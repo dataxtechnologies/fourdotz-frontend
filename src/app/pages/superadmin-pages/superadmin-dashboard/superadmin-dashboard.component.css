@@ -1,0 +1,669 @@
+.parent {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 15px;
+    /* No gaps between cards */
+    padding: 0;
+    /* Optional: remove outer padding */
+    width: 100%;
+    height: 100%;
+}
+
+/* Common card style */
+.parent>div {
+    border-radius: 32px;
+    padding: 1.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    /* background: #fff; */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    color: var(--text-black);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+/* Header section inside cards */
+.parent>div h3,
+.parent>div span.font-semibold {
+    font-weight: 600;
+}
+
+.parent>div span.text-gray-500 {
+    opacity: 0.85;
+}
+
+/* Div1: Total Property */
+.div1 {
+    grid-column: span 2 / span 2;
+    background-color: #FFFFFF;
+    color: #fff;
+    position: relative;
+}
+
+.cont{
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.div1::after {
+    content: "🏠";
+    position: absolute;
+    font-size: 3rem;
+    top: 10px;
+    right: 10px;
+    opacity: 0.15;
+}
+
+/* Div2: Number of Sales */
+.div2 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 3;
+    background-color: #FFFFFF;
+    color: #fff;
+    position: relative;
+}
+
+.div2::after {
+    content: "📈";
+    position: absolute;
+    font-size: 3rem;
+    top: 10px;
+    right: 10px;
+    opacity: 0.15;
+}
+
+/* Div3: Total Sales */
+.div3 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 5;
+     background-color: #FFFFFF;
+    color: #fff;
+    position: relative;
+}
+
+.div3::after {
+    content: "💰";
+    position: absolute;
+    font-size: 3rem;
+    top: 10px;
+    right: 10px;
+    opacity: 0.15;
+}
+
+/* Div4: Report Sales */
+.div4 {
+    grid-column: span 4 / span 4;
+    grid-row: span 3 / span 3;
+    grid-row-start: 2;
+    background: linear-gradient(145deg, #f5f7fa, #e8edf3);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.02);
+    overflow-y: auto;
+
+}
+
+/* Div5: Cost Breakdown */
+.div5 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-column-start: 5;
+    grid-row-start: 2;
+    background: linear-gradient(145deg, #fefefe, #f1f4f8);
+    overflow-y: auto;
+
+}
+
+/* Div6: Last Transactions */
+.div6 {
+    grid-column: span 3 / span 3;
+    grid-row: span 2 / span 2;
+    grid-row-start: 5;
+    background: linear-gradient(145deg, #fefefe, #f5f7fa);
+    overflow-y: auto;
+}
+
+/* Div7: Maintenance Request */
+.div7 {
+    grid-column: span 3 / span 3;
+    grid-row: span 2 / span 2;
+    grid-column-start: 4;
+    grid-row-start: 5;
+    background: linear-gradient(145deg, #fefefe, #f7fafc);
+    overflow-y: auto;
+}
+
+
+/* Percentage badges */
+.bg-red-200 {
+    background: #ffcdd2;
+    color: #b71c1c;
+}
+
+.bg-green-200 {
+    background: #c8e6c9;
+    color: #2e7d32;
+}
+
+.text-xs {
+    font-size: 0.7rem;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
+
+
+
+.table-container {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* --- Header Styles --- */
+.styled-table thead {
+    background-color: var(--header-bg-color);
+    color: var(--header-text-color);
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table th {
+    padding: 1rem;
+    text-align: left;
+}
+
+/* --- Body (Data) Row Styles --- */
+.styled-table tbody tr {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.styled-table tbody tr:hover {
+    background-color: var(--hover-bg-color);
+    cursor: pointer;
+}
+
+.styled-table tbody td {
+    padding: 1rem;
+    color: var(--text-color);
+    border-bottom: 1px solid #ddd;
+}
+
+/* Alternating row colors */
+.styled-table tbody tr:nth-child(even) {
+    background-color: var(--row-even-bg-color);
+}
+
+.styled-table tbody tr:nth-child(odd) {
+    background-color: var(--row-odd-bg-color);
+}
+
+/* --- Specific Column Alignments --- */
+.styled-table th:nth-child(4),
+.styled-table td:nth-child(4),
+.styled-table th:nth-child(5),
+.styled-table td:nth-child(5),
+.styled-table th:nth-child(6),
+.styled-table td:nth-child(6) {
+    text-align: right;
+}
+
+/* New styles for the transaction list */
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-bottom: 1em;
+}
+
+.transaction-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.transaction-header a {
+    font-size: 0.8rem;
+    color: #1e88e5;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.transaction-list {
+    width: 100%;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75em 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-item-left {
+    display: flex;
+    align-items: center;
+}
+
+.transaction-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 1em;
+    object-fit: cover;
+}
+
+.transaction-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-name {
+    font-weight: 600;
+    color: var(--text-black);
+    font-size: 0.95rem;
+}
+
+.transaction-date {
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+
+.transaction-amount {
+    font-weight: 600;
+    color: #2e7d32;
+}
+
+
+
+
+
+.maintenance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    width: 100%;
+}
+
+.maintenance-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.maintenance-header a {
+    font-size: 0.9rem;
+    color: #1e88e5;
+    text-decoration: none;
+}
+
+.maintenance-header a:hover {
+    text-decoration: underline;
+}
+
+.maintenance-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 350px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.maintenance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: #ffffffcc;
+    border-bottom: 1px solid #ccc;
+    /* semi-transparent for glassy effect */
+    backdrop-filter: blur(8px);
+}
+
+.maintenance-item-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.maintenance-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    object-fit: cover;
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.maintenance-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.maintenance-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.maintenance-date {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* Status badges */
+.maintenance-status {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.7rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-open {
+    background: #ffd6d6;
+    color: #d84315;
+}
+
+.status-in-progress {
+    background: #d0e8ff;
+    color: #1e88e5;
+}
+
+.status-completed {
+    background: #d8f3dc;
+    color: #2e7d32;
+}
+
+/* --- Responsive Grid for Dashboard --- */
+@media (max-width: 1400px) {
+    .parent {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .div1,
+    .div2,
+    .div3 {
+        grid-column: span 2;
+    }
+
+    .div4 {
+        grid-column: span 4;
+    }
+
+    .div5 {
+        grid-column: span 2;
+        grid-column-start: 3;
+    }
+
+    .div6,
+    .div7 {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 1024px) {
+    .parent {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        gap: 12px;
+    }
+
+    .div1,
+    .div2,
+    .div3,
+    .div4,
+    .div5,
+    .div6,
+    .div7 {
+        grid-column: span 2;
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .parent {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 10px;
+        width: 100% !important;
+    }
+
+    .div1,
+    .div2,
+    .div3,
+    .div4,
+    .div5,
+    .div6,
+    .div7 {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+}
+
+/* --- Table Responsiveness --- */
+@media (max-width: 768px) {
+    .styled-table thead {
+        display: none;
+    }
+
+    .styled-table,
+    .styled-table tbody,
+    .styled-table tr,
+    .styled-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .styled-table tr {
+        margin-bottom: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .styled-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: none;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .styled-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: var(--header-bg-color);
+    }
+}
+
+
+
+/* --- Mobile-First Responsive Design --- */
+@media (max-width: 768px) {
+    .styled-table thead {
+        /* Hide the header on small screens */
+        display: none;
+    }
+
+    .styled-table,
+    .styled-table tbody,
+    .styled-table tr,
+    .styled-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .styled-table tr {
+        margin-bottom: 1.5rem;
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .styled-table td {
+        text-align: right;
+        padding-left: 50%;
+        /* Give space for the label */
+        position: relative;
+        border-bottom: none;
+        padding-bottom: 0.5rem;
+        padding-top: 0.5rem;
+    }
+
+    .styled-table td::before {
+        /* Use data-label attribute to show the column name */
+        content: attr(data-label);
+        position: absolute;
+        left: 1rem;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+        color: var(--header-bg-color);
+    }
+}
+
+/* --- Extra Small / Mobile Screens --- */
+@media (max-width: 480px) {
+    .parent {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 8px;
+    }
+
+    .div1,
+    .div2,
+    .div3,
+    .div4,
+    .div5,
+    .div6,
+    .div7 {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        padding: 1em;
+        border-radius: 20px;
+    }
+
+    /* Adjust text sizes for small screens */
+    .parent>div h3 {
+        font-size: 1rem;
+    }
+
+    .parent>div span.font-semibold {
+        font-size: 0.85rem;
+    }
+
+    .parent>div span.text-gray-500 {
+        font-size: 0.75rem;
+    }
+
+    /* Reduce icon size for small cards */
+    .div1::after,
+    .div2::after,
+    .div3::after {
+        font-size: 2rem;
+        top: 5px;
+        right: 5px;
+    }
+
+    /* Table adjustments for tiny screens */
+    .styled-table td::before {
+        font-size: 0.75rem;
+        left: 0.5rem;
+    }
+
+    .styled-table td {
+        padding-left: 45%;
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+    }
+}
+
+/* --- Ultra Small / Very Small Mobile Screens --- */
+@media (max-width: 425px) {
+    .parent {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 6px;
+        width: 100% !important;
+    }
+
+    .div1,
+    .div2,
+    .div3,
+    .div4,
+    .div5,
+    .div6,
+    .div7 {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        padding: 0.8em 1em;
+        border-radius: 16px;
+    }
+
+    /* Adjust text size for readability on very small screens */
+    .parent>div h3 {
+        font-size: 0.95rem;
+    }
+
+    .parent>div span.font-semibold {
+        font-size: 0.8rem;
+    }
+
+    .parent>div span.text-gray-500 {
+        font-size: 0.7rem;
+    }
+
+    /* Shrink card icons */
+    .div1::after,
+    .div2::after,
+    .div3::after {
+        font-size: 1.8rem;
+        top: 3px;
+        right: 3px;
+    }
+
+    /* Table adjustments for very small screens */
+    .styled-table td::before {
+        font-size: 0.7rem;
+        left: 0.3rem;
+    }
+
+    .styled-table td {
+        padding-left: 42%;
+        padding-top: 0.35rem;
+        padding-bottom: 0.35rem;
+    }
+}

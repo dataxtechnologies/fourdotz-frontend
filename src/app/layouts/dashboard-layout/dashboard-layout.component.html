@@ -1,0 +1,76 @@
+
+
+<header class="navbar-header-main">
+    <div class="navbar-header">
+        <div class="user-greeting">
+            <div class="user-image">
+                <img src="assets/logo/fourdotz1.png" alt="User Icon" />
+            </div>
+            <div class="greeting-text">
+                <h3 class="user-name">Hello, John!</h3>
+            </div>
+        </div>
+
+        <div class="navbar-actions">
+            <div class="search-container">
+                <input type="text" placeholder="Search Anything..." class="search-input" />
+                <button class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+            <div class="notification-icons">
+                
+                <button class="icon-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+                <button class="icon-btn">
+                    <i class="fa-solid fa-circle-user"></i>
+                   
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Layout wrapper -->
+<div class="layout">
+    <!-- Sidebar -->
+    <nav id="sidebar" [class.close]="sidebarClosed">
+        <ul class="menu-list">
+            <!-- Toggle Button -->
+            <li class="toggle-btn-li">
+                <button (click)="toggleSidebar()" id="toggle-btn">
+                    <i class="fa-solid"
+                        [ngClass]="sidebarClosed ? 'fa-circle-arrow-right' : 'fa-circle-arrow-left'"></i>
+                </button>
+            </li>
+
+            <!-- Sidebar Menu Items -->
+            <ng-container *ngFor="let item of sidebarItems">
+                <li *ngIf="!item.allowedRole || item.allowedRole === user_type" routerLinkActive="active"
+                    [class.active]="item.route === currentRoute">
+                    <a [routerLink]="item.route" [attr.data-label]="item.label">
+                        <i [class]="item.icon"></i>
+                        <span>{{ item.label }}</span>
+                    </a>
+                </li>
+            </ng-container>
+        </ul>
+
+        <!-- Footer section -->
+        <ul class="footer-list">
+            <li>
+                <a href="javascript:void(0)">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+            
+        </ul>
+    </nav>
+
+    <!-- Main content -->
+    <main class="content">
+        <router-outlet></router-outlet>
+    </main>
+</div>
