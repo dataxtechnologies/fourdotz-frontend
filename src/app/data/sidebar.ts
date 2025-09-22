@@ -14,7 +14,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   },
   {
     label: 'Association',
-    icon: 'fa-solid fa-plus',
+    icon: 'fa-solid fa-building-user',
     route: '/Superadmin/Association-list',
     allowedRole: 'superadmin'
   },

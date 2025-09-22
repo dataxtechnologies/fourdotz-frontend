@@ -274,6 +274,7 @@
 .transaction-details {
     display: flex;
     flex-direction: column;
+    margin-left: 10px;
 }
 
 .transaction-name {
@@ -386,17 +387,41 @@
 
 .status-open {
     background: #ffd6d6;
-    color: #d84315;
+    color: var(--primary-color2);
 }
 
 .status-in-progress {
-    background: #d0e8ff;
-    color: #1e88e5;
+    background: #e6cee9;
+    color: var(--primary-color1);
 }
 
 .status-completed {
     background: #d8f3dc;
     color: #2e7d32;
+}
+
+.card-font{
+    font-size: 25px;
+    font-weight: 700 !important;
+}
+
+.card-head-font{
+     font-size: 28px;
+}
+
+/* Avatar */
+.maintenance-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #EAE9E3;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
 }
 
 /* --- Responsive Grid for Dashboard --- */
@@ -666,4 +691,14 @@
         padding-top: 0.35rem;
         padding-bottom: 0.35rem;
     }
+}
+
+.percentage1{
+    color: var(--primary-color2);
+    background: #f3d3d0;
+}
+
+.percentage2{
+    color: var(--primary-color1);
+    background: #e6cee9;
 }
