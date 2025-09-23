@@ -73,11 +73,11 @@ body {
     color: var(--text-black);
 }
 
-.required{
+.required {
     color: var(--primary-color2);
 }
 
-.submit-btn{
+.submit-btn {
     padding: 8px 12px;
     border-radius: 20px;
     background: #FFFFFF;
@@ -86,7 +86,7 @@ body {
     width: 100%;
 }
 
-.link-text{
+.link-text {
     color: var(--primary-color1) !important;
 }
 
@@ -602,11 +602,51 @@ main p {
 
 
 
-.btn-add{
+.btn-add {
     color: var(--primary-color2);
     font-weight: 700;
     padding: 10px 8px;
     background: #FFFFFF;
     border-radius: 20px;
     border: 2px solid var(--primary-color1);
+}
+
+
+
+/* Back button */
+
+.back-button {
+    display: flex;
+    height: 3em;
+    width: 100px;
+    align-items: center;
+    justify-content: start;
+    background-color: transparent;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    transition: all 0.2s linear;
+    cursor: pointer;
+    border: none;
+    /* background: #fff; */
+}
+
+.back-button span{
+    color: #555;
+}
+
+.back-button>svg {
+    margin-right: 5px;
+    margin-left: 5px;
+    font-size: 20px;
+    transition: all 0.4s ease-in;
+}
+
+.back-button:hover>svg {
+    font-size: 1.2em;
+    transform: translateX(-5px);
+}
+
+.back-button:hover {
+    /* box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff; */
+    transform: translateY(-2px);
 }

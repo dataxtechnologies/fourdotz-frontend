@@ -1,0 +1,11 @@
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* full viewport */
+    background: url('/assets/bg/auth-bg.gif') no-repeat center center;
+    background-size: cover; /* makes it responsive */
+    background-attachment: fixed;
+    padding: 0 10px; /* small horizontal padding */
+    box-sizing: border-box;
+}
