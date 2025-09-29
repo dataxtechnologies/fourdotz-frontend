@@ -16,7 +16,7 @@ export class DashboardLayoutComponent {
   sidebarClosed = true; // Sidebar starts closed
   currentRoute = ''; // Track active route
 
-  user_type = 'superadmin'; // Normally from AuthService
+  user_type = 'Owner'; // Owner , superadmin , association , Tenant
 
   constructor(private router: Router) {
     // Track the current route for active menu highlighting
@@ -25,6 +25,8 @@ export class DashboardLayoutComponent {
       .subscribe((event: any) => {
         this.currentRoute = event.urlAfterRedirects;
       });
+
+      
   }
 
   toggleSidebar() {

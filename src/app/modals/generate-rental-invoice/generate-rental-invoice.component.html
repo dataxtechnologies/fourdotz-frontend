@@ -1,0 +1,89 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3 class="modal-header">Generate Rental Invoice</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
+            <!-- Tenant + Property Info -->
+            <div class="table-cont">
+                <div class="table-container">
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Property No</th>
+                                <th>Association Name</th>
+                                <th>Tenant Name</th>
+                                <th>Tenant Phone</th>
+                                <th>Rental Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody-dd">
+                            <tr>
+                                <td data-label="Property No">H101</td>
+                                <td data-label="Tenant Name">Lakeview</td>
+                                <td data-label="Tenant Name">Arun Kumar</td>
+                                <td data-label="Tenant Phone">+91 9876543210</td>
+                                <td data-label="Rental Amount">₹12,000</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Property No">H102</td>
+                                <td data-label="Tenant Name">Lakeview</td>
+                                <td data-label="Tenant Name">Meena R</td>
+                                <td data-label="Tenant Phone">+91 9876504321</td>
+                                <td data-label="Rental Amount">₹15,500</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Property No">H103</td>
+                                <td data-label="Tenant Name">Lakeview</td>
+                                <td data-label="Tenant Name">Suresh B</td>
+                                <td data-label="Tenant Phone">+91 9123456780</td>
+                                <td data-label="Rental Amount">₹10,800</td>
+                            </tr>
+                            <!-- repeat rows for testing scroll -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Items Header -->
+            <div class="inp-cont items-header">
+                <label class="label-style">Additional Items</label>
+                <button type="button" class="btn-add" (click)="addItem()">+ Add Item</button>
+            </div>
+
+            <!-- Items -->
+            <div class="items-container scroll-box" formArrayName="items">
+                <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-row">
+                    <!-- Property No Dropdown -->
+                    <div class="custom-select">
+                        <select formControlName="propertyNo" class="inp-cus">
+                            <option value="" disabled>Select Property No</option>
+                            <option *ngFor="let property of propertyNumbers" [value]="property">
+                                {{ property }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Description -->
+                    <input type="text" formControlName="description" placeholder="Description" class="inp-cus" />
+
+                    <!-- Amount -->
+                    <input type="number" formControlName="amount" placeholder="Amount" class="inp-cus" />
+
+                    <!-- Remove -->
+                    <button type="button" class="btn-cancel" (click)="removeItem(i)">X</button>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="form-actions">
+                <button class="submit-btn" type="submit" [disabled]="maintenanceForm.invalid">
+                    Generate
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

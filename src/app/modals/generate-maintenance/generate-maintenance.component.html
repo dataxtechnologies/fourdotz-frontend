@@ -1,0 +1,54 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3 class="modal-header">Generate Maintenance</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
+
+            <!-- Grid Inputs -->
+            <div class="form-grid">
+
+                <!-- Penalty Percentage -->
+                <div class="inp-cont">
+                    <label>Property No <span class="required">*</span></label>
+                    <div class="custom-select">
+                        <div class="select-selected" (click)="toggleDropdown()">
+                            {{ selectedProperty || 'Select Property No' }}
+                            <i class="fa-solid"
+                                [ngClass]="{'fa-chevron-down': !dropdownOpen, 'fa-chevron-up': dropdownOpen}"
+                                style="float: right; font-size: 0.7rem; margin-top: 4px;"></i>
+                        </div>
+                        <div class="select-items" [class.select-hide]="!dropdownOpen">
+                            <div *ngFor="let property of propertyNumbers" (click)="selectProperty(property)">
+                                {{ property }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Items Section -->
+            <div class="inp-cont items-header">
+                <label class="label-style">Additional Items</label>
+                <button type="button" class="btn-add" (click)="addItem()">+ Add Item</button>
+            </div>
+
+            <div class="items-container scroll-box" formArrayName="items">
+                <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-row">
+                    <input type="text" formControlName="description" placeholder="Description" class="inp-cus">
+                    <input type="number" formControlName="amount" placeholder="Amount" class="inp-cus">
+                    <button type="button" class="btn-cancel" (click)="removeItem(i)">X</button>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="form-actions">
+                <button class="submit-btn" type="submit" [disabled]="maintenanceForm.invalid">
+                    Generate
+                </button>
+            </div>
+        </form>
+    </div>
+</section>

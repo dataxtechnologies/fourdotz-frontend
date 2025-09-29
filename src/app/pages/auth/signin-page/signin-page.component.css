@@ -1,7 +1,7 @@
 .bg {
-    background: #FFFFFF; 
-    /* backdrop-filter: blur(1px); 
-    -webkit-backdrop-filter: blur(1px);  */
+    background: #ffffff33; 
+    backdrop-filter: blur(1px); 
+    -webkit-backdrop-filter: blur(1px); 
     width: 90%;
     max-width: 600px; 
     height: 60vh; 
@@ -41,7 +41,7 @@
 .inp-cont label {
     font-size: 17px;
     font-weight: 600;
-    color: #000;
+    color: #fff;
 }
 
 /* Input */
@@ -87,10 +87,11 @@
     margin-bottom: 20px;
 }
 
-.forgot-password a {
+.forgot-password p {
     color: var(--primary-color2);
     text-decoration: underline;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .btn-add{

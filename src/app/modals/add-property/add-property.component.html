@@ -1,0 +1,129 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3 class="modal-header">Add Property</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form>
+            <div class="form-grid">
+                <div class="inp-cont">
+                    <label for="propertyNo" class="label-style">Property No <span class="required">*</span></label>
+                    <input type="text" name="propertyNo" id="propertyNo" class="inp-cus input-placeholder-style"
+                        placeholder="Enter your Property No">
+                </div>
+
+                <div class="inp-cont">
+                    <label for="area" class="label-style">Area <span class="required">*</span></label>
+                    <input type="text" name="area" id="area" class="inp-cus input-placeholder-style"
+                        placeholder="Enter Area">
+                </div>
+
+                <div class="inp-cont">
+                    <label for="facing" class="label-style">Facing <span class="required">*</span></label>
+                    <select name="facing" id="facing" class="inp-cus input-placeholder-style">
+                        <option value="" disabled selected>Select Facing</option>
+                        <option value="North">North</option>
+                        <option value="South">South</option>
+                        <option value="East">East</option>
+                        <option value="West">West</option>
+                    </select>
+                </div>
+
+                <div class="inp-cont">
+                    <label for="electricityNo" class="label-style">Electricity Consumer No <span
+                            class="required">*</span></label>
+                    <input type="text" name="electricityNo" id="electricityNo" class="inp-cus input-placeholder-style"
+                        placeholder="Enter Electricity Consumer No">
+                </div>
+
+                <div class="inp-cont">
+                    <label for="parkingSlot" class="label-style">Parking Slot Number <span
+                            class="required">*</span></label>
+                    <input type="text" name="parkingSlot" id="parkingSlot" class="inp-cus input-placeholder-style"
+                        placeholder="Enter Parking Slot Number">
+                </div>
+
+                <div class="inp-cont">
+                    <label for="gaslineNo" class="label-style">Gasline Number</label>
+                    <input type="text" name="gaslineNo" id="gaslineNo" class="inp-cus input-placeholder-style"
+                        placeholder="Enter Gasline Number">
+                </div>
+
+                <div class="inp-cont">
+                    <label for="gaslineNo" class="label-style">Maintenance Amount <span
+                            class="required">*</span></label>
+                    <input type="text" name="gaslineNo" id="gaslineNo" class="inp-cus input-placeholder-style"
+                        placeholder="Enter Maintenance Amount">
+                </div>
+
+                <div class="inp-cont">
+                    <label for="dueDate" class="label-style">
+                        Due Date <span class="required">*</span>
+                    </label>
+                    <input type="date" name="dueDate" id="dueDate" class="inp-cus input-placeholder-style"
+                        placeholder="Select Due Date">
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="inp-cont">
+                    <label class="label-style">Property Type <span class="required">*</span></label>
+                    <div class="checkbox-group">
+                        <label class="radio-cus" *ngFor="let type of propertyTypes">
+                            <input type="radio" name="propertyType" [value]="type" [(ngModel)]="selectedPropertyType">
+                            <span>{{ type }}</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Villa/Townhouse BHK -->
+                <div *ngIf="selectedPropertyType === 'Villa' || selectedPropertyType === 'Townhouse'" class="inp-cont">
+                    <label>BHK <span class="required">*</span></label>
+                    <input type="number" class="inp-cus" placeholder="Enter BHK" [(ngModel)]="bhkValue">
+                </div>
+
+                <!-- Apartment Fields -->
+                <ng-container *ngIf="selectedPropertyType === 'Apartment'">
+                    <div class="inp-cont">
+                        <label>Building Type <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <label class="radio-cus">
+                                <input type="radio" name="buildingType" [(ngModel)]="buildingType" value="Block">
+                                <span>Block</span>
+                            </label>
+                            <label class="radio-cus">
+                                <input type="radio" name="buildingType" [(ngModel)]="buildingType" value="Tower">
+                                <span>Tower</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="inp-cont">
+                        <label>BHK <span class="required">*</span></label>
+                        <input type="number" class="inp-cus" placeholder="Enter BHK" [(ngModel)]="bhkValue">
+                    </div>
+
+                    <div class="inp-cont" *ngIf="buildingType === 'Tower'">
+                        <label>Tower</label>
+                        <input type="text" class="inp-cus" placeholder="Enter Tower" [(ngModel)]="tower">
+                    </div>
+
+                    <div class="inp-cont" *ngIf="buildingType === 'Block'">
+                        <label>Block</label>
+                        <input type="text" class="inp-cus" placeholder="Enter Block" [(ngModel)]="block">
+                    </div>
+
+                    <div class="inp-cont">
+                        <label>Floor <span class="required">*</span></label>
+                        <input type="number" class="inp-cus" placeholder="Enter Floor" [(ngModel)]="floor">
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="form-actions">
+                <button class="submit-btn">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>

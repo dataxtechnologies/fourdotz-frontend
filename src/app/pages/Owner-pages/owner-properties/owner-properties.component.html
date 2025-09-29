@@ -1,0 +1,87 @@
+<section>
+    <div>
+        <div class="container header-cont">
+            <div class="head-cont">
+                <h2>Properties List</h2>
+            </div>
+            <div>
+                <!-- <button class="btn-add" (click)="Addproperty()">+ Add Properties</button> -->
+            </div>
+        </div>
+        <div class="container">
+
+
+            <!-- 🏠 Table Section -->
+            <div class="item">
+                <div class="table-cont">
+                    <!-- 🔍 Filter Section -->
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
+                            <!-- Association Dropdown -->
+                            <div class="inp-cont">
+                                <label for="association">Select Association</label>
+                                <select formControlName="association" class="inp-cus">
+                                    <option value="">All Associations</option>
+                                    <option *ngFor="let assoc of associations" [value]="assoc">
+                                        {{ assoc }}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="inp-cont">
+                                <label for="tenants">Select Resident</label>
+                                <!-- Resident Type Dropdown -->
+                                <select formControlName="residentType" class="inp-cus">
+                                    <option value="">All Types</option>
+                                    <option value="Owner">Owner</option>
+                                    <option value="Tenant">Tenant</option>
+                                </select>
+                            </div>
+
+                            <!-- Property No Input -->
+                            <div class="inp-cont">
+                                <label for="Property">Property No</label>
+                                <input type="text" placeholder="Search Property No" class="inp-cus"
+                                    formControlName="propertyNo" />
+                            </div>
+
+                            <!-- Reset Button -->
+                            <div class="btn">
+                                <button type="button" class="btn-remove btn-btn Buttons-font" (click)="resetFilters()">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-container">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Property No</th>
+                                    <th>Property Type</th>
+                                    <th>Association</th>
+                                    <th>Area</th>
+                                    <th>BHK</th>
+                                    <th>Residential Type</th>
+                                    <th>View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let property of filteredProperties">
+                                    <td>{{ property.no }}</td>
+                                    <td>{{ property.type }}</td>
+                                    <td>{{ property.association }}</td>
+                                    <td>{{ property.area }}</td>
+                                    <td>{{ property.bhk }}</td>
+                                    <td>{{ property.residentType }}</td>
+                                    <td (click)="viewproperty(property)">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

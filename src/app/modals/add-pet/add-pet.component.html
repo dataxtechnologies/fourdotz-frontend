@@ -1,0 +1,43 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3>Add Pet</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form action="">
+            <div class="inp-cont">
+                <label for="Name">Pet Name <span class="required">*</span></label>
+                <input type="text" name="Name" id="Name" class="inp-cus" placeholder="Enter your Pet Name">
+            </div>
+            <div class="inp-cont">
+                <label for="Name">Type <span class="required">*</span></label>
+                <input type="text" name="Name" id="Name" class="inp-cus" placeholder="Enter your Pet Type (eg: Dog, Cat)">
+            </div>
+
+            <div class="inp-cont">
+                <label for="Email">Breed<span class="required">*</span></label>
+                <input type="Text" name="Email" id="Email" class="inp-cus" placeholder="Enter your Pet Breed">
+            </div>
+
+            <div class="inp-cont">
+                <label for="Phone">Age <span class="required">*</span></label>
+                <input type="number" name="Phone" id="Phone" class="inp-cus" placeholder="Enter your Pet Age">
+            </div>
+
+            <div class="inp-cont">
+                <label for="maintenancePaidBy">Pet Owned By <span class="required">*</span></label>
+                <select id="maintenancePaidBy" class="inp-cus" formControlName="maintenancePaidBy">
+                    <option value="" selected  disabled>Select Options</option>
+                    <option value="Owner">Owner</option>
+                    <option value="Tenant">Tenant</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <button class="submit-btn">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</section>

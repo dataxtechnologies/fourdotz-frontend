@@ -1,0 +1,83 @@
+<section>
+    <div>
+        <div class="container header-cont">
+            <div class="head-cont">
+                <h2>Rental Invoice List</h2>
+            </div>
+            <div>
+                <button class="btn-add" (click)="generateRental()">+ Generate Rental Invoice</button>
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="item">
+                <div class="table-cont"> <!-- &#64; -->
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
+
+                            <!-- Status Dropdown -->
+                            <div class="inp-cont">
+                                <label for="status">Payment Status</label>
+                                <select formControlName="status" class="inp-cus">
+                                    <option value="">All</option>
+                                    <option value="Paid">Paid</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Overdue">Overdue</option>
+                                </select>
+                            </div>
+
+                            <!-- Resident Name/Phone Search -->
+                            <div class="inp-cont">
+                                <label for="residentSearch">Search</label>
+                                <input type="text" class="inp-cus" placeholder="Enter Tenant Phone, Name"
+                                    formControlName="residentSearch" />
+                            </div>
+
+                            <!-- Date Range -->
+                            <div class="inp-cont">
+                                <label for="fromDate">From Date</label>
+                                <input type="date" class="inp-cus" formControlName="fromDate" />
+                            </div>
+                            <div class="inp-cont">
+                                <label for="toDate">To Date</label>
+                                <input type="date" class="inp-cus" formControlName="toDate" />
+                            </div>
+
+                            <!-- Reset -->
+                            <div class="btn">
+                                <button type="button" class="btn-remove btn-btn" (click)="resetFilters()">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-container">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Rental Amount</th>
+                                    <th>Association Name</th>
+                                    <th>Resident Name</th>
+                                    <th>Resident Phone</th>
+                                    <th>Issue At</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="tbody-dd">
+                                <tr *ngFor="let p of filteredProperties">
+                                    <td>₹{{ p.amount }}</td>
+                                    <td>{{ p.association }}</td>
+                                    <td>{{ p.name }}</td>
+                                    <td>{{ p.phone }}</td>
+                                    <td>{{ p.date }}</td>
+                                    <td>
+                                        {{ p.status }}
+                                        <span *ngIf="p.status === 'Paid' && p.paidDate"> ({{ p.paidDate }})</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

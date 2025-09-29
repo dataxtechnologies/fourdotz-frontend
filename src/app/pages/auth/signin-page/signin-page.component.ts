@@ -21,4 +21,8 @@ export class SigninPageComponent {
   login(){
     this.route.navigateByUrl('Superadmin/Dashboard')
   }
+
+  forgetpassscreen(){
+    this.route.navigateByUrl('auth/forget-password')
+  }
 }

@@ -10,6 +10,11 @@
 }
 
 @font-face {
+    font-family: 'TTHoves-MediumItalic';
+    src: url('fonts/TTHoves-MediumItalic.ttf') format('truetype');
+}
+
+@font-face {
     font-family: 'TTHoves-DemiBold';
     src: url('fonts/TTHoves-DemiBold.ttf') format('truetype');
 }
@@ -25,8 +30,8 @@
 }
 
 @font-face {
-    font-family: 'TTHoves-Thin';
-    src: url('/assets/fonts/TTHoves-Thin.ttf') format('truetype');
+    font-family: 'TTHoves-Light';
+    src: url('/assets/fonts/TTHoves-Light.ttf') format('truetype');
 }
 
 /* ===================== Variables ===================== */
@@ -64,6 +69,32 @@ html {
     font-family: 'TTHoves-DemiBold', sans-serif;
     line-height: 1.5rem;
 }
+
+.heading-font {
+    font-family: 'TTHoves-DemiBold', sans-serif;
+}
+
+.label-font{
+    font-family: 'TTHoves-Regular', sans-serif;
+}
+
+.placeholder-font{
+    font-family: 'TTHoves-Light', sans-serif;
+}
+
+.Table-Header{
+    font-family: 'TTHoves-Medium', sans-serif;
+}
+
+.Table-Body{
+    font-family: 'TTHoves-Regular', sans-serif;
+}
+
+.Buttons-font{
+    font-family: 'TTHoves-Bold', sans-serif;
+}
+
+
 
 body {
     font-family: 'TTHoves-DemiBold', sans-serif;
@@ -521,6 +552,17 @@ main p {
 
 
 
+@media (max-width: 768px) {
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+        text-align: right;
+        white-space: nowrap;
+    }
+}
+
+
 /* --- Mobile-First Responsive Design --- */
 @media (max-width: 768px) {
     .styled-table thead {
@@ -603,12 +645,21 @@ main p {
 
 
 .btn-add {
-    color: var(--primary-color2);
+    color: var(--primary-color1);
     font-weight: 700;
     padding: 10px 8px;
     background: #FFFFFF;
     border-radius: 20px;
     border: 2px solid var(--primary-color1);
+}
+
+.btn-remove {
+    color: var(--primary-color2);
+    font-weight: 700;
+    padding: 10px 8px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    border: 2px solid var(--primary-color2);
 }
 
 
@@ -630,7 +681,7 @@ main p {
     /* background: #fff; */
 }
 
-.back-button span{
+.back-button span {
     color: #555;
 }
 
@@ -649,4 +700,16 @@ main p {
 .back-button:hover {
     /* box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff; */
     transform: translateY(-2px);
+}
+
+.pay-btn {
+    background: #FFFFFF;
+    color: var(--primary-color2);
+    border: 0;
+    font-size: 18px;
+    /* font-weight: ; */
+}
+
+tbody td i {
+    color: var(--primary-color1);
 }

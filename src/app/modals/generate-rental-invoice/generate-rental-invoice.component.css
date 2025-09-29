@@ -1,0 +1,317 @@
+.form-section {
+    background: #fff;
+    width: 800px;
+    margin: 40px auto;
+    padding: 25px 35px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    box-sizing: border-box;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.form-header h3 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0;
+    color: #000;
+}
+
+.form-header i {
+    font-size: 25px;
+    cursor: pointer;
+    color: var(--primary-color2);
+}
+
+.form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    max-height: 70vh;
+    padding-right: 5px;
+    box-sizing: border-box;
+}
+
+.form-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.form-body::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.inp-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+.inp-cont label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+}
+
+.inp-cus,
+select.inp-cus {
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #f9f9f9;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.inp-cus:focus {
+    background: #fff;
+    box-shadow: 0 0 6px #4f504f4d;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.radio-cus {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-weight: 500;
+    position: relative;
+}
+
+.radio-cus input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.radio-cus input[type="radio"]:checked {
+    background-color: var(--primary-color2);
+    border-color: var(--primary-color2);
+}
+
+.radio-cus input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #fff;
+    top: 3px;
+    left: 3px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.submit-btn {
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 2px solid var(--primary-color1);
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* Scrollable items container */
+.scroll-box {
+    max-height: 250px;
+    overflow-y: auto;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    /* border: 1px solid #eee; */
+    /* background: #fafafa; */
+}
+
+.scroll-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scroll-box::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+/* Each item row aligned properly */
+.item-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+}
+
+/* Add button */
+.btn-add {
+    background: none;
+    border: none;
+    color: var(--primary-color2);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.items-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+/* Cancel (X) button */
+.btn-cancel {
+    background:transparent;
+    color: var(--primary-color2);
+    border:0;
+    padding: 6px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: 0.2s ease;
+}
+
+
+
+/* Custom select wrapper */
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.select-selected {
+    background-color: #f9f9f9;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.select-items {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 99;
+    border-radius: 0 0 10px 10px;
+}
+
+.select-items div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.select-items div:hover {
+    background-color: #f1f1f1;
+}
+
+.select-hide {
+    display: none;
+}
+
+/* Responsive for tablet & mobile */
+@media (max-width: 1024px) {
+    .form-section {
+        width: 95%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .submit-btn {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-section {
+        width: 95%;
+        padding: 15px 20px;
+        max-height: 70vh;
+    }
+
+    .inp-cus {
+        font-size: 0.95rem;
+    }
+
+    .item-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.table-cont {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 20px;
+    max-height: 400px; /* limit height */
+    overflow-y: auto; /* enable scroll */
+}
+
+/* Make table full width */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Fix the header */
+.styled-table thead {
+    background-color: #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+/* Table styling */
+.styled-table th,
+.styled-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}

@@ -64,14 +64,6 @@
 
 
 
-.btn-add {
-    color: var(--primary-color2);
-    font-weight: 700;
-    padding: 10px 8px;
-    background: #FFFFFF;
-    border-radius: 20px;
-    border: 2px solid var(--primary-color1);
-}
 
 
 tbody td i{

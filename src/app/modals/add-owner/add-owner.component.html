@@ -1,0 +1,58 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3 class="heading-font">Add Owner</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form action="">
+            <div class="inp-cont">
+                <label for="Name">First Name <span class="required">*</span></label>
+                <input type="text" name="Name" id="Name" class="inp-cus" placeholder="Enter your Name">
+            </div>
+            <div class="inp-cont">
+                <label for="Name">Last Name <span class="required">*</span></label>
+                <input type="text" name="Name" id="Name" class="inp-cus" placeholder="Enter your Name">
+            </div>
+
+            <div class="inp-cont">
+                <label for="Email">Email ID <span class="required">*</span></label>
+                <input type="email" name="Email" id="Email" class="inp-cus" placeholder="Enter your Email">
+            </div>
+
+            <div class="inp-cont">
+                <label for="Phone">Phone Number <span class="required">*</span></label>
+                <input type="tel" name="Phone" id="Phone" class="inp-cus" placeholder="Enter your Phone Number">
+            </div>
+
+            <div class="inp-cont">
+                <label for="ownedAt">Owned At <span class="required">*</span></label>
+                <input type="date" name="ownedAt" id="ownedAt" class="inp-cus">
+            </div>
+
+            <!-- ✅ Property Type Checkboxes -->
+            <!-- <div class="inp-cont">
+                <label>Property Type <span class="required">*</span></label>
+                <div class="checkbox-group">
+                    <label class="checkbox-cus">
+                        <input type="checkbox" name="propertyType" value="villa">
+                        <span>Villa</span>
+                    </label>
+                    <label class="checkbox-cus">
+                        <input type="checkbox" name="propertyType" value="apartment">
+                        <span>Apartment</span>
+                    </label>
+                    <label class="checkbox-cus">
+                        <input type="checkbox" name="propertyType" value="townhouse">
+                        <span>Town House</span>
+                    </label>
+                </div>
+            </div> -->
+
+            <div class="mb-3">
+                <button class="submit-btn">Submit</button>
+            </div>
+        </form>
+
+    </div>
+</section>

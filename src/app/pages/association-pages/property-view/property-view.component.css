@@ -1,0 +1,235 @@
+.sec-cont {
+    border-radius: 20px;
+    background-color: #fff;
+    padding: 8px;
+    margin: 20px auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+/* Header container */
+.header-cont {
+    display: flex;
+    justify-content: flex-start;
+    /* items start from left */
+    align-items: center;
+    background-color: #EAE9E3;
+    padding: 15px 20px;
+    border-radius: 15px;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    /* allow wrapping */
+    gap: 50px;
+    /* spacing between items */
+}
+
+
+.back-button-div {
+    margin-left: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* User and apartment info */
+.user-info h5,
+.apartment-info h4 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.label {
+    margin: 2px 0 0;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+/* Section main content */
+.main-cont {
+    padding: 20px;
+}
+
+
+.ass-h {
+    margin-left: -20px;
+    margin-top: 10px;
+}
+
+.ass-h p {
+    color: #000;
+}
+
+
+/* Tabs container */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    width: 300px;
+}
+
+/* Tab button */
+.tab-btn {
+    flex: 1;
+    /* equal width */
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-color1);
+    background: #FFFFFF;
+    /* width: ; */
+
+}
+
+
+/* Active tab */
+.tab-btn.active {
+    color: var(--primary-color2);
+    border-bottom: 2px solid var(--primary-color2);
+}
+
+/* Content */
+.tab-content {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+/* Section wrapper */
+.resident-section {
+    margin: 30px auto;
+    /* max-width: 900px; */
+    padding: 10px;
+}
+
+/* Title */
+.section-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #222;
+    border-left: 5px solid var(--primary-color2);
+    padding-left: 10px;
+}
+
+/* Card */
+.resident-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* Header */
+.card-header {
+    background: #f7f9fc;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.card-header h5 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.add-btn {
+    background: var(--primary-color2);
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+
+/* Card body */
+.card-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* User info blocks */
+.user-info h5 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+}
+
+.user-info .label {
+    font-size: 13px;
+    color: #777;
+    margin-top: 3px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-body {
+        grid-template-columns: 1fr;
+    }
+
+    .add-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}
+
+.file-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 10px 0;
+  width: 250px;
+}
+
+
+.file-preview {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.file-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+  margin-top: 3px;
+}
+
+.file-size {
+  font-size: 13px;
+  color: #777;
+  margin: 2px 0 0;
+}
+
+
+.doc-div{
+    display: flex;
+    justify-content: space-around;
+     flex-grow: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    
+}

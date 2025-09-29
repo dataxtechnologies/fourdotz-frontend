@@ -1,0 +1,138 @@
+.parent {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 8px;
+}
+
+.div1 {
+    grid-column: span 3 / span 3;
+    grid-row: span 3 / span 3;
+}
+
+.div2 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-column-start: 4;
+}
+
+.div3 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-row-start: 4;
+}
+
+.div4 {
+    grid-column: span 3 / span 3;
+    grid-row: span 3 / span 3;
+    grid-column-start: 3;
+    grid-row-start: 4;
+}
+
+
+.properties-div{
+    padding: 30px;
+    border-radius: 30px;
+}
+
+
+
+/* New styles for the transaction list */
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-bottom: 1em;
+}
+
+.transaction-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.transaction-header a {
+    font-size: 0.8rem;
+    color: #1e88e5;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.transaction-list {
+    width: 100%;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75em 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-item-left {
+    display: flex;
+    align-items: center;
+}
+
+.transaction-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 1em;
+    object-fit: cover;
+}
+
+.transaction-details {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+.transaction-name {
+    font-weight: 600;
+    color: var(--text-black);
+    font-size: 0.95rem;
+}
+
+.transaction-date {
+    font-size: 0.8rem;
+    color: var(--text-color);
+}
+
+.transaction-amount {
+    font-weight: 600;
+    color: #2e7d32;
+}
+
+
+.maintenance-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #EAE9E3;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+
+
+.table-cont {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.styled-table thead {
+    background-color: #ddd;
+}

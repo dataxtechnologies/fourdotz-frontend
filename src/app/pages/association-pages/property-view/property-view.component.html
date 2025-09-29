@@ -1,0 +1,208 @@
+<section>
+    <div class="back-button-div">
+        <!-- From Uiverse.io by karthik092726122003 -->
+        <button (click)="goback()" class="back-button">
+            <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
+                <path
+                    d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z">
+                </path>
+            </svg>
+            <span>Back</span>
+        </button>
+        <div class="ass-h">
+            <p>H101 - Apartment</p>
+        </div>
+
+    </div>
+    <div class="bg-white sec-cont">
+        <!-- Header -->
+        <div class="header-cont">
+            <div class="user-info">
+                <h5>H101</h5>
+                <p class="label">Propety No</p>
+            </div>
+            <div class="user-info">
+                <h5>Apartment</h5>
+                <p class="label">Property Type</p>
+            </div>
+            <div class="user-info">
+                <h5>1000 sq.ft</h5>
+                <p class="label">Area</p>
+            </div>
+            <div class="user-info">
+                <h5>South</h5>
+                <p class="label">Facing</p>
+            </div>
+            <div class="user-info">
+                <h5>0125362663</h5>
+                <p class="label">Electricity Consumer No</p>
+            </div>
+            <div class="user-info">
+                <h5>K220</h5>
+                <p class="label">Parking Slot Number</p>
+            </div>
+            <div class="user-info">
+                <h5>2BHK</h5>
+                <p class="label">BHK</p>
+            </div>
+            <div class="user-info">
+                <h5>Tower</h5>
+                <p class="label">Building Type</p>
+            </div>
+            <div class="user-info">
+                <h5>Hipo</h5>
+                <p class="label">Tower Name</p>
+            </div>
+            <div class="user-info">
+                <h5>A</h5>
+                <p class="label">Block Name</p>
+            </div>
+            <div class="user-info">
+                <h5>3</h5>
+                <p class="label">Floor</p>
+            </div>
+
+        </div>
+
+        <!-- Section Content -->
+        <div class="main-cont">
+            <div class="tabs">
+                <button class="tab-btn" [class.active]="activeTab === 'Resident'" (click)="setTab('Resident')">
+                    Resident
+                </button>
+                <button class="tab-btn" [class.active]="activeTab === 'petvehicle'" (click)="setTab('petvehicle')">
+                    Pet & Vehicle
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <div *ngIf="activeTab === 'Resident'">
+                    <div class="resident-section">
+                        <h4 class="section-title">Resident Details</h4>
+
+                        <!-- Owner Card -->
+                        <div class="resident-card">
+                            <div class="card-header">
+                                <h5>Owner Details</h5>
+                               <div  class="d-flex gap-3">
+                                 <button class="btn-add" (click)="addowner()">+ Add Owner</button>
+                                <button class="btn-add" (click)="addowner()"> Remove Owner</button>
+                               </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="user-info">
+                                    <h5>Aswin G</h5>
+                                    <p class="label">Owner Name</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>9360170297</h5>
+                                    <p class="label">Phone Number</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>aswin&#64;gmail.com</h5>
+                                    <p class="label">Email</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>12 Sep 2025</h5>
+                                    <p class="label">Owned At</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tenant Card -->
+                        <div class="resident-card">
+                            <div class="card-header">
+                                <h5>Tenant Details</h5>
+                                <div class="d-flex gap-3">
+                                    <button class="btn-add" (click)="addTenant()">+ Add Tenant</button>
+                                <button class="btn-add" (click)="addTenant()"> Remove Tenant</button>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="user-info">
+                                    <h5>Aswin G</h5>
+                                    <p class="label">Tenant Name</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>9360170297</h5>
+                                    <p class="label">Phone Number</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>aswin&#64;gmail.com</h5>
+                                    <p class="label">Email</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>12 Sep 2025</h5>
+                                    <p class="label">Owned At</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div *ngIf="activeTab === 'petvehicle'">
+                    <div class="resident-section">
+                        <h4 class="section-title">Pet & Vehicle</h4>
+
+                        <!-- Owner Card -->
+                        <div class="resident-card">
+                            <div class="card-header">
+                                <h5>Pet Details</h5>
+                                <button class="btn-add" (click)="addpet()">+ Add Pet</button>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="user-info">
+                                    <h5>Pattu</h5>
+                                    <p class="label">Pet Name</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>Dog</h5>
+                                    <p class="label">Type</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>Shih Tzu</h5>
+                                    <p class="label">Breed</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>5 Months</h5>
+                                    <p class="label">Age</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tenant Card -->
+                        <div class="resident-card">
+                            <div class="card-header">
+                                <h5>Vehicle Details</h5>
+                                <button class="btn-add" (click)="addVehicle()">+ Add Vehicle</button>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="user-info">
+                                    <h5>Car</h5>
+                                    <p class="label">Vehicle Type</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>Honda Civic</h5>
+                                    <p class="label">Brand</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>2019</h5>
+                                    <p class="label">Vehicle Modal</p>
+                                </div>
+                                <div class="user-info">
+                                    <h5>TN-29-BV-0001</h5>
+                                    <p class="label">Vehicle Number</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

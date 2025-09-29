@@ -1,0 +1,127 @@
+<section>
+    <div>
+        <div class="container header-cont">
+            <div class="head-cont">
+                <h2>Residents List</h2>
+            </div>
+            <div>
+                <button class="btn-add" (click)="Addproperty()">+ Add Residents</button>
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="item">
+                <div class="table-cont"> <!-- &#64; -->
+                    <div class="table-container">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Property No</th>
+                                    <th>Property Type</th>
+                                    <th>Resident Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Invitation Status</th>
+                                    <th>View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-label="Property No">H101</td>
+                                    <td data-label="Property Type">Apartment</td>
+                                    <td data-label="Resident Name">Arun Kumar</td>
+                                    <td data-label="Email">arun.kumar&#64;example.com</td>
+                                    <td data-label="Phone">9876543210</td>
+                                    <td data-label="Invitation Status">Owner</td>
+                                    <td data-label="View" (click)="viewresident()"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Property No">H102</td>
+                                    <td data-label="Property Type">Villa</td>
+                                    <td data-label="Resident Name">Meena R</td>
+                                    <td data-label="Email">meena.r&#64;example.com</td>
+                                    <td data-label="Phone">9123456780</td>
+                                    <td data-label="Invitation Status">Tenant</td>
+                                    <td data-label="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Property No">H103</td>
+                                    <td data-label="Property Type">Penthouse</td>
+                                    <td data-label="Resident Name">Suresh B</td>
+                                    <td data-label="Email">suresh.b&#64;example.com</td>
+                                    <td data-label="Phone">9001122334</td>
+                                    <td data-label="Invitation Status">Owner</td>
+                                    <td data-label="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Property No">H104</td>
+                                    <td data-label="Property Type">Studio</td>
+                                    <td data-label="Resident Name">Priya M</td>
+                                    <td data-label="Email">priya.m&#64;example.com</td>
+                                    <td data-label="Phone">9887766554</td>
+                                    <td data-label="Invitation Status">Tenant</td>
+                                    <td data-label="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Property No">H105</td>
+                                    <td data-label="Property Type">Row House</td>
+                                    <td data-label="Resident Name">Vikram S</td>
+                                    <td data-label="Email">vikram.s&#64;example.com</td>
+                                    <td data-label="Phone">9876501234</td>
+                                    <td data-label="Invitation Status">Owner</td>
+                                    <td data-label="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Property No">H106</td>
+                                    <td data-label="Property Type">Apartment</td>
+                                    <td data-label="Resident Name">Neha Sharma</td>
+                                    <td data-label="Email">neha.sharma&#64;example.com</td>
+                                    <td data-label="Phone">9876009876</td>
+                                    <td data-label="Invitation Status">Tenant</td>
+                                    <td data-label="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Property No">H107</td>
+                                    <td data-label="Property Type">Villa</td>
+                                    <td data-label="Resident Name">Ramesh K</td>
+                                    <td data-label="Email">ramesh.k&#64;example.com</td>
+                                    <td data-label="Phone">9998887776</td>
+                                    <td data-label="Invitation Status">Owner</td>
+                                    <td data-label="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Property No">H108</td>
+                                    <td data-label="Property Type">Apartment</td>
+                                    <td data-label="Resident Name">Divya P</td>
+                                    <td data-label="Email">divya.p&#64;example.com</td>
+                                    <td data-label="Phone">9112233445</td>
+                                    <td data-label="Invitation Status">Tenant</td>
+                                    <td data-label="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Property No">H109</td>
+                                    <td data-label="Property Type">Row House</td>
+                                    <td data-label="Resident Name">Ajay N</td>
+                                    <td data-label="Email">ajay.n&#64;example.com</td>
+                                    <td data-label="Phone">9123450012</td>
+                                    <td data-label="Invitation Status">Owner</td>
+                                    <td data-label="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Property No">H110</td>
+                                    <td data-label="Property Type">Studio</td>
+                                    <td data-label="Resident Name">Kavya L</td>
+                                    <td data-label="Email">kavya.l&#64;example.com</td>
+                                    <td data-label="Phone">9876540099</td>
+                                    <td data-label="Invitation Status">Tenant</td>
+                                    <td data-label="View"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
