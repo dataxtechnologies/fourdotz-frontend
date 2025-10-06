@@ -14,7 +14,7 @@
 .div2,
 .div3,
 .div4 {
-    background-color: #fff;
+    background-color: #faf9f4;
     border-radius: 16px;
     padding: 20px;
     display: flex;
@@ -46,7 +46,7 @@
 /* === Large Properties Card === */
 .div5 {
     grid-column: span 5;
-    background: #fff;
+    background: #faf9f4;
     border-radius: 16px;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);

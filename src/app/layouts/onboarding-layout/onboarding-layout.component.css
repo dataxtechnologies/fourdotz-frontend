@@ -1,0 +1,349 @@
+#sidebar {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar ul li {
+    display: flex;
+}
+
+#sidebar ul li a,
+#sidebar ul li button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 16px;
+    text-decoration: none;
+    width: 100%;
+    border-radius: 8px;
+}
+
+#sidebar ul li a i {
+    font-size: 1.3rem;
+}
+
+/* Toggle button alignment */
+.toggle-btn-li {
+    margin-bottom: 10px;
+}
+
+/* Footer stays at bottom */
+.footer-list {
+    margin-top: auto;
+    /* padding-bottom: 1rem; */
+}
+
+/* Collapsed state hides text */
+#sidebar.close ul li a span {
+    display: none;
+}
+
+
+
+@media (max-width: 800px) {
+
+    .toggle-btn-li {
+        display: none !important;
+    }
+
+    .footer-list li {
+        display: none !important;
+    }
+}
+
+
+/* Header full width at the top */
+.navbar-header {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    position: sticky;
+    top: 20px !important;
+    z-index: 1000;
+}
+
+.navbar-header-main {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.content {
+    flex: 1;
+    padding: 1em;
+    margin-top: 10px;
+}
+
+/* Layout wrapper */
+.layout {
+    display: flex;
+    /* adjust based on header height */
+}
+
+.user-greeting {
+    display: flex;
+    align-items: center;
+}
+
+.user-image {
+    width: 60px;
+    height: auto;
+    /* background-color: #8cbf91; */
+    /* Example user icon background */
+    /* border-radius: 50%; */
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 40px;
+    margin-left: -10px;
+}
+
+.user-image img {
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover; */
+    /* border-radius: 50%; */
+}
+
+.user-name {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.explore-info {
+    margin: 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    
+}
+
+.search-input {
+    padding: 10px 40px 10px 15px;
+    border-radius: 25px;
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(12px); /* Safari support */
+    width: 250px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    color: #FFFFFF !important;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #8cbf91;
+    box-shadow: 0 0 5px rgba(140, 191, 145, 0.5);
+}
+
+.search-btn {
+    position: absolute;
+    right: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #555;
+    font-size: 1.2em;
+}
+
+.notification-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.icon-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+     background: rgba(255, 255, 255, 0.2); /* Semi-transparent */
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(12px); /* Safari support */
+}
+
+.icon-btn i {
+    font-size: 30px;
+    color: #000;
+}
+
+
+/* --- Responsive Header & Navbar --- */
+
+/* Medium screens: tablets */
+@media (max-width: 1024px) {
+
+    .navbar-header {
+        width: 100%;
+        padding: 0.8em;
+    }
+
+    .user-image {
+        width: 120px;
+        margin-right: 20px;
+    }
+
+    .user-name {
+        font-size: 1.2em;
+    }
+
+    .explore-info {
+        font-size: 0.8em;
+    }
+
+    .search-input {
+        width: 200px;
+        font-size: 0.9em;
+    }
+
+    .icon-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .icon-btn i {
+        font-size: 24px;
+    }
+}
+
+/* Small screens: mobile portrait */
+@media (max-width: 768px) {
+    .user-greeting, .navbar-actions{
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    /* .navbar-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.5em 1em;
+        top: 0;
+          gap: 15px;
+    } */
+
+    .navbar-header-main {
+        justify-content: flex-start;
+      
+        width: 100%;
+    }
+
+    .user-image {
+        width: 80px;
+        margin-right: 15px;
+    }
+
+    .user-name {
+        font-size: 1em;
+    }
+
+    .explore-info {
+        font-size: 0.75em;
+    }
+
+    .search-input {
+        width: 100%;
+        font-size: 0.9em;
+        padding: 8px 35px 8px 10px;
+    }
+
+    .icon-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .icon-btn i {
+        font-size: 20px;
+    }
+
+    .notification-icons {
+        gap: 10px;
+    }
+}
+
+/* Extra small screens: small mobile (<425px) */
+@media (max-width: 425px) {
+    .navbar-header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.5em 0.5em;
+    }
+
+    .navbar-header-main {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+    }
+
+    .user-image {
+        width: 60px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+
+    .user-name {
+        font-size: 0.95em;
+    }
+
+    .explore-info {
+        font-size: 0.7em;
+    }
+
+    .search-input {
+        width: 100%;
+        font-size: 0.85em;
+        padding: 6px 30px 6px 8px;
+    }
+
+    .icon-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .icon-btn i {
+        font-size: 18px;
+    }
+
+    .notification-icons {
+        gap: 8px;
+    }
+}
+
+/* Hide toggle buttons and footer lists on very small screens */
+@media (max-width: 800px) {
+    .toggle-btn-li {
+        display: none !important;
+    }
+
+    .footer-list li {
+        display: none !important;
+    }
+}

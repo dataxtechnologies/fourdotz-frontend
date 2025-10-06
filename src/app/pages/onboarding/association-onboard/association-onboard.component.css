@@ -1,0 +1,276 @@
+/* Container */
+.onboarding-container {
+    display: flex;
+    max-width: 90%;
+    margin: 20px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    background: #fff;
+}
+
+/* Sidebar */
+/* Sidebar Layout */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  /* height: 100%; */
+  background: #fafafa;
+  border-right: 1px solid #eee;
+  padding: 30px 20px;
+}
+
+/* Step list takes remaining height */
+.steps-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+/* Logout button fixed at bottom */
+.logout-container {
+  border-top: 1px solid #eee;
+  padding-top: 20px;
+}
+
+.btn-remove12{
+        color: var(--primary-color2);
+    font-weight: 500;
+    padding: 10px 8px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    width: 200px !important;
+    border: 2px solid var(--primary-color2);
+}
+
+.get-started {
+    color: #495057;
+    font-size: 14px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    line-height: 1.5;
+}
+
+.get-started .icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: var(--primary-color1);
+    color: #fff;
+    font-weight: bold;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
+/* Step Items */
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.step-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 12px;
+    width: 2px;
+    height: calc(100% - -10px);
+    background-color: #e0e0e0;
+    transition: background-color 0.3s;
+}
+
+.step-item.complete::before {
+    background-color: var(--primary-color2);
+}
+
+/* Step Icons */
+.icon-circle {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: #ddd;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    font-size: 12px;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.step-item.active .icon-circle {
+    background-color: var(--primary-color2);
+}
+
+.step-item.complete .icon-circle {
+    background-color: var(--primary-color1);
+}
+
+/* Step Text */
+.step-content .step-title {
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 3px;
+}
+
+.step-content .step-subtitle {
+    font-size: 13px;
+    color: #666;
+}
+
+/* Main Area */
+.main-content {
+    flex-grow: 1;
+    padding: 50px 50px;
+}
+
+.step-header .step-label {
+    color: var(--primary-color1);
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.step-header h2 {
+    color: #222;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.step-header .step-description {
+    color: #555;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+/* Form Controls */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 5px;
+}
+
+.inp-cus {
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #f9f9f9;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+    width: 100%;
+}
+
+.inp-cus:focus {
+    background: #fff;
+    box-shadow: 0 0 6px #4f504f4d;
+}
+
+.inp-cus::placeholder {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+.error {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Upload Section */
+.document-uploads {
+    margin-top: 10px;
+    border: 1px solid #e9ecef;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.file-upload-item {
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-upload-item label {
+    flex-basis: 35%;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+.file-upload-item input[type="file"] {
+    flex-basis: 40%;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 14px;
+}
+
+/* Navigation Buttons */
+.form-navigation {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 40px;
+}
+
+.form-navigation .btn {
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 10px;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.form-navigation .btn.primary {
+    background-color: var(--primary-color1);
+    color: white;
+    border: none;
+}
+
+.form-navigation .btn.primary:hover {
+    background-color: var(--primary-color1);
+}
+
+.form-navigation .btn.primary:disabled {
+    background-color: #d1b4ee;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-navigation .btn.secondary {
+    background-color: white;
+    color: var(--primary-color2);
+}
+
+/* Review Section */
+.review-block {
+    border: 1px solid #e9ecef;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+.review-block h3 {
+    font-size: 18px;
+    color: var(--primary-color1);
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}

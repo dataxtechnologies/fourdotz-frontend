@@ -2,24 +2,36 @@
     <div class="form-container">
         <!-- Logo -->
         <div class="logo-img">
-            <img src="assets/logo/fourdotz-logo.png" alt="Logo">
+            <img src="assets/logo/fourdotz-logo.png" alt="Logo" />
         </div>
 
         <!-- Signin Form -->
-        <form class="signin-form">
+        <form class="signin-form" [formGroup]="loginForm" (ngSubmit)="login()">
             <!-- Email / Phone -->
             <div class="inp-cont">
                 <label for="email">Email or Phone <span class="required">*</span></label>
-                <input type="text" id="email" placeholder="Enter email or phone" class="inp-cus">
+                <input type="text" id="email" placeholder="Enter email or phone" class="inp-cus"
+                    formControlName="username" />
+                <div class="error" *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid">
+                    <small *ngIf="loginForm.get('username')?.errors?.['required']" class="error-text">Email is required.</small>
+                    <small *ngIf="loginForm.get('username')?.errors?.['username']" class="error-text">Enter a valid email.</small>
+                </div>
             </div>
 
             <!-- Password with show/hide -->
             <div class="inp-cont password-group">
                 <label for="password">Password <span class="required">*</span></label>
-                <input [type]="passwordFieldType" id="password" placeholder="Enter password" class="inp-cus">
+                <input [type]="passwordFieldType" id="password" placeholder="Enter password" class="inp-cus"
+                    formControlName="password" />
                 <span class="toggle-password" (click)="togglePassword()">
                     <i [class]="passwordFieldType === 'password' ? 'fa-solid fa-lock' : 'fa-solid fa-unlock'"></i>
                 </span>
+                <div class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+                    <small *ngIf="loginForm.get('password')?.errors?.['required']" class="error-text">Password is required.</small>
+                    <small *ngIf="loginForm.get('password')?.errors?.['minlength']" class="error-text">
+                        Password must be at least 6 characters.
+                    </small>
+                </div>
             </div>
 
             <!-- Forgot password -->
@@ -28,7 +40,8 @@
             </div>
 
             <!-- Login button -->
-            <button type="button" class="btn-add" (click)="login()">Login</button>
+            <button type="submit" class="btn-add" *ngIf="loginbtn">Login</button>
+            <button type="button" class="processing-btn" disabled *ngIf="!loginbtn">processing...</button>
         </form>
     </div>
 </section>

@@ -25,6 +25,10 @@ import { TenantRentalListComponent } from './pages/Tenant-pages/tenant-rental-li
 import { TenantViewPropertyDetailsComponent } from './pages/Tenant-pages/tenant-view-property-details/tenant-view-property-details.component';
 import { ChangePasswordComponent } from './pages/auth/change-password/change-password.component';
 import { ForgetPasswordComponent } from './pages/auth/forget-password/forget-password.component';
+import { OnboardingLayoutComponent } from './layouts/onboarding-layout/onboarding-layout.component';
+import { AssociationOnboardComponent } from './pages/onboarding/association-onboard/association-onboard.component';
+import { AssociationOnboardDocumentsComponent } from './pages/onboarding/association-onboard-documents/association-onboard-documents.component';
+import { ProfilePageComponent } from './pages/profile/profile-page/profile-page.component';
 
 export const routes: Routes = [
   {
@@ -37,10 +41,33 @@ export const routes: Routes = [
   {
     path: 'auth',
     component: AuthLayoutComponent,
-    children: [{ path: 'sign-in', component: SigninPageComponent },
-      { path: 'Change-passsword', component: ChangePasswordComponent },
-      { path: 'forget-password', component: ForgetPasswordComponent }
+    children: [
+      { path: 'sign-in', component: SigninPageComponent },
+      {
+        path: 'Change-passsword/:usermail',
+        component: ChangePasswordComponent,
+      },
+      { path: 'forget-password', component: ForgetPasswordComponent },
     ],
+  },
+
+  {
+    path: 'onboarding',
+    component: OnboardingLayoutComponent,
+    children: [
+      { path: 'user-data', component: AssociationOnboardComponent },
+      { path: 'user-document', component: AssociationOnboardDocumentsComponent },
+    ],
+  },
+
+  {
+    path: 'Account',
+    component:DashboardLayoutComponent,
+    children:[
+      {
+        path: 'profile', component:ProfilePageComponent
+      },
+    ]
   },
 
   {
@@ -64,8 +91,14 @@ export const routes: Routes = [
       { path: 'properties-list', component: PropertyListComponent },
       { path: 'residents-list', component: ResidentsListComponent },
       { path: 'Maintenance-list', component: MaintenanceListComponent },
-      { path: 'view-properties/:propertiesId', component: PropertyViewComponent },
-      { path: 'view-resident/:residentId', component: ViewResidentDetailsComponent },
+      {
+        path: 'view-properties/:propertiesId',
+        component: PropertyViewComponent,
+      },
+      {
+        path: 'view-resident/:residentId',
+        component: ViewResidentDetailsComponent,
+      },
     ],
   },
 
@@ -78,8 +111,14 @@ export const routes: Routes = [
       { path: 'tenants-list', component: OwnerTenantsListComponent },
       { path: 'Maintenance-list', component: OwnerMaintenanceListComponent },
       { path: 'Rental-invoice-list', component: OwnerRentalInvoiceComponent },
-      { path: 'view-properties/:propertiesId', component: OwnerViewPropertyComponent },
-      { path: 'view-tenants/:tenantId', component: OwnerViewTenantsDetailsComponent },
+      {
+        path: 'view-properties/:propertiesId',
+        component: OwnerViewPropertyComponent,
+      },
+      {
+        path: 'view-tenants/:tenantId',
+        component: OwnerViewTenantsDetailsComponent,
+      },
     ],
   },
 
@@ -88,10 +127,16 @@ export const routes: Routes = [
     component: DashboardLayoutComponent,
     children: [
       { path: 'Dashboard', component: TenantDashboardComponent },
-      { path: 'properties-list', component: TenantViewPropertyDetailsComponent },
+      {
+        path: 'properties-list',
+        component: TenantViewPropertyDetailsComponent,
+      },
       { path: 'Maintenance-list', component: TenantMaintenanceListComponent },
       { path: 'Rental-invoice-list', component: TenantRentalListComponent },
-      { path: 'view-properties/:propertiesId', component: TenantViewPropertyDetailsComponent }
+      {
+        path: 'view-properties/:propertiesId',
+        component: TenantViewPropertyDetailsComponent,
+      },
     ],
   },
 ];

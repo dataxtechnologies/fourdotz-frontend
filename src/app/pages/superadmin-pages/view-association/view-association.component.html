@@ -16,37 +16,55 @@
     </div>
     <div class="bg-white sec-cont">
         <!-- Header -->
-        <div class="header-cont">
+        <div class="header-cont" *ngIf="!header_loading; else skeleton">
             <div class="user-info">
-                <h5>Naveen</h5>
+                <h5>{{ Associationdata.name || '--' }}</h5>
                 <p class="label">Name</p>
             </div>
+
             <div class="user-info">
-                <h5>7854544444</h5>
+                <h5>{{ Associationdata.mobile || '--' }}</h5>
                 <p class="label">Phone</p>
             </div>
+
             <div class="user-info">
-                <h5>tawico2763&#64;reifide.com</h5>
+                <h5>{{ Associationdata.email || '--' }}</h5>
                 <p class="label">Email</p>
             </div>
+
             <div class="user-info">
-                <h5>Apartment, Villa, Townhouse</h5>
+                <h5>{{ Associationdata.property_type || '--' }}</h5>
                 <p class="label">Property Type(s)</p>
             </div>
+
             <div class="user-info">
-                <h5>Lakeview Apartment</h5>
+                <h5>{{ Associationdata.property_name || '--' }}</h5>
                 <p class="label">Property Name</p>
             </div>
+
             <div class="user-info">
-                <h5>Accepted</h5>
+                <h5>{{ Associationdata.invitation_status ? 'Accepted' : 'Pending/Declined' }}</h5>
                 <p class="label">Invitation Status</p>
             </div>
+
             <div class="user-info">
-                <h5>Sep 16, 2025, 3:05:27 PM</h5>
+                <h5>{{ Associationdata.onboarded_time?.$date | date:'dd MMM yyyy, hh:mm a' }}</h5>
                 <p class="label">Created At</p>
             </div>
-
         </div>
+
+        <ng-template #skeleton>
+            <div class="container ">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6 col-lg-4" *ngFor="let i of [1,2,3,4,5,6,7]">
+                        <div class="placeholder-glow">
+                            <span class="placeholder col-8 mb-2" style="height: 20px;"></span>
+                            <span class="placeholder col-5" style="height: 14px;"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
 
         <!-- Section Content -->
         <div class="main-cont">
@@ -65,84 +83,69 @@
                     <h4>Property List</h4>
                     <div class="table-cont">
                         <div class="table-container">
-                            <table class="styled-table">
-                                <thead>
-                                    <tr>
-                                        <th>Property Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Property Type</th>
-                                        <th>Invitation Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td data-label="Property Name">Green Villa</td>
-                                        <td data-label="Email">greenvilla&#64;example.com</td>
-                                        <td data-label="Phone">+91 9876543210</td>
-                                        <td data-label="Property Type">Apartment</td>
-                                        <td data-label="Invitation Status">Pending</td>
-                                    </tr>
-                                    <tr>
-                                        <td data-label="Property Name">Green Villa</td>
-                                        <td data-label="Email">greenvilla&#64;example.com</td>
-                                        <td data-label="Phone">+91 9876543210</td>
-                                        <td data-label="Property Type">Apartment</td>
-                                        <td data-label="Invitation Status">Pending</td>
-                                    </tr>
-                                    <tr>
-                                        <td data-label="Property Name">Green Villa</td>
-                                        <td data-label="Email">greenvilla&#64;example.com</td>
-                                        <td data-label="Phone">+91 9876543210</td>
-                                        <td data-label="Property Type">Apartment</td>
-                                        <td data-label="Invitation Status">Pending</td>
-                                    </tr>
-                                    <tr>
-                                        <td data-label="Property Name">Green Villa</td>
-                                        <td data-label="Email">greenvilla&#64;example.com</td>
-                                        <td data-label="Phone">+91 9876543210</td>
-                                        <td data-label="Property Type">Apartment</td>
-                                        <td data-label="Invitation Status">Pending</td>
-                                    </tr>
-                                    <tr>
-                                        <td data-label="Property Name">Green Villa</td>
-                                        <td data-label="Email">greenvilla&#64;example.com</td>
-                                        <td data-label="Phone">+91 9876543210</td>
-                                        <td data-label="Property Type">Apartment</td>
-                                        <td data-label="Invitation Status">Pending</td>
-                                    </tr>
-                                    <tr>
-                                        <td data-label="Property Name">Green Villa</td>
-                                        <td data-label="Email">greenvilla&#64;example.com</td>
-                                        <td data-label="Phone">+91 9876543210</td>
-                                        <td data-label="Property Type">Apartment</td>
-                                        <td data-label="Invitation Status">Pending</td>
-                                    </tr>
-                                    <tr>
-                                        <td data-label="Property Name">Green Villa</td>
-                                        <td data-label="Email">greenvilla&#64;example.com</td>
-                                        <td data-label="Phone">+91 9876543210</td>
-                                        <td data-label="Property Type">Apartment</td>
-                                        <td data-label="Invitation Status">Pending</td>
-                                    </tr>
-                                    <tr>
-                                        <td data-label="Property Name">Green Villa</td>
-                                        <td data-label="Email">greenvilla&#64;example.com</td>
-                                        <td data-label="Phone">+91 9876543210</td>
-                                        <td data-label="Property Type">Apartment</td>
-                                        <td data-label="Invitation Status">Pending</td>
-                                    </tr>
-                                    <tr>
-                                        <td data-label="Property Name">Green Villa</td>
-                                        <td data-label="Email">greenvilla&#64;example.com</td>
-                                        <td data-label="Phone">+91 9876543210</td>
-                                        <td data-label="Property Type">Apartment</td>
-                                        <td data-label="Invitation Status">Pending</td>
-                                    </tr>
+                            <!-- Skeleton loader while fetching -->
+                            <!-- Skeleton loader -->
+                            <div *ngIf="header_loading" class="table-responsive">
+                                <table class="styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Property Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Property Type</th>
+                                            <th>Invitation Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">
+                                            <td><span class="placeholder col-6 placeholder-glow"></span></td>
+                                            <td><span class="placeholder col-8 placeholder-glow"></span></td>
+                                            <td><span class="placeholder col-5 placeholder-glow"></span></td>
+                                            <td><span class="placeholder col-6 placeholder-glow"></span></td>
+                                            <td><span class="placeholder col-5 placeholder-glow"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                </tbody>
+                            <!-- Actual table -->
+                            <div *ngIf="!header_loading" class="table-responsive">
+                                <table class="styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Property Name</th>
+                                            <th>Property No</th>
+                                            <th>Property Type</th>
+                                            <th>Facing</th>
+                                            <th>Owner ID</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- If data exists, show rows -->
+                                        <ng-container *ngIf="properties2.length > 0; else noDataRow">
+                                            <tr *ngFor="let property of properties2">
+                                                <td>{{ property.association_name }}</td>
+                                                <td>{{ property.property_no }}</td>
+                                                <td>{{ property.property_type }}</td>
+                                                <td>{{ property.facing }}</td>
+                                                <td>{{ property.owner_user_id || '-' }}</td>
+                                            </tr>
+                                        </ng-container>
 
-                            </table>
+                                        <!-- No data row inside tbody -->
+                                        <ng-template #noDataRow>
+                                            <tr>
+                                                <td colspan="5" class="text-center text-muted py-4">
+                                                    No Data Found
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+
                         </div>
                     </div>
                 </div>

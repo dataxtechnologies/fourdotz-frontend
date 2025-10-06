@@ -9,93 +9,92 @@ export interface SidebarItem {
 export const SIDEBAR_ITEMS: SidebarItem[] = [
   {
     label: 'Dashboard',
-    icon: 'fa-regular fa-house',
-    
+    icon: '/assets/icons/SA-home.svg',
     route: '/Superadmin/Dashboard',
-    allowedRole: 'superadmin'
+    allowedRole: 'super_admin'
   },
   {
     label: 'Association',
-    icon: 'fa-solid fa-building-user',
+    icon: '/assets/icons/SA-Association.svg',
     route: '/Superadmin/Association-list',
-    allowedRole: 'superadmin'
+    allowedRole: 'super_admin'
   },
   
   {
     label: 'Dashboard',
-    icon: 'fa-regular fa-house',
+    icon: '/assets/icons/grids1.svg',
     route: '/Association/Dashboard',
-    allowedRole: 'association'
+    allowedRole: 'hoa_admin'
   },
   {
     label: 'Properties',
-    icon: 'fa-solid fa-building',
+    icon: '/assets/icons/house.svg',
     route: '/Association/properties-list',
-    allowedRole: 'association'
+    allowedRole: 'hoa_admin'
   },
   {
     label: 'Residents',
-    icon: 'fa-solid fa-house-chimney-user',
+    icon: '/assets/icons/ai-users.svg',
     route: '/Association/residents-list',
-    allowedRole: 'association'
+    allowedRole: 'hoa_admin'
   }, 
   {
     label: 'Maintenance',
-    icon: 'fa-solid fa-wallet',
+    icon: '/assets/icons/money-recive.svg',
     route: '/Association/Maintenance-list',
-    allowedRole: 'association'
+    allowedRole: 'hoa_admin'
   },
   {
     label: 'Dashboard',
-    icon: 'fa-regular fa-house',
+    icon: '/assets/icons/grids1.svg',
     route: '/Owner/Dashboard',
-    allowedRole: 'Owner'
+    allowedRole: 'owner'
   },
   {
     label: 'Property',
-    icon: 'fa-solid fa-house-chimney-user',
+    icon: '/assets/icons/house.svg',
     route: '/Owner/properties-list',
-    allowedRole: 'Owner'
+    allowedRole: 'owner'
   },
   {
     label: 'Tenants',
-    icon: 'fa-solid fa-user-group',
+    icon: '/assets/icons/user-tag.svg',
     route: '/Owner/tenants-list',
-    allowedRole: 'Owner'
+    allowedRole: 'owner'
   },
   {
     label: 'Maintenance',
-    icon: 'fa-solid fa-money-bills',
+    icon: '/assets/icons/money-recive.svg',
     route: '/Owner/Maintenance-list',
-    allowedRole: 'Owner'
+    allowedRole: 'owner'
   },
   {
     label: 'Rental Invoice',
-    icon: 'fa-solid fa-file-invoice-dollar',
+    icon: '/assets/icons/receipt-text.svg',
     route: '/Owner/Rental-invoice-list',
-    allowedRole: 'Owner'
+    allowedRole: 'owner'
   },
   {
     label: 'Dashboard',
-    icon: 'fa-regular fa-house',
+    icon: '/assets/icons/grids1.svg',
     route: '/Tenant/Dashboard',
     allowedRole: 'Tenant'
   },
   {
     label: 'Rented property',
-    icon: 'fa-solid fa-house-user',
+    icon: '/assets/icons/house-2.svg',
     route: '/Tenant/properties-list',
     allowedRole: 'Tenant'
   },
   {
     label: 'Maintenance',
-    icon: 'fa-solid fa-money-bills',
+    icon: '/assets/icons/money-recive.svg',
     route: '/Tenant/Maintenance-list',
     allowedRole: 'Tenant'
   },
   {
     label: 'Rental Invoice',
-    icon: 'fa-solid fa-file-invoice-dollar',
+    icon: '/assets/icons/receipt-text.svg',
     route: '/Tenant/Rental-invoice-list',
     allowedRole: 'Tenant'
   },

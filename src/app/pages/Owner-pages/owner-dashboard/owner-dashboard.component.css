@@ -14,12 +14,14 @@
     grid-column: span 2 / span 2;
     grid-row: span 3 / span 3;
     grid-column-start: 4;
+    background: #faf9f4;
 }
 
 .div3 {
     grid-column: span 2 / span 2;
     grid-row: span 3 / span 3;
     grid-row-start: 4;
+    background: #faf9f4;
 }
 
 .div4 {
@@ -128,7 +130,7 @@
 
 
 .table-cont {
-    background-color: #fff;
+    background-color: #faf9f4;
     padding: 10px;
     border-radius: 20px;
 }

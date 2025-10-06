@@ -4,16 +4,33 @@
             <div class="head-cont">
                 <h2>Association List</h2>
             </div>
-            <div>
+            <div class="mt-4">
                 <button class="btn-add" (click)="AddAssociation()">+ Add Association</button>
             </div>
         </div>
         <div class="container">
-           
+
             <div class="item">
                 <div class="table-cont">
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
+
+                            <!-- Resident Name/Phone Search -->
+                            <div class="inp-cont">
+                                <label for="residentSearch">Search</label>
+                                <input type="text" class="inp-cus" placeholder="Enter Association Details"
+                                    formControlName="residentSearch" />
+                            </div>
+
+
+                            <!-- Reset -->
+                            <div class="btn">
+                                <button type="button" class="btn-remove btn-btn" (click)="resetFilters()">Reset</button>
+                            </div>
+                        </div>
+                    </form>
                     <div class="table-container">
-                        
+
                         <table class="styled-table">
                             <thead>
                                 <tr>
@@ -25,93 +42,98 @@
                                     <th>View</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td data-label="Property Name">Green Villa</td>
-                                    <td data-label="Email">greenvilla&#64;example.com</td>
-                                    <td data-label="Phone">+91 9876543210</td>
-                                    <td data-label="Property Type">Apartment</td>
-                                    <td data-label="Invitation Status">Pending</td>
-                                    <td data-label="Property Details" (click)="viewassociation(1)"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Property Name">Sunrise Residency</td>
-                                    <td data-label="Email">sunrise&#64;example.com</td>
-                                    <td data-label="Phone">+91 9876501234</td>
-                                    <td data-label="Property Type">Villa</td>
-                                    <td data-label="Invitation Status">Accepted</td>
-                                    <td data-label="Property Details"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Property Name">Lakeview Towers</td>
-                                    <td data-label="Email">lakeview&#64;example.com</td>
-                                    <td data-label="Phone">+91 8765432109</td>
-                                    <td data-label="Property Type">Apartment</td>
-                                    <td data-label="Invitation Status">Declined</td>
-                                    <td data-label="Property Details"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Property Name">Ocean Breeze Homes</td>
-                                    <td data-label="Email">oceanbreeze&#64;example.com</td>
-                                    <td data-label="Phone">+91 9123456780</td>
-                                    <td data-label="Property Type">Villa</td>
-                                    <td data-label="Invitation Status">Pending</td>
-                                    <td data-label="Property Details"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Property Name">Hilltop Residency</td>
-                                    <td data-label="Email">hilltop&#64;example.com</td>
-                                    <td data-label="Phone">+91 9988776655</td>
-                                    <td data-label="Property Type">Apartment</td>
-                                    <td data-label="Invitation Status">Accepted</td>
-                                    <td data-label="Property Details"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Property Name">Palm Grove</td>
-                                    <td data-label="Email">palmgrove&#64;example.com</td>
-                                    <td data-label="Phone">+91 8899776655</td>
-                                    <td data-label="Property Type">Villa</td>
-                                    <td data-label="Invitation Status">Accepted</td>
-                                    <td data-label="Property Details"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Property Name">Skyline Heights</td>
-                                    <td data-label="Email">skyline&#64;example.com</td>
-                                    <td data-label="Phone">+91 9090887766</td>
-                                    <td data-label="Property Type">Apartment</td>
-                                    <td data-label="Invitation Status">Pending</td>
-                                    <td data-label="Property Details"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Property Name">Silver Meadows</td>
-                                    <td data-label="Email">silvermeadows&#64;example.com</td>
-                                    <td data-label="Phone">+91 9876001234</td>
-                                    <td data-label="Property Type">Villa</td>
-                                    <td data-label="Invitation Status">Declined</td>
-                                    <td data-label="Property Details"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Property Name">Emerald Residency</td>
-                                    <td data-label="Email">emerald&#64;example.com</td>
-                                    <td data-label="Phone">+91 9876123456</td>
-                                    <td data-label="Property Type">Apartment</td>
-                                    <td data-label="Invitation Status">Accepted</td>
-                                    <td data-label="Property Details"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
-                                </tr>
-                                <tr>
-                                    <td data-label="Property Name">Golden Gate Villas</td>
-                                    <td data-label="Email">goldengate&#64;example.com</td>
-                                    <td data-label="Phone">+91 9765432100</td>
-                                    <td data-label="Property Type">Villa</td>
-                                    <td data-label="Invitation Status">Pending</td>
-                                    <td data-label="Property Details"><i class="fa-solid fa-arrow-up-right-from-square"></i></td>
-                                </tr>
-                            </tbody>
 
+                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                                <tr *ngFor="let item of Associationlist1.paginatedData">
+                                    <td data-label="Property Name">{{ item.property_name }}</td>
+                                    <td data-label="Email">{{ item.email }}</td>
+                                    <td data-label="Phone">+91 {{ item.mobile }}</td>
+                                    <td data-label="Property Type">{{ item.property_type.join(', ') }}</td>
+                                    <td data-label="Invitation Status">
+                                        {{ item.invitation_status ? 'Accepted' : 'Pending/Declined' }}
+                                    </td>
+                                    <td data-label="Property Details" (click)="viewassociation(item.user_id)">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </td>
+                                </tr>
+
+                                <!-- Show no data row if array is empty -->
+                                <ng-container *ngIf="Associationlist2.length === 0">
+                                    <tr>
+                                        <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                            🚫 No Data Found
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
                         </table>
+
+                        <!-- Skeleton Loader -->
+                        <ng-template #tableSkeleton>
+                            <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                <td>
+                                    <span class="placeholder col-10 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-8 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-6 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-7 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-5 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-3 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                            </tr>
+                        </ng-template>
+
+
                     </div>
                 </div>
             </div>
         </div>
+        <div *ngIf="Associationlist1" class="pagination-container ">
+            <p class="pagination-info">
+                Showing {{ Associationlist1.startIndex + 1 }} to {{ Associationlist1.endIndex + 1 }} of {{
+                Associationlist1.totalData }} entries
+            </p>
+
+            <ul class="pagination">
+                <!-- First Page -->
+                <li>
+                    <button [disabled]="Associationlist1.currentPage === 1" (click)="Associationlist1.prevPage()"
+                        class="page-btn arrow-btn">
+                        &#x276E;
+                    </button>
+                </li>
+
+                <!-- Current Page -->
+                <li>
+                    <span class="page-btn active">
+                        {{ Associationlist1.currentPage }}
+                    </span>
+                </li>
+
+                <!-- Next Page -->
+                <li>
+                    <button [disabled]="Associationlist1.currentPage === Associationlist1.totalPages"
+                        (click)="Associationlist1.nextPage()" class="page-btn arrow-btn">
+                        &#x276F;
+                    </button>
+                </li>
+            </ul>
+        </div>
+
     </div>
 </section>

@@ -1,5 +1,5 @@
 .form-section {
-    background: #fff;
+    background: #faf9f4;
     width: 800px;
     margin: 40px auto;
     padding: 25px 35px;
@@ -40,7 +40,7 @@
     flex-direction: column;
     gap: 20px;
     overflow-y: auto;
-    max-height: 70vh;
+    max-height: auto;
     padding-right: 5px;
     box-sizing: border-box;
 }
@@ -72,7 +72,7 @@ select.inp-cus {
     padding: 12px 14px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    background: #f9f9f9;
+    background: #faf9f4;
     font-size: 1rem;
     outline: none;
     transition: all 0.3s ease;
@@ -185,7 +185,7 @@ select.inp-cus {
 
 /* Add button */
 .btn-add {
-    background: none;
+    background: #faf9f4;
     border: none;
     color: var(--primary-color2);
     font-weight: 600;
@@ -286,7 +286,7 @@ select.inp-cus {
 }
 
 .table-cont {
-    background-color: #fff;
+    background-color: #faf9f4;
     padding: 10px;
     border-radius: 20px;
     max-height: 400px; /* limit height */

@@ -14,7 +14,7 @@
 }
 
 .table-cont {
-    background-color: #fff;
+    background-color: #faf9f4;
     padding: 10px;
     border-radius: 20px;
 }
@@ -68,7 +68,7 @@
     color: var(--primary-color1);
     font-weight: 700;
     padding: 10px 8px;
-    background: #FFFFFF;
+    background: #faf9f4;
     border-radius: 20px;
     border: 2px solid var(--primary-color1);
 }

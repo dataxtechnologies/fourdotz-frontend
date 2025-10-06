@@ -11,6 +11,7 @@
     grid-column: span 3 / span 3;
     grid-row: span 3 / span 3;
     height: 250px;
+   
 }
 
 .div2 {
@@ -18,6 +19,7 @@
     grid-row: span 3 / span 3;
     grid-column-start: 4;
     height: 250px;
+    background: #faf9f4 !important;
 }
 
 .div3 {
@@ -128,7 +130,7 @@
 
 
 .table-cont {
-    background-color: #fff;
+    background-color: #faf9f4 !important;
     padding: 10px;
     border-radius: 20px !important;
 }
@@ -145,7 +147,7 @@ img.rounded-circle {
 .welcome-card {
     padding: 30px;
     height: 100%;
-     background-color: #fff;
+     background-color: #faf9f4 !important;;
      border-radius: 30px;
 }
 
@@ -165,7 +167,7 @@ img.rounded-circle {
 
 
 .table-cont {
-    background-color: #fff;
+    background-color: #faf9f4;
     padding: 10px;
     border-radius: 20px;
 }

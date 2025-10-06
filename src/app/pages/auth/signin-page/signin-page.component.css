@@ -1,11 +1,10 @@
 .bg {
-    background: #ffffff33; 
-    backdrop-filter: blur(1px); 
+    background: #acacac33; 
+    backdrop-filter: blur(8px); 
     -webkit-backdrop-filter: blur(1px); 
     width: 90%;
     max-width: 600px; 
-    height: 60vh; 
-    max-height: 600px; 
+    height: auto; 
     border-radius: 20px;
     border: 2px solid #ffffff33;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); 
@@ -40,8 +39,8 @@
 /* Label */
 .inp-cont label {
     font-size: 17px;
-    font-weight: 600;
-    color: #fff;
+      font-family: 'TTHoves-Regular', sans-serif;
+    color: #181818;
 }
 
 /* Input */
@@ -94,10 +93,11 @@
     cursor: pointer;
 }
 
-.btn-add{
-        font-size: 20px;
-}
 
+
+.error-text{
+    color: var(--primary-color2);
+}
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .bg { height: 60vh; }

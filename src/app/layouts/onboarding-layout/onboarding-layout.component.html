@@ -1,1 +1,38 @@
-<p>onboarding-layout works!</p>
+<header class="navbar-header-main">
+    <div class="navbar-header">
+        <div class="user-greeting">
+            <div class="user-image">
+                <img src="assets/logo/fourdotz1.png" alt="User Icon" />
+            </div>
+            <div class="greeting-text">
+                <h3 class="user-name">Hello, {{ user_type }}!</h3>
+            </div>
+        </div>
+
+        <div class="navbar-actions">
+            <div class="search-container">
+                <input type="text" placeholder="Search Anything..." class="search-input" />
+                <button class="search-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+            <div class="notification-icons">
+
+                <button class="icon-btn">
+                    <img src="/assets/icons/notification-bing.svg" alt="">
+                </button>
+                <button class="icon-btn">
+                    <img src="/assets/icons/profile-circle.svg" alt="">
+
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+<!-- Main content -->
+<main class="content">
+    <router-outlet></router-outlet>
+</main>

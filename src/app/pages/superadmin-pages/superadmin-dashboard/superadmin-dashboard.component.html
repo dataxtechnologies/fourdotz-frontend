@@ -50,7 +50,7 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="main-table-font">
                         <tr>
                             <td data-label="Date">2024-09-12 10:15</td>
                             <td data-label="Amount">₹250.00</td>
@@ -92,20 +92,12 @@
                             <td data-label="Status">Paid</td>
                         </tr>
                         <tr>
-                            <td data-label="Date">2024-09-02 08:45</td>
-                            <td data-label="Amount">₹60.00</td>
-                            <td data-label="Name">Gym Subscription</td>
-                            <td data-label="Association">Orchid Greens</td>
-                            <td data-label="Resident">Priya Reddy</td>
-                            <td data-label="Status">Pending</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Date">2024-09-02 08:45</td>
-                            <td data-label="Amount">₹60.00</td>
-                            <td data-label="Name">Gym Subscription</td>
-                            <td data-label="Association">Orchid Greens</td>
-                            <td data-label="Resident">Priya Reddy</td>
-                            <td data-label="Status">Pending</td>
+                            <td data-label="Date">2024-09-04 11:10</td>
+                            <td data-label="Amount">₹320.00</td>
+                            <td data-label="Name">Monthly Rent</td>
+                            <td data-label="Association">Lakeview </td>
+                            <td data-label="Resident">Arjun Mehta</td>
+                            <td data-label="Status">Paid</td>
                         </tr>
 
                     </tbody>
@@ -114,80 +106,48 @@
         </div>
 
         <!-- div5: Cost Breakdown -->
-        <div class="div5 bg-white rounded-2xl shadow-md flex flex-col">
-            <div class="transaction-header">
+        <div class="div5 bg-white rounded-2xl shadow-md flex flex-col p-3">
+            <div class="transaction-header d-flex justify-content-between align-items-center mb-3">
                 <h3>Associations</h3>
-                <a class="link-text" href="#">See All</a>
+                <a class="link-text" (click)="redirecttoAssociationlist()">See All</a>
             </div>
 
             <div class="transaction-list">
-                <!-- Association 1 -->
-                <div class="transaction-item">
-                    <div class="transaction-item-left">
-                        <div class="maintenance-avatar">M</div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Maple Heights Association</span>
-                            <span class="transaction-date">Springfield | 120 Properties</span>
+                <!-- Skeleton Loader -->
+                <ng-container *ngIf="tableLoading">
+                    <div *ngFor="let s of [1,2,3,4, 5]" class="transaction-item d-flex align-items-center mb-3">
+                        <div class="skeleton-avatar me-2"></div>
+                        <div class="flex-grow-1">
+                            <div class="skeleton-line w-50 mb-1"></div>
+                            <div class="skeleton-line w-75"></div>
                         </div>
                     </div>
-                </div>
+                </ng-container>
 
-                <!-- Association 2 -->
-                <div class="transaction-item">
-                    <div class="transaction-item-left">
-                        <div class="maintenance-avatar">G</div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Greenwood Residency</span>
-                            <span class="transaction-date">Downtown, Chicago | 85 Properties</span>
-                        </div>
-                    </div>
-                </div>
+                <!-- No Data -->
+                <ng-container *ngIf="!tableLoading && Associationlist2?.data?.length === 0">
+                    <p class="text-center text-muted">No Data Found</p>
+                </ng-container>
 
-                <!-- Association 3 -->
-                <div class="transaction-item">
-                    <div class="transaction-item-left">
-                        <div class="maintenance-avatar">R</div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Riverdale Apartments</span>
-                            <span class="transaction-date">Brooklyn, NY | 200 Properties</span>
+                <!-- Actual Data -->
+                <ng-container *ngIf="!tableLoading">
+                    <div *ngFor="let item of Associationlist1.paginatedData" class="transaction-item">
+                        <div class="transaction-item-left d-flex align-items-center">
+                            <div class="maintenance-avatar">
+                                {{ item.property_name?.charAt(0) || '?' }}
+                            </div>
+                            <div class="transaction-details ms-2">
+                                <span class="transaction-name">{{ item.property_name }}</span>
+                                <span class="transaction-date">
+                                    {{ item.name }} | {{ item.property_type.join(', ') }}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Association 4 -->
-                <div class="transaction-item">
-                    <div class="transaction-item-left">
-                        <div class="maintenance-avatar">S</div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Sunrise Villas</span>
-                            <span class="transaction-date">Austin, Texas | 60 Properties</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Association 5 -->
-                <div class="transaction-item">
-                    <div class="transaction-item-left">
-                        <div class="maintenance-avatar">L</div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Lakeview Residency</span>
-                            <span class="transaction-date">Miami, Florida | 140 Properties</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Association 6 -->
-                <div class="transaction-item">
-                    <div class="transaction-item-left">
-                        <div class="maintenance-avatar">O</div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Orchid Greens Association</span>
-                            <span class="transaction-date">San Diego, CA | 95 Properties</span>
-                        </div>
-                    </div>
-                </div>
+                </ng-container>
             </div>
         </div>
+
 
 
         <!-- div6: Last Transactions -->

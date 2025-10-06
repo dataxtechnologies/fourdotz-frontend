@@ -1,6 +1,6 @@
 /* Section container */
 .form-section {
-    background: #fff;
+    background: #faf9f4;
     max-width: 600px;
     width: 90%;
     margin: 40px auto;
@@ -42,6 +42,25 @@
     cursor: pointer;
 }
 
+.form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+    max-height: 80vh;
+    padding-right: 5px;
+    box-sizing: border-box;
+}
+
+.form-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.form-body::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
 /* Input container */
 .inp-cont {
     display: flex;
@@ -62,7 +81,7 @@
     padding: 12px 14px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    background: #f9f9f9;
+    background: #faf9f4 !important;
     font-size: 1rem;
     transition: all 0.3s ease;
     outline: none;

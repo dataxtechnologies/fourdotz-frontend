@@ -1,6 +1,6 @@
 .sec-cont {
     border-radius: 20px;
-    background-color: #fff;
+    background-color: #faf9f4 !important;
     padding: 8px;
     margin: 20px auto;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -78,7 +78,7 @@
     cursor: pointer;
     font-weight: 600;
     color: var(--primary-color1);
-    background: #FFFFFF;
+    background: #faf9f4;
     /* width: ; */
 
 }
@@ -92,7 +92,7 @@
 
 /* Content */
 .tab-content {
-    background: #fff;
+    background: #faf9f4;
     padding: 15px;
     border-radius: 8px;
     border: 1px solid #ddd;
@@ -116,7 +116,7 @@
 
 /* Card */
 .resident-card {
-    background: #fff;
+    background: #faf9f4;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     margin-bottom: 25px;
