@@ -1,4 +1,5 @@
 <section>
+
     <div class="parent">
         <!-- div1: Total Property -->
         <div class="div1 bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
@@ -115,7 +116,7 @@
             <div class="transaction-list">
                 <!-- Skeleton Loader -->
                 <ng-container *ngIf="tableLoading">
-                    <div *ngFor="let s of [1,2,3,4, 5]" class="transaction-item d-flex align-items-center mb-3">
+                    <div *ngFor="let s of [1, 2, 3, 4, 5]" class="transaction-item d-flex align-items-center mb-3">
                         <div class="skeleton-avatar me-2"></div>
                         <div class="flex-grow-1">
                             <div class="skeleton-line w-50 mb-1"></div>
@@ -124,13 +125,13 @@
                     </div>
                 </ng-container>
 
-                <!-- No Data -->
-                <ng-container *ngIf="!tableLoading && Associationlist2?.data?.length === 0">
-                    <p class="text-center text-muted">No Data Found</p>
+                <!-- No Data Found -->
+                <ng-container *ngIf="!tableLoading && (!Associationlist2 || Associationlist2.length === 0)">
+                    <p class="text-center text-muted mt-3">No Data Found</p>
                 </ng-container>
 
                 <!-- Actual Data -->
-                <ng-container *ngIf="!tableLoading">
+                <ng-container *ngIf="!tableLoading && Associationlist2 && Associationlist2.length > 0">
                     <div *ngFor="let item of Associationlist1.paginatedData" class="transaction-item">
                         <div class="transaction-item-left d-flex align-items-center">
                             <div class="maintenance-avatar">
@@ -139,7 +140,7 @@
                             <div class="transaction-details ms-2">
                                 <span class="transaction-name">{{ item.property_name }}</span>
                                 <span class="transaction-date">
-                                    {{ item.name }} | {{ item.property_type.join(', ') }}
+                                    {{ item.name }} | {{ item.property_type?.join(', ') }}
                                 </span>
                             </div>
                         </div>

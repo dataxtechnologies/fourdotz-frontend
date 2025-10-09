@@ -31,8 +31,24 @@
     align-items: center;
 }
 
-/* User and apartment info */
+/* User info blocks */
 .user-info h5,
+.apartment-info h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #464545;
+}
+
+.user-info .label {
+    font-size: 15px;
+    color: #000;
+    margin-top: 3px;
+}
+
+
+/* User and apartment info */
+/* .user-info h5,
 .apartment-info h4 {
     margin: 0;
     font-weight: 600;
@@ -43,7 +59,7 @@
     margin: 2px 0 0;
     font-size: 0.85rem;
     color: #555;
-}
+} */
 
 /* Section main content */
 .main-cont {

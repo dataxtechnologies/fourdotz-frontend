@@ -89,9 +89,27 @@ export class ChangePasswordComponent implements OnInit {
             sessionStorage.setItem('user_id', user_id);
           }
 
-          console.log(res.message || 'Login successful');
+         console.log(res.message || 'Login successful');
 
-          this.router.navigateByUrl('Superadmin/Dashboard');
+          // Navigate based on user type
+          switch (userType) {
+            case 'super_admin':
+              this.router.navigateByUrl('/Superadmin/Dashboard');
+              break;
+            case 'hoa_admin':
+              this.router.navigateByUrl('/Association/Dashboard');
+              break;
+            case 'owner':
+              this.router.navigateByUrl('/Owner/Dashboard');
+              break;
+            case 'tenant':
+              this.router.navigateByUrl('/Tenant/Dashboard');
+              break;
+            default:
+              console.warn('Unknown user type:', userType);
+              this.router.navigateByUrl('/');
+              break;
+          }
         } else {
           this.loginbtn = true;
         }

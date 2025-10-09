@@ -42,6 +42,27 @@
     cursor: pointer;
 }
 
+.form-body {
+    max-height: 80vh;   /* adjust height as needed */
+    overflow-y: auto;
+    padding-right: 10px; /* prevent content from hiding under scrollbar */
+}
+
+/* Optional: custom scrollbar styling */
+.form-body::-webkit-scrollbar {
+    width: 1px;
+}
+
+.form-body::-webkit-scrollbar-thumb {
+    background: var(--primary-color2);
+    border-radius: 6px;
+}
+
+.form-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
 /* Input container */
 .inp-cont {
     display: flex;

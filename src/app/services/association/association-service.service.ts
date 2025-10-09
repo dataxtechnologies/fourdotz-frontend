@@ -14,6 +14,10 @@ export class AssociationServiceService {
   private OwnerSubject = new BehaviorSubject<any>(null);
   OwnerStatus$ = this.OwnerSubject.asObservable();
 
+
+  private PetSubject = new BehaviorSubject<any>(null);
+  petStatus$ = this.PetSubject.asObservable();
+
   triggerAdminAssociation(AddProperty: any): void {
     console.log('addassociation', AddProperty);
 
@@ -21,9 +25,9 @@ export class AssociationServiceService {
   }
 
 
-  triggerAssociationOwner(AddOwner: any): void {
-    console.log('addassociation', AddOwner);
+  triggerAssociationOwner(AddPet: any): void {
+    console.log('addassociation', AddPet);
 
-    this.PropertySubject.next(AddOwner);
+    this.PetSubject.next(AddPet);
   }
 }

@@ -18,24 +18,24 @@
         <!-- Header -->
         <div class="header-cont">
             <div class="user-info">
-                <h5>Aswin G</h5>
-                <p class="label">Name</p>
+                <h5 class="label">Name</h5>
+                <p>{{ Associationdata.owner_details?.name }}</p>
             </div>
             <div class="user-info">
-                <h5>aswin&#64;gmail.com</h5>
-                <p class="label">Email</p>
+                <h5 class="label">Email</h5>
+                <p>{{ Associationdata.owner_details?.email }}</p>
             </div>
             <div class="user-info">
-                <h5>9360170297</h5>
-                <p class="label">Phone</p>
+                <h5 class="label">Phone</h5>
+                <p>{{ Associationdata.owner_details?.mobile }}</p>
             </div>
             <div class="user-info">
-                <h5>Owner</h5>
-                <p class="label">Resident Type</p>
+                <h5 class="label">Resident Type</h5>
+                <p>{{ Associationdata.resident_type }}</p>
             </div>
             <div class="user-info">
-                <h5>Accepted</h5>
-                <p class="label">Invitation Status</p>
+                <h5 class="label">Owned At</h5>
+                <p>{{ Associationdata.owner_details?.onboarded_time?.$date | date:'dd-MMM-yyyy' }}</p>
             </div>
 
 
@@ -63,169 +63,173 @@
                         <div class="resident-card">
                             <div class="card-header">
                                 <h5>Property Details</h5>
-                                <button class="btn-add" (click)="addproperty()">+ Add Property</button>
+                                <!-- <button class="btn-add" (click)="addproperty()">+ Add Property</button> -->
                             </div>
 
                             <div class="card-body">
                                 <div class="user-info">
-                                    <h5>H101</h5>
-                                    <p class="label">Propety No</p>
+                                    <h5 class="label">Propety No</h5>
+                                    <p>{{ Associationdata.property_no }}</p>
                                 </div>
                                 <div class="user-info">
-                                    <h5>Apartment</h5>
-                                    <p class="label">Property Type</p>
+                                    <h5 class="label">Property Type</h5>
+                                    <p>{{ Associationdata.property_type }}</p>
                                 </div>
                                 <div class="user-info">
-                                    <h5>1000 sq.ft</h5>
-                                    <p class="label">Area</p>
+                                    <h5 class="label">Area</h5>
+                                    <p>{{ Associationdata.area }} sq.ft</p>
                                 </div>
                                 <div class="user-info">
-                                    <h5>South</h5>
-                                    <p class="label">Facing</p>
+                                    <h5 class="label">Facing</h5>
+                                    <p>{{ Associationdata.facing }}</p>
                                 </div>
                                 <div class="user-info">
-                                    <h5>0125362663</h5>
-                                    <p class="label">Electricity Consumer No</p>
+                                    <h5 class="label">Electricity Consumer No</h5>
+                                    <p>{{ Associationdata.electricity_number }}</p>
                                 </div>
                                 <div class="user-info">
-                                    <h5>K220</h5>
-                                    <p class="label">Parking Slot Number</p>
+                                    <h5 class="label">Parking Slot Number</h5>
+                                    <p>{{ Associationdata.parking_slot_number }}</p>
                                 </div>
                                 <div class="user-info">
-                                    <h5>2BHK</h5>
-                                    <p class="label">BHK</p>
+                                    <h5 class="label">BHK</h5>
+                                    <p>{{ Associationdata.property_no }}</p>
                                 </div>
                                 <div class="user-info">
-                                    <h5>Tower</h5>
-                                    <p class="label">Building Type</p>
+                                    <h5 class="label">Resident</h5>
+                                    <p>{{ Associationdata.resident_type || '--' }}</p>
                                 </div>
                                 <div class="user-info">
-                                    <h5>Hipo</h5>
-                                    <p class="label">Tower Name</p>
+                                    <h5 class="label">Maintenance Paid By</h5>
+                                    <p>{{ Associationdata.maintenance_paid_by || 'Owner' }}</p>
                                 </div>
                                 <div class="user-info">
-                                    <h5>A</h5>
-                                    <p class="label">Block Name</p>
+                                    <h5 class="label">Maintenance Amount</h5>
+                                    <p>{{ Associationdata.maintenance_amount | currency:'INR' }}</p>
                                 </div>
                                 <div class="user-info">
-                                    <h5>3</h5>
-                                    <p class="label">Floor</p>
+                                    <h5 class="label">Due Date</h5>
+                                    <p>{{ Associationdata.due_date.$date | date:'dd-MMM-yyyy' }}</p>
                                 </div>
-                                <div class="user-info">
-                                    <h5>Tenant</h5>
-                                    <p class="label">Resident</p>
+                                <div *ngIf="Associationdata.property_type === 'apartment'">
+                                    <div class="user-info">
+                                        <h5 class="label">Building Type</h5>
+                                        <p>{{ Associationdata.property_no }}</p>
+                                    </div>
+                                    <div class="user-info">
+                                        <h5 class="label">Tower Name</h5>
+                                        <p>{{ Associationdata.property_no }}</p>
+                                    </div>
+                                    <div class="user-info">
+                                        <h5 class="label">Block Name</h5>
+                                        <p>{{ Associationdata.property_no }}</p>
+                                    </div>
+                                    <div class="user-info">
+                                        <h5 class="label">Floor</h5>
+                                        <p>{{ Associationdata.property_no }}</p>
+                                    </div>
                                 </div>
-                                <!-- <div class="user-info">
-                                    <h5>Naveenkumar</h5>
-                                    <p class="label">Tenant Name</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>naveen&#64;gmail.com</h5>
-                                    <p class="label">Tenant Email</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>9685642236</h5>
-                                    <p class="label">Tenant Phone</p>
-                                </div> -->
                             </div>
                         </div>
                         <div class="resident-card">
-                            <div class="card-header">
+                            <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5>Tenant Details</h5>
-                                <button class="btn-add" (click)="addTenant()">+ Add Tenant</button>
+                                <div class="d-flex gap-3">
+                                    <button class="btn-add" (click)="addTenant(PropertyId)"
+                                        *ngIf="!Associationdata.tenant_details?._id">+ Add Tenant</button>
+                                    <button class="btn-add" (click)="addTenant(PropertyId)"
+                                        *ngIf="Associationdata.tenant_details?._id">Edit Tenant</button>
+                                </div>
                             </div>
 
-                            <div class="card-body">
-                                <div class="user-info">
-                                    <h5>Naveenkumar</h5>
-                                    <p class="label">Tenant Name</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>naveen&#64;gmail.com</h5>
-                                    <p class="label">Tenant Email</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>9685642236</h5>
-                                    <p class="label">Tenant Phone</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>12-09-2025</h5>
-                                    <p class="label">Rented At</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>50,000</h5>
-                                    <p class="label">Advance Paid</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>20,000</h5>
-                                    <p class="label">Estimated Rent</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>Owner</h5>
-                                    <p class="label">Maintenance Paid By</p>
-                                </div>
+                            <div class="card-body" *ngIf="Associationdata.tenant_details?._id; else nodatatenant">
+                                <ng-container *ngFor="let field of [
+          {label: 'Tenant Name', value: Associationdata.tenant_details?.name},
+          {label: 'Phone Number', value: Associationdata.tenant_details?.mobile},
+          {label: 'Email', value: Associationdata.tenant_details?.email},
+          {label: 'Advance Paid', value: Associationdata.advance_amount},
+          {label: 'Estimated Rent', value: Associationdata?.monthly_rent_amount},
+          {label: 'Maintenance Amount', value: Associationdata?.maintenance_amount},
+          {label: 'Maintenance Paid By', value: Associationdata?.maintenance_paid_by},
+          {label: 'Rented At', value: Associationdata.tenant_details?.onboarded_time?.$date | date:'dd-MMM-yyyy'}
+        ]">
+                                    <div class="user-info">
+                                        <h5 class="label">{{field.label}}</h5>
+                                        <p>{{field.value}}</p>
+                                    </div>
+                                </ng-container>
                             </div>
+                            <ng-template #nodatatenant>
+                                <div class="card-body">
+                                    No data found
+                                </div>
+                            </ng-template>
                         </div>
                     </div>
 
                 </div>
-                <div *ngIf="activeTab === 'petvehicle'">
-                    <div class="resident-section">
-                        <h4 class="section-title">Pet & Vehicle</h4>
+                <div *ngIf="activeTab === 'petvehicle'" class="resident-section">
+                    <h4 class="section-title">Pet & Vehicle</h4>
 
-                        <!-- Owner Card -->
-                        <div class="resident-card">
-                            <div class="card-header">
-                                <h5>Pet Details</h5>
-                                <button class="btn-add" (click)="addpet()">+ Add Pet</button>
-                            </div>
-
-                            <div class="card-body">
-                                <div class="user-info">
-                                    <h5>Pattu</h5>
-                                    <p class="label">Pet Name</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>Dog</h5>
-                                    <p class="label">Type</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>Shih Tzu</h5>
-                                    <p class="label">Breed</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>5 Months</h5>
-                                    <p class="label">Age</p>
-                                </div>
-                            </div>
+                    <!-- Pet Card -->
+                    <div class="resident-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5>Pet Details</h5>
+                            <button class="btn-add" (click)="addpet(Associationdata._id)"
+                                *ngIf="!Associationdata.pet || Associationdata.pet.length === 0">Add Pet</button>
                         </div>
 
-                        <!-- Tenant Card -->
-                        <div class="resident-card">
-                            <div class="card-header">
-                                <h5>Vehicle Details</h5>
-                                <button class="btn-add" (click)="addVehicle()">+ Add Vehicle</button>
-                            </div>
-
-                            <div class="card-body">
+                        <div class="card-body" *ngIf="Associationdata.pet?.length > 0; else nodata">
+                            <ng-container *ngFor="let field of [
+                                    {label: 'Pet Name', value: Associationdata.pet[0]?.pet_name},
+                                    {label: 'Pet Type', value: Associationdata.pet[0]?.type},
+                                    {label: 'Pet Breed', value: Associationdata.pet[0]?.breed},
+                                    {label: 'Age', value: Associationdata.pet[0]?.age},
+                                    {label: 'Pet Owned By', value: Associationdata.pet[0]?.pet_owned_by}
+                                ]">
                                 <div class="user-info">
-                                    <h5>Car</h5>
-                                    <p class="label">Vehicle Type</p>
+                                    <h5 class="label">{{ field.label }}</h5>
+                                    <p>{{ field.value }}</p>
                                 </div>
-                                <div class="user-info">
-                                    <h5>Honda Civic</h5>
-                                    <p class="label">Brand</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>2019</h5>
-                                    <p class="label">Vehicle Modal</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5>TN-29-BV-0001</h5>
-                                    <p class="label">Vehicle Number</p>
-                                </div>
-                            </div>
+                            </ng-container>
                         </div>
+
+                        <ng-template #nodata>
+                            <div class="card-body">
+                                No data found
+                            </div>
+                        </ng-template>
+
+                    </div>
+
+                    <!-- Vehicle Card -->
+                    <div class="resident-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5>Vehicle Details</h5>
+                            <button class="btn-add" (click)="addVehicle(Associationdata._id)"
+                                *ngIf="!Associationdata.vehicle || Associationdata.vehicle.length === 0">+ Add
+                                Vehicle</button>
+                        </div>
+
+                        <div class="card-body" *ngIf="Associationdata.vehicle?.length > 0; else nodatavehicle">
+                            <ng-container *ngFor="let field of [
+          {label: 'Vehicle Type', value: Associationdata.vehicle[0]?.type},
+          {label: 'Brand', value: Associationdata.vehicle[0]?.brand},
+          {label: 'Vehicle Model', value: Associationdata.vehicle[0]?.modal},
+          {label: 'Vehicle Number', value: Associationdata.vehicle[0]?.number},
+          {label: 'Vehicle Owned By', value: Associationdata.vehicle[0]?.vehicle_owned_by}
+        ]">
+                                <div class="user-info">
+                                    <h5 class="label">{{field.label}}</h5>
+                                    <p>{{field.value}}</p>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <ng-template #nodatavehicle>
+                            <div class="card-body">
+                                No data found
+                            </div>
+                        </ng-template>
                     </div>
                 </div>
                 <div *ngIf="activeTab === 'Access'">

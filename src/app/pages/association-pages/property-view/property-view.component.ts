@@ -37,6 +37,12 @@ export class PropertyViewComponent {
       }
     });
 
+     this.AssociationService.petStatus$.subscribe((Addpet) => {
+      if (Addpet) {
+        this.ViewpropertybyId(this.PropertyId);
+      }
+    });
+
 
     this.ViewpropertybyId(this.PropertyId)
   }
@@ -66,7 +72,7 @@ export class PropertyViewComponent {
       },
     });
   }
-  addTenant() {
+  addTenant(propertyId : any) {
     // AddOwnerComponent
     this.ModalService.open(AddTenantComponent, {
       modal: {
@@ -74,13 +80,16 @@ export class PropertyViewComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
+       data:{
+        PropertyIddata: propertyId
+      },
       actions: {
         click: false,
         escape: false,
       },
     });
   }
-  addpet() {
+addpet(data:  any) {
     // AddOwnerComponent
     this.ModalService.open(AddPetComponent, {
       modal: {
@@ -88,13 +97,16 @@ export class PropertyViewComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
+      data:{
+        associationId:data
+      },
       actions: {
         click: false,
         escape: false,
       },
     });
   }
-  addVehicle() {
+  addVehicle(data : any) {
     // AddOwnerComponent
     this.ModalService.open(AddVehicleComponent, {
       modal: {
@@ -102,6 +114,9 @@ export class PropertyViewComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
+       data:{
+        associationId:data
+      },
       actions: {
         click: false,
         escape: false,

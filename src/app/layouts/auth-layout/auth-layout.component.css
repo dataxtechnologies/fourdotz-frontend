@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh; /* full viewport */
-    background: url('/assets/bg/login-bg.jpg') no-repeat center center;
+    background: url('/assets/bg/login-bg-dummy.jpg') no-repeat center center;
     background-size: cover; /* makes it responsive */
     background-attachment: fixed;
     padding: 0 10px; /* small horizontal padding */

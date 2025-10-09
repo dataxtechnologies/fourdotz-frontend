@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ModalService } from 'ngx-modal-ease';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { AssociationServiceService } from '../../services/association/association-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-owner',
@@ -20,8 +21,15 @@ import { AssociationServiceService } from '../../services/association/associatio
 export class AddOwnerComponent implements OnInit {
   @Input() PropertyIddata: any;
   ownerForm!: FormGroup;
+  submitbtn: boolean = true
 
-  constructor(private fb: FormBuilder, private modal: ModalService, private apiService: ApiserviceService, private AssociationService: AssociationServiceService) {}
+  constructor(
+    private fb: FormBuilder,
+    private modal: ModalService,
+    private apiService: ApiserviceService,
+    private AssociationService: AssociationServiceService,
+    private Toast : ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.ownerForm = this.fb.group({
@@ -30,11 +38,11 @@ export class AddOwnerComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       ownedAt: ['', Validators.required],
-     
     });
   }
 
   onSubmit(): void {
+    this.submitbtn = false
     if (this.ownerForm.invalid) {
       this.ownerForm.markAllAsTouched();
       return;
@@ -50,21 +58,26 @@ export class AddOwnerComponent implements OnInit {
     };
 
     console.log('✅ Payload:', payload);
-this.apiService.createownerinproperty<any>(payload).subscribe({
-        next: (res: any) => {
-          if (res?.success) {
-            this.AssociationService.triggerAssociationOwner(res)
-            this.closeModal()
-          } else {
-            // this.loginbtn = true;
-          }
-        },
-        error: (err: any) => {
-          console.error('Login failed:', err.error.error.data);
-          // alert(err.message || 'Login failed, please try again.');
-        },
-      });
-
+    this.apiService.createownerinproperty<any>(payload).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.submitbtn = true
+          this.Toast.success(res.message, 'Success')
+          this.AssociationService.triggerAssociationOwner(res);
+          this.closeModal();
+        } else {
+          this.submitbtn = true
+          this.Toast.warning(res.message, 'Warning')
+          // this.loginbtn = true;
+        }
+      },
+      error: (err: any) => {
+        this.submitbtn = true
+        this.Toast.success(err.error.error.message, 'Failed')
+        console.error('Login failed:', err.error.error.data);
+        // alert(err.message || 'Login failed, please try again.');
+      },
+    });
   }
 
   closeModal() {

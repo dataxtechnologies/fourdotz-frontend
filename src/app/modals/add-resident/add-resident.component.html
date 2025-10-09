@@ -5,60 +5,105 @@
     </div>
 
     <div class="form-body">
-        <form action="">
+        <form [formGroup]="ownerForm">
             <div class="form-grid">
 
+                <!-- Property Dropdown -->
                 <div class="inp-cont">
                     <label>Property No <span class="required">*</span></label>
                     <div class="custom-select">
                         <div class="select-selected" (click)="toggleDropdown()">
                             {{ selectedProperty || 'Select Property No' }}
-                            <i class="fa-solid"
-                                [ngClass]="{'fa-chevron-down': !dropdownOpen, 'fa-chevron-up': dropdownOpen}"
-                                style="float: right; font-size: 0.7rem; margin-top: 4px;"></i>
+                            <i class="fa-solid" [ngClass]="{
+          'fa-chevron-down': !dropdownOpen,
+          'fa-chevron-up': dropdownOpen
+        }" style="float: right; font-size: 0.7rem; margin-top: 4px;"></i>
                         </div>
+
                         <div class="select-items" [class.select-hide]="!dropdownOpen">
-                            <div *ngFor="let property of propertyNumbers" (click)="selectProperty(property)">
-                                {{ property }}
+                            <input type="text" placeholder="Search property..." class="dropdown-search"
+                                (input)="onSearchChange($event)" />
+
+                            <div *ngFor="let property of filteredList" (click)="selectProperty(property)">
+                                {{ property.property_no }}
+                            </div>
+
+                            <div *ngIf="filteredList.length === 0" class="no-results">
+                                No properties found
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="inp-cont">
-                    <label for="Phone">Resident Name <span class="required">*</span></label>
-                    <input type="text" name="Phone" id="Phone" class="inp-cus" placeholder="Enter your Resident Name">
-                </div>
-
-                <div class="inp-cont">
-                    <label for="Phone">Resident Email <span class="required">*</span></label>
-                    <input type="email" name="Phone" id="Phone" class="inp-cus" placeholder="Enter your Resident Email">
-                </div>
-                <div class="inp-cont">
-                    <label for="Phone">Resident Mobile <span class="required">*</span></label>
-                    <input type="tel" name="Phone" id="Phone" class="inp-cus" placeholder="Enter your Resident Mobile">
-                </div>
-
-                <div class="inp-cont mt-2">
-                    <label>Resident Type <span class="required">*</span></label>
-                    <div class="checkbox-group">
-                        <label class="radio-cus">
-                            <input type="radio" name="residentType" [(ngModel)]="residentType" value="owner">
-                            <span>Owner</span>
-                        </label>
-                        <label class="radio-cus">
-                            <input type="radio" name="residentType" [(ngModel)]="residentType" value="tenant">
-                            <span>Tenant</span>
-                        </label>
+                    <div *ngIf="ownerForm.get('property_id')?.touched && ownerForm.get('property_id')?.invalid"
+                        class="error-text">
+                        Property No is required
                     </div>
                 </div>
-            </div>
 
+                <!-- First Name -->
+                <div class="inp-cont">
+                    <label>First Name <span class="required">*</span></label>
+                    <input type="text" formControlName="firstName" class="inp-cus" placeholder="Enter your First Name">
+                    <div *ngIf="ownerForm.get('firstName')?.touched && ownerForm.get('firstName')?.invalid"
+                        class="error-text">
+                        First Name is required
+                    </div>
+                </div>
 
+                <!-- Last Name -->
+                <div class="inp-cont">
+                    <label>Last Name <span class="required">*</span></label>
+                    <input type="text" formControlName="lastName" class="inp-cus" placeholder="Enter your Last Name">
+                    <div *ngIf="ownerForm.get('lastName')?.touched && ownerForm.get('lastName')?.invalid"
+                        class="error-text">
+                        Last Name is required
+                    </div>
+                </div>
 
-            <div class="form-actions mb-2">
-                <button class="submit-btn">Submit</button>
+                <!-- Email -->
+                <div class="inp-cont">
+                    <label>Email ID <span class="required">*</span></label>
+                    <input type="email" formControlName="email" class="inp-cus" placeholder="Enter your Email">
+                    <div *ngIf="ownerForm.get('email')?.touched && ownerForm.get('email')?.errors?.['required']"
+                        class="error-text">
+                        Email is required
+                    </div>
+                    <div *ngIf="ownerForm.get('email')?.touched && ownerForm.get('email')?.errors?.['email']"
+                        class="error-text">
+                        Enter a valid email
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="inp-cont">
+                    <label>Phone Number <span class="required">*</span></label>
+                    <input type="tel" formControlName="phone" class="inp-cus" placeholder="Enter your Phone Number"
+                        maxlength="10">
+                    <div *ngIf="ownerForm.get('phone')?.touched && ownerForm.get('phone')?.errors?.['required']"
+                        class="error-text">
+                        Phone number is required
+                    </div>
+                    <div *ngIf="ownerForm.get('phone')?.touched && ownerForm.get('phone')?.errors?.['pattern']"
+                        class="error-text">
+                        Phone must be 10 digits
+                    </div>
+                </div>
+
+                <!-- Owned At -->
+                <div class="inp-cont">
+                    <label>Owned At <span class="required">*</span></label>
+                    <input type="date" formControlName="ownedAt" class="inp-cus">
+                    <div *ngIf="ownerForm.get('ownedAt')?.touched"
+                        class="error-text">
+                        Owned date is required
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
             </div>
         </form>
+        <div class="mb-3">
+            <button type="button" class="submit-btn" (click)="onSubmit()">Submit</button>
+        </div>
     </div>
 </section>

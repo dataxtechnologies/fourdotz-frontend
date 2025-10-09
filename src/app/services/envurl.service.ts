@@ -8,6 +8,8 @@ export class EnvurlService {
   public logoutApi = '/auth/logout';
   public UpdateTempPass = '/auth/update_new_pwd'
 
+  public UserInfo = '/auth/user_info'
+
 
   // HOA Endpoints
 
@@ -15,6 +17,7 @@ export class EnvurlService {
   public AssociationList = '/hoa_admin/list_hoa_admin'
   public getAssociationbyId ='/hoa_admin/list_hoa_admin_byid'
   public getpropertybyAssociation = '/property/property_byhoaid'
+  public Dashboarddata = '/dashboard/hoa_dashboard_details'
 
 
 
@@ -26,4 +29,25 @@ export class EnvurlService {
   public AddPropertybyAssociation = '/property/create_property'
   public ViewpropertybyId = '/property/property_byid'
   public createownerinproperty = '/property/add_owner_property'
+  public Addpet = '/property/add_pet'
+  public AddVehicle = '/property/add_vehicle'
+  public createTenantinproperty = '/property/add_tenant_property'
+  public ListMaintenanceinAssociation = '/maintenance_invoice/list_maintenance_invoice'
+  public generateMaintenanceInvoice = '/maintenance_invoice/create_maintenance_invoice'
+
+
+
+
+
+
+  // owner endpoints
+  public ownerproperties = '/property/list_owner_property'
+  public MaintenanceListinOwner = '/maintenance_invoice/list_maintenance_invoice_owner'
+
+
+
+
+
+
+
 }

@@ -21,8 +21,8 @@
                             <div class="inp-cont">
                                 <label for="association">Select Association</label>
                                 <select formControlName="association" class="inp-cus">
-                                    <option value="">All Associations</option>
-                                    <option *ngFor="let assoc of associations" [value]="assoc">
+                                    <option value="" disabled selected>All Associations</option>
+                                    <option *ngFor="let assoc of filteredProperties" [value]="assoc">
                                         {{ assoc }}
                                     </option>
                                 </select>
@@ -59,24 +59,65 @@
                                     <th>Property Type</th>
                                     <th>Association</th>
                                     <th>Area</th>
-                                    <th>BHK</th>
                                     <th>Residential Type</th>
                                     <th>View</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr *ngFor="let property of filteredProperties">
-                                    <td>{{ property.no }}</td>
-                                    <td>{{ property.type }}</td>
-                                    <td>{{ property.association }}</td>
-                                    <td>{{ property.area }}</td>
-                                    <td>{{ property.bhk }}</td>
+                           
+                             <tbody *ngIf="!tableLoading; else tableSkeleton">
+                                <ng-container *ngIf="propertieslist2?.length === 0; else datashow">
+                                    <tr>
+                                        <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                             No Data Found
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                                <ng-template #datashow>
+                                    <tr *ngFor="let property of filteredProperties">
+                                    <td>{{ property.property_no }}</td>
+                                    <td>{{ property.property_type }}</td>
+                                    <td>{{ property.association_name }}</td>
                                     <td>{{ property.residentType }}</td>
-                                    <td (click)="viewproperty(property)">
+                                    <td>{{ property.residentType }}</td>
+                                    <td (click)="viewProperty(property)">
                                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                     </td>
                                 </tr>
+                                </ng-template>
                             </tbody>
+                            <ng-template #tableSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                    <td>
+                                        <span class="placeholder col-10 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-8 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-6 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-7 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-5 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
                         </table>
                     </div>
                 </div>

@@ -9,10 +9,14 @@ import {
 } from '@angular/forms';
 import { ApiserviceService } from '../../../services/api/apiservice.service'; // adjust path
 import { CommonModule } from '@angular/common';
+import {ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin-page',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule,
+
+  ],
+
   templateUrl: './signin-page.component.html',
   styleUrls: ['./signin-page.component.css'],
 })
@@ -24,7 +28,8 @@ export class SigninPageComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: Router,
-    private apiService: ApiserviceService
+    private apiService: ApiserviceService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -64,9 +69,7 @@ export class SigninPageComponent implements OnInit {
           sessionStorage.setItem('user_type', userType);
           sessionStorage.setItem('user_id', user_id);
 
-          console.log(res.message || 'Login successful');
-
-          // Navigate based on user type
+         this.toastr.success(res.message, 'Success');
           switch (userType) {
             case 'super_admin':
               this.route.navigateByUrl('/Superadmin/Dashboard');
@@ -82,7 +85,7 @@ export class SigninPageComponent implements OnInit {
               break;
             default:
               console.warn('Unknown user type:', userType);
-              this.route.navigateByUrl('/login');
+              this.route.navigateByUrl('/');
               break;
           }
         } else {

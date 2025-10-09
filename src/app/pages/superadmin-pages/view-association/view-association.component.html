@@ -10,7 +10,7 @@
             <span>Back</span>
         </button>
         <div class="ass-h">
-            <p>Lakeview Apartment</p>
+            <p>{{ Associationdata.property_name }}</p>
         </div>
 
     </div>
@@ -18,38 +18,38 @@
         <!-- Header -->
         <div class="header-cont" *ngIf="!header_loading; else skeleton">
             <div class="user-info">
-                <h5>{{ Associationdata.name || '--' }}</h5>
-                <p class="label">Name</p>
+                <h5 class="label">Name</h5>
+                <p>{{ Associationdata.name || '--' }}</p>
             </div>
 
             <div class="user-info">
-                <h5>{{ Associationdata.mobile || '--' }}</h5>
-                <p class="label">Phone</p>
+                <h5 class="label">Phone</h5>
+                <p>{{ Associationdata.mobile || '--' }}</p>
             </div>
 
             <div class="user-info">
-                <h5>{{ Associationdata.email || '--' }}</h5>
-                <p class="label">Email</p>
+                <h5 class="label">Email</h5>
+                <p>{{ Associationdata.email || '--' }}</p>
             </div>
 
             <div class="user-info">
-                <h5>{{ Associationdata.property_type || '--' }}</h5>
-                <p class="label">Property Type(s)</p>
+                <h5 class="label">Property Type(s)</h5>
+                <p>{{ Associationdata.property_type || '--' }}</p>
             </div>
 
             <div class="user-info">
-                <h5>{{ Associationdata.property_name || '--' }}</h5>
-                <p class="label">Property Name</p>
+                <h5 class="label">Property Name</h5>
+                <p>{{ Associationdata.property_name || '--' }}</p>
             </div>
 
             <div class="user-info">
-                <h5>{{ Associationdata.invitation_status ? 'Accepted' : 'Pending/Declined' }}</h5>
-                <p class="label">Invitation Status</p>
+                <h5 class="label">Invitation Status</h5>
+                <p>{{ Associationdata.invitation_status ? 'Accepted' : 'Pending/Declined' }}</p>
             </div>
 
             <div class="user-info">
-                <h5>{{ Associationdata.onboarded_time?.$date | date:'dd MMM yyyy, hh:mm a' }}</h5>
-                <p class="label">Created At</p>
+                <h5 class="label">Created At</h5>
+                <p>{{ Associationdata.onboarded_time?.$date | date:'dd MMM yyyy, hh:mm a' }}</p>
             </div>
         </div>
 

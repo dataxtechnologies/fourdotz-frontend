@@ -7,6 +7,8 @@ import { AddVehicleComponent } from '../../../modals/add-vehicle/add-vehicle.com
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddPropertyComponent } from '../../../modals/add-property/add-property.component';
+import { ApiserviceService } from '../../../services/api/apiservice.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-resident-details',
@@ -16,14 +18,30 @@ import { AddPropertyComponent } from '../../../modals/add-property/add-property.
 })
 export class ViewResidentDetailsComponent {
   activeTab: string = 'Property';
+  Associationdata: any;
+  PropertyId: any;
 
-  constructor(private ModalService: ModalService) {}
+  constructor(
+    private ModalService: ModalService,
+    private apiService: ApiserviceService,
+    private route: ActivatedRoute,
+    private Router : Router
+  ) {}
 
   setTab(tab: string) {
     this.activeTab = tab;
   }
 
-  goback() {}
+  goback() {
+    this.Router.navigateByUrl('/Association/residents-list')
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.PropertyId = params['residentId'] || null;
+    });
+    this.ViewpropertybyId(this.PropertyId);
+  }
 
   // grantFullAccess(data: any) {}
 
@@ -131,7 +149,7 @@ export class ViewResidentDetailsComponent {
       },
     });
   }
-  addTenant() {
+ addTenant(propertyId : any) {
     // AddOwnerComponent
     this.ModalService.open(AddTenantComponent, {
       modal: {
@@ -139,13 +157,16 @@ export class ViewResidentDetailsComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
+       data:{
+        PropertyIddata: propertyId
+      },
       actions: {
         click: false,
         escape: false,
       },
     });
   }
-  addpet() {
+  addpet(data: any) {
     // AddOwnerComponent
     this.ModalService.open(AddPetComponent, {
       modal: {
@@ -153,13 +174,16 @@ export class ViewResidentDetailsComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        propertyId: data,
+      },
       actions: {
         click: false,
         escape: false,
       },
     });
   }
-  addVehicle() {
+ addVehicle(data : any) {
     // AddOwnerComponent
     this.ModalService.open(AddVehicleComponent, {
       modal: {
@@ -167,9 +191,31 @@ export class ViewResidentDetailsComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
+       data:{
+        associationId:data
+      },
       actions: {
         click: false,
         escape: false,
+      },
+    });
+  }
+
+  ViewpropertybyId(data: any) {
+    this.apiService.ViewpropertybyId<any>(data).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.Associationdata = res.data;
+          // this.header_loading = false; // stop loading
+        } else {
+          // alert(res.message || 'Something went wrong.');
+          // this.header_loading = false; // stop loading even if error
+        }
+      },
+      error: (err: any) => {
+        // this.header_loading = false;
+        console.error('Logout failed:', err);
+        // alert(err.message || 'Logout failed, please try again.');
       },
     });
   }

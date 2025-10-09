@@ -6,11 +6,9 @@
             Get started by setting up your workspace and Association details.
         </div>
 
-        <!-- Step List -->
         <div class="steps-container">
             <div *ngFor="let step of steps; let i = index" class="step-item" [class.complete]="step.isComplete"
                 [class.active]="step.isActive">
-
                 <div class="icon-circle">
                     <ng-container *ngIf="step.isComplete">
                         <i class="fa fa-check"></i>
@@ -30,74 +28,83 @@
             </div>
         </div>
 
-        <!-- Logout Button -->
         <div class="logout-container">
             <button class="btn-remove12" (click)="logout()">
                 <i class="fa fa-sign-out"></i> Logout
             </button>
+            <button class="btn-remove22 " *ngIf="">
+                <i class="fa fa-sign-out"></i> Logging Out...
+            </button>
         </div>
     </div>
-
-
 
     <!-- Main Content -->
     <div class="main-content">
         <div class="step-header">
             <div class="step-label">STEP {{ currentStep }} OF {{ steps.length }}</div>
+
             <h2 *ngIf="currentStep === 1">Enter Your Association Details</h2>
             <h2 *ngIf="currentStep === 2">Upload Required Documents</h2>
-            <h2 *ngIf="currentStep === 3">Review and Submit</h2>
+            <h2 *ngIf="currentStep === 3">Enter Bank Account Details</h2>
+            <h2 *ngIf="currentStep === 4">Review and Submit</h2>
 
             <p class="step-description">
-                <ng-container *ngIf="currentStep === 1">Fill out the basic and registration information for your
-                    Association.</ng-container>
-                <ng-container *ngIf="currentStep === 2">Please upload clear copies of all required documents to verify
-                    your profile.</ng-container>
-                <ng-container *ngIf="currentStep === 3">Confirm all details are correct before finalizing your
-                    onboarding.</ng-container>
+                <ng-container *ngIf="currentStep === 1">
+                    Fill out the basic and registration information for your Association.
+                </ng-container>
+                <ng-container *ngIf="currentStep === 2">
+                    Please upload clear copies of all required documents to verify your profile.
+                </ng-container>
+                <ng-container *ngIf="currentStep === 3">
+                    Provide your bank account details for payment settlements.
+                </ng-container>
+                <ng-container *ngIf="currentStep === 4">
+                    Confirm all details are correct before finalizing your onboarding.
+                </ng-container>
             </p>
-
-
         </div>
 
         <!-- Step 1 -->
         <div *ngIf="currentStep === 1" class="form-section">
             <form [formGroup]="inputForm" (ngSubmit)="goToNextStep()">
                 <div class="form-group">
-                    <label for="alternate_number">Alternate Contact Number <span class="required">*</span></label>
-                    <input id="alternate_number" type="tel" formControlName="alternate_number" class="inp-cus"
-                        placeholder="e.g., +91 98765 43210">
-                    <div *ngIf="inputForm.get('alternate_number')?.invalid && inputForm.get('alternate_number')?.touched"
-                        class="error">
+                    <label>Alternate Contact Number <span class="required">*</span></label>
+                    <input type="tel" formControlName="alternate_number" class="inp-cus"
+                        placeholder="e.g., +91 98765 43210" maxlength="10"/>
+                    <div *ngIf="
+              inputForm.get('alternate_number')?.invalid &&
+              inputForm.get('alternate_number')?.touched
+            " class="error">
                         A valid phone number is required.
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="gst_number">GST Number <span class="required">*</span></label>
-                    <input id="gst_number" type="text" formControlName="gst_number" class="inp-cus"
-                        placeholder="15-digit GSTIN">
-                    <div *ngIf="inputForm.get('gst_number')?.invalid && inputForm.get('gst_number')?.touched"
-                        class="error">
+                    <label>GST Number <span class="required">*</span></label>
+                    <input type="text" formControlName="gst_number" class="inp-cus" placeholder="15-digit GSTIN" />
+                    <div *ngIf="
+              inputForm.get('gst_number')?.invalid &&
+              inputForm.get('gst_number')?.touched
+            " class="error">
                         GST Number is required.
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="registration_number">Association Registration Number <span
-                            class="required">*</span></label>
-                    <input id="registration_number" type="text" placeholder="Enter Association Registration Number"
-                        formControlName="registration_number" class="inp-cus">
+                    <label>Association Registration Number <span class="required">*</span></label>
+                    <input type="text" formControlName="registration_number" class="inp-cus"
+                        placeholder="Enter Association Registration Number" />
                 </div>
 
                 <div class="form-group">
-                    <label for="address">Full Registered Address <span class="required">*</span></label>
-                    <textarea id="address" formControlName="address" class="inp-cus"
-                        placeholder="Enter Full Address"></textarea>
+                    <label>Full Registered Address <span class="required">*</span></label>
+                    <textarea formControlName="address" class="inp-cus" placeholder="Enter Full Address"></textarea>
                 </div>
 
                 <div class="form-navigation">
-                    <button type="submit" [disabled]="inputForm.invalid" class="btn-add">Save and continue</button>
+                    <button type="submit" [disabled]="inputForm.invalid" class="btn-add">
+                        Save and continue
+                    </button>
                 </div>
             </form>
         </div>
@@ -117,45 +124,96 @@
 
                 <h4>Documents</h4>
                 <div class="document-uploads">
-                    <div *ngFor="let doc of ['passport_size_photo','rental_agreement','cancelled_cheque_leaf','pan_card','company_proof']"
-                        class="file-upload-item">
-                        <label>{{ doc.replace('_',' ') | titlecase }}</label>
-                        <input type="file" class="inp-cus" (change)="onFileChange($event, doc)" accept="image/*,.pdf">
+                    <div *ngFor="
+              let doc of [
+                'passport_size_photo',
+                'rental_agreement',
+                'cancelled_cheque_leaf',
+                'pan_card',
+                'company_proof'
+              ]
+            " class="file-upload-item">
+                        <label>{{ doc.replace('_', ' ') | titlecase }}</label>
+                        <input type="file" class="inp-cus" (change)="onFileChange($event, doc)" accept="image/*,.pdf" />
                     </div>
                 </div>
 
                 <div class="form-navigation">
                     <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
-                    <button type="submit" [disabled]="!isDocumentsValid()" class="btn-add">Save and
-                        continue</button>
+                    <button type="submit" [disabled]="!isDocumentsValid()" class="btn-add">
+                        Save and continue
+                    </button>
                 </div>
             </form>
         </div>
 
-        <!-- Step 3 -->
+        <!-- Step 3: Account Details -->
         <div *ngIf="currentStep === 3" class="form-section">
+            <form [formGroup]="accountForm" (ngSubmit)="goToNextStep()">
+                <div class="form-group">
+                    <label>Account Holder Name <span class="required">*</span></label>
+                    <input type="text" formControlName="account_holder_name" class="inp-cus"
+                        placeholder="Enter Account Holder Name" />
+                </div>
+
+                <div class="form-group">
+                    <label>Account Number <span class="required">*</span></label>
+                    <input type="text" formControlName="account_number" class="inp-cus"
+                        placeholder="Enter Account Number" />
+                </div>
+
+                <div class="form-group">
+                    <label>Account Type <span class="required">*</span></label>
+                    <select formControlName="account_type" class="inp-cus">
+                        <option value="">Select Account Type</option>
+                        <option value="savings">Savings</option>
+                        <option value="current">Current</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>IFSC Code <span class="required">*</span></label>
+                    <input type="text" formControlName="ifsc_code" class="inp-cus" placeholder="Enter IFSC Code" />
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
+                    <button type="submit" [disabled]="accountForm.invalid" class="btn-add">
+                        Save and continue
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Step 4: Review & Submit -->
+        <div *ngIf="currentStep === 4" class="form-section">
             <p class="guidance-text">
                 Please review the information below for accuracy. Once you submit, these details will be sent for
                 verification.
             </p>
 
             <div class="review-block">
-                <h3>Company Details</h3>
-                <p><strong>Alternate Contact Number:</strong> {{ inputForm.get('alternate_number')?.value }}</p>
-                <p><strong>GST Number:</strong> {{ inputForm.get('gst_number')?.value }}</p>
-                <p><strong>Association Registration Number:</strong> {{ inputForm.get('registration_number')?.value }}
-                </p>
-                <p><strong>Address:</strong> {{ inputForm.get('address')?.value }}</p>
+                <h3>Association Details</h3>
+                <p><strong>Alternate Contact:</strong> {{ inputForm.value.alternate_number }}</p>
+                <p><strong>GST:</strong> {{ inputForm.value.gst_number }}</p>
+                <p><strong>Reg. No:</strong> {{ inputForm.value.registration_number }}</p>
+                <p><strong>Address:</strong> {{ inputForm.value.address }}</p>
+            </div>
+
+            <div class="review-block">
+                <h3>Account Details</h3>
+                <p><strong>Holder Name:</strong> {{ accountForm.value.account_holder_name }}</p>
+                <p><strong>Account No:</strong> {{ accountForm.value.account_number }}</p>
+                <p><strong>Type:</strong> {{ accountForm.value.account_type }}</p>
+                <p><strong>IFSC:</strong> {{ accountForm.value.ifsc_code }}</p>
             </div>
 
             <div class="review-block">
                 <h3>Uploaded Documents</h3>
-                <!-- <ul> -->
                 <p *ngFor="let key of (uploadedFiles | keyvalue)">
-                    {{ key.key.replace('_',' ') | titlecase }}:
+                    {{ key.key.replace('_', ' ') | titlecase }}:
                     <strong>{{ key.value ? 'Uploaded' : 'Missing' }}</strong>
                 </p>
-                <!-- </ul> -->
             </div>
 
             <div class="form-navigation">

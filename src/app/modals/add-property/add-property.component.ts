@@ -10,6 +10,7 @@ import {
 import { ModalService } from 'ngx-modal-ease';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { AssociationServiceService } from '../../services/association/association-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-property',
@@ -19,18 +20,28 @@ import { AssociationServiceService } from '../../services/association/associatio
 })
 export class AddPropertyComponent {
   propertyForm!: FormGroup;
-
-  propertyTypes: string[] = ['Villa', 'Apartment', 'Townhouse'];
+  submitBtn : boolean = true
+  propertyTypes: any;
   buildingTypes: string[] = ['Tower', 'Block'];
-
+days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
   constructor(
     private fb: FormBuilder,
     private Modal: ModalService,
     private apiService: ApiserviceService,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private Toastr: ToastrService
   ) {}
 
+  // days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
+
+getOrdinal(day: number): string {
+  const suffixes = ["th", "st", "nd", "rd"];
+  const v = day % 100;
+  return day + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]);
+}
+
   ngOnInit(): void {
+
     this.propertyForm = this.fb.group({
       propertyNo: ['', Validators.required],
       area: ['', Validators.required],
@@ -48,21 +59,53 @@ export class AddPropertyComponent {
       floor: [''],
     });
 
-    // Handle conditional validators
-    this.propertyForm.get('propertyType')?.valueChanges.subscribe((type) => {
-      if (type === 'Apartment') {
-        this.propertyForm
-          .get('buildingType')
-          ?.setValidators(Validators.required);
-        this.propertyForm.get('floor')?.setValidators(Validators.required);
-      } else {
-        this.propertyForm.get('buildingType')?.clearValidators();
-        this.propertyForm.get('floor')?.clearValidators();
+    // 🔹 Get userdata from sessionStorage
+    const userdata = JSON.parse(sessionStorage.getItem('userdata') || '{}');
+
+    if (userdata?.property_type && userdata.property_type.length > 0) {
+      // Capitalize the first letter for display
+      this.propertyTypes = userdata.property_type.map(
+        (p: string) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()
+      );
+
+      // 🔹 If only one property type, auto-select and apply validators
+      if (this.propertyTypes.length === 1) {
+        const selectedType = this.propertyTypes[0];
+        this.propertyForm.get('propertyType')?.setValue(selectedType);
+
+        if (selectedType === 'Villa' || selectedType === 'Townhouse') {
+          this.propertyForm.get('bhk')?.setValidators([Validators.required]);
+        } else if (selectedType === 'Apartment') {
+          this.propertyForm.get('buildingType')?.setValidators([Validators.required]);
+          this.propertyForm.get('bhk')?.setValidators([Validators.required]);
+          this.propertyForm.get('floor')?.setValidators([Validators.required]);
+        }
+
+        this.propertyForm.updateValueAndValidity();
       }
+    }
+
+    // 🔹 Handle conditional validators for property type
+    this.propertyForm.get('propertyType')?.valueChanges.subscribe((type) => {
+      // Reset field validators first
+      this.propertyForm.get('bhk')?.clearValidators();
+      this.propertyForm.get('buildingType')?.clearValidators();
+      this.propertyForm.get('floor')?.clearValidators();
+
+      if (type === 'Apartment') {
+        this.propertyForm.get('buildingType')?.setValidators(Validators.required);
+        this.propertyForm.get('bhk')?.setValidators(Validators.required);
+        this.propertyForm.get('floor')?.setValidators(Validators.required);
+      } else if (type === 'Villa' || type === 'Townhouse') {
+        this.propertyForm.get('bhk')?.setValidators(Validators.required);
+      }
+
+      this.propertyForm.get('bhk')?.updateValueAndValidity();
       this.propertyForm.get('buildingType')?.updateValueAndValidity();
       this.propertyForm.get('floor')?.updateValueAndValidity();
     });
 
+    // 🔹 Handle conditional validators for building type
     this.propertyForm.get('buildingType')?.valueChanges.subscribe((bt) => {
       if (bt === 'Tower') {
         this.propertyForm.get('tower')?.setValidators(Validators.required);
@@ -84,6 +127,7 @@ export class AddPropertyComponent {
   }
 
   AddPropertybyAssociation() {
+    this.submitBtn  = false
     if (this.propertyForm.valid) {
       console.log(this.propertyForm.value);
       const payload = {
@@ -104,13 +148,19 @@ export class AddPropertyComponent {
       this.apiService.AddPropertybyAssociation<any>(payload).subscribe({
         next: (res: any) => {
           if (res?.success) {
+            this.submitBtn  = true
             this.AssociationService.triggerAdminAssociation(res)
+            this.Toastr.success(res.message, 'Success')
             this.closeModal()
           } else {
+            this.submitBtn  = true
+            this.Toastr.warning(res.message, 'Warning')
             // this.loginbtn = true;
           }
         },
         error: (err: any) => {
+          this.submitBtn  = true
+          this.Toastr.error(err.error.error.message, 'Failed')
           console.error('Login failed:', err.error.error.data);
           // alert(err.message || 'Login failed, please try again.');
         },

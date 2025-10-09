@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ModalService } from 'ngx-modal-ease';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { AdmindataService } from '../../services/adminservice/admindata.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-association-modal',
@@ -25,15 +26,16 @@ export class AddAssociationModalComponent implements OnInit {
     private fb: FormBuilder,
     private modal: ModalService,
     private apiService: ApiserviceService,
-    private AdminServices : AdmindataService
+    private AdminServices : AdmindataService,
+    private toastr : ToastrService
   ) {}
 
   ngOnInit(): void {
-    9;
+    
     this.associationForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       associationName: ['', Validators.required],
       propertyType: this.fb.group({
         villa: [false],
@@ -87,17 +89,20 @@ export class AddAssociationModalComponent implements OnInit {
         if (res?.success) {
            this.createButton = true
           this.AdminServices.triggerAdminAssociation(res)
+          this.toastr.success(res.message, 'success')
           this.closeModal();
         } else {
            this.createButton = true
           this.closeModal();
-          alert(res.message || 'please try again.');
+          this.toastr.success(res.message, 'success')
+          // alert(res.message || 'please try again.');
         }
       },
       error: (err: any) => {
          this.createButton = true
+         this.toastr.error(err.error.error.message, 'success')
         console.error('Logout failed:', err);
-        alert(err.message || 'Logout failed, please try again.');
+        // alert(err.message || 'Logout failed, please try again.');
       },
     });
   }

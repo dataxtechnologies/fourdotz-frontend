@@ -1,3 +1,5 @@
+/* @import '~ngx-toastr/toastr.css'; */
+
 /* ===================== Fonts ===================== */
 @font-face {
     font-family: 'TTHoves-Bold';
@@ -100,7 +102,7 @@ body {
     font-family: 'TTHoves-DemiBold', sans-serif;
     min-height: 100vh;
     min-height: 100dvh;
-    background-color: var(--bg-primary);
+    background-color: var(--bg-primary) ;
     color: var(--text-black);
 }
 
@@ -646,10 +648,11 @@ main p {
     cursor: not-allowed;
     color: var(--primary-color1);
     font-weight: 500;
-    padding: 10px 8px;
-    background: #FFFFFF;
+    padding: 8px 12px;
+    background: #faf9f4;
     border-radius: 20px;
     font-size: 20px;
+    width: 100%;
     border: 2px solid var(--primary-color1);
 }
 
@@ -867,3 +870,144 @@ tbody td i {
 
 
 
+
+
+
+/* Container styling */
+.toast-container {
+  font-size: 16px;
+  width: auto; /* let width adapt to content */
+  max-width: 400px; /* limit max width */
+  z-index: 9999;
+  content: none !important;
+  pointer-events: none; /* allow clicks to pass through outside toasts */
+}
+
+/* General toast styling */
+.toast {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+  color: white !important;
+  font-size: 15px;
+  line-height: 1.5;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Toast entry animation */
+.toast-show {
+  opacity: 1 !important;
+  transform: translateY(0px) !important;
+}
+
+
+/* 🔥 Remove tick / icon area completely */
+.toast-success,
+.toast-error,
+.toast-info,
+.toast-warning {
+  background-image: none !important; /* remove tick mark */
+  background-repeat: none !important;
+  background-position: unset !important;
+  padding-left: 24px !important; /* reset padding after icon removal */
+}
+
+.toast-message::before,
+.toast::before {
+  display: none !important;
+  content: none !important;
+}
+
+
+/* Remove default icons */
+.toast-success .toast-message::before,
+.toast-error .toast-message::before,
+.toast-info .toast-message::before,
+.toast-warning .toast-message::before {
+    content: none !important;
+}
+
+/* Change progress bar color */
+.toast-success .toast-progress {
+  background-color: white !important;
+}
+
+.toast-error .toast-progress {
+  background-color: white !important;
+}
+
+.toast-info .toast-progress {
+  background-color: white !important;
+}
+
+.toast-warning .toast-progress {
+  background-color: white !important;
+}
+
+/* Toast types */
+.toast-success {
+  background-color: #92BA92 !important;
+   padding: 16px 24px !important;
+   border-radius: 20px;
+   color: #FFFFFF !important;
+   content: none !important;
+}
+
+.toast-error {
+  background-color: #FF9B9B !important;
+   padding: 16px 24px !important;
+   border-radius: 20px;
+   color: #FFFFFF;
+   color: #FFFFFF !important;
+}
+
+.toast-warning {
+  background-color: #FFB26F !important;
+   padding: 16px 24px !important;
+   border-radius: 20px;
+   color: #FFFFFF;
+   color: #FFFFFF !important;
+}
+
+.toast-info {
+  background-color: #A7AAE1 !important;
+   padding: 16px 24px !important;
+   border-radius: 20px;
+   color: #FFFFFF;
+   color: #FFFFFF !important;
+}
+
+/* Toast title */
+.toast-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+/* Toast message */
+.toast-message {
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Positioning */
+.toast-bottom-right {
+  bottom: 20px !important;
+  right: 20px !important;
+}
+
+/* Ensuring Toastr is above everything */
+.ngx-toastr {
+  z-index: 9999 !important;
+}
+
+/* Optional hover effect */
+.toast:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+}

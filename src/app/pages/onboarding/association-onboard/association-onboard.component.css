@@ -43,6 +43,17 @@
     border: 2px solid var(--primary-color2);
 }
 
+.btn-remove22{
+        color: var(--primary-color2);
+        cursor: not-allowed;
+    font-weight: 500;
+    padding: 10px 8px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    width: 200px !important;
+    border: 2px solid var(--primary-color2);
+}
+
 .get-started {
     color: #495057;
     font-size: 14px;

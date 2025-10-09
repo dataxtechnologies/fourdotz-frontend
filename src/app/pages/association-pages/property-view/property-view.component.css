@@ -27,6 +27,7 @@
 .back-button-div {
     margin-left: 10px;
     display: flex;
+    justify-content: space-between;
     gap: 10px;
     align-items: center;
 }
@@ -51,10 +52,6 @@
 }
 
 
-.ass-h {
-    margin-left: -20px;
-    margin-top: 10px;
-}
 
 .ass-h p {
     color: #000;
@@ -163,18 +160,20 @@
 }
 
 /* User info blocks */
+/* User info blocks */
 .user-info h5 {
     margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: #111;
+    font-size: 14px;
+    font-weight: 500;
+    color: #464545;
 }
 
 .user-info .label {
-    font-size: 13px;
-    color: #777;
+    font-size: 15px;
+    color: #000;
     margin-top: 3px;
 }
+
 
 /* Responsive */
 @media (max-width: 768px) {

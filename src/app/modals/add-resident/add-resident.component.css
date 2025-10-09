@@ -150,8 +150,11 @@ select.inp-cus {
     border: 2px solid var(--primary-color1);
     border-radius: 20px;
     cursor: pointer;
-    width: 100%;
-    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100% !important;
+    /* max-width: 400px; */
     text-align: center;
     transition: all 0.3s ease;
 }
@@ -242,8 +245,8 @@ select.inp-cus {
 
 
 .custom-select {
-    position: relative;
-    user-select: none;
+  position: relative;
+  user-select: none;
 }
 
 .select-selected {
@@ -255,19 +258,21 @@ select.inp-cus {
   position: relative;
 }
 
-/* Dropdown items */
+/* Dropdown */
 .select-items {
   position: absolute;
   background-color: #fff;
   border: 1px solid #ddd;
   border-top: none;
   width: 100%;
-  max-height: 150px;
+  max-height: 180px;
   overflow-y: auto;
   z-index: 99;
   border-radius: 0 0 10px 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Dropdown items */
 .select-items div {
   padding: 10px;
   cursor: pointer;
@@ -279,4 +284,23 @@ select.inp-cus {
 
 .select-hide {
   display: none;
+}
+
+/* Search bar inside dropdown */
+.dropdown-search {
+  width: calc(100% - 20px);
+  margin: 8px 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* No results message */
+.no-results {
+  padding: 10px;
+  text-align: center;
+  color: #888;
+  font-style: italic;
 }

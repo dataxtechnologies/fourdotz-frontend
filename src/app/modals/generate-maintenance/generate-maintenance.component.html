@@ -6,25 +6,50 @@
 
     <div class="form-body">
         <form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
-
-            <!-- Grid Inputs -->
             <div class="form-grid">
-
-                <!-- Penalty Percentage -->
+                <!-- Property No -->
                 <div class="inp-cont">
                     <label>Property No <span class="required">*</span></label>
                     <div class="custom-select">
                         <div class="select-selected" (click)="toggleDropdown()">
                             {{ selectedProperty || 'Select Property No' }}
-                            <i class="fa-solid"
-                                [ngClass]="{'fa-chevron-down': !dropdownOpen, 'fa-chevron-up': dropdownOpen}"
-                                style="float: right; font-size: 0.7rem; margin-top: 4px;"></i>
+                            <i class="fa-solid" [ngClass]="{
+                  'fa-chevron-down': !dropdownOpen,
+                  'fa-chevron-up': dropdownOpen
+                }" style="float: right; font-size: 0.7rem; margin-top: 4px"></i>
                         </div>
+
                         <div class="select-items" [class.select-hide]="!dropdownOpen">
-                            <div *ngFor="let property of propertyNumbers" (click)="selectProperty(property)">
-                                {{ property }}
+                            <input type="text" placeholder="Search property..." class="dropdown-search"
+                                (input)="onSearchChange($event)" />
+
+                            <div *ngFor="let property of filteredList" (click)="selectProperty(property)">
+                                {{ property.property_no }}
+                            </div>
+
+                            <div *ngIf="filteredList.length === 0" class="no-results">
+                                No properties found
                             </div>
                         </div>
+                    </div>
+
+                    <div *ngIf="
+              maintenanceForm.get('property_id')?.touched &&
+              maintenanceForm.get('property_id')?.invalid
+            " class="error-text">
+                        Property No is required
+                    </div>
+                </div>
+
+                <!-- 🟩 Due Date -->
+                <div class="inp-cont">
+                    <label>Due Date <span class="required">*</span></label>
+                    <input type="date" formControlName="due_date" class="inp-cus" [min]="todayDate" />
+                    <div *ngIf="
+              maintenanceForm.get('due_date')?.touched &&
+              maintenanceForm.get('due_date')?.invalid
+            " class="error-text">
+                        Please select a valid due date
                     </div>
                 </div>
             </div>
@@ -32,14 +57,18 @@
             <!-- Items Section -->
             <div class="inp-cont items-header">
                 <label class="label-style">Additional Items</label>
-                <button type="button" class="btn-add" (click)="addItem()">+ Add Item</button>
+                <button type="button" class="btn-add" (click)="addItem()">
+                    + Add Item
+                </button>
             </div>
 
             <div class="items-container scroll-box" formArrayName="items">
                 <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-row">
-                    <input type="text" formControlName="description" placeholder="Description" class="inp-cus">
-                    <input type="number" formControlName="amount" placeholder="Amount" class="inp-cus">
-                    <button type="button" class="btn-cancel" (click)="removeItem(i)">X</button>
+                    <input type="text" formControlName="description" placeholder="Description" class="inp-cus" />
+                    <input type="number" formControlName="amount" placeholder="Amount" class="inp-cus" />
+                    <button type="button" class="btn-cancel" (click)="removeItem(i)">
+                        X
+                    </button>
                 </div>
             </div>
 

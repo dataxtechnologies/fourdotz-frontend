@@ -4,6 +4,7 @@ import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { TableService } from '../../../services/tableservice.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-superadmin-dashboard',
@@ -18,7 +19,7 @@ export class SuperadminDashboardComponent {
   pages: any
   tableLoading: boolean = true
 
-  constructor(private router : Router, private apiService: ApiserviceService){
+  constructor(private router : Router, private apiService: ApiserviceService, private Toastr: ToastrService){
     this.Associationlist1 = new TableService()
     this.Associationlist1.initialize(this.Associationlist2, 5)
   }
@@ -32,6 +33,14 @@ export class SuperadminDashboardComponent {
     this.router.navigateByUrl('Superadmin/Association-list')
   }
 
+//  showSuccess() {
+//     this.Toastr.success('You have successfully logged in', 'Success');
+//   }
+
+//   showError() {
+//     this.Toastr.error('Login failed. Please try again', 'Error');
+//   }
+
 
   getAssociationList() {
     this.apiService.getAssociations<any>().subscribe({
@@ -39,6 +48,7 @@ export class SuperadminDashboardComponent {
         if (res?.success) {
           this.Associationlist2 = res.data;
           this.Associationlist1.initialize(this.Associationlist2, 5);
+          // if(res.message === '')
           this.pages = Array.from(
             { length: this.Associationlist2.totalPages },
             (_, i) => i + 1

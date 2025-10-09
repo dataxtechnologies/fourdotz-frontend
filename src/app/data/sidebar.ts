@@ -78,24 +78,24 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Dashboard',
     icon: '/assets/icons/grids1.svg',
     route: '/Tenant/Dashboard',
-    allowedRole: 'Tenant'
+    allowedRole: 'tenant'
   },
   {
     label: 'Rented property',
     icon: '/assets/icons/house-2.svg',
     route: '/Tenant/properties-list',
-    allowedRole: 'Tenant'
+    allowedRole: 'tenant'
   },
   {
     label: 'Maintenance',
     icon: '/assets/icons/money-recive.svg',
     route: '/Tenant/Maintenance-list',
-    allowedRole: 'Tenant'
+    allowedRole: 'tenant'
   },
   {
     label: 'Rental Invoice',
     icon: '/assets/icons/receipt-text.svg',
     route: '/Tenant/Rental-invoice-list',
-    allowedRole: 'Tenant'
+    allowedRole: 'tenant'
   },
 ];

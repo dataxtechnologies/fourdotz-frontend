@@ -10,6 +10,8 @@ import {
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ApiserviceService } from '../../services/api/apiservice.service';
+import { ToastrService } from 'ngx-toastr';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -25,15 +27,19 @@ import { ApiserviceService } from '../../services/api/apiservice.service';
 })
 export class DashboardLayoutComponent {
   sidebarItems: SidebarItem[] = SIDEBAR_ITEMS;
-  sidebarClosed = true; // Sidebar starts closed
-  currentRoute = ''; // Track active route
+  sidebarClosed = true;
+  currentRoute = '';
 
-  user_type = sessionStorage.getItem('user_type'); // Owner , superadmin , association , Tenant
-  // user_type = 'hoa_admin'; // Owner , super_admin , hoa_admin , Tenant
-  user_id = sessionStorage.getItem('user_id'); // Owner , superadmin , association , Tenant
+  user_type = sessionStorage.getItem('user_type');
+  user_id = sessionStorage.getItem('user_id');
+  access_token = sessionStorage.getItem('access_token');
 
-  constructor(private router: Router, private apiService: ApiserviceService) {
-    // Track the current route for active menu highlighting
+  constructor(
+    private router: Router,
+    private apiService: ApiserviceService,
+    private toastr: ToastrService
+  ) {
+    // Track the current route
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
@@ -42,54 +48,69 @@ export class DashboardLayoutComponent {
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.getUserData(this.user_id)
+    // Check token before calling API
+    if (!this.access_token || !this.user_type) {
+      this.clearSessionAndRedirect('Session invalid. Please log in.');
+    } else {
+      this.getUserData(this.user_type);
+    }
   }
 
-  profileredirect(){
-    this.router.navigateByUrl('Account/profile')
+  // Toggle sidebar
+  toggleSidebar() {
+    this.sidebarClosed = !this.sidebarClosed;
   }
 
+  // Profile redirect
+  profileredirect() {
+    this.router.navigateByUrl('Account/profile');
+  }
+
+  // Logout function
   logout(): void {
     this.apiService.logoutApi<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
-          // ✅ Clear all session storage
-          sessionStorage.clear();
-
-          // ✅ Navigate to sign-in
-          this.router.navigateByUrl('/auth/sign-in');
-
-          // ✅ Optional: show success toast
-          console.log(res.message || 'Logged out successfully');
+          this.clearSessionAndRedirect(
+            res.message || 'Logged out successfully'
+          );
         } else {
-          // ❌ Logout failed
-          alert(res.message || 'Logout failed, please try again.');
+          this.toastr.error(res.message || 'Logout failed', 'Failed');
         }
       },
       error: (err: any) => {
         console.error('Logout failed:', err);
-        alert(err.message || 'Logout failed, please try again.');
+        this.toastr.error(
+          err?.error?.error?.message || 'Logout failed',
+          'Failed'
+        );
+        this.clearSessionAndRedirect();
       },
     });
   }
 
-  getUserData(data : any) {
-    this.apiService.getUserData<any>(data).subscribe({
+  // Get user data with proper token
+  getUserData(data: any) {
+    this.apiService.UserInfo<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {
+          
+          
           const userdata = res.data;
-          // if(userdata.document_uploaded === false){
-          //   this.router.navigateByUrl('/onboarding/user-data')
-          // }
-sessionStorage.setItem('userdata', JSON.stringify(userdata));
+          sessionStorage.setItem('userdata', JSON.stringify(userdata));
+          if (this.user_type === 'hoa_admin') {
+            if (userdata.document_uploaded === false) {
+              this.router.navigateByUrl('/onboarding/user-data');
+            } 
+          }
         } else {
+          
           // this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
+        console.log('tata');
         // this.tableLoading = false;
         console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
@@ -97,7 +118,10 @@ sessionStorage.setItem('userdata', JSON.stringify(userdata));
     });
   }
 
-  toggleSidebar() {
-    this.sidebarClosed = !this.sidebarClosed;
+  // Clear session and redirect to login
+  private clearSessionAndRedirect(message: string = 'Session expired') {
+    sessionStorage.clear();
+    this.toastr.info(message, 'Info');
+    this.router.navigateByUrl('/auth/sign-in');
   }
 }
