@@ -151,48 +151,25 @@
                 </div>
                 <div *ngIf="activeTab === 'Documents'">
                     <h4>Association Document</h4>
-                    <div class="doc-div">
-                        <div class="file-card">
+                    <div class="doc-div" *ngIf="documents && documents.length > 0; else noData">
+                        <div class="file-card" *ngFor="let doc of documents">
                             <div class="file-preview">
                                 <p><i class="fa-solid fa-file"></i> Preview</p>
                             </div>
                             <div class="file-info">
-                                <p class="file-name">Association Registration | <i class="fa-solid fa-eye"></i></p>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-preview">
-                                <p><i class="fa-solid fa-file"></i> Preview</p>
-                            </div>
-                            <div class="file-info">
-                                <p class="file-name">Association Registration | <i class="fa-solid fa-eye"></i></p>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-preview">
-                                <p><i class="fa-solid fa-file"></i> Preview</p>
-                            </div>
-                            <div class="file-info">
-                                <p class="file-name">Association Registration | <i class="fa-solid fa-eye"></i></p>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-preview">
-                                <p><i class="fa-solid fa-file"></i> Preview</p>
-                            </div>
-                            <div class="file-info">
-                                <p class="file-name">Association Registration | <i class="fa-solid fa-eye"></i></p>
-                            </div>
-                        </div>
-                        <div class="file-card">
-                            <div class="file-preview">
-                                <p><i class="fa-solid fa-file"></i> Preview</p>
-                            </div>
-                            <div class="file-info">
-                                <p class="file-name">Association Registration | <i class="fa-solid fa-eye"></i></p>
+                                <p class="file-name">
+                                    {{ getKey(doc) | titlecase }} |
+                                    <a [href]="getValue(doc)" target="_blank">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                </p>
                             </div>
                         </div>
                     </div>
+
+                    <ng-template #noData>
+                        <p class="no-data">No Data Found</p>
+                    </ng-template>
                 </div>
             </div>
         </div>

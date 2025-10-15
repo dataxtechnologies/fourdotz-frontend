@@ -22,8 +22,8 @@
                                 <label for="association">Select Association</label>
                                 <select formControlName="association" class="inp-cus">
                                     <option value="" disabled selected>All Associations</option>
-                                    <option *ngFor="let assoc of filteredProperties" [value]="assoc">
-                                        {{ assoc }}
+                                    <option *ngFor="let assoc of filteredProperties" [value]="assoc._id">
+                                        {{ assoc.association_name }}
                                     </option>
                                 </select>
                             </div>
@@ -33,8 +33,8 @@
                                 <!-- Resident Type Dropdown -->
                                 <select formControlName="residentType" class="inp-cus">
                                     <option value="">All Types</option>
-                                    <option value="Owner">Owner</option>
-                                    <option value="Tenant">Tenant</option>
+                                    <option value="owner">Owner</option>
+                                    <option value="tenant">Tenant</option>
                                 </select>
                             </div>
 
@@ -72,15 +72,14 @@
                                         </td>
                                     </tr>
                                 </ng-container>
-
                                 <ng-template #datashow>
                                     <tr *ngFor="let property of filteredProperties">
                                     <td>{{ property.property_no }}</td>
                                     <td>{{ property.property_type }}</td>
                                     <td>{{ property.association_name }}</td>
-                                    <td>{{ property.residentType }}</td>
-                                    <td>{{ property.residentType }}</td>
-                                    <td (click)="viewProperty(property)">
+                                    <td>{{ property.area }}</td>
+                                    <td>{{ property.resident_type }}</td>
+                                    <td (click)="viewProperty(property._id)">
                                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                     </td>
                                 </tr>

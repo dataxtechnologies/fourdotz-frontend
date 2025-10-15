@@ -11,13 +11,13 @@ export class EnvurlService {
   public UserInfo = '/auth/user_info'
 
 
-  // HOA Endpoints
+  // Superadmin Endpoints
 
   public createAssociation = '/hoa_admin/create_hoa_admin'
   public AssociationList = '/hoa_admin/list_hoa_admin'
   public getAssociationbyId ='/hoa_admin/list_hoa_admin_byid'
   public getpropertybyAssociation = '/property/property_byhoaid'
-  public Dashboarddata = '/dashboard/hoa_dashboard_details'
+  public SuperadminDashboard  = '/dashboard/superadmin_dashboard_details'
 
 
 
@@ -34,6 +34,7 @@ export class EnvurlService {
   public createTenantinproperty = '/property/add_tenant_property'
   public ListMaintenanceinAssociation = '/maintenance_invoice/list_maintenance_invoice'
   public generateMaintenanceInvoice = '/maintenance_invoice/create_maintenance_invoice'
+  public Dashboarddata = '/dashboard/hoa_dashboard_details'
 
 
 
@@ -43,11 +44,17 @@ export class EnvurlService {
   // owner endpoints
   public ownerproperties = '/property/list_owner_property'
   public MaintenanceListinOwner = '/maintenance_invoice/list_maintenance_invoice_owner'
+  public RentalInvoicelistinowner = '/rental_invoice/list_rental_invoice'
+  public TenantListinOwner = '/property/list_tenant_details'
+  public RentalInvoicegeninOwner = '/rental_invoice/create_rental_invoice'
 
 
 
 
 
-
+  // Tenant Endpoints
+  public TenantMaintenanceList = '/maintenance_invoice/list_maintenance_invoice_tenant'
+  public TenantPropertyDatas = '/property/list_tenant_property'
+  public TenantRentalInvoiceList = '/rental_invoice/list_rental_invoice_tenant'
 
 }

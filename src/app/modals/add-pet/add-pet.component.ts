@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ToastrService } from 'ngx-toastr';
+import { OwnerServiceService } from '../../services/owner/owner-service.service';
+import { AssociationServiceService } from '../../services/association/association-service.service';
 
 @Component({
   selector: 'app-add-pet',
@@ -23,7 +25,9 @@ export class AddPetComponent implements OnInit {
     private fb: FormBuilder,
     private Modal: ModalService,
     private apiService: ApiserviceService,
-    private Toast: ToastrService
+    private Toast: ToastrService,
+    private OwnerService : OwnerServiceService,
+    private AssociationService : AssociationServiceService
   ) {}
 
   ngOnInit(): void {
@@ -64,7 +68,8 @@ export class AddPetComponent implements OnInit {
       next: (res: any) => {
         if (res?.success) {
           this.Toast.success(res.message, 'Success')
-          // this.AssociationService.triggerAssociationOwner(res);
+          this.OwnerService.triggerPetAdd(res);
+          this.AssociationService.triggerAssociationOwner(res);
           this.closeModal();
         } else {
            this.Toast.warning(res.message, 'Warning')

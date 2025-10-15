@@ -285,3 +285,41 @@
     padding-bottom: 5px;
     margin-bottom: 10px;
 }
+
+
+
+.info-box {
+  display: flex;
+  align-items: flex-start;
+  background-color: #fdecea; /* light red background */
+  border-left: 4px solid #e74c3c; /* darker red border */
+  color: #a94442; /* red text tone */
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  max-width: 100%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.info-icon {
+  font-size: 20px;
+  margin-right: 10px;
+  margin-top: 2px;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.info-text {
+  font-size: 14px;
+  line-height: 1.4;
+}

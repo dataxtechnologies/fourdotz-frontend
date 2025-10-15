@@ -98,7 +98,7 @@ export class DashboardLayoutComponent {
           
           const userdata = res.data;
           sessionStorage.setItem('userdata', JSON.stringify(userdata));
-          if (this.user_type === 'hoa_admin') {
+          if (this.user_type === 'association') {
             if (userdata.document_uploaded === false) {
               this.router.navigateByUrl('/onboarding/user-data');
             } 

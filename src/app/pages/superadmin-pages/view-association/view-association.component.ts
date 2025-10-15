@@ -19,6 +19,7 @@ export class ViewAssociationComponent {
   propertyTable: boolean = true;
   properties1;
   properties2: any;
+  documents: { [key: string]: string }[] = [];
 
   constructor(
     private apiService: ApiserviceService,
@@ -46,18 +47,29 @@ export class ViewAssociationComponent {
     this.router.navigateByUrl('/Superadmin/Association-list')
   }
 
+getKey(doc: { [key: string]: string }): string {
+  return Object.keys(doc)[0];
+}
+
+getValue(doc: { [key: string]: string }): string {
+  return doc[Object.keys(doc)[0]];
+}
+
   getAssociationList(data: any) {
     this.apiService.getAssociationbyId<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.Associationdata = res.data;
+          this.documents = this.Associationdata.document;
           this.header_loading = false; // stop loading
         } else {
+          this.documents=[]
           // alert(res.message || 'Something went wrong.');
           this.header_loading = false; // stop loading even if error
         }
       },
       error: (err: any) => {
+        this.documents=[]
         this.header_loading = false;
         console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');

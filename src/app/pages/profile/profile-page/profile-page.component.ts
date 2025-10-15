@@ -42,7 +42,7 @@ export class ProfilePageComponent {
 
   ngOnInit(): void {
     this.profileForm.disable(); // Disable by default
-    this.showeditbtn = this.user_type !== 'super_admin';
+    this.showeditbtn = this.user_type !== 'superadmin';
   }
 
   goback() {

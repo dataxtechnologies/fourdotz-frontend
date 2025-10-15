@@ -8,6 +8,8 @@
 .div1 {
     grid-column: span 3 / span 3;
     grid-row: span 3 / span 3;
+    
+    
 }
 
 .div2 {
@@ -15,6 +17,7 @@
     grid-row: span 3 / span 3;
     grid-column-start: 4;
     background: #faf9f4;
+    height: 250px;
 }
 
 .div3 {
@@ -133,6 +136,13 @@
     background-color: #faf9f4;
     padding: 10px;
     border-radius: 20px;
+    height: 250px !important;
+}
+.table-cont1 {
+    background-color: #faf9f4;
+    padding: 10px;
+    border-radius: 20px;
+    height: 250px !important;
 }
 
 .styled-table thead {

@@ -1,7 +1,7 @@
 <section>
     <div class="back-button-div">
         <!-- From Uiverse.io by karthik092726122003 -->
-        
+
         <div class="ass-h">
             <h3>H101 - Apartment</h3>
         </div>
@@ -12,66 +12,84 @@
         <div class="header-cont">
             <div class="user-info">
                 <h5 class="label">Propety No</h5>
-                <p>H101</p>
+                <p>{{ TenantPropertyData[0].property_no }}</p>
             </div>
             <div class="user-info">
                 <h5 class="label">Property Type</h5>
-                <p>Apartment</p>
+                <p>{{ TenantPropertyData[0].property_type }}</p>
             </div>
             <div class="user-info">
                 <h5 class="label">Area</h5>
-                <p>1000 sq.ft</p>
+                <p>{{ TenantPropertyData[0].area }} sq.ft</p>
             </div>
             <div class="user-info">
                 <h5 class="label">Facing</h5>
-                <p>South</p>
+                <p>{{ TenantPropertyData[0].facing }}</p>
             </div>
             <div class="user-info">
                 <h5 class="label">Electricity Consumer No</h5>
-                <p>0125362663</p>
+                <p>{{ TenantPropertyData[0].electricity_number }}</p>
             </div>
             <div class="user-info">
                 <h5 class="label">Parking Slot Number</h5>
-                <p>K220</p>
+                <p>{{ TenantPropertyData[0].parking_slot_number }}</p>
             </div>
             <div class="user-info">
                 <h5 class="label">BHK</h5>
-                <p>2BHK</p>
+                <p>{{ TenantPropertyData[0].property_no }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Building Type</h5>
-                <p>Tower</p>
+                <h5 class="label">Resident</h5>
+                <p>{{ TenantPropertyData[0].resident_type || '--' }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Tower Name</h5>
-                <p>Hipo</p>
+                <h5 class="label">Maintenance Paid By</h5>
+                <p>{{ TenantPropertyData[0].maintenance_paid_by || 'Owner' }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Block Name</h5>
-                <p>A</p>
+                <h5 class="label">Maintenance Amount</h5>
+                <p>{{ TenantPropertyData[0].maintenance_amount | currency:'INR' }}</p>
             </div>
             <div class="user-info">
+                <h5 class="label">Due Date</h5>
+                <p>{{ TenantPropertyData[0].due_date.$date | date:'dd-MMM-yyyy' }}</p>
+            </div>
+            <!-- <div > -->
+            <!-- <div class="user-info" *ngIf="TenantPropertyData[0].property_type === 'apartment'">
+                    <h5 class="label">Building Type</h5>
+                    <p>{{ TenantPropertyData[0].property_no }}</p>
+                </div>
+                <div class="user-info" *ngIf="TenantPropertyData[0].property_type === 'apartment'">
+                    <h5 class="label">Tower Name</h5>
+                    <p>{{ TenantPropertyData[0].property_no }}</p>
+                </div>
+                <div class="user-info" *ngIf="TenantPropertyData[0].property_type === 'apartment'">
+                    <h5 class="label">Block Name</h5>
+                    <p>{{ TenantPropertyData[0].property_no }}</p>
+                </div> -->
+            <div class="user-info" *ngIf="TenantPropertyData[0].property_type === 'apartment'">
                 <h5 class="label">Floor</h5>
-                <p>3</p>
+                <p>{{ TenantPropertyData[0].floor }}</p>
             </div>
+            <!-- </div> -->
 
 
             <div class="user-info">
                 <h5 class="label">Owner Name</h5>
-                <p>Aswin G</p>
+                <p>{{ TenantPropertyData[0].owner_name }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Phone Number</h5>
-                <p>9360170297</p>
+                <h5 class="label">Owner Phone Number</h5>
+                <p>{{ TenantPropertyData[0].owner_mobile }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Email</h5>
-                <p>aswin&#64;gmail.com</p>
+                <h5 class="label">Owner Email</h5>
+                <p>{{ TenantPropertyData[0].owner_email }}</p>
             </div>
-            <div class="user-info">
+            <!-- <div class="user-info">
                 <h5 class="label">Owned At</h5>
-                <p>12 Sep 2025</p>
-            </div>
+                <p>{{ TenantPropertyData[0].owner_details.onboarded_time.$date | date:'dd-MMM-yyyy'}}</p>
+            </div> -->
 
         </div>
 
@@ -92,96 +110,103 @@
                     <div class="resident-section">
                         <h4 class="section-title">Resident Details</h4>
 
-                       
+
                         <!-- Tenant Card -->
                         <div class="resident-card">
-                            <div class="card-header">
+                            <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5>Tenant Details</h5>
-                                <div class="d-flex gap-3">
-                                    <!-- <button class="btn-add" (click)="addTenant()">+ Add Tenant</button>
-                                    <button class="btn-add" (click)="addTenant()"> Remove Tenant</button> -->
-                                </div>
+                                <!-- <div class="d-flex gap-3">
+                                    <button class="btn-add" (click)="addTenant(propertiesId)"
+                                        *ngIf="!TenantPropertyData[0].tenant_details?._id">+ Add Tenant</button>
+                                    <button class="btn-add" (click)="addTenant(propertiesId)"
+                                        *ngIf="TenantPropertyData[0].tenant_details?._id">Edit Tenant</button>
+                                </div> -->
                             </div>
 
-                            <div class="card-body">
-                                <div class="user-info">
-                                    <h5 class="label">Tenant Name</h5>
-                                    <p>Aswin G</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5 class="label">Phone Number</h5>
-                                    <p>9360170297</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5 class="label">Email</h5>
-                                    <p>aswin&#64;gmail.com</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5 class="label">Owned At</h5>
-                                    <p>12 Sep 2025</p>
-                                </div>
+                            <div class="card-body" *ngIf="TenantPropertyData[0]._id; else nodatatenant">
+                                <ng-container *ngFor="let field of [
+          {label: 'Tenant Name', value: TenantPropertyData[0].tenant_name},
+          {label: 'Phone Number', value: TenantPropertyData[0].tenant_mobile},
+          {label: 'Email', value: TenantPropertyData[0].tenant_email},
+          {label: 'Rented At', value: TenantPropertyData[0].tenant_rented_at?.$date | date:'dd-MMM-yyyy'}
+        ]">
+                                    <div class="user-info">
+                                        <h5 class="label">{{field.label}}</h5>
+                                        <p>{{field.value}}</p>
+                                    </div>
+                                </ng-container>
                             </div>
+                            <ng-template #nodatatenant>
+                                <div class="card-body">
+                                    No data found
+                                </div>
+                            </ng-template>
                         </div>
                     </div>
 
                 </div>
-                <div *ngIf="activeTab === 'petvehicle'">
-                    <div class="resident-section">
-                        <h4 class="section-title">Pet & Vehicle</h4>
+                <div *ngIf="activeTab === 'petvehicle'" class="resident-section">
+                    <h4 class="section-title">Pet & Vehicle</h4>
 
-                        <!-- Owner Card -->
-                        <div class="resident-card">
-                            <div class="card-header">
-                                <h5>Pet Details</h5>
-                                <button class="btn-add" (click)="addpet()">+ Add Pet</button>
-                            </div>
-
-                            <div class="card-body">
-                                <div class="user-info">
-                                    <h5 class="label">Pet Name</h5>
-                                    <p>Pattu</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5 class="label">Type</h5>
-                                    <p>Dog</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5 class="label">Breed</h5>
-                                    <p>Shih Tzu</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5 class="label">Age</h5>
-                                    <p>5 Months</p>
-                                </div>
-                            </div>
+                    <!-- Pet Card -->
+                    <div class="resident-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5>Pet Details</h5>
+                            <button class="btn-add" (click)="addpet(TenantPropertyData[0]._id)"
+                                *ngIf="!TenantPropertyData[0].pet || TenantPropertyData[0].pet.length === 0">Add Pet</button>
                         </div>
 
-                        <!-- Tenant Card -->
-                        <div class="resident-card">
-                            <div class="card-header">
-                                <h5>Vehicle Details</h5>
-                                <button class="btn-add" (click)="addVehicle()">+ Add Vehicle</button>
-                            </div>
-
-                            <div class="card-body">
+                        <div class="card-body" *ngIf="TenantPropertyData[0].pet?.length > 0; else nodata">
+                            <ng-container *ngFor="let field of [
+                                    {label: 'Pet Name', value: TenantPropertyData[0].pet[0]?.pet_name},
+                                    {label: 'Pet Type', value: TenantPropertyData[0].pet[0]?.type},
+                                    {label: 'Pet Breed', value: TenantPropertyData[0].pet[0]?.breed},
+                                    {label: 'Age', value: TenantPropertyData[0].pet[0]?.age},
+                                    {label: 'Pet Owned By', value: TenantPropertyData[0].pet[0]?.pet_owned_by}
+                                ]">
                                 <div class="user-info">
-                                    <h5 class="label">Vehicle Type</h5>
-                                    <p>Car</p>
+                                    <h5 class="label">{{ field.label }}</h5>
+                                    <p>{{ field.value }}</p>
                                 </div>
-                                <div class="user-info">
-                                    <h5 class="label">Brand</h5>
-                                    <p>Honda Civic</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5 class="label">Vehicle Modal</h5>
-                                    <p>2019</p>
-                                </div>
-                                <div class="user-info">
-                                    <h5 class="label">Vehicle Number</h5>
-                                    <p>TN-29-BV-0001</p>
-                                </div>
-                            </div>
+                            </ng-container>
                         </div>
+
+                        <ng-template #nodata>
+                            <div class="card-body">
+                                No data found
+                            </div>
+                        </ng-template>
+
+                    </div>
+
+                    <!-- Vehicle Card -->
+                    <div class="resident-card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5>Vehicle Details</h5>
+                            <button class="btn-add" (click)="addVehicle(TenantPropertyData[0]._id)"
+                                *ngIf="!TenantPropertyData[0].vehicle || TenantPropertyData[0].vehicle.length === 0">+ Add
+                                Vehicle</button>
+                        </div>
+
+                        <div class="card-body" *ngIf="TenantPropertyData[0].vehicle?.length > 0; else nodatavehicle">
+                            <ng-container *ngFor="let field of [
+          {label: 'Vehicle Type', value: TenantPropertyData[0].vehicle[0]?.type},
+          {label: 'Brand', value: TenantPropertyData[0].vehicle[0]?.brand},
+          {label: 'Vehicle Model', value: TenantPropertyData[0].vehicle[0]?.modal},
+          {label: 'Vehicle Number', value: TenantPropertyData[0].vehicle[0]?.number},
+          {label: 'Vehicle Owned By', value: TenantPropertyData[0].vehicle[0]?.vehicle_owned_by}
+        ]">
+                                <div class="user-info">
+                                    <h5 class="label">{{field.label}}</h5>
+                                    <p>{{field.value}}</p>
+                                </div>
+                            </ng-container>
+                        </div>
+                        <ng-template #nodatavehicle>
+                            <div class="card-body">
+                                No data found
+                            </div>
+                        </ng-template>
                     </div>
                 </div>
             </div>

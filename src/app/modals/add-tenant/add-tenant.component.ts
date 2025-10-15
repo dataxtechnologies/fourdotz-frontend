@@ -11,6 +11,7 @@ import { ModalService } from 'ngx-modal-ease';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ToastrService } from 'ngx-toastr';
 import { AssociationServiceService } from '../../services/association/association-service.service';
+import { OwnerServiceService } from '../../services/owner/owner-service.service';
 
 @Component({
   selector: 'app-add-tenant',
@@ -23,7 +24,10 @@ export class AddTenantComponent {
 
   submitbtn: boolean = true;
 
-  constructor(private Modal: ModalService, private fb: FormBuilder, private apiService: ApiserviceService, private Toast: ToastrService, private AssociationService: AssociationServiceService) {}
+  constructor(private Modal: ModalService, private fb: FormBuilder, private apiService: ApiserviceService, private Toast: ToastrService, private AssociationService: AssociationServiceService,
+    private OwnerService : OwnerServiceService
+
+  ) {}
 
   closeModal() {
     this.Modal.close();
@@ -42,6 +46,8 @@ ngOnInit(): void {
       estimatedRent: ['', [Validators.required, Validators.min(0)]],
       maintenancePaidBy: ['', Validators.required]
     });
+    console.log('PropertyIddata', this.PropertyIddata);
+    
   }
 
   onSubmit(): void {
@@ -50,6 +56,7 @@ ngOnInit(): void {
       this.tenantForm.markAllAsTouched();
       return;
     }
+    
 
     const payload = {
       name: this.tenantForm.get('firstName')?.value,
@@ -58,7 +65,7 @@ ngOnInit(): void {
       mobile: this.tenantForm.get('phone')?.value,
       rented_at: this.tenantForm.get('rentedAt')?.value,
       advance_amount: this.tenantForm.get('advancePaid')?.value,
-      monthly_rent_amount: this.tenantForm.get('advancePaid')?.value,
+      monthly_rent_amount: this.tenantForm.get('estimatedRent')?.value,
       maintenance_paid_by: this.tenantForm.get('maintenancePaidBy')?.value,
       property_id: this.PropertyIddata,
     };
@@ -70,6 +77,7 @@ ngOnInit(): void {
           this.submitbtn = true
           this.Toast.success(res.message, 'Success')
           this.AssociationService.triggerAssociationOwner(res);
+          this.OwnerService.triggerTenantAdd(res);
           this.closeModal();
         } else {
           this.submitbtn = true

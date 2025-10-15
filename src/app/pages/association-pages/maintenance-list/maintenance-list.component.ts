@@ -7,6 +7,7 @@ import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { TableService } from '../../../services/tableservice.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AssociationServiceService } from '../../../services/association/association-service.service';
 
 @Component({
   selector: 'app-maintenance-list',
@@ -24,25 +25,43 @@ export class MaintenanceListComponent {
 
 
 
-  constructor(private ModalService: ModalService, private route: Router, private apiService: ApiserviceService) {
+  constructor(private ModalService: ModalService, private route: Router, private apiService: ApiserviceService, private AssociationService: AssociationServiceService) {
     this.MaintenanceList1 = new TableService()
     this.MaintenanceList1.initialize(this.MaintenanceList2, 11)
   }
 
   ngOnInit(): void {
     this.ListMaintenanceinAssociation()
+
+    this.AssociationService.MaintenanceInvStatus$.subscribe((GenMaintenanceInv) => {
+      if (GenMaintenanceInv) {
+        this.ListMaintenanceinAssociation();
+      }
+    });
   }
 
-  getStatus(item: any): string {
+    isOverdue(createdDate: any): boolean {
+    const created = new Date(createdDate);
+    const today = new Date();
+
+    // Compare only the date part (ignore time)
+    created.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    return today > created;
+  }
+
+getStatus(item: any) {
   const today = new Date().getTime();
   const itemDate = new Date(item.created_time?.$date).getTime();
 
   if (item.payment_status === true) {
     return 'Paid';
-  } else if (today > itemDate) {
-    return 'Overdue';
+  } else if (item.payment_status === false) {
+    // Check if overdue based on date
+    return today > itemDate ? 'Overdue' : 'Pending';
   } else {
-    return 'Pending';
+    return '';
   }
 }
 

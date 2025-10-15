@@ -71,10 +71,10 @@ export class SigninPageComponent implements OnInit {
 
          this.toastr.success(res.message, 'Success');
           switch (userType) {
-            case 'super_admin':
+            case 'superadmin':
               this.route.navigateByUrl('/Superadmin/Dashboard');
               break;
-            case 'hoa_admin':
+            case 'association':
               this.route.navigateByUrl('/Association/Dashboard');
               break;
             case 'owner':

@@ -57,9 +57,9 @@ export class OwnerPropertiesComponent implements OnInit {
 
     this.filteredProperties = this.propertieslist2.filter((p: any) => {
       return (
-        (!association || p.association === association) &&
-        (!residentType || p.residentType === residentType) &&
-        (!propertyNo || p.no?.toLowerCase().includes(propertyNo.toLowerCase()))
+        (!association || p._id === association) &&
+        (!residentType || p.resident_type === residentType) &&
+        (!propertyNo || p.property_no?.toLowerCase().includes(propertyNo.toLowerCase()))
       );
     });
   }

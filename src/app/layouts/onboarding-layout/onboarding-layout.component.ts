@@ -33,7 +33,7 @@ export class OnboardingLayoutComponent {
       next: (res: any) => {
         if (res?.success) {
           const userdata = res.data;
-         if(this.user_type === 'hoa_admin'){
+         if(this.user_type === 'association'){
            if(userdata.document_uploaded === false){
             this.router.navigateByUrl('/onboarding/user-data')
           }else{

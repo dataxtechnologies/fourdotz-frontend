@@ -18,6 +18,7 @@ export class SuperadminDashboardComponent {
   Associationlist2: any
   pages: any
   tableLoading: boolean = true
+  DashboardData : any
 
   constructor(private router : Router, private apiService: ApiserviceService, private Toastr: ToastrService){
     this.Associationlist1 = new TableService()
@@ -26,6 +27,7 @@ export class SuperadminDashboardComponent {
   
   ngOnInit(): void {
       this.getAssociationList()
+      this.SuperadminDashboardData()
   
   }
 
@@ -61,6 +63,26 @@ export class SuperadminDashboardComponent {
       },
       error: (err: any) => {
         this.tableLoading = false;
+        console.error('Logout failed:', err);
+        // alert(err.message || 'Logout failed, please try again.');
+      },
+    });
+  }
+  
+
+  SuperadminDashboardData() {
+    this.apiService.SuperadminDashboardData<any>().subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.DashboardData = res.data
+          // this.tableLoading = false;
+        } else {
+          // this.tableLoading = false;
+          // alert(res.message || 'Logout failed, please try again.');
+        }
+      },
+      error: (err: any) => {
+        // this.tableLoading = false;
         console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },

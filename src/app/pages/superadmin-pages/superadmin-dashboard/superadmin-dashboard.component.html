@@ -7,7 +7,7 @@
                 <span class="card-head-font">Total Associations</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font">1,500</span>
+                <span class="card-font">{{ DashboardData.hoa_total_count }}</span>
 
             </div>
         </div>
@@ -18,7 +18,7 @@
                 <span class="card-head-font">Number of Properties</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font">320</span>
+                <span class="card-font">{{ DashboardData.property_total_count }}</span>
 
             </div>
         </div>
@@ -29,7 +29,7 @@
                 <span class="card-head-font">Total Tenants</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font">150</span>
+                <span class="card-font">{{ DashboardData.tenant_total_count }}</span>
 
             </div>
         </div>
@@ -108,7 +108,7 @@
 
         <!-- div5: Cost Breakdown -->
         <div class="div5 bg-white rounded-2xl shadow-md flex flex-col p-3">
-            <div class="transaction-header d-flex justify-content-between align-items-center mb-3">
+            <div class="transaction-header12 d-flex justify-content-between align-items-start mb-3">
                 <h3>Associations</h3>
                 <a class="link-text" (click)="redirecttoAssociationlist()">See All</a>
             </div>

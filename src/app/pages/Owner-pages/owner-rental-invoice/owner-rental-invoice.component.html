@@ -61,7 +61,7 @@
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody class="tbody-dd">
+                            <!-- <tbody class="tbody-dd">
                                 <tr *ngFor="let p of filteredProperties">
                                     <td>₹{{ p.amount }}</td>
                                     <td>{{ p.association }}</td>
@@ -73,7 +73,62 @@
                                         <span *ngIf="p.status === 'Paid' && p.paidDate"> ({{ p.paidDate }})</span>
                                     </td>
                                 </tr>
+                            </tbody> -->
+                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                                <ng-container *ngIf="rentalinvoicelist2?.length === 0; else datashow">
+                                    <tr>
+                                        <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                             No Data Found
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                                <ng-template #datashow>
+                                    <tr *ngFor="let p of filteredProperties">
+                                    <td>₹{{ p.total_amount }}</td>
+                                    <td>{{ p.association_name }}</td>
+                                    <td>{{ p.tenant_name }}</td>
+                                    <td>{{ p.tenant_mobile }}</td>
+                                    <td>{{ p.created_time.$date | date:'dd-MMM-yyyy' }}</td>
+                                    <td>
+                                            <span *ngIf="p.payment_status === false">Pending</span>
+                                            <span *ngIf="p.payment_status === true">Paid</span>
+                                        </td>
+                                </tr>
+                                </ng-template>
                             </tbody>
+                            <ng-template #tableSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                    <td>
+                                        <span class="placeholder col-10 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-8 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-6 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-7 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-5 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
                         </table>
                     </div>
                 </div>

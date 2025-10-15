@@ -16,7 +16,7 @@
     padding: 1.5em;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: flex-start;
 
     /* background: #fff; */
@@ -250,6 +250,27 @@
 }
 
 .transaction-header a {
+    font-size: 0.8rem;
+    color: #1e88e5;
+    text-decoration: none;
+    font-weight: 600;
+}
+.transaction-header12 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin-bottom: 1em;
+    margin-top: 10px;
+}
+
+.transaction-header12 h3 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+.transaction-header12 a {
     font-size: 0.8rem;
     color: #1e88e5;
     text-decoration: none;
@@ -748,7 +769,7 @@
 /* Transaction Item */
 .transaction-item {
   display: flex;
-  align-items: center;
+  align-items: start;
   margin-bottom: 12px;
 }
 

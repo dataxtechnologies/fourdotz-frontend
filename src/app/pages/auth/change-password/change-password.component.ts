@@ -23,7 +23,7 @@ export class ChangePasswordComponent implements OnInit {
   passwordFieldType: string = 'password';
   confirmPasswordFieldType: string = 'password';
   usermail: string | null = null;
-  loginbtn: boolean = false;
+  btnloading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -57,6 +57,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onSubmit() {
+    this.btnloading = true
     if (this.changePasswordForm.invalid) {
       this.changePasswordForm.markAllAsTouched();
       return;
@@ -77,7 +78,7 @@ export class ChangePasswordComponent implements OnInit {
           const tokenData = res.data?.data;
           const userType = res.data?.user_type;
           const user_id = res.data?.user_id;
-          this.loginbtn = true;
+          this.btnloading = false;
           sessionStorage.removeItem('session_key')
           if (tokenData) {
             sessionStorage.setItem('access_token', tokenData.AccessToken);
@@ -93,10 +94,10 @@ export class ChangePasswordComponent implements OnInit {
 
           // Navigate based on user type
           switch (userType) {
-            case 'super_admin':
+            case 'superadmin':
               this.router.navigateByUrl('/Superadmin/Dashboard');
               break;
-            case 'hoa_admin':
+            case 'association':
               this.router.navigateByUrl('/Association/Dashboard');
               break;
             case 'owner':
@@ -111,11 +112,11 @@ export class ChangePasswordComponent implements OnInit {
               break;
           }
         } else {
-          this.loginbtn = true;
+          this.btnloading = false;
         }
       },
       error: (err: any) => {
-        this.loginbtn = true;
+        this.btnloading = false;
         // const newuseremail = this.loginForm.get('username')?.value;
         // if (err.error.error.data.update_password == false) {
         //   sessionStorage.setItem(

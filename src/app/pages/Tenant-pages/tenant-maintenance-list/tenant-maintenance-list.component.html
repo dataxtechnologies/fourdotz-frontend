@@ -19,93 +19,97 @@
                                     <th>Property No</th>
                                     <th>Maintenance Amount</th>
                                     <th>Owner Name</th>
+                                    <th>Association</th>
                                     <th>Issue Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody class="tbody-dd">
-                                <tr>
-                                    <td>H101</td>
-                                    <td>₹2,500</td>
-                                    <td>Arun Kumar</td>
-                                    <td>2025-09-01</td>
-                                    <td>Paid</td>
-                                    <td><i class="fa-solid fa-file-lines"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>H102</td>
-                                    <td>₹3,000</td>
-                                    <td>Meena R</td>
-                                    <td>2025-09-03</td>
-                                    <td>Pending</td>
-                                    <td><button class="pay-btn">Pay Now</button></td>
-                                </tr>
-                                <tr>
-                                    <td>H103</td>
-                                    <td>₹1,800</td>
-                                    <td>Suresh B</td>
-                                    <td>2025-09-05</td>
-                                    <td>Paid</td>
-                                    <td><i class="fa-solid fa-file-lines"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>H104</td>
-                                    <td>₹2,200</td>
-                                    <td>Priya M</td>
-                                    <td>2025-09-06</td>
-                                    <td>Overdue</td>
-                                    <td><button class="pay-btn">Pay Now</button></td>
-                                </tr>
-                                <tr>
-                                    <td>H105</td>
-                                    <td>₹2,750</td>
-                                    <td>Vikram S</td>
-                                    <td>2025-09-07</td>
-                                    <td>Paid</td>
-                                    <td><i class="fa-solid fa-file-lines"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>H106</td>
-                                    <td>₹1,950</td>
-                                    <td>Neha Sharma</td>
-                                    <td>2025-09-08</td>
-                                    <td>Pending</td>
-                                    <td><button class="pay-btn">Pay Now</button></td>
-                                </tr>
-                                <tr>
-                                    <td>H107</td>
-                                    <td>₹2,600</td>
-                                    <td>Ramesh K</td>
-                                    <td>2025-09-09</td>
-                                    <td>Paid</td>
-                                    <td><i class="fa-solid fa-file-lines"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>H108</td>
-                                    <td>₹2,300</td>
-                                    <td>Divya P</td>
-                                    <td>2025-09-10</td>
-                                    <td>Pending</td>
-                                    <td><button class="pay-btn">Pay Now</button></td>
-                                </tr>
-                                <tr>
-                                    <td>H109</td>
-                                    <td>₹2,900</td>
-                                    <td>Ajay N</td>
-                                    <td>2025-09-11</td>
-                                    <td>Overdue</td>
-                                    <td><button class="pay-btn">Pay Now</button></td>
-                                </tr>
-                                <tr>
-                                    <td>H110</td>
-                                    <td>₹2,100</td>
-                                    <td>Kavya L</td>
-                                    <td>2025-09-12</td>
-                                    <td>Paid</td>
-                                    <td><i class="fa-solid fa-file-lines"></i></td>
-                                </tr>
+                            <!-- <tr>
+                                <td>H101</td>
+                                <td>₹2,500</td>
+                                <td>Arun Kumar</td>
+                                <td>2025-09-01</td>
+                                <td>Paid</td>
+                                <td><i class="fa-solid fa-file-lines"></i></td>
+                            </tr> -->
+                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                                <ng-container *ngIf="maintenancelist2?.length === 0; else datashow">
+                                    <tr>
+                                        <td colspan="7" style="text-align: center; font-weight: 600; color: gray;">
+                                            No Data Found
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                                <ng-template #datashow>
+                                    <tr *ngFor="let item of maintenancelist1.paginatedData">
+                                        <td data-label="Maintenance Amount">₹{{ item.total_amount }}</td>
+                                        <td data-label="Resident Name">{{ item.resident_name }}</td>
+                                        <td data-label="Resident Type">{{ item.resident_type }}</td>
+                                        <td data-label="Association Name">{{ item.association_name }}</td>
+                                        <td data-label="Date">{{ item.created_time.$date | date: 'dd-MMM-yyyy' }}</td>
+
+                                        <!-- ✅ Status Column -->
+                                        <td data-label="Status">
+                                            <ng-container *ngIf="item.payment_status; else notPaid">
+                                                <span class="status paid">Paid</span>
+                                            </ng-container>
+                                            <ng-template #notPaid>
+                                                <span class="status" [ngClass]="{
+                                                    overdue: isOverdue(item.created_time.$date),
+                                                    pending: !isOverdue(item.created_time.$date)
+                                                    }">
+                                                    {{ isOverdue(item.created_time.$date) ? 'Overdue' : 'Pending' }}
+                                                </span>
+                                            </ng-template>
+                                        </td>
+
+                                        <!-- ✅ Conditional Action -->
+                                        <td data-label="Actions">
+                                            <ng-container *ngIf="!item.payment_status; else viewDetails">
+                                                <button class="pay-btn">Pay Now</button>
+                                            </ng-container>
+                                            <ng-template #viewDetails>
+                                                <i class="fa-solid fa-arrow-up-right-from-square"
+                                                    style="cursor: pointer;"></i>
+                                            </ng-template>
+                                        </td>
+                                    </tr>
+                                </ng-template>
                             </tbody>
+                            <ng-template #tableSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5,6]" style="height: 50px;"> <!-- taller row -->
+                                    <td>
+                                        <span class="placeholder col-10 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-8 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-6 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-7 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-5 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
                         </table>
 
                     </div>

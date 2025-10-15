@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { Router } from '@angular/router';
 import { ModalService } from 'ngx-modal-ease';
 import { CommonModule } from '@angular/common';
+import { ApiserviceService } from '../../../services/api/apiservice.service';
+import { TableService } from '../../../services/tableservice.service';
 
 @Component({
   selector: 'app-tenant-rental-list',
@@ -15,12 +17,20 @@ export class TenantRentalListComponent {
 filterForm!: FormGroup;
   properties: any[] = [];
   filteredProperties: any[] = [];
+  rentalinvoicelist1
+  rentalinvoicelist2: any
+  tableLoading = true
+  pages: any
 
   constructor(
     private modalService: ModalService,
     private router: Router,
-    private fb: FormBuilder
-  ) {}
+    private fb: FormBuilder,
+    private apiService: ApiserviceService
+  ) {
+    this.rentalinvoicelist1 = new TableService()
+    this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 12)
+  }
 
   ngOnInit(): void {
     this.filterForm = this.fb.group({
@@ -30,90 +40,7 @@ filterForm!: FormGroup;
       toDate: [''], // To Date
     });
 
-    this.filterForm.valueChanges.subscribe(() => {
-      this.applyFilters();
-    });
-
-    // Example data
-    this.properties = [
-      {
-        amount: 2500,
-        name: 'Arun Kumar',
-        phone: '9955668844',
-        date: '2025-09-01',
-        status: 'Paid',
-        paidDate: '2025-09-04',
-      },
-      {
-        amount: 3000,
-        name: 'Meena R',
-        phone: '9876543210',
-        date: '2025-09-03',
-        status: 'Pending',
-      },
-      {
-        amount: 1800,
-        name: 'Suresh B',
-        phone: '9123456789',
-        date: '2025-09-05',
-        status: 'Paid',
-         paidDate: '2025-09-04',
-      },
-      {
-        amount: 2200,
-        name: 'Priya M',
-        phone: '9789054321',
-        date: '2025-09-06',
-        status: 'Overdue',
-      },
-      {
-        amount: 2750,
-        name: 'Vikram S',
-        phone: '9001122334',
-        date: '2025-09-07',
-        status: 'Paid',
-         paidDate: '2025-09-04',
-      },
-      {
-        amount: 1950,
-        name: 'Neha Sharma',
-        phone: '9887766554',
-        date: '2025-09-08',
-        status: 'Pending',
-      },
-      {
-        amount: 2600,
-        name: 'Ramesh K',
-        phone: '9776655443',
-        date: '2025-09-09',
-        status: 'Paid',
-         paidDate: '2025-09-04',
-      },
-      {
-        amount: 2300,
-        name: 'Divya P',
-        phone: '9665544332',
-        date: '2025-09-10',
-        status: 'Pending',
-      },
-      {
-        amount: 2900,
-        name: 'Ajay N',
-        phone: '9554433221',
-        date: '2025-09-11',
-        status: 'Overdue',
-      },
-      {
-        amount: 2100,
-        name: 'Kavya L',
-        phone: '9443322110',
-        date: '2025-09-12',
-        status: 'Paid',
-         paidDate: '2025-09-04',
-      },
-    ];
-
-    this.filteredProperties = [...this.properties];
+    this.RentalInvoicelistinTenant()
   }
 
   applyFilters(): void {
@@ -157,4 +84,38 @@ filterForm!: FormGroup;
   viewresident(): void {
     this.router.navigateByUrl(`Association/view-properties/${1}`);
   }
+
+  RentalInvoicelistinTenant() {
+        this.apiService.TenantRentalInvoiceList<any>().subscribe({
+          next: (res: any) => {
+            if (res?.success) {
+              this.rentalinvoicelist2 = res.data || [];
+              this.filteredProperties = [...this.rentalinvoicelist2];
+    
+              // Initialize TableService
+              this.rentalinvoicelist1 = new TableService();
+              this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 12);
+    
+              // If backend provides pagination info
+              this.pages = Array.from(
+                { length: res.data?.totalPages || 1 },
+                (_, i) => i + 1
+              );
+    
+              this.tableLoading = false;
+            } else {
+              this.rentalinvoicelist2 = []
+              this.tableLoading = false;
+              console.warn(res.message || 'Failed to load properties.');
+            }
+          },
+          error: (err: any) => {
+            this.rentalinvoicelist2 = []
+            this.tableLoading = false;
+            console.error('Property list fetch failed:', err);
+          },
+        });
+      }
+
+  
 }

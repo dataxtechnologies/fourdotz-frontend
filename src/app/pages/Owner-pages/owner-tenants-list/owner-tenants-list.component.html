@@ -5,7 +5,7 @@
                 <h2>Tenants List</h2>
             </div>
             <div>
-                <button class="btn-add Buttons-font" (click)="Addtenant()">+ Add Tenant</button>
+                <!-- <button class="btn-add Buttons-font" (click)="Addtenant()">+ Add Tenant</button> -->
             </div>
         </div>
         <div class="container">
@@ -26,22 +26,7 @@
                                     <!-- <th>View</th> -->
                                 </tr>
                             </thead>
-                            
-                                <!-- (click)="viewassociation(1)"
-                                 (click)="AddAssociation()" -->
-                                
-                            <tbody class="Table-Body">
-                                <tr>
-                                    <td data-label="Property No">H101</td>
-                                    <td data-label="Property Type">Apartment</td>
-                                    <td data-label="Property Type">Lakeview</td>
-                                    <td data-label="Area">Naveen</td>
-                                    <td data-label="BHK">9632587410</td>
-                                    <td data-label="Residential Type">12-10-2025</td>
-                                    <td data-label="Residential Type">Owner</td>
-                                    <!-- <td data-label="View" (click)="viewproperty()"><i class="fa-solid fa-arrow-up-right-from-square"></i></td> -->
-                                </tr>
-                                <tr>
+                            <!-- <tr>
                                     <td data-label="Property No">H103</td>
                                     <td data-label="Property Type">Apartment</td>
                                     <td data-label="Property Type">Lakeview</td>
@@ -49,10 +34,68 @@
                                     <td data-label="BHK">9632587410</td>
                                     <td data-label="Residential Type">12-10-2025</td>
                                     <td data-label="Residential Type">Tenant</td>
-                                    <!-- <td data-label="View" (click)="viewproperty()"><i class="fa-solid fa-arrow-up-right-from-square"></i></td> -->
-                                </tr>
+                                    
+                                </tr> -->
+                                <!-- (click)="viewassociation(1)"
+                                 (click)="AddAssociation()" -->
                                 
+                           
+
+                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                                <ng-container *ngIf="TenantList2?.length === 0; else datashow">
+                                    <tr>
+                                        <td colspan="7" style="text-align: center; font-weight: 600; color: gray;">
+                                             No Data Found
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <ng-template #datashow>
+                                    <tr *ngFor="let property of TenantList1.paginatedData">
+                                    <td>{{ property.property_no }}</td>
+                                    <td>{{ property.property_type }}</td>
+                                    <td>{{ property.association_name }}</td>
+                                    <td>{{ property.tenant_name }}</td>
+                                    <td>{{ property.tenant_mobile }}</td>
+                                    <td>{{ property.tenant_rented_at.$date | date:'dd-MMM-yyyy' }}</td>
+                                    <td>{{ property.maintenance_paid_by}}</td>
+                                    <!-- <td (click)="viewProperty(property._id)">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </td> -->
+                                </tr>
+                                </ng-template>
                             </tbody>
+                            <ng-template #tableSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                    <td>
+                                        <span class="placeholder col-10 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-8 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-6 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-7 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-5 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
 
                         </table>
                     </div>

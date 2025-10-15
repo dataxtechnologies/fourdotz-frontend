@@ -70,7 +70,7 @@
                 <div class="form-group">
                     <label>Alternate Contact Number <span class="required">*</span></label>
                     <input type="tel" formControlName="alternate_number" class="inp-cus"
-                        placeholder="e.g., +91 98765 43210" maxlength="10"/>
+                        placeholder="e.g., +91 98765 43210" maxlength="10" />
                     <div *ngIf="
               inputForm.get('alternate_number')?.invalid &&
               inputForm.get('alternate_number')?.touched
@@ -94,11 +94,23 @@
                     <label>Association Registration Number <span class="required">*</span></label>
                     <input type="text" formControlName="registration_number" class="inp-cus"
                         placeholder="Enter Association Registration Number" />
+                    <div *ngIf="
+              inputForm.get('registration_number')?.invalid &&
+              inputForm.get('registration_number')?.touched
+            " class="error">
+                        Registration Number is required.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label>Full Registered Address <span class="required">*</span></label>
                     <textarea formControlName="address" class="inp-cus" placeholder="Enter Full Address"></textarea>
+                    <div *ngIf="
+              inputForm.get('address')?.invalid &&
+              inputForm.get('address')?.touched
+            " class="error">
+                        Address is required.
+                    </div>
                 </div>
 
                 <div class="form-navigation">
@@ -111,9 +123,19 @@
 
         <!-- Step 2 -->
         <div *ngIf="currentStep === 2" class="form-section">
+            <div class="info-box">
+                <div class="info-icon">⚠️</div>
+                <div class="info-content">
+                    <div class="info-title">Complete All Fields</div>
+                    <div class="info-text">
+                        Please fill in all the required fields and upload all the necessary documents before proceeding
+                        to the next step.
+                    </div>
+                </div>
+            </div>
             <form [formGroup]="documentForm" (ngSubmit)="goToNextStep()">
                 <div class="form-group">
-                    <label for="company_proof_type">Select Company Proof Type</label>
+                    <label for="company_proof_type">Select Company Proof Type <span class="required">*</span></label>
                     <select id="company_proof_type" formControlName="company_proof_type" class="inp-cus">
                         <option value="">Choose Type</option>
                         <option value="incorporation_certificate">Certificate of Incorporation</option>
@@ -122,8 +144,8 @@
                     </select>
                 </div>
 
-                <h4>Documents</h4>
-                <div class="document-uploads">
+                <h4>Documents <span class="required">*</span></h4>
+                <!-- <div class="document-uploads">
                     <div *ngFor="
               let doc of [
                 'passport_size_photo',
@@ -132,17 +154,47 @@
                 'pan_card',
                 'company_proof'
               ]
-            " class="file-upload-item">
-                        <label>{{ doc.replace('_', ' ') | titlecase }}</label>
-                        <input type="file" class="inp-cus" (change)="onFileChange($event, doc)" accept="image/*,.pdf" />
+            " class="file-upload-item"> -->
+                <!-- <label>{{ doc.replace('_', ' ') | titlecase }}</label>
+                        <input type="file" class="inp-cus" (change)="onFileChange($event)" accept="image/*,.pdf" /> -->
+                <div class="document-uploads">
+
+
+                    <div class="form-group">
+                        <label for="Passport">Passport Size Photo</label>
+                        <input type="file" class="inp-cus" (change)="onFilePassportChange($event)"
+                            accept="image/*,.pdf" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Passport">Rental Agreement</label>
+                        <input type="file" class="inp-cus" (change)="onFileRentalChange($event)"
+                            accept="image/*,.pdf" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Passport">Cancelled Cheque Leaf</label>
+                        <input type="file" class="inp-cus" (change)="onFileChequeChange($event)"
+                            accept="image/*,.pdf" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Passport">Pan Card</label>
+                        <input type="file" class="inp-cus" (change)="onFilePanChange($event)" accept="image/*,.pdf" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Passport">Company Proof</label>
+                        <input type="file" class="inp-cus" (change)="onFileCompanyChange($event)"
+                            accept="image/*,.pdf" />
                     </div>
                 </div>
+                <!-- </div> -->
 
                 <div class="form-navigation">
                     <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
                     <button type="submit" [disabled]="!isDocumentsValid()" class="btn-add">
                         Save and continue
                     </button>
+                    <!-- <button type="button" (click)="submitDocumentForm()" class="btn-add">
+                        submitDocumentForm
+                    </button> -->
                 </div>
             </form>
         </div>
@@ -154,12 +206,24 @@
                     <label>Account Holder Name <span class="required">*</span></label>
                     <input type="text" formControlName="account_holder_name" class="inp-cus"
                         placeholder="Enter Account Holder Name" />
+                    <div *ngIf="
+              accountForm.get('account_holder_name')?.invalid &&
+              accountForm.get('account_holder_name')?.touched
+            " class="error">
+                        Account Holder Name is required.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label>Account Number <span class="required">*</span></label>
                     <input type="text" formControlName="account_number" class="inp-cus"
                         placeholder="Enter Account Number" />
+                    <div *ngIf="
+              accountForm.get('account_number')?.invalid &&
+              accountForm.get('account_number')?.touched
+            " class="error">
+                        Account Number is required.
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -169,11 +233,23 @@
                         <option value="savings">Savings</option>
                         <option value="current">Current</option>
                     </select>
+                    <div *ngIf="
+              accountForm.get('account_type')?.invalid &&
+              accountForm.get('account_type')?.touched
+            " class="error">
+                        Account Type is required.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label>IFSC Code <span class="required">*</span></label>
                     <input type="text" formControlName="ifsc_code" class="inp-cus" placeholder="Enter IFSC Code" />
+                    <div *ngIf="
+              accountForm.get('ifsc_code')?.invalid &&
+              accountForm.get('ifsc_code')?.touched
+            " class="error">
+                        IFSC Code is required.
+                    </div>
                 </div>
 
                 <div class="form-navigation">
@@ -210,9 +286,25 @@
 
             <div class="review-block">
                 <h3>Uploaded Documents</h3>
-                <p *ngFor="let key of (uploadedFiles | keyvalue)">
-                    {{ key.key.replace('_', ' ') | titlecase }}:
-                    <strong>{{ key.value ? 'Uploaded' : 'Missing' }}</strong>
+                <p>
+                    Passport Size Photo:
+                    <strong>{{ passport_sizephoto ? passport_sizephoto.name : 'Missing' }}</strong>
+                </p>
+                <p>
+                    Rental Agreement:
+                    <strong>{{ RentalAggrement ? RentalAggrement.name : 'Missing' }}</strong>
+                </p>
+                <p>
+                    Cancelled Cheque Leaf:
+                    <strong>{{ ChequeLeaf ? ChequeLeaf.name : 'Missing' }}</strong>
+                </p>
+                <p>
+                    PAN Card:
+                    <strong>{{ Pancard ? Pancard.name : 'Missing' }}</strong>
+                </p>
+                <p>
+                    Company Proof:
+                    <strong>{{ Company_proof ? Company_proof.name : 'Missing' }}</strong>
                 </p>
             </div>
 

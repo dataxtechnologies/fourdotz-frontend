@@ -117,11 +117,15 @@ export class AssociationListComponent {
           );
           this.tableLoading = false;
         } else {
+          this.Associationlist2 = []
+          this.Associationlist1.initialize(this.Associationlist2, 8);
           this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
+        this.Associationlist2 = []
+        this.Associationlist1.initialize(this.Associationlist2, 8);
         this.tableLoading = false;
         console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');

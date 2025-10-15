@@ -20,6 +20,7 @@
                                     <th>Resident Name</th>
                                     <th>Resident Type</th>
                                     <th>Date</th>
+                                    <th>Type</th>
                                     <th>Status</th>
                                     <th>View</th>
                                 </tr>
@@ -43,16 +44,21 @@
                                         <td data-label="Resident Name">{{ item.resident_name }}</td>
                                         <td data-label="Resident Type">{{ item.resident_type }}</td>
                                         <td data-label="Date">{{ item.created_time.$date | date:'dd-MMM-yyyy' }}</td>
+                                        <td data-label="Resident Type">{{ item.invoice_type }}</td>
 
                                         <!-- Status Logic -->
-                                        <td data-label="Status">
-                                            <ng-container [ngSwitch]="getStatus(item)">
-                                                <span *ngSwitchCase="'Pending'"
-                                                    class="badge badge-warning">Pending</span>
-                                                <span *ngSwitchCase="'Paid'" class="badge badge-success">Paid</span>
-                                                <span *ngSwitchCase="'Overdue'"
-                                                    class="badge badge-danger">Overdue</span>
+                                         <td data-label="Status">
+                                            <ng-container *ngIf="item.payment_status; else notPaid">
+                                                <span class="status paid">Paid</span>
                                             </ng-container>
+                                            <ng-template #notPaid>
+                                                <span class="status" [ngClass]="{
+                                                    overdue: isOverdue(item.created_time.$date),
+                                                    pending: !isOverdue(item.created_time.$date)
+                                                    }">
+                                                    {{ isOverdue(item.created_time.$date) ? 'Overdue' : 'Pending' }}
+                                                </span>
+                                            </ng-template>
                                         </td>
 
                                         <!-- Icons -->

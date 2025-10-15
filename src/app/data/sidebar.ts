@@ -11,38 +11,38 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Dashboard',
     icon: '/assets/icons/SA-home.svg',
     route: '/Superadmin/Dashboard',
-    allowedRole: 'super_admin'
+    allowedRole: 'superadmin'
   },
   {
     label: 'Association',
     icon: '/assets/icons/SA-Association.svg',
     route: '/Superadmin/Association-list',
-    allowedRole: 'super_admin'
+    allowedRole: 'superadmin'
   },
   
   {
     label: 'Dashboard',
     icon: '/assets/icons/grids1.svg',
     route: '/Association/Dashboard',
-    allowedRole: 'hoa_admin'
+    allowedRole: 'association'
   },
   {
     label: 'Properties',
     icon: '/assets/icons/house.svg',
     route: '/Association/properties-list',
-    allowedRole: 'hoa_admin'
+    allowedRole: 'association'
   },
   {
     label: 'Residents',
     icon: '/assets/icons/ai-users.svg',
     route: '/Association/residents-list',
-    allowedRole: 'hoa_admin'
+    allowedRole: 'association'
   }, 
   {
     label: 'Maintenance',
     icon: '/assets/icons/money-recive.svg',
     route: '/Association/Maintenance-list',
-    allowedRole: 'hoa_admin'
+    allowedRole: 'association'
   },
   {
     label: 'Dashboard',

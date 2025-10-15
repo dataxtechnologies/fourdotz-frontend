@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ToastrService } from 'ngx-toastr';
+import { OwnerServiceService } from '../../services/owner/owner-service.service';
+import { AssociationServiceService } from '../../services/association/association-service.service';
 
 @Component({
   selector: 'app-add-vehicle',
@@ -18,7 +20,9 @@ export class AddVehicleComponent implements OnInit {
 
   vehicleForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private modal: ModalService, private apiService: ApiserviceService, private Toast: ToastrService) {}
+  constructor(private fb: FormBuilder, private modal: ModalService, private apiService: ApiserviceService, private Toast: ToastrService,
+    private OwnerService : OwnerServiceService, private AssociationService: AssociationServiceService
+  ) {}
 
   ngOnInit(): void {
     this.vehicleForm = this.fb.group({
@@ -59,7 +63,8 @@ export class AddVehicleComponent implements OnInit {
       next: (res: any) => {
         if (res?.success) {
           this.Toast.success(res.message, 'Success')
-          // this.AssociationService.triggerAssociationOwner(res);
+          this.OwnerService.triggerVehicleAdd(res);
+          this.AssociationService.triggervehicleAdd(res);
           this.closeModal();
         } else {
            this.Toast.warning(res.message, 'Warning')

@@ -29,8 +29,13 @@ interface Step {
 })
 export class AssociationOnboardComponent implements OnInit {
   user_id = sessionStorage.getItem('user_id');
-  userData: any
-
+  userData: any;
+  passport_sizephoto: File | null = null;
+  RentalAggrement: File | null = null;
+  selectedFile: File | null = null;
+  ChequeLeaf: File | null = null;
+  Pancard: File | null = null;
+  Company_proof: File | null = null;
 
   steps: Step[] = [
     {
@@ -71,20 +76,12 @@ export class AssociationOnboardComponent implements OnInit {
 
   loginbtn = false;
 
-  uploadedFiles: { [key: string]: File | null } = {
-    passport_size_photo: null,
-    rental_agreement: null,
-    cancelled_cheque_leaf: null,
-    pan_card: null,
-    company_proof: null,
-  };
-
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private apiService: ApiserviceService,
     private router: Router,
-    private Toast : ToastrService
+    private Toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -125,27 +122,31 @@ export class AssociationOnboardComponent implements OnInit {
 
   /** Navigation **/
   goToNextStep(): void {
-    if (this.currentStep === 1) {
-      if (this.inputForm.invalid) {
-        this.inputForm.markAllAsTouched();
-        return;
-      }
-      this.steps[0].isComplete = true;
-      this.currentStep = 2;
-    } else if (this.currentStep === 2) {
-      if (!this.isDocumentsValid()) return;
-      this.steps[1].isComplete = true;
-      this.currentStep = 3;
-    } else if (this.currentStep === 3) {
-      if (this.accountForm.invalid) {
-        this.accountForm.markAllAsTouched();
-        return;
-      }
-      this.steps[2].isComplete = true;
-      this.currentStep = 4;
+  if (this.currentStep === 1) {
+    if (this.inputForm.invalid) {
+      this.inputForm.markAllAsTouched();
+      return;
     }
-    this.updateStepStatus();
+    this.steps[0].isComplete = true;
+    this.currentStep = 2;
+  } else if (this.currentStep === 2) {
+    if (!this.isDocumentsValid()) {
+      // Optionally show a toast here
+      this.Toast.warning('Please upload all required documents', 'Warning');
+      return;
+    }
+    this.steps[1].isComplete = true;
+    this.currentStep = 3;
+  } else if (this.currentStep === 3) {
+    if (this.accountForm.invalid) {
+      this.accountForm.markAllAsTouched();
+      return;
+    }
+    this.steps[2].isComplete = true;
+    this.currentStep = 4;
   }
+  this.updateStepStatus();
+}
 
   goToPreviousStep(): void {
     if (this.currentStep > 1) {
@@ -161,26 +162,39 @@ export class AssociationOnboardComponent implements OnInit {
   }
 
   /** File Upload **/
-  onFileChange(event: any, fieldName: string): void {
-    const file = event.target.files?.[0] || null;
-    this.uploadedFiles[fieldName] = file;
-  }
+  onFilePassportChange(event: Event) {
+  const file = event.target as HTMLInputElement;
+  if (file.files && file.files.length > 0) {
+      this.passport_sizephoto = file.files[0];
+    }
+  // if (file) this.passport_sizephoto = file.files[0];
+}
+onFileRentalChange(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) this.RentalAggrement = file;
+}
+onFileChequeChange(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) this.ChequeLeaf = file;
+}
+onFilePanChange(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) this.Pancard = file;
+}
+onFileCompanyChange(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) this.Company_proof = file;
+}
 
-  /** Validate all documents **/
-  isDocumentsValid(): boolean {
-    const requiredDocs = [
-      'passport_size_photo',
-      'rental_agreement',
-      'cancelled_cheque_leaf',
-      'pan_card',
-      'company_proof',
-    ];
-    const allDocsUploaded = requiredDocs.every(
-      (doc) => this.uploadedFiles[doc] !== null
-    );
-    return allDocsUploaded && this.documentForm.valid;
-  }
-
+isDocumentsValid(): boolean {
+  return (
+    this.passport_sizephoto != null &&
+    this.RentalAggrement != null &&
+    this.ChequeLeaf != null &&
+    this.Pancard != null &&
+    this.Company_proof != null
+  );
+}
   /** Submit Input Form **/
   submitInputForm(): void {
     const payload = {
@@ -198,15 +212,15 @@ export class AssociationOnboardComponent implements OnInit {
     this.apiService.AssociationDataOnboard<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
-          this.Toast.success(res.message, 'Success')
+          this.Toast.success(res.message, 'Success');
           this.submitDocumentForm();
         } else {
-          this.Toast.warning(res.message, 'Warning')
+          this.Toast.warning(res.message, 'Warning');
           console.warn('Failed to submit input form');
         }
       },
       error: (err: any) => {
-        this.Toast.error(err.error.error.message, 'Failed')
+        this.Toast.error(err.error.error.message, 'Failed');
         console.error('Error submitting input form:', err);
       },
     });
@@ -214,18 +228,21 @@ export class AssociationOnboardComponent implements OnInit {
 
   /** Submit Document Form **/
   submitDocumentForm(): void {
-    const formData = new FormData();
+      const formData = new FormData();
 
-    Object.keys(this.uploadedFiles).forEach((key) => {
-      const file = this.uploadedFiles[key];
-      if (file) formData.append(key, file);
-    });
+  if (this.passport_sizephoto) formData.append('passport_size_photo', this.passport_sizephoto);
+  if (this.RentalAggrement) formData.append('rental_agreement', this.RentalAggrement);
+  if (this.ChequeLeaf) formData.append('cancelled_cheque_leaf', this.ChequeLeaf);
+  if (this.Pancard) formData.append('pan_card', this.Pancard);
+  if (this.Company_proof) formData.append('company_proof', this.Company_proof);
+  formData.append('company_proof_type', this.documentForm.get('company_proof_type')?.value)
 
-    Object.entries(this.documentForm.value).forEach(([key, value]) => {
-      formData.append(key, value as string);
-    });
+  console.log('Uploaded files:');
+  formData.forEach((value, key) => {
+    console.log(key, value);
+  });
 
-    this.apiService.AssociationDocumentOnboard<any>(formData).subscribe({
+    this.apiService.AssociationDocumentOnboard<FormData>(formData).subscribe({
       next: (res: any) => {
         if (res?.success) {
            this.Toast.success(res.message, 'Success')
@@ -272,7 +289,7 @@ export class AssociationOnboardComponent implements OnInit {
     if (
       this.inputForm.invalid ||
       this.accountForm.invalid ||
-      !this.isDocumentsValid()
+       !this.isDocumentsValid()
     ) {
       console.warn('Please complete all sections before submitting.');
       return;
@@ -283,20 +300,20 @@ export class AssociationOnboardComponent implements OnInit {
     console.log('Onboarding Completed!');
   }
 
-logout(): void {
+  logout(): void {
     this.apiService.logoutApi<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
           sessionStorage.clear();
           this.router.navigateByUrl('/auth/sign-in');
-          this.Toast.success(res.message, 'Successs')
+          this.Toast.success(res.message, 'Successs');
           console.log(res.message || 'Logged out successfully');
         } else {
-          this.Toast.success(res.message, 'Failed')
+          this.Toast.success(res.message, 'Failed');
         }
       },
       error: (err: any) => {
-        this.Toast.success(err.error.error.message, 'Failed')
+        this.Toast.success(err.error.error.message, 'Failed');
         console.error('Logout failed:', err);
       },
     });

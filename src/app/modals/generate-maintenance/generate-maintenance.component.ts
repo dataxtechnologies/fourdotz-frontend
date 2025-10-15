@@ -11,6 +11,7 @@ import { ModalService } from 'ngx-modal-ease';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { TableService } from '../../services/tableservice.service';
 import { ToastrService } from 'ngx-toastr';
+import { AssociationServiceService } from '../../services/association/association-service.service';
 
 @Component({
   selector: 'app-generate-maintenance',
@@ -25,7 +26,7 @@ export class GenerateMaintenanceComponent implements OnInit {
   propertylist1: any;
   propertylist2: any[] = [];
   filteredList: any[] = [];
-
+  btnloading = false
   dropdownOpen = false;
   selectedProperty: string | null = null;
   searchTerm = '';
@@ -37,7 +38,8 @@ export class GenerateMaintenanceComponent implements OnInit {
     private fb: FormBuilder,
     private modal: ModalService,
     private Toast: ToastrService,
-    private apiService: ApiserviceService
+    private apiService: ApiserviceService,
+    private AssociationService : AssociationServiceService
   ) {
     this.propertylist1 = new TableService();
   }
@@ -137,30 +139,42 @@ export class GenerateMaintenanceComponent implements OnInit {
 
   // ✅ Submit
   onSubmit() {
+  this.btnloading = true
     if (this.maintenanceForm.valid) {
-      const payload = {
-        property_id: this.maintenanceForm.value.property_id,
-        duedate: this.maintenanceForm.value.due_date,
-        additional_charges: [
-          {
-            item_name: this.maintenanceForm.value.model,
-            charges: this.maintenanceForm.value.vehicleNumber,
-          },
-        ],
-      };
+      const additional_charges = this.items.value.map((item: any) => ({
+      item_name: item.description,
+      charges: Number(item.amount),
+    }));
+
+    // 🟩 Calculate total amount
+    const total_amount = additional_charges.reduce(
+      (sum: number, item: any) => sum + item.charges,
+      0
+    );
+
+    // 🟩 Prepare final payload
+    const payload = {
+      property_id: this.maintenanceForm.value.property_id,
+      due_date: this.maintenanceForm.value.due_date,
+      additional_charges,
+      total_amount, // ✅ Added total amount here
+    };
 
       this.apiService.generateMaintenanceInvoice<any>(payload).subscribe({
         next: (res: any) => {
           if (res?.success) {
+            this.btnloading = false
             this.Toast.success(res.message, 'Success');
-            // this.AssociationService.triggerAssociationOwner(res);
+            this.AssociationService.triggerMaintenanceInv(res);
             this.closeModal();
           } else {
+            this.btnloading = false
             this.Toast.warning(res.message, 'Warning');
             // this.loginbtn = true;
           }
         },
         error: (err: any) => {
+          this.btnloading = false
           this.Toast.error(err.error.error.message, 'Failed');
           console.error('Login failed:', err.error.error.data);
           // alert(err.message || 'Login failed, please try again.');
@@ -168,6 +182,7 @@ export class GenerateMaintenanceComponent implements OnInit {
       });
       // this.closeModal();
     } else {
+       this.btnloading = false
       this.maintenanceForm.markAllAsTouched();
     }
   }

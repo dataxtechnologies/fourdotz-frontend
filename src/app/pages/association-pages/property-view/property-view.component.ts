@@ -43,6 +43,12 @@ export class PropertyViewComponent {
       }
     });
 
+     this.AssociationService.VehicleStatus$.subscribe((Addvehicle) => {
+      if (Addvehicle) {
+        this.ViewpropertybyId(this.PropertyId);
+      }
+    });
+
 
     this.ViewpropertybyId(this.PropertyId)
   }

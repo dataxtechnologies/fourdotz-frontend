@@ -16,9 +16,9 @@
         </div>
 
 
-        <div>
+        <!-- <div>
             <button class="submit-btn">Edit</button>
-        </div>
+        </div> -->
 
     </div>
     <div class="sec-cont">
@@ -66,26 +66,26 @@
             </div>
             <div class="user-info">
                 <h5 class="label">Due Date</h5>
-                <p>{{ Associationdata.due_date.$date | date:'dd-MMM-yyyy' }}</p>
+                <p>{{ Associationdata.due_date }} of Month</p>
             </div>
-            <div *ngIf="Associationdata.property_type === 'apartment'">
-                <div class="user-info">
+            <!-- <div > -->
+                <!-- <div class="user-info" *ngIf="Associationdata.property_type === 'Apartment'">
                     <h5 class="label">Building Type</h5>
                     <p>{{ Associationdata.property_no }}</p>
-                </div>
-                <div class="user-info">
+                </div> -->
+                <!-- <div class="user-info" *ngIf="Associationdata.property_type === 'Apartment'">
                     <h5 class="label">Tower Name</h5>
                     <p>{{ Associationdata.property_no }}</p>
                 </div>
-                <div class="user-info">
+                <div class="user-info" *ngIf="Associationdata.property_type === 'Apartment'">
                     <h5 class="label">Block Name</h5>
                     <p>{{ Associationdata.property_no }}</p>
-                </div>
-                <div class="user-info">
+                </div> -->
+                <div class="user-info" *ngIf="Associationdata.property_type === 'Apartment'">
                     <h5 class="label">Floor</h5>
-                    <p>{{ Associationdata.property_no }}</p>
+                    <p>{{ Associationdata.floor }}</p>
                 </div>
-            </div>
+            <!-- </div> -->
 
         </div>
 
@@ -114,8 +114,8 @@
                             <div class="d-flex gap-3">
                                 <button class="btn-add" (click)="addowner(PropertyId)"
                                     *ngIf="!Associationdata.owner_details?._id">+ Add Owner</button>
-                                <button class="btn-add" (click)="addowner(PropertyId)"
-                                    *ngIf="Associationdata.owner_details?._id">Edit Owner</button>
+                                <!-- <button class="btn-add" (click)="addowner(PropertyId)"
+                                    *ngIf="Associationdata.owner_details?._id">Edit Owner</button> -->
                             </div>
                         </div>
 
@@ -147,8 +147,8 @@
                             <div class="d-flex gap-3">
                                 <button class="btn-add" (click)="addTenant(PropertyId)"
                                     *ngIf="!Associationdata.tenant_details?._id">+ Add Tenant</button>
-                                <button class="btn-add" (click)="addTenant(PropertyId)"
-                                    *ngIf="Associationdata.tenant_details?._id">Edit Tenant</button>
+                                <!-- <button class="btn-add" (click)="addTenant(PropertyId)"
+                                    *ngIf="Associationdata.tenant_details?._id">Edit Tenant</button> -->
                             </div>
                         </div>
 
