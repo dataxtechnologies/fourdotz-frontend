@@ -1,0 +1,100 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3 class="heading-font">Edit Tenant</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="tenantForm" (ngSubmit)="onSubmit()">
+            <!-- First Name -->
+            <div class="inp-cont">
+                <label>First Name <span class="required">*</span></label>
+                <input type="text" formControlName="firstName" class="inp-cus" placeholder="Enter First Name" />
+                <div *ngIf="tenantForm.get('firstName')?.touched && tenantForm.get('firstName')?.invalid"
+                    class="error-text">
+                    First name is required (min 2 characters)
+                </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="inp-cont">
+                <label>Last Name <span class="required">*</span></label>
+                <input type="text" formControlName="lastName" class="inp-cus" placeholder="Enter Last Name" />
+                <div *ngIf="tenantForm.get('lastName')?.touched && tenantForm.get('lastName')?.invalid"
+                    class="error-text">
+                    Last name is required (min 2 characters)
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="inp-cont">
+                <label>Email ID <span class="required">*</span></label>
+                <input type="email" formControlName="email" class="inp-cus" placeholder="Enter Email" readonly/>
+                <div *ngIf="tenantForm.get('email')?.touched && tenantForm.get('email')?.invalid" class="error-text">
+                    Enter a valid email
+                </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="inp-cont">
+                <label>Phone Number <span class="required">*</span></label>
+                <input type="tel" formControlName="phone" class="inp-cus" maxlength="10"
+                    placeholder="Enter Phone Number" readonly/>
+                <div *ngIf="tenantForm.get('phone')?.touched && tenantForm.get('phone')?.invalid" class="error-text">
+                    Enter a valid 10-digit phone number
+                </div>
+            </div>
+
+            <!-- Rented At -->
+            <div class="inp-cont">
+                <label>Rented At <span class="required">*</span></label>
+                <input type="date" formControlName="rentedAt" class="inp-cus" />
+                <div *ngIf="tenantForm.get('rentedAt')?.touched && tenantForm.get('rentedAt')?.invalid"
+                    class="error-text">
+                    Rented date is required
+                </div>
+            </div>
+
+            <!-- Advance Paid -->
+            <div class="inp-cont">
+                <label>Advance Paid <span class="required">*</span></label>
+                <input type="number" formControlName="advancePaid" class="inp-cus" placeholder="Enter Advance Amount" />
+                <div *ngIf="tenantForm.get('advancePaid')?.touched && tenantForm.get('advancePaid')?.invalid"
+                    class="error-text">
+                    Enter valid advance amount
+                </div>
+            </div>
+
+            <!-- Estimated Rent -->
+            <div class="inp-cont">
+                <label>Estimated Rent <span class="required">*</span></label>
+                <input type="number" formControlName="estimatedRent" class="inp-cus"
+                    placeholder="Enter Estimated Rent" />
+                <div *ngIf="tenantForm.get('estimatedRent')?.touched && tenantForm.get('estimatedRent')?.invalid"
+                    class="error-text">
+                    Enter valid estimated rent
+                </div>
+            </div>
+
+            <!-- Maintenance Paid By -->
+            <div class="inp-cont">
+                <label>Maintenance Paid by <span class="required">*</span></label>
+                <select formControlName="maintenancePaidBy" class="inp-cus">
+                    <option value="" disabled>Select Options</option>
+                    <option value="Owner">Owner</option>
+                    <option value="Tenant">Tenant</option>
+                </select>
+                <div *ngIf="tenantForm.get('maintenancePaidBy')?.touched && tenantForm.get('maintenancePaidBy')?.invalid"
+                    class="error-text">
+                    Please select who pays maintenance
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="submit-btn" [disabled]="tenantForm.invalid"
+                    *ngIf="submitbtn">Update</button>
+                <button type="button" class="processing-btn" *ngIf="!submitbtn">Processing...</button>
+            </div>
+        </form>
+    </div>
+</section>

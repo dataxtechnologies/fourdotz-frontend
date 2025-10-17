@@ -69,7 +69,7 @@ export class AddPetComponent implements OnInit {
         if (res?.success) {
           this.Toast.success(res.message, 'Success')
           this.OwnerService.triggerPetAdd(res);
-          this.AssociationService.triggerAssociationOwner(res);
+          this.AssociationService.triggerAssociationpet(res);
           this.closeModal();
         } else {
            this.Toast.warning(res.message, 'Warning')

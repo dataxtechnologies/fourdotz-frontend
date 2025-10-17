@@ -46,7 +46,8 @@
             </div>
 
             <div class="mb-3">
-                <button class="submit-btn" type="submit">Submit</button>
+                <button class="submit-btn" type="submit" *ngIf="submitbtn">Submit</button>
+                <button class="processing-btn" type="button" *ngIf="!submitbtn">Processing...</button>
             </div>
         </form>
 

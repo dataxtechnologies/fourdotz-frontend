@@ -39,13 +39,13 @@ export class AssociationDashboardComponent {
     } else {
       console.log('No user data found in sessionStorage');
     }
-    this.getpropertiesdata(this.associationId);
+    this.getpropertiesdata();
 
     this.Dashboarddata()
   }
 
-  getpropertiesdata(user_id: any) {
-    this.apiService.propertiesbyAssociation<any>(user_id).subscribe({
+  getpropertiesdata() {
+    this.apiService.PropertyListinAssociation<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.propertylist2 = res.data;

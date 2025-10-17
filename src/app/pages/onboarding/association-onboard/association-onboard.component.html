@@ -208,8 +208,7 @@
                         placeholder="Enter Account Holder Name" />
                     <div *ngIf="
               accountForm.get('account_holder_name')?.invalid &&
-              accountForm.get('account_holder_name')?.touched
-            " class="error">
+              accountForm.get('account_holder_name')?.touched" class="error">
                         Account Holder Name is required.
                     </div>
                 </div>

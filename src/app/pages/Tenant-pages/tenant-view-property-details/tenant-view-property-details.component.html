@@ -3,7 +3,7 @@
         <!-- From Uiverse.io by karthik092726122003 -->
 
         <div class="ass-h">
-            <h3>H101 - Apartment</h3>
+            <h3>{{ TenantPropertyData[0].property_no }} - {{ TenantPropertyData[0].property_type }}</h3>
         </div>
 
     </div>
@@ -36,7 +36,7 @@
             </div>
             <div class="user-info">
                 <h5 class="label">BHK</h5>
-                <p>{{ TenantPropertyData[0].property_no }}</p>
+                <p>{{ TenantPropertyData[0].bhk }}</p>
             </div>
             <div class="user-info">
                 <h5 class="label">Resident</h5>
@@ -52,7 +52,7 @@
             </div>
             <div class="user-info">
                 <h5 class="label">Due Date</h5>
-                <p>{{ TenantPropertyData[0].due_date.$date | date:'dd-MMM-yyyy' }}</p>
+                <p>{{ TenantPropertyData[0].due_date}}</p>
             </div>
             <!-- <div > -->
             <!-- <div class="user-info" *ngIf="TenantPropertyData[0].property_type === 'apartment'">
@@ -128,6 +128,10 @@
           {label: 'Tenant Name', value: TenantPropertyData[0].tenant_name},
           {label: 'Phone Number', value: TenantPropertyData[0].tenant_mobile},
           {label: 'Email', value: TenantPropertyData[0].tenant_email},
+           {label: 'Advance Paid', value: TenantPropertyData[0].advance_amount},
+          {label: 'Estimated Rent', value: TenantPropertyData[0]?.monthly_rent_amount},
+          {label: 'Maintenance Amount', value: TenantPropertyData[0]?.maintenance_amount},
+          {label: 'Maintenance Paid By', value: TenantPropertyData[0]?.maintenance_paid_by},
           {label: 'Rented At', value: TenantPropertyData[0].tenant_rented_at?.$date | date:'dd-MMM-yyyy'}
         ]">
                                     <div class="user-info">
@@ -153,7 +157,13 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Pet Details</h5>
                             <button class="btn-add" (click)="addpet(TenantPropertyData[0]._id)"
-                                *ngIf="!TenantPropertyData[0].pet || TenantPropertyData[0].pet.length === 0">Add Pet</button>
+                                *ngIf="!TenantPropertyData[0].pet || TenantPropertyData[0].pet.length === 0">Add
+                                Pet</button>
+                            <button class="btn-add"
+                                (click)="EditPet(TenantPropertyData[0].pet[0], TenantPropertyData[0]._id)"
+                                *ngIf="TenantPropertyData[0].pet && TenantPropertyData[0].pet.length > 0">
+                                Edit Pet
+                            </button>
                         </div>
 
                         <div class="card-body" *ngIf="TenantPropertyData[0].pet?.length > 0; else nodata">
@@ -184,8 +194,14 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Vehicle Details</h5>
                             <button class="btn-add" (click)="addVehicle(TenantPropertyData[0]._id)"
-                                *ngIf="!TenantPropertyData[0].vehicle || TenantPropertyData[0].vehicle.length === 0">+ Add
+                                *ngIf="!TenantPropertyData[0].vehicle || TenantPropertyData[0].vehicle.length === 0">+
+                                Add
                                 Vehicle</button>
+                            <button class="btn-add"
+                                (click)="EditVehicle(TenantPropertyData[0].vehicle[0], TenantPropertyData[0]._id)"
+                                *ngIf="TenantPropertyData[0].vehicle && TenantPropertyData[0].vehicle.length > 0">
+                                Edit vehicle
+                            </button>
                         </div>
 
                         <div class="card-body" *ngIf="TenantPropertyData[0].vehicle?.length > 0; else nodatavehicle">

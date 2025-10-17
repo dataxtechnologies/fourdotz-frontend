@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { OwnerServiceService } from '../../../services/owner/owner-service.service';
+import { EditPetDataComponent } from '../../../modals/edit-pet-data/edit-pet-data.component';
+import { EditVehicleDataComponent } from '../../../modals/edit-vehicle-data/edit-vehicle-data.component';
 
 @Component({
   selector: 'app-tenant-view-property-details',
@@ -134,4 +136,43 @@ export class TenantViewPropertyDetailsComponent {
       },
     });
   }
+
+
+   EditPet(PetData: any, propertyId: any) {
+      // AddOwnerComponent
+      this.ModalService.open(EditPetDataComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        data: {
+          PetDetails: PetData,
+          propertyId: propertyId,
+        },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
+  
+    EditVehicle(VehicleData: any, associationId: any) {
+      // AddOwnerComponent
+      this.ModalService.open(EditVehicleDataComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        data: {
+          vehicleDetails: VehicleData,
+          associationId: associationId,
+        },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
 }

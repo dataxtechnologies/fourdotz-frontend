@@ -29,6 +29,8 @@ export class DashboardLayoutComponent {
   sidebarItems: SidebarItem[] = SIDEBAR_ITEMS;
   sidebarClosed = true;
   currentRoute = '';
+  loadingUserData = false; // flag to control loader visibility
+
 
   user_type = sessionStorage.getItem('user_type');
   user_id = sessionStorage.getItem('user_id');
@@ -91,24 +93,26 @@ export class DashboardLayoutComponent {
 
   // Get user data with proper token
   getUserData(data: any) {
+     if (this.user_type === 'association') {
+    this.loadingUserData = true; // show loader before API call
+  }
     this.apiService.UserInfo<any>(data).subscribe({
       next: (res: any) => {
-        if (res?.success) {
-          
-          
-          const userdata = res.data;
-          sessionStorage.setItem('userdata', JSON.stringify(userdata));
-          if (this.user_type === 'association') {
-            if (userdata.document_uploaded === false) {
-              this.router.navigateByUrl('/onboarding/user-data');
-            } 
-          }
-        } else {
-          
-          // this.tableLoading = false;
-          // alert(res.message || 'Logout failed, please try again.');
+      if (res?.success) {
+        const userdata = res.data;
+        sessionStorage.setItem('userdata', JSON.stringify(userdata));
+
+        if (this.user_type === 'association') {
+          if (userdata.document_uploaded === false) {
+            this.router.navigateByUrl('/onboarding/user-data');
+          } 
         }
-      },
+      }
+
+      // ✅ hide loader after check completes (success or not)
+      this.loadingUserData = false;
+    },
+
       error: (err: any) => {
         console.log('tata');
         // this.tableLoading = false;

@@ -1,0 +1,188 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3 class="modal-header">Edit Property</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="propertyForm" (ngSubmit)="editPropertybyAssociation()">
+            <div class="form-grid">
+
+                <div class="inp-cont">
+                    <label>Property No <span class="required">*</span></label>
+                    <input type="text" formControlName="propertyNo" class="inp-cus"
+                        placeholder="Enter your Property No">
+                    <div *ngIf="propertyForm.get('propertyNo')?.touched && propertyForm.get('propertyNo')?.invalid"
+                        class="error-text">
+                        Property No is required
+                    </div>
+                </div>
+
+                <div class="inp-cont">
+                    <label>Area <span class="required">*</span> <span style="font-size: 12px;"> (sq.ft)</span></label>
+                    <input type="text" formControlName="area" class="inp-cus" placeholder="Enter Area">
+                    <div *ngIf="propertyForm.get('area')?.touched && propertyForm.get('area')?.invalid"
+                        class="error-text">
+                        Area is required
+                    </div>
+                </div>
+
+                <div class="inp-cont">
+                    <label>Facing <span class="required">*</span></label>
+                    <select formControlName="facing" class="inp-cus">
+                        <option value="" disabled>Select Facing</option>
+                        <option value="North">North</option>
+                        <option value="South">South</option>
+                        <option value="East">East</option>
+                        <option value="West">West</option>
+                    </select>
+                    <div *ngIf="propertyForm.get('facing')?.touched && propertyForm.get('facing')?.invalid"
+                        class="error-text">
+                        Facing is required
+                    </div>
+                </div>
+
+                <div class="inp-cont">
+                    <label>Electricity Consumer No <span class="required">*</span></label>
+                    <input type="text" formControlName="electricityNo" class="inp-cus"
+                        placeholder="Enter Electricity Consumer No">
+                    <div *ngIf="propertyForm.get('electricityNo')?.touched && propertyForm.get('electricityNo')?.invalid"
+                        class="error-text">
+                        Electricity No is required
+                    </div>
+                </div>
+
+                <div class="inp-cont">
+                    <label>Parking Slot Number <span class="required">*</span></label>
+                    <input type="text" formControlName="parkingSlot" class="inp-cus"
+                        placeholder="Enter Parking Slot Number">
+                    <div *ngIf="propertyForm.get('parkingSlot')?.touched && propertyForm.get('parkingSlot')?.invalid"
+                        class="error-text">
+                        Parking Slot is required
+                    </div>
+                </div>
+
+                <div class="inp-cont">
+                    <label>Gasline Number</label>
+                    <input type="text" formControlName="gaslineNo" class="inp-cus" placeholder="Enter Gasline Number">
+                </div>
+
+                <div class="inp-cont">
+                    <label>Maintenance Amount <span class="required">*</span></label>
+                    <input type="text" formControlName="maintenanceAmount" class="inp-cus"
+                        placeholder="Enter Maintenance Amount">
+                    <div *ngIf="propertyForm.get('maintenanceAmount')?.touched && propertyForm.get('maintenanceAmount')?.invalid"
+                        class="error-text">
+                        Maintenance Amount is required
+                    </div>
+                </div>
+
+                <div class="inp-cont">
+                    <label>Due Date <span class="required">*</span></label>
+                    <select formControlName="dueDate" class="inp-cus">
+  <option value="" disabled>Select Day</option>
+  <option *ngFor="let day of days" [value]="day">{{ day }} of Month</option>
+</select>
+                    <div *ngIf="propertyForm.get('dueDate')?.touched && propertyForm.get('dueDate')?.invalid"
+                        class="error-text">
+                        Due Date is required
+                    </div>
+                </div>
+
+                <div class="inp-cont">
+                    <label>Property Type <span class="required">*</span></label>
+                    <div class="checkbox-group" *ngIf="propertyTypes?.length; else noTypes">
+                        <label class="radio-cus" *ngFor="let type of propertyTypes">
+                            <input type="radio" [value]="type" formControlName="propertyType" />
+                            {{ type }}
+                        </label>
+                    </div>
+
+                    <ng-template #noTypes>
+                        <div>No property types available</div>
+                    </ng-template>
+
+                    <div *ngIf="propertyForm.get('propertyType')?.touched && propertyForm.get('propertyType')?.invalid"
+                        class="error-text">
+                        Property Type is required
+                    </div>
+                </div>
+
+                <div *ngIf="
+    propertyForm.get('propertyType')?.value === 'Villa' ||
+    propertyForm.get('propertyType')?.value === 'Townhouse'
+  " class="inp-cont">
+                    <label>BHK <span class="required">*</span></label>
+                    <input type="number" formControlName="bhk" class="inp-cus" placeholder="Enter BHK" />
+                    <div *ngIf="propertyForm.get('bhk')?.touched && propertyForm.get('bhk')?.invalid"
+                        class="error-text">
+                        BHK is required
+                    </div>
+                </div>
+
+                <ng-container *ngIf="propertyForm.get('propertyType')?.value === 'Apartment'">
+                    <div class="inp-cont">
+                        <label>Building Type <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <label class="radio-cus">
+                                <input type="radio" formControlName="buildingType" value="Block" /> Block
+                            </label>
+                            <label class="radio-cus">
+                                <input type="radio" formControlName="buildingType" value="Tower" /> Tower
+                            </label>
+                        </div>
+                        <div *ngIf="
+        propertyForm.get('buildingType')?.touched &&
+        propertyForm.get('buildingType')?.invalid
+      " class="error-text">
+                            Building Type is required
+                        </div>
+                    </div>
+
+                    <div class="inp-cont">
+                        <label>BHK <span class="required">*</span></label>
+                        <input type="number" formControlName="bhk" class="inp-cus" placeholder="Enter BHK" />
+                        <div *ngIf="propertyForm.get('bhk')?.touched && propertyForm.get('bhk')?.invalid"
+                            class="error-text">
+                            BHK is required
+                        </div>
+                    </div>
+
+                    <div class="inp-cont" *ngIf="propertyForm.get('buildingType')?.value === 'Tower'">
+                        <label>Tower <span class="required">*</span></label>
+                        <input type="text" formControlName="tower" class="inp-cus" placeholder="Enter Tower" />
+                        <div *ngIf="propertyForm.get('tower')?.touched && propertyForm.get('tower')?.invalid"
+                            class="error-text">
+                            Tower is required
+                        </div>
+                    </div>
+
+                    <div class="inp-cont" *ngIf="propertyForm.get('buildingType')?.value === 'Block'">
+                        <label>Block <span class="required">*</span></label>
+                        <input type="text" formControlName="block" class="inp-cus" placeholder="Enter Block" />
+                        <div *ngIf="propertyForm.get('block')?.touched && propertyForm.get('block')?.invalid"
+                            class="error-text">
+                            Block is required
+                        </div>
+                    </div>
+
+                    <div class="inp-cont">
+                        <label>Floor <span class="required">*</span></label>
+                        <input type="text" formControlName="floor" class="inp-cus" placeholder="Enter Floor" />
+                        <div *ngIf="propertyForm.get('floor')?.touched && propertyForm.get('floor')?.invalid"
+                            class="error-text">
+                            Floor is required
+                        </div>
+                    </div>
+                </ng-container>
+
+
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn" *ngIf="submitBtn">Submit</button>
+                <button type="button" class="processing-btn" *ngIf="!submitBtn">Processing</button>
+            </div>
+        </form>
+    </div>
+</section>

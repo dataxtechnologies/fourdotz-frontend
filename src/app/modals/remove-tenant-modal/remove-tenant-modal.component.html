@@ -1,0 +1,30 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3>Remove Tenant Resident</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <p class="warning-text">
+            <strong>Warning:</strong> This action cannot be undone. If you remove this tenant,
+            the tenant’s access to the property will be permanently revoked, and they will
+            no longer be able to view or manage any related property details.
+        </p>
+
+        <div class="inp-cont">
+            <label for="confirmText">To confirm, type <span class="highlight">DELETE</span> below:</label>
+            <input id="confirmText" type="text" [(ngModel)]="confirmationText" placeholder="Type DELETE to confirm"
+                class="inp-cus" />
+        </div>
+
+        <div class="popup-actions">
+            <button class="cancel-btn" (click)="closeModal()">No, Cancel</button>
+            <button class="delete-btn" [disabled]="!canDelete()" (click)="confirmDelete(associationId)" *ngIf="!showprocessingbtn">
+                Yes, Remove Tenant
+            </button>
+            <button class="delete-btn"  disabled *ngIf="showprocessingbtn" (click)="confirmDelete(associationId)">
+                Processing...
+            </button>
+        </div>
+    </div>
+</section>

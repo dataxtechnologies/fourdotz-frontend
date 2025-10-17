@@ -1,4 +1,9 @@
-<header class="navbar-header-main">
+<section *ngIf="user_type === 'association' && loadingUserData" class="loader-section">
+  <img src="assets/logo/fourdotz-logo.png" alt="Loading..." class="loader-img" />
+</section>
+
+
+<header class="navbar-header-main" *ngIf="!loadingUserData">
     <div class="navbar-header">
         <div class="user-greeting">
             <div class="user-image">

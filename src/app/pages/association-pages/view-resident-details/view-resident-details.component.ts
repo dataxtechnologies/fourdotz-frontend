@@ -9,6 +9,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddPropertyComponent } from '../../../modals/add-property/add-property.component';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EditTenantDataComponent } from '../../../modals/edit-tenant-data/edit-tenant-data.component';
+import { EditPetDataComponent } from '../../../modals/edit-pet-data/edit-pet-data.component';
+import { EditVehicleDataComponent } from '../../../modals/edit-vehicle-data/edit-vehicle-data.component';
+import { AssociationServiceService } from '../../../services/association/association-service.service';
+import { ResidentServicesService } from '../../../services/Resident/resident-services.service';
+import { RemoveTenantModalComponent } from '../../../modals/remove-tenant-modal/remove-tenant-modal.component';
 
 @Component({
   selector: 'app-view-resident-details',
@@ -20,12 +26,15 @@ export class ViewResidentDetailsComponent {
   activeTab: string = 'Property';
   Associationdata: any;
   PropertyId: any;
+  associationId: any;
 
   constructor(
     private ModalService: ModalService,
     private apiService: ApiserviceService,
     private route: ActivatedRoute,
-    private Router : Router
+    private Router: Router,
+    private ResidentService: ResidentServicesService,
+    private AssociationService: AssociationServiceService
   ) {}
 
   setTab(tab: string) {
@@ -33,14 +42,61 @@ export class ViewResidentDetailsComponent {
   }
 
   goback() {
-    this.Router.navigateByUrl('/Association/residents-list')
+    this.Router.navigateByUrl('/Association/residents-list');
   }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.PropertyId = params['residentId'] || null;
     });
+    this.AssociationService.OwnerStatus$.subscribe((AddOwner) => {
+      if (AddOwner) {
+        this.ViewpropertybyId(this.PropertyId);
+      }
+    });
+
+    this.AssociationService.PropertyStatus$.subscribe((AddProperty) => {
+      if (AddProperty) {
+        this.ViewpropertybyId(this.PropertyId);
+      }
+    });
+
+    this.AssociationService.petStatus$.subscribe((Addpet) => {
+      if (Addpet) {
+        this.ViewpropertybyId(this.PropertyId);
+      }
+    });
+
+    this.AssociationService.VehicleStatus$.subscribe((Addvehicle) => {
+      if (Addvehicle) {
+        this.ViewpropertybyId(this.PropertyId);
+      }
+    });
+
+     this.AssociationService.RemoveResidentStatus$.subscribe((removeresident) => {
+      if (removeresident) {
+        this.ViewpropertybyId(this.PropertyId);
+      }
+    });
+
+    this.ResidentService.PetStatus$.subscribe((AddPet) => {
+      if (AddPet) {
+        console.log('Parent received data:', AddPet);
+
+        // Refresh property details
+        this.ViewpropertybyId(this.PropertyId);
+      }
+    });
+
+    // this.AssociationService.VehicleStatus$.subscribe((Addvehicle) => {
+    //   if (Addvehicle) {
+    //     this.ViewpropertybyId(this.PropertyId);
+    //   }
+    // });
+
     this.ViewpropertybyId(this.PropertyId);
+
+    this.associationId = this.Associationdata._id;
   }
 
   // grantFullAccess(data: any) {}
@@ -149,7 +205,7 @@ export class ViewResidentDetailsComponent {
       },
     });
   }
- addTenant(propertyId : any) {
+  addTenant(propertyId: any) {
     // AddOwnerComponent
     this.ModalService.open(AddTenantComponent, {
       modal: {
@@ -157,8 +213,8 @@ export class ViewResidentDetailsComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-       data:{
-        PropertyIddata: propertyId
+      data: {
+        PropertyIddata: propertyId,
       },
       actions: {
         click: false,
@@ -175,7 +231,7 @@ export class ViewResidentDetailsComponent {
       },
       overlay: { leave: 'fade-out 0.5s' },
       data: {
-        propertyId: data,
+        associationId: data,
       },
       actions: {
         click: false,
@@ -183,7 +239,7 @@ export class ViewResidentDetailsComponent {
       },
     });
   }
- addVehicle(data : any) {
+  addVehicle(data: any) {
     // AddOwnerComponent
     this.ModalService.open(AddVehicleComponent, {
       modal: {
@@ -191,8 +247,64 @@ export class ViewResidentDetailsComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-       data:{
-        associationId:data
+      data: {
+        associationId: data,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  EditTenant(propertydata: any) {
+    // AddOwnerComponent
+    this.ModalService.open(EditTenantDataComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        TenantDetails: propertydata,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  EditPet(PetData: any, propertyId: any) {
+    // AddOwnerComponent
+    this.ModalService.open(EditPetDataComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        PetDetails: PetData,
+        propertyId: propertyId,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  EditVehicle(VehicleData: any, associationId: any) {
+    // AddOwnerComponent
+    this.ModalService.open(EditVehicleDataComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        vehicleDetails: VehicleData,
+        associationId:associationId
       },
       actions: {
         click: false,
@@ -219,4 +331,22 @@ export class ViewResidentDetailsComponent {
       },
     });
   }
+
+   RemoveTenant(associationId:any){
+      this.ModalService.open(RemoveTenantModalComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        data: {
+          associationId: associationId
+  
+        },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
 }

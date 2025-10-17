@@ -1,0 +1,61 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3>Edit Pet</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="petForm" (ngSubmit)="addPet()">
+            <div class="inp-cont">
+                <label>Pet Name <span class="required">*</span></label>
+                <input type="text" class="inp-cus" placeholder="Enter your Pet Name" formControlName="petName" />
+                <small class="text-danger" *ngIf="isInvalid('petName')">
+                    Pet Name is required.
+                </small>
+            </div>
+
+            <div class="inp-cont">
+                <label>Type <span class="required">*</span></label>
+                <input type="text" class="inp-cus" placeholder="Enter your Pet Type (eg: Dog, Cat)"
+                    formControlName="type" />
+                <small class="text-danger" *ngIf="isInvalid('type')">
+                    Pet Type is required.
+                </small>
+            </div>
+
+            <div class="inp-cont">
+                <label>Breed <span class="required">*</span></label>
+                <input type="text" class="inp-cus" placeholder="Enter your Pet Breed" formControlName="breed" />
+                <small class="text-danger" *ngIf="isInvalid('breed')">
+                    Pet Breed is required.
+                </small>
+            </div>
+
+            <div class="inp-cont">
+                <label>Age <span class="required">*</span></label>
+                <input type="text" class="inp-cus" placeholder="Enter your Pet Age" formControlName="age" />
+                <small class="text-danger" *ngIf="isInvalid('age')">
+                    Enter a valid age.
+                </small>
+            </div>
+
+            <div class="inp-cont">
+                <label>Pet Owned By <span class="required">*</span></label>
+                <select class="inp-cus" formControlName="ownedBy">
+                    <option value="" disabled selected>Select Options</option>
+                    <option value="Owner">Owner</option>
+                    <option value="Tenant">Tenant</option>
+                </select>
+                <small class="text-danger" *ngIf="isInvalid('ownedBy')">
+                    Please select Owner or Tenant.
+                </small>
+            </div>
+
+            <div class="mb-3">
+                <button class="submit-btn" type="submit" *ngIf="submitbtn">Submit</button>
+                <button class="processing-btn" type="button" *ngIf="!submitbtn">Processing...</button>
+            </div>
+        </form>
+
+    </div>
+</section>

@@ -44,11 +44,11 @@ export class ResidentsListComponent {
     } else {
       console.log('No user data found in sessionStorage');
     }
-    this.getpropertiesdata(this.associationId);
+    this.getpropertiesdata();
 
     this.AssociationService.PropertyStatus$.subscribe((AddProperty) => {
       if (AddProperty) {
-        this.getpropertiesdata(this.associationId);
+        this.getpropertiesdata();
       }
     });
   }
@@ -74,8 +74,8 @@ export class ResidentsListComponent {
     this.route.navigateByUrl(`Association/view-resident/${data}`);
   }
 
-  getpropertiesdata(user_id: any) {
-    this.apiService.propertiesbyAssociation<any>(user_id).subscribe({
+  getpropertiesdata() {
+    this.apiService.ResidentedProperty<any>().subscribe({
       next: (res: any) => {
         if (res?.success && Array.isArray(res.data)) {
           this.Residentlist2 = res.data;

@@ -309,11 +309,11 @@ isDocumentsValid(): boolean {
           this.Toast.success(res.message, 'Successs');
           console.log(res.message || 'Logged out successfully');
         } else {
-          this.Toast.success(res.message, 'Failed');
+          this.Toast.error(res.message, 'Failed');
         }
       },
       error: (err: any) => {
-        this.Toast.success(err.error.error.message, 'Failed');
+        this.Toast.error(err.error.error.message, 'Failed');
         console.error('Logout failed:', err);
       },
     });

@@ -10,7 +10,7 @@
             <span>Back</span>
         </button>
         <div class="ass-h">
-            <p>H101 - Apartment</p>
+            <p>{{ Propertiesdata.property_no }} - {{ Propertiesdata.property_type }}</p>
         </div>
 
     </div>
@@ -42,8 +42,12 @@
                 <p>{{ Propertiesdata.parking_slot_number }}</p>
             </div>
             <div class="user-info">
+                <h5 class="label">Gas Line Number</h5>
+                <p>{{ Propertiesdata.gasline_number || '--'}}</p>
+            </div>
+            <div class="user-info">
                 <h5 class="label">BHK</h5>
-                <p>{{ Propertiesdata.property_no }}</p>
+                <p>{{ Propertiesdata.bhk }}</p>
             </div>
             <div class="user-info">
                 <h5 class="label">Resident</h5>
@@ -59,7 +63,7 @@
             </div>
             <div class="user-info">
                 <h5 class="label">Due Date</h5>
-                <p>{{ Propertiesdata.due_date.$date | date:'dd-MMM-yyyy' }}</p>
+                <p>{{ Propertiesdata.due_date }} of Month</p>
             </div>
             <!-- <div > -->
                 <!-- <div class="user-info" *ngIf="Propertiesdata.property_type === 'apartment'">
@@ -125,8 +129,10 @@
                                 <div class="d-flex gap-3">
                                     <button class="btn-add" (click)="addTenant(propertiesId)"
                                         *ngIf="!Propertiesdata.tenant_details?._id">+ Add Tenant</button>
-                                    <!-- <button class="btn-add" (click)="addTenant(propertiesId)"
-                                        *ngIf="Propertiesdata.tenant_details?._id">Edit Tenant</button> -->
+                                   <button class="btn-add" (click)="RemoveTenant(propertiesId)"
+                                        *ngIf="Propertiesdata.tenant_details?._id">Remove Tenant</button>
+                                    <button class="btn-add" (click)="EditTenant(Propertiesdata)"
+                                        *ngIf="Propertiesdata.tenant_details?._id">Edit Tenant</button>
                                 </div>
                             </div>
 
@@ -135,6 +141,10 @@
           {label: 'Tenant Name', value: Propertiesdata.tenant_details?.name},
           {label: 'Phone Number', value: Propertiesdata.tenant_details?.mobile},
           {label: 'Email', value: Propertiesdata.tenant_details?.email},
+          {label: 'Advance Paid', value: Propertiesdata.advance_amount},
+          {label: 'Estimated Rent', value: Propertiesdata?.monthly_rent_amount},
+          {label: 'Maintenance Amount', value: Propertiesdata?.maintenance_amount},
+          {label: 'Maintenance Paid By', value: Propertiesdata?.maintenance_paid_by},
           {label: 'Rented At', value: Propertiesdata.tenant_details?.onboarded_time?.$date | date:'dd-MMM-yyyy'}
         ]">
                                     <div class="user-info">
@@ -161,6 +171,10 @@
                             <h5>Pet Details</h5>
                             <button class="btn-add" (click)="addpet(propertiesId)"
                                 *ngIf="!Propertiesdata.pet || Propertiesdata.pet.length === 0">Add Pet</button>
+                                 <button class="btn-add" (click)="EditPet(Propertiesdata.pet[0], propertiesId)"
+                                *ngIf="Propertiesdata.pet && Propertiesdata.pet.length > 0">
+                                Edit Pet
+                            </button>
                         </div>
 
                         <div class="card-body" *ngIf="Propertiesdata.pet?.length > 0; else nodata">
@@ -193,6 +207,10 @@
                             <button class="btn-add" (click)="addVehicle(propertiesId)"
                                 *ngIf="!Propertiesdata.vehicle || Propertiesdata.vehicle.length === 0">+ Add
                                 Vehicle</button>
+                                 <button class="btn-add" (click)="EditVehicle(Propertiesdata.vehicle[0], propertiesId)"
+                                *ngIf="Propertiesdata.vehicle && Propertiesdata.vehicle.length > 0">
+                                Edit vehicle
+                            </button>
                         </div>
 
                         <div class="card-body" *ngIf="Propertiesdata.vehicle?.length > 0; else nodatavehicle">

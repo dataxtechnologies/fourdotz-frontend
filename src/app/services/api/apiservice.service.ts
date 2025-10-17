@@ -27,10 +27,9 @@ export class ApiserviceService {
     });
   }
 
-    private getHeadersforFormdata(): HttpHeaders {
+  private getHeadersforFormdata(): HttpHeaders {
     const token = sessionStorage.getItem('access_token');
     return new HttpHeaders({
-     
       ...(token && { Authorization: `${token}` }),
     });
   }
@@ -284,35 +283,61 @@ export class ApiserviceService {
   }
 
   public AssociationDocumentOnboard<T>(formData: FormData): Observable<T> {
-  const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.AssociationDocumentOnboard}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.AssociationDocumentOnboard
+    }`;
 
-  return this.http.post<T>(serviceURL, formData, {
-    // ⚠️ DO NOT manually set Content-Type for FormData
-    headers: this.getHeadersforFormdata(), // <-- modify this method to skip JSON headers when true
-  })
-  .pipe(
-    catchError((error) => {
-      if (
-        error?.error?.success === false &&
-        error?.error?.message === 'Session expired'
-      ) {
-        this.router.navigate(['/auth/sign-in']);
-      }
+    return this.http
+      .post<T>(serviceURL, formData, {
+        // ⚠️ DO NOT manually set Content-Type for FormData
+        headers: this.getHeadersforFormdata(), // <-- modify this method to skip JSON headers when true
+      })
+      .pipe(
+        catchError((error) => {
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
 
-      console.error('AssociationDocumentOnboard API error', error);
-      return throwError(() => ({
-        statusCode: 500,
-        message: 'AssociationDocumentOnboard API error',
-        error,
-      }));
-    })
-  );
-}
+          console.error('AssociationDocumentOnboard API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'AssociationDocumentOnboard API error',
+            error,
+          }));
+        })
+      );
+  }
 
   public propertiesbyAssociation<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.propertiesbyAssociation
     }?id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public PropertyListinAssociation<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.PropertyListinAssociation
+    }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -651,7 +676,6 @@ export class ApiserviceService {
     );
   }
 
-
   public TenantMaintenanceList<T>(): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.TenantMaintenanceList
@@ -674,7 +698,6 @@ export class ApiserviceService {
       })
     );
   }
-
 
   public RentalInvoicegeninOwner<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
@@ -703,7 +726,6 @@ export class ApiserviceService {
       );
   }
 
-
   public TenantPropertyDatas<T>(): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.TenantPropertyDatas
@@ -726,7 +748,6 @@ export class ApiserviceService {
       })
     );
   }
-
 
   public TenantRentalInvoiceList<T>(): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
@@ -751,7 +772,6 @@ export class ApiserviceService {
     );
   }
 
-
   public SuperadminDashboardData<T>(): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.SuperadminDashboard
@@ -773,5 +793,163 @@ export class ApiserviceService {
         }));
       })
     );
+  }
+
+
+
+
+  public UpdatePropertyData<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.UpdatePropertyData
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .put<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+
+   public ResidentedProperty<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.ResidentedProperty
+    }`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+   public RemoveOwnerResident<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.RemoveOwnerResident
+    }?id=${payload}`;
+
+    return this.http.delete<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+   public RemoveTenantResident<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.RemoveTenantResident
+    }?id=${payload}`;
+
+    return this.http.delete<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public EditTenantDetails<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.EditTenantDetails
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .put<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+
+  public UpdateAssociation<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.UpdateAssociation
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .put<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
   }
 }

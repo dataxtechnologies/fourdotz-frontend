@@ -20,13 +20,13 @@ export class PropertyListComponent {
   propertylist2: any;
   tableLoading: boolean = true;
   pages: any;
-  associationId : any
+  associationId: any;
 
   constructor(
     private ModalService: ModalService,
     private route: Router,
     private apiService: ApiserviceService,
-    private AssociationService : AssociationServiceService
+    private AssociationService: AssociationServiceService
   ) {
     this.propertylist1 = new TableService();
     this.propertylist1.initialize(this.propertylist2, 12);
@@ -43,15 +43,13 @@ export class PropertyListComponent {
     } else {
       console.log('No user data found in sessionStorage');
     }
-    this.getpropertiesdata(this.associationId);
+    this.getpropertiesdata();
 
     this.AssociationService.PropertyStatus$.subscribe((AddProperty) => {
       if (AddProperty) {
-        this.getpropertiesdata(this.associationId);
+        this.getpropertiesdata();
       }
     });
-
-  
   }
 
   Addproperty() {
@@ -72,8 +70,8 @@ export class PropertyListComponent {
     this.route.navigateByUrl(`Association/view-properties/${data}`);
   }
 
-  getpropertiesdata(user_id: any) {
-    this.apiService.propertiesbyAssociation<any>(user_id).subscribe({
+  getpropertiesdata() {
+    this.apiService.PropertyListinAssociation<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.propertylist2 = res.data;
@@ -84,15 +82,15 @@ export class PropertyListComponent {
           );
           this.tableLoading = false;
         } else {
-          this.propertylist2 = []
-           this.propertylist1.initialize(this.propertylist2, 12);
+          this.propertylist2 = [];
+          this.propertylist1.initialize(this.propertylist2, 12);
           this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
-        this.propertylist2 = []
-         this.propertylist1.initialize(this.propertylist2, 12);
+        this.propertylist2 = [];
+        this.propertylist1.initialize(this.propertylist2, 12);
         this.tableLoading = false;
         console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');

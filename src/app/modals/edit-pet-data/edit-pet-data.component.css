@@ -1,0 +1,160 @@
+/* Section container */
+.form-section {
+    background: #faf9f4 !important;
+    max-width: 600px;
+    width: 90%;
+    margin: 40px auto;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.container {
+    height: auto;
+    width: 900px;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+
+.form-header {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border-bottom: 1px solid #ccc; */
+}
+
+/* Heading */
+.form-header h3 {
+    font-size: 30px;
+    font-weight: 600;
+    color: #000;
+    margin: 0;
+}
+
+.form-header i {
+    font-size: 25px;
+    color: var(--primary-color2);
+    cursor: pointer;
+}
+
+.form-body {
+    max-height: 80vh;   /* adjust height as needed */
+    overflow-y: auto;
+    padding-right: 10px; /* prevent content from hiding under scrollbar */
+}
+
+/* Optional: custom scrollbar styling */
+.form-body::-webkit-scrollbar {
+    width: 1px;
+}
+
+.form-body::-webkit-scrollbar-thumb {
+    background: var(--primary-color2);
+    border-radius: 6px;
+}
+
+.form-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Input container */
+.inp-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+/* Label */
+.inp-cont label {
+    font-size: 17px;
+    font-weight: 600;
+    color: #555;
+}
+
+/* Input */
+.inp-cus {
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #faf9f4;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+/* Input focus effect */
+.inp-cus:focus {
+    background: #fff;
+    box-shadow: 0 0 6px #4f504f4d;
+}
+
+/* Placeholder style */
+.inp-cus::placeholder {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+/* Grouping checkboxes in a row */
+.checkbox-group {
+    display: flex;
+    gap: 20px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+/* Custom checkbox style */
+.checkbox-cus {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    color: #333;
+    font-weight: 500;
+    position: relative;
+}
+
+.checkbox-cus input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Check effect */
+.checkbox-cus input[type="checkbox"]:checked {
+    background-color: var(--primary-color2);
+    border-color: var(--primary-color2);
+}
+
+.checkbox-cus input[type="checkbox"]:checked::after {
+    content: "✓";
+    font-size: 13px;
+    color: #fff;
+    position: absolute;
+    left: 3px;
+    top: -1px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-section {
+        padding: 15px 20px;
+    }
+
+    .inp-cus {
+        font-size: 0.95rem;
+    }
+}

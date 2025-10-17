@@ -9,6 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { OwnerServiceService } from '../../../services/owner/owner-service.service';
+import { EditTenantDataComponent } from '../../../modals/edit-tenant-data/edit-tenant-data.component';
+import { RemoveTenantModalComponent } from '../../../modals/remove-tenant-modal/remove-tenant-modal.component';
+import { EditPetDataComponent } from '../../../modals/edit-pet-data/edit-pet-data.component';
+import { EditVehicleDataComponent } from '../../../modals/edit-vehicle-data/edit-vehicle-data.component';
 
 @Component({
   selector: 'app-owner-view-property',
@@ -18,21 +22,24 @@ import { OwnerServiceService } from '../../../services/owner/owner-service.servi
 })
 export class OwnerViewPropertyComponent {
   activeTab: string = 'Resident';
-  propertiesId: any
-  Propertiesdata: any
-  header_loading = true
+  propertiesId: any;
+  Propertiesdata: any;
+  header_loading = true;
 
-  constructor(private ModalService: ModalService, private route: ActivatedRoute, private apiService: ApiserviceService, 
-    private OwnerService : OwnerServiceService
+  constructor(
+    private ModalService: ModalService,
+    private route: ActivatedRoute,
+    private apiService: ApiserviceService,
+    private OwnerService: OwnerServiceService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-     this.route.params.subscribe((params) => {
+    this.route.params.subscribe((params) => {
       this.propertiesId = params['propertiesId'] || null;
     });
-
 
     this.OwnerService.PetStatus$.subscribe((AddPet) => {
       if (AddPet) {
@@ -51,16 +58,17 @@ export class OwnerViewPropertyComponent {
         this.ViewpropertybyId(this.propertiesId);
       }
     });
-   
-    
-    this.ViewpropertybyId(this.propertiesId)
+
+    this.ViewpropertybyId(this.propertiesId);
   }
 
   setTab(tab: string) {
     this.activeTab = tab;
   }
 
-  goback() {}
+  goback() {
+    this.router.navigateByUrl('/Owner/properties-list')
+  }
 
   addowner() {
     // AddOwnerComponent
@@ -76,7 +84,7 @@ export class OwnerViewPropertyComponent {
       },
     });
   }
-  addTenant(data : any) {
+  addTenant(data: any) {
     // AddOwnerComponent
     this.ModalService.open(AddTenantComponent, {
       modal: {
@@ -84,8 +92,8 @@ export class OwnerViewPropertyComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-      data:{
-        PropertyIddata: data
+      data: {
+        PropertyIddata: data,
       },
       actions: {
         click: false,
@@ -93,7 +101,7 @@ export class OwnerViewPropertyComponent {
       },
     });
   }
-  addpet(data :any) {
+  addpet(data: any) {
     // AddOwnerComponent
     this.ModalService.open(AddPetComponent, {
       modal: {
@@ -101,8 +109,8 @@ export class OwnerViewPropertyComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-      data:{
-        associationId: data
+      data: {
+        associationId: data,
       },
       actions: {
         click: false,
@@ -110,7 +118,7 @@ export class OwnerViewPropertyComponent {
       },
     });
   }
-  addVehicle(data :any) {
+  addVehicle(data: any) {
     // AddOwnerComponent
     this.ModalService.open(AddVehicleComponent, {
       modal: {
@@ -118,8 +126,8 @@ export class OwnerViewPropertyComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-      data:{
-        associationId: data
+      data: {
+        associationId: data,
       },
       actions: {
         click: false,
@@ -128,7 +136,80 @@ export class OwnerViewPropertyComponent {
     });
   }
 
-  ViewpropertybyId(data : any){
+  EditTenant(propertydata: any) {
+    // AddOwnerComponent
+    this.ModalService.open(EditTenantDataComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        TenantDetails: propertydata,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  RemoveTenant(associationId: any) {
+    this.ModalService.open(RemoveTenantModalComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        associationId: associationId,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  EditPet(PetData: any, propertyId: any) {
+    // AddOwnerComponent
+    this.ModalService.open(EditPetDataComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        PetDetails: PetData,
+        propertyId: propertyId,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  EditVehicle(VehicleData: any, associationId: any) {
+    // AddOwnerComponent
+    this.ModalService.open(EditVehicleDataComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        vehicleDetails: VehicleData,
+        associationId: associationId,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  ViewpropertybyId(data: any) {
     this.apiService.ViewpropertybyId<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {

@@ -44,16 +44,16 @@ export class AssociationListComponent {
       residentSearch: [''], // Search by property name/email/phone
     });
 
-    this.getAssociationList();
-
-    // Apply filters whenever the form changes
-    this.filterForm.valueChanges.subscribe(() => this.applyFilters());
-
+    
     this.AdminServices.AssociationStatus$.subscribe((addassociation) => {
       if (addassociation) {
         this.getAssociationList();
       }
     });
+    this.getAssociationList();
+
+    // Apply filters whenever the form changes
+    this.filterForm.valueChanges.subscribe(() => this.applyFilters());
   }
 
   applyFilters(): void {

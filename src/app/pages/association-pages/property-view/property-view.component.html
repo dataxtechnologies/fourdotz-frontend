@@ -16,9 +16,9 @@
         </div>
 
 
-        <!-- <div>
-            <button class="submit-btn">Edit</button>
-        </div> -->
+        <div>
+            <button class="submit-btn" (click)="EditProperty(PropertyId)">Edit</button>
+        </div>
 
     </div>
     <div class="sec-cont">
@@ -49,8 +49,12 @@
                 <p>{{ Associationdata.parking_slot_number }}</p>
             </div>
             <div class="user-info">
+                <h5 class="label">Gas Line Number</h5>
+                <p>{{ Associationdata.gasline_number || '--'}}</p>
+            </div>
+            <div class="user-info">
                 <h5 class="label">BHK</h5>
-                <p>{{ Associationdata.property_no }}</p>
+                <p>{{ Associationdata.bhk }}</p>
             </div>
             <div class="user-info">
                 <h5 class="label">Resident</h5>
@@ -69,11 +73,11 @@
                 <p>{{ Associationdata.due_date }} of Month</p>
             </div>
             <!-- <div > -->
-                <!-- <div class="user-info" *ngIf="Associationdata.property_type === 'Apartment'">
+            <!-- <div class="user-info" *ngIf="Associationdata.property_type === 'Apartment'">
                     <h5 class="label">Building Type</h5>
                     <p>{{ Associationdata.property_no }}</p>
                 </div> -->
-                <!-- <div class="user-info" *ngIf="Associationdata.property_type === 'Apartment'">
+            <!-- <div class="user-info" *ngIf="Associationdata.property_type === 'Apartment'">
                     <h5 class="label">Tower Name</h5>
                     <p>{{ Associationdata.property_no }}</p>
                 </div>
@@ -81,10 +85,10 @@
                     <h5 class="label">Block Name</h5>
                     <p>{{ Associationdata.property_no }}</p>
                 </div> -->
-                <div class="user-info" *ngIf="Associationdata.property_type === 'Apartment'">
-                    <h5 class="label">Floor</h5>
-                    <p>{{ Associationdata.floor }}</p>
-                </div>
+            <div class="user-info" *ngIf="Associationdata.property_type === 'Apartment'">
+                <h5 class="label">Floor</h5>
+                <p>{{ Associationdata.floor }}</p>
+            </div>
             <!-- </div> -->
 
         </div>
@@ -114,7 +118,9 @@
                             <div class="d-flex gap-3">
                                 <button class="btn-add" (click)="addowner(PropertyId)"
                                     *ngIf="!Associationdata.owner_details?._id">+ Add Owner</button>
-                                <!-- <button class="btn-add" (click)="addowner(PropertyId)"
+                                <button class="btn-add" (click)="RemoveOwner(PropertyId)"
+                                    *ngIf="Associationdata.owner_details?._id">Remove Owner</button>
+                                <!-- <button class="btn-add" (click)="EditOwner(PropertyId, Associationdata.owner_details)"
                                     *ngIf="Associationdata.owner_details?._id">Edit Owner</button> -->
                             </div>
                         </div>
@@ -147,16 +153,22 @@
                             <div class="d-flex gap-3">
                                 <button class="btn-add" (click)="addTenant(PropertyId)"
                                     *ngIf="!Associationdata.tenant_details?._id">+ Add Tenant</button>
-                                <!-- <button class="btn-add" (click)="addTenant(PropertyId)"
-                                    *ngIf="Associationdata.tenant_details?._id">Edit Tenant</button> -->
+                                <button class="btn-add" (click)="RemoveTenant(PropertyId)"
+                                    *ngIf="Associationdata.tenant_details?._id">Remove Tenant</button>
+                                <button class="btn-add" (click)="EditTenant(Associationdata)"
+                                    *ngIf="Associationdata.tenant_details?._id">Edit Tenant</button>
                             </div>
                         </div>
 
                         <div class="card-body" *ngIf="Associationdata.tenant_details?._id; else nodatatenant">
                             <ng-container *ngFor="let field of [
-          {label: 'Tenant Name', value: Associationdata.tenant_details?.name},
+         {label: 'Tenant Name', value: Associationdata.tenant_details?.name},
           {label: 'Phone Number', value: Associationdata.tenant_details?.mobile},
           {label: 'Email', value: Associationdata.tenant_details?.email},
+          {label: 'Advance Paid', value: Associationdata.advance_amount},
+          {label: 'Estimated Rent', value: Associationdata?.monthly_rent_amount},
+          {label: 'Maintenance Amount', value: Associationdata?.maintenance_amount},
+          {label: 'Maintenance Paid By', value: Associationdata?.maintenance_paid_by},
           {label: 'Rented At', value: Associationdata.tenant_details?.onboarded_time?.$date | date:'dd-MMM-yyyy'}
         ]">
                                 <div class="user-info">
@@ -183,6 +195,10 @@
                             <h5>Pet Details</h5>
                             <button class="btn-add" (click)="addpet(Associationdata._id)"
                                 *ngIf="!Associationdata.pet || Associationdata.pet.length === 0">Add Pet</button>
+                            <button class="btn-add" (click)="EditPet(Associationdata.pet[0], PropertyId)"
+                                *ngIf="Associationdata.pet && Associationdata.pet.length > 0">
+                                Edit Pet
+                            </button>
                         </div>
 
                         <div class="card-body" *ngIf="Associationdata.pet?.length > 0; else nodata">
@@ -215,6 +231,10 @@
                             <button class="btn-add" (click)="addVehicle(Associationdata._id)"
                                 *ngIf="!Associationdata.vehicle || Associationdata.vehicle.length === 0">+ Add
                                 Vehicle</button>
+                                 <button class="btn-add" (click)="EditVehicle(Associationdata.vehicle[0], PropertyId)"
+                                *ngIf="Associationdata.vehicle && Associationdata.vehicle.length > 0">
+                                Edit vehicle
+                            </button>
                         </div>
 
                         <div class="card-body" *ngIf="Associationdata.vehicle?.length > 0; else nodatavehicle">

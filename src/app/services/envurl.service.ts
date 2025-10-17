@@ -18,6 +18,7 @@ export class EnvurlService {
   public getAssociationbyId ='/hoa_admin/list_hoa_admin_byid'
   public getpropertybyAssociation = '/property/property_byhoaid'
   public SuperadminDashboard  = '/dashboard/superadmin_dashboard_details'
+  public UpdateAssociation = '/hoa_admin/update_association'
 
 
 
@@ -35,6 +36,12 @@ export class EnvurlService {
   public ListMaintenanceinAssociation = '/maintenance_invoice/list_maintenance_invoice'
   public generateMaintenanceInvoice = '/maintenance_invoice/create_maintenance_invoice'
   public Dashboarddata = '/dashboard/hoa_dashboard_details'
+  public PropertyListinAssociation = '/property/list_property'
+  public UpdatePropertyData = '/property/update_property_byid'
+  public ResidentedProperty = '/property/list_resident_properties'
+  public RemoveOwnerResident = '/property/remove_residents'
+  public RemoveTenantResident = '/property/remove_tenant'
+  public EditTenantDetails = '/property/update_tenant_details'
 
 
 

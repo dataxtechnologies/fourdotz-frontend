@@ -4,6 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableService } from '../../../services/tableservice.service';
+import { EditAssociationModalComponent } from '../../../modals/edit-association-modal/edit-association-modal.component';
+import { ModalService } from 'ngx-modal-ease';
+import { AdmindataService } from '../../../services/adminservice/admindata.service';
 
 @Component({
   selector: 'app-view-association',
@@ -24,7 +27,9 @@ export class ViewAssociationComponent {
   constructor(
     private apiService: ApiserviceService,
     private route: ActivatedRoute,
-    private router : Router
+    private router : Router,
+    private ModalService: ModalService,
+    private AdminServices: AdmindataService
   ) {
     this.properties1 = new TableService();
     this.properties1.initialize(this.properties2);
@@ -37,6 +42,12 @@ export class ViewAssociationComponent {
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.AssociationId = params['associationId'] || null;
+    });
+
+     this.AdminServices.AssociationStatus$.subscribe((addassociation) => {
+      if (addassociation) {
+        this.getAssociationList(this.AssociationId);
+      }
     });
 
     this.getAssociationList(this.AssociationId);
@@ -103,4 +114,26 @@ getValue(doc: { [key: string]: string }): string {
       },
     });
   }
+
+
+      editassociation(Associationdata: any) {
+      // AddOwnerComponent
+      this.ModalService.open(EditAssociationModalComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        data: {
+          Associationdata: Associationdata,
+  
+        },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
+
+  // EditAssociationModalComponent
 }

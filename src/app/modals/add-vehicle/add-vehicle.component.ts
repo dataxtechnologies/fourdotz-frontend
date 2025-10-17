@@ -19,6 +19,7 @@ export class AddVehicleComponent implements OnInit {
   @Input() associationId: any;
 
   vehicleForm!: FormGroup;
+  submitbtn = true
 
   constructor(private fb: FormBuilder, private modal: ModalService, private apiService: ApiserviceService, private Toast: ToastrService,
     private OwnerService : OwnerServiceService, private AssociationService: AssociationServiceService
@@ -41,6 +42,7 @@ export class AddVehicleComponent implements OnInit {
   }
 
   addVehicle() {
+    this.submitbtn = false
     if (this.vehicleForm.invalid) {
       this.vehicleForm.markAllAsTouched();
       return;
@@ -62,16 +64,19 @@ export class AddVehicleComponent implements OnInit {
     this.apiService.AddVehicle<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
+          this.submitbtn = true
           this.Toast.success(res.message, 'Success')
           this.OwnerService.triggerVehicleAdd(res);
           this.AssociationService.triggervehicleAdd(res);
           this.closeModal();
         } else {
+          this.submitbtn = true
            this.Toast.warning(res.message, 'Warning')
           // this.loginbtn = true;
         }
       },
       error: (err: any) => {
+        this.submitbtn = true
          this.Toast.error(err.error.error.message, 'Failed')
         console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
