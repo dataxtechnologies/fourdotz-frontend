@@ -129,7 +129,7 @@ get selectedPropertyTypes(): string[] {
           err.error?.error?.message || 'Update failed',
           'Error'
         );
-        console.error('Update failed:', err);
+        //console.error('Update failed:', err);
       },
     });
   }

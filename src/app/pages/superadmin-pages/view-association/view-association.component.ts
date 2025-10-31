@@ -22,6 +22,10 @@ export class ViewAssociationComponent {
   propertyTable: boolean = true;
   properties1;
   properties2: any;
+monthly_invoice_total_amount = 0
+monthly_rent_invoices_total_amount = 0
+payout_maintenance_total_amount = 0
+payout_rent_invoices_total_amount = 0
   documents: { [key: string]: string }[] = [];
 
   constructor(
@@ -52,6 +56,7 @@ export class ViewAssociationComponent {
 
     this.getAssociationList(this.AssociationId);
     this.getpropertybyAssociation(this.AssociationId);
+    this.AmountforAssociationinSA(this.AssociationId);
   }
 
   goback() {
@@ -75,14 +80,13 @@ getValue(doc: { [key: string]: string }): string {
           this.header_loading = false; // stop loading
         } else {
           this.documents=[]
-          // alert(res.message || 'Something went wrong.');
           this.header_loading = false; // stop loading even if error
         }
       },
       error: (err: any) => {
         this.documents=[]
         this.header_loading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });
@@ -98,7 +102,7 @@ getValue(doc: { [key: string]: string }): string {
           this.properties1 = new TableService();
           this.properties1.initialize(this.properties2);
         } else {
-          console.log('Data not found');
+          //console.log('Data not found');
           this.properties2 = [];
           this.properties1 = new TableService();
           this.properties1.initialize(this.properties2);
@@ -106,11 +110,39 @@ getValue(doc: { [key: string]: string }): string {
         this.propertyTable = false; // stop loading in both cases
       },
       error: (err: any) => {
-        console.log('Data not found', err.message);
+        //console.log('Data not found', err.message);
         this.properties2 = [];
         this.properties1 = new TableService();
         this.properties1.initialize(this.properties2);
         this.propertyTable = false;
+      },
+    });
+  }
+
+
+  AmountforAssociationinSA(data: any) {
+    // this.propertyTable = true;
+
+    this.apiService.AmountforAssociationinSA<any>(data).subscribe({
+      next: (res: any) => {
+        if (res?.success && res.data?.length > 0) {
+          // this.properties2 = res.data; // array of properties
+          // this.properties1 = new TableService();
+          // this.properties1.initialize(this.properties2);
+        } else {
+          //console.log('Data not found');
+          // this.properties2 = [];
+          // this.properties1 = new TableService();
+          // this.properties1.initialize(this.properties2);
+        }
+        // this.propertyTable = false; // stop loading in both cases
+      },
+      error: (err: any) => {
+        //console.log('Data not found', err.message);
+        // this.properties2 = [];
+        // this.properties1 = new TableService();
+        // this.properties1.initialize(this.properties2);
+        // this.propertyTable = false;
       },
     });
   }

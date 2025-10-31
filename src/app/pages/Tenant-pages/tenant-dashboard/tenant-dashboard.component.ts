@@ -74,7 +74,7 @@ maintenancelist2: any;
         this.maintenancelist2 = [];
         this.maintenancelist1.initialize(this.maintenancelist2, 12);
         this.tableLoading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });
@@ -98,7 +98,7 @@ maintenancelist2: any;
         this.propertieslist2 = [];
            this.propertieslist1.initialize(this.propertieslist2, 12);
         this.header_loading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });

@@ -31,7 +31,7 @@ export class AddPetComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('this.associationId', this.associationId);
+    //console.log('this.associationId', this.associationId);
 
     // Initialize reactive form
     this.petForm = this.fb.group({
@@ -78,7 +78,7 @@ export class AddPetComponent implements OnInit {
       },
       error: (err: any) => {
          this.Toast.error(err.error.error.message, 'Failed')
-        console.error('Login failed:', err.error.error.data);
+        //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },
     });

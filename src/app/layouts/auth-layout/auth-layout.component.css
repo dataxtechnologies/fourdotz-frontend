@@ -1,11 +1,11 @@
 .content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; /* full viewport */
-    background: url('/assets/bg/login-bg-dummy.jpg') no-repeat center center;
-    background-size: cover; /* makes it responsive */
-    background-attachment: fixed;
-    padding: 0 10px; /* small horizontal padding */
-    box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('/assets/bg/fourdot-Website-Login.jpg') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 0 10px;
+  box-sizing: border-box;
 }

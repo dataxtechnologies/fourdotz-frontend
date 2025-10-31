@@ -127,7 +127,7 @@ export class AssociationListComponent {
         this.Associationlist2 = []
         this.Associationlist1.initialize(this.Associationlist2, 8);
         this.tableLoading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });

@@ -222,7 +222,7 @@ export class OwnerViewPropertyComponent {
       },
       error: (err: any) => {
         this.header_loading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });

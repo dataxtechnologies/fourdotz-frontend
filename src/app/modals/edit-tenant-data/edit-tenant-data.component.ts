@@ -93,7 +93,7 @@ export class EditTenantDataComponent implements OnInit {
       id: this.TenantDetails._id,
     };
 
-    console.log('Payload to update tenant:', payload);
+    //console.log('Payload to update tenant:', payload);
 
     this.apiService.EditTenantDetails(payload).subscribe({
       next: (res: any) => {
@@ -112,7 +112,7 @@ export class EditTenantDataComponent implements OnInit {
       error: (err: any) => {
         this.submitbtn = true
         this.Toast.error(err.error.error.message, 'Failed')
-        console.error('Login failed:', err.error.error.data);
+        //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },
     });
@@ -120,6 +120,6 @@ export class EditTenantDataComponent implements OnInit {
 
   closeModal() {
     this.Modal.close();
-    console.log('Modal closed');
+    //console.log('Modal closed');
   }
 }

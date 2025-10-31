@@ -19,6 +19,7 @@ export class EnvurlService {
   public getpropertybyAssociation = '/property/property_byhoaid'
   public SuperadminDashboard  = '/dashboard/superadmin_dashboard_details'
   public UpdateAssociation = '/hoa_admin/update_association'
+  public AmountforAssociation = '/payment/list_payment_byassociation'
 
 
 

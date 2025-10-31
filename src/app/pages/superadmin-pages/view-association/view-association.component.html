@@ -81,6 +81,9 @@
                 <button class="tab-btn" [class.active]="activeTab === 'Documents'" (click)="setTab('Documents')">
                     Documents
                 </button>
+                <button class="tab-btn" [class.active]="activeTab === 'Transactions'" (click)="setTab('Transactions')">
+                    Transaction Amounts
+                </button>
             </div>
 
             <!-- Tab Content -->
@@ -150,8 +153,6 @@
                                 </table>
                             </div>
 
-
-
                         </div>
                     </div>
                 </div>
@@ -177,6 +178,52 @@
                         <p class="no-data">No Data Found</p>
                     </ng-template>
                 </div>
+                <div *ngIf="activeTab === 'Transactions'">
+                    <h4>Transaction Amounts</h4>
+
+                    <div class="transaction-section">
+                        <div class="transaction-grid">
+
+                            <div class="transaction-card">
+                                <div class="icon"><i class="fa-solid fa-file-invoice"></i></div>
+                                <div class="title">Monthly Invoice Total</div>
+                                <div class="amount">{{ monthly_invoice_total_amount | currency:'INR':'symbol':'1.0-0' }}
+                                </div>
+                                <div class="desc">Invoices generated this month</div>
+                            </div>
+
+                            <div class="transaction-card">
+                                <div class="icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                                <div class="title">Monthly Rent Total</div>
+                                <div class="amount">{{ monthly_rent_invoices_total_amount |
+                                    currency:'INR':'symbol':'1.0-0' }}</div>
+                                <div class="desc">Total rent collected this month</div>
+                            </div>
+
+                            <div class="transaction-card">
+                                <div class="icon"><i class="fa-solid fa-money-check-dollar"></i></div>
+                                <div class="title">Payout (Maintenance)</div>
+                                <div class="amount">{{ payout_maintenance_total_amount | currency:'INR':'symbol':'1.0-0'
+                                    }}</div>
+                                <div class="desc">Maintenance payouts processed</div>
+                            </div>
+
+                            <div class="transaction-card">
+                                <div class="icon"><i class="fa-solid fa-building-user"></i></div>
+                                <div class="title">Payout (Rent)</div>
+                                <div class="amount">{{ payout_rent_invoices_total_amount |
+                                    currency:'INR':'symbol':'1.0-0' }}</div>
+                                <div class="desc">Rent payouts processed</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <ng-template #noData>
+                        <p class="no-data">No Data Found</p>
+                    </ng-template>
+                </div>
+
             </div>
         </div>
     </div>

@@ -1,22 +1,37 @@
 .bg {
-    background: #acacac33; 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(1px); 
-    width: 90%;
-    max-width: 600px; 
-    height: auto; 
-    border-radius: 20px;
-    border: 2px solid #ffffff33;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); 
-    padding: 20px;
-    box-sizing: border-box;
+  background: #ffffff;
+  width: 80%;
+  max-width: 550px;
+  height: 65vh;
+  border-radius: 20px;
+  border: 1px solid #c9c8c8;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin-left: 50px;
+}
+
+.logo-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo-img p{
+    font-family: 'TTHoves-Regular', sans-serif;
+    font-size: 18px;
+    margin-bottom: -10px;
 }
 
 .logo-img img {
-    width: 40%;
+    width: 55%;
     max-width: 650px; 
     height: auto;
     border-radius: 12px;
+    margin-bottom: 20px;
 }
 
 /* Form styles */
@@ -32,7 +47,7 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     width: 100%;
 }
 
@@ -64,6 +79,7 @@
 .inp-cus::placeholder {
     color: #aaa;
     font-size: 0.95rem;
+     font-family: 'TTHoves-Regular', sans-serif;
 }
 
 .password-group {
@@ -83,16 +99,26 @@
 /* Forgot password */
 .forgot-password {
     text-align: right;
-    margin-bottom: 20px;
+    font-family: 'TTHoves-Regular', sans-serif;
 }
 
 .forgot-password p {
-    color: var(--primary-color2);
+    color: #434343;
     text-decoration: underline;
-    font-size: 14px;
+    font-size: 18px;
     cursor: pointer;
 }
 
+
+.login-btn{
+    color: #FFFFFF;
+    background: var(--primary-color2);
+    padding: 12px;
+    border: 0;
+    border-radius: 6px;
+    font-family: 'TTHoves-Regular', sans-serif;
+
+}
 
 
 .error-text{
@@ -107,4 +133,9 @@
 @media (max-width: 480px) {
     .bg { height: 50vh; padding: 20px; }
     .logo-img img { width: 60%; }
+}
+
+
+.form-container{
+    padding: 10px 0 20px 0;
 }

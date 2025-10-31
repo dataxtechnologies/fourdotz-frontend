@@ -90,7 +90,7 @@ export class ChangePasswordComponent implements OnInit {
             sessionStorage.setItem('user_id', user_id);
           }
 
-         console.log(res.message || 'Login successful');
+         //console.log(res.message || 'Login successful');
 
           // Navigate based on user type
           switch (userType) {
@@ -107,7 +107,7 @@ export class ChangePasswordComponent implements OnInit {
               this.router.navigateByUrl('/Tenant/Dashboard');
               break;
             default:
-              console.warn('Unknown user type:', userType);
+              //console.warn('Unknown user type:', userType);
               this.router.navigateByUrl('/');
               break;
           }
@@ -125,7 +125,7 @@ export class ChangePasswordComponent implements OnInit {
         //   );
         //   this.router.navigateByUrl(`/auth/Change-passsword/${newuseremail}`);
         // }
-        console.error('Login failed:', err.error.error.data);
+        //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },
     });

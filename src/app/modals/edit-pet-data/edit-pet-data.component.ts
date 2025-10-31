@@ -48,7 +48,7 @@ export class EditPetDataComponent implements OnInit {
     if (this.PetDetails) {
       this.patchPetData(this.PetDetails);
     }
-    console.log('propertyId', this.propertyId);
+    //console.log('propertyId', this.propertyId);
   }
 
   initForm() {
@@ -112,7 +112,7 @@ export class EditPetDataComponent implements OnInit {
           this.AssociationService.triggerAssociationpet(res);
           this.ResidentService.TriggerPetServiceinResident(res);
 
-          console.log('Popup emitted data:', res);
+          //console.log('Popup emitted data:', res);
           
           this.closeModal();
         } else {
@@ -123,7 +123,7 @@ export class EditPetDataComponent implements OnInit {
       error: (err: any) => {
         this.submitbtn = true;
         this.Toast.error(err.error.error.message, 'Failed');
-        console.error('Login failed:', err.error.error.data);
+        //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },
     });
@@ -131,6 +131,6 @@ export class EditPetDataComponent implements OnInit {
 
   closeModal() {
     this.Modal.close();
-    console.log('Modal closed');
+    //console.log('Modal closed');
   }
 }

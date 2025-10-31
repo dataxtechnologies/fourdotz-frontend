@@ -101,7 +101,7 @@ export class AddAssociationModalComponent implements OnInit {
       error: (err: any) => {
          this.createButton = true
          this.toastr.error(err.error.error.message, 'success')
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });

@@ -57,7 +57,7 @@ export class AddOwnerComponent implements OnInit {
       property_id: this.PropertyIddata,
     };
 
-    console.log('✅ Payload:', payload);
+    //console.log('✅ Payload:', payload);
     this.apiService.createownerinproperty<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
@@ -74,7 +74,7 @@ export class AddOwnerComponent implements OnInit {
       error: (err: any) => {
         this.submitbtn = true
         this.Toast.error(err.error.error.message, 'Failed')
-        console.error('Login failed:', err.error.error.data);
+        //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },
     });

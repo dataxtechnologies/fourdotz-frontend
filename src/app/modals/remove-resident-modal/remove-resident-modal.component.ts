@@ -51,7 +51,7 @@ export class RemoveResidentModalComponent {
         this.showprocessingbtn = false
         this.closeModal();
          this.Toast.error(err.error.error.message, 'Failed')
-        console.error('Login failed:', err.error.error.data);
+        //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },
     });

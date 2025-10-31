@@ -57,7 +57,7 @@ export class ProfilePageComponent {
   saveProfile(): void {
     if (this.profileForm.valid) {
       const updatedProfile = this.profileForm.value;
-      console.log('Profile saved:', updatedProfile);
+      //console.log('Profile saved:', updatedProfile);
       alert('Profile updated successfully!');
       this.toggleEditMode();
     } else {

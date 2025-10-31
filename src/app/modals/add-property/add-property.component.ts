@@ -129,7 +129,7 @@ getOrdinal(day: number): string {
   AddPropertybyAssociation() {
     this.submitBtn  = false
     if (this.propertyForm.valid) {
-      console.log(this.propertyForm.value);
+      //console.log(this.propertyForm.value);
       const payload = {
         property_no: this.propertyForm.get('propertyNo')?.value,
         area: this.propertyForm.get('area')?.value,
@@ -161,7 +161,7 @@ getOrdinal(day: number): string {
         error: (err: any) => {
           this.submitBtn  = true
           this.Toastr.error(err.error.error.message, 'Failed')
-          console.error('Login failed:', err.error.error.data);
+          //console.error('Login failed:', err.error.error.data);
           // alert(err.message || 'Login failed, please try again.');
         },
       });

@@ -92,11 +92,11 @@ export class EditPropertiesDataComponent implements OnInit {
 
           this.patchFormData(this.PropertiesData);
         } else {
-          console.warn('No property data found.');
+          //console.warn('No property data found.');
         }
       },
       error: (err: any) => {
-        console.error('Error fetching property details:', err);
+        //console.error('Error fetching property details:', err);
       },
     });
   }
@@ -192,18 +192,18 @@ export class EditPropertiesDataComponent implements OnInit {
           this.AssociationService.triggerAdminAssociation(res)
           this.closeModal();
         } else {
-          console.warn(res?.message || 'Something went wrong.');
+          //console.warn(res?.message || 'Something went wrong.');
         }
       },
       error: (err: any) => {
         this.submitBtn = true;
-        console.error('Error updating property:', err);
+        //console.error('Error updating property:', err);
       },
     });
   }
 
   closeModal() {
     this.Modal.close();
-    console.log('Modal closed');
+    //console.log('Modal closed');
   }
 }

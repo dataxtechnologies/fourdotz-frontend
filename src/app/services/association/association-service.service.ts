@@ -29,7 +29,7 @@ export class AssociationServiceService {
   RemoveResidentStatus$ = this.RemoveResidentSubject.asObservable();
 
   triggerAdminAssociation(AddProperty: any): void {
-    console.log('addassociation', AddProperty);
+    //console.log('addassociation', AddProperty);
     this.PropertySubject.next(AddProperty);
   }
 
@@ -37,32 +37,32 @@ export class AssociationServiceService {
   // triggerAssociationTenant
 
   triggerAssociationOwner(AddOwner: any): void {
-    console.log('addassociation', AddOwner);
+    //console.log('addassociation', AddOwner);
     this.OwnerSubject.next(AddOwner);
   }
 
   triggerAssociationpet(AddPet: any): void {
-    console.log('addassociation', AddPet);
+    //console.log('addassociation', AddPet);
     this.PetSubject.next(AddPet);
   }
 
   triggerAssociationpetresident(AddPetres: any): void {
-    console.log('addassociation', AddPetres);
+    //console.log('addassociation', AddPetres);
     this.PetSubjectinresident.next(AddPetres);
   }
 
   triggervehicleAdd(Addvehicle: any): void {
-    console.log('addassociation', Addvehicle);
+    //console.log('addassociation', Addvehicle);
     this.VehicleSubject.next(Addvehicle);
   }
 
   triggerMaintenanceInv(GenMaintenanceInv: any): void {
-    console.log('addassociation', GenMaintenanceInv);
+    //console.log('addassociation', GenMaintenanceInv);
     this.MaintenanceInvSubject.next(GenMaintenanceInv);
   }
 
   triggerRemoveResident(removeresident: any): void {
-    console.log('addassociation', removeresident);
+    //console.log('addassociation', removeresident);
     this.RemoveResidentSubject.next(removeresident);
   }
 }

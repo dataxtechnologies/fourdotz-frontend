@@ -81,7 +81,7 @@ export class ViewResidentDetailsComponent {
 
     this.ResidentService.PetStatus$.subscribe((AddPet) => {
       if (AddPet) {
-        console.log('Parent received data:', AddPet);
+        //console.log('Parent received data:', AddPet);
 
         // Refresh property details
         this.ViewpropertybyId(this.PropertyId);
@@ -188,7 +188,7 @@ export class ViewResidentDetailsComponent {
 
   // Debug (optional)
   logPermissions() {
-    console.log('Current permissions:', this.permissions);
+    //console.log('Current permissions:', this.permissions);
   }
 
   addproperty() {
@@ -326,7 +326,7 @@ export class ViewResidentDetailsComponent {
       },
       error: (err: any) => {
         // this.header_loading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });

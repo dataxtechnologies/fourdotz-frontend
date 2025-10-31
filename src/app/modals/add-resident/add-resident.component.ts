@@ -103,7 +103,7 @@ export class AddResidentComponent implements OnInit {
       property_id: this.ownerForm.get('property_id')?.value, // send _id
     };
 
-    console.log('✅ Payload:', payload);
+    //console.log('✅ Payload:', payload);
 
     this.apiService.createownerinproperty<any>(payload).subscribe({
       next: (res: any) => {
@@ -120,7 +120,7 @@ export class AddResidentComponent implements OnInit {
       error: (err: any) => {
         this.submitbtn = true;
         this.Toast.error(err.error.error.message, 'Failed');
-        console.error('Request failed:', err);
+        //console.error('Request failed:', err);
       },
     });
   }

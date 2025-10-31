@@ -82,7 +82,7 @@ export class GenerateMaintenanceComponent implements OnInit {
         this.tableLoading = false;
       },
       error: (err: any) => {
-        console.error('Property list fetch failed:', err);
+        //console.error('Property list fetch failed:', err);
         this.propertylist2 = [];
         this.filteredList = [];
         this.tableLoading = false;
@@ -176,7 +176,7 @@ export class GenerateMaintenanceComponent implements OnInit {
         error: (err: any) => {
           this.btnloading = false
           this.Toast.error(err.error.error.message, 'Failed');
-          console.error('Login failed:', err.error.error.data);
+          //console.error('Login failed:', err.error.error.data);
           // alert(err.message || 'Login failed, please try again.');
         },
       });

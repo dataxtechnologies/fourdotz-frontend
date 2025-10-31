@@ -106,13 +106,13 @@ filterForm!: FormGroup;
             } else {
               this.rentalinvoicelist2 = []
               this.tableLoading = false;
-              console.warn(res.message || 'Failed to load properties.');
+              //console.warn(res.message || 'Failed to load properties.');
             }
           },
           error: (err: any) => {
             this.rentalinvoicelist2 = []
             this.tableLoading = false;
-            console.error('Property list fetch failed:', err);
+            //console.error('Property list fetch failed:', err);
           },
         });
       }

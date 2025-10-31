@@ -18,17 +18,17 @@ export class OwnerServiceService {
   VehicleStatus$ = this.VehicleSubject.asObservable();
 
   triggerTenantAdd(AddTenant: any): void {
-    console.log('addassociation', AddTenant);
+    //console.log('addassociation', AddTenant);
     this.TenantSubject.next(AddTenant);
   }
 
   triggerPetAdd(AddPet: any): void {
-    console.log('addassociation', AddPet);
+    //console.log('addassociation', AddPet);
     this.petSubject.next(AddPet);
   }
 
     triggerVehicleAdd(AddVehicle: any): void {
-    console.log('addassociation', AddVehicle);
+    //console.log('addassociation', AddVehicle);
     this.VehicleSubject.next(AddVehicle);
   }
 }

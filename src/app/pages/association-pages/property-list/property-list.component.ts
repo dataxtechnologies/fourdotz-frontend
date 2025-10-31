@@ -39,9 +39,9 @@ export class PropertyListComponent {
       const parsedData = JSON.parse(userdata); // Convert string → object
       this.associationId = parsedData._id; // Access the _id field
 
-      console.log('User ID:', this.associationId);
+      //console.log('User ID:', this.associationId);
     } else {
-      console.log('No user data found in sessionStorage');
+      //console.log('No user data found in sessionStorage');
     }
     this.getpropertiesdata();
 
@@ -92,7 +92,7 @@ export class PropertyListComponent {
         this.propertylist2 = [];
         this.propertylist1.initialize(this.propertylist2, 12);
         this.tableLoading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });

@@ -3,6 +3,11 @@
         <!-- Logo -->
         <div class="logo-img">
             <img src="assets/logo/fourdotz-logo.png" alt="Logo" />
+
+            <!-- <div> -->
+                <h4>Sign in to continue</h4>
+                <p>Please enter your login to sign in </p>
+            <!-- </div> -->
         </div>
 
         <!-- Signin Form -->
@@ -40,7 +45,7 @@
             </div>
 
             <!-- Login button -->
-            <button type="submit" class="btn-add" *ngIf="loginbtn">Login</button>
+            <button type="submit" class="login-btn" *ngIf="loginbtn">Sign in</button>
             <button type="button" class="processing-btn" disabled *ngIf="!loginbtn">processing...</button>
         </form>
     </div>

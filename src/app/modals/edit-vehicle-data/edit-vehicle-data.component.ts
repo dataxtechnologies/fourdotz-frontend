@@ -31,7 +31,7 @@ export class EditVehicleDataComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('vehicleDetails', this.vehicleDetails);
+    //console.log('vehicleDetails', this.vehicleDetails);
  this.vehicleForm = this.fb.group({
       vehicleType: ['', Validators.required],
       brand: ['', Validators.required],
@@ -114,7 +114,7 @@ patchVehicleData(data: any) {
       error: (err: any) => {
         this.submitbtn = true;
          this.Toast.error(err.error.error.message, 'Failed')
-        console.error('Login failed:', err.error.error.data);
+        //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },
     });
@@ -122,6 +122,6 @@ patchVehicleData(data: any) {
 
   closeModal() {
     this.Modal.close()
-    console.log('Modal closed');
+    //console.log('Modal closed');
   }
 }

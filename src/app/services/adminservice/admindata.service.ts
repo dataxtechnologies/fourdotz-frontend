@@ -11,7 +11,7 @@ export class AdmindataService {
   AssociationStatus$ = this.AssociationSubject.asObservable();
 
   triggerAdminAssociation(addassociation: any): void {
-    console.log('addassociation', addassociation);
+    //console.log('addassociation', addassociation);
     
     this.AssociationSubject.next(addassociation);
   }

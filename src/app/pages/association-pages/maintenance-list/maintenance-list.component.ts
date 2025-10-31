@@ -107,7 +107,7 @@ getStatus(item: any) {
         this.MaintenanceList2 = []
          this.MaintenanceList1.initialize(this.MaintenanceList2, 12);
         this.tableLoading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });

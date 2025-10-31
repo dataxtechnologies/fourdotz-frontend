@@ -40,9 +40,9 @@ export class ResidentsListComponent {
       const parsedData = JSON.parse(userdata); // Convert string → object
       this.associationId = parsedData._id; // Access the _id field
 
-      console.log('User ID:', this.associationId);
+      //console.log('User ID:', this.associationId);
     } else {
-      console.log('No user data found in sessionStorage');
+      //console.log('No user data found in sessionStorage');
     }
     this.getpropertiesdata();
 
@@ -84,7 +84,7 @@ export class ResidentsListComponent {
           this.unowned_properties = this.Residentlist2.filter(
             (item: any) => !item.resident_type
           );
-          console.log('unowned_properties', this.unowned_properties);
+          //console.log('unowned_properties', this.unowned_properties);
 
           // Initialize table
           this.Residentlist1.initialize(this.Residentlist2, 11);
@@ -110,7 +110,7 @@ export class ResidentsListComponent {
         this.Residentlist1.initialize(this.Residentlist2, 11);
         this.pages = [];
         this.tableLoading = false;
-        console.error('Property fetch failed:', err);
+        //console.error('Property fetch failed:', err);
       },
     });
   }

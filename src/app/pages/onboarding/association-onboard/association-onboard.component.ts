@@ -216,12 +216,12 @@ isDocumentsValid(): boolean {
           this.submitDocumentForm();
         } else {
           this.Toast.warning(res.message, 'Warning');
-          console.warn('Failed to submit input form');
+          //console.warn('Failed to submit input form');
         }
       },
       error: (err: any) => {
         this.Toast.error(err.error.error.message, 'Failed');
-        console.error('Error submitting input form:', err);
+        //console.error('Error submitting input form:', err);
       },
     });
   }
@@ -237,9 +237,9 @@ isDocumentsValid(): boolean {
   if (this.Company_proof) formData.append('company_proof', this.Company_proof);
   formData.append('company_proof_type', this.documentForm.get('company_proof_type')?.value)
 
-  console.log('Uploaded files:');
+  //console.log('Uploaded files:');
   formData.forEach((value, key) => {
-    console.log(key, value);
+    //console.log(key, value);
   });
 
     this.apiService.AssociationDocumentOnboard<FormData>(formData).subscribe({
@@ -247,15 +247,15 @@ isDocumentsValid(): boolean {
         if (res?.success) {
            this.Toast.success(res.message, 'Success')
           this.router.navigateByUrl('/Association/Dashboard');
-          console.log('Documents uploaded successfully');
+          //console.log('Documents uploaded successfully');
         } else {
           this.Toast.warning(res.message, 'Warning')
-          console.warn('Document upload failed');
+          //console.warn('Document upload failed');
         }
       },
       error: (err: any) => {
          this.Toast.error(err.error.error.message, 'Failed')
-        console.error('Error uploading documents:', err);
+        //console.error('Error uploading documents:', err);
       },
     });
   }
@@ -273,13 +273,13 @@ isDocumentsValid(): boolean {
   //   this.apiService.AssociationDataOnboard<any>(payload).subscribe({
   //     next: (res: any) => {
   //       if (res?.success) {
-  //         console.log('Account details saved successfully');
+  //         //console.log('Account details saved successfully');
   //       } else {
-  //         console.warn('Account details submission failed');
+  //         //console.warn('Account details submission failed');
   //       }
   //     },
   //     error: (err: any) => {
-  //       console.error('Error submitting account details:', err);
+  //       //console.error('Error submitting account details:', err);
   //     },
   //   });
   // }
@@ -291,13 +291,13 @@ isDocumentsValid(): boolean {
       this.accountForm.invalid ||
        !this.isDocumentsValid()
     ) {
-      console.warn('Please complete all sections before submitting.');
+      //console.warn('Please complete all sections before submitting.');
       return;
     }
     this.submitInputForm();
     // this.submitAccountForm();
     this.loginbtn = true;
-    console.log('Onboarding Completed!');
+    //console.log('Onboarding Completed!');
   }
 
   logout(): void {
@@ -307,14 +307,14 @@ isDocumentsValid(): boolean {
           sessionStorage.clear();
           this.router.navigateByUrl('/auth/sign-in');
           this.Toast.success(res.message, 'Successs');
-          console.log(res.message || 'Logged out successfully');
+          //console.log(res.message || 'Logged out successfully');
         } else {
           this.Toast.error(res.message, 'Failed');
         }
       },
       error: (err: any) => {
         this.Toast.error(err.error.error.message, 'Failed');
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
       },
     });
   }

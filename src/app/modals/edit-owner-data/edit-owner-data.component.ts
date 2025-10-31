@@ -85,7 +85,7 @@ export class EditOwnerDataComponent implements OnInit {
     //   },
     //   error: (err) => {
     //     this.submitbtn = true;
-    //     console.error('Error updating owner:', err);
+    //     //console.error('Error updating owner:', err);
     //     alert('❌ Failed to update owner details.');
     //   }
     // });
@@ -93,6 +93,6 @@ export class EditOwnerDataComponent implements OnInit {
 
   closeModal() {
     this.Modal.close()
-    console.log('Modal closed');
+    //console.log('Modal closed');
   }
 }

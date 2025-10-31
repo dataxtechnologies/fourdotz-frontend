@@ -90,7 +90,7 @@ export class OwnerDashboardComponent {
         this.maintenancelist2 = [];
         this.maintenancelist1.initialize(this.maintenancelist2, 4);
         this.tableLoading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });
@@ -117,13 +117,13 @@ export class OwnerDashboardComponent {
         } else {
           this.propertieslist2 = []
           this.propertytableLoading = false;
-          console.warn(res.message || 'Failed to load properties.');
+          //console.warn(res.message || 'Failed to load properties.');
         }
       },
       error: (err: any) => {
         this.propertieslist2 = []
         this.propertytableLoading = false;
-        console.error('Property list fetch failed:', err);
+        //console.error('Property list fetch failed:', err);
       },
     });
   }
@@ -150,13 +150,13 @@ export class OwnerDashboardComponent {
         } else {
           this.TenantList2 = []
           this.TenanttableLoading = false;
-          console.warn(res.message || 'Failed to load properties.');
+          //console.warn(res.message || 'Failed to load properties.');
         }
       },
       error: (err: any) => {
         this.TenantList2 = []
         this.TenanttableLoading = false;
-        console.error('Property list fetch failed:', err);
+        //console.error('Property list fetch failed:', err);
       },
     });
   }
@@ -181,13 +181,13 @@ export class OwnerDashboardComponent {
           } else {
             this.rentalinvoicelist2 = []
             this.rentaltableLoading = false;
-            console.warn(res.message || 'Failed to load properties.');
+            //console.warn(res.message || 'Failed to load properties.');
           }
         },
         error: (err: any) => {
           this.rentalinvoicelist2 = []
           this.rentaltableLoading = false;
-          console.error('Property list fetch failed:', err);
+          //console.error('Property list fetch failed:', err);
         },
       });
     }

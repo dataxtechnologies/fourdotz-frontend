@@ -67,7 +67,7 @@ export class TenantMaintenanceListComponent {
         this.maintenancelist2 = [];
         this.maintenancelist1.initialize(this.maintenancelist2, 12);
         this.tableLoading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });

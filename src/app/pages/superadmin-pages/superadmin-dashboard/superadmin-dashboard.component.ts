@@ -63,7 +63,7 @@ export class SuperadminDashboardComponent {
       },
       error: (err: any) => {
         this.tableLoading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });
@@ -83,7 +83,7 @@ export class SuperadminDashboardComponent {
       },
       error: (err: any) => {
         // this.tableLoading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });

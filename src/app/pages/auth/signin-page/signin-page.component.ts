@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ApiserviceService } from '../../../services/api/apiservice.service'; // adjust path
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import {ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -24,12 +25,14 @@ export class SigninPageComponent implements OnInit {
   loginForm!: FormGroup;
   passwordFieldType: string = 'password';
   loginbtn: boolean = true;
+    pingResponse: string = '';
 
   constructor(
     private fb: FormBuilder,
     private route: Router,
     private apiService: ApiserviceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +41,23 @@ export class SigninPageComponent implements OnInit {
       username: ['', [Validators.required, Validators.email]], // email validation
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+    
+    // this.getPing()
+  }
+
+
+  getPing() {
+    this.http.get('http://dev-api.fourdotz.com/ping', { responseType: 'text' })
+      .subscribe({
+        next: (res) => {
+          this.pingResponse = res;
+          //console.log('Ping Response:', res);
+        },
+        error: (err) => {
+          //console.error('Error:', err);
+          this.pingResponse = 'Error connecting to API';
+        }
+      });
   }
 
   togglePassword(): void {
@@ -84,7 +104,7 @@ export class SigninPageComponent implements OnInit {
               this.route.navigateByUrl('/Tenant/Dashboard');
               break;
             default:
-              console.warn('Unknown user type:', userType);
+              //console.warn('Unknown user type:', userType);
               this.route.navigateByUrl('/');
               break;
           }
@@ -102,7 +122,7 @@ export class SigninPageComponent implements OnInit {
           );
           this.route.navigateByUrl(`/auth/Change-passsword/${newuseremail}`);
         }
-        console.error('Login failed:', err.error.error.data);
+        //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },
     });

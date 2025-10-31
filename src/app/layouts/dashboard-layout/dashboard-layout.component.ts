@@ -81,7 +81,7 @@ export class DashboardLayoutComponent {
         }
       },
       error: (err: any) => {
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         this.toastr.error(
           err?.error?.error?.message || 'Logout failed',
           'Failed'
@@ -114,9 +114,9 @@ export class DashboardLayoutComponent {
     },
 
       error: (err: any) => {
-        console.log('tata');
+        //console.log('tata');
         // this.tableLoading = false;
-        console.error('Logout failed:', err);
+        //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });

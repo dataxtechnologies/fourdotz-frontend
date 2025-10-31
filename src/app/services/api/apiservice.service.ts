@@ -49,7 +49,7 @@ export class ApiserviceService {
           ) {
             this.router.navigate(['/auth/sign-in']);
           }
-          console.error('Login API error', error);
+          //console.error('Login API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'Login API error',
@@ -72,7 +72,7 @@ export class ApiserviceService {
           ) {
             this.router.navigate(['/auth/sign-in']);
           }
-          console.error('Logout API error', error);
+          //console.error('Logout API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'Logout API error',
@@ -100,7 +100,7 @@ export class ApiserviceService {
           ) {
             this.router.navigate(['/auth/sign-in']);
           }
-          console.error('Login API error', error);
+          //console.error('Login API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'Login API error',
@@ -126,7 +126,7 @@ export class ApiserviceService {
           this.router.navigate(['/auth/sign-in']);
         }
 
-        console.error('Get Associations API error', error.error.success);
+        //console.error('Get Associations API error', error.error.success);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -153,7 +153,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -176,7 +176,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -199,7 +199,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -222,7 +222,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -245,7 +245,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -272,7 +272,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -301,7 +301,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('AssociationDocumentOnboard API error', error);
+          //console.error('AssociationDocumentOnboard API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'AssociationDocumentOnboard API error',
@@ -324,7 +324,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -347,7 +347,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -374,7 +374,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -397,7 +397,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -424,7 +424,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -447,7 +447,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -472,7 +472,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -497,7 +497,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -524,7 +524,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -547,7 +547,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -570,7 +570,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -593,7 +593,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -620,7 +620,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -643,7 +643,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -666,7 +666,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -689,7 +689,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -716,7 +716,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -739,7 +739,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -762,7 +762,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -785,7 +785,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -815,7 +815,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -839,7 +839,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -863,7 +863,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -887,7 +887,7 @@ export class ApiserviceService {
         ) {
           this.router.navigate(['/auth/sign-in']);
         }
-        console.error('Get Associations API error', error);
+        //console.error('Get Associations API error', error);
         return throwError(() => ({
           statusCode: 500,
           message: 'Get Associations API error',
@@ -915,7 +915,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -943,7 +943,7 @@ export class ApiserviceService {
             this.router.navigate(['/auth/sign-in']);
           }
 
-          console.error('UpdateTempPass API error', error);
+          //console.error('UpdateTempPass API error', error);
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
@@ -951,5 +951,29 @@ export class ApiserviceService {
           }));
         })
       );
+  }
+
+
+  public AmountforAssociationinSA<T>(payload : any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.AmountforAssociation
+    }?id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
   }
 }

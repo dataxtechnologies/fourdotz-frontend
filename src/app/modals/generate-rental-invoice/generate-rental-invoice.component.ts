@@ -62,7 +62,7 @@ export class GenerateRentalInvoiceComponent implements OnInit {
   // Submit
   onSubmit(): void {
     if (this.maintenanceForm.valid) {
-        console.log('this.TenantList2', this.TenantList2);
+        //console.log('this.TenantList2', this.TenantList2);
         
       const propertyIds = this.TenantList2.map((item: any) => item._id);
     const formItems = this.items.value; // get all form array values
@@ -91,7 +91,7 @@ export class GenerateRentalInvoiceComponent implements OnInit {
         },
         error: (err: any) => {
           this.Toast.error(err.error.error.message, 'Failed');
-          console.error('Login failed:', err.error.error.data);
+          //console.error('Login failed:', err.error.error.data);
           // alert(err.message || 'Login failed, please try again.');
         },
       });
@@ -119,13 +119,13 @@ export class GenerateRentalInvoiceComponent implements OnInit {
           } else {
             this.TenantList2 = []
             this.tableLoading = false;
-            console.warn(res.message || 'Failed to load properties.');
+            //console.warn(res.message || 'Failed to load properties.');
           }
         },
         error: (err: any) => {
           this.TenantList2 = []
           this.tableLoading = false;
-          console.error('Property list fetch failed:', err);
+          //console.error('Property list fetch failed:', err);
         },
       });
     }
