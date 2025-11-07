@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { SidebarItem, SIDEBAR_ITEMS } from '../../data/sidebar';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +12,8 @@ import { filter } from 'rxjs/operators';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
+import { ModalService } from 'ngx-modal-ease';
+import { LogoutModalComponent } from '../../modals/logout-modal/logout-modal.component';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -30,8 +32,8 @@ export class DashboardLayoutComponent {
   sidebarClosed = true;
   currentRoute = '';
   loadingUserData = false; // flag to control loader visibility
-
-
+showFooter = false;
+footerTimeout: any;
   user_type = sessionStorage.getItem('user_type');
   user_id = sessionStorage.getItem('user_id');
   access_token = sessionStorage.getItem('access_token');
@@ -39,7 +41,8 @@ export class DashboardLayoutComponent {
   constructor(
     private router: Router,
     private apiService: ApiserviceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private ModalService: ModalService
   ) {
     // Track the current route
     this.router.events
@@ -48,6 +51,40 @@ export class DashboardLayoutComponent {
         this.currentRoute = event.urlAfterRedirects;
       });
   }
+
+
+
+@HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    
+    // Check if user is near the bottom (within 100px)
+    const IS_NEAR_BOTTOM = (windowHeight + scrollTop + 100) >= docHeight;
+
+    if (IS_NEAR_BOTTOM) {
+      // 1. Clear any pending hide timeout
+      clearTimeout(this.footerTimeout);
+      
+      // 2. Show footer immediately
+      if (!this.showFooter) {
+        this.showFooter = true;
+      }
+      
+    } else {
+      // User is scrolling up/in the middle
+      
+      // 1. Clear any previous timeout to reset the delay
+      clearTimeout(this.footerTimeout);
+      
+      // 2. Set a new timeout to hide the footer after 1 second
+      this.footerTimeout = setTimeout(() => {
+        this.showFooter = false;
+      }, 1000);
+    }
+  }
+
 
   ngOnInit(): void {
     // Check token before calling API
@@ -128,4 +165,18 @@ export class DashboardLayoutComponent {
     this.toastr.info(message, 'Info');
     this.router.navigateByUrl('/auth/sign-in');
   }
+
+    logoutmodal() {
+      this.ModalService.open(LogoutModalComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
 }

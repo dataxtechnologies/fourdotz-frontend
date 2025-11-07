@@ -68,7 +68,7 @@
                                         <!-- ✅ Conditional Action -->
                                         <td data-label="Actions">
                                             <ng-container *ngIf="!item.payment_status; else viewDetails">
-                                                <button class="pay-btn">Pay Now</button>
+                                                <button class="pay-btn" (click)="CreatePaymentforInvoiceId(item.invoice_no)">Pay Now</button>
                                             </ng-container>
                                             <ng-template #viewDetails>
                                                 <i class="fa-solid fa-arrow-up-right-from-square"
@@ -115,6 +115,37 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div *ngIf="maintenancelist1" class="pagination-container ">
+            <p class="pagination-info">
+                Showing {{ maintenancelist1.startIndex + 1 }} to {{ maintenancelist1.endIndex + 1 }} of {{
+                maintenancelist1.totalData }} entries
+            </p>
+
+            <ul class="pagination">
+                <!-- First Page -->
+                <li>
+                    <button [disabled]="maintenancelist1.currentPage === 1" (click)="maintenancelist1.prevPage()"
+                        class="page-btn arrow-btn">
+                        &#x276E;
+                    </button>
+                </li>
+
+                <!-- Current Page -->
+                <li>
+                    <span class="page-btn active">
+                        {{ maintenancelist1.currentPage }}
+                    </span>
+                </li>
+
+                <!-- Next Page -->
+                <li>
+                    <button [disabled]="maintenancelist1.currentPage === maintenancelist1.totalPages"
+                        (click)="maintenancelist1.nextPage()" class="page-btn arrow-btn">
+                        &#x276F;
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
 </section>

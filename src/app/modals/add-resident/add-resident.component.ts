@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -20,8 +20,9 @@ import { AssociationServiceService } from '../../services/association/associatio
   styleUrls: ['./add-resident.component.css'],
 })
 export class AddResidentComponent implements OnInit {
-  @Input() associationId1: any[] = []; // array of property objects
-
+  associationId1: any; // array of property objects
+  @ViewChild('hiddenDatePicker')
+  hiddenDatePicker!: ElementRef<HTMLInputElement>;
   ownerForm!: FormGroup;
 
   dropdownOpen = false;
@@ -39,6 +40,8 @@ export class AddResidentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    this.getpropertiesdata()
     // Initialize filtered list with all properties
     this.filteredList = [...this.associationId1];
 
@@ -77,7 +80,7 @@ export class AddResidentComponent implements OnInit {
       return;
     }
 
-    this.filteredList = this.associationId1.filter((prop) =>
+    this.filteredList = this.associationId1.filter((prop: any) =>
       prop.property_no.toLowerCase().includes(input)
     );
   }
@@ -86,6 +89,54 @@ export class AddResidentComponent implements OnInit {
     this.Modal.close();
   }
 
+   openDatePicker(): void {
+    this.hiddenDatePicker.nativeElement.showPicker();
+  }
+
+  // 👇 Handle date selection and format the date
+  onDateSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.value) return;
+
+    const selectedDate = new Date(input.value);
+    const formattedDate = this.formatDate(selectedDate);
+
+    this.ownerForm.get('ownedAt')?.setValue(formattedDate);
+  }
+
+  // 👇 Helper function to format as dd-MMM-yyyy (e.g. 22-Jun-2025)
+  private formatDate(date: Date): string {
+    const day = String(date.getDate()).padStart(2, '0');
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
+ getpropertiesdata() {
+  this.apiService.PropertyListinAssociation<any>().subscribe({
+    next: (res: any) => {
+      if (res?.success && Array.isArray(res.data)) {
+        // ✅ Filter out properties that already have a resident_type = 'owner' or 'tenant'
+        this.associationId1 = res.data.filter(
+          (prop: any) =>
+            !prop.resident_type || prop.resident_type === '' // keep only those without resident_type
+        );
+
+        // Initialize filtered list for dropdown
+        this.filteredList = [...this.associationId1];
+      } else {
+        this.associationId1 = [];
+        this.filteredList = [];
+      }
+    },
+    error: (err: any) => {
+      console.error('Property list fetch failed:', err);
+      this.associationId1 = [];
+      this.filteredList = [];
+    },
+  });
+}
   onSubmit(): void {
     this.submitbtn = false;
     if (this.ownerForm.invalid) {

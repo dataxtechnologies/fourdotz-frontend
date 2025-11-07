@@ -24,7 +24,7 @@ export class EditTenantDataComponent implements OnInit {
   @Input() TenantDetails: any; // Full tenant response object
   tenantForm!: FormGroup;
   submitbtn = true;
-
+days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
   constructor(
     private fb: FormBuilder,
     private apiService: ApiserviceService,
@@ -42,6 +42,11 @@ export class EditTenantDataComponent implements OnInit {
     }
   }
 
+  getOrdinal(day: number): string {
+    const suffixes = ['th', 'st', 'nd', 'rd'];
+    const v = day % 100;
+    return day + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]);
+  }
   initForm() {
     this.tenantForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -49,6 +54,7 @@ export class EditTenantDataComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       rentedAt: ['', Validators.required],
+      monthly_rent_due_date: ['', Validators.required],
       advancePaid: ['', [Validators.required, Validators.min(1)]],
       estimatedRent: ['', [Validators.required, Validators.min(1)]],
       maintenancePaidBy: ['', Validators.required],
@@ -67,6 +73,7 @@ export class EditTenantDataComponent implements OnInit {
       email: tenant.email ?? data.tenant_email ?? '',
       phone: tenant.mobile?.toString() ?? data.tenant_mobile ?? '',
       rentedAt: rentedAtDate,
+      monthly_rent_due_date: data.monthly_rent_due_date ?? '',
       advancePaid: data.advance_amount ?? '',
       estimatedRent: data.monthly_rent_amount ?? '',
       maintenancePaidBy: data.maintenance_paid_by ?? '',
@@ -89,6 +96,7 @@ export class EditTenantDataComponent implements OnInit {
       rented_at: this.tenantForm.get('rentedAt')?.value,
       advance_amount: this.tenantForm.get('advancePaid')?.value,
       monthly_rent_amount: this.tenantForm.get('estimatedRent')?.value,
+      monthly_rent_due_date: this.tenantForm.get('monthly_rent_due_date')?.value,
       maintenance_paid_by: this.tenantForm.get('maintenancePaidBy')?.value,
       id: this.TenantDetails._id,
     };

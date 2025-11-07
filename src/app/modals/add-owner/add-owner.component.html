@@ -5,8 +5,8 @@
     </div>
 
     <div class="form-body">
-        <form [formGroup]="ownerForm" >
-           
+        <form [formGroup]="ownerForm">
+
             <div class="inp-cont">
                 <label>First Name <span class="required">*</span></label>
                 <input type="text" formControlName="firstName" class="inp-cus" placeholder="Enter your First Name">
@@ -46,7 +46,13 @@
 
             <div class="inp-cont">
                 <label>Owned At <span class="required">*</span></label>
-                <input type="date" formControlName="ownedAt" class="inp-cus">
+                <div class="date-input-wrapper">
+                    <input type="text" id="rentedAt" class="inp-cus placeholder-font" formControlName="ownedAt"
+                        placeholder="Select date" readonly (click)="openDatePicker()" />
+                    <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
+                    <input #hiddenDatePicker type="date" class="hidden-date-input" (change)="onDateSelected($event)" />
+                </div>
+                <!-- <input type="date" formControlName="ownedAt" class="inp-cus"> -->
                 <div *ngIf="ownerForm.get('ownedAt')?.touched && ownerForm.get('ownedAt')?.invalid" class="error-text">
                     Owned date is required
                 </div>

@@ -44,27 +44,27 @@
                             </thead>
 
                             <tbody *ngIf="!tableLoading; else tableSkeleton">
-  <!-- Show rows if data is available -->
-  <tr *ngFor="let item of Associationlist1.paginatedData; let i = index">
-    <td data-label="Property Name">{{ item.property_name }}</td>
-    <td data-label="Email">{{ item.email }}</td>
-    <td data-label="Phone">+91 {{ item.mobile }}</td>
-    <td data-label="Property Type">{{ item.property_type.join(', ') }}</td>
-    <td data-label="Invitation Status">
-      {{ item.invitation_status ? 'Accepted' : 'Pending/Declined' }}
-    </td>
-    <td data-label="Property Details" (click)="viewassociation(item.user_id)">
-      <i class="fa-solid fa-arrow-up-right-from-square"></i>
-    </td>
-  </tr>
+                                <!-- Show rows if data is available -->
+                                <tr *ngFor="let item of Associationlist1.paginatedData; let i = index">
+                                    <td data-label="Property Name">{{ item.property_name }}</td>
+                                    <td data-label="Email">{{ item.email }}</td>
+                                    <td data-label="Phone">+91 {{ item.mobile }}</td>
+                                    <td data-label="Property Type">{{ item.property_type.join(', ') }}</td>
+                                    <td data-label="Invitation Status">
+                                        {{ item.invitation_status ? 'Accepted' : 'Pending/Declined' }}
+                                    </td>
+                                    <td data-label="Property Details" (click)="viewassociation(item.user_id)">
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </td>
+                                </tr>
 
-  <!-- Show "No Data Found" if array is empty -->
-  <tr *ngIf="Associationlist1.paginatedData?.length === 0">
-    <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
-       No Data Found
-    </td>
-  </tr>
-</tbody>
+                                <!-- Show "No Data Found" if array is empty -->
+                                <tr *ngIf="Associationlist1.paginatedData?.length === 0">
+                                    <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                        No Data Found
+                                    </td>
+                                </tr>
+                            </tbody>
                         </table>
 
                         <!-- Skeleton Loader -->

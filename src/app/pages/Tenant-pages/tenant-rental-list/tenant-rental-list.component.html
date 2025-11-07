@@ -77,8 +77,8 @@
                                             <span *ngIf="p.payment_status === true">Paid</span>
                                         </td>
                                         <td>
-                                            <span *ngIf="p.payment_status === false"> <button class="pay-btn">Pay Now</button></span>
-                                            <span *ngIf="p.payment_status === true">Paid</span>
+                                            <span *ngIf="p.payment_status === false"> <button class="pay-btn" (click)="CreatePaymentforInvoiceId(p.invoice_no)">Pay Now</button> |  <i class="fa-solid fa-file-lines" (click)="viewInvoice(p.invoice_no)"></i></span>
+                                            <span *ngIf="p.payment_status === true">Paid | <i class="fa-solid fa-file-lines" (click)="viewInvoice(p.invoice_no)"></i></span>
                                         </td>
                                     </tr>
                                 </ng-template>

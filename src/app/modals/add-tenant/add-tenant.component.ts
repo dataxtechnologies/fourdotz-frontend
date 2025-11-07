@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -21,9 +21,11 @@ import { OwnerServiceService } from '../../services/owner/owner-service.service'
 })
 export class AddTenantComponent {
   @Input() PropertyIddata: any
-
+ @ViewChild('hiddenDatePicker') hiddenDatePicker!: ElementRef<HTMLInputElement>;
   submitbtn: boolean = true;
-
+   formattedDate: string = '';
+  showDatePicker = false;
+ days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
   constructor(private Modal: ModalService, private fb: FormBuilder, private apiService: ApiserviceService, private Toast: ToastrService, private AssociationService: AssociationServiceService,
     private OwnerService : OwnerServiceService
 
@@ -31,6 +33,12 @@ export class AddTenantComponent {
 
   closeModal() {
     this.Modal.close();
+  }
+
+   getOrdinal(day: number): string {
+    const suffixes = ['th', 'st', 'nd', 'rd'];
+    const v = day % 100;
+    return day + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]);
   }
 
   tenantForm!: FormGroup;
@@ -42,6 +50,7 @@ ngOnInit(): void {
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]], // 10 digits
       rentedAt: ['', Validators.required],
+      monthly_rent_due_date: ['', Validators.required],
       advancePaid: ['', [Validators.required, Validators.min(0)]],
       estimatedRent: ['', [Validators.required, Validators.min(0)]],
       maintenancePaidBy: ['', Validators.required]
@@ -49,6 +58,32 @@ ngOnInit(): void {
     //console.log('PropertyIddata', this.PropertyIddata);
     
   }
+
+
+  openDatePicker(): void {
+    this.hiddenDatePicker.nativeElement.showPicker();
+  }
+
+  // 👇 Handle date selection and format the date
+  onDateSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.value) return;
+
+    const selectedDate = new Date(input.value);
+    const formattedDate = this.formatDate(selectedDate);
+
+    this.tenantForm.get('rentedAt')?.setValue(formattedDate);
+  }
+
+  // 👇 Helper function to format as dd-MMM-yyyy (e.g. 22-Jun-2025)
+  private formatDate(date: Date): string {
+    const day = String(date.getDate()).padStart(2, '0');
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
 
   onSubmit(): void {
     this.submitbtn = false;
@@ -66,6 +101,7 @@ ngOnInit(): void {
       rented_at: this.tenantForm.get('rentedAt')?.value,
       advance_amount: this.tenantForm.get('advancePaid')?.value,
       monthly_rent_amount: this.tenantForm.get('estimatedRent')?.value,
+      monthly_rent_due_date: this.tenantForm.get('monthly_rent_due_date')?.value,
       maintenance_paid_by: this.tenantForm.get('maintenancePaidBy')?.value,
       property_id: this.PropertyIddata,
     };

@@ -97,3 +97,58 @@ tbody td i {
 .notify-icon{
     color: var(--primary-color2) !important;
 }
+
+
+
+
+
+
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 20px;
+}
+
+.summary-card {
+  flex: 1;
+  min-width: 220px;
+  max-height: 120px;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+
+.summary-card h4 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.summary-card p {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+}
+
+/* Card Colors */
+.light-green {
+  background-color: #dfeeda;
+}
+.light-blue {
+  background-color: #d9f5fd;
+}
+.light-yellow {
+  background-color: #f6ecda;
+}
+.light-grey {
+  background-color: #e4e5e6;
+}

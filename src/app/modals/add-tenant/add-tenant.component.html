@@ -48,13 +48,38 @@
             </div>
 
             <!-- Rented At -->
-            <div class="inp-cont">
-                <label for="rentedAt" class="label-font">Rented At <span class="required">*</span></label>
-                <input type="date" id="rentedAt" class="inp-cus placeholder-font" formControlName="rentedAt">
-                <div class="error-text" *ngIf="tenantForm.get('rentedAt')?.touched && tenantForm.get('rentedAt')?.invalid">
-                    Rented date is required
-                </div>
-            </div>
+           <div class="inp-cont date-picker-container">
+  <label for="rentedAt" class="label-font">
+    Rented At <span class="required">*</span>
+  </label>
+
+  <div class="date-input-wrapper">
+    <input
+      type="text"
+      id="rentedAt"
+      class="inp-cus placeholder-font"
+      formControlName="rentedAt"
+      placeholder="Select date"
+      readonly
+      (click)="openDatePicker()"
+    />
+    <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
+    <input
+      #hiddenDatePicker
+      type="date"
+      class="hidden-date-input"
+      (change)="onDateSelected($event)"
+    />
+  </div>
+
+  <div
+    class="error-text"
+    *ngIf="tenantForm.get('rentedAt')?.touched && tenantForm.get('rentedAt')?.invalid"
+  >
+    Rented date is required
+  </div>
+</div>
+
 
             <!-- Advance Paid -->
             <div class="inp-cont">
@@ -77,6 +102,18 @@
                     Enter valid estimated rent
                 </div>
             </div>
+
+            <div class="inp-cont">
+                    <label>Rent Due Date <span class="required">*</span></label>
+                    <select formControlName="monthly_rent_due_date" class="inp-cus">
+                        <option value="" disabled selected>Select Day</option>
+                        <option *ngFor="let day of days" [value]="day">{{ day }} of Month</option>
+                    </select>
+                    <div *ngIf="tenantForm.get('monthly_rent_due_date')?.touched && tenantForm.get('monthly_rent_due_date')?.invalid"
+                        class="error-text">
+                      Rent  Due Date is required
+                    </div>
+                </div>
 
             <!-- Maintenance Paid By -->
             <div class="inp-cont">

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ModalService } from 'ngx-modal-ease';
@@ -18,6 +18,9 @@ export class EditOwnerDataComponent implements OnInit {
 
   ownerForm!: FormGroup;
   submitbtn = true;
+
+    @ViewChild('hiddenDatePicker')
+  hiddenDatePicker!: ElementRef<HTMLInputElement>;
 
   constructor(private fb: FormBuilder, private apiService: ApiserviceService, private Modal : ModalService) {
     this.initForm();
@@ -94,5 +97,44 @@ export class EditOwnerDataComponent implements OnInit {
   closeModal() {
     this.Modal.close()
     //console.log('Modal closed');
+  }
+
+
+  
+  openDatePicker(): void {
+    this.hiddenDatePicker.nativeElement.showPicker();
+  }
+
+  // 👇 Handle date selection and format the date
+  onDateSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.value) return;
+
+    const selectedDate = new Date(input.value);
+    const formattedDate = this.formatDate(selectedDate);
+
+    this.ownerForm.get('ownedAt')?.setValue(formattedDate);
+  }
+
+  // 👇 Helper function to format as dd-MMM-yyyy (e.g. 22-Jun-2025)
+  private formatDate(date: Date): string {
+    const day = String(date.getDate()).padStart(2, '0');
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
   }
 }

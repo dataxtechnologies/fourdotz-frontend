@@ -1,0 +1,172 @@
+/* ========================= */
+/* 🧩 LOGOUT CONFIRMATION MODAL */
+/* ========================= */
+.logout-modal {
+  top: 0;
+  left: 0;
+
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Center Card Popup */
+.logout-card {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 580px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: slideUp 0.3s ease;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+/* Header */
+.logout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f2f2f2;
+  padding-bottom: 8px;
+}
+
+.logout-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logout-header h3 i {
+  color: #e53e3e;
+}
+
+.close-icon {
+  font-size: 22px;
+  color: #555;
+  cursor: pointer;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.close-icon:hover {
+  color: #000;
+  transform: rotate(90deg);
+}
+
+/* Body */
+.logout-body {
+  text-align: left;
+  padding-top: 8px;
+}
+
+/* .logout-warning {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background: #fff5f5;
+  border-left: 5px solid #e53e3e;
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: 0 2px 6px rgba(229, 62, 62, 0.08);
+} */
+
+.logout-warning strong {
+  color: #c53030;
+  font-weight: 600;
+  font-size: 22px;
+}
+
+/* Actions */
+.logout-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.cancel-btn,
+.delete-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+  border: none;
+  transition: all 0.25s ease;
+}
+
+/* Cancel Button */
+.cancel-btn {
+  background: #edf2f7;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background: #cbd5e0;
+}
+
+/* Logout Button */
+.delete-btn {
+  background: linear-gradient(135deg, #e53e3e, #c53030);
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(229, 62, 62, 0.2);
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #c53030, #9b2c2c);
+}
+
+.delete-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Subtle Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .logout-card {
+    padding: 20px;
+    width: 90%;
+  }
+
+  .logout-header h3 {
+    font-size: 18px;
+  }
+
+  .logout-warning {
+    font-size: 14.5px;
+  }
+
+  .logout-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cancel-btn,
+  .delete-btn {
+    width: 100%;
+  }
+}

@@ -14,7 +14,7 @@
     /* items start from left */
     align-items: center;
     background-color: #EAE9E3;
-    padding: 15px 20px;
+    padding: 15px 15px;
     border-radius: 15px;
     flex-grow: 1;
     flex-wrap: wrap;
@@ -48,6 +48,9 @@
     margin-top: 3px;
 }
 
+.user-info p{
+  margin-bottom: 0px !important;
+}
 
 /* User and apartment info */
 /* .user-info h5,
@@ -303,11 +306,11 @@
 }
 
 .transaction-card {
-  background: linear-gradient(180deg, #ffffff, #f7fff9);
+  background: linear-gradient(180deg, #ffffff, #ffeffc);
   border-radius: 14px;
   padding: 24px;
-  border: 1px solid rgba(34, 139, 34, 0.1);
-  box-shadow: 0 6px 18px rgba(0, 128, 0, 0.08);
+  border: 1px solid #f0a5fa;
+  box-shadow: 0 6px 18px rgba(122, 0, 128, 0.08);
   text-align: center;
   transition: all 0.25s ease;
 }
@@ -319,7 +322,7 @@
   height: 60px;
   margin: 0 auto 10px;
   background: rgba(0, 128, 0, 0.08);
-  color: #0a5232;
+  color: #8B4095;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -330,18 +333,18 @@
 .transaction-card .title {
   font-weight: 600;
   font-size: 15px;
-  color: #064e2a;
+  color: #000;
   margin-bottom: 6px;
 }
 
 .transaction-card .amount {
   font-size: 22px;
   font-weight: 700;
-  color: #0a5232;
+  color: #000;
   margin-bottom: 4px;
 }
 
 .transaction-card .desc {
   font-size: 13px;
-  color: #6b8774;
+  color: #303030;
 }

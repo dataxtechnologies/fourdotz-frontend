@@ -1,5 +1,5 @@
 <section *ngIf="user_type === 'association' && loadingUserData" class="loader-section">
-  <img src="assets/logo/fourdotz-logo.png" alt="Loading..." class="loader-img" />
+    <img src="assets/logo/fourdotz-logo.png" alt="Loading..." class="loader-img" />
 </section>
 
 
@@ -46,7 +46,7 @@
                         <img src="assets/icons/arrow-circle-right.svg" alt="Right Arrow" width="30">
                     </ng-container>
                     <ng-template #openIcon>
-                         <img src="assets/icons/arrow-circle-left.svg" alt="Left Arrow" width="30">
+                        <img src="assets/icons/arrow-circle-left.svg" alt="Left Arrow" width="30">
                     </ng-template>
                 </button>
             </li>
@@ -69,7 +69,7 @@
         <!-- Footer section -->
         <ul class="footer-list">
             <li style="cursor: pointer;">
-                <a (click)="logout()">
+                <a (click)="logoutmodal()">
                     <img src="/assets/icons/logout.svg" alt="logout">
                     <span>Logout</span>
                 </a>
@@ -82,4 +82,15 @@
     <main class="content">
         <router-outlet></router-outlet>
     </main>
+
+    <footer class="app-footer" [class.visible]="showFooter">
+        <div class="footer-left">
+            <span>© 2025 All Rights Reserved <span style="color: var(--primary-color1);">Datax</span></span>
+        </div>
+        <div class="footer-right">
+            <a href="https://fourdotz.com/privacy.html" target="_blank">Privacy Policy</a> |
+            <a href="https://fourdotz.com/terms.html" target="_blank">Terms & Conditions</a> |
+            <a href="https://fourdotz.com/refund.html" target="_blank">Refund Policy</a>
+        </div>
+    </footer>
 </div>

@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { GenerateRentalInvoiceComponent } from '../../../modals/generate-rental-invoice/generate-rental-invoice.component';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { TableService } from '../../../services/tableservice.service';
+import { ChangePaidStatusComponent } from '../../../modals/change-paid-status/change-paid-status.component';
+import { OwnerServiceService } from '../../../services/owner/owner-service.service';
 
 @Component({
   selector: 'app-owner-rental-invoice',
@@ -32,7 +34,8 @@ export class OwnerRentalInvoiceComponent {
     private modalService: ModalService,
     private router: Router,
     private fb: FormBuilder,
-    private apiService: ApiserviceService
+    private apiService: ApiserviceService,
+    private OwnerService: OwnerServiceService
   ) {
     this.rentalinvoicelist1 = new TableService()
     this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 12)
@@ -48,6 +51,12 @@ export class OwnerRentalInvoiceComponent {
     this.RentalInvoicelistinowner()
     this.filterForm.valueChanges.subscribe(() => {
       this.applyFilters();
+    });
+
+    this.OwnerService.RentalPaidStatus$.subscribe((PaidRental) => {
+      if (PaidRental) {
+        this.RentalInvoicelistinowner();
+      }
     });
 
 
@@ -86,6 +95,23 @@ export class OwnerRentalInvoiceComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  changetopaidstatus(data : any){
+    this.modalService.open(ChangePaidStatusComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data:{
+        invoice_id: data
+      },
       actions: {
         click: false,
         escape: false,

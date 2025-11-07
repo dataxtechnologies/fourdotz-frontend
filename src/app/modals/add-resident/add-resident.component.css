@@ -304,3 +304,48 @@ select.inp-cus {
   color: #888;
   font-style: italic;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.date-picker-container {
+  position: relative;
+}
+
+.date-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inp-cus {
+  width: 100%;
+  padding-right: 35px; /* space for icon */
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 10px;
+  color: #555;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.calendar-icon:hover {
+  color: #007bff;
+}
+
+.hidden-date-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}

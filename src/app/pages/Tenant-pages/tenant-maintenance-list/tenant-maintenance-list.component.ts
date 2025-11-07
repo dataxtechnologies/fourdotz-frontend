@@ -72,4 +72,31 @@ export class TenantMaintenanceListComponent {
       },
     });
   }
+
+
+  CreatePaymentforInvoiceId(data: any) {
+  const payload = {
+    invoice_no: data
+  };
+
+  console.log('payload', payload);
+
+  this.Apiservice.CreatePaymentforInvoiceId<any>(payload).subscribe({
+    next: (res: any) => {
+      if (res?.success && res?.data?.redirectUrl) {
+        console.log('Payment initiated:', res);
+
+        // ✅ Redirect user to PhonePe payment page
+        window.location.href = res.data.redirectUrl;
+      } else {
+        console.error('Payment initiation failed:', res);
+        alert(res.message || 'Failed to initiate payment, please try again.');
+      }
+    },
+    error: (err: any) => {
+      console.error('Payment API Error:', err);
+      alert(err.message || 'Something went wrong, please try again later.');
+    }
+  });
+}
 }

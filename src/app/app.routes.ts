@@ -29,6 +29,9 @@ import { OnboardingLayoutComponent } from './layouts/onboarding-layout/onboardin
 import { AssociationOnboardComponent } from './pages/onboarding/association-onboard/association-onboard.component';
 import { AssociationOnboardDocumentsComponent } from './pages/onboarding/association-onboard-documents/association-onboard-documents.component';
 import { ProfilePageComponent } from './pages/profile/profile-page/profile-page.component';
+import { GlobalInvoiceComponent } from './pages/global-invoice/global-invoice.component';
+import { NewInvComponent } from './pages/new-inv/new-inv.component';
+import { NewInv1Component } from './pages/new-inv1/new-inv1.component';
 
 export const routes: Routes = [
   {
@@ -139,4 +142,18 @@ export const routes: Routes = [
       },
     ],
   },
+
+
+  {
+    path: 'Global-invoice/:invoice_id',
+    component: GlobalInvoiceComponent
+  },
+  // {
+  //   path: 'newGlobal-invoice/:invoice_id',
+  //   component: NewInvComponent
+  // },
+  // {
+  //   path: 'new1Global-invoice/:invoice_id',
+  //   component: NewInv1Component
+  // }
 ];

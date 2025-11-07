@@ -76,6 +76,18 @@
                 </div>
             </div>
 
+             <div class="inp-cont">
+                    <label>Rent Due Date <span class="required">*</span></label>
+                    <select formControlName="monthly_rent_due_date" class="inp-cus">
+                        <option value="" disabled selected>Select Day</option>
+                        <option *ngFor="let day of days" [value]="day">{{ day }} of Month</option>
+                    </select>
+                    <div *ngIf="tenantForm.get('monthly_rent_due_date')?.touched && tenantForm.get('monthly_rent_due_date')?.invalid"
+                        class="error-text">
+                      Rent  Due Date is required
+                    </div>
+                </div>
+
             <!-- Maintenance Paid By -->
             <div class="inp-cont">
                 <label>Maintenance Paid by <span class="required">*</span></label>

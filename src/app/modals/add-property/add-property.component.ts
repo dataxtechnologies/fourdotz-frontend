@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -14,16 +14,18 @@ import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-property',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './add-property.component.html',
   styleUrl: './add-property.component.css',
 })
-export class AddPropertyComponent {
+export class AddPropertyComponent implements OnInit {
   propertyForm!: FormGroup;
-  submitBtn : boolean = true
+  submitBtn = true;
   propertyTypes: any;
   buildingTypes: string[] = ['Tower', 'Block'];
-days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
+  days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
+
   constructor(
     private fb: FormBuilder,
     private Modal: ModalService,
@@ -32,16 +34,13 @@ days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
     private Toastr: ToastrService
   ) {}
 
-  // days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
-
-getOrdinal(day: number): string {
-  const suffixes = ["th", "st", "nd", "rd"];
-  const v = day % 100;
-  return day + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]);
-}
+  getOrdinal(day: number): string {
+    const suffixes = ['th', 'st', 'nd', 'rd'];
+    const v = day % 100;
+    return day + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]);
+  }
 
   ngOnInit(): void {
-
     this.propertyForm = this.fb.group({
       propertyNo: ['', Validators.required],
       area: ['', Validators.required],
@@ -49,7 +48,9 @@ getOrdinal(day: number): string {
       electricityNo: ['', Validators.required],
       parkingSlot: ['', Validators.required],
       gaslineNo: [''],
-      maintenanceAmount: ['', Validators.required],
+      maintenanceType: ['', Validators.required],
+      maintenanceAmount: [''],
+      maintenancePerSqft: [''],
       dueDate: ['', Validators.required],
       propertyType: ['', Validators.required],
       bhk: ['', Validators.required],
@@ -59,16 +60,37 @@ getOrdinal(day: number): string {
       floor: [''],
     });
 
+    // 🔹 Handle maintenance type switch
+    this.propertyForm.get('maintenanceType')?.valueChanges.subscribe((type) => {
+      if (type === 'fixed') {
+        this.propertyForm
+          .get('maintenanceAmount')
+          ?.setValidators([Validators.required]);
+        this.propertyForm.get('maintenancePerSqft')?.clearValidators();
+        this.propertyForm.get('maintenancePerSqft')?.reset();
+      } else if (type === 'square_feet') {
+        this.propertyForm
+          .get('maintenancePerSqft')
+          ?.setValidators([Validators.required]);
+        this.propertyForm.get('maintenanceAmount')?.clearValidators();
+        this.propertyForm.get('maintenanceAmount')?.reset();
+      } else {
+        this.propertyForm.get('maintenanceAmount')?.clearValidators();
+        this.propertyForm.get('maintenancePerSqft')?.clearValidators();
+      }
+
+      this.propertyForm.get('maintenanceAmount')?.updateValueAndValidity();
+      this.propertyForm.get('maintenancePerSqft')?.updateValueAndValidity();
+    });
+
     // 🔹 Get userdata from sessionStorage
     const userdata = JSON.parse(sessionStorage.getItem('userdata') || '{}');
-
     if (userdata?.property_type && userdata.property_type.length > 0) {
-      // Capitalize the first letter for display
       this.propertyTypes = userdata.property_type.map(
         (p: string) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()
       );
 
-      // 🔹 If only one property type, auto-select and apply validators
+      // Auto-select if only one property type
       if (this.propertyTypes.length === 1) {
         const selectedType = this.propertyTypes[0];
         this.propertyForm.get('propertyType')?.setValue(selectedType);
@@ -76,7 +98,9 @@ getOrdinal(day: number): string {
         if (selectedType === 'Villa' || selectedType === 'Townhouse') {
           this.propertyForm.get('bhk')?.setValidators([Validators.required]);
         } else if (selectedType === 'Apartment') {
-          this.propertyForm.get('buildingType')?.setValidators([Validators.required]);
+          this.propertyForm
+            .get('buildingType')
+            ?.setValidators([Validators.required]);
           this.propertyForm.get('bhk')?.setValidators([Validators.required]);
           this.propertyForm.get('floor')?.setValidators([Validators.required]);
         }
@@ -85,15 +109,16 @@ getOrdinal(day: number): string {
       }
     }
 
-    // 🔹 Handle conditional validators for property type
+    // 🔹 Conditional validators for property type
     this.propertyForm.get('propertyType')?.valueChanges.subscribe((type) => {
-      // Reset field validators first
       this.propertyForm.get('bhk')?.clearValidators();
       this.propertyForm.get('buildingType')?.clearValidators();
       this.propertyForm.get('floor')?.clearValidators();
 
       if (type === 'Apartment') {
-        this.propertyForm.get('buildingType')?.setValidators(Validators.required);
+        this.propertyForm
+          .get('buildingType')
+          ?.setValidators(Validators.required);
         this.propertyForm.get('bhk')?.setValidators(Validators.required);
         this.propertyForm.get('floor')?.setValidators(Validators.required);
       } else if (type === 'Villa' || type === 'Townhouse') {
@@ -105,7 +130,7 @@ getOrdinal(day: number): string {
       this.propertyForm.get('floor')?.updateValueAndValidity();
     });
 
-    // 🔹 Handle conditional validators for building type
+    // 🔹 Conditional validators for building type
     this.propertyForm.get('buildingType')?.valueChanges.subscribe((bt) => {
       if (bt === 'Tower') {
         this.propertyForm.get('tower')?.setValidators(Validators.required);
@@ -117,6 +142,7 @@ getOrdinal(day: number): string {
         this.propertyForm.get('tower')?.clearValidators();
         this.propertyForm.get('block')?.clearValidators();
       }
+
       this.propertyForm.get('tower')?.updateValueAndValidity();
       this.propertyForm.get('block')?.updateValueAndValidity();
     });
@@ -127,15 +153,27 @@ getOrdinal(day: number): string {
   }
 
   AddPropertybyAssociation() {
-    this.submitBtn  = false
+    this.submitBtn = false;
+
     if (this.propertyForm.valid) {
-      //console.log(this.propertyForm.value);
+      const type = this.propertyForm.get('maintenanceType')?.value;
+      const maintenance_amount =
+        type === 'fixed'
+          ? this.propertyForm.get('maintenanceAmount')?.value
+          : 0;
+      const square_feet_price =
+        type === 'square_feet'
+          ? this.propertyForm.get('maintenancePerSqft')?.value
+          : 0;
+
       const payload = {
         property_no: this.propertyForm.get('propertyNo')?.value,
         area: this.propertyForm.get('area')?.value,
         facing: this.propertyForm.get('facing')?.value,
         property_type: this.propertyForm.get('propertyType')?.value,
-        maintenance_amount: this.propertyForm.get('maintenanceAmount')?.value,
+        type: type,
+        maintenance_amount: maintenance_amount,
+        square_feet_price: square_feet_price,
         due_date: this.propertyForm.get('dueDate')?.value,
         electricity_number: this.propertyForm.get('electricityNo')?.value,
         gasline_number: this.propertyForm.get('gaslineNo')?.value,
@@ -145,27 +183,25 @@ getOrdinal(day: number): string {
         block: this.propertyForm.get('block')?.value,
         floor: this.propertyForm.get('floor')?.value,
       };
+
       this.apiService.AddPropertybyAssociation<any>(payload).subscribe({
         next: (res: any) => {
+          this.submitBtn = true;
           if (res?.success) {
-            this.submitBtn  = true
-            this.AssociationService.triggerAdminAssociation(res)
-            this.Toastr.success(res.message, 'Success')
-            this.closeModal()
+            this.AssociationService.triggerAdminAssociation(res);
+            this.Toastr.success(res.message, 'Success');
+            this.closeModal();
           } else {
-            this.submitBtn  = true
-            this.Toastr.warning(res.message, 'Warning')
-            // this.loginbtn = true;
+            this.Toastr.warning(res.message, 'Warning');
           }
         },
         error: (err: any) => {
-          this.submitBtn  = true
-          this.Toastr.error(err.error.error.message, 'Failed')
-          //console.error('Login failed:', err.error.error.data);
-          // alert(err.message || 'Login failed, please try again.');
+          this.submitBtn = true;
+          this.Toastr.error(err.error?.error?.message || 'Failed', 'Error');
         },
       });
     } else {
+      this.submitBtn = true;
       this.propertyForm.markAllAsTouched();
     }
   }

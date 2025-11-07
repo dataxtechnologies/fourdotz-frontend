@@ -6,6 +6,8 @@
   background-color: #faf9f4;
   border-radius: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  /* padding: 0 !important; */
+  margin: 0 !important;
 }
 
 /* Profile Header Section */

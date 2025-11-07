@@ -1,0 +1,28 @@
+<section class="logout-modal">
+  <div class="logout-card">
+    <div class="logout-header">
+      <h3><i class="fa-solid fa-right-from-bracket"></i> Logout Confirmation</h3>
+      <i class="fa-solid fa-xmark close-icon" (click)="closeModal()"></i>
+    </div>
+
+    <div class="logout-body">
+      <p class="logout-warning">
+        <strong>Are you sure you want to logout?</strong><br>
+        You’ll be signed out of your account and redirected to the login page.
+        Any unsaved changes will be lost. Please confirm your action below.
+      </p>
+    </div>
+
+    <div class="logout-actions">
+      <button class="cancel-btn" (click)="closeModal()">Cancel</button>
+
+      <button class="delete-btn" (click)="confirmlogout()" *ngIf="!showprocessingbtn">
+        <i class="fa-solid fa-arrow-right-from-bracket me-1"></i> Logout
+      </button>
+
+      <button class="delete-btn" disabled *ngIf="showprocessingbtn">
+        <i class="fa-solid fa-spinner fa-spin"></i> Processing...
+      </button>
+    </div>
+  </div>
+</section>

@@ -44,7 +44,26 @@
                 <!-- 🟩 Due Date -->
                 <div class="inp-cont">
                     <label>Due Date <span class="required">*</span></label>
-                    <input type="date" formControlName="due_date" class="inp-cus" [min]="todayDate" />
+                    <div class="date-input-wrapper">
+    <input
+      type="text"
+      id="rentedAt"
+      class="inp-cus placeholder-font"
+      formControlName="due_date"
+      placeholder="Select date"
+      readonly
+      (click)="openDatePicker()"
+    />
+    <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
+    <input
+      #hiddenDatePicker
+      type="date"
+      [min]="todayDate"
+      class="hidden-date-input"
+      (change)="onDateSelected($event)"
+    />
+  </div>
+                    <!-- <input type="date" formControlName="due_date" class="inp-cus"  /> -->
                     <div *ngIf="
               maintenanceForm.get('due_date')?.touched &&
               maintenanceForm.get('due_date')?.invalid

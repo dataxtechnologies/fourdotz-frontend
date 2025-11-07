@@ -26,6 +26,7 @@
     grid-column: span 5 / span 5;
     grid-row: span 3 / span 3;
     grid-row-start: 4;
+    /* margin-top: -150px !important; */
 }
 
 
@@ -154,6 +155,7 @@ img.rounded-circle {
 .profile-img img {
     width: auto;
     height: 150px;
+    /* z-index: -100; */
     /* object-fit: cover; */
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.15), -5px -5px 15px rgba(255, 255, 255, 0.3);
     transform: rotateY(10deg);

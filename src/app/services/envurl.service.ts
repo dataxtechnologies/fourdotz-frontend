@@ -43,6 +43,8 @@ export class EnvurlService {
   public RemoveOwnerResident = '/property/remove_residents'
   public RemoveTenantResident = '/property/remove_tenant'
   public EditTenantDetails = '/property/update_tenant_details'
+  public maintenanceAmountBalance = '/hoa_admin/list_payment_details'
+  public SendRemainderforMaintenance = '/maintenance_invoice/send_remainder'
 
 
 
@@ -64,5 +66,19 @@ export class EnvurlService {
   public TenantMaintenanceList = '/maintenance_invoice/list_maintenance_invoice_tenant'
   public TenantPropertyDatas = '/property/list_tenant_property'
   public TenantRentalInvoiceList = '/rental_invoice/list_rental_invoice_tenant'
+
+
+
+
+  // Invoices
+  public RentalInvoice = '/rental_invoice/get_rent_invoice_invoiceid'
+  public RentalinvoiceQR = '/rental_invoice/invoice_payment_qr'
+  public ChangeRentalInvoicePaidStatus = '/rental_invoice/rental_payment_status'
+
+
+
+
+  // Payment Integration
+  public CreatePaymentforInvoiceId = '/payment/create_pay'
 
 }

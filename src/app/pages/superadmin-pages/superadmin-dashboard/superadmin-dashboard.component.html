@@ -1,244 +1,112 @@
 <section>
 
     <div class="parent">
-        <!-- div1: Total Property -->
         <div class="div1 bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
             <div class="cont">
                 <span class="card-head-font">Total Associations</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font">{{ DashboardData.hoa_total_count }}</span>
+                <span class="card-font">{{ DashboardData.hoa_total_count || 0}}</span>
 
             </div>
         </div>
-
-        <!-- div2: Number of Sales -->
         <div class="div2 bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
             <div class="flex items-center justify-between">
                 <span class="card-head-font">Number of Properties</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font">{{ DashboardData.property_total_count }}</span>
+                <span class="card-font">{{ DashboardData.property_total_count || 0}}</span>
 
             </div>
-        </div>
 
-        <!-- div3: Total Sales -->
-        <div class="div3 bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
+        </div>
+        <div class="div3  bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
             <div class="flex items-center justify-between">
                 <span class="card-head-font">Total Tenants</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font">{{ DashboardData.tenant_total_count }}</span>
+                <span class="card-font">{{ DashboardData.tenant_total_count || 0}}</span>
 
             </div>
         </div>
-
-        <!-- div4: Report Sales -->
-        <div class="div4 bg-white rounded-2xl shadow-md flex flex-col">
-            <div>
-                <h4>Maintenance Amount</h4>
-            </div>
-            <div class="table-container">
-                <table class="styled-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Name</th>
-                            <th>Association</th>
-                            <th>Resident</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="main-table-font">
-                        <tr>
-                            <td data-label="Date">2024-09-12 10:15</td>
-                            <td data-label="Amount">₹250.00</td>
-                            <td data-label="Name">Maintenance Fee</td>
-                            <td data-label="Association">Maple</td>
-                            <td data-label="Resident">Rahul Sharma</td>
-                            <td data-label="Status">Paid</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Date">2024-09-10 14:40</td>
-                            <td data-label="Amount">₹120.00</td>
-                            <td data-label="Name">Water Bill</td>
-                            <td data-label="Association">Greenwood </td>
-                            <td data-label="Resident">Ananya Singh</td>
-                            <td data-label="Status">Pending</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Date">2024-09-08 09:30</td>
-                            <td data-label="Amount">₹500.00</td>
-                            <td data-label="Name">Annual Parking</td>
-                            <td data-label="Association">Riverdale </td>
-                            <td data-label="Resident">Vikram Patel</td>
-                            <td data-label="Status">Paid</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Date">2024-09-06 18:25</td>
-                            <td data-label="Amount">₹75.00</td>
-                            <td data-label="Name">Clubhouse </td>
-                            <td data-label="Association">Sunrise </td>
-                            <td data-label="Resident">Sanya Iyer</td>
-                            <td data-label="Status">Cancelled</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Date">2024-09-04 11:10</td>
-                            <td data-label="Amount">₹320.00</td>
-                            <td data-label="Name">Monthly Rent</td>
-                            <td data-label="Association">Lakeview </td>
-                            <td data-label="Resident">Arjun Mehta</td>
-                            <td data-label="Status">Paid</td>
-                        </tr>
-                        <tr>
-                            <td data-label="Date">2024-09-04 11:10</td>
-                            <td data-label="Amount">₹320.00</td>
-                            <td data-label="Name">Monthly Rent</td>
-                            <td data-label="Association">Lakeview </td>
-                            <td data-label="Resident">Arjun Mehta</td>
-                            <td data-label="Status">Paid</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- div5: Cost Breakdown -->
-        <div class="div5 bg-white rounded-2xl shadow-md flex flex-col p-3">
+        <div class="div4 bg-white rounded-2xl shadow-md flex flex-col p-3">
             <div class="transaction-header12 d-flex justify-content-between align-items-start mb-3">
                 <h3>Associations</h3>
                 <a class="link-text" (click)="redirecttoAssociationlist()">See All</a>
             </div>
 
-            <div class="transaction-list">
-                <!-- Skeleton Loader -->
-                <ng-container *ngIf="tableLoading">
-                    <div *ngFor="let s of [1, 2, 3, 4, 5]" class="transaction-item d-flex align-items-center mb-3">
-                        <div class="skeleton-avatar me-2"></div>
-                        <div class="flex-grow-1">
-                            <div class="skeleton-line w-50 mb-1"></div>
-                            <div class="skeleton-line w-75"></div>
-                        </div>
-                    </div>
-                </ng-container>
+            <div class="table-container">
 
-                <!-- No Data Found -->
-                <ng-container *ngIf="!tableLoading && (!Associationlist2 || Associationlist2.length === 0)">
-                    <p class="text-center text-muted mt-3">No Data Found</p>
-                </ng-container>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Property Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Property Type</th>
+                            <th>Invitation Status</th>
+                            <th>View</th>
+                        </tr>
+                    </thead>
 
-                <!-- Actual Data -->
-                <ng-container *ngIf="!tableLoading && Associationlist2 && Associationlist2.length > 0">
-                    <div *ngFor="let item of Associationlist1.paginatedData" class="transaction-item">
-                        <div class="transaction-item-left d-flex align-items-center">
-                            <div class="maintenance-avatar">
-                                {{ item.property_name?.charAt(0) || '?' }}
-                            </div>
-                            <div class="transaction-details ms-2">
-                                <span class="transaction-name">{{ item.property_name }}</span>
-                                <span class="transaction-date">
-                                    {{ item.name }} | {{ item.property_type?.join(', ') }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-        </div>
+                    <tbody *ngIf="!tableLoading; else tableSkeleton">
+                        <!-- Show rows if data is available -->
+                        <tr *ngFor="let item of Associationlist1.paginatedData; let i = index">
+                            <td data-label="Property Name">{{ item.property_name }}</td>
+                            <td data-label="Email">{{ item.email }}</td>
+                            <td data-label="Phone">+91 {{ item.mobile }}</td>
+                            <td data-label="Property Type">{{ item.property_type.join(', ') }}</td>
+                            <td data-label="Invitation Status">
+                                {{ item.invitation_status ? 'Accepted' : 'Pending/Declined' }}
+                            </td>
+                            <td data-label="Property Details" (click)="viewassociation(item.user_id)">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </td>
+                        </tr>
+
+                        <!-- Show "No Data Found" if array is empty -->
+                        <tr *ngIf="Associationlist1.paginatedData?.length === 0">
+                            <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                No Data Found
+                            </td>
+                        </tr>
+                    </tbody>
 
 
+                    <!-- Skeleton Loader -->
+                    <ng-template #tableSkeleton>
+                        <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                            <td>
+                                <span class="placeholder col-10 placeholder-glow"
+                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
+                            </td>
+                            <td>
+                                <span class="placeholder col-8 placeholder-glow"
+                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
+                            </td>
+                            <td>
+                                <span class="placeholder col-6 placeholder-glow"
+                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
+                            </td>
+                            <td>
+                                <span class="placeholder col-7 placeholder-glow"
+                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
+                            </td>
+                            <td>
+                                <span class="placeholder col-5 placeholder-glow"
+                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
+                            </td>
+                            <td>
+                                <span class="placeholder col-3 placeholder-glow"
+                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
+                            </td>
+                        </tr>
+                    </ng-template>
 
-        <!-- div6: Last Transactions -->
-        <div class="div6 bg-white rounded-2xl shadow-md p-6 flex flex-col">
-            <div class="transaction-header">
-                <h3>Last Transactions</h3>
-                <a class="link-text">See All</a>
-            </div>
-            <div class="transaction-list">
-                <div class="transaction-item">
-                    <div class="transaction-item-left">
-                        <i class="fa-solid fa-indian-rupee-sign transaction-image maintenance-avatar"></i>
-                        <div class="transaction-details">
-                            <span class="transaction-name">123 Maple Avenue Springfield</span>
-                            <span class="transaction-date">12 Sep 2024, 9:29</span>
-                        </div>
-                    </div>
-                    <span class="link-text">$30K</span>
-                </div>
-                <div class="transaction-item">
-                    <div class="transaction-item-left">
-                        <i class="fa-solid fa-indian-rupee-sign transaction-image maintenance-avatar"></i>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Booking 987 Villa Street</span>
-                            <span class="transaction-date">10 Sep 2024, 9:29</span>
-                        </div>
-                    </div>
-                    <span class="link-text">$10K</span>
-                </div>
-                <div class="transaction-item">
-                    <div class="transaction-item-left">
-                        <i class="fa-solid fa-indian-rupee-sign transaction-image maintenance-avatar"></i>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Apartment Booking On Garden Street</span>
-                            <span class="transaction-date">10 Sep 2024, 9:29</span>
-                        </div>
-                    </div>
-                    <span class="link-text">$10K</span>
-                </div>
-                <div class="transaction-item">
-                    <div class="transaction-item-left">
-                        <i class="fa-solid fa-indian-rupee-sign transaction-image maintenance-avatar"></i>
-                        <div class="transaction-details">
-                            <span class="transaction-name">Apartment Booking On Garden Street</span>
-                            <span class="transaction-date">10 Sep 2024, 9:29</span>
-                        </div>
-                    </div>
-                    <span class="link-text">$10K</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- div7: Maintenance Request -->
-        <div class="div7 bg-white rounded-2xl shadow-md">
-            <div class="maintenance-header">
-                <h3>Maintenance Request</h3>
-                <a class="link-text">See All</a>
-            </div>
-            <div class="maintenance-list">
-                <div class="maintenance-item">
-                    <div class="maintenance-item-left">
-                        <div class="maintenance-avatar">L</div>
-                        <div class="maintenance-details">
-                            <span class="maintenance-name">Leaky Faucet in Kitchen</span>
-                            <span class="maintenance-date">14 Sep 2024, 11:30</span>
-                        </div>
-                    </div>
-                    <span class="maintenance-status status-open">Open</span>
-                </div>
-                <div class="maintenance-item">
-                    <div class="maintenance-item-left">
-                        <div class="maintenance-avatar">L</div>
-                        <div class="maintenance-details">
-                            <span class="maintenance-name">Light Bulb Replacement</span>
-                            <span class="maintenance-date">13 Sep 2024, 15:45</span>
-                        </div>
-                    </div>
-                    <span class="maintenance-status status-in-progress">In Progress</span>
-                </div>
-                <div class="maintenance-item">
-                    <div class="maintenance-item-left">
-                        <div class="maintenance-avatar">A</div>
-                        <div class="maintenance-details">
-                            <span class="maintenance-name">AC Unit Repair</span>
-                            <span class="maintenance-date">12 Sep 2024, 10:10</span>
-                        </div>
-                    </div>
-                    <span class="maintenance-status status-completed">Completed</span>
-                </div>
+                </table>
             </div>
         </div>
     </div>
+
+
 </section>

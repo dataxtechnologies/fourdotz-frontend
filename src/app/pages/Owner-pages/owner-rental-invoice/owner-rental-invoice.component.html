@@ -59,6 +59,7 @@
                                     <th>Resident Phone</th>
                                     <th>Issue At</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <!-- <tbody class="tbody-dd">
@@ -93,6 +94,10 @@
                                     <td>
                                             <span *ngIf="p.payment_status === false">Pending</span>
                                             <span *ngIf="p.payment_status === true">Paid</span>
+                                        </td>
+                                    <td>
+                                            <span *ngIf="p.payment_status === true">Success</span>
+                                            <span *ngIf="p.payment_status === false" style="color: var(--primary-color1);" (click)="changetopaidstatus(p.invoice_no)">Paid</span>
                                         </td>
                                 </tr>
                                 </ng-template>

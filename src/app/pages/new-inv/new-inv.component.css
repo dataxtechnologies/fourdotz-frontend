@@ -1,0 +1,484 @@
+.star-cont {
+    font-size: 10px;
+    color: #000;
+    margin: 10px;
+}
+
+.invoice-container {
+    width: 210mm;
+    min-height: 297mm;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: auto;
+    padding: 12px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.logo-and-details{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.company-address {
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.company-address p {
+    margin: 0 !important;
+    margin-bottom: 3px !important;
+}
+
+.invoice-title-box {
+    text-align: right;
+    padding: 5px 10px;
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+.invoice-title-box p {
+    margin: 0 !important;
+    margin-bottom: 3px !important;
+}
+
+.header-separator {
+    border: none;
+    border-top: 1px solid #000;
+    margin: 5px 0;
+}
+
+.inv-title {
+    font-size: 20px;
+    color: #EA4531 !important;
+}
+
+/* --- GST + Invoice Title Row --- */
+.gst-invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-left: 1px solid #d7acdd;
+  border-right: 1px solid #d7acdd;
+  border-top: 1px solid #d7acdd;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
+.gst-invoice-table td {
+ border-left: 1px solid #d7acdd;
+  border-right: 1px solid #d7acdd;
+  border-top: 1px solid #d7acdd;
+  border-bottom: 0px !important;
+  padding: 6px 10px;
+  vertical-align: middle;
+}
+
+/* Remove bottom border for the 2nd td (RENT INVOICE cell) */
+.gst-invoice-table tr:first-child td:nth-child(2) {
+  border-bottom: 0;
+}
+
+.gst-cell {
+  width: 60%;
+  text-align: left;
+}
+
+.invoice-title-cell {
+  width: 40%;
+  text-align: right;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+}
+
+.inv-title {
+  margin: 0;
+  font-size: 20px;
+  color: #d7acdd;
+  font-weight: bold;
+}
+
+/* --- Details Section --- */
+.details-section {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #d7acdd;
+    background-color: #fef9ff;
+    font-size: 10px;
+    border-bottom: none;
+    /* joins table below */
+    /* border-radius: 8px 8px 0 0; */
+    /* rounded only at top */
+    margin-bottom: 0;
+}
+
+.left-details,
+.center-details,
+.right-details {
+    width: 35%;
+    padding: 8px;
+    border-right: 1px solid #d7acdd;
+}
+
+.customer-info p {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.right-details {
+    border-right: none;
+}
+
+.inv-table-title {
+    font-size: 18px;
+}
+
+/* --- Table --- */
+.line-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 10px;
+    table-layout: fixed;
+    border-left: 1px solid #d7acdd;
+    border-right: 1px solid #d7acdd;
+    border-top: none;
+    
+    /* joins above details */
+    border-bottom: none;
+    /* joins footer below */
+}
+
+.line-items-table th {
+    background-color: #fef9ff;
+    font-weight: bold;
+    color: #000;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #d7acdd;
+    padding: 6px 4px;
+}
+
+.line-items-table td {
+    border: 1px solid #d7acdd;
+    padding: 6px 4px;
+    font-size: 14px;
+    background-color: #fff;
+    text-align: center;
+    vertical-align: top;
+}
+
+.line-items-table th:nth-child(1),
+.line-items-table td:nth-child(1) {
+    width: 8%;
+    text-align: center;
+}
+
+.line-items-table th:nth-child(2),
+.line-items-table td:nth-child(2) {
+    width: 20%;
+    text-align: left;
+    padding-left: 8px;
+}
+
+.line-items-table th:nth-child(3),
+.line-items-table td:nth-child(3) {
+    width: 15%;
+    text-align: right;
+    padding-right: 8px;
+}
+
+.line-items-table th:nth-child(4),
+.line-items-table td:nth-child(4) {
+    width: 42%;
+    text-align: left;
+    padding-left: 8px;
+}
+
+.line-items-table th:nth-child(5),
+.line-items-table td:nth-child(5) {
+    width: 15%;
+    text-align: right;
+    padding-right: 8px;
+}
+
+.line-items-table .empty-row td {
+    height: 40px;
+    background-color: #fff;
+    border: 1px solid #d7acdd;
+    border-bottom: 0px;
+    border-top: 0px;
+}
+
+.line-items-table .total-row {
+    font-weight: bold;
+    background-color: #f7fee1;
+}
+
+.line-items-table .total-row td {
+    border-top: 1px solid #d7acdd;
+    background-color: #fef9ff;
+    font-size: 14px;
+    padding: 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Footer Section --- */
+.footer-details {
+  border-left: 1px solid #d7acdd;
+  border-right: 1px solid #d7acdd;
+  border-top: none;
+  border-bottom: 1px solid #d7acdd;
+  font-size: 20px;
+  background-color: #fff;
+  margin-top: 0;
+}
+
+/* --- Top (Total in words) --- */
+.footer-top {
+  /* border-top: 1px solid #d7acdd; */
+  border-bottom: 1px solid #d7acdd;
+  padding: 6px;
+}
+
+.footer-title {
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  padding: 3px;
+  margin: 0;
+  color: #EA4531;
+  font-size: 18px;
+  text-align: left;
+}
+
+
+.footer-cont {
+  margin: 5px 0;
+  padding-left: 5px;
+  font-size: 16px;
+}
+
+/* --- Table Layout --- */
+.footer-layout {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.footer-layout td {
+  vertical-align: top;
+  padding: 10px;
+}
+
+/* Left: Bank + QR */
+.footer-left-td {
+  width: 70%;
+  border-right: 1px solid #d7acdd;
+}
+
+/* Right: Signature */
+.footer-right-td {
+  width: 30%;
+  text-align: center;
+  padding: 0;
+  vertical-align: top;
+  border-left: 1px solid #d7acdd;
+}
+
+/* --- Bank + QR Container --- */
+.bank-qr-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+/* --- Bank Table --- */
+.footer-table1 {
+  width: 70%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.footer-table1 td {
+  padding: 4px 6px;
+  vertical-align: top;
+  border-bottom: 1px solid #eee;
+}
+
+.footer-table1 td:first-child {
+  width: 35%;
+  font-weight: bold;
+}
+
+/* --- QR Box --- */
+.qr-box {
+  border: 1px solid #d7acdd;
+  background-color: #fff;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.qr-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qr-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.qr-wrapper.disabled {
+  opacity: 0.5;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+/* Overlay for paid QR */
+.qr-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #cddc39;
+  border-radius: 2px;
+}
+
+.paid-upi-overlay {
+  font-size: 12px;
+  color: #000;
+  line-height: 1.4;
+  font-weight: bold;
+  margin: 0;
+  padding: 4px;
+}
+
+.upi-text {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+  margin: 6px 0 0 0;
+  text-align: center;
+}
+
+/* --- Signature Section --- */
+.sign-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 220px; /* adjust height as needed */
+  border-collapse: collapse;
+}
+
+/* Top: Certified text + Company name */
+.sign-top {
+  padding: 10px;
+}
+
+.signature-text {
+  font-size: 12px;
+  text-align: center;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.for-company {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px 0 0 0;
+  text-align: center;
+  color: #EA4531;
+}
+
+/* Middle: Empty space for signature */
+.sign-space {
+  flex-grow: 1;
+  background-color: #fff;
+  /* border-top: 1px solid #d7acdd; */
+  border-bottom: 1px solid #d7acdd;
+}
+
+/* Bottom: Authorized Signatory */
+.sign-bottom {
+  border-top: 1px solid #d7acdd;
+  padding: 5px 0;
+}
+
+.auth-text {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+  color: #EA4531;
+}
+
+/* --- Watermark --- */
+.watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-size: 200px;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.05);
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  white-space: nowrap;
+  z-index: 0;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  user-select: none;
+}
+
+
+
+
+/* .sign-table{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+} */

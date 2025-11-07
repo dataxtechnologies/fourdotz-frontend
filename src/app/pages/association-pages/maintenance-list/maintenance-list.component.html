@@ -1,5 +1,27 @@
 <section>
+
     <div>
+        <div class=" container card-container">
+            <div class="summary-card light-green">
+                <h4>Monthly Invoice Total</h4>
+                <p>₹{{ MaintenanceListAmount?.monthly_invoice_total_amount || 0 }}</p>
+            </div>
+
+            <div class="summary-card light-blue">
+                <h4>Monthly Rent Invoices</h4>
+                <p>₹{{ MaintenanceListAmount?.monthly_rent_invoices_total_amount || 0 }}</p>
+            </div>
+
+            <div class="summary-card light-yellow">
+                <h4>Payout Maintenance </h4>
+                <p>₹{{ MaintenanceListAmount?.payout_maintenance_total_amount || 0 }}</p>
+            </div>
+
+            <div class="summary-card light-grey">
+                <h4>Payout Rent Invoices</h4>
+                <p>₹{{ MaintenanceListAmount?.payout_rent_invoices_total_amount || 0 }}</p>
+            </div>
+        </div>
         <div class="container header-cont">
             <div class="head-cont">
                 <h2>Maintenance List</h2>
@@ -47,7 +69,7 @@
                                         <td data-label="Resident Type">{{ item.invoice_type }}</td>
 
                                         <!-- Status Logic -->
-                                         <td data-label="Status">
+                                        <td data-label="Status">
                                             <ng-container *ngIf="item.payment_status; else notPaid">
                                                 <span class="status paid">Paid</span>
                                             </ng-container>
@@ -65,7 +87,7 @@
                                         <td data-label="View">
                                             <i class="fa-solid fa-file-lines"></i>
                                             <i *ngIf="getStatus(item) === 'Overdue'"
-                                                class="fa-solid fa-bell notify-icon"></i>
+                                                class="fa-solid fa-bell notify-icon" (click)="SendRemainderforMaintenance(item._id)"></i>
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -102,6 +124,37 @@
                     </div>
                 </div>
             </div>
+        </div>
+         <div *ngIf="MaintenanceList1" class="pagination-container ">
+            <p class="pagination-info">
+                Showing {{ MaintenanceList1.startIndex + 1 }} to {{ MaintenanceList1.endIndex + 1 }} of {{
+                MaintenanceList1.totalData }} entries
+            </p>
+
+            <ul class="pagination">
+                <!-- First Page -->
+                <li>
+                    <button [disabled]="MaintenanceList1.currentPage === 1" (click)="MaintenanceList1.prevPage()"
+                        class="page-btn arrow-btn">
+                        &#x276E;
+                    </button>
+                </li>
+
+                <!-- Current Page -->
+                <li>
+                    <span class="page-btn active">
+                        {{ MaintenanceList1.currentPage }}
+                    </span>
+                </li>
+
+                <!-- Next Page -->
+                <li>
+                    <button [disabled]="MaintenanceList1.currentPage === MaintenanceList1.totalPages"
+                        (click)="MaintenanceList1.nextPage()" class="page-btn arrow-btn">
+                        &#x276F;
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
 </section>

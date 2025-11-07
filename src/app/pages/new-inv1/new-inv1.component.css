@@ -1,0 +1,360 @@
+/* General Reset and Font */
+.star-cont {
+    font-family: Arial, sans-serif;
+    font-size: 10pt;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.invoice-container {
+    max-width: 800px; /* Standard A4-like width for web view */
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border: 1px solid #ccc; /* Mimic the paper look */
+}
+
+/* --- Header Section --- */
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 60px; /* Adjust size to match image */
+    height: auto;
+    margin-right: 10px;
+}
+
+.company-info strong {
+    font-size: 12pt;
+    color: #4CAF50; /* Green color from the logo/design */
+}
+
+.header-left .company-info p {
+    margin: 0;
+    line-height: 1.2;
+}
+
+.header-right p {
+    margin: 2px 0;
+    text-align: right;
+    font-size: 9pt;
+}
+
+.separator {
+    border: 0;
+    height: 1px;
+    background-color: #4CAF50; /* Green separator line */
+    margin: 10px 0;
+}
+
+/* --- Title and Detail Section --- */
+.title-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 3px double #000;
+    padding-bottom: 5px;
+}
+
+.gstin-title {
+    font-size: 10pt;
+    font-weight: bold;
+    flex: 1;
+}
+
+.invoice-title {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #4CAF50; /* Green highlight */
+    flex: 1;
+    text-align: center;
+}
+
+.original-title {
+    font-size: 9pt;
+    font-weight: bold;
+    flex: 1;
+    text-align: right;
+}
+
+/* --- Customer and Invoice Data Grid --- */
+.invoice-data-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr; /* Customer | Invoice No | Date */
+    border: 1px solid #000;
+    margin-bottom: 15px;
+}
+
+.customer-section, .invoice-section, .date-section {
+    padding: 5px;
+    border-right: 1px solid #000;
+}
+
+.date-section {
+    border-right: none;
+}
+
+.section-title {
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+    padding-bottom: 3px;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+.detail-row .label {
+    width: 35%;
+    font-weight: bold;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.detail-row .value {
+    width: 65%;
+    border-left: 1px solid #000;
+    padding-left: 5px;
+}
+
+.address-row .label {
+    align-self: flex-start;
+}
+.address-row .value {
+    line-height: 1.2;
+}
+
+.highlight-val {
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 11pt;
+}
+
+/* --- Items Table --- */
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    font-size: 9pt;
+}
+
+.items-table thead th {
+    border: 1px solid #000;
+    padding: 5px 2px;
+    background-color: #e0ffe0; /* Light background for header */
+    text-align: center;
+    vertical-align: top;
+}
+
+.items-table tbody td, .items-table tfoot td {
+    border: 1px solid #000;
+    padding: 5px 2px;
+    vertical-align: top;
+    height: 1.5em; /* Default row height */
+}
+
+/* Column Widths (Approximation) */
+.col-sr { width: 4%; text-align: center; }
+.col-product { width: 25%; text-align: left; padding-left: 5px !important; }
+.col-hsn { width: 10%; text-align: center; }
+.col-qty { width: 8%; text-align: right; }
+.col-rate { width: 10%; text-align: right; }
+.col-taxable { width: 12%; text-align: right; font-weight: bold; }
+.col-tax { width: 15%; text-align: center; } /* Combined CGST/SGST header */
+.col-total { width: 16%; text-align: right; font-weight: bold; }
+
+.col-tax-group {
+    display: flex;
+    text-align: right;
+    padding: 0 !important;
+    border: none !important;
+    height: 100%;
+}
+.tax-cell {
+    flex: 1;
+    text-align: center;
+    padding: 5px 2px;
+}
+/* Separator for % and Amount in the cell */
+.col-tax-group .tax-cell:first-child {
+    border-right: 1px solid #000;
+}
+
+.blank-row td {
+    height: 150px; /* Large blank space as in the image */
+    border-bottom: none !important;
+    border-top: none !important;
+}
+
+.items-table tfoot tr {
+    background-color: #f0f0f0;
+}
+.footer-total-label {
+    text-align: right;
+    font-weight: bold;
+    padding-right: 10px !important;
+}
+
+.total-tax {
+    border: none !important;
+    text-align: right !important;
+    font-weight: bold;
+}
+
+/* --- Footer Section (Total in Words, Bank, Summary, Signature) --- */
+.footer-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-left {
+    flex: 2;
+    padding-right: 10px;
+}
+
+.footer-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.footer-right {
+    flex: 1.5;
+    border: 1px solid #000;
+}
+
+/* Total in Words */
+.total-in-words {
+    padding-bottom: 5px;
+}
+.total-in-words p {
+    margin: 0;
+    line-height: 1.3;
+}
+.total-in-words p:last-child {
+    font-size: 11pt;
+}
+
+/* Bank Details Box */
+.bank-details-box {
+    border: 1px solid #000;
+    padding: 5px;
+    margin-top: 10px;
+    font-size: 9pt;
+}
+.bank-details-box .section-title {
+    border-bottom: 1px solid #000;
+    margin-bottom: 3px;
+    padding-bottom: 3px;
+}
+.bank-detail-row {
+    display: flex;
+    justify-content: space-between;
+}
+.bank-detail-row .label {
+    font-weight: bold;
+}
+.bank-detail-row .value {
+    text-align: right;
+}
+
+/* QR Code */
+.qr-code-box {
+    text-align: center;
+}
+.qr-code-box img {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #000;
+    margin-bottom: 5px;
+}
+
+/* Summary Table */
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.summary-table tr:first-child td {
+    padding-top: 8px;
+}
+
+.summary-table td {
+    padding: 3px 8px;
+}
+
+.summary-label {
+    text-align: left;
+}
+
+.summary-value {
+    text-align: right;
+}
+
+.underline-value {
+    border-bottom: 1px solid #000;
+}
+
+.grand-total td {
+    background-color: #e0ffe0; /* Light green background */
+    font-size: 12pt;
+    padding: 5px 8px;
+}
+.grand-total .summary-value {
+    color: #4CAF50;
+}
+
+/* Signature Box */
+.signature-box {
+    text-align: center;
+    padding: 10px 15px;
+}
+.signature-box .certificate {
+    font-style: italic;
+    font-size: 8pt;
+    margin-bottom: 5px;
+}
+.signature-box .for-company {
+    font-size: 11pt;
+    margin: 10px 0 30px 0;
+}
+.signature-line {
+    border-bottom: 1px solid #000;
+    margin-bottom: 3px;
+}
+.signature-box .authorised {
+    font-size: 9pt;
+}
+
+/* Terms and Conditions */
+.terms-conditions {
+    border: 1px solid #000;
+    padding: 5px;
+    margin-top: 15px;
+    font-size: 8pt;
+}
+.terms-conditions .section-title {
+    border-bottom: 1px solid #000;
+    margin-bottom: 3px;
+    padding-bottom: 3px;
+}
+.terms-conditions p {
+    margin: 2px 0;
+    line-height: 1.3;
+}

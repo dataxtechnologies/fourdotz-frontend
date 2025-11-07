@@ -22,17 +22,21 @@ export class SuperadminDashboardComponent {
 
   constructor(private router : Router, private apiService: ApiserviceService, private Toastr: ToastrService){
     this.Associationlist1 = new TableService()
-    this.Associationlist1.initialize(this.Associationlist2, 5)
+    this.Associationlist1.initialize(this.Associationlist2, 6)
   }
   
   ngOnInit(): void {
+    this.SuperadminDashboardData()
       this.getAssociationList()
-      this.SuperadminDashboardData()
   
   }
 
   redirecttoAssociationlist(){
     this.router.navigateByUrl('Superadmin/Association-list')
+  }
+
+    viewassociation(data: any) {
+    this.router.navigateByUrl(`Superadmin/view-association/${data}`);
   }
 
 //  showSuccess() {
@@ -45,23 +49,27 @@ export class SuperadminDashboardComponent {
 
 
   getAssociationList() {
+    this.tableLoading = true;
     this.apiService.getAssociations<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.Associationlist2 = res.data;
-          this.Associationlist1.initialize(this.Associationlist2, 5);
-          // if(res.message === '')
+          this.Associationlist1.initialize(this.Associationlist2, 8);
           this.pages = Array.from(
             { length: this.Associationlist2.totalPages },
             (_, i) => i + 1
           );
           this.tableLoading = false;
         } else {
+          this.Associationlist2 = []
+          this.Associationlist1.initialize(this.Associationlist2, 8);
           this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
+        this.Associationlist2 = []
+        this.Associationlist1.initialize(this.Associationlist2, 8);
         this.tableLoading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');

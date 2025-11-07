@@ -1,0 +1,48 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3>Invoice Paid Status Change</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <p class="warning-text warning-yellow">
+            <strong>⚠️ Note:</strong> Please ensure that the tenant has
+            <strong>paid the rental invoice amount</strong> before confirming.
+            Once marked as <strong>Paid</strong>, this action cannot be undone.
+        </p>
+
+        <!-- ✅ Payment Mode Selection -->
+        <div class="inp-cont">
+            <label for="paymentMode">Select Payment Mode:</label>
+            <select id="paymentMode" [(ngModel)]="selectedPaymentMode" class="inp-cus select-cus">
+                <option value="" disabled selected>Select a payment mode</option>
+                <option value="CASH">Cash</option>
+                <option value="UPI">UPI</option>
+                <option value="CARD">Card</option>
+            </select>
+        </div>
+
+        <!-- ✅ Confirmation Input -->
+        <div class="inp-cont">
+            <label for="confirmText">
+                To confirm, type <span class="highlight-yellow">CONFIRM</span> below:
+            </label>
+            <input id="confirmText" type="text" [(ngModel)]="confirmationText"
+                placeholder="Type CONFIRM to confirm payment" class="inp-cus" />
+        </div>
+
+        <!-- ✅ Action Buttons -->
+        <div class="popup-actions">
+            <button class="cancel-btn" (click)="closeModal()">Cancel</button>
+
+            <button class="confirm-btn" [disabled]="!canConfirm() || !selectedPaymentMode"
+                (click)="confirmPaidStatus(invoice_id)" *ngIf="!showprocessingbtn">
+                Yes, Mark as Paid
+            </button>
+
+            <button class="confirm-btn" disabled *ngIf="showprocessingbtn">
+                Processing...
+            </button>
+        </div>
+    </div>
+</section>

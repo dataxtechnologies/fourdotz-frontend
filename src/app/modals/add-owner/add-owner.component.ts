@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -20,15 +20,17 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AddOwnerComponent implements OnInit {
   @Input() PropertyIddata: any;
+  @ViewChild('hiddenDatePicker')
+  hiddenDatePicker!: ElementRef<HTMLInputElement>;
   ownerForm!: FormGroup;
-  submitbtn: boolean = true
+  submitbtn: boolean = true;
 
   constructor(
     private fb: FormBuilder,
     private modal: ModalService,
     private apiService: ApiserviceService,
     private AssociationService: AssociationServiceService,
-    private Toast : ToastrService
+    private Toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -41,8 +43,45 @@ export class AddOwnerComponent implements OnInit {
     });
   }
 
+  openDatePicker(): void {
+    this.hiddenDatePicker.nativeElement.showPicker();
+  }
+
+  // 👇 Handle date selection and format the date
+  onDateSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.value) return;
+
+    const selectedDate = new Date(input.value);
+    const formattedDate = this.formatDate(selectedDate);
+
+    this.ownerForm.get('ownedAt')?.setValue(formattedDate);
+  }
+
+  // 👇 Helper function to format as dd-MMM-yyyy (e.g. 22-Jun-2025)
+  private formatDate(date: Date): string {
+    const day = String(date.getDate()).padStart(2, '0');
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    const month = monthNames[date.getMonth()];
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
   onSubmit(): void {
-    this.submitbtn = false
+    this.submitbtn = false;
     if (this.ownerForm.invalid) {
       this.ownerForm.markAllAsTouched();
       return;
@@ -61,19 +100,19 @@ export class AddOwnerComponent implements OnInit {
     this.apiService.createownerinproperty<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
-          this.submitbtn = true
-          this.Toast.success(res.message, 'Success')
+          this.submitbtn = true;
+          this.Toast.success(res.message, 'Success');
           this.AssociationService.triggerAssociationOwner(res);
           this.closeModal();
         } else {
-          this.submitbtn = true
-          this.Toast.warning(res.message, 'Warning')
+          this.submitbtn = true;
+          this.Toast.warning(res.message, 'Warning');
           // this.loginbtn = true;
         }
       },
       error: (err: any) => {
-        this.submitbtn = true
-        this.Toast.error(err.error.error.message, 'Failed')
+        this.submitbtn = true;
+        this.Toast.error(err.error.error.message, 'Failed');
         //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },

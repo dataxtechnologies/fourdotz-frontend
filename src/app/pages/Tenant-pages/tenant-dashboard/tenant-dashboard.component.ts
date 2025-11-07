@@ -57,7 +57,7 @@ maintenancelist2: any;
       next: (res: any) => {
         if (res?.success) {
           this.maintenancelist2 = res.data;
-          this.maintenancelist1.initialize(this.maintenancelist2, 12);
+          this.maintenancelist1.initialize(this.maintenancelist2, 6);
           this.pages = Array.from(
             { length: this.maintenancelist2.totalPages },
             (_, i) => i + 1
@@ -65,14 +65,14 @@ maintenancelist2: any;
           this.tableLoading = false;
         } else {
           this.maintenancelist2 = [];
-          this.maintenancelist1.initialize(this.maintenancelist2, 12);
+          this.maintenancelist1.initialize(this.maintenancelist2, 6);
           this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
         this.maintenancelist2 = [];
-        this.maintenancelist1.initialize(this.maintenancelist2, 12);
+        this.maintenancelist1.initialize(this.maintenancelist2, 6);
         this.tableLoading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
