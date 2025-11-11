@@ -85,11 +85,13 @@ export class SuperadminDashboardComponent {
           this.DashboardData = res.data
           // this.tableLoading = false;
         } else {
+           this.DashboardData = ''
           // this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
+        this.DashboardData = ''
         // this.tableLoading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');

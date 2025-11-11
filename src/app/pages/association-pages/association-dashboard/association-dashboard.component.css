@@ -1,4 +1,12 @@
 /* === Dashboard Grid Layout === */
+
+section{
+    margin: 0 !important;
+}
+
+
+
+
 .parent {
     display: grid;
     grid-template-columns: repeat(5, 1fr);

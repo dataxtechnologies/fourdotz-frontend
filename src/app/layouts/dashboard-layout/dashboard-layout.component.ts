@@ -14,6 +14,8 @@ import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
 import { ModalService } from 'ngx-modal-ease';
 import { LogoutModalComponent } from '../../modals/logout-modal/logout-modal.component';
+import { AddUPIIdComponent } from '../../modals/add-upi-id/add-upi-id.component';
+import { OwnerServiceService } from '../../services/owner/owner-service.service';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -42,7 +44,8 @@ footerTimeout: any;
     private router: Router,
     private apiService: ApiserviceService,
     private toastr: ToastrService,
-    private ModalService: ModalService
+    private ModalService: ModalService,
+    private OwnerService: OwnerServiceService
   ) {
     // Track the current route
     this.router.events
@@ -93,6 +96,14 @@ footerTimeout: any;
     } else {
       this.getUserData(this.user_type);
     }
+
+    this.OwnerService.OwnerUpiIdUpdatedStatus$.subscribe(
+      (UpdateUPI) => {
+        if (UpdateUPI) {
+         this.getUserData(this.user_type);
+        }
+      }
+    );
   }
 
   // Toggle sidebar
@@ -143,6 +154,11 @@ footerTimeout: any;
           if (userdata.document_uploaded === false) {
             this.router.navigateByUrl('/onboarding/user-data');
           } 
+        }else if (this.user_type === 'owner'){
+          if (userdata.upi_submit_status === false) {
+            this.UPIidAddModal()
+            // this.router.navigateByUrl('/onboarding/user-data');
+          } 
         }
       }
 
@@ -168,6 +184,21 @@ footerTimeout: any;
 
     logoutmodal() {
       this.ModalService.open(LogoutModalComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
+
+
+    UPIidAddModal() {
+      this.ModalService.open(AddUPIIdComponent, {
         modal: {
           enter: 'enter-going-down 0.3s ease-out',
           leave: 'fade-out 0.5s',

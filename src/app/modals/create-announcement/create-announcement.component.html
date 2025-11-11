@@ -1,0 +1,82 @@
+<section class="form-section container" [formGroup]="announcementForm">
+    <div class="form-header">
+        <h3>Create Announcement</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+
+        <!-- Category -->
+        <div class="inp-cont">
+            <label>Category <span class="required">*</span></label>
+            <div class="category-options">
+                <label>
+                    <input type="radio" value="announcements" formControlName="category"
+                        (change)="onCategoryChange()" />
+                    Announcements
+                </label>
+                <label>
+                    <input type="radio" value="events" formControlName="category" (change)="onCategoryChange()" />
+                    Events
+                </label>
+                <label>
+                    <input type="radio" value="updates" formControlName="category" (change)="onCategoryChange()" />
+                    Updates
+                </label>
+            </div>
+            <small class="error-text" *ngIf="f['category'].touched && f['category'].invalid">
+                Please select a category.
+            </small>
+        </div>
+
+        <!-- Event Date (Visible only if category === 'Events') -->
+        <div class="inp-cont" *ngIf="announcementForm.get('category')?.value === 'events'">
+            <label>Event Date <span class="required">*</span></label>
+            <input type="date" class="inp-cus" formControlName="event_date" />
+            <small class="error-text" *ngIf="f['event_date'].touched && f['event_date'].invalid">
+                Event date is required for Events.
+            </small>
+        </div>
+
+        <!-- Title -->
+        <div class="inp-cont">
+            <label>Title <span class="required">*</span></label>
+            <input type="text" class="inp-cus" placeholder="Enter title" formControlName="title" />
+            <small class="error-text" *ngIf="f['title'].touched && f['title'].invalid">
+                Title is required.
+            </small>
+        </div>
+
+        <!-- Summary -->
+        <div class="inp-cont">
+            <label>Summary <span class="required">*</span></label>
+            <textarea class="inp-cus" rows="4" placeholder="Enter summary..." formControlName="summary"></textarea>
+            <small class="error-text" *ngIf="f['summary'].touched && f['summary'].invalid">
+                Summary is required.
+            </small>
+        </div>
+
+        <!-- Attachments -->
+        <div class="inp-cont">
+            <label>Attachments (Max 2 images)</label>
+            <input type="file" class="inp-cus" (change)="onFileSelected($event)" multiple accept="image/*" />
+
+            <!-- Preview images -->
+            <div class="preview-container" *ngIf="previewImages.length > 0">
+                <div class="preview-image" *ngFor="let img of previewImages; let i = index">
+                    <img [src]="img" alt="Preview" />
+                    <span class="remove-btn" (click)="removeImage(i)">×</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="popup-actions">
+            <button class="cancel-btn" type="button" (click)="closeModal()">Cancel</button>
+            <button class="delete-btn" type="button" (click)="submitAnnouncement()"
+                [disabled]="announcementForm.invalid">
+                Post
+            </button>
+        </div>
+    </div>
+</section>

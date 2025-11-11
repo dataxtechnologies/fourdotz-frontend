@@ -1,0 +1,175 @@
+/* ======================================================
+   FORM CONTAINER
+====================================================== */
+.form-section {
+  background: #fff !important;
+  width: 800px;
+  /* width: 100%; */
+  margin: 40px auto;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-header h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.form-header i {
+  font-size: 22px;
+  cursor: pointer;
+  color: #444;
+}
+
+.form-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* ======================================================
+   INPUT STYLES
+====================================================== */
+.inp-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.inp-cont label {
+  font-weight: 600;
+  font-size: 15px;
+  color: #444;
+}
+
+.inp-cus {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #faf9f4;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.inp-cus:focus {
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ======================================================
+   CATEGORY RADIO GROUP
+====================================================== */
+.category-options {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.category-options label {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: #333;
+}
+
+.category-options input[type="radio"] {
+  accent-color: var(--primary-color1);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ======================================================
+   IMAGE PREVIEW
+====================================================== */
+.preview-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.preview-image {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+}
+
+.preview-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 50%;
+  font-size: 16px;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  line-height: 22px;
+  cursor: pointer;
+}
+
+/* ======================================================
+   FOOTER ACTIONS
+====================================================== */
+.popup-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.cancel-btn,
+.delete-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+.cancel-btn {
+  background: #e2e8f0;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background: #cbd5e0;
+}
+
+.delete-btn {
+  background: var(--primary-color1);
+  color: #fff;
+}
+
+.delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

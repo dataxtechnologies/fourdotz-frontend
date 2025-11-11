@@ -24,7 +24,8 @@ export class ChangePasswordComponent implements OnInit {
   confirmPasswordFieldType: string = 'password';
   usermail: string | null = null;
   btnloading: boolean = false;
-
+showNewPassword = false;
+showConfirmPassword = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -60,6 +61,7 @@ export class ChangePasswordComponent implements OnInit {
     this.btnloading = true
     if (this.changePasswordForm.invalid) {
       this.changePasswordForm.markAllAsTouched();
+       this.btnloading = false
       return;
     }
 
@@ -130,4 +132,16 @@ export class ChangePasswordComponent implements OnInit {
       },
     });
   }
+
+    goBack() {
+    this.router.navigateByUrl('auth/sign-in');
+  }
+
+toggleNewPassword(): void {
+  this.showNewPassword = !this.showNewPassword;
+}
+
+toggleConfirmPassword(): void {
+  this.showConfirmPassword = !this.showConfirmPassword;
+}
 }

@@ -36,7 +36,7 @@ export class AssociationOnboardComponent implements OnInit {
   ChequeLeaf: File | null = null;
   Pancard: File | null = null;
   Company_proof: File | null = null;
-
+  submitbtnloading = false;
   steps: Step[] = [
     {
       id: 1,
@@ -94,9 +94,9 @@ export class AssociationOnboardComponent implements OnInit {
   initializeForms(): void {
     this.inputForm = this.fb.group({
       alternate_number: [
-        '',
-        [Validators.required, Validators.pattern('^[0-9]{10,15}$')],
-      ],
+  '',
+  [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')],
+],
       gst_number: ['', [Validators.required, Validators.maxLength(15)]],
       registration_number: ['', Validators.required],
       address: ['', Validators.required],
@@ -104,6 +104,7 @@ export class AssociationOnboardComponent implements OnInit {
 
     this.documentForm = this.fb.group({
       company_proof_type: ['', Validators.required],
+     
     });
 
     this.accountForm = this.fb.group({
@@ -120,33 +121,31 @@ export class AssociationOnboardComponent implements OnInit {
     });
   }
 
-  /** Navigation **/
   goToNextStep(): void {
-  if (this.currentStep === 1) {
-    if (this.inputForm.invalid) {
-      this.inputForm.markAllAsTouched();
-      return;
+    if (this.currentStep === 1) {
+      if (this.inputForm.invalid) {
+        this.inputForm.markAllAsTouched();
+        return;
+      }
+      this.steps[0].isComplete = true;
+      this.currentStep = 2;
+    } else if (this.currentStep === 2) {
+      if (this.documentForm.invalid) {
+        this.documentForm.markAllAsTouched();
+        return;
+      }
+      this.steps[1].isComplete = true;
+      this.currentStep = 3;
+    } else if (this.currentStep === 3) {
+      if (this.accountForm.invalid) {
+        this.accountForm.markAllAsTouched();
+        return;
+      }
+      this.steps[2].isComplete = true;
+      this.currentStep = 4;
     }
-    this.steps[0].isComplete = true;
-    this.currentStep = 2;
-  } else if (this.currentStep === 2) {
-    if (!this.isDocumentsValid()) {
-      // Optionally show a toast here
-      this.Toast.warning('Please upload all required documents', 'Warning');
-      return;
-    }
-    this.steps[1].isComplete = true;
-    this.currentStep = 3;
-  } else if (this.currentStep === 3) {
-    if (this.accountForm.invalid) {
-      this.accountForm.markAllAsTouched();
-      return;
-    }
-    this.steps[2].isComplete = true;
-    this.currentStep = 4;
+    this.updateStepStatus();
   }
-  this.updateStepStatus();
-}
 
   goToPreviousStep(): void {
     if (this.currentStep > 1) {
@@ -197,6 +196,7 @@ isDocumentsValid(): boolean {
 }
   /** Submit Input Form **/
   submitInputForm(): void {
+    this.submitbtnloading = true;
     const payload = {
       alternate_number: this.inputForm.value.alternate_number,
       gst_number: this.inputForm.value.gst_number,
@@ -212,14 +212,17 @@ isDocumentsValid(): boolean {
     this.apiService.AssociationDataOnboard<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
+          this.submitbtnloading = false;
           this.Toast.success(res.message, 'Success');
           this.submitDocumentForm();
         } else {
+          this.submitbtnloading = false;
           this.Toast.warning(res.message, 'Warning');
           //console.warn('Failed to submit input form');
         }
       },
       error: (err: any) => {
+        this.submitbtnloading = false;
         this.Toast.error(err.error.error.message, 'Failed');
         //console.error('Error submitting input form:', err);
       },
@@ -228,33 +231,44 @@ isDocumentsValid(): boolean {
 
   /** Submit Document Form **/
   submitDocumentForm(): void {
-      const formData = new FormData();
+    this.submitbtnloading = true;
+    const formData = new FormData();
 
-  if (this.passport_sizephoto) formData.append('passport_size_photo', this.passport_sizephoto);
-  if (this.RentalAggrement) formData.append('rental_agreement', this.RentalAggrement);
-  if (this.ChequeLeaf) formData.append('cancelled_cheque_leaf', this.ChequeLeaf);
-  if (this.Pancard) formData.append('pan_card', this.Pancard);
-  if (this.Company_proof) formData.append('company_proof', this.Company_proof);
-  formData.append('company_proof_type', this.documentForm.get('company_proof_type')?.value)
+    if (this.passport_sizephoto)
+      formData.append('passport_size_photo', this.passport_sizephoto);
+    if (this.RentalAggrement)
+      formData.append('rental_agreement', this.RentalAggrement);
+    if (this.ChequeLeaf)
+      formData.append('cancelled_cheque_leaf', this.ChequeLeaf);
+    if (this.Pancard) formData.append('pan_card', this.Pancard);
+    if (this.Company_proof)
+      formData.append('company_proof', this.Company_proof);
+    formData.append(
+      'company_proof_type',
+      this.documentForm.get('company_proof_type')?.value
+    );
 
-  //console.log('Uploaded files:');
-  formData.forEach((value, key) => {
-    //console.log(key, value);
-  });
+    //console.log('Uploaded files:');
+    formData.forEach((value, key) => {
+      //console.log(key, value);
+    });
 
     this.apiService.AssociationDocumentOnboard<FormData>(formData).subscribe({
       next: (res: any) => {
         if (res?.success) {
-           this.Toast.success(res.message, 'Success')
+          this.submitbtnloading = true;
+          this.Toast.success(res.message, 'Success');
           this.router.navigateByUrl('/Association/Dashboard');
           //console.log('Documents uploaded successfully');
         } else {
-          this.Toast.warning(res.message, 'Warning')
+          this.submitbtnloading = true;
+          this.Toast.warning(res.message, 'Warning');
           //console.warn('Document upload failed');
         }
       },
       error: (err: any) => {
-         this.Toast.error(err.error.error.message, 'Failed')
+        this.submitbtnloading = true;
+        this.Toast.error(err.error.error.message, 'Failed');
         //console.error('Error uploading documents:', err);
       },
     });
@@ -289,7 +303,7 @@ isDocumentsValid(): boolean {
     if (
       this.inputForm.invalid ||
       this.accountForm.invalid ||
-       !this.isDocumentsValid()
+      !this.isDocumentsValid()
     ) {
       //console.warn('Please complete all sections before submitting.');
       return;

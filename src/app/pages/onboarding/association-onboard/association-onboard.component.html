@@ -67,52 +67,58 @@
         <!-- Step 1 -->
         <div *ngIf="currentStep === 1" class="form-section">
             <form [formGroup]="inputForm" (ngSubmit)="goToNextStep()">
+
+                <!-- Alternate Number -->
                 <div class="form-group">
                     <label>Alternate Contact Number <span class="required">*</span></label>
-                    <input type="tel" formControlName="alternate_number" class="inp-cus"
-                        placeholder="e.g., +91 98765 43210" maxlength="10" />
-                    <div *ngIf="
-              inputForm.get('alternate_number')?.invalid &&
-              inputForm.get('alternate_number')?.touched
-            " class="error">
-                        A valid phone number is required.
+                    <input type="tel" formControlName="alternate_number" class="inp-cus" placeholder="e.g., 9876543210"
+                        maxlength="10" />
+                    <div *ngIf="inputForm.get('alternate_number')?.touched">
+                        <div *ngIf="inputForm.get('alternate_number')?.errors?.['required']" class="error">
+                            Alternate number is required.
+                        </div>
+                        <div *ngIf="inputForm.get('alternate_number')?.errors?.['pattern']" class="error">
+                            Enter a valid 10-digit number starting with 6, 7, 8, or 9.
+                        </div>
                     </div>
                 </div>
 
+                <!-- GST Number -->
                 <div class="form-group">
                     <label>GST Number <span class="required">*</span></label>
-                    <input type="text" formControlName="gst_number" class="inp-cus" placeholder="15-digit GSTIN" />
-                    <div *ngIf="
-              inputForm.get('gst_number')?.invalid &&
-              inputForm.get('gst_number')?.touched
-            " class="error">
-                        GST Number is required.
+                    <input type="text" formControlName="gst_number" class="inp-cus" placeholder="15-digit GSTIN"
+                        maxlength="15" />
+                    <div *ngIf="inputForm.get('gst_number')?.touched">
+                        <div *ngIf="inputForm.get('gst_number')?.errors?.['required']" class="error">
+                            GST Number is required.
+                        </div>
+                        <div *ngIf="inputForm.get('gst_number')?.errors?.['maxlength']" class="error">
+                            GST Number must be 15 characters.
+                        </div>
                     </div>
                 </div>
 
+                <!-- Registration Number -->
                 <div class="form-group">
                     <label>Association Registration Number <span class="required">*</span></label>
                     <input type="text" formControlName="registration_number" class="inp-cus"
                         placeholder="Enter Association Registration Number" />
-                    <div *ngIf="
-              inputForm.get('registration_number')?.invalid &&
-              inputForm.get('registration_number')?.touched
-            " class="error">
+                    <div *ngIf="inputForm.get('registration_number')?.touched && inputForm.get('registration_number')?.invalid"
+                        class="error">
                         Registration Number is required.
                     </div>
                 </div>
 
+                <!-- Full Address -->
                 <div class="form-group">
                     <label>Full Registered Address <span class="required">*</span></label>
                     <textarea formControlName="address" class="inp-cus" placeholder="Enter Full Address"></textarea>
-                    <div *ngIf="
-              inputForm.get('address')?.invalid &&
-              inputForm.get('address')?.touched
-            " class="error">
+                    <div *ngIf="inputForm.get('address')?.touched && inputForm.get('address')?.invalid" class="error">
                         Address is required.
                     </div>
                 </div>
 
+                <!-- Save Button -->
                 <div class="form-navigation">
                     <button type="submit" [disabled]="inputForm.invalid" class="btn-add">
                         Save and continue
@@ -120,6 +126,7 @@
                 </div>
             </form>
         </div>
+
 
         <!-- Step 2 -->
         <div *ngIf="currentStep === 2" class="form-section">
@@ -145,18 +152,6 @@
                 </div>
 
                 <h4>Documents <span class="required">*</span></h4>
-                <!-- <div class="document-uploads">
-                    <div *ngFor="
-              let doc of [
-                'passport_size_photo',
-                'rental_agreement',
-                'cancelled_cheque_leaf',
-                'pan_card',
-                'company_proof'
-              ]
-            " class="file-upload-item"> -->
-                <!-- <label>{{ doc.replace('_', ' ') | titlecase }}</label>
-                        <input type="file" class="inp-cus" (change)="onFileChange($event)" accept="image/*,.pdf" /> -->
                 <div class="document-uploads">
 
 
@@ -197,34 +192,41 @@
                     </button> -->
                 </div>
             </form>
+
         </div>
 
         <!-- Step 3: Account Details -->
         <div *ngIf="currentStep === 3" class="form-section">
             <form [formGroup]="accountForm" (ngSubmit)="goToNextStep()">
+                <!-- Account Holder Name -->
                 <div class="form-group">
                     <label>Account Holder Name <span class="required">*</span></label>
                     <input type="text" formControlName="account_holder_name" class="inp-cus"
                         placeholder="Enter Account Holder Name" />
                     <div *ngIf="
-              accountForm.get('account_holder_name')?.invalid &&
-              accountForm.get('account_holder_name')?.touched" class="error">
+          accountForm.get('account_holder_name')?.touched &&
+          accountForm.get('account_holder_name')?.invalid
+        " class="error">
                         Account Holder Name is required.
                     </div>
                 </div>
 
+                <!-- Account Number -->
                 <div class="form-group">
                     <label>Account Number <span class="required">*</span></label>
                     <input type="text" formControlName="account_number" class="inp-cus"
                         placeholder="Enter Account Number" />
-                    <div *ngIf="
-              accountForm.get('account_number')?.invalid &&
-              accountForm.get('account_number')?.touched
-            " class="error">
-                        Account Number is required.
+                    <div *ngIf="accountForm.get('account_number')?.touched" class="error">
+                        <div *ngIf="accountForm.get('account_number')?.errors?.['required']">
+                            Account Number is required.
+                        </div>
+                        <div *ngIf="accountForm.get('account_number')?.errors?.['pattern']">
+                            Enter a valid account number (9–18 digits only).
+                        </div>
                     </div>
                 </div>
 
+                <!-- Account Type -->
                 <div class="form-group">
                     <label>Account Type <span class="required">*</span></label>
                     <select formControlName="account_type" class="inp-cus">
@@ -233,26 +235,32 @@
                         <option value="current">Current</option>
                     </select>
                     <div *ngIf="
-              accountForm.get('account_type')?.invalid &&
-              accountForm.get('account_type')?.touched
-            " class="error">
+          accountForm.get('account_type')?.touched &&
+          accountForm.get('account_type')?.invalid
+        " class="error">
                         Account Type is required.
                     </div>
                 </div>
 
+                <!-- IFSC Code -->
                 <div class="form-group">
                     <label>IFSC Code <span class="required">*</span></label>
-                    <input type="text" formControlName="ifsc_code" class="inp-cus" placeholder="Enter IFSC Code" />
-                    <div *ngIf="
-              accountForm.get('ifsc_code')?.invalid &&
-              accountForm.get('ifsc_code')?.touched
-            " class="error">
-                        IFSC Code is required.
+                    <input type="text" formControlName="ifsc_code" class="inp-cus" placeholder="e.g., SBIN0001234"
+                        maxlength="11" style="text-transform: uppercase" />
+                    <div *ngIf="accountForm.get('ifsc_code')?.touched" class="error">
+                        <div *ngIf="accountForm.get('ifsc_code')?.errors?.['required']">
+                            IFSC Code is required.
+                        </div>
+                        <div *ngIf="accountForm.get('ifsc_code')?.errors?.['pattern']">
+                            Enter a valid IFSC Code (e.g., SBIN0XXXXXX — 4 letters, 0, 6 alphanumeric).
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-navigation">
-                    <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
+                    <button type="button" (click)="goToPreviousStep()" class="btn secondary">
+                        ← Back
+                    </button>
                     <button type="submit" [disabled]="accountForm.invalid" class="btn-add">
                         Save and continue
                     </button>
@@ -309,7 +317,10 @@
 
             <div class="form-navigation">
                 <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
-                <button type="button" (click)="submitInputForm()" class="btn-add">Submit Onboarding</button>
+                <button type="button" (click)="submitInputForm()" class="btn-add" *ngIf="!submitbtnloading">Submit
+                    Onboarding</button>
+                <button type="button" class="btn-add" style="cursor: not-allowed;"
+                    *ngIf="submitbtnloading">Submitting...</button>
             </div>
         </div>
     </div>

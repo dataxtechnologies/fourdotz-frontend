@@ -1,64 +1,88 @@
+/* ================================================
+   Outer Container
+   ================================================ */
 .bg {
-  background: #ffffff;
-  width: 80%;
-  max-width: 550px;
-  height: 65vh;
-  border-radius: 20px;
-  border: 1px solid #c9c8c8;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  margin-left: 50px;
+    background: #ffffff;
+    width: 550px !important;
+    /* Keep desktop width */
+    border-radius: 20px;
+    border: 1px solid #c9c8c8;
+    padding: 20px;
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
 }
 
-.logo-img{
+/* ================================================
+   Form Container
+   ================================================ */
+.form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0 10px 0;
+    box-sizing: border-box;
+}
+
+/* ================================================
+   Logo Section
+   ================================================ */
+.logo-img {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-
-.logo-img p{
-    font-family: 'TTHoves-Regular', sans-serif;
-    font-size: 18px;
-    margin-bottom: -10px;
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .logo-img img {
-    width: 55%;
-    max-width: 650px; 
+    width: 220px;
     height: auto;
-    border-radius: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
-/* Form styles */
+.logo-img h4 {
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #181818;
+}
+
+.logo-img p {
+    font-family: 'TTHoves-Regular', sans-serif;
+    font-size: 16px;
+    color: #444;
+    margin: 0;
+}
+
+/* ================================================
+   Form Styles
+   ================================================ */
 .signin-form {
-    margin-top: 30px;
-    width: auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-/* Input container */
 .inp-cont {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     width: 100%;
 }
 
-/* Label */
 .inp-cont label {
-    font-size: 17px;
-      font-family: 'TTHoves-Regular', sans-serif;
+    font-size: 16px;
     color: #181818;
+    font-family: 'TTHoves-Regular', sans-serif;
 }
 
-/* Input */
 .inp-cus {
     padding: 12px 14px;
     border: 1px solid #ddd;
@@ -67,75 +91,231 @@
     font-size: 1rem;
     transition: all 0.3s ease;
     outline: none;
+    width: 100%;
 }
 
-/* Input focus effect */
 .inp-cus:focus {
     background: #fff;
     box-shadow: 0 0 6px #4f504f4d;
 }
 
-/* Placeholder style */
+/* Placeholder */
 .inp-cus::placeholder {
     color: #aaa;
     font-size: 0.95rem;
-     font-family: 'TTHoves-Regular', sans-serif;
 }
 
+/* ================================================
+   Password Field
+   ================================================ */
 .password-group {
-  position: relative;
+    position: relative;
 }
 
 .toggle-password {
-  position: absolute;
-  right: 12px;
-  top: 43px; /* adjust based on input padding */
-  cursor: pointer;
-  user-select: none;
-  font-size: 18px;
-  color: var(--primary-color2);
+    position: absolute;
+    right: 14px;
+    top: 42px;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--primary-color2);
 }
 
-/* Forgot password */
+/* ================================================
+   Forgot Password
+   ================================================ */
 .forgot-password {
     text-align: right;
-    font-family: 'TTHoves-Regular', sans-serif;
+    margin-bottom: 15px;
 }
 
 .forgot-password p {
+    font-size: 16px;
     color: #434343;
     text-decoration: underline;
-    font-size: 18px;
     cursor: pointer;
 }
 
-
-.login-btn{
-    color: #FFFFFF;
-    background: var(--primary-color2);
+/* ================================================
+   Buttons
+   ================================================ */
+.login-btn {
+    width: 100%;
     padding: 12px;
-    border: 0;
-    border-radius: 6px;
+    border-radius: 8px;
+    font-size: 18px;
     font-family: 'TTHoves-Regular', sans-serif;
-
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s ease;
+    background: var(--primary-color2) !important;
 }
 
+.login-btn {
+    color: #ffffff;
+    background: var(--primary-color2);
+}
 
-.error-text{
+.login-btn:hover {
+    opacity: 0.9;
+}
+
+.processing-btn {
+    background: var(--primary-color2);
+    color: #fff;
+     border-radius: 8px;
+    border: 1px solid var(--primary-color2);
+}
+
+/* ================================================
+   Error Message
+   ================================================ */
+.error-text {
     color: var(--primary-color2);
-}
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .bg { height: 60vh; }
-    .logo-img img { width: 50%; }
+    font-size: 13px;
+    font-weight: 500;
 }
 
-@media (max-width: 480px) {
-    .bg { height: 50vh; padding: 20px; }
-    .logo-img img { width: 60%; }
+/* ================================================
+   RESPONSIVE DESIGN
+   ================================================ */
+
+/* ----- Large Tablets (1024px–1280px) ----- */
+@media (max-width: 1280px) {
+    .bg {
+        width: 70%;
+        padding: 25px;
+        margin: 30px auto;
+    }
+
+    .logo-img img {
+        width: 180px;
+    }
+
+    .logo-img h4 {
+        font-size: 19px;
+    }
+
+    .logo-img p {
+        font-size: 15px;
+    }
 }
 
+/* ----- Tablets (768px–1023px) ----- */
+@media (max-width: 1024px) {
+    .bg {
+        width: 80%;
+        padding: 20px;
+        margin: 20px auto;
+    }
 
-.form-container{
-    padding: 10px 0 20px 0;
+    .form-container {
+        padding: 10px;
+    }
+
+    .logo-img img {
+        width: 150px;
+    }
+
+    .logo-img h4 {
+        font-size: 18px;
+    }
+
+    .signin-form {
+        width: 100%;
+    }
+}
+
+/* ----- Mobile Landscape (600px–767px) ----- */
+@media (max-width: 767px) {
+    .bg {
+        width: 90%;
+        padding: 20px 15px;
+        margin: 20px auto;
+    }
+
+    .logo-img img {
+        width: 130px;
+    }
+
+    .logo-img h4 {
+        font-size: 17px;
+    }
+
+    .logo-img p {
+        font-size: 15px;
+    }
+
+    .inp-cus {
+        font-size: 0.95rem;
+        padding: 10px 12px;
+    }
+
+    .login-btn {
+        font-size: 15px;
+        padding: 10px;
+    }
+}
+
+/* ----- Mobile Portrait (360px–599px) ----- */
+@media (max-width: 599px) {
+    .bg {
+        width: 95%;
+        border-radius: 12px;
+        padding: 15px;
+        margin: 15px auto;
+    }
+
+    .logo-img img {
+        width: 100px;
+    }
+
+    .logo-img h4 {
+        font-size: 16px;
+    }
+
+    .logo-img p {
+        font-size: 14px;
+    }
+
+    .inp-cus {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .login-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .forgot-password p {
+        font-size: 14px;
+    }
+}
+
+/* ----- Extra Small Mobiles (up to 360px) ----- */
+@media (max-width: 360px) {
+    .bg {
+        width: 98%;
+        padding: 12px;
+        margin: 10px auto;
+    }
+
+    .logo-img img {
+        width: 80px;
+    }
+
+    .logo-img h4 {
+        font-size: 15px;
+    }
+
+    .inp-cus {
+        font-size: 0.85rem;
+        padding: 8px;
+    }
+
+    .login-btn {
+        font-size: 13px;
+    }
 }

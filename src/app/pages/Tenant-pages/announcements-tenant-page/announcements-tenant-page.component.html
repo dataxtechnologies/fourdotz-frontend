@@ -1,0 +1,154 @@
+<section class="announcement-section">
+    <div class="container-fluid py-4">
+
+        <!-- ===== Header Section (Title + Filters) ===== -->
+        <div class="header-new">
+            <h4>Announcements</h4>
+            <div class="filter-controls">
+                <!-- Date Range Filter -->
+                <div class="filter-item">
+                    <i class="fa-regular fa-calendar"></i>
+                    <select>
+                        <option>Date Range</option>
+                        <option>Today</option>
+                        <option>This Week</option>
+                        <option>This Month</option>
+                        <option>Last 3 Months</option>
+                    </select>
+                </div>
+
+                <!-- Sort / Category Filter -->
+                <div class="filter-item">
+                    <i class="fa-solid fa-sort"></i>
+                    <select>
+                        <option>All Category</option>
+                        <option>Announcements</option>
+                        <option>Events</option>
+                        <option>Updates</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 layout-wrapper">
+            <!-- ===== Left Sidebar ===== -->
+            <div class="col-lg-3">
+                <div class="sidebar fixed-sidebar">
+                    <div class="sidebar-head">
+                        <h5 class="mt-1">Category</h5>
+
+                    </div>
+                    <ul>
+                        <li class="active">All Announcements</li>
+                        <li>Announcements</li>
+                        <li>Events</li>
+                        <li>Updates</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ===== Center Feed ===== -->
+            <div class="col-lg-6">
+                <div class="post-feed">
+
+                   
+
+                    <!-- 🔹 Skeleton Loader (Posts) -->
+                    <div *ngIf="loadingPosts" class="skeleton-container">
+                        <div class="skeleton-card" *ngFor="let i of [1,2,3]"></div>
+                    </div>
+
+                    <!-- 🔹 No Data Found -->
+                    <div *ngIf="!loadingPosts && posts?.length === 0; else announcementpost" class="no-data">
+                        <img src="assets/logo/no-announcement.jpg" alt="No data"  style="width: 600px;"/>
+                        <!-- <p>No announcements found.</p> -->
+                    </div>
+
+                    <ng-template #announcementpost>
+
+                        <!-- 🔹 Announcement Posts Loop -->
+                        <div *ngFor="let post of posts; let i = index" class="announcement-card">
+                            <div class="announcement-header">
+                                <div class="announcement-user">
+                                    <img src="https://i.pravatar.cc/100?u={{ post.user }}" alt="User" />
+                                    <div>
+                                        <strong>{{ post.association_name }}</strong><br />
+                                        <small>{{ post.created_time.$date | date:'dd-MMM-yyy HH:mm:ss' }}</small>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <img src="assets/icons/view-post.svg" alt="view-post" style=" cursor: pointer;">
+                                    <img src="assets/icons/pinpost.png" alt="pin-post"
+                                        style="width: 25px; cursor: pointer;">
+                                    <span class="badge">{{ post.category }}</span>
+                                </div>
+                            </div>
+
+                            <div class="announcement-body mt-3">
+                                <h6>{{ post.title }}</h6>
+                                <p>
+                                    {{ post.summary?.length > 80 ? (post.summary | slice:0:80) + '...' : post.summary }}
+                                </p>
+
+                                <!-- Single Image -->
+                                <ng-container *ngIf="post.images?.length === 1">
+                                    <img [src]="post.images[0]" class="single-image mt-3" alt="Post Image" />
+                                </ng-container>
+
+                                <!-- Two Images Grid -->
+                                <ng-container *ngIf="post.images?.length === 2">
+                                    <div class="two-img-grid mt-3">
+                                        <img *ngFor="let img of post.images" [src]="img" alt="Post Image" />
+                                    </div>
+                                </ng-container>
+                            </div>
+
+                            <!-- Reaction Buttons -->
+                            <div class="announcement-actions">
+                                <div class="react-wrapper">
+                                    <button class="react-btn">{{ selectedEmoji[i] || '😊' }}</button>
+                                    <div class="reaction-bar">
+                                        <span (click)="setReaction(i, '👍')">👍</span>
+                                        <span (click)="setReaction(i, '👏')">👏</span>
+                                        <span (click)="setReaction(i, '🤗')">🤗</span>
+                                        <span (click)="setReaction(i, '❤️')">❤️</span>
+                                        <span (click)="setReaction(i, '💡')">💡</span>
+                                        <span (click)="setReaction(i, '😂')">😂</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="pinned-sidebar fixed-pinned">
+                    <h5>Pinned Announcements</h5>
+
+                    <div *ngIf="loadingPinned" class="skeleton-container">
+                        <div class="skeleton-line" *ngFor="let i of [1,2,3]"></div>
+                    </div>
+
+                    <div *ngIf="!loadingPinned && pinnedAnnouncement2?.length === 0; else contentdiv" class="no-data">
+                       <img src="assets/logo/no-pin-announcement.jpg" alt="No data"  style="width: 250px;"/>
+                        <p>No pinned announcements.</p>
+                    </div>
+
+                    <ng-template #contentdiv>
+
+                        <div class="pinned-scroll">
+                            <div class="pinned-item" *ngFor="let p of pinnedAnnouncement1.paginatedData">
+                                <strong>{{ p.title }}</strong>
+                                <p>
+                                    {{ p.summary?.length > 80 ? (p.summary | slice: 0:80) + '...' : p.summary }}
+                                </p>
+                                <a href="javascript:void(0)">View post →</a>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

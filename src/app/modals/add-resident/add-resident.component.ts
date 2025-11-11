@@ -24,7 +24,7 @@ export class AddResidentComponent implements OnInit {
   @ViewChild('hiddenDatePicker')
   hiddenDatePicker!: ElementRef<HTMLInputElement>;
   ownerForm!: FormGroup;
-
+  submitbtnloading = false
   dropdownOpen = false;
   selectedProperty: string | null = null;
   searchTerm: string = '';
@@ -138,10 +138,10 @@ export class AddResidentComponent implements OnInit {
   });
 }
   onSubmit(): void {
-    this.submitbtn = false;
+    this.submitbtnloading = true;
     if (this.ownerForm.invalid) {
       this.ownerForm.markAllAsTouched();
-      this.submitbtn = true;
+      this.submitbtnloading = false;
       return;
     }
 
@@ -158,18 +158,19 @@ export class AddResidentComponent implements OnInit {
 
     this.apiService.createownerinproperty<any>(payload).subscribe({
       next: (res: any) => {
-        this.submitbtn = true;
         if (res?.success) {
+          this.submitbtnloading = false;
           this.Toast.success(res.message, 'Success');
           this.AssociationService.triggerAssociationOwner(res);
           this.AssociationService.triggerAdminAssociation(res);
           this.closeModal();
         } else {
+          this.submitbtnloading = false;
           this.Toast.warning(res.message, 'Warning');
         }
       },
       error: (err: any) => {
-        this.submitbtn = true;
+        this.submitbtnloading = false;
         this.Toast.error(err.error.error.message, 'Failed');
         //console.error('Request failed:', err);
       },

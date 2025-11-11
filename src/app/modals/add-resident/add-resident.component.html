@@ -111,7 +111,8 @@
             </div>
         </form>
         <div class="mb-3">
-            <button type="button" class="submit-btn" (click)="onSubmit()">Submit</button>
+            <button type="button" class="submit-btn" (click)="onSubmit()" *ngIf="!submitbtnloading">Submit</button>
+            <button type="button" class="submit-btn" style="cursor: not-allowed;" *ngIf="submitbtnloading">Submitting...</button>
         </div>
     </div>
 </section>

@@ -45,6 +45,12 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     allowedRole: 'association'
   },
   {
+    label: 'Announcement',
+    icon: '/assets/icons/Announcement.svg',
+    route: '/Association/announcement',
+    allowedRole: 'association'
+  },
+  {
     label: 'Dashboard',
     icon: '/assets/icons/grids1.svg',
     route: '/Owner/Dashboard',
@@ -75,6 +81,12 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     allowedRole: 'owner'
   },
   {
+    label: 'Announcement',
+    icon: '/assets/icons/Announcement.svg',
+    route: '/Owner/announcement/owner',
+    allowedRole: 'owner'
+  },
+  {
     label: 'Dashboard',
     icon: '/assets/icons/grids1.svg',
     route: '/Tenant/Dashboard',
@@ -96,6 +108,12 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Rental Invoice',
     icon: '/assets/icons/receipt-text.svg',
     route: '/Tenant/Rental-invoice-list',
+    allowedRole: 'tenant'
+  },
+  {
+    label: 'Announcement',
+    icon: '/assets/icons/Announcement.svg',
+    route: '/Tenant/announcement/tenant',
     allowedRole: 'tenant'
   },
 ];

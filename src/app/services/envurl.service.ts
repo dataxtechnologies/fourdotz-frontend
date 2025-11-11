@@ -7,6 +7,8 @@ export class EnvurlService {
   public loginApi = '/auth/login';
   public logoutApi = '/auth/logout';
   public UpdateTempPass = '/auth/update_new_pwd'
+  public forgetpassword = '/auth/forgot_password_send_otp'
+  public updateforgetpassword = '/auth/update_forgot_password'
 
   public UserInfo = '/auth/user_info'
 
@@ -47,19 +49,13 @@ export class EnvurlService {
   public SendRemainderforMaintenance = '/maintenance_invoice/send_remainder'
 
 
-
-
-
-
   // owner endpoints
   public ownerproperties = '/property/list_owner_property'
   public MaintenanceListinOwner = '/maintenance_invoice/list_maintenance_invoice_owner'
   public RentalInvoicelistinowner = '/rental_invoice/list_rental_invoice'
   public TenantListinOwner = '/property/list_tenant_details'
   public RentalInvoicegeninOwner = '/rental_invoice/create_rental_invoice'
-
-
-
+  public OwnerUpdateUPI = '/owner/update_upi'
 
 
   // Tenant Endpoints
@@ -68,17 +64,22 @@ export class EnvurlService {
   public TenantRentalInvoiceList = '/rental_invoice/list_rental_invoice_tenant'
 
 
-
-
   // Invoices
   public RentalInvoice = '/rental_invoice/get_rent_invoice_invoiceid'
   public RentalinvoiceQR = '/rental_invoice/invoice_payment_qr'
   public ChangeRentalInvoicePaidStatus = '/rental_invoice/rental_payment_status'
 
 
-
-
   // Payment Integration
   public CreatePaymentforInvoiceId = '/payment/create_pay'
+
+
+
+
+  // Announcement 
+  public CreateAnnouncement = '/announcements/create_announcements'
+  public ListAnnouncementinHOA = '/announcements/list_announcements'
+  public pinannouncement = '/announcements/pin_unpin_announcements'
+  public listpinannouncement = '/announcements/list_pin_announcements'
 
 }

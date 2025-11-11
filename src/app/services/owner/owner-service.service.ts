@@ -21,6 +21,10 @@ export class OwnerServiceService {
   private RentalInvoicePaidStatusSubject = new BehaviorSubject<any>(null);
   RentalPaidStatus$ = this.RentalInvoicePaidStatusSubject.asObservable();
 
+
+  private OwnerUPIidUpdateSubject = new BehaviorSubject<any>(null);
+  OwnerUpiIdUpdatedStatus$ = this.OwnerUPIidUpdateSubject.asObservable();
+
   triggerTenantAdd(AddTenant: any): void {
     //console.log('addassociation', AddTenant);
     this.TenantSubject.next(AddTenant);
@@ -40,5 +44,11 @@ export class OwnerServiceService {
     triggerRentalPaidStatus(AddVehicle: any): void {
     //console.log('addassociation', AddVehicle);
     this.RentalInvoicePaidStatusSubject.next(AddVehicle);
+  }
+
+
+    triggerOwnerUpiIDUpdate(UpdateUPI: any): void {
+    //console.log('addassociation', AddVehicle);
+    this.OwnerUPIidUpdateSubject.next(UpdateUPI);
   }
 }

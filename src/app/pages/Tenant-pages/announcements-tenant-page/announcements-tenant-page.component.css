@@ -1,0 +1,434 @@
+/* ============================================================
+   GLOBAL STRUCTURE
+============================================================ */
+.layout-wrapper {
+    position: relative;
+}
+
+/* ============================================================
+   HEADER SECTION (Title + Filters)
+============================================================ */
+.header-new {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+/* ----- Filter Dropdowns ----- */
+.filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: 0.2s;
+}
+
+.filter-item:hover {
+    border-color: var(--primary-color1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-item i {
+    font-size: 16px;
+    color: #666;
+}
+
+.filter-item select {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    color: #444;
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+.filter-item select:focus {
+    outline: none;
+}
+
+/* ============================================================
+   LEFT SIDEBAR
+============================================================ */
+.fixed-sidebar {
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar, .pinned-sidebar {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+}
+
+.sidebar-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.add-button {
+    padding: 6px;
+    width: 120px;
+    border-radius: 12px;
+    background-color: #fff;
+    color: var(--primary-color1);
+    border: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.sidebar ul li:hover,
+.sidebar ul li.active {
+    margin-top: 10px;
+    background-color: #ffeafe;
+    color: var(--primary-color1);
+}
+
+/* ============================================================
+   CREATE ANNOUNCEMENT BOX
+============================================================ */
+.create-announcement {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.create-announcement input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f1f3f5;
+}
+
+.create-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-top: 10px;
+  border-top: 1px solid #eaeaea;
+}
+
+.option-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 500;
+  color: #444;
+  padding: 8px 0;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.option-btn i {
+  font-size: 18px;
+}
+
+/* Hover effect */
+.option-btn:hover {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+/* Icon colors (like LinkedIn style) */
+.option-btn.video i {
+  color: #34a853; /* green */
+}
+
+.option-btn.photo i {
+  color: #4285f4; /* blue */
+}
+
+.option-btn.article i {
+  color: #ea4335; /* red/orange */
+}
+
+/* Responsive tweak for small screens */
+@media (max-width: 768px) {
+  .create-options {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option-btn {
+    justify-content: flex-start;
+    width: 100%;
+    padding-left: 10px;
+  }
+}
+/* ============================================================
+   MAIN FEED AREA
+============================================================ */
+.post-feed {
+    overflow-y: auto;
+    max-height: 80vh;
+    padding-right: 8px;
+}
+
+.post-feed::-webkit-scrollbar {
+    display: none;
+}
+
+/* ============================================================
+   ANNOUNCEMENT CARD
+============================================================ */
+.announcement-card {
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.announcement-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.announcement-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.announcement-user img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.announcement-body {
+    border-bottom: 1px solid #ccc;
+}
+
+.announcement-body h6 {
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.announcement-body p {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* ----- Image Layouts ----- */
+.single-image {
+    width: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+    display: block;
+    max-height: 450px;
+    margin-bottom: 10px;
+}
+
+.two-img-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.two-img-grid img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+/* ============================================================
+   REACTION EMOJIS
+============================================================ */
+.react-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.react-btn {
+    border: none;
+    background: none;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.react-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Hover Emoji Bar */
+.reaction-bar {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    display: flex;
+    gap: 10px;
+    background: #fff;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 8px 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.2s ease-in-out;
+    z-index: 10;
+}
+
+.react-wrapper:hover .reaction-bar {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.reaction-bar span {
+    font-size: 22px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.reaction-bar span:hover {
+    transform: scale(1.4);
+}
+
+/* ============================================================
+   PINNED ANNOUNCEMENTS (RIGHT SIDEBAR)
+============================================================ */
+.fixed-pinned {
+    position: sticky;
+    top: 100px;
+    max-height: 70vh;
+    overflow: hidden;
+}
+
+.pinned-scroll {
+    overflow-y: auto;
+    max-height: 60vh;
+    padding-right: 8px;
+}
+
+.pinned-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.pinned-scroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.pinned-item {
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.pinned-item:last-child {
+    border-bottom: none;
+}
+
+.pinned-item strong {
+    display: block;
+    font-size: 15px;
+    color: #222;
+}
+
+.pinned-item p {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.pinned-item a {
+    font-size: 13px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.pinned-item a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+============================================================ */
+@media (max-width: 768px) {
+    .filter-controls {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .filter-item {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .fixed-sidebar,
+    .fixed-pinned {
+        position: relative;
+        top: 0;
+        max-height: none;
+    }
+
+    .post-feed {
+        max-height: none;
+    }
+
+    .two-img-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.no-data {
+  text-align: center;
+  color: #777;
+  padding: 30px 0;
+  border-radius: 16px;
+  background-color: #fff;
+}
+
+.no-data img {
+  padding: 20px;
+  margin-bottom: 10px;
+}

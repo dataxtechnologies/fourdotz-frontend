@@ -1,0 +1,199 @@
+/* ========================= */
+/* 💰 ADD UPI ID MODAL STYLING */
+/* ========================= */
+
+.form-section {
+  background: #faf9f4 !important;
+  max-width: 600px;
+  width: 90%;
+  margin: 40px auto;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: all 0.3s ease-in-out;
+}
+
+.container {
+  width: 900px;
+  padding: 15px 20px;
+  border-radius: 20px;
+}
+
+.form-header {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-header h3 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 🔒 Logout Button */
+.logout-btn {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  transform: scale(1.03);
+}
+
+/* Form body */
+.form-body {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Input container */
+.inp-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.inp-cont label {
+  font-size: 17px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Inputs */
+.inp-cus {
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #faf9f4;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.inp-cus:focus {
+  background: #fff;
+  box-shadow: 0 0 6px #4f504f4d;
+}
+
+.inp-cus.invalid {
+  border-color: #ef4444;
+}
+
+.inp-cus::placeholder {
+  color: #aaa;
+  font-size: 0.95rem;
+}
+
+/* Error text */
+.error-text {
+  color: var(--primary-color2);
+  font-size: 14px;
+}
+
+/* ⚠️ Warning Box */
+.warning-text {
+  font-size: 15px;
+  line-height: 1.6;
+  background: #fff6da;
+  border-left: 4px solid #f6ad55;
+  color: #5a4a1d;
+  padding: 12px 15px;
+  border-radius: 6px;
+  margin: 0 0 20px 0;
+}
+
+.highlight-yellow {
+  color: #b7791f;
+  font-weight: bold;
+}
+
+/* Buttons */
+.popup-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+.cancel-btn,
+.confirm-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn {
+  background: #e2e8f0;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background: #cbd5e0;
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(34, 197, 94, 0.2);
+}
+
+.confirm-btn:hover {
+  background: linear-gradient(135deg, #15803d, #16a34a);
+}
+
+.confirm-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-section {
+    padding: 15px 20px;
+  }
+
+  .inp-cus {
+    font-size: 0.95rem;
+  }
+}
+
+
+.btn-add {
+    background: #faf9f4;
+    border: none;
+    color: var(--primary-color2);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 6px;
+    width: 180px;
+    border: 2px solid var(--primary-color2);
+}

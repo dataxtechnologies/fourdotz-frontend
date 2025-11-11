@@ -110,6 +110,7 @@ export class SigninPageComponent implements OnInit {
           }
         } else {
           this.loginbtn = true;
+          this.toastr.info(res.message, 'Information');
         }
       },
       error: (err: any) => {
@@ -122,6 +123,7 @@ export class SigninPageComponent implements OnInit {
           );
           this.route.navigateByUrl(`/auth/Change-passsword/${newuseremail}`);
         }
+        this.toastr.error(err.error.error.message, 'Error');
         //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },

@@ -1,0 +1,52 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3>Add Your UPI ID</h3>
+    </div>
+
+    <div class="form-body">
+        <p class="warning-text warning-yellow">
+            <strong>⚠️ Note:</strong> Please ensure that your UPI ID is valid before submitting.<br />
+            This UPI ID will be used <strong>for rental collection from your tenant</strong> only.<br />
+            Please <strong>double-check</strong> your UPI ID before submitting, as once it’s submitted,
+            <strong>it cannot be undone</strong>.<br />
+            Example: <strong>username&#64;bank</strong>
+        </p>
+
+        <!-- ✅ Reactive Form -->
+        <form [formGroup]="upiForm" (ngSubmit)="confirmUPISubmit()">
+            <div class="inp-cont">
+                <label for="upiId">Enter your UPI ID: <Span class="required">*</Span></label>
+                <input id="upiId" type="text" formControlName="upiId" placeholder="e.g., john.doe@upi" class="inp-cus"
+                    [class.invalid]="upiForm.get('upiId')?.invalid && upiForm.get('upiId')?.touched" />
+
+                <!--  Validation Errors -->
+                <small class="error-text"
+                    *ngIf="upiForm.get('upiId')?.touched && upiForm.get('upiId')?.hasError('required')">
+                     UPI ID is required.
+                </small>
+
+                <small class="error-text"
+                    *ngIf="upiForm.get('upiId')?.touched && upiForm.get('upiId')?.hasError('pattern')">
+                     Please enter a valid UPI ID format (example: name&#64;bank)
+                </small>
+            </div>
+
+            <!-- ✅ Action Buttons -->
+            <div class="popup-actions">
+                <button type="button" class="cancel-btn" (click)="confirmlogout()" *ngIf="!showprocessingbtn">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+                <button type="button" class="cancel-btn" style="cursor: not-allowed;" disabled *ngIf="showprocessingbtn">
+                    <i class="fa-solid fa-right-from-bracket"></i> Processing...
+                </button>
+
+                <button type="submit" class="btn-add" [disabled]="upiForm.invalid"
+                    *ngIf="!showsubmitprocessingbtn">
+                    Submit UPI
+                </button>
+
+                <button class="btn-add" style="cursor: not-allowed;" disabled *ngIf="showsubmitprocessingbtn">Processing...</button>
+            </div>
+        </form>
+    </div>
+</section>

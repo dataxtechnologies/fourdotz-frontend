@@ -32,6 +32,9 @@ import { ProfilePageComponent } from './pages/profile/profile-page/profile-page.
 import { GlobalInvoiceComponent } from './pages/global-invoice/global-invoice.component';
 import { NewInvComponent } from './pages/new-inv/new-inv.component';
 import { NewInv1Component } from './pages/new-inv1/new-inv1.component';
+import {  Announcementcomponent } from './pages/association-pages/announcements/announcements.component';
+import { AnnouncementsPageComponent } from './pages/Owner-pages/announcements-page/announcements-page.component';
+import { AnnouncementsTenantPageComponent } from './pages/Tenant-pages/announcements-tenant-page/announcements-tenant-page.component';
 
 export const routes: Routes = [
   {
@@ -102,6 +105,10 @@ export const routes: Routes = [
         path: 'view-resident/:residentId',
         component: ViewResidentDetailsComponent,
       },
+      {
+        path: 'announcement',
+        component: Announcementcomponent,
+      },
     ],
   },
 
@@ -114,6 +121,7 @@ export const routes: Routes = [
       { path: 'tenants-list', component: OwnerTenantsListComponent },
       { path: 'Maintenance-list', component: OwnerMaintenanceListComponent },
       { path: 'Rental-invoice-list', component: OwnerRentalInvoiceComponent },
+      { path: 'announcement/owner', component: AnnouncementsPageComponent },
       {
         path: 'view-properties/:propertiesId',
         component: OwnerViewPropertyComponent,
@@ -136,6 +144,7 @@ export const routes: Routes = [
       },
       { path: 'Maintenance-list', component: TenantMaintenanceListComponent },
       { path: 'Rental-invoice-list', component: TenantRentalListComponent },
+      { path: 'announcement/tenant', component: AnnouncementsTenantPageComponent },
       {
         path: 'view-properties/:propertiesId',
         component: TenantViewPropertyDetailsComponent,
