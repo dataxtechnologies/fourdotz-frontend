@@ -88,6 +88,7 @@ ngOnInit(): void {
   onSubmit(): void {
     this.submitbtn = false;
     if (this.tenantForm.invalid) {
+      this.submitbtn = true;
       this.tenantForm.markAllAsTouched();
       return;
     }

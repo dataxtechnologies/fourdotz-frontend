@@ -20,15 +20,15 @@ export class ProfilePageComponent {
   profileForm: FormGroup;
   isEditMode: boolean = false;
   showeditbtn: boolean = false;
-  user_type = sessionStorage.getItem('user_type');
+  user_type = localStorage.getItem('user_type');
   userData: any;
 
   constructor(private fb: FormBuilder, private location: Location) {
-    // Fetch user data from sessionStorage
-    const userJson = sessionStorage.getItem('userdata');
+    // Fetch user data from localStorage
+    const userJson = localStorage.getItem('userdata');
     this.userData = userJson ? JSON.parse(userJson) : {};
 
-    // Initialize form with sessionStorage data
+    // Initialize form with localStorage data
     this.profileForm = this.fb.group({
       firstName: [this.userData.name || '', Validators.required],
       lastName: [this.userData.last_name || ''], // Assuming last_name might exist

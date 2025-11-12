@@ -65,7 +65,7 @@ showConfirmPassword = false;
       return;
     }
 
-    const newsession = sessionStorage.getItem('session_key');
+    const newsession = localStorage.getItem('session_key');
 
     const payload = {
       email: this.usermail,
@@ -81,15 +81,15 @@ showConfirmPassword = false;
           const userType = res.data?.user_type;
           const user_id = res.data?.user_id;
           this.btnloading = false;
-          sessionStorage.removeItem('session_key')
+          localStorage.removeItem('session_key')
           if (tokenData) {
-            sessionStorage.setItem('access_token', tokenData.AccessToken);
-            sessionStorage.setItem('refresh_token', tokenData.RefreshToken);
+            localStorage.setItem('access_token', tokenData.AccessToken);
+            localStorage.setItem('refresh_token', tokenData.RefreshToken);
           }
 
           if (userType) {
-            sessionStorage.setItem('user_type', userType);
-            sessionStorage.setItem('user_id', user_id);
+            localStorage.setItem('user_type', userType);
+            localStorage.setItem('user_id', user_id);
           }
 
          //console.log(res.message || 'Login successful');
@@ -121,7 +121,7 @@ showConfirmPassword = false;
         this.btnloading = false;
         // const newuseremail = this.loginForm.get('username')?.value;
         // if (err.error.error.data.update_password == false) {
-        //   sessionStorage.setItem(
+        //   localStorage.setItem(
         //     'session_key',
         //     err.error.error.data.session_key
         //   );

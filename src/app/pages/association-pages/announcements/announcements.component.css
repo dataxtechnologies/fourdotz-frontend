@@ -469,6 +469,6 @@
 
 .no-data img {
   padding: 20px;
-  opacity: 0.6;
+  /* opacity: 0.6; */
   margin-bottom: 10px;
 }

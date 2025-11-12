@@ -46,7 +46,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   },
   {
     label: 'Announcement',
-    icon: '/assets/icons/Announcement.svg',
+    icon: '/assets/icons/chart-3.svg',
     route: '/Association/announcement',
     allowedRole: 'association'
   },
@@ -82,7 +82,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   },
   {
     label: 'Announcement',
-    icon: '/assets/icons/Announcement.svg',
+    icon: '/assets/icons/chart-3.svg',
     route: '/Owner/announcement/owner',
     allowedRole: 'owner'
   },
@@ -112,7 +112,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   },
   {
     label: 'Announcement',
-    icon: '/assets/icons/Announcement.svg',
+    icon: '/assets/icons/chart-3.svg',
     route: '/Tenant/announcement/tenant',
     allowedRole: 'tenant'
   },

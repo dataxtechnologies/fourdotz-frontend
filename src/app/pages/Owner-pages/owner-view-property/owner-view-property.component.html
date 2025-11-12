@@ -170,7 +170,7 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Pet Details</h5>
                             <button class="btn-add" (click)="addpet(propertiesId)"
-                                *ngIf="!Propertiesdata.pet || Propertiesdata.pet.length === 0">Add Pet</button>
+                                *ngIf="!Propertiesdata.pet || Propertiesdata.pet.length === 0">+ Add pet</button>
                                  <button class="btn-add" (click)="EditPet(Propertiesdata.pet[0], propertiesId)"
                                 *ngIf="Propertiesdata.pet && Propertiesdata.pet.length > 0">
                                 Edit Pet

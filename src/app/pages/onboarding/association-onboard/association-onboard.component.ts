@@ -28,7 +28,7 @@ interface Step {
   styleUrls: ['./association-onboard.component.css'],
 })
 export class AssociationOnboardComponent implements OnInit {
-  user_id = sessionStorage.getItem('user_id');
+  user_id = localStorage.getItem('user_id');
   userData: any;
   passport_sizephoto: File | null = null;
   RentalAggrement: File | null = null;
@@ -87,7 +87,7 @@ export class AssociationOnboardComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForms();
 
-    const userJson = sessionStorage.getItem('userdata');
+    const userJson = localStorage.getItem('userdata');
     this.userData = userJson ? JSON.parse(userJson) : {};
   }
 
@@ -318,7 +318,7 @@ isDocumentsValid(): boolean {
     this.apiService.logoutApi<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigateByUrl('/auth/sign-in');
           this.Toast.success(res.message, 'Successs');
           //console.log(res.message || 'Logged out successfully');

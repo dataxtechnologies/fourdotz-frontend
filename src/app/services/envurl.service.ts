@@ -68,6 +68,7 @@ export class EnvurlService {
   public RentalInvoice = '/rental_invoice/get_rent_invoice_invoiceid'
   public RentalinvoiceQR = '/rental_invoice/invoice_payment_qr'
   public ChangeRentalInvoicePaidStatus = '/rental_invoice/rental_payment_status'
+  public MaintenanceInvoicegetbyID = '/maintenance_invoice/get_maintenance_invoice_invoiceid'
 
 
   // Payment Integration

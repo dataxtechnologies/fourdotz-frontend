@@ -76,8 +76,8 @@
 
                     <!-- 🔹 No Data Found -->
                     <div *ngIf="!loadingPosts && posts?.length === 0; else announcementpost" class="no-data">
-                        <img src="assets/icons/no-data.svg" alt="No data" />
-                        <p>No announcements found.</p>
+                        <img src="assets/logo/no-announcement.jpg" alt="No data"  style="width: 600px;"/>
+                        <!-- <p>No announcements found.</p> -->
                     </div>
 
                     <ng-template #announcementpost>
@@ -147,7 +147,7 @@
                     </div>
 
                     <div *ngIf="!loadingPinned && pinnedAnnouncement2?.length === 0; else contentdiv" class="no-data">
-                        <img src="assets/icons/no-data.svg" alt="No data" />
+                        <img src="assets/logo/no-pin-announcement.jpg" alt="No data" style="width: 250px;"/>
                         <p>No pinned announcements.</p>
                     </div>
 

@@ -1,0 +1,193 @@
+<section class="star-cont">
+    <div class="loading-cont" *ngIf="globalloading">
+        <div class="custom-loader"></div>
+    </div>
+    <div class="invoice-container" *ngIf="!globalloading">
+        <!-- Watermark -->
+        <div class="watermark" *ngIf="isPaid">PAID</div>
+
+        <header class="invoice-header">
+            <div class="logo-and-details">
+                <div class="logo-section">
+                    <img src="assets/logo/fourdotz1.png" alt="fourdotz-logo" style="width: 150px;">
+                </div>
+                <div class="company-address">
+                    <p>5th Cross Rd</p>
+                    <p>Saibaba Colony</p>
+                    <p>Coimbatore, Tamil Nadu - 641011</p>
+                </div>
+            </div>
+            <div class="invoice-title-box">
+                <p><strong>Name :</strong> Fourdotz</p>
+                <p><strong>Phone :</strong> 9988998899</p>
+                <p><strong>Email :</strong> hello&#64;fourdotz.com</p>
+                <p><strong>Website :</strong> www.fourdotz.com</p>
+            </div>
+        </header>
+
+        <!-- GST + Title Row -->
+        <table class="gst-invoice-table">
+            <tr>
+                <td class="gst-cell">
+                    <h5 class="section-title">GSTIN: 33AOPPV0720H1ZW</h5>
+                </td>
+                <td class="invoice-title-cell">
+                    <h3 class="inv-title">MAINTENANCE INVOICE</h3>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="spacer-row"></td>
+            </tr>
+        </table>
+
+        <!-- Details Section -->
+        <section class="details-section">
+            <!-- Tenant Details (optional) -->
+            <div class="left-details" *ngIf="tenantDetailsdatashow">
+                <h5 class="inv-table-title">Tenant Details</h5>
+                <div class="customer-info">
+                    <p class="Table-Body"><strong>M/S:</strong> {{ MaintenanceInvoicedetails.tenant_name }}</p>
+                    <p class="Table-Body"><strong>Email:</strong>{{ MaintenanceInvoicedetails.tenant_email }}</p>
+                    <p class="Table-Body"><strong>Phone:</strong> {{ MaintenanceInvoicedetails.tenant_mobile }}</p>
+                </div>
+            </div>
+
+            <!-- Owner Details -->
+            <div class="center-details" [class.full-width]="!tenantDetailsdatashow">
+                <h5 class="inv-table-title">Owner Details</h5>
+                <div class="customer-info">
+                    <p class="Table-Body"><strong>M/S:</strong> {{ MaintenanceInvoicedetails.owner_name }}</p>
+                    <p class="Table-Body"><strong>Phone:</strong> {{ MaintenanceInvoicedetails.owner_mobile }}</p>
+                    <p class="Table-Body"><strong>Association:</strong> {{ MaintenanceInvoicedetails.association_name }}
+                    </p>
+                    <p class="Table-Body"><strong>Property:</strong> {{ MaintenanceInvoicedetails.property_no }}</p>
+                </div>
+            </div>
+
+            <!-- Invoice Details -->
+            <div class="right-details" [class.full-width-right]="!tenantDetailsdatashow">
+                <h5 class="inv-table-title">Invoice Details</h5>
+                <div class="customer-info">
+                    <p class="Table-Body"><strong>Invoice No.:</strong> {{ MaintenanceInvoicedetails.invoice_no }}</p>
+                    <p class="Table-Body"><strong>Invoice Date:</strong> {{ MaintenanceInvoicedetails.created_time.$date
+                        | date:'dd-MMM-yyyy'}}</p>
+                    <p class="Table-Body"><strong>Due Date:</strong> {{ MaintenanceInvoicedetails.due_date }}</p>
+                </div>
+            </div>
+        </section>
+
+
+        <table class="line-items-table">
+            <thead>
+                <tr>
+                    <th>S.No.</th>
+                    <th>Invoice Type</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <!-- Actual invoice data -->
+                <tr *ngFor="let item of invoiceItems">
+                    <td>{{ 1 }}</td>
+                    <td>{{ formatInvoiceType(item.invoice_type) }}</td>
+                    <td>{{ item.amount }}</td>
+                    <td>{{ item.description }}</td>
+                    <td style="color: #EA4531;">{{ item.total_amount | currency:'INR'}}</td>
+                </tr>
+
+                <!-- <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                </tr> -->
+
+                <!-- Auto filler rows -->
+                <tr class="empty-row" *ngFor="let x of fillerRows">
+                    <td>&nbsp;</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <!-- Total row -->
+                <tr class="total-row">
+                    <td colspan="3"></td>
+                    <td style="text-align:right;">Total</td>
+                    <td style="color: #EA4531;">{{ MaintenanceInvoicedetails.total_amount | currency:'INR' }} </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <section class="footer-details">
+            <!-- Top full-width row -->
+            <div class="footer-top">
+                <p class="footer-title">Total in words</p>
+                <p class="footer-cont"><strong>{{ convertAmountToWords(MaintenanceInvoicedetails?.total_amount)
+                        }}</strong></p>
+            </div>
+
+            <!-- Bank Details + QR + Signature -->
+            <!-- <div class="footer-bottom">
+                <table class="footer-layout">
+                    <tr>
+                        <td class="footer-left-td">
+                            <p class="footer-title">Bank Details</p>
+                            <div class="bank-qr-container">
+                                <table class="footer-table1">
+                                    <tr>
+                                        <td><strong>Name :</strong></td>
+                                        <td>{{ invoiceData.owner_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>UPI ID :</strong></td>
+                                        <td>{{ invoiceData.owner_upi_id }}</td>
+                                    </tr>
+                                </table>
+
+                                <div class="qr-box">
+                                    <div class="qr-wrapper" [class.disabled]="isPaid">
+                                        <img *ngIf="qrImage" [src]="qrImage" alt="UPI QR" class="qr-image">
+
+                                        <div class="qr-overlay" *ngIf="isPaid">
+                                            <p class="paid-upi-overlay">
+                                                <strong>Paid through</strong><br>
+                                                <strong>UPI ID:</strong> wowelse.ibz&#64;okicici
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p class="upi-text" *ngIf="!isPaid">Pay using UPI</p>
+                                    <p class="upi-text" *ngIf="isPaid">Payment Completed</p>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="footer-right-td">
+                            <div class="sign-section">
+                                <div class="sign-top">
+                                    <p class="signature-text">
+                                        Certified that the particulars given above are true and correct.
+                                    </p>
+                                    <p class="for-company"><strong>For FOURDOTZ</strong></p>
+                                </div>
+
+                                <div class="sign-space"></div>
+
+                                <div class="sign-bottom">
+                                    <p class="auth-text">Authorised Signatory</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div> -->
+        </section>
+
+
+    </div>
+</section>

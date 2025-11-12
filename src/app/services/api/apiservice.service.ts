@@ -20,7 +20,7 @@ export class ApiserviceService {
 
   // Build headers (with token if available)
   private getHeaders(): HttpHeaders {
-    const token = sessionStorage.getItem('access_token');
+    const token = localStorage.getItem('access_token');
     return new HttpHeaders({
       'Content-Type': 'application/json',
       ...(token && { Authorization: `${token}` }),
@@ -28,7 +28,7 @@ export class ApiserviceService {
   }
 
   private getHeadersforFormdata(): HttpHeaders {
-    const token = sessionStorage.getItem('access_token');
+    const token = localStorage.getItem('access_token');
     return new HttpHeaders({
       ...(token && { Authorization: `${token}` }),
     });
@@ -1272,5 +1272,29 @@ export class ApiserviceService {
           }));
         })
       );
+  }
+
+
+    public MaintenanceInvoicegetbyID<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.MaintenanceInvoicegetbyID
+    }?invoice_no=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
   }
 }

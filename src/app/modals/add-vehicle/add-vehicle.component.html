@@ -7,11 +7,17 @@
     <div class="form-body">
         <form [formGroup]="vehicleForm" (ngSubmit)="addVehicle()">
             <div class="inp-cont">
-                <label>Vehicle Type <span class="required">*</span></label>
-                <input type="text" class="inp-cus" formControlName="vehicleType"
-                    placeholder="Enter your Vehicle Type" />
-                <small class="text-danger" *ngIf="isInvalid('vehicleType')">Vehicle Type is required.</small>
-            </div>
+        <label>Vehicle Type <span class="required">*</span></label>
+        <select class="inp-cus" formControlName="vehicleType">
+          <option value="" disabled selected>Select Vehicle Type</option>
+          <option value="2 Wheeler">2 Wheeler</option>
+          <option value="4 Wheeler">4 Wheeler</option>
+          <option value="Others">Others</option>
+        </select>
+        <small class="text-danger" *ngIf="isInvalid('vehicleType')">
+          Vehicle Type is required.
+        </small>
+      </div>
 
             <div class="inp-cont">
                 <label>Brand <span class="required">*</span></label>

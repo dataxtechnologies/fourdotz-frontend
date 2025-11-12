@@ -18,6 +18,7 @@ export class OwnerMaintenanceListComponent {
   maintenancelist2: any
   maintenancelist1
   pages: any
+  usertype : any
 
 
 
@@ -29,6 +30,7 @@ export class OwnerMaintenanceListComponent {
 
 
   ngOnInit(): void {
+    this.usertype = localStorage.getItem('user_type')
     this.MaintenanceListinOwner()
   }
 
@@ -91,27 +93,28 @@ export class OwnerMaintenanceListComponent {
 
 
  CreatePaymentforInvoiceId(data: any) {
-  const payload = {
-    invoice_no: data
-  };
+  this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paynow`);
+  // const payload = {
+  //   invoice_no: data
+  // };
 
-  console.log('payload', payload);
+  // console.log('payload', payload);
 
-  this.Apiservice.CreatePaymentforInvoiceId<any>(payload).subscribe({
-    next: (res: any) => {
-      if (res?.success && res.data?.redirectUrl) {
-        console.log('Payment created successfully:', res);
+  // this.Apiservice.CreatePaymentforInvoiceId<any>(payload).subscribe({
+  //   next: (res: any) => {
+  //     if (res?.success && res.data?.redirectUrl) {
+  //       console.log('Payment created successfully:', res);
 
-        // ✅ Redirect to PhonePe payment page
-        window.location.href = res.data.redirectUrl;
-      } else {
-        console.warn('Payment creation failed:', res?.message);
-      }
-    },
-    error: (err: any) => {
-      console.error('Error creating payment:', err);
-    },
-  });
+  //       // ✅ Redirect to PhonePe payment page
+  //       window.location.href = res.data.redirectUrl;
+  //     } else {
+  //       console.warn('Payment creation failed:', res?.message);
+  //     }
+  //   },
+  //   error: (err: any) => {
+  //     console.error('Error creating payment:', err);
+  //   },
+  // });
 }
 
 }

@@ -36,9 +36,9 @@ export class DashboardLayoutComponent {
   loadingUserData = false; // flag to control loader visibility
 showFooter = false;
 footerTimeout: any;
-  user_type = sessionStorage.getItem('user_type');
-  user_id = sessionStorage.getItem('user_id');
-  access_token = sessionStorage.getItem('access_token');
+  user_type = localStorage.getItem('user_type');
+  user_id = localStorage.getItem('user_id');
+  access_token = localStorage.getItem('access_token');
 
   constructor(
     private router: Router,
@@ -148,7 +148,7 @@ footerTimeout: any;
       next: (res: any) => {
       if (res?.success) {
         const userdata = res.data;
-        sessionStorage.setItem('userdata', JSON.stringify(userdata));
+        localStorage.setItem('userdata', JSON.stringify(userdata));
 
         if (this.user_type === 'association') {
           if (userdata.document_uploaded === false) {
@@ -177,7 +177,7 @@ footerTimeout: any;
 
   // Clear session and redirect to login
   private clearSessionAndRedirect(message: string = 'Session expired') {
-    sessionStorage.clear();
+    localStorage.clear();
     this.toastr.info(message, 'Info');
     this.router.navigateByUrl('/auth/sign-in');
   }

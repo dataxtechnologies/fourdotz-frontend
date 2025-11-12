@@ -32,9 +32,12 @@ import { ProfilePageComponent } from './pages/profile/profile-page/profile-page.
 import { GlobalInvoiceComponent } from './pages/global-invoice/global-invoice.component';
 import { NewInvComponent } from './pages/new-inv/new-inv.component';
 import { NewInv1Component } from './pages/new-inv1/new-inv1.component';
-import {  Announcementcomponent } from './pages/association-pages/announcements/announcements.component';
+import { Announcementcomponent } from './pages/association-pages/announcements/announcements.component';
 import { AnnouncementsPageComponent } from './pages/Owner-pages/announcements-page/announcements-page.component';
 import { AnnouncementsTenantPageComponent } from './pages/Tenant-pages/announcements-tenant-page/announcements-tenant-page.component';
+import { authGuard } from './auth.guard';
+import { MaintenanceInvoicePaymentComponent } from './pages/maintenance-invoice-payment/maintenance-invoice-payment.component';
+import { InvoiceLayoutComponent } from './layouts/invoice-layout/invoice-layout.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +50,7 @@ export const routes: Routes = [
   {
     path: 'auth',
     component: AuthLayoutComponent,
+    // canActivate: [authGuard],
     children: [
       { path: 'sign-in', component: SigninPageComponent },
       {
@@ -62,22 +66,28 @@ export const routes: Routes = [
     component: OnboardingLayoutComponent,
     children: [
       { path: 'user-data', component: AssociationOnboardComponent },
-      { path: 'user-document', component: AssociationOnboardDocumentsComponent },
+      {
+        path: 'user-document',
+        component: AssociationOnboardDocumentsComponent,
+      },
     ],
   },
 
   {
     path: 'Account',
-    component:DashboardLayoutComponent,
-    children:[
+    //  canActivate: [authGuard],
+    component: DashboardLayoutComponent,
+    children: [
       {
-        path: 'profile', component:ProfilePageComponent
+        path: 'profile',
+        component: ProfilePageComponent,
       },
-    ]
+    ],
   },
 
   {
     path: 'Superadmin',
+    // canActivate: [authGuard],
     component: DashboardLayoutComponent,
     children: [
       { path: 'Dashboard', component: SuperadminDashboardComponent },
@@ -91,6 +101,7 @@ export const routes: Routes = [
 
   {
     path: 'Association',
+    // canActivate: [authGuard],
     component: DashboardLayoutComponent,
     children: [
       { path: 'Dashboard', component: AssociationDashboardComponent },
@@ -114,6 +125,7 @@ export const routes: Routes = [
 
   {
     path: 'Owner',
+    // canActivate: [authGuard],
     component: DashboardLayoutComponent,
     children: [
       { path: 'Dashboard', component: OwnerDashboardComponent },
@@ -135,6 +147,7 @@ export const routes: Routes = [
 
   {
     path: 'Tenant',
+    // canActivate: [authGuard],
     component: DashboardLayoutComponent,
     children: [
       { path: 'Dashboard', component: TenantDashboardComponent },
@@ -144,7 +157,10 @@ export const routes: Routes = [
       },
       { path: 'Maintenance-list', component: TenantMaintenanceListComponent },
       { path: 'Rental-invoice-list', component: TenantRentalListComponent },
-      { path: 'announcement/tenant', component: AnnouncementsTenantPageComponent },
+      {
+        path: 'announcement/tenant',
+        component: AnnouncementsTenantPageComponent,
+      },
       {
         path: 'view-properties/:propertiesId',
         component: TenantViewPropertyDetailsComponent,
@@ -152,17 +168,21 @@ export const routes: Routes = [
     ],
   },
 
-
   {
     path: 'Global-invoice/:invoice_id',
-    component: GlobalInvoiceComponent
+    component: GlobalInvoiceComponent,
   },
-  // {
-  //   path: 'newGlobal-invoice/:invoice_id',
-  //   component: NewInvComponent
-  // },
-  // {
-  //   path: 'new1Global-invoice/:invoice_id',
-  //   component: NewInv1Component
-  // }
+
+  {
+    path: 'maintenance-invoice',
+    component: InvoiceLayoutComponent,
+    children: [
+      {
+        path: ':userType/:invoiceid',
+        component: MaintenanceInvoicePaymentComponent,
+      },
+    ],
+  },
+
+  // maintenance-invoice/owner/IN-NYYN-PM-5330?status=paynow
 ];

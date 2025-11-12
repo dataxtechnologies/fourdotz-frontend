@@ -3,26 +3,51 @@ import { inject } from '@angular/core';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  const token = sessionStorage.getItem('authToken');
-  const userType = sessionStorage.getItem('user_type');
+  const token = localStorage.getItem('access_token');
+  const userType = localStorage.getItem('user_type');
 
-  // If no token → go to login
+  // 1️⃣ If user has token and visits sign-in → redirect to dashboard
+  if (token && state.url === '/auth/sign-in') {
+    switch (userType) {
+      case 'superadmin':
+        router.navigate(['/Superadmin/Dashboard']);
+        return false;
+      case 'association':
+        router.navigate(['/Association/Dashboard']);
+        return false;
+      case 'owner':
+        router.navigate(['/Owner/Dashboard']);
+        return false;
+      case 'tenant':
+        router.navigate(['/Tenant/Dashboard']);
+        return false;
+      default:
+        localStorage.clear();
+        router.navigate(['/auth/sign-in']);
+        return false;
+    }
+  }
+
+  // 2️⃣ If user has NO token → only allow auth pages
   if (!token) {
-    sessionStorage.clear();
+    if (state.url.startsWith('/auth')) {
+      return true; // allow sign-in, forget-password, etc.
+    }
+    localStorage.clear();
     router.navigate(['/auth/sign-in']);
     return false;
   }
 
-  // If logged in, check user type and redirect if needed
+  // 3️⃣ Authenticated users accessing other routes
   switch (userType) {
-    case 'super_admin':
+    case 'superadmin':
       if (!state.url.startsWith('/Superadmin')) {
         router.navigate(['/Superadmin/Dashboard']);
         return false;
       }
       break;
 
-    case 'hoa_admin':
+    case 'association':
       if (!state.url.startsWith('/Association')) {
         router.navigate(['/Association/Dashboard']);
         return false;
@@ -44,8 +69,8 @@ export const authGuard: CanActivateFn = (route, state) => {
       break;
 
     default:
-      // sessionStorage.clear();
-      // router.navigate(['/auth/sign-in']);
+      localStorage.clear();
+      router.navigate(['/auth/sign-in']);
       return false;
   }
 

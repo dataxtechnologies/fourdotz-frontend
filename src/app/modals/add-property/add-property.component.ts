@@ -83,8 +83,8 @@ export class AddPropertyComponent implements OnInit {
       this.propertyForm.get('maintenancePerSqft')?.updateValueAndValidity();
     });
 
-    // 🔹 Get userdata from sessionStorage
-    const userdata = JSON.parse(sessionStorage.getItem('userdata') || '{}');
+    // 🔹 Get userdata from localStorage
+    const userdata = JSON.parse(localStorage.getItem('userdata') || '{}');
     if (userdata?.property_type && userdata.property_type.length > 0) {
       this.propertyTypes = userdata.property_type.map(
         (p: string) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()

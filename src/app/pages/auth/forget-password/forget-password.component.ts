@@ -94,15 +94,15 @@ export class ForgetPasswordComponent {
           const userType = res.data?.user_type;
           const user_id = res.data?.user_id;
           // this.btnloading = false;
-          sessionStorage.removeItem('session_key')
+          localStorage.removeItem('session_key')
           if (tokenData) {
-            sessionStorage.setItem('access_token', tokenData.AccessToken);
-            sessionStorage.setItem('refresh_token', tokenData.RefreshToken);
+            localStorage.setItem('access_token', tokenData.AccessToken);
+            localStorage.setItem('refresh_token', tokenData.RefreshToken);
           }
 
           if (userType) {
-            sessionStorage.setItem('user_type', userType);
-            sessionStorage.setItem('user_id', user_id);
+            localStorage.setItem('user_type', userType);
+            localStorage.setItem('user_id', user_id);
           }
 
          //console.log(res.message || 'Login successful');

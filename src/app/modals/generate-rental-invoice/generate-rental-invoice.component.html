@@ -7,74 +7,7 @@
     <div class="form-body">
         <form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
             <!-- Tenant + Property Info -->
-            <div class="table-cont">
-                <div class="table-container">
-                    <table class="styled-table">
-                        <thead>
-                            <tr>
-                                <th>Property No</th>
-                                <th>Association Name</th>
-                                <th>Tenant Name</th>
-                                <th>Tenant Phone</th>
-                                <th>Rental Amount</th>
-                            </tr>
-                        </thead>
-                        <!-- <tr>
-                            <td data-label="Property No">H101</td>
-                            <td data-label="Tenant Name">Lakeview</td>
-                            <td data-label="Tenant Name">Arun Kumar</td>
-                            <td data-label="Tenant Phone">+91 9876543210</td>
-                            <td data-label="Rental Amount">₹12,000</td>
-                        </tr> -->
-                        <tbody *ngIf="!tableLoading; else tableSkeleton">
-                                <ng-container *ngIf="TenantList2?.length === 0; else datashow">
-                                    <tr>
-                                        <td colspan="7" style="text-align: center; font-weight: 600; color: gray;">
-                                             No Data Found
-                                        </td>
-                                    </tr>
-                                </ng-container>
-                                <ng-template #datashow>
-                                    <tr *ngFor="let property of TenantList1.paginatedData">
-                                    <td>{{ property.property_no }}</td>
-                                    <td>{{ property.association_name }}</td>
-                                    <td>{{ property.tenant_name }}</td>
-                                    <td>{{ property.tenant_mobile }}</td>
-                                    <td>{{ property.monthly_rent_amount}}</td>
-                                    <!-- <td (click)="viewProperty(property._id)">
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </td> -->
-                                </tr>
-                                </ng-template>
-                            </tbody>
-                            <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3]" style="height: 50px;"> <!-- taller row -->
-                                    <td>
-                                        <span class="placeholder col-10 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-8 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-6 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-7 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-7 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    
-                                </tr>
-                            </ng-template>
-                    </table>
-                </div>
-            </div>
+           
 
 
             <!-- Items Header -->

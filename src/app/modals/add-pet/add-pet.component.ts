@@ -47,6 +47,7 @@ export class AddPetComponent implements OnInit {
   addPet() {
     this.submitbtn = false;
     if (this.petForm.invalid) {
+      this.submitbtn = true;
       this.petForm.markAllAsTouched(); // show validation errors
       return;
     }
@@ -56,7 +57,7 @@ export class AddPetComponent implements OnInit {
       pet: [
         {
           pet_name: this.petForm.value.petName,
-          type: this.petForm.value.type,
+         type: this.petForm.value.type.toLowerCase(),
           breed: this.petForm.value.breed,
           age: this.petForm.value.age,
           pet_owned_by: this.petForm.value.ownedBy.toLowerCase(), // tenant/owner in lowercase

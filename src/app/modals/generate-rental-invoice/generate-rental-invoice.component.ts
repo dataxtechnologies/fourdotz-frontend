@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ModalService } from 'ngx-modal-ease';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { TableService } from '../../services/tableservice.service';
@@ -15,28 +22,30 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class GenerateRentalInvoiceComponent implements OnInit {
   maintenanceForm!: FormGroup;
-  TenantList2: any
-  TenantList1
-  pages: any
-  tableLoading = true
+  TenantList2: any;
+  TenantList1;
+  pages: any;
+  tableLoading = true;
 
-  propertyNumbers: any
+  propertyNumbers: any;
 
-  constructor(private fb: FormBuilder, private modal: ModalService,
-    private apiService: ApiserviceService, private Toast: ToastrService
+  constructor(
+    private fb: FormBuilder,
+    private modal: ModalService,
+    private apiService: ApiserviceService,
+    private Toast: ToastrService
   ) {
-    this.TenantList1 = new TableService()
-    this.TenantList1.initialize(this.TenantList2, 4)
+    this.TenantList1 = new TableService();
+    this.TenantList1.initialize(this.TenantList2, 4);
   }
 
   ngOnInit(): void {
     this.maintenanceForm = this.fb.group({
-     
       items: this.fb.array([]),
     });
 
     this.addItem(); // start with one item row
-    this.propertylist()
+    this.propertylist();
   }
 
   // Getter for items array
@@ -62,23 +71,21 @@ export class GenerateRentalInvoiceComponent implements OnInit {
   // Submit
   onSubmit(): void {
     if (this.maintenanceForm.valid) {
-        //console.log('this.TenantList2', this.TenantList2);
-        
-      const propertyIds = this.TenantList2.map((item: any) => item._id);
-    const formItems = this.items.value; // get all form array values
+      //console.log('this.TenantList2', this.TenantList2);
 
-    const additionalInvoice = formItems.map((item: any) => ({
-      property_id: item.propertyNo,
-      description: item.description,
-      additional_charges: Number(item.amount),
-    }));
+      const formItems = this.items.value; // get all form array values
 
-    const payload = {
-      property_id: propertyIds,
-      additional_invoice: additionalInvoice,
-    };
+      const additionalInvoice = formItems.map((item: any) => ({
+        property_id: item.propertyNo,
+        description: item.description,
+        additional_charges: Number(item.amount),
+      }));
 
-    this.apiService.RentalInvoicegeninOwner<any>(payload).subscribe({
+      const payload = {
+        additional_invoice: additionalInvoice,
+      };
+
+      this.apiService.RentalInvoicegeninOwner<any>(payload).subscribe({
         next: (res: any) => {
           if (res?.success) {
             this.Toast.success(res.message, 'Success');
@@ -90,7 +97,7 @@ export class GenerateRentalInvoiceComponent implements OnInit {
           }
         },
         error: (err: any) => {
-          this.Toast.error(err.error.error.message, 'Failed');
+          this.Toast.error(err.error.error.error, 'Failed');
           //console.error('Login failed:', err.error.error.data);
           // alert(err.message || 'Login failed, please try again.');
         },
@@ -99,36 +106,36 @@ export class GenerateRentalInvoiceComponent implements OnInit {
   }
 
   propertylist() {
-      this.apiService.TenantListinOwner<any>().subscribe({
-        next: (res: any) => {
-          if (res?.success) {
-            this.TenantList2 = res.data || [];
-            // this.filteredProperties = [...this.propertieslist2];
-  
-            // Initialize TableService
-            this.TenantList1 = new TableService();
-            this.TenantList1.initialize(this.TenantList2, 12);
-  
-            // If backend provides pagination info
-            this.pages = Array.from(
-              { length: res.data?.totalPages || 1 },
-              (_, i) => i + 1
-            );
-  
-            this.tableLoading = false;
-          } else {
-            this.TenantList2 = []
-            this.tableLoading = false;
-            //console.warn(res.message || 'Failed to load properties.');
-          }
-        },
-        error: (err: any) => {
-          this.TenantList2 = []
+    this.apiService.TenantListinOwner<any>().subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.TenantList2 = res.data || [];
+          // this.filteredProperties = [...this.propertieslist2];
+
+          // Initialize TableService
+          this.TenantList1 = new TableService();
+          this.TenantList1.initialize(this.TenantList2, 12);
+
+          // If backend provides pagination info
+          this.pages = Array.from(
+            { length: res.data?.totalPages || 1 },
+            (_, i) => i + 1
+          );
+
           this.tableLoading = false;
-          //console.error('Property list fetch failed:', err);
-        },
-      });
-    }
+        } else {
+          this.TenantList2 = [];
+          this.tableLoading = false;
+          //console.warn(res.message || 'Failed to load properties.');
+        }
+      },
+      error: (err: any) => {
+        this.TenantList2 = [];
+        this.tableLoading = false;
+        //console.error('Property list fetch failed:', err);
+      },
+    });
+  }
 
   closeModal(): void {
     this.modal.close();

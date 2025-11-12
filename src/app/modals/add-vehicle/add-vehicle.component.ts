@@ -44,6 +44,7 @@ export class AddVehicleComponent implements OnInit {
   addVehicle() {
     this.submitbtn = false
     if (this.vehicleForm.invalid) {
+      this.submitbtn = true
       this.vehicleForm.markAllAsTouched();
       return;
     }
@@ -52,7 +53,7 @@ export class AddVehicleComponent implements OnInit {
       id: this.associationId, // assuming this is the unique ID
       vehicle: [
         {
-          type: this.vehicleForm.value.vehicleType,
+          type: this.vehicleForm.value.vehicleType.toLowerCase(),
           brand: this.vehicleForm.value.brand,
           modal: this.vehicleForm.value.model,
           number: this.vehicleForm.value.vehicleNumber,

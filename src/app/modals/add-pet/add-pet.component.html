@@ -15,13 +15,17 @@
             </div>
 
             <div class="inp-cont">
-                <label>Type <span class="required">*</span></label>
-                <input type="text" class="inp-cus" placeholder="Enter your Pet Type (eg: Dog, Cat)"
-                    formControlName="type" />
-                <small class="text-danger" *ngIf="isInvalid('type')">
-                    Pet Type is required.
-                </small>
-            </div>
+        <label>Type <span class="required">*</span></label>
+        <select class="inp-cus" formControlName="type">
+          <option value="" disabled selected>Select Pet Type</option>
+          <option value="Dog">Dog</option>
+          <option value="Cat">Cat</option>
+          <option value="Others">Others</option>
+        </select>
+        <small class="text-danger" *ngIf="isInvalid('type')">
+          Please select a Pet Type.
+        </small>
+      </div>
 
             <div class="inp-cont">
                 <label>Breed <span class="required">*</span></label>

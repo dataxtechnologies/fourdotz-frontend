@@ -1,0 +1,10 @@
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 0 10px;
+  box-sizing: border-box;
+}

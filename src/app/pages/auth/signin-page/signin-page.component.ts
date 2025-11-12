@@ -7,17 +7,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ApiserviceService } from '../../../services/api/apiservice.service'; // adjust path
+import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import {ToastrModule, ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin-page',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule,
-
-  ],
-
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './signin-page.component.html',
   styleUrls: ['./signin-page.component.css'],
 })
@@ -25,7 +22,7 @@ export class SigninPageComponent implements OnInit {
   loginForm!: FormGroup;
   passwordFieldType: string = 'password';
   loginbtn: boolean = true;
-    pingResponse: string = '';
+  pingResponse: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -36,28 +33,39 @@ export class SigninPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    sessionStorage.clear();
+    const userType = localStorage.getItem('user_type');
+    const token = localStorage.getItem('access_token');
+
+    // 🔁 If already logged in, redirect to respective dashboard
+    if (token && userType) {
+      this.redirectUser(userType);
+    }
+
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]], // email validation
+      username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
-    
-    // this.getPing()
   }
 
-
-  getPing() {
-    this.http.get('http://dev-api.fourdotz.com/ping', { responseType: 'text' })
-      .subscribe({
-        next: (res) => {
-          this.pingResponse = res;
-          //console.log('Ping Response:', res);
-        },
-        error: (err) => {
-          //console.error('Error:', err);
-          this.pingResponse = 'Error connecting to API';
-        }
-      });
+  redirectUser(userType: string): void {
+    switch (userType) {
+      case 'superadmin':
+        this.route.navigateByUrl('/Superadmin/Dashboard');
+        break;
+      case 'association':
+        this.route.navigateByUrl('/Association/Dashboard');
+        break;
+      case 'owner':
+        this.route.navigateByUrl('/Owner/Dashboard');
+        break;
+      case 'tenant':
+        this.route.navigateByUrl('/Tenant/Dashboard');
+        break;
+      default:
+        localStorage.clear();
+        this.route.navigateByUrl('/auth/sign-in');
+        break;
+    }
   }
 
   togglePassword(): void {
@@ -72,65 +80,43 @@ export class SigninPageComponent implements OnInit {
     }
 
     this.loginbtn = false;
-
     const payload = this.loginForm.value;
 
     this.apiService.loginApi<any>(payload).subscribe({
       next: (res: any) => {
+        this.loginbtn = true;
+
         if (res?.success) {
           const tokenData = res.data?.token;
           const userType = res.data?.userType;
           const user_id = res.data?.user_id;
-          this.loginbtn = true;
-          if (tokenData) {
-            sessionStorage.setItem('access_token', tokenData.AccessToken);
-            sessionStorage.setItem('refresh_token', tokenData.RefreshToken);
-          }
-          sessionStorage.setItem('user_type', userType);
-          sessionStorage.setItem('user_id', user_id);
 
-         this.toastr.success(res.message, 'Success');
-          switch (userType) {
-            case 'superadmin':
-              this.route.navigateByUrl('/Superadmin/Dashboard');
-              break;
-            case 'association':
-              this.route.navigateByUrl('/Association/Dashboard');
-              break;
-            case 'owner':
-              this.route.navigateByUrl('/Owner/Dashboard');
-              break;
-            case 'tenant':
-              this.route.navigateByUrl('/Tenant/Dashboard');
-              break;
-            default:
-              //console.warn('Unknown user type:', userType);
-              this.route.navigateByUrl('/');
-              break;
+          if (tokenData) {
+            localStorage.setItem('access_token', tokenData.AccessToken);
+            localStorage.setItem('refresh_token', tokenData.RefreshToken);
           }
+          localStorage.setItem('user_type', userType);
+          localStorage.setItem('user_id', user_id);
+
+          this.toastr.success(res.message, 'Success');
+          this.redirectUser(userType);
         } else {
-          this.loginbtn = true;
           this.toastr.info(res.message, 'Information');
         }
       },
       error: (err: any) => {
         this.loginbtn = true;
         const newuseremail = this.loginForm.get('username')?.value;
-        if (err.error.error.data.update_password == false) {
-          sessionStorage.setItem(
-            'session_key',
-            err.error.error.data.session_key
-          );
-          this.route.navigateByUrl(`/auth/Change-passsword/${newuseremail}`);
+        if (err.error?.error?.data?.update_password === false) {
+          localStorage.setItem('session_key', err.error.error.data.session_key);
+          this.route.navigateByUrl(`/auth/change-password/${newuseremail}`);
         }
-        this.toastr.error(err.error.error.message, 'Error');
-        //console.error('Login failed:', err.error.error.data);
-        // alert(err.message || 'Login failed, please try again.');
+        this.toastr.error(err.error?.error?.message || 'Login failed', 'Error');
       },
     });
   }
 
   forgetpassscreen(): void {
-    this.route.navigateByUrl('auth/forget-password');
+    this.route.navigateByUrl('/auth/forget-password');
   }
 }

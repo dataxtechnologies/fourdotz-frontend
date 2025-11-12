@@ -54,7 +54,7 @@ export class SuperadminDashboardComponent {
       next: (res: any) => {
         if (res?.success) {
           this.Associationlist2 = res.data;
-          this.Associationlist1.initialize(this.Associationlist2, 8);
+          this.Associationlist1.initialize(this.Associationlist2, 6);
           this.pages = Array.from(
             { length: this.Associationlist2.totalPages },
             (_, i) => i + 1
@@ -62,14 +62,14 @@ export class SuperadminDashboardComponent {
           this.tableLoading = false;
         } else {
           this.Associationlist2 = []
-          this.Associationlist1.initialize(this.Associationlist2, 8);
+          this.Associationlist1.initialize(this.Associationlist2, 6);
           this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
         this.Associationlist2 = []
-        this.Associationlist1.initialize(this.Associationlist2, 8);
+        this.Associationlist1.initialize(this.Associationlist2, 6);
         this.tableLoading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');

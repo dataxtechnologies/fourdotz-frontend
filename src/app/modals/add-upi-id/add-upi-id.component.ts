@@ -115,7 +115,7 @@ export class AddUPIIdComponent {
   }
 
   private clearSessionAndRedirect(message: string = 'Session expired') {
-    sessionStorage.clear();
+    localStorage.clear();
     // this.Toast.info(message, 'Info');
     this.Router.navigateByUrl('/auth/sign-in');
   }

@@ -34,7 +34,7 @@ export class ResidentsListComponent {
   }
 
   ngOnInit(): void {
-    const userdata = sessionStorage.getItem('userdata');
+    const userdata = localStorage.getItem('userdata');
 
     if (userdata) {
       const parsedData = JSON.parse(userdata); // Convert string → object
@@ -42,7 +42,7 @@ export class ResidentsListComponent {
 
       //console.log('User ID:', this.associationId);
     } else {
-      //console.log('No user data found in sessionStorage');
+      //console.log('No user data found in localStorage');
     }
     this.getpropertiesdata();
 

@@ -22,12 +22,13 @@ import { AssociationServiceService } from '../../services/association/associatio
 })
 export class GenerateMaintenanceComponent implements OnInit {
   maintenanceForm!: FormGroup;
-   @ViewChild('hiddenDatePicker') hiddenDatePicker!: ElementRef<HTMLInputElement>;
+  @ViewChild('hiddenDatePicker')
+  hiddenDatePicker!: ElementRef<HTMLInputElement>;
 
   propertylist1: any;
   propertylist2: any[] = [];
   filteredList: any[] = [];
-  btnloading = false
+  btnloading = false;
   dropdownOpen = false;
   selectedProperty: string | null = null;
   searchTerm = '';
@@ -40,7 +41,7 @@ export class GenerateMaintenanceComponent implements OnInit {
     private modal: ModalService,
     private Toast: ToastrService,
     private apiService: ApiserviceService,
-    private AssociationService : AssociationServiceService
+    private AssociationService: AssociationServiceService
   ) {
     this.propertylist1 = new TableService();
   }
@@ -53,12 +54,12 @@ export class GenerateMaintenanceComponent implements OnInit {
     // Initialize form
     this.maintenanceForm = this.fb.group({
       property_id: ['', Validators.required],
-      due_date: ['', Validators.required], 
+      due_date: ['', Validators.required],
       items: this.fb.array([]),
     });
 
     // Fetch user id from session
-    const userdata = JSON.parse(sessionStorage.getItem('userdata') || '{}');
+    const userdata = JSON.parse(localStorage.getItem('userdata') || '{}');
     const user_id = userdata?._id;
 
     if (user_id) {
@@ -140,52 +141,101 @@ export class GenerateMaintenanceComponent implements OnInit {
 
   // ✅ Submit
   onSubmit() {
-  this.btnloading = true
-    if (this.maintenanceForm.valid) {
-      const additional_charges = this.items.value.map((item: any) => ({
-      item_name: item.description,
+    this.btnloading = true;
+
+    if (this.maintenanceForm.invalid) {
+      this.maintenanceForm.markAllAsTouched();
+      this.btnloading = false;
+      console.log('New');
+      // 🔍 Check if at least one valid item is entered
+      const itemsValue = this.items.value;
+
+      // console.log('Items in array:', itemsValue); // (You can check this once)
+      const validItems = itemsValue.filter(
+        (item: any) =>
+          item.description &&
+          item.description.trim() !== '' &&
+          item.amount &&
+          !isNaN(item.amount) &&
+          Number(item.amount) > 0
+      );
+
+      // 🔥 If all are empty or invalid — show toast
+      if (validItems.length === 0) {
+        this.items.markAllAsTouched();
+        this.btnloading = false;
+        this.Toast.info(
+          'Please add at least one valid description and amount.',
+          ''
+        );
+        return;
+      }
+      return;
+    }
+
+    // 🔍 Check if at least one valid item is entered
+    const itemsValue = this.items.value;
+
+    // console.log('Items in array:', itemsValue); // (You can check this once)
+    const validItems = itemsValue.filter(
+      (item: any) =>
+        item.description &&
+        item.description.trim() !== '' &&
+        item.amount &&
+        !isNaN(item.amount) &&
+        Number(item.amount) > 0
+    );
+
+    // 🔥 If all are empty or invalid — show toast
+    if (validItems.length === 0) {
+      this.items.markAllAsTouched();
+      this.btnloading = false;
+      this.Toast.warning(
+        'Please add at least one valid description and amount.',
+        'Warning'
+      );
+      return;
+    }
+
+    // ✅ Map valid items to payload format
+    const additional_charges = validItems.map((item: any) => ({
+      item_name: item.description.trim(),
       charges: Number(item.amount),
     }));
 
-    // 🟩 Calculate total amount
+    // ✅ Total amount
     const total_amount = additional_charges.reduce(
       (sum: number, item: any) => sum + item.charges,
       0
     );
 
-    // 🟩 Prepare final payload
+    // ✅ Final payload
     const payload = {
       property_id: this.maintenanceForm.value.property_id,
       due_date: this.maintenanceForm.value.due_date,
       additional_charges,
-      total_amount, // ✅ Added total amount here
+      total_amount,
     };
 
-      this.apiService.generateMaintenanceInvoice<any>(payload).subscribe({
-        next: (res: any) => {
-          if (res?.success) {
-            this.btnloading = false
-            this.Toast.success(res.message, 'Success');
-            this.AssociationService.triggerMaintenanceInv(res);
-            this.closeModal();
-          } else {
-            this.btnloading = false
-            this.Toast.warning(res.message, 'Warning');
-            // this.loginbtn = true;
-          }
-        },
-        error: (err: any) => {
-          this.btnloading = false
-          this.Toast.error(err.error.error.message, 'Failed');
-          //console.error('Login failed:', err.error.error.data);
-          // alert(err.message || 'Login failed, please try again.');
-        },
-      });
-      // this.closeModal();
-    } else {
-       this.btnloading = false
-      this.maintenanceForm.markAllAsTouched();
-    }
+    this.apiService.generateMaintenanceInvoice<any>(payload).subscribe({
+      next: (res: any) => {
+        this.btnloading = false;
+        if (res?.success) {
+          this.Toast.success(res.message, 'Success');
+          this.AssociationService.triggerMaintenanceInv(res);
+          this.closeModal();
+        } else {
+          this.Toast.warning(res.message, 'Warning');
+        }
+      },
+      error: (err: any) => {
+        this.btnloading = false;
+        this.Toast.error(
+          err.error?.error?.message || 'Failed to generate maintenance',
+          'Failed'
+        );
+      },
+    });
   }
 
   // ✅ Close modal
@@ -193,8 +243,7 @@ export class GenerateMaintenanceComponent implements OnInit {
     this.modal.close();
   }
 
-
-    openDatePicker(): void {
+  openDatePicker(): void {
     this.hiddenDatePicker.nativeElement.showPicker();
   }
 
@@ -212,7 +261,20 @@ export class GenerateMaintenanceComponent implements OnInit {
   // 👇 Helper function to format as dd-MMM-yyyy (e.g. 22-Jun-2025)
   private formatDate(date: Date): string {
     const day = String(date.getDate()).padStart(2, '0');
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     const month = monthNames[date.getMonth()];
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;

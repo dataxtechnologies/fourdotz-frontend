@@ -5,6 +5,59 @@ section{
 }
 
 
+/* ===== No Data Placeholder Style ===== */
+.nodata-container {
+  background-color: #eae9e3; /* Light pastel beige */
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.nodata-bg-circle {
+  width: 420px;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin-bottom: 25px; */
+}
+
+.nodata-img {
+  width: 420px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.nodata-text h3 {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.nodata-text p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.add-btn {
+  background-color: transparent;
+  color: var(--primary-color1);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+}
+
 
 
 .parent {
@@ -208,6 +261,86 @@ p {
 
 .skeleton-box {
   height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 
+.custom-loader {
+  width: 50px;
+  height: 50px;
+  --c: radial-gradient(farthest-side,#000000 92%,#0000);
+  background: var(--c) 50%  0, 
+    var(--c) 50%  100%, 
+    var(--c) 100% 50%, 
+    var(--c) 0    50%;
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  animation: s8 1s infinite;
+  position: relative;
+}
+
+.custom-loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: 3px;
+  background: repeating-conic-gradient(#0000 0 35deg,#000000 0 90deg);
+  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 3px),#000 0);
+  border-radius: 50%;
+}
+
+@keyframes s8 {
+ 
+  100% {
+    transform: rotate(.5turn)
+  }
+} */
+
+
+
+
+
+
+/* From Uiverse.io by PriyanshuGupta28 */ 
+.custom-loader {
+  width: 50px;
+  height: 50px;
+  --c: radial-gradient(farthest-side,#8B4095 92%,#0000);
+  background: var(--c) 50%  0, 
+    var(--c) 50%  100%, 
+    var(--c) 100% 50%, 
+    var(--c) 0    50%;
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  animation: s8 1s infinite;
+  position: relative;
+   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.custom-loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: 3px;
+  background: repeating-conic-gradient(#0000 0 35deg,#8B4095 0 90deg);
+  -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 3px),#000 0);
+  border-radius: 50%;
+}
+
+@keyframes s8 {
+  100% {
+    transform: rotate(.5turn)
+  }
+}
+
+.loading-cont{
+      height: 30vh;
   display: flex;
   align-items: center;
   justify-content: center;

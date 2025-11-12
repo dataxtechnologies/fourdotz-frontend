@@ -5,7 +5,7 @@
     </div>
 
     <div class="form-body">
-        <form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="maintenanceForm" >
             <div class="form-grid">
                 <!-- Property No -->
                 <div class="inp-cont">
@@ -45,24 +45,12 @@
                 <div class="inp-cont">
                     <label>Due Date <span class="required">*</span></label>
                     <div class="date-input-wrapper">
-    <input
-      type="text"
-      id="rentedAt"
-      class="inp-cus placeholder-font"
-      formControlName="due_date"
-      placeholder="Select date"
-      readonly
-      (click)="openDatePicker()"
-    />
-    <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
-    <input
-      #hiddenDatePicker
-      type="date"
-      [min]="todayDate"
-      class="hidden-date-input"
-      (change)="onDateSelected($event)"
-    />
-  </div>
+                        <input type="text" id="rentedAt" class="inp-cus placeholder-font" formControlName="due_date"
+                            placeholder="Select date" readonly (click)="openDatePicker()" />
+                        <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
+                        <input #hiddenDatePicker type="date" [min]="todayDate" class="hidden-date-input"
+                            (change)="onDateSelected($event)" />
+                    </div>
                     <!-- <input type="date" formControlName="due_date" class="inp-cus"  /> -->
                     <div *ngIf="
               maintenanceForm.get('due_date')?.touched &&
@@ -93,7 +81,7 @@
 
             <!-- Submit -->
             <div class="form-actions">
-                <button class="submit-btn" type="submit" [disabled]="maintenanceForm.invalid" *ngIf="!btnloading">
+                <button class="submit-btn" type="button" *ngIf="!btnloading" (click)="onSubmit()">
                     Generate
                 </button>
                 <button class="submit-btn" type="button" style="cursor: not-allowed;" *ngIf="btnloading">

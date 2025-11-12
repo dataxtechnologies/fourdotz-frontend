@@ -15,7 +15,7 @@ import { AssociationServiceService } from '../../../services/association/associa
   styleUrl: './property-list.component.css',
 })
 export class PropertyListComponent {
-  user_id = sessionStorage.getItem('user_id');
+  user_id = localStorage.getItem('user_id');
   propertylist1;
   propertylist2: any;
   tableLoading: boolean = true;
@@ -33,7 +33,7 @@ export class PropertyListComponent {
   }
 
   ngOnInit(): void {
-    const userdata = sessionStorage.getItem('userdata');
+    const userdata = localStorage.getItem('userdata');
 
     if (userdata) {
       const parsedData = JSON.parse(userdata); // Convert string → object
@@ -41,7 +41,7 @@ export class PropertyListComponent {
 
       //console.log('User ID:', this.associationId);
     } else {
-      //console.log('No user data found in sessionStorage');
+      //console.log('No user data found in localStorage');
     }
     this.getpropertiesdata();
 

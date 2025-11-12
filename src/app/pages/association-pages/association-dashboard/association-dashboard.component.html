@@ -1,79 +1,94 @@
 <section>
-    <div class="parent">
-        <div class="div1">
-            <div>
-                <div>
-                    <h4>{{ dashboarddata.total_properties }}</h4>
-                </div>
-                <div>
-                    <p>Total Properties</p>
-                </div>
+    <div class="loading-cont" *ngIf="globalloading">
+        <div class="custom-loader" ></div>
+    </div>
+    <div *ngIf="!globalloading">
+        <div class="nodata-container" *ngIf="nodatashown">
+            <div class="nodata-bg-circle">
+                <img src="assets/bg/nodata-association.jpg" alt="No data" class="nodata-img" />
             </div>
-        </div>
-        <div class="div2">
-            <div>
-                <div>
-                    <h4>{{ dashboarddata.owner_count }}</h4>
-                </div>
-                <div>
-                    <p>Total Owners</p>
-                </div>
-            </div>
-        </div>
-        <div class="div3">
-            <div>
-                <div>
-                    <h4>{{ dashboarddata.tenant_count }}</h4>
-                </div>
-                <div>
-                    <p>Total Tenants</p>
-                </div>
-            </div>
-        </div>
-        <div class="div4">
-            <div class="big-card">
-                <div>
-                    <div>
-                        <h4>{{ dashboarddata.paid_invoices }}</h4>
-                    </div>
-                    <div>
-                        <p>Paid Maintenance</p>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <h4>{{unpaidmaintenance }}</h4>
-                    </div>
-                    <div>
-                        <p>Total Maintenance</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="div5">
-            <div class="properties-card">
-                <div>
-                    <h4>Properties List</h4>
-                </div>
-                <div class="table-cont">
-                    <div class="table-container">
-                        <table class="styled-table">
-                            <thead>
-                                <tr>
-                                    <th>Property No</th>
-                                    <th>Property Type</th>
-                                    <th>Area</th>
-                                    <!-- <th>BHK</th> -->
-                                    <th>Facing</th>
-                                    <!-- <th>Residental Type</th> -->
-                                    <th>Maintenance Paid By</th>
-                                    <!-- <th>View</th> -->
-                                </tr>
-                            </thead>
 
-                            <!-- (click)="viewassociation(1)"
+            <div class="nodata-text">
+                <h3>You have no property or owners</h3>
+                <p>Add property to view the dashboard</p>
+                <button class="add-btn" (click)="addProperty()">To add property click here</button>
+            </div>
+        </div>
+        <div class="parent" *ngIf="!nodatashown">
+            <div class="div1">
+                <div>
+                    <div>
+                        <h4>{{ dashboarddata.total_properties }}</h4>
+                    </div>
+                    <div>
+                        <p>Total Properties</p>
+                    </div>
+                </div>
+            </div>
+            <div class="div2">
+                <div>
+                    <div>
+                        <h4>{{ dashboarddata.owner_count }}</h4>
+                    </div>
+                    <div>
+                        <p>Total Owners</p>
+                    </div>
+                </div>
+            </div>
+            <div class="div3">
+                <div>
+                    <div>
+                        <h4>{{ dashboarddata.tenant_count }}</h4>
+                    </div>
+                    <div>
+                        <p>Total Tenants</p>
+                    </div>
+                </div>
+            </div>
+            <div class="div4">
+                <div class="big-card">
+                    <div>
+                        <div>
+                            <h4>{{ dashboarddata.paid_invoices }}</h4>
+                        </div>
+                        <div>
+                            <p>Paid Maintenance</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <h4>{{unpaidmaintenance }}</h4>
+                        </div>
+                        <div>
+                            <p>Total Maintenance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="div5">
+                <div class="properties-card">
+                    <div>
+                        <h4>Properties List</h4>
+                    </div>
+                    <div class="table-cont">
+                        <div class="table-container">
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Property No</th>
+                                        <th>Property Type</th>
+                                        <th>Area</th>
+                                        <!-- <th>BHK</th> -->
+                                        <th>Facing</th>
+                                        <!-- <th>Residental Type</th> -->
+                                        <th>Maintenance Paid By</th>
+                                        <!-- <th>View</th> -->
+                                    </tr>
+                                </thead>
+
+                                <!-- (click)="viewassociation(1)"
                                  (click)="AddAssociation()" -->
-                            <!-- <tr>
+                                <!-- <tr>
                                 <td data-label="Property No">H101</td>
                                 <td data-label="Property Type">Apartment</td>
                                 <td data-label="Area">1000 sq.ft</td>
@@ -83,62 +98,63 @@
                                         class="fa-solid fa-arrow-up-right-from-square"></i></td>
                             </tr> -->
 
-                            <tbody *ngIf="!tableLoading; else tableSkeleton">
-                                <!-- If no data -->
-                                <ng-container *ngIf="propertylist2?.length === 0; else datashow">
-                                    <tr>
-                                        <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
-                                             No Data Found
-                                        </td>
-                                    </tr>
-                                </ng-container>
+                                <tbody *ngIf="!tableLoading; else tableSkeleton">
+                                    <!-- If no data -->
+                                    <ng-container *ngIf="propertylist2?.length === 0; else datashow">
+                                        <tr>
+                                            <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                                No Data Found
+                                            </td>
+                                        </tr>
+                                    </ng-container>
 
-                                <!-- If data exists -->
-                                <ng-template #datashow>
-                                    <tr *ngFor="let item of propertylist1.paginatedData">
-                                        <td data-label="Property Name">{{ item.property_no }}</td>
-                                        <td data-label="Email">{{ item.property_type }}</td>
-                                        <td data-label="Phone">{{ item.area }} Sq.ft</td>
-                                        <td data-label="Property Type">{{ item.facing }}</td>
-                                        <td data-label="Invitation Status">
-                                            {{ item.maintenance_paid_by || 'owner' }}
-                                        </td>
-                                        <!-- <td data-label="Property Details" (click)="viewproperty(item._id)">
+                                    <!-- If data exists -->
+                                    <ng-template #datashow>
+                                        <tr *ngFor="let item of propertylist1.paginatedData">
+                                            <td data-label="Property Name">{{ item.property_no }}</td>
+                                            <td data-label="Email">{{ item.property_type }}</td>
+                                            <td data-label="Phone">{{ item.area }} Sq.ft</td>
+                                            <td data-label="Property Type">{{ item.facing }}</td>
+                                            <td data-label="Invitation Status">
+                                                {{ item.maintenance_paid_by || 'owner' }}
+                                            </td>
+                                            <!-- <td data-label="Property Details" (click)="viewproperty(item._id)">
                                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                         </td> -->
-                                    </tr>
-                                </ng-template>
-                            </tbody>
-                            <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
-                                    <td>
-                                        <span class="placeholder col-10 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-8 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-6 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-7 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-5 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <!-- <td>
+                                        </tr>
+                                    </ng-template>
+                                </tbody>
+                                <ng-template #tableSkeleton>
+                                    <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                        <td>
+                                            <span class="placeholder col-10 placeholder-glow"
+                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                        </td>
+                                        <td>
+                                            <span class="placeholder col-8 placeholder-glow"
+                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                        </td>
+                                        <td>
+                                            <span class="placeholder col-6 placeholder-glow"
+                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                        </td>
+                                        <td>
+                                            <span class="placeholder col-7 placeholder-glow"
+                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                        </td>
+                                        <td>
+                                            <span class="placeholder col-5 placeholder-glow"
+                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                        </td>
+                                        <!-- <td>
                                         <span class="placeholder col-3 placeholder-glow"
                                             style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
                                     </td> -->
-                                </tr>
-                            </ng-template>
+                                    </tr>
+                                </ng-template>
 
-                        </table>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

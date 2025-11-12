@@ -18,7 +18,7 @@ import { ApiserviceService } from '../../services/api/apiservice.service';
   styleUrl: './onboarding-layout.component.css',
 })
 export class OnboardingLayoutComponent {
-  user_type = sessionStorage.getItem('user_type'); // Owner , superadmin , association , Tenant
+  user_type = localStorage.getItem('user_type'); // Owner , superadmin , association , Tenant
 
   constructor(private apiService: ApiserviceService, private router: Router){}
 
@@ -40,7 +40,7 @@ export class OnboardingLayoutComponent {
             this.router.navigateByUrl('/Association/Dashboard')
           }
          }
-sessionStorage.setItem('userdata', JSON.stringify(userdata));
+localStorage.setItem('userdata', JSON.stringify(userdata));
         } else {
           // this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
