@@ -2,7 +2,11 @@
     <div class="loading-cont" *ngIf="globalloading">
         <div class="custom-loader"></div>
     </div>
-    <div class="invoice-container" *ngIf="!globalloading">
+    <div class="download-btn" *ngIf="!globalloading">
+        <button (click)="downloadPDF()" *ngIf="!downloadbtnloading"><i class="fa-solid fa-download"></i> Download</button>
+        <button *ngIf="downloadbtnloading" style="cursor: not-allowed;"><i class="fa-solid fa-download"></i> Downloading...</button>
+    </div>
+    <div class="invoice-container" id="invoice-download" *ngIf="!globalloading">
         <!-- Watermark -->
         <div class="watermark" *ngIf="isPaid">PAID</div>
 
@@ -17,6 +21,7 @@
                     <p>Coimbatore, Tamil Nadu - 641011</p>
                 </div>
             </div>
+            
             <div class="invoice-title-box">
                 <p><strong>Name :</strong> Fourdotz</p>
                 <p><strong>Phone :</strong> 9988998899</p>

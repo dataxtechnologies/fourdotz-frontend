@@ -22,6 +22,10 @@ export class OwnerServiceService {
   RentalPaidStatus$ = this.RentalInvoicePaidStatusSubject.asObservable();
 
 
+  private RentalinvoicegenerateSubject = new BehaviorSubject<any>(null);
+  RentalInvoiceStatus$ = this.RentalinvoicegenerateSubject.asObservable();
+
+
   private OwnerUPIidUpdateSubject = new BehaviorSubject<any>(null);
   OwnerUpiIdUpdatedStatus$ = this.OwnerUPIidUpdateSubject.asObservable();
 
@@ -44,6 +48,12 @@ export class OwnerServiceService {
     triggerRentalPaidStatus(AddVehicle: any): void {
     //console.log('addassociation', AddVehicle);
     this.RentalInvoicePaidStatusSubject.next(AddVehicle);
+  }
+
+
+    triggerRentalGeneratedInvoice(GeneratedInvoice: any): void {
+    //console.log('addassociation', AddVehicle);
+    this.RentalinvoicegenerateSubject.next(GeneratedInvoice);
   }
 
 

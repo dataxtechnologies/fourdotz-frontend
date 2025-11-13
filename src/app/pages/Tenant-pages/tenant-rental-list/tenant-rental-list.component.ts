@@ -29,7 +29,7 @@ filterForm!: FormGroup;
     private apiService: ApiserviceService
   ) {
     this.rentalinvoicelist1 = new TableService()
-    this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 12)
+    this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10)
   }
 
   ngOnInit(): void {
@@ -99,7 +99,7 @@ viewInvoice(data: any) {
     
               // Initialize TableService
               this.rentalinvoicelist1 = new TableService();
-              this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 12);
+              this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10);
     
               // If backend provides pagination info
               this.pages = Array.from(

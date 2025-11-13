@@ -107,21 +107,17 @@ tbody td i {
 
 .card-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* optional: center vertically */
   gap: 1rem;
   margin-top: 20px;
 }
 
 .summary-card {
-  flex: 1;
-  min-width: 220px;
-  max-height: 120px;
+  width: 400px; /* ensure equal width */
   border-radius: 12px;
   padding: 1.5rem;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 
@@ -140,15 +136,26 @@ tbody td i {
   color: #000;
 }
 
+@media (max-width: 768px) {
+  .card-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .summary-card {
+    width: 90%;
+  }
+}
+
 /* Card Colors */
 .light-green {
   background-color: #dfeeda;
 }
 .light-blue {
-  background-color: #d9f5fd;
+  background-color: #f5aaff;
 }
 .light-yellow {
-  background-color: #f6ecda;
+  background-color: #ff9c91;
 }
 .light-grey {
   background-color: #e4e5e6;

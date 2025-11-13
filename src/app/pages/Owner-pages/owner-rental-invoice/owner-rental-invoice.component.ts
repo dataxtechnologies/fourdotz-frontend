@@ -60,6 +60,13 @@ export class OwnerRentalInvoiceComponent {
     });
 
 
+    this.OwnerService.RentalInvoiceStatus$.subscribe((GeneratedInvoice) => {
+      if (GeneratedInvoice) {
+        this.RentalInvoicelistinowner();
+      }
+    });
+
+
 
     // this.filteredProperties = [...this.rentalinvoicelist2];
   }
@@ -87,6 +94,11 @@ export class OwnerRentalInvoiceComponent {
     this.filterForm.reset();
     this.filteredProperties = [...this.rentalinvoicelist2];
   }
+
+  viewInvoice(data: any) {
+  const url = `/Global-invoice/${data}`;
+  window.open(url, '_blank');
+}
 
   generateRental(): void {
     this.modalService.open(GenerateRentalInvoiceComponent, {
@@ -132,7 +144,7 @@ export class OwnerRentalInvoiceComponent {
   
             // Initialize TableService
             this.rentalinvoicelist1 = new TableService();
-            this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 12);
+            this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10);
   
             // If backend provides pagination info
             this.pages = Array.from(

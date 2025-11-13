@@ -79,27 +79,31 @@
                                 <ng-container *ngIf="rentalinvoicelist2?.length === 0; else datashow">
                                     <tr>
                                         <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
-                                             No Data Found
+                                            No Data Found
                                         </td>
                                     </tr>
                                 </ng-container>
 
                                 <ng-template #datashow>
                                     <tr *ngFor="let p of filteredProperties">
-                                    <td>₹{{ p.total_amount }}</td>
-                                    <td>{{ p.association_name }}</td>
-                                    <td>{{ p.tenant_name }}</td>
-                                    <td>{{ p.tenant_mobile }}</td>
-                                    <td>{{ p.created_time.$date | date:'dd-MMM-yyyy' }}</td>
-                                    <td>
+                                        <td>₹{{ p.total_amount }}</td>
+                                        <td>{{ p.association_name }}</td>
+                                        <td>{{ p.tenant_name }}</td>
+                                        <td>{{ p.tenant_mobile }}</td>
+                                        <td>{{ p.created_time.$date | date:'dd-MMM-yyyy' }}</td>
+                                        <td>
                                             <span *ngIf="p.payment_status === false">Pending</span>
-                                            <span *ngIf="p.payment_status === true">Paid</span>
+                                            <span *ngIf="p.payment_status === true"  style="color: #226942 !important;">Paid</span>
                                         </td>
-                                    <td>
-                                            <span *ngIf="p.payment_status === true">Success</span>
-                                            <span *ngIf="p.payment_status === false" style="color: var(--primary-color1);" (click)="changetopaidstatus(p.invoice_no)">Paid</span>
+                                        <td>
+                                            <span *ngIf="p.payment_status === true"> <img
+                                                    src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
+                                                    (click)="viewInvoice(p.invoice_no)" /></span>
+                                            <span *ngIf="p.payment_status === false"
+                                                style="color: var(--primary-color1);"
+                                                (click)="changetopaidstatus(p.invoice_no)">Paid</span>
                                         </td>
-                                </tr>
+                                    </tr>
                                 </ng-template>
                             </tbody>
                             <ng-template #tableSkeleton>
@@ -138,6 +142,37 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div *ngIf="rentalinvoicelist1" class="pagination-container ">
+            <p class="pagination-info">
+                Showing {{ rentalinvoicelist1.startIndex + 1 }} to {{ rentalinvoicelist1.endIndex + 1 }} of {{
+                rentalinvoicelist1.totalData }} entries
+            </p>
+
+            <ul class="pagination">
+                <!-- First Page -->
+                <li>
+                    <button [disabled]="rentalinvoicelist1.currentPage === 1" (click)="rentalinvoicelist1.prevPage()"
+                        class="page-btn arrow-btn">
+                        &#x276E;
+                    </button>
+                </li>
+
+                <!-- Current Page -->
+                <li>
+                    <span class="page-btn active">
+                        {{ rentalinvoicelist1.currentPage }}
+                    </span>
+                </li>
+
+                <!-- Next Page -->
+                <li>
+                    <button [disabled]="rentalinvoicelist1.currentPage === rentalinvoicelist1.totalPages"
+                        (click)="rentalinvoicelist1.nextPage()" class="page-btn arrow-btn">
+                        &#x276F;
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
 </section>

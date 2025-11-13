@@ -156,7 +156,7 @@ select.inp-cus {
 
 /* Scrollable items container */
 .scroll-box {
-    max-height: 250px;
+    max-height: 350px;
     overflow-y: auto;
     margin-top: 10px;
     padding: 12px;
@@ -174,13 +174,29 @@ select.inp-cus {
     border-radius: 3px;
 }
 
-/* Each item row aligned properly */
+.item-wrapper {
+  margin-bottom: 20px;
+}
+
 .item-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr auto;
-    gap: 10px;
-    margin-bottom: 12px;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item-row label {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 3px;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .item-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Add button */
@@ -289,7 +305,7 @@ select.inp-cus {
     background-color: #faf9f4;
     padding: 10px;
     border-radius: 20px;
-    max-height: 400px; /* limit height */
+    max-height: 500px; /* limit height */
     overflow-y: auto; /* enable scroll */
 }
 

@@ -18,6 +18,7 @@ export class TenantMaintenanceListComponent {
   maintenancelist1;
   pages: any;
   tableLoading = true;
+  usertype = localStorage.getItem('user_type')
 
   constructor(
     private ModalService: ModalService,
@@ -25,7 +26,7 @@ export class TenantMaintenanceListComponent {
     private Apiservice: ApiserviceService
   ) {
     this.maintenancelist1 = new TableService();
-    this.maintenancelist1.initialize(this.maintenancelist2, 12);
+    this.maintenancelist1.initialize(this.maintenancelist2, 10);
   }
 
   ngOnInit(): void {
@@ -50,7 +51,7 @@ export class TenantMaintenanceListComponent {
       next: (res: any) => {
         if (res?.success) {
           this.maintenancelist2 = res.data;
-          this.maintenancelist1.initialize(this.maintenancelist2, 12);
+          this.maintenancelist1.initialize(this.maintenancelist2, 10);
           this.pages = Array.from(
             { length: this.maintenancelist2.totalPages },
             (_, i) => i + 1
@@ -58,20 +59,27 @@ export class TenantMaintenanceListComponent {
           this.tableLoading = false;
         } else {
           this.maintenancelist2 = [];
-          this.maintenancelist1.initialize(this.maintenancelist2, 12);
+          this.maintenancelist1.initialize(this.maintenancelist2, 10);
           this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
         this.maintenancelist2 = [];
-        this.maintenancelist1.initialize(this.maintenancelist2, 12);
+        this.maintenancelist1.initialize(this.maintenancelist2, 10);
         this.tableLoading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
     });
   }
+
+
+  openpaidmaintenanceinvoice(data: any){
+   this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paid`);
+}
+
+
 
 
   CreatePaymentforInvoiceId(data: any) {

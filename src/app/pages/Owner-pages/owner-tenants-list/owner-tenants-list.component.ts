@@ -30,7 +30,7 @@ export class OwnerTenantsListComponent {
     private apiService: ApiserviceService
   ) {
     this.TenantList1 = new TableService()
-    this.TenantList1.initialize(this.TenantList2, 12)
+    this.TenantList1.initialize(this.TenantList2, 10)
   }
 
   ngOnInit(): void {
@@ -63,7 +63,7 @@ export class OwnerTenantsListComponent {
 
           // Initialize TableService
           this.TenantList1 = new TableService();
-          this.TenantList1.initialize(this.TenantList2, 12);
+          this.TenantList1.initialize(this.TenantList2, 10);
 
           // If backend provides pagination info
           this.pages = Array.from(

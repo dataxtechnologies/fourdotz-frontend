@@ -54,7 +54,7 @@
                                         <!-- ✅ Status Column -->
                                         <td data-label="Status">
                                             <ng-container *ngIf="item.payment_status; else notPaid">
-                                                <span class="status paid">Paid</span>
+                                                <span class="status paid"  style="color: #226942 !important;">Paid</span>
                                             </ng-container>
                                             <ng-template #notPaid>
                                                 <span class="status" [ngClass]="{
@@ -71,11 +71,12 @@
                                             <ng-container *ngIf="item.maintenance_paid_by === 'owner'; else showStatus">
                                                 <!-- Show Pay Now if unpaid by owner -->
                                                 <ng-container *ngIf="!item.payment_status; else viewDetails">
-                                                    <button class="pay-btn" (click)="CreatePaymentforInvoiceId(item.invoice_no)">Pay Now</button>
+                                                    <button class="pay-btn"
+                                                        (click)="CreatePaymentforInvoiceId(item.invoice_no)">Pay
+                                                        Now</button>
                                                 </ng-container>
                                                 <ng-template #viewDetails>
-                                                    <i class="fa-solid fa-arrow-up-right-from-square"
-                                                        style="cursor: pointer;"></i>
+                                                    <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon" (click)="openpaidmaintenanceinvoice(item.invoice_no)">
                                                 </ng-template>
                                             </ng-container>
 
@@ -86,9 +87,9 @@
                                                 </ng-container>
                                                 <ng-template #notPaid>
                                                     <span class="status" [ngClass]="{
-          overdue: isOverdue(item.created_time.$date),
-          pending: !isOverdue(item.created_time.$date)
-        }">
+                                                    overdue: isOverdue(item.created_time.$date),
+                                                    pending: !isOverdue(item.created_time.$date)
+                                                    }">
                                                         {{ isOverdue(item.created_time.$date) ? 'Overdue' : 'Pending' }}
                                                     </span>
                                                 </ng-template>

@@ -4,6 +4,23 @@
     margin: 10px;
 }
 
+
+.download-btn{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.download-btn button{
+    padding: 6px;
+    width: 150px;
+    border: 1px solid var(--primary-color2);
+    background-color: #fff;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
 .invoice-container {
     width: 210mm;
     min-height: 257mm;
@@ -483,7 +500,7 @@
 /* --- Watermark --- */
 .watermark {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-30deg);
     font-size: 200px;

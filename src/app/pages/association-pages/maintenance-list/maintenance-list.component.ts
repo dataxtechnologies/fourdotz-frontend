@@ -22,6 +22,7 @@ export class MaintenanceListComponent {
   pages: any;
   tableLoading: boolean = true;
   MaintenanceListAmount: any;
+  usertype = localStorage.getItem('user_type')
 
   constructor(
     private ModalService: ModalService,
@@ -46,6 +47,15 @@ export class MaintenanceListComponent {
         }
       }
     );
+  }
+
+  viewInvoice(data : any){
+    this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paynow&&user=Association`);
+  }
+
+
+  viewpaidInvoice(data : any){
+    this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paid&&user=Association`);
   }
 
   isOverdue(createdDate: any): boolean {

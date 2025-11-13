@@ -1,5 +1,12 @@
 <section class="star-cont">
-    <div class="invoice-container">
+    <div class="loading-cont" *ngIf="globalloading">
+        <div class="custom-loader"></div>
+    </div>
+    <div class="download-btn" *ngIf="!globalloading">
+        <button (click)="downloadPDF()" *ngIf="!downloadbtnloading"><i class="fa-solid fa-download"></i> Download</button>
+        <button *ngIf="downloadbtnloading" style="cursor: not-allowed;"><i class="fa-solid fa-download"></i> Downloading...</button>
+    </div>
+    <div class="invoice-container" id="invoice-download" *ngIf="!globalloading">
         <!-- Watermark -->
         <div class="watermark" *ngIf="isPaid">PAID</div>
 
@@ -146,7 +153,7 @@
                                         <div class="qr-overlay" *ngIf="isPaid">
                                             <p class="paid-upi-overlay">
                                                 <strong>Paid through</strong><br>
-                                                <strong>UPI ID:</strong> wowelse.ibz&#64;okicici
+                                                <strong>UPI ID:</strong> {{ invoiceData.owner_upi_id }}
                                             </p>
                                         </div>
                                     </div>

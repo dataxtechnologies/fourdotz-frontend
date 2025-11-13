@@ -74,11 +74,15 @@
                                         <td>{{ p.created_time.$date | date:'dd-MMM-yyyy'}}</td>
                                         <td>
                                             <span *ngIf="p.payment_status === false">Pending</span>
-                                            <span *ngIf="p.payment_status === true">Paid</span>
+                                            <span *ngIf="p.payment_status === true" style="color: #226942;">Paid</span>
                                         </td>
                                         <td>
-                                            <span *ngIf="p.payment_status === false"> <button class="pay-btn" (click)="CreatePaymentforInvoiceId(p.invoice_no)">Pay Now</button> |  <i class="fa-solid fa-file-lines" (click)="viewInvoice(p.invoice_no)"></i></span>
-                                            <span *ngIf="p.payment_status === true">Paid | <i class="fa-solid fa-file-lines" (click)="viewInvoice(p.invoice_no)"></i></span>
+                                            <span ><img
+                                                    src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
+                                                    (click)="viewInvoice(p.invoice_no)" /></span>
+                                            <!--*ngIf="p.payment_status === false" <span *ngIf="p.payment_status === true"><img
+                                                    src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
+                                                    (click)="viewInvoice(p.invoice_no)" /></span> -->
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -120,6 +124,37 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div *ngIf="rentalinvoicelist1" class="pagination-container ">
+            <p class="pagination-info">
+                Showing {{ rentalinvoicelist1.startIndex + 1 }} to {{ rentalinvoicelist1.endIndex + 1 }} of {{
+                rentalinvoicelist1.totalData }} entries
+            </p>
+
+            <ul class="pagination">
+                <!-- First Page -->
+                <li>
+                    <button [disabled]="rentalinvoicelist1.currentPage === 1" (click)="rentalinvoicelist1.prevPage()"
+                        class="page-btn arrow-btn">
+                        &#x276E;
+                    </button>
+                </li>
+
+                <!-- Current Page -->
+                <li>
+                    <span class="page-btn active">
+                        {{ rentalinvoicelist1.currentPage }}
+                    </span>
+                </li>
+
+                <!-- Next Page -->
+                <li>
+                    <button [disabled]="rentalinvoicelist1.currentPage === rentalinvoicelist1.totalPages"
+                        (click)="rentalinvoicelist1.nextPage()" class="page-btn arrow-btn">
+                        &#x276F;
+                    </button>
+                </li>
+            </ul>
         </div>
     </div>
 </section>

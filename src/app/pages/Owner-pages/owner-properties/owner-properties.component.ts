@@ -37,7 +37,7 @@ export class OwnerPropertiesComponent implements OnInit {
     private apiService: ApiserviceService
   ) {
     this.propertieslist1 = new TableService()
-    this.propertieslist1.initialize(this.propertieslist2, 11)
+    this.propertieslist1.initialize(this.propertieslist2, 10)
   }
 
   ngOnInit(): void {
@@ -96,7 +96,7 @@ export class OwnerPropertiesComponent implements OnInit {
 
           // Initialize TableService
           this.propertieslist1 = new TableService();
-          this.propertieslist1.initialize(this.propertieslist2, 11);
+          this.propertieslist1.initialize(this.propertieslist2, 10);
 
           // If backend provides pagination info
           this.pages = Array.from(

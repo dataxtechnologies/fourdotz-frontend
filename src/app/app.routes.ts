@@ -168,9 +168,16 @@ export const routes: Routes = [
     ],
   },
 
-  {
-    path: 'Global-invoice/:invoice_id',
-    component: GlobalInvoiceComponent,
+        {
+    path: 'Global-invoice',
+    component: InvoiceLayoutComponent,
+    children: [
+      {
+        path: ':invoice_id',
+        component: GlobalInvoiceComponent,
+      },
+
+    ],
   },
 
   {
@@ -181,6 +188,7 @@ export const routes: Routes = [
         path: ':userType/:invoiceid',
         component: MaintenanceInvoicePaymentComponent,
       },
+
     ],
   },
 

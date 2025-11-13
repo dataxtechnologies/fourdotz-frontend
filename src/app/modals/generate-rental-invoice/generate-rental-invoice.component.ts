@@ -12,6 +12,7 @@ import { ModalService } from 'ngx-modal-ease';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { TableService } from '../../services/tableservice.service';
 import { ToastrService } from 'ngx-toastr';
+import { OwnerServiceService } from '../../services/owner/owner-service.service';
 
 @Component({
   selector: 'app-generate-rental-invoice',
@@ -33,7 +34,8 @@ export class GenerateRentalInvoiceComponent implements OnInit {
     private fb: FormBuilder,
     private modal: ModalService,
     private apiService: ApiserviceService,
-    private Toast: ToastrService
+    private Toast: ToastrService,
+    private OwnerService : OwnerServiceService
   ) {
     this.TenantList1 = new TableService();
     this.TenantList1.initialize(this.TenantList2, 4);
@@ -56,10 +58,12 @@ export class GenerateRentalInvoiceComponent implements OnInit {
   // Add new item
   addItem(): void {
     const itemGroup = this.fb.group({
-      propertyNo: [''],
-      description: [''],
-      amount: [''],
+      propertyNo: ['', Validators.required],
+      description: ['', Validators.required],
+      amount: ['', Validators.required],
+      dueDate: ['', Validators.required], // 👈 added
     });
+
     this.items.push(itemGroup);
   }
 
@@ -79,6 +83,7 @@ export class GenerateRentalInvoiceComponent implements OnInit {
         property_id: item.propertyNo,
         description: item.description,
         additional_charges: Number(item.amount),
+        due_date: item.dueDate, // 👈 send date to backend
       }));
 
       const payload = {
@@ -89,7 +94,7 @@ export class GenerateRentalInvoiceComponent implements OnInit {
         next: (res: any) => {
           if (res?.success) {
             this.Toast.success(res.message, 'Success');
-            // this.AssociationService.triggerMaintenanceInv(res);
+            this.OwnerService.triggerRentalGeneratedInvoice(res);
             this.closeModal();
           } else {
             this.Toast.warning(res.message, 'Warning');

@@ -123,5 +123,37 @@
             </div>
         </div>
 
+        <div *ngIf="propertieslist1" class="pagination-container ">
+            <p class="pagination-info">
+                Showing {{ propertieslist1.startIndex + 1 }} to {{ propertieslist1.endIndex + 1 }} of {{
+                propertieslist1.totalData }} entries
+            </p>
+
+            <ul class="pagination">
+                <!-- First Page -->
+                <li>
+                    <button [disabled]="propertieslist1.currentPage === 1" (click)="propertieslist1.prevPage()"
+                        class="page-btn arrow-btn">
+                        &#x276E;
+                    </button>
+                </li>
+
+                <!-- Current Page -->
+                <li>
+                    <span class="page-btn active">
+                        {{ propertieslist1.currentPage }}
+                    </span>
+                </li>
+
+                <!-- Next Page -->
+                <li>
+                    <button [disabled]="propertieslist1.currentPage === propertieslist1.totalPages"
+                        (click)="propertieslist1.nextPage()" class="page-btn arrow-btn">
+                        &#x276F;
+                    </button>
+                </li>
+            </ul>
+        </div>
+
     </div>
 </section>

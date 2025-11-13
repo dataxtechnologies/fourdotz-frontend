@@ -4,6 +4,8 @@ import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-maintenance-invoice-payment',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
@@ -11,16 +13,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './maintenance-invoice-payment.component.css',
 })
 export class MaintenanceInvoicePaymentComponent {
-  isPaid: any;
+  isPaid = false;
   invoiceItems: any;
   totalVisibleRows = 11;
   tenantDetailsdatashow = false;
   MaintenanceInvoicedetails: any;
-  globalloading = true
-  payment_status : any
-  userType : any
-invoiceId : any
-status : any
+  globalloading = true;
+  payment_status: any;
+  userType: any;
+  invoiceId: any;
+  status: any;
+  user: any;
+  downloadbtnloading = false
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +37,7 @@ status : any
     this.userType = this.route.snapshot.paramMap.get('userType');
     this.invoiceId = this.route.snapshot.paramMap.get('invoiceid');
     this.status = this.route.snapshot.queryParamMap.get('status');
+    this.user = this.route.snapshot.queryParamMap.get('user');
 
     const storeduserType = localStorage.getItem('user_type');
     const storedtoken = localStorage.getItem('access_token');
@@ -40,9 +45,6 @@ status : any
     if (this.userType == storeduserType && storedtoken) {
       console.log(this.userType, this.invoiceId, this.status);
       this.MaintenanceInvoicegetbyID(this.invoiceId);
-      // if(status === 'paynow'){
-      //   this.CreatePaymentforInvoiceId(invoiceId)
-      // }
     } else {
       this.confirmlogout();
     }
@@ -51,6 +53,23 @@ status : any
   get fillerRows() {
     const emptyCount = this.totalVisibleRows - 2;
     return Array(emptyCount > 0 ? emptyCount : 0);
+  }
+
+  downloadPDF() {
+    this.downloadbtnloading = true
+    const DATA: any = document.getElementById('invoice-download');
+
+    html2canvas(DATA, { scale: 3 }).then((canvas) => {
+      const fileWidth = 210; // A4 width in mm
+      const fileHeight = (canvas.height * fileWidth) / canvas.width;
+
+      const FILEURI = canvas.toDataURL('image/png');
+
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      PDF.addImage(FILEURI, 'PNG', 0, 0, fileWidth, fileHeight);
+      PDF.save('invoice.pdf');
+      this.downloadbtnloading = false
+    });
   }
 
   confirmlogout() {
@@ -76,7 +95,7 @@ status : any
   }
 
   MaintenanceInvoicegetbyID(data: any) {
-    this.globalloading = true
+    this.globalloading = true;
     this.apiService.MaintenanceInvoicegetbyID<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {
@@ -84,8 +103,16 @@ status : any
           const residenttype = this.MaintenanceInvoicedetails.resident_type;
           this.invoiceItems = this.MaintenanceInvoicedetails.items;
           this.payment_status = this.MaintenanceInvoicedetails.payment_status;
-          if(this.payment_status === false && this.status == 'paynow'){
-            this.CreatePaymentforInvoiceId(this.MaintenanceInvoicedetails.invoice_no)
+          if (this.payment_status === false && this.status == 'paynow' && this.user !== 'Association') {
+            this.CreatePaymentforInvoiceId(
+              this.MaintenanceInvoicedetails.invoice_no
+            );
+          }else if(this.payment_status === false && this.status == 'paynow' && this.user === 'Association'){
+ this.globalloading = false;
+            this.isPaid = false;
+          } else {
+            this.globalloading = false;
+            this.isPaid = true;
           }
           if (residenttype == 'tenant') {
             this.tenantDetailsdatashow = true;
@@ -110,29 +137,29 @@ status : any
     });
   }
 
-   CreatePaymentforInvoiceId(data: any) {
-  const payload = {
-    invoice_no: data
-  };
+  CreatePaymentforInvoiceId(data: any) {
+    const payload = {
+      invoice_no: data,
+    };
 
-  console.log('payload', payload);
+    console.log('payload', payload);
 
-  this.apiService.CreatePaymentforInvoiceId<any>(payload).subscribe({
-    next: (res: any) => {
-      if (res?.success && res.data?.redirectUrl) {
-        console.log('Payment created successfully:', res);
+    this.apiService.CreatePaymentforInvoiceId<any>(payload).subscribe({
+      next: (res: any) => {
+        if (res?.success && res.data?.redirectUrl) {
+          console.log('Payment created successfully:', res);
 
-        // ✅ Redirect to PhonePe payment page
-        window.location.href = res.data.redirectUrl;
-      } else {
-        console.warn('Payment creation failed:', res?.message);
-      }
-    },
-    error: (err: any) => {
-      console.error('Error creating payment:', err);
-    },
-  });
-}
+          // ✅ Redirect to PhonePe payment page
+          window.location.href = res.data.redirectUrl;
+        } else {
+          console.warn('Payment creation failed:', res?.message);
+        }
+      },
+      error: (err: any) => {
+        console.error('Error creating payment:', err);
+      },
+    });
+  }
 
   private clearSessionAndRedirect(message: string = 'Session expired') {
     localStorage.clear();

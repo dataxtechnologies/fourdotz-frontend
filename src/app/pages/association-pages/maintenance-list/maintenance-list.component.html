@@ -1,33 +1,27 @@
 <section>
 
     <div>
-        <div class=" container card-container">
-            <div class="summary-card light-green">
-                <h4>Monthly Invoice Total</h4>
-                <p>₹{{ MaintenanceListAmount?.monthly_invoice_total_amount || 0 }}</p>
-            </div>
+       <div class="container card-container">
 
-            <div class="summary-card light-blue">
-                <h4>Monthly Rent Invoices</h4>
-                <p>₹{{ MaintenanceListAmount?.monthly_rent_invoices_total_amount || 0 }}</p>
-            </div>
+    
+    <div class="summary-card light-blue">
+        <h4>Monthly Paid Total</h4>
+        <p>₹{{ MaintenanceListAmount?.monthly_invoice_total_amount || 0 }}</p>
+    </div>
 
-            <div class="summary-card light-yellow">
-                <h4>Payout Maintenance </h4>
-                <p>₹{{ MaintenanceListAmount?.payout_maintenance_total_amount || 0 }}</p>
-            </div>
+    <div class="summary-card light-yellow">
+        <h4>Monthly Unpaid Total</h4>
+        <p>₹{{ MaintenanceListAmount?.monthly_invoice_pending_amount || 0 }}</p>
+    </div>
 
-            <div class="summary-card light-grey">
-                <h4>Payout Rent Invoices</h4>
-                <p>₹{{ MaintenanceListAmount?.payout_rent_invoices_total_amount || 0 }}</p>
-            </div>
-        </div>
+
+</div>
         <div class="container header-cont">
             <div class="head-cont">
                 <h2>Maintenance List</h2>
             </div>
             <div>
-                <button class="btn-add" (click)="generateMaintenance()">+ Generate Maintenance</button>
+                <button class="btn-add" (click)="generateMaintenance()">+ Create Manual Invoice</button>
             </div>
         </div>
         <div class="container">
@@ -71,7 +65,7 @@
                                         <!-- Status Logic -->
                                         <td data-label="Status">
                                             <ng-container *ngIf="item.payment_status; else notPaid">
-                                                <span class="status paid">Paid</span>
+                                                <span class="status paid" style="color: #226942 !important;">Paid</span>
                                             </ng-container>
                                             <ng-template #notPaid>
                                                 <span class="status" [ngClass]="{
@@ -85,9 +79,18 @@
 
                                         <!-- Icons -->
                                         <td data-label="View">
-                                            <i class="fa-solid fa-file-lines"></i>
-                                            <i *ngIf="getStatus(item) === 'Overdue'"
-                                                class="fa-solid fa-bell notify-icon" (click)="SendRemainderforMaintenance(item._id)"></i>
+                                            <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
+                                                (click)="viewpaidInvoice(item.invoice_no)"
+                                                *ngIf="item.payment_status === true" />
+                                           <div  class=" d-flex gap-2">
+                                             <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
+                                                (click)="viewInvoice(item.invoice_no)"
+                                                *ngIf="item.payment_status === false" />
+                                            <img src="assets/icons/whatsapp.svg" alt="whatsapp-alert-icon"
+                                                *ngIf="getStatus(item) === 'Overdue'"
+                                                (click)="SendRemainderforMaintenance(item._id)">
+                                           </div>
+
                                         </td>
                                     </tr>
                                 </ng-template>
@@ -125,7 +128,7 @@
                 </div>
             </div>
         </div>
-         <div *ngIf="MaintenanceList1" class="pagination-container ">
+        <div *ngIf="MaintenanceList1" class="pagination-container ">
             <p class="pagination-info">
                 Showing {{ MaintenanceList1.startIndex + 1 }} to {{ MaintenanceList1.endIndex + 1 }} of {{
                 MaintenanceList1.totalData }} entries

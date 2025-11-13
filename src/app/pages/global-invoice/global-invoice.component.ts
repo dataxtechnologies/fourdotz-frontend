@@ -2,7 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiserviceService } from '../../services/api/apiservice.service';
-
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-global-invoice',
   imports: [CommonModule],
@@ -14,10 +15,11 @@ export class GlobalInvoiceComponent {
   invoice_id: string | null = null; // ✅ Store the invoice_id from route
   invoiceItems: any;
   qrImage: any;
-
+  downloadbtnloading = false
+  globalloading = true
   invoiceData: any;
 
-  totalVisibleRows = 11;
+  totalVisibleRows = 8;
 
   constructor(
     private ActivatedParams: ActivatedRoute,
@@ -40,6 +42,23 @@ export class GlobalInvoiceComponent {
     return Array(emptyCount > 0 ? emptyCount : 0);
   }
 
+    downloadPDF() {
+    this.downloadbtnloading = true
+    const DATA: any = document.getElementById('invoice-download');
+
+    html2canvas(DATA, { scale: 3 }).then((canvas) => {
+      const fileWidth = 210; // A4 width in mm
+      const fileHeight = (canvas.height * fileWidth) / canvas.width;
+
+      const FILEURI = canvas.toDataURL('image/png');
+
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      PDF.addImage(FILEURI, 'PNG', 0, 0, fileWidth, fileHeight);
+      PDF.save('invoice.pdf');
+      this.downloadbtnloading = false
+    });
+  }
+
   // get totalAmount() {
   //   return this.invoiceItems
   //     .reduce((sum, item) => sum + parseFloat(item.total.replace(/,/g, '')), 0)
@@ -50,18 +69,21 @@ export class GlobalInvoiceComponent {
     this.apiService.RentalInvoice<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {
+          this.globalloading = false
           this.invoiceData = res.data;
           this.invoiceItems = this.invoiceData.items;
           this.isPaid = this.invoiceData.payment_status;
           this.RentalinvoiceQR(this.invoiceData.invoice_no)
           // this.Toast.success(res.message);
         } else {
+          this.globalloading = false
           //  this.Toast.warning(res.message);
           // this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
+        this.globalloading = false
         //  this.Toast.error(err.err.error.message);
         // this.tableLoading = false;
         //console.error('Logout failed:', err);

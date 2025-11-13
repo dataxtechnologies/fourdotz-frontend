@@ -60,7 +60,7 @@ export class AssociationDashboardComponent {
           this.globalloading = false
           this.nodatashown = false
           this.propertylist2 = res.data;
-          this.propertylist1.initialize(this.propertylist2, 12);
+          this.propertylist1.initialize(this.propertylist2, 8);
           this.pages = Array.from(
             { length: this.propertylist2.totalPages },
             (_, i) => i + 1
@@ -70,7 +70,7 @@ export class AssociationDashboardComponent {
           this.globalloading = false
           this.nodatashown = true
           this.propertylist2 = [];
-          this.propertylist1.initialize(this.propertylist2, 12);
+          this.propertylist1.initialize(this.propertylist2, 8);
           this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
@@ -79,7 +79,7 @@ export class AssociationDashboardComponent {
         this.globalloading = false
         this.nodatashown = true
         this.propertylist2 = [];
-        this.propertylist1.initialize(this.propertylist2, 12);
+        this.propertylist1.initialize(this.propertylist2, 8);
         this.tableLoading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');

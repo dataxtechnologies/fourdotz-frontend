@@ -7,7 +7,7 @@
     <div class="form-body">
         <form [formGroup]="maintenanceForm" (ngSubmit)="onSubmit()">
             <!-- Tenant + Property Info -->
-           
+
 
 
             <!-- Items Header -->
@@ -18,25 +18,43 @@
 
             <!-- Items -->
             <div class="items-container scroll-box" formArrayName="items">
-                <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-row">
-                    <!-- Property No Dropdown -->
-                    <div class="custom-select">
-                        <select formControlName="propertyNo" class="inp-cus">
-                            <option value="" disabled>Select Property No</option>
-                            <option *ngFor="let property of TenantList2" [value]="property._id">
-                                {{ property.property_no }}
-                            </option>
-                        </select>
+                <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-wrapper">
+
+                    <!-- Row 1 -->
+                    <div class="item-row">
+                        <div>
+                            <label>Property No</label>
+                            <select formControlName="propertyNo" class="inp-cus">
+                                <option value="" disabled>Select Property No</option>
+                                <option *ngFor="let property of TenantList2" [value]="property._id">
+                                    {{ property.property_no }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>Description</label>
+                            <input type="text" formControlName="description" class="inp-cus" placeholder="Description">
+                        </div>
                     </div>
 
-                    <!-- Description -->
-                    <input type="text" formControlName="description" placeholder="Description" class="inp-cus" />
+                    <!-- Row 2 -->
+                    <div class="item-row">
+                        <div>
+                            <label>Amount</label>
+                            <input type="number" formControlName="amount" class="inp-cus" placeholder="Amount">
+                        </div>
 
-                    <!-- Amount -->
-                    <input type="number" formControlName="amount" placeholder="Amount" class="inp-cus" />
+                        <div>
+                            <label>Due Date</label>
+                            <input type="date" formControlName="dueDate" class="inp-cus">
+                        </div>
 
-                    <!-- Remove -->
-                    <button type="button" class="btn-cancel" (click)="removeItem(i)">X</button>
+                        <!-- Remove button on row 2 -->
+                        <button type="button" class="btn-cancel" (click)="removeItem(i)">X</button>
+                    </div>
+
+                    <hr />
                 </div>
             </div>
 
