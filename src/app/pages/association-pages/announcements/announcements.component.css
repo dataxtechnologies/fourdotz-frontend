@@ -245,9 +245,7 @@
     object-fit: cover;
 }
 
-.announcement-body {
-    border-bottom: 1px solid #ccc;
-}
+
 
 .announcement-body h6 {
     font-weight: 700;
@@ -471,4 +469,17 @@
   padding: 20px;
   /* opacity: 0.6; */
   margin-bottom: 10px;
+}
+
+
+.view-btn{
+    color: var(--primary-color1);
+    border: 0;
+    background-color: #fff;
+}
+
+.btn-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

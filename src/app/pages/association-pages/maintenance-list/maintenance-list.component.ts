@@ -23,7 +23,12 @@ export class MaintenanceListComponent {
   tableLoading: boolean = true;
   MaintenanceListAmount: any;
   usertype = localStorage.getItem('user_type')
-
+filters = {
+  fromDate: '',
+  toDate: '',
+  status: '',
+  search: ''
+};
   constructor(
     private ModalService: ModalService,
     private route: Router,
@@ -48,6 +53,40 @@ export class MaintenanceListComponent {
       }
     );
   }
+
+  applyFilters() {
+  let filtered = [...this.MaintenanceList2]; // original data
+
+  // 🔹 Filter by From Date
+  if (this.filters.fromDate) {
+    const from = new Date(this.filters.fromDate).getTime();
+    filtered = filtered.filter(item => new Date(item.created_time.$date).getTime() >= from);
+  }
+
+  // 🔹 Filter by To Date
+  if (this.filters.toDate) {
+    const to = new Date(this.filters.toDate).getTime();
+    filtered = filtered.filter(item => new Date(item.created_time.$date).getTime() <= to);
+  }
+
+  // 🔹 Filter by Status
+  if (this.filters.status) {
+    filtered = filtered.filter(item => this.getStatus(item) === this.filters.status);
+  }
+
+  // 🔹 Search (name or property number)
+  if (this.filters.search.trim() !== '') {
+    const s = this.filters.search.toLowerCase();
+
+    filtered = filtered.filter(item =>
+      item.resident_name?.toLowerCase().includes(s) ||
+      item.property_id?.toLowerCase().includes(s)
+    );
+  }
+
+  // Reset Pagination With Filtered Data
+  this.MaintenanceList1.initialize(filtered, 10);
+}
 
   viewInvoice(data : any){
     this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paynow&&user=Association`);
@@ -82,6 +121,18 @@ export class MaintenanceListComponent {
       return '';
     }
   }
+
+
+    resetFilters() {
+  this.filters = {
+    fromDate: '',
+    toDate: '',
+    status: '',
+    search: ''
+  };
+  this.applyFilters();
+}
+
 
   generateMaintenance() {
     this.ModalService.open(GenerateMaintenanceComponent, {

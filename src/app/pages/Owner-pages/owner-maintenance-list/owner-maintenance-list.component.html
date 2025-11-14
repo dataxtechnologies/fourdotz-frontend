@@ -12,6 +12,44 @@
 
             <div class="item">
                 <div class="table-cont">
+                    <div class="filter-container">
+
+                        <!-- Date Range -->
+                        <div class="filter-item">
+                            <label>From Date</label>
+                            <input type="date" [(ngModel)]="filters.fromDate" (change)="applyFilters()">
+                        </div>
+
+                        <div class="filter-item">
+                            <label>To Date</label>
+                            <input type="date" [(ngModel)]="filters.toDate" (change)="applyFilters()">
+                        </div>
+
+                        <!-- Status Filter -->
+                        <div class="filter-item">
+                            <label>Status</label>
+                            <select [(ngModel)]="filters.status" (change)="applyFilters()">
+                                <option value="">All</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Overdue">Overdue</option>
+                            </select>
+                        </div>
+
+                        <!-- Search -->
+                        <div class="filter-item">
+                            <label>Search</label>
+                            <input type="text" placeholder="Resident Name / Property No" [(ngModel)]="filters.search"
+                                (input)="applyFilters()">
+                        </div>
+
+                        <div class="filters-right">
+                            <button class="reset-btn" (click)="resetFilters()"><i
+                                    class="fa-solid fa-arrow-rotate-right"></i> Reset Filter</button>
+                        </div>
+
+
+                    </div>
                     <div class="table-container">
                         <table class="styled-table">
                             <thead>
@@ -54,7 +92,7 @@
                                         <!-- ✅ Status Column -->
                                         <td data-label="Status">
                                             <ng-container *ngIf="item.payment_status; else notPaid">
-                                                <span class="status paid"  style="color: #226942 !important;">Paid</span>
+                                                <span class="status paid" style="color: #226942 !important;">Paid</span>
                                             </ng-container>
                                             <ng-template #notPaid>
                                                 <span class="status" [ngClass]="{
@@ -76,7 +114,8 @@
                                                         Now</button>
                                                 </ng-container>
                                                 <ng-template #viewDetails>
-                                                    <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon" (click)="openpaidmaintenanceinvoice(item.invoice_no)">
+                                                    <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
+                                                        (click)="openpaidmaintenanceinvoice(item.invoice_no)">
                                                 </ng-template>
                                             </ng-container>
 

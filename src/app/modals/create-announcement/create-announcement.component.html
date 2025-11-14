@@ -74,8 +74,11 @@
         <div class="popup-actions">
             <button class="cancel-btn" type="button" (click)="closeModal()">Cancel</button>
             <button class="delete-btn" type="button" (click)="submitAnnouncement()"
-                [disabled]="announcementForm.invalid">
+                [disabled]="announcementForm.invalid"  *ngIf="!showprocessingbtn">
                 Post
+            </button>
+            <button class="delete-btn" type="button" *ngIf="showprocessingbtn" style="cursor: not-allowed;">
+                Posting...
             </button>
         </div>
     </div>

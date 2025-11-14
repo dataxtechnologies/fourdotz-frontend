@@ -1,0 +1,56 @@
+<section class="announcement-modal container">
+
+    <!-- 🔥 FIXED HEADER -->
+    <div class="announcement-header">
+        <h3>{{ Postdetails?.association_name }}</h3>
+
+        <p class="post-date">
+            {{ Postdetails?.created_time.$date | date:'dd MMM yyyy, hh:mm a' }}
+        </p>
+
+        <i class="fa-solid fa-xmark close-btn" (click)="closeModal()"></i>
+    </div>
+
+    <!-- 🔥 SCROLLABLE BODY -->
+    <div class="announcement-body">
+
+        <!-- Category -->
+        <div class="info-block">
+            <label>Category:</label>
+            <span>{{ Postdetails?.category | titlecase }}</span>
+        </div>
+
+        <!-- Event Date (only when category = events) -->
+        <div class="info-block" *ngIf="Postdetails?.category === 'events'">
+            <label>Event Date:</label>
+            <p>{{ Postdetails?.event_date | date:'dd MMM yyyy' }}</p>
+        </div>
+
+        <!-- Title -->
+        <div class="info-block">
+            <label>Title:</label>
+            <p>{{ Postdetails?.title }}</p>
+        </div>
+
+        <!-- Summary -->
+        <div class="info-block">
+            <label>Summary:</label>
+            <p>{{ Postdetails?.summary }}</p>
+        </div>
+
+        <!-- Images -->
+        <div class="image-section" *ngIf="Postdetails?.images?.length > 0">
+            <label>Attachments:</label>
+            <div class="image-grid">
+                <img *ngFor="let img of Postdetails.images" [src]="img" alt="Attachment" />
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 🔥 FIXED FOOTER -->
+    <div class="announcement-footer">
+        <button class="cancel-btn" (click)="closeModal()">Close</button>
+    </div>
+
+</section>

@@ -14,24 +14,72 @@ import { TableService } from '../../../services/tableservice.service';
   styleUrl: './owner-maintenance-list.component.css',
 })
 export class OwnerMaintenanceListComponent {
-  tableLoading: boolean = true
-  maintenancelist2: any
-  maintenancelist1
-  pages: any
-  usertype : any
+  tableLoading: boolean = true;
+  maintenancelist2: any;
+  maintenancelist1;
+  pages: any;
+  usertype: any;
 
+  filters = {
+    fromDate: '',
+    toDate: '',
+    status: '',
+    search: '',
+  };
 
-
-
-  constructor(private ModalService: ModalService, private route: Router, private Apiservice: ApiserviceService) {
-    this.maintenancelist1 = new TableService()
-    this.maintenancelist1.initialize(this.maintenancelist2, 10)
+  constructor(
+    private ModalService: ModalService,
+    private route: Router,
+    private Apiservice: ApiserviceService
+  ) {
+    this.maintenancelist1 = new TableService();
+    this.maintenancelist1.initialize(this.maintenancelist2, 10);
   }
 
-
   ngOnInit(): void {
-    this.usertype = localStorage.getItem('user_type')
-    this.MaintenanceListinOwner()
+    this.usertype = localStorage.getItem('user_type');
+    this.MaintenanceListinOwner();
+  }
+
+  applyFilters() {
+    let filtered = [...this.maintenancelist2]; // original data
+
+    // 🔹 Filter by From Date
+    if (this.filters.fromDate) {
+      const from = new Date(this.filters.fromDate).getTime();
+      filtered = filtered.filter(
+        (item) => new Date(item.created_time.$date).getTime() >= from
+      );
+    }
+
+    // 🔹 Filter by To Date
+    if (this.filters.toDate) {
+      const to = new Date(this.filters.toDate).getTime();
+      filtered = filtered.filter(
+        (item) => new Date(item.created_time.$date).getTime() <= to
+      );
+    }
+
+    // 🔹 Filter by Status
+    if (this.filters.status) {
+      filtered = filtered.filter(
+        (item) => this.getStatus(item) === this.filters.status
+      );
+    }
+
+    // 🔹 Search (name or property number)
+    if (this.filters.search.trim() !== '') {
+      const s = this.filters.search.toLowerCase();
+
+      filtered = filtered.filter(
+        (item) =>
+          item.resident_name?.toLowerCase().includes(s) ||
+          item.property_id?.toLowerCase().includes(s)
+      );
+    }
+
+    // Reset Pagination With Filtered Data
+    this.maintenancelist1.initialize(filtered, 10);
   }
 
   generateMaintenance() {
@@ -53,14 +101,38 @@ export class OwnerMaintenanceListComponent {
   }
 
   isOverdue(createdDate: any): boolean {
-  const created = new Date(createdDate);
-  const today = new Date();
+    const created = new Date(createdDate);
+    const today = new Date();
 
-  // Compare only the date part (ignore time)
-  created.setHours(0, 0, 0, 0);
-  today.setHours(0, 0, 0, 0);
+    // Compare only the date part (ignore time)
+    created.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
 
-  return today > created;
+    return today > created;
+  }
+
+    getStatus(item: any) {
+    const today = new Date().getTime();
+    const itemDate = new Date(item.created_time?.$date).getTime();
+
+    if (item.payment_status === true) {
+      return 'Paid';
+    } else if (item.payment_status === false) {
+      // Check if overdue based on date
+      return today > itemDate ? 'Overdue' : 'Pending';
+    } else {
+      return '';
+    }
+  }
+
+  resetFilters() {
+  this.filters = {
+    fromDate: '',
+    toDate: '',
+    status: '',
+    search: ''
+  };
+  this.applyFilters();
 }
 
   MaintenanceListinOwner() {
@@ -75,15 +147,15 @@ export class OwnerMaintenanceListComponent {
           );
           this.tableLoading = false;
         } else {
-          this.maintenancelist2 = []
-           this.maintenancelist1.initialize(this.maintenancelist2, 10);
+          this.maintenancelist2 = [];
+          this.maintenancelist1.initialize(this.maintenancelist2, 10);
           this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
-        this.maintenancelist2 = []
-         this.maintenancelist1.initialize(this.maintenancelist2, 10);
+        this.maintenancelist2 = [];
+        this.maintenancelist1.initialize(this.maintenancelist2, 10);
         this.tableLoading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
@@ -91,34 +163,36 @@ export class OwnerMaintenanceListComponent {
     });
   }
 
+  CreatePaymentforInvoiceId(data: any) {
+    this.route.navigateByUrl(
+      `maintenance-invoice/${this.usertype}/${data}?status=paynow`
+    );
+    // const payload = {
+    //   invoice_no: data
+    // };
 
- CreatePaymentforInvoiceId(data: any) {
-  this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paynow`);
-  // const payload = {
-  //   invoice_no: data
-  // };
+    // console.log('payload', payload);
 
-  // console.log('payload', payload);
+    // this.Apiservice.CreatePaymentforInvoiceId<any>(payload).subscribe({
+    //   next: (res: any) => {
+    //     if (res?.success && res.data?.redirectUrl) {
+    //       console.log('Payment created successfully:', res);
 
-  // this.Apiservice.CreatePaymentforInvoiceId<any>(payload).subscribe({
-  //   next: (res: any) => {
-  //     if (res?.success && res.data?.redirectUrl) {
-  //       console.log('Payment created successfully:', res);
+    //       // ✅ Redirect to PhonePe payment page
+    //       window.location.href = res.data.redirectUrl;
+    //     } else {
+    //       console.warn('Payment creation failed:', res?.message);
+    //     }
+    //   },
+    //   error: (err: any) => {
+    //     console.error('Error creating payment:', err);
+    //   },
+    // });
+  }
 
-  //       // ✅ Redirect to PhonePe payment page
-  //       window.location.href = res.data.redirectUrl;
-  //     } else {
-  //       console.warn('Payment creation failed:', res?.message);
-  //     }
-  //   },
-  //   error: (err: any) => {
-  //     console.error('Error creating payment:', err);
-  //   },
-  // });
-}
-
-openpaidmaintenanceinvoice(data: any){
-   this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paid`);
-}
-
+  openpaidmaintenanceinvoice(data: any) {
+    this.route.navigateByUrl(
+      `maintenance-invoice/${this.usertype}/${data}?status=paid`
+    );
+  }
 }

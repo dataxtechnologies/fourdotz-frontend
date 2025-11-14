@@ -1,0 +1,76 @@
+<div class="popup-wrapper">
+
+    <!-- LEFT SECTION (80%) -->
+    <section class="announcement-modal">
+
+        <div class="announcement-header">
+            <h3>{{ activePost?.association_name }}</h3>
+
+            <p class="post-date">
+                {{ activePost?.created_time?.$date | date:'dd MMM yyyy, hh:mm a' }}
+            </p>
+
+            <i class="fa-solid fa-xmark close-btn" style="cursor: pointer;" (click)="closeModal()"></i>
+        </div>
+
+        <div class="announcement-body">
+
+            <div class="info-block">
+                <label>Category:</label>
+                <span>{{ activePost?.category | titlecase }}</span>
+            </div>
+
+            <div class="info-block" *ngIf="activePost?.category === 'events'">
+                <label>Event Date:</label>
+                <p>{{ activePost?.event_date | date:'dd MMM yyyy' }}</p>
+            </div>
+
+            <div class="info-block">
+                <label>Title:</label>
+                <p>{{ activePost?.title }}</p>
+            </div>
+
+            <div class="info-block">
+                <label>Summary:</label>
+                <p>{{ activePost?.summary }}</p>
+            </div>
+
+            <div class="image-section" *ngIf="activePost?.images?.length > 0">
+                <label>Attachments:</label>
+                <div class="image-grid">
+                    <img *ngFor="let img of activePost.images" [src]="img" />
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- RIGHT SIDEBAR (20%) -->
+    <aside class="sidebar">
+
+        <h4 class="sidebar-title">Pinned Announcements</h4>
+
+        <div class="sidebar-list">
+
+            <div 
+                class="sidebar-item"
+                *ngFor="let item of PinnedAnnouncement"
+                [class.active-item]="activePost?.announcement_id === item.announcement_id"
+                (click)="setActive(item)"
+            >
+                <h5>{{ item.title }}</h5>
+
+                <p class="sidebar-date">
+                    {{ item.created_time?.$date | date:'dd MMM' }}
+                </p>
+
+                <p class="sidebar-summary">
+                    {{ item.summary | slice:0:20 }}{{ item.summary.length > 20 ? '...' : '' }}
+                </p>
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>

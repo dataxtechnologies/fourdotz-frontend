@@ -114,6 +114,11 @@
     color: var(--primary-color1);
 }
 
+.badge{
+    background-color: var(--primary-color1);
+    font-size: 14px;
+}
+
 /* ============================================================
    CREATE ANNOUNCEMENT BOX
 ============================================================ */
@@ -240,18 +245,17 @@
     object-fit: cover;
 }
 
-.announcement-body {
-    border-bottom: 1px solid #ccc;
-}
+
 
 .announcement-body h6 {
     font-weight: 700;
     margin-top: 10px;
+    font-size: 18px;
 }
 
 .announcement-body p {
     margin-bottom: 8px;
-    color: #555;
+    color: #000;
 }
 
 /* ----- Image Layouts ----- */
@@ -369,13 +373,13 @@
 
 .pinned-item strong {
     display: block;
-    font-size: 15px;
+    font-size: 22px;
     color: #222;
 }
 
 .pinned-item p {
-    font-size: 13px;
-    color: #666;
+    font-size: 16px;
+    color: #000;
     margin-bottom: 6px;
 }
 
@@ -420,15 +424,62 @@
 }
 
 
+
+
+
+
+
+/* Skeleton Loader */
+.skeleton-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.skeleton-card {
+  height: 120px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-line {
+  height: 50px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* No Data Found */
 .no-data {
   text-align: center;
   color: #777;
   padding: 30px 0;
-  border-radius: 16px;
   background-color: #fff;
 }
 
 .no-data img {
   padding: 20px;
+  /* opacity: 0.6; */
   margin-bottom: 10px;
+}
+
+
+.view-btn{
+    color: var(--primary-color1);
+    border: 0;
+    background-color: #fff;
+}
+
+.btn-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

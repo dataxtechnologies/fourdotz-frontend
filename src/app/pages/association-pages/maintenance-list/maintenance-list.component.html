@@ -1,21 +1,21 @@
 <section>
 
     <div>
-       <div class="container card-container">
-
-    
-    <div class="summary-card light-blue">
-        <h4>Monthly Paid Total</h4>
-        <p>₹{{ MaintenanceListAmount?.monthly_invoice_total_amount || 0 }}</p>
-    </div>
-
-    <div class="summary-card light-yellow">
-        <h4>Monthly Unpaid Total</h4>
-        <p>₹{{ MaintenanceListAmount?.monthly_invoice_pending_amount || 0 }}</p>
-    </div>
+        <div class="container card-container">
 
 
-</div>
+            <div class="summary-card light-blue">
+                <h4>Monthly Paid Total</h4>
+                <p>₹{{ MaintenanceListAmount?.monthly_invoice_total_amount || 0 }}</p>
+            </div>
+
+            <div class="summary-card light-yellow">
+                <h4>Monthly Unpaid Total</h4>
+                <p>₹{{ MaintenanceListAmount?.monthly_invoice_pending_amount || 0 }}</p>
+            </div>
+
+
+        </div>
         <div class="container header-cont">
             <div class="head-cont">
                 <h2>Maintenance List</h2>
@@ -25,9 +25,46 @@
             </div>
         </div>
         <div class="container">
-
             <div class="item">
                 <div class="table-cont"> <!-- &#64; -->
+                    <div class="filter-container">
+
+                        <!-- Date Range -->
+                        <div class="filter-item">
+                            <label>From Date</label>
+                            <input type="date" [(ngModel)]="filters.fromDate" (change)="applyFilters()">
+                        </div>
+
+                        <div class="filter-item">
+                            <label>To Date</label>
+                            <input type="date" [(ngModel)]="filters.toDate" (change)="applyFilters()">
+                        </div>
+
+                        <!-- Status Filter -->
+                        <div class="filter-item">
+                            <label>Status</label>
+                            <select [(ngModel)]="filters.status" (change)="applyFilters()">
+                                <option value="">All</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Overdue">Overdue</option>
+                            </select>
+                        </div>
+
+                        <!-- Search -->
+                        <div class="filter-item">
+                            <label>Search</label>
+                            <input type="text" placeholder="Resident Name / Property No" [(ngModel)]="filters.search"
+                                (input)="applyFilters()">
+                        </div>
+
+                        <div class="filters-right">
+                            <button class="reset-btn" (click)="resetFilters()"><i
+                                    class="fa-solid fa-arrow-rotate-right"></i> Reset Filter</button>
+                        </div>
+
+
+                    </div>
                     <div class="table-container">
                         <table class="styled-table">
                             <thead>
@@ -82,14 +119,14 @@
                                             <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
                                                 (click)="viewpaidInvoice(item.invoice_no)"
                                                 *ngIf="item.payment_status === true" />
-                                           <div  class=" d-flex gap-2">
-                                             <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
-                                                (click)="viewInvoice(item.invoice_no)"
-                                                *ngIf="item.payment_status === false" />
-                                            <img src="assets/icons/whatsapp.svg" alt="whatsapp-alert-icon"
-                                                *ngIf="getStatus(item) === 'Overdue'"
-                                                (click)="SendRemainderforMaintenance(item._id)">
-                                           </div>
+                                            <div class=" d-flex gap-2">
+                                                <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
+                                                    (click)="viewInvoice(item.invoice_no)"
+                                                    *ngIf="item.payment_status === false" />
+                                                <img src="assets/icons/whatsapp.svg" alt="whatsapp-alert-icon"
+                                                    *ngIf="getStatus(item) === 'Overdue'"
+                                                    (click)="SendRemainderforMaintenance(item._id)">
+                                            </div>
 
                                         </td>
                                     </tr>

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ModalService } from 'ngx-modal-ease';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from '../../services/api/apiservice.service';
+import { AssociationServiceService } from '../../services/association/association-service.service';
 
 @Component({
   selector: 'app-create-announcement',
@@ -23,6 +24,7 @@ export class CreateAnnouncementComponent {
     private modal: ModalService,
     private toast: ToastrService,
     private apiService: ApiserviceService,
+    private AssociationSer : AssociationServiceService
     
   ) {
     this.initializeForm();
@@ -33,7 +35,7 @@ export class CreateAnnouncementComponent {
     this.announcementForm = this.fb.group({
       category: ['', Validators.required],
       title: ['', [Validators.required, Validators.maxLength(100)]],
-      summary: ['', [Validators.required, Validators.maxLength(500)]],
+      summary: ['', [Validators.required, Validators.maxLength(10000)]],
       event_date: [''] // required only for "Events"
     });
   }
@@ -98,27 +100,22 @@ export class CreateAnnouncementComponent {
   this.showprocessingbtn = true;
   const formData = new FormData();
 
-  // ✅ Append main text fields
-  formData.append('category', this.announcementForm.value.category);
-  formData.append('title', this.announcementForm.value.title.trim());
-  formData.append('summary', this.announcementForm.value.summary.trim());
+formData.append('category', this.announcementForm.value.category);
+formData.append('title', this.announcementForm.value.title.trim());
+formData.append('summary', this.announcementForm.value.summary.trim());
 
-  // ✅ Append event_date ONLY if category is 'Events' AND value exists
-  if (
-    this.announcementForm.value.category === 'events' &&
-    this.announcementForm.value.event_date
-  ) {
-    formData.append('event_date', this.announcementForm.value.event_date);
-  }
+if (this.announcementForm.value.category === 'events' &&
+    this.announcementForm.value.event_date) {
+  formData.append('event_date', this.announcementForm.value.event_date);
+}
 
-  // ✅ Append images
-  this.attachments.forEach((file, index) => {
-    formData.append(`images[${index}]`, file);
-  });
+// 🔥 Send multiple files under SAME KEY
+this.attachments.forEach(file => {
+  formData.append('images', file);
+});
 
-  // 🧩 Debug: Verify FormData before submission
-  console.log('✅ FormData Entries:');
-  formData.forEach((value, key) => console.log(`${key}:`, value));
+// Debug log
+formData.forEach((value, key) => console.log(key, value));
 
   // ✅ API Call
   this.apiService.CreateAnnouncement<any>(formData).subscribe({
@@ -126,6 +123,7 @@ export class CreateAnnouncementComponent {
       this.showprocessingbtn = false;
 
       if (res?.success) {
+        this.AssociationSer.triggerAnnouncementCreated(res)
         this.toast.success(res.message || 'Announcement created successfully!', 'Success');
         this.closeModal();
       } else {

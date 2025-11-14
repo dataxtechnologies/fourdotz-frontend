@@ -160,3 +160,67 @@ tbody td i {
 .light-grey {
   background-color: #e4e5e6;
 }
+
+
+
+
+
+
+
+
+
+
+.filter-container {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 15px 20px;
+  border-radius: 10px;
+}
+
+.filters-left {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+}
+
+.filter-item label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.filter-item input,
+.filter-item select {
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.filters-right {
+  display: flex;
+  align-items: flex-end;
+}
+
+.reset-btn {
+  padding: 8px 16px;
+  background: transparent;
+  color: #ff4d4d;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.reset-btn:hover {
+  transform: translateY(-2px);
+  color: #e63939;
+}

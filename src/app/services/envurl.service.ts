@@ -82,5 +82,6 @@ export class EnvurlService {
   public ListAnnouncementinHOA = '/announcements/list_announcements'
   public pinannouncement = '/announcements/pin_unpin_announcements'
   public listpinannouncement = '/announcements/list_pin_announcements'
+  public ListAnnouncementinOwnerTenant = '/announcements/list_association_announcements'
 
 }

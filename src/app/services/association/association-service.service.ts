@@ -28,6 +28,9 @@ export class AssociationServiceService {
   private RemoveResidentSubject = new BehaviorSubject<any>(null);
   RemoveResidentStatus$ = this.RemoveResidentSubject.asObservable();
 
+  private AnnouncementCreatedSubject = new BehaviorSubject<any>(null);
+  AnnouncementCreatedStatus$ = this.AnnouncementCreatedSubject.asObservable();
+
   triggerAdminAssociation(AddProperty: any): void {
     //console.log('addassociation', AddProperty);
     this.PropertySubject.next(AddProperty);
@@ -64,5 +67,11 @@ export class AssociationServiceService {
   triggerRemoveResident(removeresident: any): void {
     //console.log('addassociation', removeresident);
     this.RemoveResidentSubject.next(removeresident);
+  }
+
+
+  triggerAnnouncementCreated(AnnouncementCreated: any): void {
+    //console.log('addassociation', removeresident);
+    this.AnnouncementCreatedSubject.next(AnnouncementCreated);
   }
 }

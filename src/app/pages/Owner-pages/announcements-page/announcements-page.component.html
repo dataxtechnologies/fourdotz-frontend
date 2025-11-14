@@ -8,24 +8,24 @@
                 <!-- Date Range Filter -->
                 <div class="filter-item">
                     <i class="fa-regular fa-calendar"></i>
-                    <select>
-                        <option>Date Range</option>
-                        <option>Today</option>
-                        <option>This Week</option>
-                        <option>This Month</option>
-                        <option>Last 3 Months</option>
-                    </select>
+                    <select [(ngModel)]="selectedDateRange" (change)="applyFilters()">
+    <option value="all">Date Range</option>
+    <option value="today">Today</option>
+    <option value="week">This Week</option>
+    <option value="month">This Month</option>
+    <option value="3months">Last 3 Months</option>
+</select>
                 </div>
 
                 <!-- Sort / Category Filter -->
                 <div class="filter-item">
                     <i class="fa-solid fa-sort"></i>
-                    <select>
-                        <option>All Category</option>
-                        <option>Announcements</option>
-                        <option>Events</option>
-                        <option>Updates</option>
-                    </select>
+                    <select [(ngModel)]="selectedCategory" (change)="applyFilters()">
+    <option value="all">All Category</option>
+    <option value="announcements">Announcements</option>
+    <option value="events">Events</option>
+    <option value="updates">Updates</option>
+</select>
                 </div>
             </div>
         </div>
@@ -36,22 +36,42 @@
                 <div class="sidebar fixed-sidebar">
                     <div class="sidebar-head">
                         <h5 class="mt-1">Category</h5>
-                       
+                        <!-- <button class="add-button">+ Add New</button> -->
                     </div>
-                    <ul>
-                        <li class="active">All Announcements</li>
-                        <li>Announcements</li>
-                        <li>Events</li>
-                        <li>Updates</li>
-                    </ul>
+                   <ul>
+    <li 
+        [class.active]="selectedCategory === 'all'"
+        (click)="selectedCategory='all'; applyFilters()">
+        All Announcements
+    </li>
+
+    <li 
+        [class.active]="selectedCategory === 'announcements'"
+        (click)="selectedCategory='announcements'; applyFilters()">
+        Announcements
+    </li>
+
+    <li 
+        [class.active]="selectedCategory === 'events'"
+        (click)="selectedCategory='events'; applyFilters()">
+        Events
+    </li>
+
+    <li 
+        [class.active]="selectedCategory === 'updates'"
+        (click)="selectedCategory='updates'; applyFilters()">
+        Updates
+    </li>
+</ul>
                 </div>
             </div>
 
             <!-- ===== Center Feed ===== -->
-             <div class="col-lg-6">
+            <!-- ===== Center Feed ===== -->
+            <div class="col-lg-6">
                 <div class="post-feed">
 
-                   
+
 
                     <!-- 🔹 Skeleton Loader (Posts) -->
                     <div *ngIf="loadingPosts" class="skeleton-container">
@@ -67,19 +87,25 @@
                     <ng-template #announcementpost>
 
                         <!-- 🔹 Announcement Posts Loop -->
-                        <div *ngFor="let post of posts; let i = index" class="announcement-card">
+                        <div *ngFor="let post of filteredPosts; let i = index" class="announcement-card">
                             <div class="announcement-header">
                                 <div class="announcement-user">
-                                    <img src="https://i.pravatar.cc/100?u={{ post.user }}" alt="User" />
+                                    <img src="assets/logo/association_avatar.jpg" alt="User" />
                                     <div>
                                         <strong>{{ post.association_name }}</strong><br />
                                         <small>{{ post.created_time.$date | date:'dd-MMM-yyy HH:mm:ss' }}</small>
                                     </div>
                                 </div>
                                 <div class="d-flex gap-2">
-                                    <img src="assets/icons/view-post.svg" alt="view-post" style=" cursor: pointer;">
-                                    <img src="assets/icons/pinpost.png" alt="pin-post"
-                                        style="width: 25px; cursor: pointer;">
+                                    <img src="assets/icons/view-post.svg" alt="view-post" style=" cursor: pointer;" (click)="viewpost(post)">
+                                   <img src="assets/icons/pinfilled.png" *ngIf="post.pin"
+                                        style="width: 25px; cursor: pointer;"
+                                        (click)="Createpinannouncement(post._id)" />
+
+                                    <!-- Not pinned -->
+                                    <img src="assets/icons/pinoutline.png" *ngIf="!post.pin"
+                                        style="width: 25px; cursor: pointer;"
+                                        (click)="Createpinannouncement(post._id)" />
                                     <span class="badge">{{ post.category }}</span>
                                 </div>
                             </div>
@@ -103,20 +129,7 @@
                                 </ng-container>
                             </div>
 
-                            <!-- Reaction Buttons -->
-                            <div class="announcement-actions">
-                                <div class="react-wrapper">
-                                    <button class="react-btn">{{ selectedEmoji[i] || '😊' }}</button>
-                                    <div class="reaction-bar">
-                                        <span (click)="setReaction(i, '👍')">👍</span>
-                                        <span (click)="setReaction(i, '👏')">👏</span>
-                                        <span (click)="setReaction(i, '🤗')">🤗</span>
-                                        <span (click)="setReaction(i, '❤️')">❤️</span>
-                                        <span (click)="setReaction(i, '💡')">💡</span>
-                                        <span (click)="setReaction(i, '😂')">😂</span>
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
                     </ng-template>
                 </div>
@@ -131,7 +144,7 @@
                     </div>
 
                     <div *ngIf="!loadingPinned && pinnedAnnouncement2?.length === 0; else contentdiv" class="no-data">
-                       <img src="assets/logo/no-pin-announcement.jpg" alt="No data"  style="width: 250px;"/>
+                        <img src="assets/logo/no-pin-announcement.jpg" alt="No data" style="width: 250px;"/>
                         <p>No pinned announcements.</p>
                     </div>
 
@@ -141,14 +154,19 @@
                             <div class="pinned-item" *ngFor="let p of pinnedAnnouncement1.paginatedData">
                                 <strong>{{ p.title }}</strong>
                                 <p>
-                                    {{ p.summary?.length > 80 ? (p.summary | slice: 0:80) + '...' : p.summary }}
+                                    {{ p.summary.length > 80 ? (p.summary | slice: 0:80) + '...' : p.summary }}
                                 </p>
-                                <a href="javascript:void(0)">View post →</a>
+                                <a (click)="viewpost(p)">View post →</a>
                             </div>
                         </div>
                     </ng-template>
+
+                    <div class="btn-div">
+                        <button class="view-btn" (click)="viewallpinnedAnnouncement(pinnedAnnouncement2)"> View all <i class="fa-solid fa-arrow-turn-up"></i></button>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
