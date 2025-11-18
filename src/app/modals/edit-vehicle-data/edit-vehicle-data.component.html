@@ -7,42 +7,48 @@
     <div class="form-body">
         <form [formGroup]="vehicleForm" (ngSubmit)="EditVehicle()">
             <div class="inp-cont">
-                <label>Vehicle Type <span class="required">*</span></label>
-                <input type="text" class="inp-cus" formControlName="vehicleType"
-                    placeholder="Enter your Vehicle Type" />
-                <small class="text-danger" *ngIf="isInvalid('vehicleType')">Vehicle Type is required.</small>
+                <label class="medium-font">Vehicle Type <span class="required">*</span></label>
+                <select class="inp-cus regular-font" formControlName="vehicleType">
+                    <option value="" disabled selected>Select Vehicle Type</option>
+                    <option value="2 Wheeler">2 Wheeler</option>
+                    <option value="4 Wheeler">4 Wheeler</option>
+                    <option value="Others">Others</option>
+                </select>
+                <small class="text-danger regular-font" *ngIf="isInvalid('vehicleType')">
+                    Vehicle Type is required.
+                </small>
             </div>
 
             <div class="inp-cont">
-                <label>Brand <span class="required">*</span></label>
-                <input type="text" class="inp-cus" formControlName="brand" placeholder="Enter your Brand" />
-                <small class="text-danger" *ngIf="isInvalid('brand')">Brand is required.</small>
+                <label class="medium-font">Brand <span class="required">*</span></label>
+                <input type="text" class="inp-cus regular-font" formControlName="brand" placeholder="Enter your Brand" />
+                <small class="text-danger regular-font" *ngIf="isInvalid('brand')">Brand is required.</small>
             </div>
 
             <div class="inp-cont">
-                <label>Vehicle Model <span class="required">*</span></label>
-                <input type="text" class="inp-cus" formControlName="model" placeholder="Enter your Vehicle Model" />
-                <small class="text-danger" *ngIf="isInvalid('model')">Vehicle Model is required.</small>
+                <label class="medium-font">Vehicle Model <span class="required">*</span></label>
+                <input type="text" class="inp-cus regular-font" formControlName="model" placeholder="Enter your Vehicle Model" />
+                <small class="text-danger regular-font" *ngIf="isInvalid('model')">Vehicle Model is required.</small>
             </div>
 
             <div class="inp-cont">
-                <label>Vehicle Number <span class="required">*</span></label>
-                <input type="text" class="inp-cus" formControlName="vehicleNumber" placeholder="TN-01-AB-1234"
+                <label class="medium-font">Vehicle Number <span class="required">*</span></label>
+                <input type="text" class="inp-cus regular-font" formControlName="vehicleNumber" placeholder="TN-01-AB-1234"
                     maxlength="13" pattern="[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}" title="Format must be TN-01-AB-1234"
                     (keypress)="onVehicleNumberInput($event)" />
-                <small class="text-danger" *ngIf="isInvalid('vehicleNumber')">
+                <small class="text-danger regular-font" *ngIf="isInvalid('vehicleNumber')">
                     Vehicle Number must be in format TN-01-AB-1234
                 </small>
             </div>
 
             <div class="inp-cont">
-                <label>Vehicle Owned By <span class="required">*</span></label>
-                <select class="inp-cus" formControlName="ownedBy">
+                <label class="medium-font">Vehicle Owned By <span class="required">*</span></label>
+                <select class="inp-cus regular-font" formControlName="ownedBy">
                     <option value="" disabled selected>Select Options</option>
-                    <option value="Owner">Owner</option>
-                    <option value="Tenant">Tenant</option>
+                    <option value="owner">Owner</option>
+                    <option value="tenant">Tenant</option>
                 </select>
-                <small class="text-danger" *ngIf="isInvalid('ownedBy')">Select Owner or Tenant.</small>
+                <small class="text-danger regular-font" *ngIf="isInvalid('ownedBy')">Select Owner or Tenant.</small>
             </div>
 
             <div class="mb-3">

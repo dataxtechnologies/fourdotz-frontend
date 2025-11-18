@@ -1,31 +1,31 @@
-<section>
+<section class="whole-div">
 
     <div class="parent">
         <div class="div1 bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
             <div class="cont">
-                <span class="card-head-font">Total Associations</span>
+                <span class="card-head-font medium-font">Total Associations</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font">{{ DashboardData.hoa_total_count || 0}}</span>
+                <span class="card-font regular-font">{{ DashboardData.hoa_total_count || 0}}</span>
 
             </div>
         </div>
         <div class="div2 bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
             <div class="flex items-center justify-between">
-                <span class="card-head-font">Number of Properties</span>
+                <span class="card-head-font medium-font">Number of Properties</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font">{{ DashboardData.property_total_count || 0}}</span>
+                <span class="card-font regular-font">{{ DashboardData.property_total_count || 0}}</span>
 
             </div>
 
         </div>
         <div class="div3  bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
             <div class="flex items-center justify-between">
-                <span class="card-head-font">Total Tenants</span>
+                <span class="card-head-font medium-font">Total Tenants</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font">{{ DashboardData.tenant_total_count || 0}}</span>
+                <span class="card-font regular-font">{{ DashboardData.tenant_total_count || 0}}</span>
 
             </div>
         </div>
@@ -40,16 +40,16 @@
                 <table class="styled-table">
                     <thead>
                         <tr>
-                            <th>Property Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Property Type</th>
-                            <th>Invitation Status</th>
-                            <th>View</th>
+                            <th class="medium-font">Property Name</th>
+                            <th class="medium-font">Email</th>
+                            <th class="medium-font">Phone</th>
+                            <th class="medium-font">Property Type</th>
+                            <th class="medium-font">Invitation Status</th>
+                            <th class="medium-font">View</th>
                         </tr>
                     </thead>
 
-                    <tbody *ngIf="!tableLoading; else tableSkeleton">
+                    <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
                         <!-- Show rows if data is available -->
                         <tr *ngFor="let item of Associationlist1.paginatedData; let i = index">
                             <td data-label="Property Name">{{ item.property_name }}</td>
@@ -66,7 +66,7 @@
 
                         <!-- Show "No Data Found" if array is empty -->
                         <tr *ngIf="Associationlist1.paginatedData.length === 0">
-                            <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                            <td colspan="6" class="regular-font" style="text-align: center;  color: gray;">
                                 No Data Found
                             </td>
                         </tr>

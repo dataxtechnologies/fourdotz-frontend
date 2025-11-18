@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ModalService } from 'ngx-modal-ease';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from '../../services/api/apiservice.service';
@@ -11,21 +16,20 @@ import { AssociationServiceService } from '../../services/association/associatio
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './create-announcement.component.html',
-  styleUrls: ['./create-announcement.component.css']
+  styleUrls: ['./create-announcement.component.css'],
 })
 export class CreateAnnouncementComponent {
   announcementForm!: FormGroup;
-  previewImages: string[] = [];
-  attachments: File[] = [];
-  showprocessingbtn = false
+previewFiles: { url: string, type: 'image' | 'video' }[] = [];
+attachments: File[] = [];
+  showprocessingbtn = false;
 
   constructor(
     private fb: FormBuilder,
     private modal: ModalService,
     private toast: ToastrService,
     private apiService: ApiserviceService,
-    private AssociationSer : AssociationServiceService
-    
+    private AssociationSer: AssociationServiceService
   ) {
     this.initializeForm();
   }
@@ -36,7 +40,7 @@ export class CreateAnnouncementComponent {
       category: ['', Validators.required],
       title: ['', [Validators.required, Validators.maxLength(100)]],
       summary: ['', [Validators.required, Validators.maxLength(10000)]],
-      event_date: [''] // required only for "Events"
+      event_date: [''], // required only for "Events"
     });
   }
 
@@ -62,85 +66,117 @@ export class CreateAnnouncementComponent {
 
   /** Image Upload Handler */
   onFileSelected(event: any) {
-    const files: FileList = event.target.files;
-    if (!files.length) return;
+  const files: FileList = event.target.files;
+  if (!files.length) return;
 
-    // Limit max 2 images
-    if (this.attachments.length + files.length > 2) {
-      this.toast.warning('You can only upload up to 2 images.');
-      return;
-    }
-
-    Array.from(files).forEach((file) => {
-      if (file.type.startsWith('image/')) {
-        this.attachments.push(file);
-        const reader = new FileReader();
-        reader.onload = (e: any) => this.previewImages.push(e.target.result);
-        reader.readAsDataURL(file);
-      } else {
-        this.toast.error('Only image files are allowed.');
-      }
-    });
-  }
-
-  /** Remove image */
-  removeImage(index: number) {
-    this.previewImages.splice(index, 1);
-    this.attachments.splice(index, 1);
-  }
-
-  /** Submit form */
-  submitAnnouncement() {
-  if (this.announcementForm.invalid) {
-    this.toast.warning('Please fill all required fields correctly.');
-    this.announcementForm.markAllAsTouched();
+  // Max 2 total files limit
+  if (this.attachments.length + files.length > 2) {
+    this.toast.warning('You can only upload a maximum of 2 attachments.');
     return;
   }
 
-  this.showprocessingbtn = true;
-  const formData = new FormData();
+  Array.from(files).forEach((file) => {
+    // Only allow image or video
+    if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) {
+      this.toast.error('Only image and video files are allowed.');
+      return;
+    }
 
-formData.append('category', this.announcementForm.value.category);
-formData.append('title', this.announcementForm.value.title.trim());
-formData.append('summary', this.announcementForm.value.summary.trim());
+    // Handle images
+    if (file.type.startsWith('image/')) {
+      this.attachments.push(file);
 
-if (this.announcementForm.value.category === 'events' &&
-    this.announcementForm.value.event_date) {
-  formData.append('event_date', this.announcementForm.value.event_date);
-}
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewFiles.push({ url: e.target.result, type: 'image' });
+      };
+      reader.readAsDataURL(file);
+      return;
+    }
 
-// 🔥 Send multiple files under SAME KEY
-this.attachments.forEach(file => {
-  formData.append('images', file);
-});
+    // Handle videos (Validate duration < 5 min)
+    if (file.type.startsWith('video/')) {
+      const videoURL = URL.createObjectURL(file);
+      const video = document.createElement('video');
 
-// Debug log
-formData.forEach((value, key) => console.log(key, value));
+      video.src = videoURL;
 
-  // ✅ API Call
-  this.apiService.CreateAnnouncement<any>(formData).subscribe({
-    next: (res: any) => {
-      this.showprocessingbtn = false;
+      video.onloadedmetadata = () => {
+        const duration = video.duration;
 
-      if (res?.success) {
-        this.AssociationSer.triggerAnnouncementCreated(res)
-        this.toast.success(res.message || 'Announcement created successfully!', 'Success');
-        this.closeModal();
-      } else {
-        this.toast.warning(res.message || 'Something went wrong.', 'Warning');
-      }
-    },
-    error: (err: any) => {
-      this.showprocessingbtn = false;
-      this.toast.error(
-        err.error?.error?.message || 'Something went wrong!',
-        'Failed'
-      );
-      this.closeModal();
-    },
+        if (duration > 300) {
+          this.toast.error('Video must be under 5 minutes.');
+          URL.revokeObjectURL(videoURL);
+          return;
+        }
+
+        // Accept file
+        this.attachments.push(file);
+        this.previewFiles.push({ url: videoURL, type: 'video' });
+      };
+    }
   });
 }
 
+  /** Remove image */
+removeAttachment(index: number) {
+  this.previewFiles.splice(index, 1);
+  this.attachments.splice(index, 1);
+}
+
+  /** Submit form */
+  submitAnnouncement() {
+    if (this.announcementForm.invalid) {
+      this.toast.warning('Please fill all required fields correctly.');
+      this.announcementForm.markAllAsTouched();
+      return;
+    }
+
+    this.showprocessingbtn = true;
+    const formData = new FormData();
+
+    formData.append('category', this.announcementForm.value.category);
+    formData.append('title', this.announcementForm.value.title.trim());
+    formData.append('summary', this.announcementForm.value.summary.trim());
+
+    if (
+      this.announcementForm.value.category === 'events' &&
+      this.announcementForm.value.event_date
+    ) {
+      formData.append('event_date', this.announcementForm.value.event_date);
+    }
+
+    // 🔥 Send multiple files under SAME KEY
+    this.attachments.forEach((file) => {
+      formData.append('images', file);
+    });
+
+    // Debug log
+    formData.forEach((value, key) => console.log(key, value));
+
+    // ✅ API Call
+    this.apiService.CreateAnnouncement<any>(formData).subscribe({
+      next: (res: any) => {
+        this.showprocessingbtn = false;
+
+        if (res?.success) {
+          this.AssociationSer.triggerAnnouncementCreated(res);
+          this.toast.success(res.message ,'Success');
+          this.closeModal();
+        } else {
+          this.toast.warning(res.message || 'Something went wrong.', 'Warning');
+        }
+      },
+      error: (err: any) => {
+        this.showprocessingbtn = false;
+        this.toast.error(
+          err.error?.error?.message || 'Something went wrong!',
+          'Failed'
+        );
+        this.closeModal();
+      },
+    });
+  }
 
   /** Close Modal */
   closeModal() {

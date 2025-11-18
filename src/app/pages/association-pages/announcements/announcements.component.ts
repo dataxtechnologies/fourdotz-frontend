@@ -8,6 +8,7 @@ import { AssociationServiceService } from '../../../services/association/associa
 import { ViewAnnouncementsComponent } from '../../../modals/view-announcements/view-announcements.component';
 import { ViewAllPinnedAnnouncementsComponent } from '../../../modals/view-all-pinned-announcements/view-all-pinned-announcements.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-announcements',
@@ -19,11 +20,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class Announcementcomponent implements OnInit {
   posts: any[] = [];
   pinnedannouncement: any[] = [];
-selectedCategory: string = 'all';
-selectedDateRange: string = 'all';
-filteredPosts: any[] = [];
+  selectedCategory: string = 'all';
+  selectedDateRange: string = 'all';
+  filteredPosts: any[] = [];
   selectedEmoji: { [key: number]: string } = {};
-  pinnedpost = false
+  pinnedpost = false;
 
   loadingPosts = true; // 🔹 skeleton for posts
   loadingPinned = true; // 🔹 skeleton for pinned posts
@@ -34,7 +35,8 @@ filteredPosts: any[] = [];
   constructor(
     private ModalService: ModalService,
     private apiService: ApiserviceService,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private Toast: ToastrService
   ) {
     this.pinnedAnnouncement1 = new TableService();
     this.pinnedAnnouncement1.initialize(this.pinnedAnnouncement2, 4);
@@ -71,85 +73,98 @@ filteredPosts: any[] = [];
   }
 
   /** Fetch Announcements */
-ListAnnouncementinHOA() {
-  this.loadingPosts = true;
+  ListAnnouncementinHOA() {
+    this.loadingPosts = true;
 
-  this.apiService.ListAnnouncementinHOA<any>().subscribe({
-    next: (res: any) => {
-      this.loadingPosts = false;
+    this.apiService.ListAnnouncementinHOA<any>().subscribe({
+      next: (res: any) => {
+        this.loadingPosts = false;
 
-      if (res?.success && Array.isArray(res.data)) {
+        if (res?.success && Array.isArray(res.data)) {
+          this.posts = res.data.map((post: any) => {
+            if (Array.isArray(post.images)) {
+              post.attachments = post.images.map((url: string) => {
+                const isVideo = url
+                  .toLowerCase()
+                  .match(/\.(mp4|mov|avi|mkv|webm)$/);
+                return {
+                  url,
+                  type: isVideo ? 'video' : 'image',
+                };
+              });
+            } else {
+              post.attachments = [];
+            }
+            return post;
+          });
 
-        this.posts = res.data;
+          // 🔥 Just apply filters — NO pin logic needed here
+          this.applyFilters();
+        } else {
+          this.posts = [];
+          this.filteredPosts = [];
+        }
+      },
 
-        // 🔥 Just apply filters — NO pin logic needed here
-        this.applyFilters();
-
-      } else {
+      error: () => {
+        this.loadingPosts = false;
         this.posts = [];
         this.filteredPosts = [];
-      }
-    },
-
-    error: () => {
-      this.loadingPosts = false;
-      this.posts = [];
-      this.filteredPosts = [];
-    },
-  });
-}
-
-applyFilters() {
-  let data = [...this.posts];
-
-  // ----- Category Filter -----
-  if (this.selectedCategory !== 'all') {
-    data = data.filter(post => post.category === this.selectedCategory);
-  }
-
-  // ----- Date Range Filter -----
-  const today = new Date();
-
-  if (this.selectedDateRange === 'today') {
-    data = data.filter(post => {
-      const postDate = new Date(post.created_time.$date);
-      return postDate.toDateString() === today.toDateString();
+      },
     });
   }
 
-  if (this.selectedDateRange === 'week') {
-    const weekAgo = new Date();
-    weekAgo.setDate(today.getDate() - 7);
+  applyFilters() {
+    let data = [...this.posts];
 
-    data = data.filter(post => {
-      const postDate = new Date(post.created_time.$date);
-      return postDate >= weekAgo && postDate <= today;
-    });
+    // ----- Category Filter -----
+    if (this.selectedCategory !== 'all') {
+      data = data.filter((post) => post.category === this.selectedCategory);
+    }
+
+    // ----- Date Range Filter -----
+    const today = new Date();
+
+    if (this.selectedDateRange === 'today') {
+      data = data.filter((post) => {
+        const postDate = new Date(post.created_time.$date);
+        return postDate.toDateString() === today.toDateString();
+      });
+    }
+
+    if (this.selectedDateRange === 'week') {
+      const weekAgo = new Date();
+      weekAgo.setDate(today.getDate() - 7);
+
+      data = data.filter((post) => {
+        const postDate = new Date(post.created_time.$date);
+        return postDate >= weekAgo && postDate <= today;
+      });
+    }
+
+    if (this.selectedDateRange === 'month') {
+      const monthAgo = new Date();
+      monthAgo.setMonth(today.getMonth() - 1);
+
+      data = data.filter((post) => {
+        const postDate = new Date(post.created_time.$date);
+        return postDate >= monthAgo && postDate <= today;
+      });
+    }
+
+    if (this.selectedDateRange === '3months') {
+      const monthsAgo = new Date();
+      monthsAgo.setMonth(today.getMonth() - 3);
+
+      data = data.filter((post) => {
+        const postDate = new Date(post.created_time.$date);
+        return postDate >= monthsAgo && postDate <= today;
+      });
+    }
+
+    // 🔥 Push filtered list to center feed
+    this.filteredPosts = data;
   }
-
-  if (this.selectedDateRange === 'month') {
-    const monthAgo = new Date();
-    monthAgo.setMonth(today.getMonth() - 1);
-
-    data = data.filter(post => {
-      const postDate = new Date(post.created_time.$date);
-      return postDate >= monthAgo && postDate <= today;
-    });
-  }
-
-  if (this.selectedDateRange === '3months') {
-    const monthsAgo = new Date();
-    monthsAgo.setMonth(today.getMonth() - 3);
-
-    data = data.filter(post => {
-      const postDate = new Date(post.created_time.$date);
-      return postDate >= monthsAgo && postDate <= today;
-    });
-  }
-
-  // 🔥 Push filtered list to center feed
-  this.filteredPosts = data;
-}
 
   Createpinannouncement(data: any) {
     this.loadingPosts = true;
@@ -160,15 +175,16 @@ applyFilters() {
       next: (res: any) => {
         this.loadingPosts = false;
         if (res?.success) {
+          this.Toast.success(res.message, 'success');
           this.ListAnnouncementinHOA();
           this.listpinannouncement();
         } else {
-          // this.posts = [];
+          this.Toast.warning(res.message, 'warning');
         }
       },
-      error: () => {
+      error: (err: any) => {
         this.loadingPosts = false;
-        // this.posts = [];
+        this.Toast.error(err.err.error.message, 'Error');
       },
     });
   }
@@ -212,22 +228,22 @@ applyFilters() {
         enter: 'enter-going-down 0.3s ease-out',
         leave: 'fade-out 0.5s',
       },
-      data:{
-        Postdetails : data
+      data: {
+        Postdetails: data,
       },
       overlay: { leave: 'fade-out 0.5s' },
       actions: { click: false, escape: false },
     });
   }
 
-  viewallpinnedAnnouncement(data: any){
+  viewallpinnedAnnouncement(data: any) {
     this.ModalService.open(ViewAllPinnedAnnouncementsComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
         leave: 'fade-out 0.5s',
       },
-      data:{
-        PinnedAnnouncement : data
+      data: {
+        PinnedAnnouncement: data,
       },
       overlay: { leave: 'fade-out 0.5s' },
       actions: { click: false, escape: false },

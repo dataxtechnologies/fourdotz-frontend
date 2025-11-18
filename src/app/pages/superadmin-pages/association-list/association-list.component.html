@@ -17,8 +17,8 @@
 
                             <!-- Resident Name/Phone Search -->
                             <div class="inp-cont">
-                                <label for="residentSearch">Search</label>
-                                <input type="text" class="inp-cus" placeholder="Enter Association Details"
+                                <label for="residentSearch" class="medium-font">Search</label>
+                                <input type="text" class="inp-cus regular-font" placeholder="Enter Association Details"
                                     formControlName="residentSearch" />
                             </div>
 
@@ -34,16 +34,16 @@
                         <table class="styled-table">
                             <thead>
                                 <tr>
-                                    <th>Property Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Property Type</th>
-                                    <th>Invitation Status</th>
-                                    <th>View</th>
+                                    <th class="medium-font">Property Name</th>
+                                    <th class="medium-font">Email</th>
+                                    <th class="medium-font">Phone</th>
+                                    <th class="medium-font">Property Type</th>
+                                    <th class="medium-font">Invitation Status</th>
+                                    <th class="medium-font">View</th>
                                 </tr>
                             </thead>
 
-                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
                                 <!-- Show rows if data is available -->
                                 <tr *ngFor="let item of Associationlist1.paginatedData; let i = index">
                                     <td data-label="Property Name">{{ item.property_name }}</td>
@@ -60,7 +60,7 @@
 
                                 <!-- Show "No Data Found" if array is empty -->
                                 <tr *ngIf="Associationlist1.paginatedData?.length === 0">
-                                    <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                    <td colspan="6" class="regular-font" style="text-align: center;  color: gray;">
                                         No Data Found
                                     </td>
                                 </tr>
@@ -102,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="Associationlist1" class="pagination-container ">
+        <div *ngIf="Associationlist1" class="pagination-container regular-font">
             <p class="pagination-info">
                 Showing {{ Associationlist1.startIndex + 1 }} to {{ Associationlist1.endIndex + 1 }} of {{
                 Associationlist1.totalData }} entries
@@ -113,7 +113,7 @@
                 <li>
                     <button [disabled]="Associationlist1.currentPage === 1" (click)="Associationlist1.prevPage()"
                         class="page-btn arrow-btn">
-                        &#x276E;
+                        <i class="fa-solid fa-angle-left"></i>
                     </button>
                 </li>
 
@@ -128,7 +128,7 @@
                 <li>
                     <button [disabled]="Associationlist1.currentPage === Associationlist1.totalPages"
                         (click)="Associationlist1.nextPage()" class="page-btn arrow-btn">
-                        &#x276F;
+                       <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </li>
             </ul>

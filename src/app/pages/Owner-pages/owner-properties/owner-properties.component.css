@@ -38,6 +38,8 @@
 
 
 
+
+
 .new-cards {
     background: #fff;
     border-radius: 1rem;
@@ -138,12 +140,6 @@ tbody td i {
     margin-bottom: 20px;
 }
 
-/* Label */
-.inp-cont label {
-    font-size: 17px;
-    font-weight: 600;
-    color: #555;
-}
 
 /* Input */
 .inp-cus {

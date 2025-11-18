@@ -7,46 +7,50 @@
     <div class="form-body">
         <form [formGroup]="petForm" (ngSubmit)="addPet()">
             <div class="inp-cont">
-                <label>Pet Name <span class="required">*</span></label>
-                <input type="text" class="inp-cus" placeholder="Enter your Pet Name" formControlName="petName" />
-                <small class="text-danger" *ngIf="isInvalid('petName')">
+                <label class="medium-font">Pet Name <span class="required">*</span></label>
+                <input type="text" class="inp-cus regular-font" placeholder="Enter your Pet Name" formControlName="petName" />
+                <small class="text-danger regular-font" *ngIf="isInvalid('petName')">
                     Pet Name is required.
                 </small>
             </div>
 
             <div class="inp-cont">
-                <label>Type <span class="required">*</span></label>
-                <input type="text" class="inp-cus" placeholder="Enter your Pet Type (eg: Dog, Cat)"
-                    formControlName="type" />
-                <small class="text-danger" *ngIf="isInvalid('type')">
-                    Pet Type is required.
+                <label class="medium-font">Type <span class="required">*</span></label>
+                <select class="inp-cu regular-fonts" formControlName="type">
+                    <option value="" disabled selected>Select Pet Type</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Cat">Cat</option>
+                    <option value="Others">Others</option>
+                </select>
+                <small class="text-danger regular-font" *ngIf="isInvalid('type')">
+                    Please select a Pet Type.
                 </small>
             </div>
 
             <div class="inp-cont">
-                <label>Breed <span class="required">*</span></label>
-                <input type="text" class="inp-cus" placeholder="Enter your Pet Breed" formControlName="breed" />
-                <small class="text-danger" *ngIf="isInvalid('breed')">
+                <label class="medium-font">Breed <span class="required">*</span></label>
+                <input type="text" class="inp-cus regular-font" placeholder="Enter your Pet Breed" formControlName="breed" />
+                <small class="text-danger regular-font" *ngIf="isInvalid('breed')">
                     Pet Breed is required.
                 </small>
             </div>
 
             <div class="inp-cont">
-                <label>Age <span class="required">*</span></label>
-                <input type="text" class="inp-cus" placeholder="Enter your Pet Age" formControlName="age" />
-                <small class="text-danger" *ngIf="isInvalid('age')">
+                <label class="medium-font">Age <span class="required">*</span></label>
+                <input type="text" class="inp-cus regular-font" placeholder="Enter your Pet Age" formControlName="age" />
+                <small class="text-danger regular-font" *ngIf="isInvalid('age')">
                     Enter a valid age.
                 </small>
             </div>
 
             <div class="inp-cont">
-                <label>Pet Owned By <span class="required">*</span></label>
-                <select class="inp-cus" formControlName="ownedBy">
+                <label class="medium-font">Pet Owned By <span class="required">*</span></label>
+                <select class="inp-cus regular-font" formControlName="ownedBy">
                     <option value="" disabled selected>Select Options</option>
-                    <option value="Owner">Owner</option>
-                    <option value="Tenant">Tenant</option>
+                    <option value="owner">Owner</option>
+                    <option value="tenant">Tenant</option>
                 </select>
-                <small class="text-danger" *ngIf="isInvalid('ownedBy')">
+                <small class="text-danger regular-font" *ngIf="isInvalid('ownedBy')">
                     Please select Owner or Tenant.
                 </small>
             </div>

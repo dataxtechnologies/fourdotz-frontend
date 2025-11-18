@@ -1,6 +1,6 @@
 <section class="form-section container">
     <div class="form-header">
-        <h3 class="modal-header">Generate Maintenance</h3>
+        <h3 class="modal-header demibold-font">Generate Maintenance</h3>
         <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
     </div>
 
@@ -9,9 +9,9 @@
             <div class="form-grid">
                 <!-- Property No -->
                 <div class="inp-cont">
-                    <label>Property No <span class="required">*</span></label>
+                    <label class="medium-font">Property No <span class="required">*</span></label>
                     <div class="custom-select">
-                        <div class="select-selected" (click)="toggleDropdown()">
+                        <div class="select-selected regular-font" (click)="toggleDropdown()" >
                             {{ selectedProperty || 'Select Property No' }}
                             <i class="fa-solid" [ngClass]="{
                   'fa-chevron-down': !dropdownOpen,
@@ -20,7 +20,7 @@
                         </div>
 
                         <div class="select-items" [class.select-hide]="!dropdownOpen">
-                            <input type="text" placeholder="Search property..." class="dropdown-search"
+                            <input type="text" placeholder="Search property..." class="dropdown-search regular-font"
                                 (input)="onSearchChange($event)" />
 
                             <div *ngFor="let property of filteredList" (click)="selectProperty(property)">
@@ -43,9 +43,9 @@
 
                 <!-- 🟩 Due Date -->
                 <div class="inp-cont">
-                    <label>Due Date <span class="required">*</span></label>
+                    <label class="medium-font">Due Date <span class="required">*</span></label>
                     <div class="date-input-wrapper">
-                        <input type="text" id="rentedAt" class="inp-cus placeholder-font" formControlName="due_date"
+                        <input type="text" id="rentedAt" class="inp-cus regular-font" formControlName="due_date"
                             placeholder="Select date" readonly (click)="openDatePicker()" />
                         <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
                         <input #hiddenDatePicker type="date" [min]="todayDate" class="hidden-date-input"
@@ -63,7 +63,7 @@
 
             <!-- Items Section -->
             <div class="inp-cont items-header">
-                <label class="label-style">Additional Items</label>
+                <label class="label-style medium-font">Additional Items</label>
                 <button type="button" class="btn-add" (click)="addItem()">
                     + Add Item
                 </button>
@@ -71,10 +71,10 @@
 
             <div class="items-container scroll-box" formArrayName="items">
                 <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-row">
-                    <input type="text" formControlName="description" placeholder="Description" class="inp-cus" />
-                    <input type="number" formControlName="amount" placeholder="Amount" class="inp-cus" />
+                    <input type="text" formControlName="description" placeholder="Description" class="inp-cus regular-font" />
+                    <input type="number" formControlName="amount" placeholder="Amount" class="inp-cus regular-font" />
                     <button type="button" class="btn-cancel" (click)="removeItem(i)">
-                        X
+                        Cancel
                     </button>
                 </div>
             </div>

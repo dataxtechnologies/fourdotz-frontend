@@ -5,7 +5,7 @@
     </div>
 
     <div class="form-body">
-        <p class="warning-text warning-yellow">
+        <p class="warning-text warning-yellow regular-font">
             <strong>⚠️ Note:</strong> Please ensure that the tenant has
             <strong>paid the rental invoice amount</strong> before confirming.
             Once marked as <strong>Paid</strong>, this action cannot be undone.
@@ -13,8 +13,8 @@
 
         <!-- ✅ Payment Mode Selection -->
         <div class="inp-cont">
-            <label for="paymentMode">Select Payment Mode:</label>
-            <select id="paymentMode" [(ngModel)]="selectedPaymentMode" class="inp-cus select-cus">
+            <label class="medium-font" for="paymentMode">Select Payment Mode:</label>
+            <select id="paymentMode" [(ngModel)]="selectedPaymentMode" class="inp-cus select-cus regular-font">
                 <option value="" disabled selected>Select a payment mode</option>
                 <option value="CASH">Cash</option>
                 <option value="UPI">UPI</option>
@@ -24,11 +24,11 @@
 
         <!-- ✅ Confirmation Input -->
         <div class="inp-cont">
-            <label for="confirmText">
+            <label class="medium-font" for="confirmText">
                 To confirm, type <span class="highlight-yellow">CONFIRM</span> below:
             </label>
             <input id="confirmText" type="text" [(ngModel)]="confirmationText"
-                placeholder="Type CONFIRM to confirm payment" class="inp-cus" />
+                placeholder="Type CONFIRM to confirm payment" class="inp-cus regular-font" />
         </div>
 
         <!-- ✅ Action Buttons -->

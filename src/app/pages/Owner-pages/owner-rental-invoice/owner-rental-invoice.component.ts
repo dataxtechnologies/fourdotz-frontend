@@ -25,10 +25,11 @@ export class OwnerRentalInvoiceComponent {
   filterForm!: FormGroup;
   properties: any[] = [];
   filteredProperties: any[] = [];
-  rentalinvoicelist2: any
-  rentalinvoicelist1
-  pages: any
-  tableLoading = true
+  rentalinvoicelist2: any;
+  rentalinvoicelist1;
+  pages: any;
+  tableLoading = true;
+  isTenantPresent: boolean = false;
 
   constructor(
     private modalService: ModalService,
@@ -37,8 +38,8 @@ export class OwnerRentalInvoiceComponent {
     private apiService: ApiserviceService,
     private OwnerService: OwnerServiceService
   ) {
-    this.rentalinvoicelist1 = new TableService()
-    this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 12)
+    this.rentalinvoicelist1 = new TableService();
+    this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 12);
   }
 
   ngOnInit(): void {
@@ -48,7 +49,8 @@ export class OwnerRentalInvoiceComponent {
       fromDate: [''], // From Date
       toDate: [''], // To Date
     });
-    this.RentalInvoicelistinowner()
+    this.propertylist();
+    this.RentalInvoicelistinowner();
     this.filterForm.valueChanges.subscribe(() => {
       this.applyFilters();
     });
@@ -59,14 +61,11 @@ export class OwnerRentalInvoiceComponent {
       }
     });
 
-
     this.OwnerService.RentalInvoiceStatus$.subscribe((GeneratedInvoice) => {
       if (GeneratedInvoice) {
         this.RentalInvoicelistinowner();
       }
     });
-
-
 
     // this.filteredProperties = [...this.rentalinvoicelist2];
   }
@@ -96,9 +95,9 @@ export class OwnerRentalInvoiceComponent {
   }
 
   viewInvoice(data: any) {
-  const url = `/Global-invoice/${data}`;
-  window.open(url, '_blank');
-}
+    const url = `/Global-invoice/${data}`;
+    window.open(url, '_blank');
+  }
 
   generateRental(): void {
     this.modalService.open(GenerateRentalInvoiceComponent, {
@@ -114,15 +113,15 @@ export class OwnerRentalInvoiceComponent {
     });
   }
 
-  changetopaidstatus(data : any){
+  changetopaidstatus(data: any) {
     this.modalService.open(ChangePaidStatusComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-      data:{
-        invoice_id: data
+      data: {
+        invoice_id: data,
       },
       actions: {
         click: false,
@@ -136,34 +135,65 @@ export class OwnerRentalInvoiceComponent {
   }
 
   RentalInvoicelistinowner() {
-      this.apiService.RentalInvoicelistinowner<any>().subscribe({
-        next: (res: any) => {
-          if (res?.success) {
-            this.rentalinvoicelist2 = res.data || [];
-            this.filteredProperties = [...this.rentalinvoicelist2];
-  
-            // Initialize TableService
-            this.rentalinvoicelist1 = new TableService();
-            this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10);
-  
-            // If backend provides pagination info
-            this.pages = Array.from(
-              { length: res.data?.totalPages || 1 },
-              (_, i) => i + 1
-            );
-  
-            this.tableLoading = false;
-          } else {
-            this.rentalinvoicelist2 = []
-            this.tableLoading = false;
-            //console.warn(res.message || 'Failed to load properties.');
-          }
-        },
-        error: (err: any) => {
-          this.rentalinvoicelist2 = []
+    this.apiService.RentalInvoicelistinowner<any>().subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.rentalinvoicelist2 = res.data || [];
+          this.filteredProperties = [...this.rentalinvoicelist2];
+
+          // Initialize TableService
+          this.rentalinvoicelist1 = new TableService();
+          this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10);
+
+          // If backend provides pagination info
+          this.pages = Array.from(
+            { length: res.data?.totalPages || 1 },
+            (_, i) => i + 1
+          );
+
           this.tableLoading = false;
-          //console.error('Property list fetch failed:', err);
-        },
-      });
-    }
+        } else {
+          this.rentalinvoicelist2 = [];
+          this.tableLoading = false;
+          //console.warn(res.message || 'Failed to load properties.');
+        }
+      },
+      error: (err: any) => {
+        this.rentalinvoicelist2 = [];
+        this.tableLoading = false;
+        //console.error('Property list fetch failed:', err);
+      },
+    });
+  }
+
+  propertylist() {
+    this.apiService.ownerproperties<any>().subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          const list = res.data || [];
+
+          // 🔥 Check if ANY item has resident_type = 'tenant'
+          this.isTenantPresent = list.some(
+            (item: any) => item.resident_type === 'tenant'
+          );
+
+          console.log('this.isTenantPresent', this.isTenantPresent);
+          
+
+          // If backend provides pagination info
+          this.pages = Array.from(
+            { length: res.data?.totalPages || 1 },
+            (_, i) => i + 1
+          );
+
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
+        }
+      },
+      error: (err: any) => {
+        this.tableLoading = false;
+      },
+    });
+  }
 }

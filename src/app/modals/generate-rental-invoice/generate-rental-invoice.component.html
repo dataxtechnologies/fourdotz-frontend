@@ -12,7 +12,7 @@
 
             <!-- Items Header -->
             <div class="inp-cont items-header">
-                <label class="label-style">Additional Items</label>
+                <label  class="label-style medium-font">Additional Items</label>
                 <button type="button" class="btn-add" (click)="addItem()">+ Add Item</button>
             </div>
 
@@ -23,8 +23,8 @@
                     <!-- Row 1 -->
                     <div class="item-row">
                         <div>
-                            <label>Property No</label>
-                            <select formControlName="propertyNo" class="inp-cus">
+                            <label class="medium-font">Property No</label>
+                            <select formControlName="propertyNo" class="inp-cus regular-font">
                                 <option value="" disabled>Select Property No</option>
                                 <option *ngFor="let property of TenantList2" [value]="property._id">
                                     {{ property.property_no }}
@@ -33,25 +33,25 @@
                         </div>
 
                         <div>
-                            <label>Description</label>
-                            <input type="text" formControlName="description" class="inp-cus" placeholder="Description">
+                            <label class="medium-font">Description</label>
+                            <input type="text" formControlName="description" class="inp-cus regular-font" placeholder="Description">
                         </div>
                     </div>
 
                     <!-- Row 2 -->
                     <div class="item-row">
                         <div>
-                            <label>Amount</label>
-                            <input type="number" formControlName="amount" class="inp-cus" placeholder="Amount">
+                            <label class="medium-font">Amount</label>
+                            <input type="number" formControlName="amount" class="inp-cus regular-font" placeholder="Amount">
                         </div>
 
                         <div>
-                            <label>Due Date</label>
-                            <input type="date" formControlName="dueDate" class="inp-cus">
+                            <label class="medium-font">Due Date</label>
+                            <input type="date" formControlName="dueDate" class="inp-cus regular-font">
                         </div>
 
                         <!-- Remove button on row 2 -->
-                        <button type="button" class="btn-cancel" (click)="removeItem(i)">X</button>
+                        <button type="button" class="btn-cancel regular-font" (click)="removeItem(i)">Cancel</button>
                     </div>
 
                     <hr />

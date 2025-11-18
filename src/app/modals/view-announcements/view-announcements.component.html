@@ -1,10 +1,10 @@
 <section class="announcement-modal container">
 
     <!-- 🔥 FIXED HEADER -->
-    <div class="announcement-header">
+    <div class="announcement-header medium-font">
         <h3>{{ Postdetails?.association_name }}</h3>
 
-        <p class="post-date">
+        <p class="post-date regular-font">
             {{ Postdetails?.created_time.$date | date:'dd MMM yyyy, hh:mm a' }}
         </p>
 
@@ -16,33 +16,43 @@
 
         <!-- Category -->
         <div class="info-block">
-            <label>Category:</label>
-            <span>{{ Postdetails?.category | titlecase }}</span>
+            <label class="medium-font">Category:</label>
+            <span class="regular-font">{{ Postdetails?.category | titlecase }}</span>
         </div>
 
         <!-- Event Date (only when category = events) -->
         <div class="info-block" *ngIf="Postdetails?.category === 'events'">
-            <label>Event Date:</label>
-            <p>{{ Postdetails?.event_date | date:'dd MMM yyyy' }}</p>
+            <label class="medium-font">Event Date:</label>
+            <p class="regular-font">{{ Postdetails?.event_date | date:'dd MMM yyyy' }}</p>
         </div>
 
         <!-- Title -->
         <div class="info-block">
-            <label>Title:</label>
-            <p>{{ Postdetails?.title }}</p>
+            <label class="medium-font">Title:</label>
+            <p class="regular-font">{{ Postdetails?.title }}</p>
         </div>
 
         <!-- Summary -->
         <div class="info-block">
-            <label>Summary:</label>
-            <p>{{ Postdetails?.summary }}</p>
+            <label class="medium-font">Summary:</label>
+            <p class="regular-font">{{ Postdetails?.summary }}</p>
         </div>
 
         <!-- Images -->
-        <div class="image-section" *ngIf="Postdetails?.images?.length > 0">
-            <label>Attachments:</label>
-            <div class="image-grid">
-                <img *ngFor="let img of Postdetails.images" [src]="img" alt="Attachment" />
+        <!-- Attachments (Images + Videos) -->
+        <div class="attachment-section" *ngIf="Postdetails?.images?.length > 0">
+            <label class="medium-font">Attachments:</label>
+
+            <div class="attachment-grid">
+                <ng-container *ngFor="let file of Postdetails.images">
+
+                    <!-- Image Preview -->
+                    <img *ngIf="isImage(file)" [src]="file" class="attachment-item" alt="Attachment" />
+
+                    <!-- Video Preview -->
+                    <video *ngIf="isVideo(file)" [src]="file" class="attachment-item" controls></video>
+
+                </ng-container>
             </div>
         </div>
 

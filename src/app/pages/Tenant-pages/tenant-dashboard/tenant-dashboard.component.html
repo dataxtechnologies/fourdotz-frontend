@@ -4,7 +4,7 @@
             <div class="welcome-card d-flex justify-content-between align-items-center h-100">
                 <div>
                     <h1 class="fw-bold mb-1 text-dark">Welcome back!</h1>
-                    <p class="text-muted mb-0">Hope you have a productive day ahead.</p>
+                    <p class="text-muted mb-0 regular-font">Hope you have a productive day ahead.</p>
                 </div>
                 <div class="profile-img">
                     <img src="assets/images/tenant.jpg" alt="Profile" class=" shadow-3d">
@@ -40,10 +40,10 @@
                                     {{ property.owner_name.charAt(0) }}
                                 </div>
                                 <div class="transaction-details">
-                                    <span class="transaction-name">
+                                    <span class="transaction-name medium-font">
                                         {{ property.owner_name }} | {{ property.property_no }}
                                     </span>
-                                    <span class="transaction-date">
+                                    <span class="transaction-date regular-font">
                                         {{ property.association_name }}
                                     </span>
                                 </div>
@@ -63,19 +63,19 @@
                     <table class="styled-table">
                         <thead>
                             <tr>
-                                <th>Property No</th>
-                                <th>Maintenance Amount</th>
-                                <th>Owner Name</th>
-                                <th>Association</th>
-                                <th>Issue Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th class="medium-font">Property No</th>
+                                <th class="medium-font">Maintenance Amount</th>
+                                <th class="medium-font">Owner Name</th>
+                                <th class="medium-font">Association</th>
+                                <th class="medium-font">Issue Date</th>
+                                <th class="medium-font">Status</th>
+                                <th class="medium-font">Action</th>
                             </tr>
                         </thead>
-                        <tbody *ngIf="!tableLoading; else tableSkeleton">
+                        <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
                             <ng-container *ngIf="maintenancelist2?.length === 0; else datashow">
                                 <tr>
-                                    <td colspan="7" style="text-align: center; font-weight: 600; color: gray;">
+                                    <td colspan="7" class="regular-font" style="text-align: center;  color: gray;">
                                         No Data Found
                                     </td>
                                 </tr>

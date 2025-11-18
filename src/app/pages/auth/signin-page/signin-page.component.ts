@@ -109,7 +109,7 @@ export class SigninPageComponent implements OnInit {
         const newuseremail = this.loginForm.get('username')?.value;
         if (err.error?.error?.data?.update_password === false) {
           localStorage.setItem('session_key', err.error.error.data.session_key);
-          this.route.navigateByUrl(`/auth/change-password/${newuseremail}`);
+          this.route.navigateByUrl(`/auth/Change-password/${newuseremail}`);
         }
         this.toastr.error(err.error?.error?.message || 'Login failed', 'Error');
       },

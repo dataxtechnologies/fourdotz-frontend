@@ -98,9 +98,7 @@
 }
 
 .transaction-name {
-    font-weight: 600;
     color: var(--text-black);
-    font-size: 0.95rem;
 }
 
 .transaction-date {

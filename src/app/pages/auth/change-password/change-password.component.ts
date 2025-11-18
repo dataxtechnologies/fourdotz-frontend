@@ -24,8 +24,8 @@ export class ChangePasswordComponent implements OnInit {
   confirmPasswordFieldType: string = 'password';
   usermail: string | null = null;
   btnloading: boolean = false;
-showNewPassword = false;
-showConfirmPassword = false;
+  showNewPassword = false;
+  showConfirmPassword = false;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -58,10 +58,10 @@ showConfirmPassword = false;
   }
 
   onSubmit() {
-    this.btnloading = true
+    this.btnloading = true;
     if (this.changePasswordForm.invalid) {
       this.changePasswordForm.markAllAsTouched();
-       this.btnloading = false
+      this.btnloading = false;
       return;
     }
 
@@ -81,7 +81,7 @@ showConfirmPassword = false;
           const userType = res.data?.user_type;
           const user_id = res.data?.user_id;
           this.btnloading = false;
-          localStorage.removeItem('session_key')
+          localStorage.removeItem('session_key');
           if (tokenData) {
             localStorage.setItem('access_token', tokenData.AccessToken);
             localStorage.setItem('refresh_token', tokenData.RefreshToken);
@@ -92,7 +92,7 @@ showConfirmPassword = false;
             localStorage.setItem('user_id', user_id);
           }
 
-         //console.log(res.message || 'Login successful');
+          //console.log(res.message || 'Login successful');
 
           // Navigate based on user type
           switch (userType) {
@@ -133,15 +133,15 @@ showConfirmPassword = false;
     });
   }
 
-    goBack() {
+  goBack() {
     this.router.navigateByUrl('auth/sign-in');
   }
 
-toggleNewPassword(): void {
-  this.showNewPassword = !this.showNewPassword;
-}
+  toggleNewPassword(): void {
+    this.showNewPassword = !this.showNewPassword;
+  }
 
-toggleConfirmPassword(): void {
-  this.showConfirmPassword = !this.showConfirmPassword;
-}
+  toggleConfirmPassword(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
 }

@@ -16,21 +16,21 @@
                         <table class="styled-table">
                             <thead>
                                 <tr>
-                                    <th>Resident Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Property No</th>
-                                    <th>Property Type</th>
-                                    <th>Resident Type</th>
-                                    <th>View</th>
+                                    <th class="medium-font">Resident Name</th>
+                                    <th class="medium-font">Email</th>
+                                    <th class="medium-font">Phone</th>
+                                    <th class="medium-font">Property No</th>
+                                    <th class="medium-font">Property Type</th>
+                                    <th class="medium-font">Resident Type</th>
+                                    <th class="medium-font">View</th>
                                 </tr>
                             </thead>
-                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
 
                                 <!-- If no data -->
                                 <ng-container *ngIf="Residentlist2?.length === 0; else datashow">
                                     <tr>
-                                        <td colspan="7" style="text-align: center; font-weight: 600; color: gray;">
+                                        <td colspan="7" class="regular-font" style="text-align: center; color: gray;">
                                             No Data Found
                                         </td>
                                     </tr>
@@ -88,7 +88,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="Residentlist1" class="pagination-container ">
+        <div *ngIf="Residentlist1" class="pagination-container regular-font">
             <p class="pagination-info">
                 Showing {{ Residentlist1.startIndex + 1 }} to {{ Residentlist1.endIndex + 1 }} of {{
                 Residentlist1.totalData }} entries
@@ -99,7 +99,7 @@
                 <li>
                     <button [disabled]="Residentlist1.currentPage === 1" (click)="Residentlist1.prevPage()"
                         class="page-btn arrow-btn">
-                        &#x276E;
+                        <i class="fa-solid fa-angle-left"></i>
                     </button>
                 </li>
 
@@ -114,7 +114,7 @@
                 <li>
                     <button [disabled]="Residentlist1.currentPage === Residentlist1.totalPages"
                         (click)="Residentlist1.nextPage()" class="page-btn arrow-btn">
-                        &#x276F;
+                       <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </li>
             </ul>

@@ -1,287 +1,261 @@
-<div class="parent">
-    <div class="div1">
-        <div class="table-cont"> <!-- &#64; -->
-            <div class="table-container">
-                <table class="styled-table">
-                    <thead class="Table-Header">
-                        <tr>
-                            <th> Amount</th>
-                            <th> Name</th>
-                            <th> Type</th>
-                            <th>Association </th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="tbody-dd Table-Body" *ngIf="!tableLoading; else tableSkeleton">
-                        <ng-container *ngIf="maintenancelist2?.length === 0; else datashow">
+<section class="whole-div">
+    <div class="parent">
+        <div class="div1">
+            <div class="table-cont"> <!-- &#64; -->
+                <div class="table-container">
+                    <table class="styled-table">
+                        <thead class="Table-Header">
                             <tr>
-                                <td colspan="7" style="text-align: center; font-weight: 600; color: gray;">
-                                    No Data Found
-                                </td>
+                                <th class="medium-font"> Amount</th>
+                                <th class="medium-font"> Name</th>
+                                <th class="medium-font"> Type</th>
+                                <th class="medium-font">Association </th>
+                                <th class="medium-font">Date</th>
+                                <th class="medium-font">Status</th>
                             </tr>
-                        </ng-container>
+                        </thead>
+                        <tbody class="tbody-dd Table-Body regular-font" *ngIf="!tableLoading; else tableSkeleton">
+                            <ng-container *ngIf="maintenancelist2?.length === 0; else datashow">
+                                <tr>
+                                    <td colspan="7" class="regular-font" style="text-align: center; color: gray;">
+                                        No Data Found
+                                    </td>
+                                </tr>
+                            </ng-container>
 
-                        <ng-template #datashow>
-                            <tr *ngFor="let item of maintenancelist1.paginatedData">
-                                <td data-label="Maintenance Amount">₹{{ item.total_amount }}</td>
-                                <td data-label="Resident Name">{{ item.resident_name }}</td>
-                                <td data-label="Resident Type">{{ item.resident_type }}</td>
-                                <td data-label="Association Name">{{ item.association_name }}</td>
-                                <td data-label="Date">{{ item.created_time.$date | date: 'dd-MMM-yyyy' }}</td>
+                            <ng-template #datashow>
+                                <tr *ngFor="let item of maintenancelist1.paginatedData">
+                                    <td data-label="Maintenance Amount">₹{{ item.total_amount }}</td>
+                                    <td data-label="Resident Name">{{ item.resident_name }}</td>
+                                    <td data-label="Resident Type">{{ item.resident_type }}</td>
+                                    <td data-label="Association Name">{{ item.association_name }}</td>
+                                    <td data-label="Date">{{ item.created_time.$date | date: 'dd-MMM-yyyy' }}</td>
 
-                                <!-- ✅ Status Column -->
-                                <td data-label="Status">
-                                    <ng-container *ngIf="item.payment_status; else notPaid">
-                                        <span class="status paid">Paid</span>
-                                    </ng-container>
-                                    <ng-template #notPaid>
-                                        <span class="status" [ngClass]="{
-                                                    overdue: isOverdue(item.created_time.$date),
-                                                    pending: !isOverdue(item.created_time.$date)
-                                                    }">
-                                            {{ isOverdue(item.created_time.$date) ? 'Overdue' : 'Pending' }}
-                                        </span>
-                                    </ng-template>
-                                </td>
-
-                                <!-- ✅ Conditional Action -->
-                                <td data-label="Actions">
-                                    <ng-container *ngIf="item.maintenance_paid_by === 'owner'; else showStatus">
-                                        <!-- Show Pay Now if unpaid by owner -->
-                                        <ng-container *ngIf="!item.payment_status; else viewDetails">
-                                            <button class="pay-btn">Pay Now</button>
-                                        </ng-container>
-                                        <ng-template #viewDetails>
-                                            <i class="fa-solid fa-arrow-up-right-from-square"
-                                                style="cursor: pointer;"></i>
-                                        </ng-template>
-                                    </ng-container>
-
-                                    <!-- Show status if maintenance is not paid by owner -->
-                                    <ng-template #showStatus>
+                                    <!-- ✅ Status Column -->
+                                    <td data-label="Status">
                                         <ng-container *ngIf="item.payment_status; else notPaid">
                                             <span class="status paid">Paid</span>
                                         </ng-container>
                                         <ng-template #notPaid>
                                             <span class="status" [ngClass]="{
-          overdue: isOverdue(item.created_time.$date),
-          pending: !isOverdue(item.created_time.$date)
-        }">
+                                                    overdue: isOverdue(item.created_time.$date),
+                                                    pending: !isOverdue(item.created_time.$date)
+                                                    }">
                                                 {{ isOverdue(item.created_time.$date) ? 'Overdue' : 'Pending' }}
                                             </span>
                                         </ng-template>
-                                    </ng-template>
+                                    </td>
+
+
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                        <ng-template #tableSkeleton>
+                            <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                <td>
+                                    <span class="placeholder col-10 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-8 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-6 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-7 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-5 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-3 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
                                 </td>
                             </tr>
                         </ng-template>
-                    </tbody>
-                    <ng-template #tableSkeleton>
-                        <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
-                            <td>
-                                <span class="placeholder col-10 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-8 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-6 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-7 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-5 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-3 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="div2 rounded-2xl shadow-md flex flex-col properties-div">
-        <div class="transaction-header">
-            <h3>My Properties</h3>
-            <a class="link-text" (click)="viewallproperty()">See All</a>
-        </div>
+        <div class="div2 rounded-2xl shadow-md flex flex-col properties-div">
+            <div class="transaction-header">
+                <h3 class="demibold-font">My Properties</h3>
+                <a class="link-text" (click)="viewallproperty()" style="cursor: pointer;">See All</a>
+            </div>
 
-        <div class="transaction-list">
-            <!-- Skeleton loader when loading -->
-            <ng-container *ngIf="propertytableLoading; else propertyList">
-                <div *ngFor="let n of [1, 2]" class="transaction-item skeleton-item">
-                    <div class="transaction-item-left">
-                        <div class="maintenance-avatar skeleton-circle"></div>
-                        <div class="transaction-details">
-                            <div class="skeleton-line w-75 mb-2"></div>
-                            <div class="skeleton-line w-50"></div>
+            <div class="transaction-list">
+                <!-- Skeleton loader when loading -->
+                <ng-container *ngIf="propertytableLoading; else propertyList">
+                    <div *ngFor="let n of [1, 2]" class="transaction-item skeleton-item">
+                        <div class="transaction-item-left">
+                            <div class="maintenance-avatar skeleton-circle"></div>
+                            <div class="transaction-details">
+                                <div class="skeleton-line w-75 mb-2"></div>
+                                <div class="skeleton-line w-50"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </ng-container>
+                </ng-container>
 
-            <!-- Actual data -->
-            <ng-template #propertyList>
-                <div *ngIf="propertieslist2?.length > 0; else noData">
-                    <div class="transaction-item" *ngFor="let property of propertieslist2">
+                <!-- Actual data -->
+                <ng-template #propertyList>
+                    <div *ngIf="propertieslist2?.length > 0; else noData">
+                        <div class="transaction-item" *ngFor="let property of propertieslist2">
+                            <div class="transaction-item-left">
+                                <div class="maintenance-avatar">
+                                    {{ property.owner_name.charAt(0) }}
+                                </div>
+                                <div class="transaction-details">
+                                    <span class="transaction-name medium-font">
+                                        {{ property.owner_name }} | {{ property.property_no }}
+                                    </span>
+                                    <span class="transaction-date regular-font">
+                                        {{ property.association_name }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ng-template #noData>
+                        <p class="text-center text-muted my-4 regular-font">No properties found</p>
+                    </ng-template>
+                </ng-template>
+            </div>
+        </div>
+        <div class="div3  rounded-2xl shadow-md flex flex-col properties-div">
+            <div class="transaction-header">
+                <h3>Tenants</h3>
+                <a class="link-text" (click)="viewallTenant()" style="cursor: pointer;">See All</a>
+            </div>
+
+            <div class="transaction-list">
+
+                <!-- Bootstrap Skeleton Loader -->
+                <ng-container *ngIf="TenanttableLoading">
+                    <div class="transaction-item" *ngFor="let i of [1,2]">
+                        <div class="transaction-item-left d-flex align-items-center">
+                            <div class="maintenance-avatar placeholder bg-secondary rounded-circle"
+                                style="width:40px;height:40px;"></div>
+                            <div class="transaction-details ms-3" style="width: 200px;">
+                                <div class="placeholder-glow">
+                                    <span class="placeholder col-8 mb-2"></span>
+                                    <span class="placeholder col-6"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!-- Tenant List -->
+                <ng-container *ngIf="!TenanttableLoading && TenantList2.length > 0">
+                    <div class="transaction-item" *ngFor="let tenant of TenantList2">
                         <div class="transaction-item-left">
                             <div class="maintenance-avatar">
-                                {{ property.owner_name.charAt(0) }}
+                                {{ tenant.tenant_name.charAt(0).toUpperCase() }}
                             </div>
                             <div class="transaction-details">
-                                <span class="transaction-name">
-                                    {{ property.owner_name }} | {{ property.property_no }}
+                                <span class="transaction-name medium-font">
+                                    {{ tenant.tenant_name }} | {{ tenant.property_no }}
                                 </span>
-                                <span class="transaction-date">
-                                    {{ property.association_name }}
-                                </span>
+                                <span class="transaction-date regular-font">{{ tenant.association_name }}</span>
                             </div>
                         </div>
                     </div>
-                </div>
+                </ng-container>
 
-                <ng-template #noData>
-                    <p class="text-center text-muted my-4">No properties found</p>
-                </ng-template>
-            </ng-template>
+                <!-- No Data -->
+                <ng-container *ngIf="!TenanttableLoading && TenantList2.length === 0">
+                    <p class="text-center text-muted mt-3 regular-font">No tenants found</p>
+                </ng-container>
+            </div>
         </div>
-    </div>
-    <div class="div3  rounded-2xl shadow-md flex flex-col properties-div">
-        <div class="transaction-header">
-            <h3>Tenants</h3>
-            <a class="link-text" (click)="viewallTenant()">See All</a>
-        </div>
-
-        <div class="transaction-list">
-
-            <!-- Bootstrap Skeleton Loader -->
-            <ng-container *ngIf="TenanttableLoading">
-                <div class="transaction-item" *ngFor="let i of [1,2]">
-                    <div class="transaction-item-left d-flex align-items-center">
-                        <div class="maintenance-avatar placeholder bg-secondary rounded-circle"
-                            style="width:40px;height:40px;"></div>
-                        <div class="transaction-details ms-3" style="width: 200px;">
-                            <div class="placeholder-glow">
-                                <span class="placeholder col-8 mb-2"></span>
-                                <span class="placeholder col-6"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </ng-container>
-
-            <!-- Tenant List -->
-            <ng-container *ngIf="!TenanttableLoading && TenantList2.length > 0">
-                <div class="transaction-item" *ngFor="let tenant of TenantList2">
-                    <div class="transaction-item-left">
-                        <div class="maintenance-avatar">
-                            {{ tenant.tenant_name.charAt(0).toUpperCase() }}
-                        </div>
-                        <div class="transaction-details">
-                            <span class="transaction-name">
-                                {{ tenant.tenant_name }} | {{ tenant.property_no }}
-                            </span>
-                            <span class="transaction-date">{{ tenant.association_name }}</span>
-                        </div>
-                    </div>
-                </div>
-            </ng-container>
-
-            <!-- No Data -->
-            <ng-container *ngIf="!TenanttableLoading && TenantList2.length === 0">
-                <p class="text-center text-muted mt-3">No tenants found</p>
-            </ng-container>
-        </div>
-    </div>
-    <div class="div4">
-        <div class="table-cont1"> <!-- &#64; -->
-            <div class="table-container">
-                <table class="styled-table">
-                    <thead>
-                        <tr>
-                            <th>Rental Amount</th>
-                            <th>Association </th>
-                            <th> Name</th>
-                            <th> Phone</th>
-                            <th>Issue At</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngIf="!rentaltableLoading; else tableSkeleton">
-                        <ng-container *ngIf="rentalinvoicelist2?.length === 0; else datashow">
+        <div class="div4">
+            <div class="table-cont1"> <!-- &#64; -->
+                <div class="table-container">
+                    <table class="styled-table">
+                        <thead>
                             <tr>
-                                <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
-                                    No Data Found
-                                </td>
+                                <th class="medium-font">Rental Amount</th>
+                                <th class="medium-font">Association </th>
+                                <th class="medium-font"> Name</th>
+                                <th class="medium-font"> Phone</th>
+                                <th class="medium-font">Issue At</th>
+                                <th class="medium-font">Status</th>
                             </tr>
-                        </ng-container>
+                        </thead>
+                        <tbody *ngIf="!rentaltableLoading; else tableSkeleton" class="regular-font">
+                            <ng-container *ngIf="rentalinvoicelist2?.length === 0; else datashow">
+                                <tr>
+                                    <td colspan="6" class="regular-font" style="text-align: center; color: gray;">
+                                        No Data Found
+                                    </td>
+                                </tr>
+                            </ng-container>
 
-                        <ng-template #datashow>
-                            <tr *ngFor="let p of rentalinvoicelist1.paginatedData">
-                                <td>₹{{ p.total_amount }}</td>
-                                <td>{{ p.association_name }}</td>
-                                <td>{{ p.tenant_name }}</td>
-                                <td>{{ p.tenant_mobile }}</td>
-                                <td>{{ p.created_time.$date | date:'dd-MMM-yyyy' }}</td>
-                                <td data-label="Status">
-                                            <ng-container *ngIf="p.payment_status; else notPaid">
-                                                <span class="status paid">Paid</span>
-                                            </ng-container>
-                                            <ng-template #notPaid>
-                                                <span class="status" [ngClass]="{
+                            <ng-template #datashow>
+                                <tr *ngFor="let p of rentalinvoicelist1.paginatedData">
+                                    <td>₹{{ p.total_amount }}</td>
+                                    <td>{{ p.association_name }}</td>
+                                    <td>{{ p.tenant_name }}</td>
+                                    <td>{{ p.tenant_mobile }}</td>
+                                    <td>{{ p.created_time.$date | date:'dd-MMM-yyyy' }}</td>
+                                    <td data-label="Status">
+                                        <ng-container *ngIf="p.payment_status; else notPaid">
+                                            <span class="status paid">Paid</span>
+                                        </ng-container>
+                                        <ng-template #notPaid>
+                                            <span class="status" [ngClass]="{
                                                     overdue: isOverdue(p.created_time.$date),
                                                     pending: !isOverdue(p.created_time.$date)
                                                     }">
-                                                    {{ isOverdue(p.created_time.$date) ? 'Overdue' : 'Pending' }}
-                                                </span>
-                                            </ng-template>
-                                        </td>
+                                                {{ isOverdue(p.created_time.$date) ? 'Overdue' : 'Pending' }}
+                                            </span>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                        <ng-template #tableSkeleton>
+                            <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                <td>
+                                    <span class="placeholder col-10 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-8 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-6 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-7 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-5 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-3 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
+                                <td>
+                                    <span class="placeholder col-3 placeholder-glow"
+                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                </td>
                             </tr>
                         </ng-template>
-                    </tbody>
-                    <ng-template #tableSkeleton>
-                        <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
-                            <td>
-                                <span class="placeholder col-10 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-8 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-6 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-7 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-5 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-3 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-3 placeholder-glow"
-                                    style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>

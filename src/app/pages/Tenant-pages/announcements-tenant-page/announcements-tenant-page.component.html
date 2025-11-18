@@ -8,24 +8,23 @@
                 <!-- Date Range Filter -->
                 <div class="filter-item">
                     <i class="fa-regular fa-calendar"></i>
-                    <select [(ngModel)]="selectedDateRange" (change)="applyFilters()">
-    <option value="all">Date Range</option>
-    <option value="today">Today</option>
-    <option value="week">This Week</option>
-    <option value="month">This Month</option>
-    <option value="3months">Last 3 Months</option>
-</select>
+                    <select [(ngModel)]="selectedDateRange" (change)="applyFilters()" class="regular-font">
+                        <option value="all">Date Range</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="3months">Last 3 Months</option>
+                    </select>
                 </div>
 
                 <!-- Sort / Category Filter -->
                 <div class="filter-item">
-                    <i class="fa-solid fa-sort"></i>
-                    <select [(ngModel)]="selectedCategory" (change)="applyFilters()">
-    <option value="all">All Category</option>
-    <option value="announcements">Announcements</option>
-    <option value="events">Events</option>
-    <option value="updates">Updates</option>
-</select>
+                    <select [(ngModel)]="selectedCategory" (change)="applyFilters()" class="regular-font">
+                        <option value="all">All Category</option>
+                        <option value="announcements">Announcements</option>
+                        <option value="events">Events</option>
+                        <option value="updates">Updates</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -35,107 +34,137 @@
             <div class="col-lg-3">
                 <div class="sidebar fixed-sidebar">
                     <div class="sidebar-head">
-                        <h5 class="mt-1">Category</h5>
+                        <h5 class="mt-1 medium-font">Category</h5>
                         <!-- <button class="add-button">+ Add New</button> -->
                     </div>
-                   <ul>
-    <li 
-        [class.active]="selectedCategory === 'all'"
-        (click)="selectedCategory='all'; applyFilters()">
-        All Announcements
-    </li>
+                    <ul class="regular-font">
+                        <li [class.active]="selectedCategory === 'all'"
+                            (click)="selectedCategory='all'; applyFilters()">
+                            All Announcements
+                        </li>
 
-    <li 
-        [class.active]="selectedCategory === 'announcements'"
-        (click)="selectedCategory='announcements'; applyFilters()">
-        Announcements
-    </li>
+                        <li [class.active]="selectedCategory === 'announcements'"
+                            (click)="selectedCategory='announcements'; applyFilters()">
+                            Announcements
+                        </li>
 
-    <li 
-        [class.active]="selectedCategory === 'events'"
-        (click)="selectedCategory='events'; applyFilters()">
-        Events
-    </li>
+                        <li [class.active]="selectedCategory === 'events'"
+                            (click)="selectedCategory='events'; applyFilters()">
+                            Events
+                        </li>
 
-    <li 
-        [class.active]="selectedCategory === 'updates'"
-        (click)="selectedCategory='updates'; applyFilters()">
-        Updates
-    </li>
-</ul>
+                        <li [class.active]="selectedCategory === 'updates'"
+                            (click)="selectedCategory='updates'; applyFilters()">
+                            Updates
+                        </li>
+
+                        <li (click)="viewallpinnedAnnouncement(pinnedAnnouncement2)">
+                            Pinned Announcements
+                        </li>
+                    </ul>
                 </div>
             </div>
 
             <!-- ===== Center Feed ===== -->
             <!-- ===== Center Feed ===== -->
-            <div class="col-lg-6">
-                <div class="post-feed">
+            <!-- <div class="col-lg-9"> -->
+                <div class="col-lg-9">
+                    <div class="post-feed">
 
+                        <!-- Create Announcement Box -->
+                        
 
-
-                    <!-- 🔹 Skeleton Loader (Posts) -->
-                    <div *ngIf="loadingPosts" class="skeleton-container">
-                        <div class="skeleton-card" *ngFor="let i of [1,2,3]"></div>
-                    </div>
-
-                    <!-- 🔹 No Data Found -->
-                    <div *ngIf="!loadingPosts && posts?.length === 0; else announcementpost" class="no-data">
-                        <img src="assets/logo/no-announcement.jpg" alt="No data"  style="width: 600px;"/>
-                        <!-- <p>No announcements found.</p> -->
-                    </div>
-
-                    <ng-template #announcementpost>
-
-                        <!-- 🔹 Announcement Posts Loop -->
-                        <div *ngFor="let post of filteredPosts; let i = index" class="announcement-card">
-                            <div class="announcement-header">
-                                <div class="announcement-user">
-                                    <img src="assets/logo/association_avatar.jpg" alt="User" />
-                                    <div>
-                                        <strong>{{ post.association_name }}</strong><br />
-                                        <small>{{ post.created_time.$date | date:'dd-MMM-yyy HH:mm:ss' }}</small>
-                                    </div>
-                                </div>
-                                <div class="d-flex gap-2">
-                                    <img src="assets/icons/view-post.svg" alt="view-post" style=" cursor: pointer;" (click)="viewpost(post)">
-                                   <img src="assets/icons/pinfilled.png" *ngIf="post.pin"
-                                        style="width: 25px; cursor: pointer;"
-                                        (click)="Createpinannouncement(post._id)" />
-
-                                    <!-- Not pinned -->
-                                    <img src="assets/icons/pinoutline.png" *ngIf="!post.pin"
-                                        style="width: 25px; cursor: pointer;"
-                                        (click)="Createpinannouncement(post._id)" />
-                                    <span class="badge">{{ post.category }}</span>
-                                </div>
-                            </div>
-
-                            <div class="announcement-body mt-3">
-                                <h6>{{ post.title }}</h6>
-                                <p>
-                                    {{ post.summary?.length > 80 ? (post.summary | slice:0:80) + '...' : post.summary }}
-                                </p>
-
-                                <!-- Single Image -->
-                                <ng-container *ngIf="post.images?.length === 1">
-                                    <img [src]="post.images[0]" class="single-image mt-3" alt="Post Image" />
-                                </ng-container>
-
-                                <!-- Two Images Grid -->
-                                <ng-container *ngIf="post.images?.length === 2">
-                                    <div class="two-img-grid mt-3">
-                                        <img *ngFor="let img of post.images" [src]="img" alt="Post Image" />
-                                    </div>
-                                </ng-container>
-                            </div>
-
-                           
+                        <!-- 🔹 Skeleton Loader (Posts) -->
+                        <div *ngIf="loadingPosts" class="skeleton-container">
+                            <div class="skeleton-card" *ngFor="let i of [1,2,3]"></div>
                         </div>
-                    </ng-template>
-                </div>
-            </div>
 
-            <div class="col-lg-3">
+                        <!-- 🔹 No Data Found -->
+
+                        <div *ngIf="!loadingPosts">
+                            <div *ngIf="posts?.length === 0; else announcementpost" class="no-data">
+                                <img src="assets/logo/no-announcement.jpg" alt="No data" style="width: 600px;" />
+                                <!-- <p>No announcements found.</p> -->
+                            </div>
+                            <ng-template #announcementpost>
+
+                                <!-- 🔹 Announcement Posts Loop -->
+                                <div *ngFor="let post of filteredPosts; let i = index" class="announcement-card">
+                                    <div class="announcement-header">
+                                        <div class="announcement-user">
+                                            <img src="assets/logo/association_avatar.jpg" alt="User" />
+                                            <div>
+                                                <strong class="medium-font">{{ post.association_name }}</strong><br />
+                                                <small class="regular-font">{{ post.created_time.$date | date:'dd-MMM-yyy HH:mm:ss'
+                                                    }}</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-2">
+                                            <img src="assets/icons/view-post.svg" alt="view-post"
+                                                style=" cursor: pointer;" (click)="viewpost(post)">
+                                            <!-- Already pinned -->
+                                            <img src="assets/icons/pinfilled.png" *ngIf="!post.pin"
+                                                style="width: 25px; cursor: pointer;"
+                                                (click)="Createpinannouncement(post._id)" />
+
+                                            <!-- Not pinned -->
+                                            <img src="assets/icons/pinoutline.png" *ngIf="post.pin"
+                                                style="width: 25px; cursor: pointer;"
+                                                (click)="Createpinannouncement(post._id)" />
+                                            <span class="badge">{{ post.category }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="announcement-body mt-3">
+                                        <h6 class="medium-font">{{ post.title }}</h6>
+                                        <p class="regular-font">
+                                            {{ post.summary?.length > 300 ? (post.summary | slice:0:300) + '...' :
+                                            post.summary }}
+                                        </p>
+
+                                        <!-- Single attachment -->
+                                        <ng-container *ngIf="post.attachments?.length === 1">
+
+                                            <!-- Image -->
+                                            <img *ngIf="post.attachments[0].type === 'image'"
+                                                [src]="post.attachments[0].url" class="single-image mt-3" />
+
+                                            <!-- Video -->
+                                            <video *ngIf="post.attachments[0].type === 'video'"
+                                                [src]="post.attachments[0].url" class="single-video mt-3"
+                                                controls></video>
+
+                                        </ng-container>
+
+                                        <!-- Two attachments grid -->
+                                        <ng-container *ngIf="post.attachments?.length === 2">
+                                            <div class="two-img-grid mt-3">
+
+                                                <ng-container *ngFor="let att of post.attachments">
+
+                                                    <!-- Image -->
+                                                    <img *ngIf="att.type === 'image'" [src]="att.url" alt="Image" />
+
+                                                    <!-- Video -->
+                                                    <video *ngIf="att.type === 'video'" [src]="att.url"
+                                                        controls></video>
+
+                                                </ng-container>
+
+                                            </div>
+                                        </ng-container>
+                                    </div>
+
+
+
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            <!-- </div> -->
+
+            <!-- <div class="col-lg-3">
                 <div class="pinned-sidebar fixed-pinned">
                     <h5>Pinned Announcements</h5>
 
@@ -144,7 +173,7 @@
                     </div>
 
                     <div *ngIf="!loadingPinned && pinnedAnnouncement2?.length === 0; else contentdiv" class="no-data">
-                        <img src="assets/logo/no-pin-announcement.jpg" alt="No data" style="width: 250px;"/>
+                        <img src="assets/logo/no-pin-announcement.jpg" alt="No data" style="width: 250px;" />
                         <p>No pinned announcements.</p>
                     </div>
 
@@ -162,10 +191,11 @@
                     </ng-template>
 
                     <div class="btn-div">
-                        <button class="view-btn" (click)="viewallpinnedAnnouncement(pinnedAnnouncement2)"> View all <i class="fa-solid fa-arrow-turn-up"></i></button>
+                        <button class="view-btn" (click)="viewallpinnedAnnouncement(pinnedAnnouncement2)"> View all <i
+                                class="fa-solid fa-arrow-turn-up"></i></button>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>

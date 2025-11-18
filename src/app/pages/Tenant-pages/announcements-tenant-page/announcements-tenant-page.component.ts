@@ -75,8 +75,25 @@ export class AnnouncementsTenantPageComponent {
       next: (res: any) => {
         this.loadingPosts = false;
 
-        if (res?.success && Array.isArray(res.data)) {
-          this.posts = res.data;
+       if (res?.success && Array.isArray(res.data)) {
+          this.posts = res.data.map((post: any) => {
+            if (Array.isArray(post.images)) {
+              post.attachments = post.images.map((url: string) => {
+                const isVideo = url
+                  .toLowerCase()
+                  .match(/\.(mp4|mov|avi|mkv|webm)$/);
+                return {
+                  url,
+                  type: isVideo ? 'video' : 'image',
+                };
+              });
+            } else {
+              post.attachments = [];
+            }
+            return post;
+          });
+
+          // 🔥 Just apply filters — NO pin logic needed here
           this.applyFilters();
         } else {
           this.posts = [];

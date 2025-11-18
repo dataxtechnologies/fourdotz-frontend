@@ -1,4 +1,4 @@
 
 .bg-00{
-background-color: #EAE9E3;
+background-color: var(--bg-primary);
 }

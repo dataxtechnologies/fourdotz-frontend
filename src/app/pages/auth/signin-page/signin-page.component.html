@@ -5,8 +5,8 @@
             <img src="assets/logo/fourdotz-logo.png" alt="Logo" />
 
             <!-- <div> -->
-                <h4>Sign in to continue</h4>
-                <p>Please enter your login to sign in </p>
+                <h4 class="demibold-font">Sign in to continue</h4>
+                <p class="regular-font">Please enter your login to sign in </p>
             <!-- </div> -->
         </div>
 
@@ -15,9 +15,9 @@
             <!-- Email / Phone -->
             <div class="inp-cont">
                 <label for="email">Email or Phone <span class="required">*</span></label>
-                <input type="text" id="email" placeholder="Enter email or phone" class="inp-cus"
+                <input type="text" id="email" placeholder="Enter email or phone" class="inp-cus regular-font"
                     formControlName="username" />
-                <div class="error" *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid">
+                <div class="error medium-font" *ngIf="loginForm.get('username')?.touched && loginForm.get('username')?.invalid">
                     <small *ngIf="loginForm.get('username')?.errors?.['required']" class="error-text">Email is required.</small>
                     <small *ngIf="loginForm.get('username')?.errors?.['username']" class="error-text">Enter a valid email.</small>
                 </div>
@@ -26,12 +26,12 @@
             <!-- Password with show/hide -->
             <div class="inp-cont password-group">
                 <label for="password">Password <span class="required">*</span></label>
-                <input [type]="passwordFieldType" id="password" placeholder="Enter password" class="inp-cus"
+                <input [type]="passwordFieldType" id="password" placeholder="Enter password" class="inp-cus regular-font"
                     formControlName="password" />
                 <span class="toggle-password" (click)="togglePassword()">
                     <i [class]="passwordFieldType === 'password' ? 'fa-solid fa-lock' : 'fa-solid fa-unlock'"></i>
                 </span>
-                <div class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+                <div class="error medium-font" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
                     <small *ngIf="loginForm.get('password')?.errors?.['required']" class="error-text">Password is required.</small>
                     <small *ngIf="loginForm.get('password')?.errors?.['minlength']" class="error-text">
                         Password must be at least 6 characters.

@@ -70,8 +70,8 @@
 
                 <!-- Alternate Number -->
                 <div class="form-group">
-                    <label>Alternate Contact Number <span class="required">*</span></label>
-                    <input type="tel" formControlName="alternate_number" class="inp-cus" placeholder="e.g., 9876543210"
+                    <label class="medium-font">Alternate Contact Number <span class="required">*</span></label>
+                    <input type="tel" formControlName="alternate_number" class="inp-cus regular-font" placeholder="e.g., 9876543210"
                         maxlength="10" />
                     <div *ngIf="inputForm.get('alternate_number')?.touched">
                         <div *ngIf="inputForm.get('alternate_number')?.errors?.['required']" class="error">
@@ -85,8 +85,8 @@
 
                 <!-- GST Number -->
                 <div class="form-group">
-                    <label>GST Number <span class="required">*</span></label>
-                    <input type="text" formControlName="gst_number" class="inp-cus" placeholder="15-digit GSTIN"
+                    <label class="medium-font">GST Number <span class="required">*</span></label>
+                    <input type="text" formControlName="gst_number" class="inp-cus regular-font" placeholder="15-digit GSTIN"
                         maxlength="15" />
                     <div *ngIf="inputForm.get('gst_number')?.touched">
                         <div *ngIf="inputForm.get('gst_number')?.errors?.['required']" class="error">
@@ -100,8 +100,8 @@
 
                 <!-- Registration Number -->
                 <div class="form-group">
-                    <label>Association Registration Number <span class="required">*</span></label>
-                    <input type="text" formControlName="registration_number" class="inp-cus"
+                    <label class="medium-font">Association Registration Number <span class="required">*</span></label>
+                    <input type="text" formControlName="registration_number" class="inp-cus regular-font"
                         placeholder="Enter Association Registration Number" />
                     <div *ngIf="inputForm.get('registration_number')?.touched && inputForm.get('registration_number')?.invalid"
                         class="error">
@@ -111,8 +111,8 @@
 
                 <!-- Full Address -->
                 <div class="form-group">
-                    <label>Full Registered Address <span class="required">*</span></label>
-                    <textarea formControlName="address" class="inp-cus" placeholder="Enter Full Address"></textarea>
+                    <label class="medium-font">Full Registered Address <span class="required">*</span></label>
+                    <textarea formControlName="address" class="inp-cus regular-font" placeholder="Enter Full Address"></textarea>
                     <div *ngIf="inputForm.get('address')?.touched && inputForm.get('address')?.invalid" class="error">
                         Address is required.
                     </div>
@@ -142,8 +142,8 @@
             </div>
             <form [formGroup]="documentForm" (ngSubmit)="goToNextStep()">
                 <div class="form-group">
-                    <label for="company_proof_type">Select Company Proof Type <span class="required">*</span></label>
-                    <select id="company_proof_type" formControlName="company_proof_type" class="inp-cus">
+                    <label class="medium-font" for="company_proof_type">Select Company Proof Type <span class="required">*</span></label>
+                    <select id="company_proof_type" formControlName="company_proof_type" class="inp-cus regular-font">
                         <option value="">Choose Type</option>
                         <option value="incorporation_certificate">Certificate of Incorporation</option>
                         <option value="moa_aoa">Memorandum of Association (MOA)</option>
@@ -156,27 +156,27 @@
 
 
                     <div class="form-group">
-                        <label for="Passport">Passport Size Photo</label>
-                        <input type="file" class="inp-cus" (change)="onFilePassportChange($event)"
+                        <label class="medium-font" for="Passport">Passport Size Photo</label>
+                        <input type="file" class="inp-cus regular-font" (change)="onFilePassportChange($event)"
                             accept="image/*,.pdf" />
                     </div>
                     <div class="form-group">
-                        <label for="Passport">Rental Agreement</label>
-                        <input type="file" class="inp-cus" (change)="onFileRentalChange($event)"
+                        <label class="medium-font" for="Passport">Rental Agreement</label>
+                        <input type="file" class="inp-cus regular-font" (change)="onFileRentalChange($event)"
                             accept="image/*,.pdf" />
                     </div>
                     <div class="form-group">
-                        <label for="Passport">Cancelled Cheque Leaf</label>
-                        <input type="file" class="inp-cus" (change)="onFileChequeChange($event)"
+                        <label class="medium-font" for="Passport">Cancelled Cheque Leaf</label>
+                        <input type="file" class="inp-cus regular-font" (change)="onFileChequeChange($event)"
                             accept="image/*,.pdf" />
                     </div>
                     <div class="form-group">
-                        <label for="Passport">Pan Card</label>
-                        <input type="file" class="inp-cus" (change)="onFilePanChange($event)" accept="image/*,.pdf" />
+                        <label class="medium-font" for="Passport">Pan Card</label>
+                        <input type="file" class="inp-cus regular-font" (change)="onFilePanChange($event)" accept="image/*,.pdf" />
                     </div>
                     <div class="form-group">
-                        <label for="Passport">Company Proof</label>
-                        <input type="file" class="inp-cus" (change)="onFileCompanyChange($event)"
+                        <label class="medium-font" for="Passport">Company Proof</label>
+                        <input type="file" class="inp-cus regular-font" (change)="onFileCompanyChange($event)"
                             accept="image/*,.pdf" />
                     </div>
                 </div>
@@ -200,8 +200,8 @@
             <form [formGroup]="accountForm" (ngSubmit)="goToNextStep()">
                 <!-- Account Holder Name -->
                 <div class="form-group">
-                    <label>Account Holder Name <span class="required">*</span></label>
-                    <input type="text" formControlName="account_holder_name" class="inp-cus"
+                    <label class="medium-font">Account Holder Name <span class="required">*</span></label>
+                    <input type="text" formControlName="account_holder_name" class="inp-cus regular-font"
                         placeholder="Enter Account Holder Name" />
                     <div *ngIf="
           accountForm.get('account_holder_name')?.touched &&
@@ -213,8 +213,8 @@
 
                 <!-- Account Number -->
                 <div class="form-group">
-                    <label>Account Number <span class="required">*</span></label>
-                    <input type="text" formControlName="account_number" class="inp-cus"
+                    <label class="medium-font">Account Number <span class="required">*</span></label>
+                    <input type="text" formControlName="account_number" class="inp-cus regular-font"
                         placeholder="Enter Account Number" />
                     <div *ngIf="accountForm.get('account_number')?.touched" class="error">
                         <div *ngIf="accountForm.get('account_number')?.errors?.['required']">
@@ -228,8 +228,8 @@
 
                 <!-- Account Type -->
                 <div class="form-group">
-                    <label>Account Type <span class="required">*</span></label>
-                    <select formControlName="account_type" class="inp-cus">
+                    <label class="medium-font">Account Type <span class="required">*</span></label>
+                    <select formControlName="account_type" class="inp-cus regular-font">
                         <option value="">Select Account Type</option>
                         <option value="savings">Savings</option>
                         <option value="current">Current</option>
@@ -244,8 +244,8 @@
 
                 <!-- IFSC Code -->
                 <div class="form-group">
-                    <label>IFSC Code <span class="required">*</span></label>
-                    <input type="text" formControlName="ifsc_code" class="inp-cus" placeholder="e.g., SBIN0001234"
+                    <label class="medium-font">IFSC Code <span class="required">*</span></label>
+                    <input type="text" formControlName="ifsc_code" class="inp-cus regular-font" placeholder="e.g., SBIN0001234"
                         maxlength="11" style="text-transform: uppercase" />
                     <div *ngIf="accountForm.get('ifsc_code')?.touched" class="error">
                         <div *ngIf="accountForm.get('ifsc_code')?.errors?.['required']">
@@ -277,39 +277,39 @@
 
             <div class="review-block">
                 <h3>Association Details</h3>
-                <p><strong>Alternate Contact:</strong> {{ inputForm.value.alternate_number }}</p>
-                <p><strong>GST:</strong> {{ inputForm.value.gst_number }}</p>
-                <p><strong>Reg. No:</strong> {{ inputForm.value.registration_number }}</p>
-                <p><strong>Address:</strong> {{ inputForm.value.address }}</p>
+                <p class="regular-font"><strong>Alternate Contact:</strong> {{ inputForm.value.alternate_number }}</p>
+                <p class="regular-font"><strong>GST:</strong> {{ inputForm.value.gst_number }}</p>
+                <p class="regular-font"><strong>Reg. No:</strong> {{ inputForm.value.registration_number }}</p>
+                <p class="regular-font"><strong>Address:</strong> {{ inputForm.value.address }}</p>
             </div>
 
             <div class="review-block">
                 <h3>Account Details</h3>
-                <p><strong>Holder Name:</strong> {{ accountForm.value.account_holder_name }}</p>
-                <p><strong>Account No:</strong> {{ accountForm.value.account_number }}</p>
-                <p><strong>Type:</strong> {{ accountForm.value.account_type }}</p>
-                <p><strong>IFSC:</strong> {{ accountForm.value.ifsc_code }}</p>
+                <p class="regular-font"><strong>Holder Name:</strong> {{ accountForm.value.account_holder_name }}</p>
+                <p class="regular-font"><strong>Account No:</strong> {{ accountForm.value.account_number }}</p>
+                <p class="regular-font"><strong>Type:</strong> {{ accountForm.value.account_type }}</p>
+                <p class="regular-font"><strong>IFSC:</strong> {{ accountForm.value.ifsc_code }}</p>
             </div>
 
             <div class="review-block">
                 <h3>Uploaded Documents</h3>
-                <p>
+                <p class="regular-font">
                     Passport Size Photo:
                     <strong>{{ passport_sizephoto ? passport_sizephoto.name : 'Missing' }}</strong>
                 </p>
-                <p>
+                <p class="regular-font">
                     Rental Agreement:
                     <strong>{{ RentalAggrement ? RentalAggrement.name : 'Missing' }}</strong>
                 </p>
-                <p>
+                <p class="regular-font">
                     Cancelled Cheque Leaf:
                     <strong>{{ ChequeLeaf ? ChequeLeaf.name : 'Missing' }}</strong>
                 </p>
-                <p>
+                <p class="regular-font">
                     PAN Card:
                     <strong>{{ Pancard ? Pancard.name : 'Missing' }}</strong>
                 </p>
-                <p>
+                <p class="regular-font">
                     Company Proof:
                     <strong>{{ Company_proof ? Company_proof.name : 'Missing' }}</strong>
                 </p>

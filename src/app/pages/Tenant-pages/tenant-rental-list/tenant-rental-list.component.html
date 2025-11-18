@@ -47,19 +47,19 @@
                         <table class="styled-table">
                             <thead>
                                 <tr>
-                                    <th>Rental Amount</th>
-                                    <th>Association Name</th>
-                                    <th>Owner Name</th>
+                                    <th class="medium-font">Rental Amount</th>
+                                    <th class="medium-font">Association Name</th>
+                                    <th class="medium-font">Owner Name</th>
                                     <!-- <th>Owner Phone</th> -->
-                                    <th>Issue At</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    <th class="medium-font">Issue At</th>
+                                    <th class="medium-font">Status</th>
+                                    <th class="medium-font">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
                                 <ng-container *ngIf="rentalinvoicelist2?.length === 0; else datashow">
                                     <tr>
-                                        <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                        <td colspan="6" class="regular-font" style="text-align: center;  color: gray;">
                                             No Data Found
                                         </td>
                                     </tr>
@@ -125,7 +125,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="rentalinvoicelist1" class="pagination-container ">
+        <div *ngIf="rentalinvoicelist1" class="pagination-container regular-font">
             <p class="pagination-info">
                 Showing {{ rentalinvoicelist1.startIndex + 1 }} to {{ rentalinvoicelist1.endIndex + 1 }} of {{
                 rentalinvoicelist1.totalData }} entries
@@ -136,7 +136,7 @@
                 <li>
                     <button [disabled]="rentalinvoicelist1.currentPage === 1" (click)="rentalinvoicelist1.prevPage()"
                         class="page-btn arrow-btn">
-                        &#x276E;
+                        <i class="fa-solid fa-angle-left"></i>
                     </button>
                 </li>
 
@@ -151,7 +151,7 @@
                 <li>
                     <button [disabled]="rentalinvoicelist1.currentPage === rentalinvoicelist1.totalPages"
                         (click)="rentalinvoicelist1.nextPage()" class="page-btn arrow-btn">
-                        &#x276F;
+                       <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </li>
             </ul>

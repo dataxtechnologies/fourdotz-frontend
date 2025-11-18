@@ -54,7 +54,7 @@ export const routes: Routes = [
     children: [
       { path: 'sign-in', component: SigninPageComponent },
       {
-        path: 'Change-passsword/:usermail',
+        path: 'Change-password/:usermail',
         component: ChangePasswordComponent,
       },
       { path: 'forget-password', component: ForgetPasswordComponent },

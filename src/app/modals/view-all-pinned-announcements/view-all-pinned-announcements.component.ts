@@ -7,32 +7,38 @@ import { ModalService } from 'ngx-modal-ease';
   selector: 'app-view-all-pinned-announcements',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './view-all-pinned-announcements.component.html',
-  styleUrl: './view-all-pinned-announcements.component.css'
+  styleUrl: './view-all-pinned-announcements.component.css',
 })
 export class ViewAllPinnedAnnouncementsComponent {
-
- @Input() PinnedAnnouncement: any = [];
+  @Input() PinnedAnnouncement: any = [];
 
   activePost: any = null;
 
-  constructor(private Modal : ModalService){}
+  constructor(private Modal: ModalService) {}
 
-  ngOnInit(): void {
-    console.log('PinnedAnnouncement', this.PinnedAnnouncement);
-    
-    // Set first item as active post
-    if (this.PinnedAnnouncement?.length > 0) {
-      this.activePost = this.PinnedAnnouncement[0];
-    }
+ngOnInit(): void {
+  if (this.PinnedAnnouncement?.length > 0) {
+    this.activePost = this.PinnedAnnouncement[0];
+  } else {
+    this.activePost = null;
   }
+}
 
   setActive(post: any) {
     this.activePost = post;
   }
 
-  closeModal() {
-    this.Modal.close()
-    console.log("Close modal");
+  // Detect image file
+  isImage(url: string): boolean {
+    return /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
   }
 
+  // Detect video file
+  isVideo(url: string): boolean {
+    return /\.(mp4|mov|avi|mkv|webm)$/i.test(url);
+  }
+
+  closeModal() {
+    this.Modal.close();
+  }
 }

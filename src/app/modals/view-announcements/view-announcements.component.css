@@ -106,3 +106,26 @@
 .cancel-btn:hover {
     background: #222;
 }
+
+/* Attachment Section */
+.attachment-section label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.attachment-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Works for both IMAGE & VIDEO */
+.attachment-item {
+    width: 400px;
+    height: 350px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #fafafa;
+}

@@ -11,7 +11,7 @@
                 <span>Back</span>
             </button>
             <div class="ass-h">
-                <p>{{ Associationdata.property_name }}</p>
+                <p class="demibold-font">{{ Associationdata.property_name }}</p>
             </div>
         </div>
 
@@ -24,38 +24,38 @@
         <!-- Header -->
         <div class="header-cont" *ngIf="!header_loading; else skeleton">
             <div class="user-info">
-                <h5 class="label">Name</h5>
-                <p>{{ Associationdata.name || '--' }}</p>
+                <h5 class="label medium-font">Name</h5>
+                <p class="regular-font">{{ Associationdata.name || '--' }}</p>
             </div>
 
             <div class="user-info">
-                <h5 class="label">Phone</h5>
-                <p>{{ Associationdata.mobile || '--' }}</p>
+                <h5 class="label medium-font">Phone</h5>
+                <p class="regular-font">{{ Associationdata.mobile || '--' }}</p>
             </div>
 
             <div class="user-info">
-                <h5 class="label">Email</h5>
-                <p>{{ Associationdata.email || '--' }}</p>
+                <h5 class="label medium-font">Email</h5>
+                <p class="regular-font">{{ Associationdata.email || '--' }}</p>
             </div>
 
             <div class="user-info">
-                <h5 class="label">Property Type(s)</h5>
-                <p>{{ Associationdata.property_type || '--' }}</p>
+                <h5 class="label medium-font">Property Type(s)</h5>
+                <p class="regular-font">{{ Associationdata.property_type || '--' }}</p>
             </div>
 
             <div class="user-info">
-                <h5 class="label">Property Name</h5>
-                <p>{{ Associationdata.property_name || '--' }}</p>
+                <h5 class="label medium-font">Property Name</h5>
+                <p class="regular-font">{{ Associationdata.property_name || '--' }}</p>
             </div>
 
             <div class="user-info">
-                <h5 class="label">Invitation Status</h5>
-                <p>{{ Associationdata.invitation_status ? 'Accepted' : 'Pending/Declined' }}</p>
+                <h5 class="label medium-font">Invitation Status</h5>
+                <p class="regular-font">{{ Associationdata.invitation_status ? 'Accepted' : 'Pending/Declined' }}</p>
             </div>
 
             <div class="user-info">
-                <h5 class="label">Created At</h5>
-                <p>{{ Associationdata.onboarded_time?.$date | date:'dd MMM yyyy, hh:mm a' }}</p>
+                <h5 class="label medium-font">Created At</h5>
+                <p class="regular-font">{{ Associationdata.onboarded_time?.$date | date:'dd MMM yyyy, hh:mm a' }}</p>
             </div>
         </div>
 
@@ -89,7 +89,7 @@
             <!-- Tab Content -->
             <div class="tab-content">
                 <div *ngIf="activeTab === 'Properties'">
-                    <h4>Property List</h4>
+                    <h4 class="medium-font">Property List</h4>
                     <div class="table-cont">
                         <div class="table-container">
                             <!-- Skeleton loader while fetching -->
@@ -98,11 +98,11 @@
                                 <table class="styled-table">
                                     <thead>
                                         <tr>
-                                            <th>Property Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Property Type</th>
-                                            <th>Invitation Status</th>
+                                            <th class="medium-font">Property Name</th>
+                                            <th class="medium-font">Email</th>
+                                            <th class="medium-font">Phone</th>
+                                            <th class="medium-font">Property Type</th>
+                                            <th class="medium-font">Invitation Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -122,14 +122,14 @@
                                 <table class="styled-table">
                                     <thead>
                                         <tr>
-                                            <th>Property Name</th>
-                                            <th>Property No</th>
-                                            <th>Property Type</th>
-                                            <th>Facing</th>
-                                            <th>Owner ID</th>
+                                            <th class="medium-font">Property Name</th>
+                                            <th class="medium-font">Property No</th>
+                                            <th class="medium-font">Property Type</th>
+                                            <th class="medium-font">Facing</th>
+                                            <th class="medium-font">Owner ID</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="regular-font"> 
                                         <!-- If data exists, show rows -->
                                         <ng-container *ngIf="properties2.length > 0; else noDataRow">
                                             <tr *ngFor="let property of properties2">
@@ -144,7 +144,7 @@
                                         <!-- No data row inside tbody -->
                                         <ng-template #noDataRow>
                                             <tr>
-                                                <td colspan="5" class="text-center text-muted py-4">
+                                                <td colspan="5" class="text-center text-muted py-4 regular-font">
                                                     No Data Found
                                                 </td>
                                             </tr>
@@ -156,17 +156,17 @@
                     </div>
                 </div>
                 <div *ngIf="activeTab === 'Documents'">
-                    <h4>Association Document</h4>
+                    <h4 class="medium-font">Association Document</h4>
                     <div class="doc-div" *ngIf="documents && documents.length > 0; else noData">
                         <div class="file-card" *ngFor="let doc of documents">
                             <div class="file-preview">
-                                <p><i class="fa-solid fa-file"></i> Preview</p>
+                                <p class="regular-font"><i class="fa-solid fa-file"></i> Preview</p>
                             </div>
                             <div class="file-info">
-                                <p class="file-name">
+                                <p class="file-name regular-font">
                                     {{ getKey(doc) | titlecase }} |
                                     <a [href]="getValue(doc)" target="_blank">
-                                        <i class="fa-solid fa-eye"></i>
+                                        <i class="fa-solid fa-eye" style="color: var(--primary-color1);"></i>
                                     </a>
                                 </p>
                             </div>
@@ -174,45 +174,45 @@
                     </div>
 
                     <ng-template #noData>
-                        <p class="no-data">No Data Found</p>
+                        <p class="no-data regular-font">No Data Found</p>
                     </ng-template>
                 </div>
                 <div *ngIf="activeTab === 'Transactions'">
-                    <h4>Transaction Amounts</h4>
+                    <h4 class="medium-font">Transaction Amounts</h4>
 
                     <div class="transaction-section">
                         <div class="transaction-grid">
 
                             <div class="transaction-card">
                                 <div class="icon"><i class="fa-solid fa-file-invoice"></i></div>
-                                <div class="title">Monthly Invoice Total</div>
-                                <div class="amount">{{ monthly_invoice_total_amount | currency:'INR':'symbol':'1.0-0' }}
+                                <div class="title medium-font">Monthly Invoice Total</div>
+                                <div class="amount regular-font">{{ monthly_invoice_total_amount | currency:'INR':'symbol':'1.0-0' }}
                                 </div>
-                                <div class="desc">Invoices generated this month</div>
+                                <div class="desc regular-font">Invoices generated this month</div>
                             </div>
 
                             <div class="transaction-card">
                                 <div class="icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                                <div class="title">Monthly Rent Total</div>
-                                <div class="amount">{{ monthly_rent_invoices_total_amount |
+                                <div class="title medium-font">Monthly Rent Total</div>
+                                <div class="amount regular-font">{{ monthly_rent_invoices_total_amount |
                                     currency:'INR':'symbol':'1.0-0' }}</div>
-                                <div class="desc">Total rent collected this month</div>
+                                <div class="desc regular-font">Total rent collected this month</div>
                             </div>
 
                             <div class="transaction-card">
                                 <div class="icon"><i class="fa-solid fa-money-check-dollar"></i></div>
-                                <div class="title">Payout (Maintenance)</div>
-                                <div class="amount">{{ payout_maintenance_total_amount | currency:'INR':'symbol':'1.0-0'
+                                <div class="title medium-font">Payout (Maintenance)</div>
+                                <div class="amount regular-font">{{ payout_maintenance_total_amount | currency:'INR':'symbol':'1.0-0'
                                     }}</div>
-                                <div class="desc">Maintenance payouts processed</div>
+                                <div class="desc regular-font">Maintenance payouts processed</div>
                             </div>
 
                             <div class="transaction-card">
                                 <div class="icon"><i class="fa-solid fa-building-user"></i></div>
-                                <div class="title">Payout (Rent)</div>
-                                <div class="amount">{{ payout_rent_invoices_total_amount |
+                                <div class="title medium-font">Payout (Rent)</div>
+                                <div class="amount regular-font">{{ payout_rent_invoices_total_amount |
                                     currency:'INR':'symbol':'1.0-0' }}</div>
-                                <div class="desc">Rent payouts processed</div>
+                                <div class="desc regular-font">Rent payouts processed</div>
                             </div>
 
                         </div>

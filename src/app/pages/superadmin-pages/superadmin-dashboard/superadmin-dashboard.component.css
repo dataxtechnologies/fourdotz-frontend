@@ -10,6 +10,10 @@
     height: 100%;
 }
 
+.whole-div{
+    margin-top: 20px;
+}
+
 /* Common card style */
 .parent>div {
     border-radius: 32px;

@@ -19,9 +19,9 @@
                     <img src="/assets/images/superadmin-avatar.png" alt="User Avatar" />
                 </div>
                 <div class="text-info">
-                    <h3 class="user-name">{{ profileForm.get('firstName')?.value }} {{
+                    <h3 class="user-name medium-font">{{ profileForm.get('firstName')?.value }} {{
                         profileForm.get('lastName')?.value }}</h3>
-                    <p class="user-email">{{ profileForm.get('email')?.value }}</p>
+                    <p class="user-email regular-font">{{ profileForm.get('email')?.value }}</p>
                 </div>
             </div>
             <!-- Edit Button -->
@@ -35,40 +35,40 @@
             <div class="form-grid">
                 <!-- First Name -->
                 <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input id="firstName" type="text" formControlName="firstName" class="inp-cus"
+                    <label class="medium-font" for="firstName">First Name</label>
+                    <input id="firstName" type="text" formControlName="firstName" class="inp-cus regular-font"
                         placeholder="Your First Name" [readonly]="!isEditMode" />
                     <div *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched"
-                        class="error-message">
+                        class="error-message regular-font">
                         First Name is required.
                     </div>
                 </div>
 
                 <!-- Last Name -->
                 <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input id="lastName" type="text" formControlName="lastName" class="inp-cus"
+                    <label class="medium-font" for="lastName">Last Name</label>
+                    <input id="lastName" type="text" formControlName="lastName" class="inp-cus regular-font"
                         placeholder="Your Last Name" [readonly]="!isEditMode" />
                 </div>
 
                 <!-- Email -->
                 <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input id="email" type="email" formControlName="email" class="inp-cus"
+                    <label class="medium-font" for="email">Email Address</label>
+                    <input id="email" type="email" formControlName="email" class="inp-cus regular-font"
                         placeholder="your.email@example.com" [readonly]="!isEditMode" />
                     <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
-                        class="error-message">
+                        class="error-message regular-font">
                         Please enter a valid email.
                     </div>
                 </div>
 
                 <!-- Phone -->
                 <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input id="phone" type="tel" formControlName="phone" class="inp-cus"
+                    <label class="medium-font" for="phone">Phone Number</label>
+                    <input id="phone" type="tel" formControlName="phone" class="inp-cus regular-font"
                         placeholder="Enter your phone number" [readonly]="!isEditMode" />
                     <div *ngIf="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched"
-                        class="error-message">
+                        class="error-message regular-font">
                         Please enter a valid phone number.
                     </div>
                 </div>

@@ -23,4 +23,12 @@ export class ViewAnnouncementsComponent {
     this.modal.close()
   }
 
+  isImage(url: string): boolean {
+  return /\.(jpg|jpeg|png|webp)$/i.test(url);
+}
+
+isVideo(url: string): boolean {
+  return /\.(mp4|mov|avi|mkv|webm)$/i.test(url);
+}
+
 }

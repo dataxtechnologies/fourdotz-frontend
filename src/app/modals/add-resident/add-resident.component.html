@@ -10,9 +10,9 @@
 
                 <!-- Property Dropdown -->
                 <div class="inp-cont">
-                    <label>Property No <span class="required">*</span></label>
+                    <label class="medium-font">Property No <span class="required">*</span></label>
                     <div class="custom-select">
-                        <div class="select-selected" (click)="toggleDropdown()">
+                        <div class="select-selected regular-font" (click)="toggleDropdown()">
                             {{ selectedProperty || 'Select Property No' }}
                             <i class="fa-solid" [ngClass]="{
           'fa-chevron-down': !dropdownOpen,
@@ -21,14 +21,14 @@
                         </div>
 
                         <div class="select-items" [class.select-hide]="!dropdownOpen">
-                            <input type="text" placeholder="Search property..." class="dropdown-search"
+                            <input type="text" placeholder="Search property..." class="dropdown-search regular-font"
                                 (input)="onSearchChange($event)" />
 
-                            <div *ngFor="let property of filteredList" (click)="selectProperty(property)">
+                            <div class="regular-font" *ngFor="let property of filteredList" (click)="selectProperty(property)">
                                 {{ property.property_no }}
                             </div>
 
-                            <div *ngIf="filteredList.length === 0" class="no-results">
+                            <div *ngIf="filteredList.length === 0" class="no-results regular-font">
                                 No properties found
                             </div>
                         </div>
@@ -42,8 +42,8 @@
 
                 <!-- First Name -->
                 <div class="inp-cont">
-                    <label>First Name <span class="required">*</span></label>
-                    <input type="text" formControlName="firstName" class="inp-cus" placeholder="Enter your First Name">
+                    <label class="medium-font">First Name <span class="required">*</span></label>
+                    <input type="text" formControlName="firstName" class="inp-cus  regular-font" placeholder="Enter your First Name">
                     <div *ngIf="ownerForm.get('firstName')?.touched && ownerForm.get('firstName')?.invalid"
                         class="error-text">
                         First Name is required
@@ -52,8 +52,8 @@
 
                 <!-- Last Name -->
                 <div class="inp-cont">
-                    <label>Last Name <span class="required">*</span></label>
-                    <input type="text" formControlName="lastName" class="inp-cus" placeholder="Enter your Last Name">
+                    <label class="medium-font">Last Name <span class="required">*</span></label>
+                    <input type="text" formControlName="lastName" class="inp-cus  regular-font" placeholder="Enter your Last Name">
                     <div *ngIf="ownerForm.get('lastName')?.touched && ownerForm.get('lastName')?.invalid"
                         class="error-text">
                         Last Name is required
@@ -62,8 +62,8 @@
 
                 <!-- Email -->
                 <div class="inp-cont">
-                    <label>Email ID <span class="required">*</span></label>
-                    <input type="email" formControlName="email" class="inp-cus" placeholder="Enter your Email">
+                    <label class="medium-font">Email ID <span class="required">*</span></label>
+                    <input type="email" formControlName="email" class="inp-cus  regular-font" placeholder="Enter your Email">
                     <div *ngIf="ownerForm.get('email')?.touched && ownerForm.get('email')?.errors?.['required']"
                         class="error-text">
                         Email is required
@@ -76,8 +76,8 @@
 
                 <!-- Phone -->
                 <div class="inp-cont">
-                    <label>Phone Number <span class="required">*</span></label>
-                    <input type="tel" formControlName="phone" class="inp-cus" placeholder="Enter your Phone Number"
+                    <label class="medium-font">Phone Number <span class="required">*</span></label>
+                    <input type="tel" formControlName="phone" class="inp-cus  regular-font" placeholder="Enter your Phone Number"
                         maxlength="10">
                     <div *ngIf="ownerForm.get('phone')?.touched && ownerForm.get('phone')?.errors?.['required']"
                         class="error-text">
@@ -91,7 +91,7 @@
 
                 <!-- Owned At -->
                 <div class="inp-cont">
-                    <label>Owned At <span class="required">*</span></label>
+                    <label class="medium-font">Owned At <span class="required">*</span></label>
 
                     <div class="date-input-wrapper">
                         <input type="text" id="rentedAt" class="inp-cus placeholder-font" formControlName="ownedAt"
@@ -100,7 +100,7 @@
                         <input #hiddenDatePicker type="date" class="hidden-date-input"
                             (change)="onDateSelected($event)" />
                     </div>
-                    <!-- <input type="date" formControlName="ownedAt" class="inp-cus"> -->
+                    <!-- <input type="date" formControlName="ownedAt" class="inp-cus  regular-font"> -->
                     <div *ngIf="ownerForm.get('ownedAt')?.touched" class="error-text">
                         Owned date is required
                     </div>

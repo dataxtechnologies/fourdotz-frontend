@@ -7,53 +7,53 @@
   <div class="form-body">
     <form [formGroup]="ownerForm">
       <div class="inp-cont">
-        <label>First Name <span class="required">*</span></label>
-        <input type="text" formControlName="firstName" class="inp-cus" placeholder="Enter First Name">
-        <div *ngIf="ownerForm.get('firstName')?.touched && ownerForm.get('firstName')?.invalid" class="error-text">
+        <label class="medium-font">First Name <span class="required">*</span></label>
+        <input type="text" formControlName="firstName" class="inp-cus regular-font" placeholder="Enter First Name">
+        <div *ngIf="ownerForm.get('firstName')?.touched && ownerForm.get('firstName')?.invalid" class="error-text regular-font">
           First Name is required
         </div>
       </div>
 
       <div class="inp-cont">
-        <label>Last Name <span class="required">*</span></label>
-        <input type="text" formControlName="lastName" class="inp-cus" placeholder="Enter Last Name">
-        <div *ngIf="ownerForm.get('lastName')?.touched && ownerForm.get('lastName')?.invalid" class="error-text">
+        <label class="medium-font">Last Name <span class="required">*</span></label>
+        <input type="text" formControlName="lastName" class="inp-cus regular-font" placeholder="Enter Last Name">
+        <div *ngIf="ownerForm.get('lastName')?.touched && ownerForm.get('lastName')?.invalid" class="error-text regular-font">
           Last Name is required
         </div>
       </div>
 
       <div class="inp-cont">
-        <label>Email ID <span class="required">*</span></label>
-        <input type="email" formControlName="email" class="inp-cus" placeholder="Enter Email" readonly>
-        <div *ngIf="ownerForm.get('email')?.touched && ownerForm.get('email')?.hasError('required')" class="error-text">
+        <label class="medium-font">Email ID <span class="required">*</span></label>
+        <input type="email" formControlName="email" class="inp-cus regular-font" placeholder="Enter Email" readonly>
+        <div *ngIf="ownerForm.get('email')?.touched && ownerForm.get('email')?.hasError('required')" class="error-text regular-font">
           Email is required
         </div>
-        <div *ngIf="ownerForm.get('email')?.touched && ownerForm.get('email')?.hasError('email')" class="error-text">
+        <div *ngIf="ownerForm.get('email')?.touched && ownerForm.get('email')?.hasError('email')" class="error-text regular-font">
           Enter a valid email
         </div>
       </div>
 
       <div class="inp-cont">
-        <label>Phone Number <span class="required">*</span></label>
-        <input type="tel" formControlName="phone" class="inp-cus" maxlength="10" placeholder="Enter Phone Number" readonly>
-        <div *ngIf="ownerForm.get('phone')?.touched && ownerForm.get('phone')?.hasError('required')" class="error-text">
+        <label class="medium-font">Phone Number <span class="required">*</span></label>
+        <input type="tel" formControlName="phone" class="inp-cus regular-font" maxlength="10" placeholder="Enter Phone Number" readonly>
+        <div *ngIf="ownerForm.get('phone')?.touched && ownerForm.get('phone')?.hasError('required')" class="error-text regular-font">
           Phone number is required
         </div>
-        <div *ngIf="ownerForm.get('phone')?.touched && ownerForm.get('phone')?.hasError('pattern')" class="error-text">
+        <div *ngIf="ownerForm.get('phone')?.touched && ownerForm.get('phone')?.hasError('pattern')" class="error-text regular-font">
           Phone must be 10 digits
         </div>
       </div>
 
       <div class="inp-cont">
-                <label>Owned At <span class="required">*</span></label>
+                <label class="medium-font">Owned At <span class="required">*</span></label>
                 <div class="date-input-wrapper">
-                    <input type="text" id="rentedAt" class="inp-cus placeholder-font" formControlName="ownedAt"
+                    <input type="text" id="rentedAt" class="inp-cus placeholder-font regular-font" formControlName="ownedAt"
                         placeholder="Select date" readonly (click)="openDatePicker()" />
                     <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
                     <input #hiddenDatePicker type="date" class="hidden-date-input" (change)="onDateSelected($event)" />
                 </div>
                 <!-- <input type="date" formControlName="ownedAt" class="inp-cus"> -->
-                <div *ngIf="ownerForm.get('ownedAt')?.touched && ownerForm.get('ownedAt')?.invalid" class="error-text">
+                <div *ngIf="ownerForm.get('ownedAt')?.touched && ownerForm.get('ownedAt')?.invalid" class="error-text regular-font">
                     Owned date is required
                 </div>
             </div>

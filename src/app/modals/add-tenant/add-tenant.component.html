@@ -9,8 +9,8 @@
 
             <!-- First Name -->
             <div class="inp-cont">
-                <label for="firstName" class="label-font">First Name <span class="required">*</span></label>
-                <input type="text" id="firstName" class="inp-cus placeholder-font" formControlName="firstName"
+                <label class="medium-font" for="firstName" class="label-font">First Name <span class="required">*</span></label>
+                <input type="text" id="firstName" class="inp-cus regular-font" formControlName="firstName"
                     placeholder="Enter First Name">
                 <div class="error-text" *ngIf="tenantForm.get('firstName')?.touched && tenantForm.get('firstName')?.invalid">
                     First name is required (min 2 characters)
@@ -19,8 +19,8 @@
 
             <!-- Last Name -->
             <div class="inp-cont">
-                <label for="lastName" class="label-font">Last Name <span class="required">*</span></label>
-                <input type="text" id="lastName" class="inp-cus placeholder-font" formControlName="lastName"
+                <label class="medium-font" for="lastName" class="label-font">Last Name <span class="required">*</span></label>
+                <input type="text" id="lastName" class="inp-cus regular-font" formControlName="lastName"
                     placeholder="Enter Last Name">
                 <div class="error-text" *ngIf="tenantForm.get('lastName')?.touched && tenantForm.get('lastName')?.invalid">
                     Last name is required (min 2 characters)
@@ -29,8 +29,8 @@
 
             <!-- Email -->
             <div class="inp-cont">
-                <label for="email" class="label-font">Email ID <span class="required">*</span></label>
-                <input type="email" id="email" class="inp-cus placeholder-font" formControlName="email"
+                <label class="medium-font" for="email" class="label-font">Email ID <span class="required">*</span></label>
+                <input type="email" id="email" class="inp-cus regular-font" formControlName="email"
                     placeholder="Enter your Email">
                 <div class="error-text" *ngIf="tenantForm.get('email')?.touched && tenantForm.get('email')?.invalid">
                     Enter a valid email
@@ -39,8 +39,8 @@
 
             <!-- Phone -->
             <div class="inp-cont">
-                <label for="phone" class="label-font">Phone Number <span class="required">*</span></label>
-                <input type="tel" id="phone" class="inp-cus placeholder-font" formControlName="phone"
+                <label class="medium-font" for="phone" class="label-font">Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phone" class="inp-cus regular-font" formControlName="phone"
                     placeholder="Enter 10-digit Phone Number" maxlength="10">
                 <div class="error-text" *ngIf="tenantForm.get('phone')?.touched && tenantForm.get('phone')?.invalid">
                     Enter a valid 10-digit phone number
@@ -49,7 +49,7 @@
 
             <!-- Rented At -->
            <div class="inp-cont date-picker-container">
-  <label for="rentedAt" class="label-font">
+  <label class="medium-font" for="rentedAt" class="label-font">
     Rented At <span class="required">*</span>
   </label>
 
@@ -57,7 +57,7 @@
     <input
       type="text"
       id="rentedAt"
-      class="inp-cus placeholder-font"
+      class="inp-cus regular-font"
       formControlName="rentedAt"
       placeholder="Select date"
       readonly
@@ -83,8 +83,8 @@
 
             <!-- Advance Paid -->
             <div class="inp-cont">
-                <label for="advancePaid" class="label-font">Advance Paid <span class="required">*</span></label>
-                <input type="number" id="advancePaid" class="inp-cus placeholder-font" formControlName="advancePaid"
+                <label class="medium-font" for="advancePaid" class="label-font">Advance Paid <span class="required">*</span></label>
+                <input type="number" id="advancePaid" class="inp-cus regular-font" formControlName="advancePaid"
                     placeholder="Enter Advance Amount">
                 <div class="error-text"
                     *ngIf="tenantForm.get('advancePaid')?.touched && tenantForm.get('advancePaid')?.invalid">
@@ -94,8 +94,8 @@
 
             <!-- Estimated Rent -->
             <div class="inp-cont">
-                <label for="estimatedRent" class="label-font">Estimated Rent <span class="required">*</span></label>
-                <input type="number" id="estimatedRent" class="inp-cus placeholder-font" formControlName="estimatedRent"
+                <label class="medium-font" for="estimatedRent" class="label-font">Estimated Rent <span class="required">*</span></label>
+                <input type="number" id="estimatedRent" class="inp-cus regular-font" formControlName="estimatedRent"
                     placeholder="Enter Estimated Rent">
                 <div class="error-text"
                     *ngIf="tenantForm.get('estimatedRent')?.touched && tenantForm.get('estimatedRent')?.invalid">
@@ -104,8 +104,8 @@
             </div>
 
             <div class="inp-cont">
-                    <label>Rent Due Date <span class="required">*</span></label>
-                    <select formControlName="monthly_rent_due_date" class="inp-cus">
+                    <label class="medium-font">Rent Due Date <span class="required">*</span></label>
+                    <select formControlName="monthly_rent_due_date" class="inp-cus regular-font">
                         <option value="" disabled selected>Select Day</option>
                         <option *ngFor="let day of days" [value]="day">{{ day }} of Month</option>
                     </select>
@@ -117,12 +117,12 @@
 
             <!-- Maintenance Paid By -->
             <div class="inp-cont">
-                <label for="maintenancePaidBy" class="label-font">Maintenance Paid by <span
+                <label class="medium-font" for="maintenancePaidBy" class="label-font">Maintenance Paid by <span
                         class="required">*</span></label>
-                <select id="maintenancePaidBy" class="inp-cus placeholder-font" formControlName="maintenancePaidBy">
+                <select id="maintenancePaidBy" class="inp-cus regular-font" formControlName="maintenancePaidBy">
                     <option value="" disabled>Select Options</option>
-                    <option value="Owner">Owner</option>
-                    <option value="Tenant">Tenant</option>
+                    <option value="owner">Owner</option>
+                    <option value="tenant">Tenant</option>
                 </select>
                 <div class="error-text"
                     *ngIf="tenantForm.get('maintenancePaidBy')?.touched && tenantForm.get('maintenancePaidBy')?.invalid">

@@ -11,84 +11,84 @@
         <!-- Header -->
         <div class="header-cont">
             <div class="user-info">
-                <h5 class="label">Propety No</h5>
-                <p>{{ TenantPropertyData[0].property_no }}</p>
+                <h5 class="label medium-font">Propety No</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].property_no }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Property Type</h5>
-                <p>{{ TenantPropertyData[0].property_type }}</p>
+                <h5 class="label medium-font">Property Type</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].property_type }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Area</h5>
-                <p>{{ TenantPropertyData[0].area }} sq.ft</p>
+                <h5 class="label medium-font">Area</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].area }} sq.ft</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Facing</h5>
-                <p>{{ TenantPropertyData[0].facing }}</p>
+                <h5 class="label medium-font">Facing</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].facing }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Electricity Consumer No</h5>
-                <p>{{ TenantPropertyData[0].electricity_number }}</p>
+                <h5 class="label medium-font">Electricity Consumer No</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].electricity_number }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Parking Slot Number</h5>
-                <p>{{ TenantPropertyData[0].parking_slot_number }}</p>
+                <h5 class="label medium-font">Parking Slot Number</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].parking_slot_number }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">BHK</h5>
-                <p>{{ TenantPropertyData[0].bhk }}</p>
+                <h5 class="label medium-font">BHK</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].bhk }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Resident</h5>
-                <p>{{ TenantPropertyData[0].resident_type || '--' }}</p>
+                <h5 class="label medium-font">Resident</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].resident_type || '--' }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Maintenance Paid By</h5>
-                <p>{{ TenantPropertyData[0].maintenance_paid_by || 'Owner' }}</p>
+                <h5 class="label medium-font">Maintenance Paid By</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].maintenance_paid_by || 'Owner' }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Maintenance Amount</h5>
-                <p>{{ TenantPropertyData[0].maintenance_amount | currency:'INR' }}</p>
+                <h5 class="label medium-font">Maintenance Amount</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].maintenance_amount | currency:'INR' }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Due Date</h5>
-                <p>{{ TenantPropertyData[0].due_date}}</p>
+                <h5 class="label medium-font">Due Date</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].due_date}}</p>
             </div>
             <!-- <div > -->
             <!-- <div class="user-info" *ngIf="TenantPropertyData[0].property_type === 'apartment'">
-                    <h5 class="label">Building Type</h5>
-                    <p>{{ TenantPropertyData[0].property_no }}</p>
+                    <h5 class="label medium-font">Building Type</h5>
+                    <p class="regular-font">{{ TenantPropertyData[0].property_no }}</p>
                 </div>
                 <div class="user-info" *ngIf="TenantPropertyData[0].property_type === 'apartment'">
-                    <h5 class="label">Tower Name</h5>
-                    <p>{{ TenantPropertyData[0].property_no }}</p>
+                    <h5 class="label medium-font">Tower Name</h5>
+                    <p class="regular-font">{{ TenantPropertyData[0].property_no }}</p>
                 </div>
                 <div class="user-info" *ngIf="TenantPropertyData[0].property_type === 'apartment'">
-                    <h5 class="label">Block Name</h5>
-                    <p>{{ TenantPropertyData[0].property_no }}</p>
+                    <h5 class="label medium-font">Block Name</h5>
+                    <p class="regular-font">{{ TenantPropertyData[0].property_no }}</p>
                 </div> -->
             <div class="user-info" *ngIf="TenantPropertyData[0].property_type === 'apartment'">
-                <h5 class="label">Floor</h5>
-                <p>{{ TenantPropertyData[0].floor }}</p>
+                <h5 class="label medium-font">Floor</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].floor }}</p>
             </div>
             <!-- </div> -->
 
 
             <div class="user-info">
-                <h5 class="label">Owner Name</h5>
-                <p>{{ TenantPropertyData[0].owner_name }}</p>
+                <h5 class="label medium-font">Owner Name</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].owner_name }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Owner Phone Number</h5>
-                <p>{{ TenantPropertyData[0].owner_mobile }}</p>
+                <h5 class="label medium-font">Owner Phone Number</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].owner_mobile }}</p>
             </div>
             <div class="user-info">
-                <h5 class="label">Owner Email</h5>
-                <p>{{ TenantPropertyData[0].owner_email }}</p>
+                <h5 class="label medium-font">Owner Email</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].owner_email }}</p>
             </div>
             <!-- <div class="user-info">
-                <h5 class="label">Owned At</h5>
-                <p>{{ TenantPropertyData[0].owner_details.onboarded_time.$date | date:'dd-MMM-yyyy'}}</p>
+                <h5 class="label medium-font">Owned At</h5>
+                <p class="regular-font">{{ TenantPropertyData[0].owner_details.onboarded_time.$date | date:'dd-MMM-yyyy'}}</p>
             </div> -->
 
         </div>
@@ -114,7 +114,7 @@
                         <!-- Tenant Card -->
                         <div class="resident-card">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5>Tenant Details</h5>
+                                <h5 class="medium-font">Tenant Details</h5>
                                 <!-- <div class="d-flex gap-3">
                                     <button class="btn-add" (click)="addTenant(propertiesId)"
                                         *ngIf="!TenantPropertyData[0].tenant_details?._id">+ Add Tenant</button>
@@ -135,8 +135,8 @@
           {label: 'Rented At', value: TenantPropertyData[0].tenant_rented_at?.$date | date:'dd-MMM-yyyy'}
         ]">
                                     <div class="user-info">
-                                        <h5 class="label">{{field.label}}</h5>
-                                        <p>{{field.value}}</p>
+                                        <h5 class="label medium-font">{{field.label}}</h5>
+                                        <p class="regular-font">{{field.value}}</p>
                                     </div>
                                 </ng-container>
                             </div>
@@ -155,7 +155,7 @@
                     <!-- Pet Card -->
                     <div class="resident-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5>Pet Details</h5>
+                            <h5 class="medium-font">Pet Details</h5>
                             <button class="btn-add" (click)="addpet(TenantPropertyData[0]._id)"
                                 *ngIf="!TenantPropertyData[0].pet || TenantPropertyData[0].pet.length === 0">Add
                                 Pet</button>
@@ -175,14 +175,14 @@
                                     {label: 'Pet Owned By', value: TenantPropertyData[0].pet[0]?.pet_owned_by}
                                 ]">
                                 <div class="user-info">
-                                    <h5 class="label">{{ field.label }}</h5>
-                                    <p>{{ field.value }}</p>
+                                    <h5 class="label medium-font">{{ field.label }}</h5>
+                                    <p class="regular-font">{{ field.value }}</p>
                                 </div>
                             </ng-container>
                         </div>
 
                         <ng-template #nodata>
-                            <div class="card-body">
+                            <div class="card-body regular-font">
                                 No data found
                             </div>
                         </ng-template>
@@ -192,7 +192,7 @@
                     <!-- Vehicle Card -->
                     <div class="resident-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5>Vehicle Details</h5>
+                            <h5 class="medium-font">Vehicle Details</h5>
                             <button class="btn-add" (click)="addVehicle(TenantPropertyData[0]._id)"
                                 *ngIf="!TenantPropertyData[0].vehicle || TenantPropertyData[0].vehicle.length === 0">+
                                 Add
@@ -213,13 +213,13 @@
           {label: 'Vehicle Owned By', value: TenantPropertyData[0].vehicle[0]?.vehicle_owned_by}
         ]">
                                 <div class="user-info">
-                                    <h5 class="label">{{field.label}}</h5>
-                                    <p>{{field.value}}</p>
+                                    <h5 class="label medium-font">{{field.label}}</h5>
+                                    <p class="regular-font">{{field.value}}</p>
                                 </div>
                             </ng-container>
                         </div>
                         <ng-template #nodatavehicle>
-                            <div class="card-body">
+                            <div class="card-body regular-font">
                                 No data found
                             </div>
                         </ng-template>

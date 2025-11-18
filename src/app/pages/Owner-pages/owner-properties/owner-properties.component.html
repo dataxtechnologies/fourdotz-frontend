@@ -2,7 +2,7 @@
     <div>
         <div class="container header-cont">
             <div class="head-cont">
-                <h2>Properties List</h2>
+                <h2 class="demibold-font">Properties List</h2>
             </div>
             <div>
                 <!-- <button class="btn-add" (click)="Addproperty()">+ Add Properties</button> -->
@@ -19,9 +19,9 @@
                         <div class="filters">
                             <!-- Association Dropdown -->
                             <div class="inp-cont">
-                                <label for="association">Select Association</label>
-                                <select formControlName="association" class="inp-cus">
-                                    <option value="" disabled selected>All Associations</option>
+                                <label for="association"  class="medium-font">Select Association</label>
+                                <select formControlName="association" class="inp-cus regular-font">
+                                    <option value="" selected>All Associations</option>
                                     <option *ngFor="let assoc of filteredProperties" [value]="assoc._id">
                                         {{ assoc.association_name }}
                                     </option>
@@ -29,19 +29,19 @@
                             </div>
 
                             <div class="inp-cont">
-                                <label for="tenants">Select Resident</label>
+                                <label for="tenants"  class="medium-font">Select Resident</label>
                                 <!-- Resident Type Dropdown -->
-                                <select formControlName="residentType" class="inp-cus">
-                                    <option value="">All Types</option>
-                                    <option value="owner">Owner</option>
-                                    <option value="tenant">Tenant</option>
+                                <select formControlName="residentType" class="inp-cus regular-font">
+                                    <option value=""  class="regular-font">All Types</option>
+                                    <option value="owner"  class="regular-font">Owner</option>
+                                    <option value="tenant"  class="regular-font">Tenant</option>
                                 </select>
                             </div>
 
                             <!-- Property No Input -->
                             <div class="inp-cont">
-                                <label for="Property">Property No</label>
-                                <input type="text" placeholder="Search Property No" class="inp-cus"
+                                <label for="Property"   class="medium-font">Property No</label>
+                                <input type="text" placeholder="Search Property No" class="inp-cus regular-font"
                                     formControlName="propertyNo" />
                             </div>
 
@@ -53,19 +53,19 @@
                     </form>
                     <div class="table-container">
                         <table class="styled-table">
-                            <thead>
+                            <thead class="medium-font">
                                 <tr>
-                                    <th>Property No</th>
-                                    <th>Property Type</th>
-                                    <th>Association</th>
-                                    <th>Area</th>
-                                    <th>Residential Type</th>
-                                    <th>View</th>
+                                    <th class="medium-font">Property No</th>
+                                    <th class="medium-font">Property Type</th>
+                                    <th class="medium-font">Association</th>
+                                    <th class="medium-font">Area</th>
+                                    <th class="medium-font">Residential Type</th>
+                                    <th class="medium-font">View</th>
                                 </tr>
                             </thead>
                            
-                             <tbody *ngIf="!tableLoading; else tableSkeleton">
-                                <ng-container *ngIf="propertieslist2?.length === 0; else datashow">
+                             <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+                                <ng-container *ngIf="propertieslist2.length === 0; else datashow">
                                     <tr>
                                         <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
                                              No Data Found
@@ -123,7 +123,7 @@
             </div>
         </div>
 
-        <div *ngIf="propertieslist1" class="pagination-container ">
+        <div *ngIf="propertieslist1" class="pagination-container medium-font">
             <p class="pagination-info">
                 Showing {{ propertieslist1.startIndex + 1 }} to {{ propertieslist1.endIndex + 1 }} of {{
                 propertieslist1.totalData }} entries
@@ -134,7 +134,7 @@
                 <li>
                     <button [disabled]="propertieslist1.currentPage === 1" (click)="propertieslist1.prevPage()"
                         class="page-btn arrow-btn">
-                        &#x276E;
+                        <i class="fa-solid fa-angle-left"></i>
                     </button>
                 </li>
 
@@ -149,7 +149,7 @@
                 <li>
                     <button [disabled]="propertieslist1.currentPage === propertieslist1.totalPages"
                         (click)="propertieslist1.nextPage()" class="page-btn arrow-btn">
-                        &#x276F;
+                       <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </li>
             </ul>

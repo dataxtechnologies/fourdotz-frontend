@@ -117,8 +117,6 @@
 
 .section-title {
     margin: 0;
-    font-size: 14px;
-    font-weight: bold;
     color: #000;
 }
 
@@ -169,8 +167,6 @@
 
 /* Titles */
 .inv-table-title {
-  font-size: 18px;
-  font-weight: 600;
   margin-bottom: 6px;
 }
 
@@ -207,9 +203,7 @@
 
 .line-items-table th {
     background-color: #fef9ff;
-    font-weight: bold;
     color: #000;
-    font-size: 14px;
     text-align: center;
     border: 1px solid #d7acdd;
     padding: 6px 4px;
@@ -308,12 +302,10 @@
 }
 
 .footer-title {
-    font-weight: bold;
     border-bottom: 1px solid #ccc;
     padding: 3px;
     margin: 0;
     color: #EA4531;
-    font-size: 18px;
     text-align: left;
 }
 

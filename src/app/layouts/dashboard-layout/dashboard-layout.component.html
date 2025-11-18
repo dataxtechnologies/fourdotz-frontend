@@ -40,7 +40,7 @@
     <nav id="sidebar" [class.close]="sidebarClosed">
         <ul class="menu-list">
             <!-- Toggle Button -->
-            <li class="toggle-btn-li">
+            <!-- <li class="toggle-btn-li">
                 <button (click)="toggleSidebar()" id="toggle-btn">
                     <ng-container *ngIf="sidebarClosed; else openIcon">
                         <img src="assets/icons/arrow-circle-right.svg" alt="Right Arrow" width="30">
@@ -49,7 +49,7 @@
                         <img src="assets/icons/arrow-circle-left.svg" alt="Left Arrow" width="30">
                     </ng-template>
                 </button>
-            </li>
+            </li> -->
 
             <!-- Sidebar Menu Items -->
             <ng-container *ngFor="let item of sidebarItems">
@@ -58,7 +58,12 @@
 
                     <a [routerLink]="item.route" data-toggle="tooltip" data-placement="right" [attr.title]="item.label"
                         class="d-flex align-items-center">
-                        <img [src]="item.icon" alt="icon" class="icon-img me-2" />
+                        <!-- <ng-container *ngIf="sidebarClosed; else activeicon"> -->
+                            <img [src]="item.icon" alt="icon" class="icon-img me-2" />
+                        <!-- </ng-container> -->
+                        <!-- <ng-template #activeicon> -->
+                            <!-- <img [src]="item.activeicon" alt="icon" class="icon-img me-2" /> -->
+                        <!-- </ng-template> -->
                         <span>{{ item.label }}</span>
                     </a>
                 </li>
@@ -88,9 +93,9 @@
             <span>© 2025 All Rights Reserved <span style="color: var(--primary-color1);">Datax</span></span>
         </div>
         <div class="footer-right">
-            <a href="https://fourdotz.com/privacy.html" target="_blank">Privacy Policy</a> |
-            <a href="https://fourdotz.com/terms.html" target="_blank">Terms & Conditions</a> |
-            <a href="https://fourdotz.com/refund.html" target="_blank">Refund Policy</a>
+            <a href="https://fourdotz.com/privacy-policy/" target="_blank">Privacy Policy</a> |
+            <a href="https://fourdotz.com/terms-of-service/" target="_blank">Terms & Conditions</a> |
+            <a href="https://fourdotz.com/refund-policy/" target="_blank">Refund Policy</a>
         </div>
     </footer>
 </div>

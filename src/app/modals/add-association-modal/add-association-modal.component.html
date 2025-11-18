@@ -7,21 +7,21 @@
     <div class="form-body scrollable">
         <form [formGroup]="associationForm" (ngSubmit)="createAssociation()">
             <div class="inp-cont">
-                <label for="name">Name <span class="required">*</span></label>
-                <input type="text" id="name" class="inp-cus" placeholder="Enter your Name" formControlName="name">
+                <label class="medium-font" for="name">Name <span class="required">*</span></label>
+                <input type="text" id="name" class="inp-cus regular-font" placeholder="Enter your Name" formControlName="name">
                 <small *ngIf="isInvalid('name')" class="error-text">Name is required</small>
             </div>
 
             <div class="inp-cont">
-                <label for="email">Email ID <span class="required">*</span></label>
-                <input type="email" id="email" class="inp-cus" placeholder="Enter your Email" formControlName="email">
+                <label class="medium-font" for="email">Email ID <span class="required">*</span></label>
+                <input type="email" id="email" class="inp-cus regular-font" placeholder="Enter your Email" formControlName="email">
                 
                 <small *ngIf="isInvalid('email')" class="error-text">Valid email is required</small>
             </div>
 
             <div class="inp-cont">
-                <label for="phone">Phone Number <span class="required">*</span></label>
-                <input type="tel" id="phone" class="inp-cus" placeholder="Enter your Phone Number"
+                <label class="medium-font" for="phone">Phone Number <span class="required">*</span></label>
+                <input type="tel" id="phone" class="inp-cus regular-font" placeholder="Enter your Phone Number"
                     formControlName="phone" maxlength="10">
                 <!-- <small *ngIf="isInvalid('phone')" class="error-text">Valid 10-digit phone number is required</small> -->
                 <small *ngIf="associationForm.get('phone')?.touched && associationForm.get('phone')?.errors?.['required']"
@@ -31,29 +31,29 @@
             </div>
 
             <div class="inp-cont">
-                <label for="associationName">Association Name <span class="required">*</span></label>
-                <input type="text" id="associationName" class="inp-cus" placeholder="Enter your Association Name"
+                <label class="medium-font" for="associationName">Association Name <span class="required">*</span></label>
+                <input type="text" id="associationName" class="inp-cus regular-font" placeholder="Enter your Association Name"
                     formControlName="associationName">
                 <small *ngIf="isInvalid('associationName')" class="error-text">Association Name is required</small>
             </div>
 
             <div class="inp-cont">
-                <label>Property Type <span class="required">*</span></label>
+                <label class="medium-font">Property Type <span class="required">*</span></label>
                 <div class="checkbox-group" formGroupName="propertyType">
-                    <label class="checkbox-cus">
+                    <label class="medium-font" class="checkbox-cus">
                         <input type="checkbox" formControlName="villa">
-                        <span>Villa</span>
+                        <span class="regular-font">Villa</span>
                     </label>
-                    <label class="checkbox-cus">
+                    <label class="medium-font" class="checkbox-cus">
                         <input type="checkbox" formControlName="apartment">
-                        <span>Apartment</span>
+                        <span class="regular-font">Apartment</span>
                     </label>
-                    <label class="checkbox-cus">
+                    <label class="medium-font" class="checkbox-cus">
                         <input type="checkbox" formControlName="townhouse">
-                        <span>Town House</span>
+                        <span class="regular-font">Town House</span>
                     </label>
                 </div>
-                <small *ngIf="!anyPropertySelected() && associationForm.touched" class="error-text">Select at least one property
+                <small *ngIf="!anyPropertySelected() && associationForm.get('propertyType')?.touched" class="error-text">Select at least one property
                     type</small>
             </div>
 

@@ -9,8 +9,8 @@
             <div class="form-grid">
 
                 <div class="inp-cont">
-                    <label>Property No <span class="required">*</span></label>
-                    <input type="text" formControlName="propertyNo" class="inp-cus"
+                    <label class="medium-font">Property No <span class="required">*</span></label>
+                    <input type="text" formControlName="propertyNo" class="inp-cus regular-font"
                         placeholder="Enter your Property No">
                     <div *ngIf="propertyForm.get('propertyNo')?.touched && propertyForm.get('propertyNo')?.invalid"
                         class="error-text">
@@ -19,8 +19,8 @@
                 </div>
 
                 <div class="inp-cont">
-                    <label>Area <span class="required">*</span> <span style="font-size: 12px;"> (sq.ft)</span></label>
-                    <input type="text" formControlName="area" class="inp-cus" placeholder="Enter Area">
+                    <label class="medium-font">Area <span class="required">*</span> <span style="font-size: 12px;"> (sq.ft)</span></label>
+                    <input type="text" formControlName="area" class="inp-cus regular-font" placeholder="Enter Area">
                     <div *ngIf="propertyForm.get('area')?.touched && propertyForm.get('area')?.invalid"
                         class="error-text">
                         Area is required
@@ -28,8 +28,8 @@
                 </div>
 
                 <div class="inp-cont">
-                    <label>Facing <span class="required">*</span></label>
-                    <select formControlName="facing" class="inp-cus">
+                    <label class="medium-font">Facing <span class="required">*</span></label>
+                    <select formControlName="facing" class="inp-cus regular-font">
                         <option value="" disabled>Select Facing</option>
                         <option value="North">North</option>
                         <option value="South">South</option>
@@ -43,8 +43,8 @@
                 </div>
 
                 <div class="inp-cont">
-                    <label>Electricity Consumer No <span class="required">*</span></label>
-                    <input type="text" formControlName="electricityNo" class="inp-cus"
+                    <label class="medium-font">Electricity Consumer No <span class="required">*</span></label>
+                    <input type="text" formControlName="electricityNo" class="inp-cus regular-font"
                         placeholder="Enter Electricity Consumer No">
                     <div *ngIf="propertyForm.get('electricityNo')?.touched && propertyForm.get('electricityNo')?.invalid"
                         class="error-text">
@@ -53,8 +53,8 @@
                 </div>
 
                 <div class="inp-cont">
-                    <label>Parking Slot Number <span class="required">*</span></label>
-                    <input type="text" formControlName="parkingSlot" class="inp-cus"
+                    <label class="medium-font">Parking Slot Number <span class="required">*</span></label>
+                    <input type="text" formControlName="parkingSlot" class="inp-cus regular-font"
                         placeholder="Enter Parking Slot Number">
                     <div *ngIf="propertyForm.get('parkingSlot')?.touched && propertyForm.get('parkingSlot')?.invalid"
                         class="error-text">
@@ -63,13 +63,13 @@
                 </div>
 
                 <div class="inp-cont">
-                    <label>Gasline Number</label>
-                    <input type="text" formControlName="gaslineNo" class="inp-cus" placeholder="Enter Gasline Number">
+                    <label class="medium-font">Gasline Number</label>
+                    <input type="text" formControlName="gaslineNo" class="inp-cus regular-font" placeholder="Enter Gasline Number">
                 </div>
 
                 <div class="inp-cont">
-  <label>Maintenance Type <span class="required">*</span></label>
-  <select formControlName="maintenanceType" class="inp-cus">
+  <label class="medium-font">Maintenance Type <span class="required">*</span></label>
+  <select formControlName="maintenanceType" class="inp-cus regular-font">
     <option value="" disabled>Select Type</option>
     <option value="fixed">Fixed</option>
     <option value="square_feet">Square Feet</option>
@@ -87,11 +87,11 @@
 
 <!-- 👇 Conditional input for Fixed -->
 <div class="inp-cont" *ngIf="propertyForm.get('maintenanceType')?.value === 'fixed'">
-  <label>Maintenance Amount <span class="required">*</span></label>
+  <label class="medium-font">Maintenance Amount <span class="required">*</span></label>
   <input
     type="number"
     formControlName="maintenanceAmount"
-    class="inp-cus"
+    class="inp-cus regular-font"
     placeholder="Enter Maintenance Amount"
   />
   <div
@@ -107,11 +107,11 @@
 
 <!-- 👇 Conditional input for per sq ft -->
 <div class="inp-cont" *ngIf="propertyForm.get('maintenanceType')?.value === 'square_feet'">
-  <label>Amount per Sq. Ft <span class="required">*</span></label>
+  <label class="medium-font">Amount per Sq. Ft <span class="required">*</span></label>
   <input
     type="number"
     formControlName="maintenancePerSqft"
-    class="inp-cus"
+    class="inp-cus regular-font"
     placeholder="Enter Amount per Sq. Ft"
   />
   <div
@@ -126,8 +126,8 @@
 </div>
 
                 <div class="inp-cont">
-                    <label>Due Date <span class="required">*</span></label>
-                    <select formControlName="dueDate" class="inp-cus">
+                    <label class="medium-font">Due Date <span class="required">*</span></label>
+                    <select formControlName="dueDate" class="inp-cus regular-font">
                         <option value="" disabled selected>Select Day</option>
                         <option *ngFor="let day of days" [value]="day">{{ day }} of Month</option>
                     </select>
@@ -140,9 +140,9 @@
                 <!-- Property Type -->
                 <!-- Property Type -->
                 <div class="inp-cont">
-                    <label>Property Type <span class="required">*</span></label>
+                    <label class="medium-font">Property Type <span class="required">*</span></label>
                     <div class="checkbox-group">
-                        <label class="radio-cus" *ngFor="let type of propertyTypes">
+                        <label class="medium-font" class="radio-cus regular-font" *ngFor="let type of propertyTypes">
                             <input type="radio" [value]="type" formControlName="propertyType"
                                 [checked]="propertyTypes.length === 1 && propertyTypes[0] === type" />
                             {{ type }}
@@ -158,9 +158,9 @@
                 <div *ngIf="
     propertyForm.get('propertyType')?.value === 'Villa' ||
     propertyForm.get('propertyType')?.value === 'Townhouse'
-  " class="inp-cont">
-                    <label>BHK <span class="required">*</span></label>
-                    <input type="number" formControlName="bhk" class="inp-cus" placeholder="Enter BHK" />
+  " class="inp-cont regular-font">
+                    <label class="medium-font">BHK <span class="required">*</span></label>
+                    <input type="number" formControlName="bhk" class="inp-cus regular-font" placeholder="Enter BHK" />
                     <div *ngIf="propertyForm.get('bhk')?.touched && propertyForm.get('bhk')?.invalid"
                         class="error-text">
                         BHK is required
@@ -170,12 +170,12 @@
                 <!-- Apartment Fields -->
                 <ng-container *ngIf="propertyForm.get('propertyType')?.value === 'Apartment'">
                     <div class="inp-cont">
-                        <label>Building Type <span class="required">*</span></label>
+                        <label class="medium-font">Building Type <span class="required">*</span></label>
                         <div class="checkbox-group">
-                            <label class="radio-cus">
+                            <label class="medium-font" class="radio-cus regular-font">
                                 <input type="radio" formControlName="buildingType" value="Block" /> Block
                             </label>
-                            <label class="radio-cus">
+                            <label class="medium-font" class="radio-cus regular-font">
                                 <input type="radio" formControlName="buildingType" value="Tower" /> Tower
                             </label>
                         </div>
@@ -188,8 +188,8 @@
                     </div>
 
                     <div class="inp-cont">
-                        <label>BHK <span class="required">*</span></label>
-                        <input type="number" formControlName="bhk" class="inp-cus" placeholder="Enter BHK" />
+                        <label class="medium-font">BHK <span class="required">*</span></label>
+                        <input type="number" formControlName="bhk" class="inp-cus regular-font" placeholder="Enter BHK" />
                         <div *ngIf="propertyForm.get('bhk')?.touched && propertyForm.get('bhk')?.invalid"
                             class="error-text">
                             BHK is required
@@ -198,8 +198,8 @@
 
                     <!-- Tower -->
                     <div class="inp-cont" *ngIf="propertyForm.get('buildingType')?.value === 'Tower'">
-                        <label>Tower <span class="required">*</span></label>
-                        <input type="text" formControlName="tower" class="inp-cus" placeholder="Enter Tower" />
+                        <label class="medium-font">Tower <span class="required">*</span></label>
+                        <input type="text" formControlName="tower" class="inp-cus regular-font" placeholder="Enter Tower" />
                         <div *ngIf="propertyForm.get('tower')?.touched && propertyForm.get('tower')?.invalid"
                             class="error-text">
                             Tower is required
@@ -208,8 +208,8 @@
 
                     <!-- Block -->
                     <div class="inp-cont" *ngIf="propertyForm.get('buildingType')?.value === 'Block'">
-                        <label>Block <span class="required">*</span></label>
-                        <input type="text" formControlName="block" class="inp-cus" placeholder="Enter Block" />
+                        <label class="medium-font">Block <span class="required">*</span></label>
+                        <input type="text" formControlName="block" class="inp-cus regular-font" placeholder="Enter Block" />
                         <div *ngIf="propertyForm.get('block')?.touched && propertyForm.get('block')?.invalid"
                             class="error-text">
                             Block is required
@@ -218,8 +218,8 @@
 
                     <!-- Floor -->
                     <div class="inp-cont">
-                        <label>Floor <span class="required">*</span></label>
-                        <input type="text" formControlName="floor" class="inp-cus" placeholder="Enter Floor" />
+                        <label class="medium-font">Floor <span class="required">*</span></label>
+                        <input type="text" formControlName="floor" class="inp-cus regular-font" placeholder="Enter Floor" />
                         <div *ngIf="propertyForm.get('floor')?.touched && propertyForm.get('floor')?.invalid"
                             class="error-text">
                             Floor is required

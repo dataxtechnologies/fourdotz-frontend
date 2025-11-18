@@ -16,13 +16,13 @@
                         <table class="styled-table">
                             <thead>
                                 <tr>
-                                    <th>Property No</th>
-                                    <th>Maintenance Amount</th>
-                                    <th>Owner Name</th>
-                                    <th>Association</th>
-                                    <th>Issue Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th class="medium-font">Property No</th>
+                                    <th class="medium-font">Maintenance Amount</th>
+                                    <th class="medium-font">Owner Name</th>
+                                    <th class="medium-font">Association</th>
+                                    <th class="medium-font">Issue Date</th>
+                                    <th class="medium-font">Status</th>
+                                    <th class="medium-font">Action</th>
                                 </tr>
                             </thead>
                             <!-- <tr>
@@ -33,10 +33,10 @@
                                 <td>Paid</td>
                                 <td><i class="fa-solid fa-file-lines"></i></td>
                             </tr> -->
-                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
                                 <ng-container *ngIf="maintenancelist2?.length === 0; else datashow">
                                     <tr>
-                                        <td colspan="7" style="text-align: center; font-weight: 600; color: gray;">
+                                        <td colspan="7" class="regular-font" style="text-align: center; color: gray;">
                                             No Data Found
                                         </td>
                                     </tr>
@@ -67,12 +67,18 @@
 
                                         <!-- ✅ Conditional Action -->
                                         <td data-label="Actions">
-                                            <ng-container *ngIf="item.maintenance_paid_by === 'owner'; else showStatus">
+                                            <ng-container *ngIf="item.maintenance_paid_by === 'tenant'; else showStatus">
                                                 <!-- Show Pay Now if unpaid by owner -->
                                                 <ng-container *ngIf="!item.payment_status; else viewDetails">
                                                     <button class="pay-btn"
                                                         (click)="CreatePaymentforInvoiceId(item.invoice_no)">Pay
                                                         Now</button>
+                                                        <!-- <div class="loader">
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div></div>
+                                                        </div> -->
                                                 </ng-container>
                                                 <ng-template #viewDetails>
                                                     <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon" (click)="openpaidmaintenanceinvoice(item.invoice_no)">
@@ -82,7 +88,8 @@
                                             <!-- Show status if maintenance is not paid by owner -->
                                             <ng-template #showStatus>
                                                 <ng-container *ngIf="item.payment_status; else notPaid">
-                                                    <span class="status paid" style="color: #226942 !important;">Paid</span>
+                                                     <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
+                                                        (click)="openpaidmaintenanceinvoice(item.invoice_no)">
                                                 </ng-container>
                                                 <ng-template #notPaid>
                                                     <span class="status" [ngClass]="{
@@ -135,7 +142,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="maintenancelist1" class="pagination-container ">
+        <div *ngIf="maintenancelist1" class="pagination-container regular-font">
             <p class="pagination-info">
                 Showing {{ maintenancelist1.startIndex + 1 }} to {{ maintenancelist1.endIndex + 1 }} of {{
                 maintenancelist1.totalData }} entries
@@ -146,7 +153,7 @@
                 <li>
                     <button [disabled]="maintenancelist1.currentPage === 1" (click)="maintenancelist1.prevPage()"
                         class="page-btn arrow-btn">
-                        &#x276E;
+                        <i class="fa-solid fa-angle-left"></i>
                     </button>
                 </li>
 
@@ -161,7 +168,7 @@
                 <li>
                     <button [disabled]="maintenancelist1.currentPage === maintenancelist1.totalPages"
                         (click)="maintenancelist1.nextPage()" class="page-btn arrow-btn">
-                        &#x276F;
+                       <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </li>
             </ul>

@@ -200,11 +200,6 @@
 }
 
 
-.file-preview {
-  font-weight: 600;
-  font-size: 14px;
-}
-
 .file-name {
   font-size: 15px;
   font-weight: 600;
@@ -331,8 +326,6 @@
 }
 
 .transaction-card .title {
-  font-weight: 600;
-  font-size: 15px;
   color: #000;
   margin-bottom: 6px;
 }

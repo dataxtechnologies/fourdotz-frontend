@@ -60,11 +60,18 @@ export class GenerateMaintenanceComponent implements OnInit {
 
     // Fetch user id from session
     const userdata = JSON.parse(localStorage.getItem('userdata') || '{}');
+    const user_type = localStorage.getItem('user_type');
     const user_id = userdata?._id;
 
-    if (user_id) {
+    if(user_type == 'owner'){
+      this.propertylist()
+    }else{
+      if (user_id) {
       this.getPropertiesData(user_id);
     }
+    }
+
+    
 
     // Add first item row
     this.addItem();
@@ -91,6 +98,33 @@ export class GenerateMaintenanceComponent implements OnInit {
       },
     });
   }
+
+  propertylist() {
+    this.apiService.ownerproperties<any>().subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.propertylist2 = res.data || [];
+          this.filteredList = [...this.propertylist2];
+
+          // Initialize TableService
+          this.propertylist1 = new TableService();
+          this.propertylist1.initialize(this.propertylist2, 10);
+
+
+          this.tableLoading = false;
+        } else {
+          this.tableLoading = false;
+          //console.warn(res.message || 'Failed to load properties.');
+        }
+      },
+      error: (err: any) => {
+        this.tableLoading = false;
+        //console.error('Property list fetch failed:', err);
+      },
+    });
+  }
+
+
 
   // ✅ Dropdown toggle
   toggleDropdown() {

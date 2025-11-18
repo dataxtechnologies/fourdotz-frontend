@@ -18,30 +18,30 @@
             <div class="div1">
                 <div>
                     <div>
-                        <h4>{{ dashboarddata.total_properties }}</h4>
+                        <h4 class="medium-font">{{ dashboarddata.total_properties }}</h4>
                     </div>
                     <div>
-                        <p>Total Properties</p>
+                        <p class="regular-font">Total Properties</p>
                     </div>
                 </div>
             </div>
             <div class="div2">
                 <div>
                     <div>
-                        <h4>{{ dashboarddata.owner_count }}</h4>
+                        <h4 class="medium-font">{{ dashboarddata.owner_count }}</h4>
                     </div>
                     <div>
-                        <p>Total Owners</p>
+                        <p class="regular-font">Total Owners</p>
                     </div>
                 </div>
             </div>
             <div class="div3">
                 <div>
                     <div>
-                        <h4>{{ dashboarddata.tenant_count }}</h4>
+                        <h4 class="medium-font">{{ dashboarddata.tenant_count }}</h4>
                     </div>
                     <div>
-                        <p>Total Tenants</p>
+                        <p class="regular-font">Total Tenants</p>
                     </div>
                 </div>
             </div>
@@ -49,18 +49,18 @@
                 <div class="big-card">
                     <div>
                         <div>
-                            <h4>{{ dashboarddata.paid_invoices }}</h4>
+                            <h4 class="medium-font">{{ dashboarddata.paid_invoices }}</h4>
                         </div>
                         <div>
-                            <p>Paid Maintenance</p>
+                            <p class="regular-font">Paid Maintenance</p>
                         </div>
                     </div>
                     <div>
                         <div>
-                            <h4>{{unpaidmaintenance }}</h4>
+                            <h4 class="medium-font">{{unpaidmaintenance }}</h4>
                         </div>
                         <div>
-                            <p>Total Maintenance</p>
+                            <p class="regular-font">Total Maintenance</p>
                         </div>
                     </div>
                 </div>
@@ -75,13 +75,13 @@
                             <table class="styled-table">
                                 <thead>
                                     <tr>
-                                        <th>Property No</th>
-                                        <th>Property Type</th>
-                                        <th>Area</th>
+                                        <th class="medium-font">Property No</th>
+                                        <th class="medium-font">Property Type</th>
+                                        <th class="medium-font">Area</th>
                                         <!-- <th>BHK</th> -->
-                                        <th>Facing</th>
+                                        <th class="medium-font">Facing</th>
                                         <!-- <th>Residental Type</th> -->
-                                        <th>Maintenance Paid By</th>
+                                        <th class="medium-font">Maintenance Paid By</th>
                                         <!-- <th>View</th> -->
                                     </tr>
                                 </thead>
@@ -98,11 +98,11 @@
                                         class="fa-solid fa-arrow-up-right-from-square"></i></td>
                             </tr> -->
 
-                                <tbody *ngIf="!tableLoading; else tableSkeleton">
+                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
                                     <!-- If no data -->
                                     <ng-container *ngIf="propertylist2?.length === 0; else datashow">
                                         <tr>
-                                            <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                            <td colspan="6" class="regular-font" style="text-align: center; color: gray;">
                                                 No Data Found
                                             </td>
                                         </tr>

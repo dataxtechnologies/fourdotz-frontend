@@ -5,61 +5,78 @@
                 <h2>Rental Invoice List</h2>
             </div>
             <div>
-                <button class="btn-add" (click)="generateRental()">+ Generate Rental Invoice</button>
-            </div>
+  <button
+    class="btn-add"
+    (click)="generateRental()"
+    [disabled]="!isTenantPresent"
+    [title]="!isTenantPresent ? 'You don’t have any tenant to generate rent invoice' : ''"
+  >
+    + Generate Rental Invoice
+  </button>
+</div>
         </div>
         <div class="container">
 
             <div class="item">
                 <div class="table-cont"> <!-- &#64; -->
                     <form [formGroup]="filterForm">
-                        <div class="filters">
+                        <div class="filter-container">
 
-                            <!-- Status Dropdown -->
-                            <div class="inp-cont">
-                                <label for="status">Payment Status</label>
-                                <select formControlName="status" class="inp-cus">
-                                    <option value="">All</option>
-                                    <option value="Paid">Paid</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Overdue">Overdue</option>
-                                </select>
+                            <!-- LEFT Filters -->
+                            <div class="filters-left">
+
+                                <!-- Status Dropdown -->
+                                <div class="filter-item">
+                                    <label for="status" class="medium-font">Payment Status</label>
+                                    <select formControlName="status">
+                                        <option value="">All</option>
+                                        <option value="Paid">Paid</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Overdue">Overdue</option>
+                                    </select>
+                                </div>
+
+                                <!-- Search -->
+                                <div class="filter-item">
+                                    <label for="residentSearch" class="medium-font" id="select-tag">Search</label>
+                                    <input type="text" placeholder="Enter Tenant Phone, Name"
+                                        formControlName="residentSearch" />
+                                </div>
+
+                                <!-- From Date -->
+                                <div class="filter-item">
+                                    <label for="fromDate" class="medium-font">From Date</label>
+                                    <input type="date" formControlName="fromDate" />
+                                </div>
+
+                                <!-- To Date -->
+                                <div class="filter-item">
+                                    <label for="toDate" class="medium-font">To Date</label>
+                                    <input type="date" formControlName="toDate" />
+                                </div>
+
                             </div>
 
-                            <!-- Resident Name/Phone Search -->
-                            <div class="inp-cont">
-                                <label for="residentSearch">Search</label>
-                                <input type="text" class="inp-cus" placeholder="Enter Tenant Phone, Name"
-                                    formControlName="residentSearch" />
+                            <!-- RIGHT Reset Button -->
+                            <div class="filters-right">
+                                <button type="button" class="reset-btn" (click)="resetFilters()"><i
+                                    class="fa-solid fa-arrow-rotate-right"></i> Reset</button>
                             </div>
 
-                            <!-- Date Range -->
-                            <div class="inp-cont">
-                                <label for="fromDate">From Date</label>
-                                <input type="date" class="inp-cus" formControlName="fromDate" />
-                            </div>
-                            <div class="inp-cont">
-                                <label for="toDate">To Date</label>
-                                <input type="date" class="inp-cus" formControlName="toDate" />
-                            </div>
-
-                            <!-- Reset -->
-                            <div class="btn">
-                                <button type="button" class="btn-remove btn-btn" (click)="resetFilters()">Reset</button>
-                            </div>
                         </div>
                     </form>
+
                     <div class="table-container">
                         <table class="styled-table">
                             <thead>
                                 <tr>
-                                    <th>Rental Amount</th>
-                                    <th>Association Name</th>
-                                    <th>Resident Name</th>
-                                    <th>Resident Phone</th>
-                                    <th>Issue At</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th  class="medium-font">Rental Amount</th>
+                                    <th  class="medium-font">Association Name</th>
+                                    <th  class="medium-font">Resident Name</th>
+                                    <th  class="medium-font">Resident Phone</th>
+                                    <th  class="medium-font">Issue At</th>
+                                    <th  class="medium-font">Status</th>
+                                    <th  class="medium-font">Action</th>
                                 </tr>
                             </thead>
                             <!-- <tbody class="tbody-dd">
@@ -75,10 +92,10 @@
                                     </td>
                                 </tr>
                             </tbody> -->
-                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
                                 <ng-container *ngIf="rentalinvoicelist2?.length === 0; else datashow">
                                     <tr>
-                                        <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                        <td colspan="7" style="text-align: center; font-weight: 600; color: gray;">
                                             No Data Found
                                         </td>
                                     </tr>
@@ -93,7 +110,8 @@
                                         <td>{{ p.created_time.$date | date:'dd-MMM-yyyy' }}</td>
                                         <td>
                                             <span *ngIf="p.payment_status === false">Pending</span>
-                                            <span *ngIf="p.payment_status === true"  style="color: #226942 !important;">Paid</span>
+                                            <span *ngIf="p.payment_status === true"
+                                                style="color: #226942 !important;">Paid</span>
                                         </td>
                                         <td>
                                             <span *ngIf="p.payment_status === true"> <img
@@ -107,7 +125,7 @@
                                 </ng-template>
                             </tbody>
                             <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                <tr *ngFor="let i of [1,2,3,4,5,6]" style="height: 50px;"> <!-- taller row -->
                                     <td>
                                         <span class="placeholder col-10 placeholder-glow"
                                             style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
@@ -143,7 +161,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="rentalinvoicelist1" class="pagination-container ">
+        <div *ngIf="rentalinvoicelist1" class="pagination-container regular-font">
             <p class="pagination-info">
                 Showing {{ rentalinvoicelist1.startIndex + 1 }} to {{ rentalinvoicelist1.endIndex + 1 }} of {{
                 rentalinvoicelist1.totalData }} entries
@@ -154,7 +172,7 @@
                 <li>
                     <button [disabled]="rentalinvoicelist1.currentPage === 1" (click)="rentalinvoicelist1.prevPage()"
                         class="page-btn arrow-btn">
-                        &#x276E;
+                        <i class="fa-solid fa-angle-left"></i>
                     </button>
                 </li>
 
@@ -169,7 +187,7 @@
                 <li>
                     <button [disabled]="rentalinvoicelist1.currentPage === rentalinvoicelist1.totalPages"
                         (click)="rentalinvoicelist1.nextPage()" class="page-btn arrow-btn">
-                        &#x276F;
+                       <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </li>
             </ul>

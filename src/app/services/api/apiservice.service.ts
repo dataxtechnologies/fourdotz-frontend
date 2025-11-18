@@ -43,6 +43,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error.error.success === false &&
             error.error.message == 'Session expired'
@@ -66,6 +72,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, {}, { headers: this.getHeaders() }) // ✅ empty body, headers in 3rd arg
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error.error.success === false &&
             error.error.message == 'Session expired'
@@ -94,6 +106,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error.error.success === false &&
             error.error.message == 'Session expired'
@@ -119,6 +137,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -146,6 +170,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -170,6 +200,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -193,6 +229,13 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -216,6 +259,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -239,6 +288,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -265,6 +320,12 @@ export class ApiserviceService {
       .put<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -294,6 +355,12 @@ export class ApiserviceService {
       })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -318,6 +385,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -341,6 +414,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -367,6 +446,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -391,6 +476,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -417,6 +508,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -441,6 +538,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -465,6 +568,12 @@ export class ApiserviceService {
       .put<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -490,6 +599,12 @@ export class ApiserviceService {
       .put<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -517,6 +632,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -541,6 +662,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -564,6 +691,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -587,6 +720,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -613,6 +752,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -637,6 +782,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -660,6 +811,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -683,6 +840,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -709,6 +872,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -733,6 +902,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -756,6 +931,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -779,6 +960,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -805,6 +992,12 @@ export class ApiserviceService {
       .put<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -829,6 +1022,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -852,6 +1051,12 @@ export class ApiserviceService {
 
     return this.http.delete<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -875,6 +1080,12 @@ export class ApiserviceService {
 
     return this.http.delete<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -901,6 +1112,12 @@ export class ApiserviceService {
       .put<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -928,6 +1145,12 @@ export class ApiserviceService {
       .put<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -952,6 +1175,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -975,6 +1204,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -1001,6 +1236,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, '', { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -1027,6 +1268,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -1051,6 +1298,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -1074,6 +1327,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -1100,6 +1359,12 @@ export class ApiserviceService {
       .put<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -1127,6 +1392,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -1154,6 +1425,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -1182,6 +1459,12 @@ export class ApiserviceService {
       })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -1206,6 +1489,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -1221,7 +1510,6 @@ export class ApiserviceService {
       })
     );
   }
-
 
   public listpinannouncement<T>(): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
@@ -1230,6 +1518,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -1246,7 +1540,6 @@ export class ApiserviceService {
     );
   }
 
-
   public ListAnnouncementinOwnerTenant<T>(): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.ListAnnouncementinOwnerTenant
@@ -1254,6 +1547,12 @@ export class ApiserviceService {
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'
@@ -1280,6 +1579,12 @@ export class ApiserviceService {
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -1296,7 +1601,6 @@ export class ApiserviceService {
         })
       );
   }
-
 
   public OwnerUpdateUPI<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
@@ -1308,6 +1612,12 @@ export class ApiserviceService {
       .put<T>(serviceURL, payload, { headers: this.getHeaders() })
       .pipe(
         catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
           if (
             error?.error?.success === false &&
             error?.error?.message === 'Session expired'
@@ -1325,14 +1635,19 @@ export class ApiserviceService {
       );
   }
 
-
-    public MaintenanceInvoicegetbyID<T>(payload: any): Observable<T> {
+  public MaintenanceInvoicegetbyID<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.MaintenanceInvoicegetbyID
     }?invoice_no=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
         if (
           error.error.success === false &&
           error.error.message == 'Session expired'

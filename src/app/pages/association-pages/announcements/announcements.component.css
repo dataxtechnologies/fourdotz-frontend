@@ -3,6 +3,7 @@
 ============================================================ */
 .layout-wrapper {
     position: relative;
+    width: 100%;
 }
 
 /* ============================================================
@@ -14,13 +15,15 @@
     align-items: center;
     margin-bottom: 20px;
     padding: 5px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-/* ----- Filter Dropdowns ----- */
 .filter-controls {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .filter-item {
@@ -58,10 +61,6 @@
     padding-right: 10px;
 }
 
-.filter-item select:focus {
-    outline: none;
-}
-
 /* ============================================================
    LEFT SIDEBAR
 ============================================================ */
@@ -70,7 +69,8 @@
     top: 100px;
 }
 
-.sidebar, .pinned-sidebar {
+.sidebar,
+.pinned-sidebar {
     background-color: #fff;
     border-radius: 16px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -90,7 +90,14 @@
     border-radius: 12px;
     background-color: #fff;
     color: var(--primary-color1);
-    border: 0;
+    border: 1px solid var(--primary-color1);
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.add-button:hover {
+    background: var(--primary-color1);
+    color: #fff;
 }
 
 .sidebar ul {
@@ -104,19 +111,17 @@
     border-radius: 8px;
     cursor: pointer;
     font-weight: 500;
-    transition: 0.2s;
+    transition: 0.25s ease;
 }
 
 .sidebar ul li:hover,
 .sidebar ul li.active {
-    margin-top: 10px;
     background-color: #ffeafe;
     color: var(--primary-color1);
 }
 
-.badge{
+.badge {
     background-color: var(--primary-color1);
-    font-size: 14px;
 }
 
 /* ============================================================
@@ -125,82 +130,63 @@
 .create-announcement {
     background-color: #fff;
     border-radius: 16px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     padding: 16px;
     margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .create-announcement input {
-    border: none;
-    outline: none;
     width: 100%;
     padding: 10px;
     border-radius: 8px;
     background-color: #f1f3f5;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
 
 .create-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  padding-top: 10px;
-  border-top: 1px solid #eaeaea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding-top: 10px;
+    border-top: 1px solid #eaeaea;
 }
 
 .option-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-weight: 500;
-  color: #444;
-  padding: 8px 0;
-  transition: all 0.2s ease;
-  font-size: 14px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: #444;
+    padding: 8px 0;
+    font-size: 14px;
+    transition: background 0.2s ease;
 }
 
-.option-btn i {
-  font-size: 18px;
-}
-
-/* Hover effect */
 .option-btn:hover {
-  background-color: #f5f5f5;
-  border-radius: 10px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
 }
 
-/* Icon colors (like LinkedIn style) */
 .option-btn.video i {
-  color: #34a853; /* green */
+    color: #34a853;
 }
 
 .option-btn.photo i {
-  color: #4285f4; /* blue */
+    color: #4285f4;
 }
 
 .option-btn.article i {
-  color: #ea4335; /* red/orange */
+    color: #ea4335;
 }
 
-/* Responsive tweak for small screens */
-@media (max-width: 768px) {
-  .create-options {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .option-btn {
-    justify-content: flex-start;
-    width: 100%;
-    padding-left: 10px;
-  }
-}
 /* ============================================================
    MAIN FEED AREA
 ============================================================ */
@@ -208,6 +194,7 @@
     overflow-y: auto;
     max-height: 80vh;
     padding-right: 8px;
+    -webkit-overflow-scrolling: touch;
 }
 
 .post-feed::-webkit-scrollbar {
@@ -220,16 +207,15 @@
 .announcement-card {
     background-color: #fff;
     border-radius: 16px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     padding: 20px;
     margin-bottom: 20px;
-    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .announcement-header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 }
 
 .announcement-user {
@@ -245,12 +231,10 @@
     object-fit: cover;
 }
 
-
-
 .announcement-body h6 {
-    font-weight: 700;
     margin-top: 10px;
     font-size: 18px;
+    font-weight: 700;
 }
 
 .announcement-body p {
@@ -258,28 +242,31 @@
     color: #000;
 }
 
-/* ----- Image Layouts ----- */
-.single-image {
+/* Image Styles */
+.single-image,
+.single-video {
     width: 100%;
+    height: 700px;              /* FIXED HEIGHT */
     border-radius: 12px;
-    object-fit: cover;
+    object-fit: contain;        /* KEEP ENTIRE IMAGE/VIDEO */
+    background: #f1f1f1;        /* OPTIONAL: GRAY BACKGROUND */
     display: block;
-    max-height: 450px;
     margin-bottom: 10px;
 }
 
 .two-img-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
 }
 
-.two-img-grid img {
+.two-img-grid img,
+.two-img-grid video {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    height: 350px;              /* Half of 500px, adjust as needed */
     border-radius: 12px;
-    object-fit: cover;
-    margin-bottom: 10px;
+    object-fit: contain;
+    background: #f1f1f1;
 }
 
 /* ============================================================
@@ -287,22 +274,20 @@
 ============================================================ */
 .react-wrapper {
     position: relative;
-    display: inline-block;
 }
 
 .react-btn {
-    border: none;
-    background: none;
     font-size: 22px;
+    background: none;
+    border: none;
     cursor: pointer;
-    transition: 0.2s;
+    transition: transform 0.2s;
 }
 
 .react-btn:hover {
     transform: scale(1.2);
 }
 
-/* Hover Emoji Bar */
 .reaction-bar {
     position: absolute;
     bottom: 40px;
@@ -310,13 +295,13 @@
     display: flex;
     gap: 10px;
     background: #fff;
+    padding: 8px 12px;
     border-radius: 50px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 8px 12px;
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s;
     z-index: 10;
 }
 
@@ -329,7 +314,7 @@
 .reaction-bar span {
     font-size: 22px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s;
 }
 
 .reaction-bar span:hover {
@@ -342,13 +327,12 @@
 .fixed-pinned {
     position: sticky;
     top: 100px;
-    max-height: 70vh;
-    overflow: hidden;
+    height: 70vh;
 }
 
 .pinned-scroll {
+    height: 60vh;
     overflow-y: auto;
-    max-height: 60vh;
     padding-right: 8px;
 }
 
@@ -367,12 +351,7 @@
     border-bottom: 1px solid #eee;
 }
 
-.pinned-item:last-child {
-    border-bottom: none;
-}
-
 .pinned-item strong {
-    display: block;
     font-size: 22px;
     color: #222;
 }
@@ -380,13 +359,12 @@
 .pinned-item p {
     font-size: 16px;
     color: #000;
-    margin-bottom: 6px;
 }
 
 .pinned-item a {
     font-size: 13px;
     color: #007bff;
-    text-decoration: none;
+    cursor: pointer;
 }
 
 .pinned-item a:hover {
@@ -394,92 +372,130 @@
 }
 
 /* ============================================================
-   RESPONSIVE ADJUSTMENTS
+   SKELETON LOADER
 ============================================================ */
-@media (max-width: 768px) {
-    .filter-controls {
-        flex-wrap: wrap;
-        gap: 8px;
+.skeleton-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.skeleton-card,
+.skeleton-line {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
+    background-size: 400% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 10px;
+}
+
+.skeleton-card {
+    height: 120px;
+}
+
+.skeleton-line {
+    height: 50px;
+    border-radius: 8px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -400px 0;
     }
+
+    100% {
+        background-position: 400px 0;
+    }
+}
+
+/* ============================================================
+   NO DATA FOUND
+============================================================ */
+.no-data {
+    text-align: center;
+    color: #777;
+    padding: 30px 0;
+    background-color: #fff;
+}
+
+.no-data img {
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.view-btn {
+    color: var(--primary-color1);
+    border: 0;
+    background: #fff;
+}
+
+.btn-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS — PRO MODE UPGRADE
+============================================================ */
+
+/* Tablets & Small Laptops */
+@media (max-width: 992px) {
+
+    .fixed-sidebar,
+    .fixed-pinned {
+        position: relative;
+        height: auto;
+        top: 0;
+    }
+
+    .post-feed {
+        max-height: none;
+    }
+}
+
+/* Large Mobile / Small Tablets */
+@media (max-width: 768px) {
 
     .filter-item {
         width: 100%;
         justify-content: space-between;
     }
 
-    .fixed-sidebar,
-    .fixed-pinned {
-        position: relative;
-        top: 0;
-        max-height: none;
-    }
-
-    .post-feed {
-        max-height: none;
-    }
-
     .two-img-grid {
         grid-template-columns: 1fr;
     }
+
+    .create-options {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .option-btn {
+        width: 100%;
+        justify-content: flex-start;
+        padding-left: 10px;
+    }
 }
 
+/* Normal Mobile */
+@media (max-width: 576px) {
+    .announcement-user img {
+        width: 34px;
+        height: 34px;
+    }
 
-
-
-
-
-
-/* Skeleton Loader */
-.skeleton-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+    .announcement-body h6 {
+        font-size: 16px;
+    }
 }
 
-.skeleton-card {
-  height: 120px;
-  border-radius: 10px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
-  background-size: 400% 100%;
-  animation: shimmer 1.5s infinite;
-}
+/* Small Phones */
+@media (max-width: 400px) {
+    .header-new h4 {
+        font-size: 18px;
+    }
 
-.skeleton-line {
-  height: 50px;
-  border-radius: 8px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
-  background-size: 400% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
-}
-
-/* No Data Found */
-.no-data {
-  text-align: center;
-  color: #777;
-  padding: 30px 0;
-  background-color: #fff;
-}
-
-.no-data img {
-  padding: 20px;
-  /* opacity: 0.6; */
-  margin-bottom: 10px;
-}
-
-
-.view-btn{
-    color: var(--primary-color1);
-    border: 0;
-    background-color: #fff;
-}
-
-.btn-div{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    .filter-item select {
+        font-size: 13px;
+    }
 }

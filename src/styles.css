@@ -38,7 +38,7 @@
 
 /* ===================== Variables ===================== */
 :root {
-    --bg-primary: #EAE9E3;
+    --bg-primary: #f1eee8;
     --bg-white: #FFFFFF;
     --btn-primary: #8B4095;
     --text-primary: #FFFFFF;
@@ -97,6 +97,21 @@ html {
 }
 
 
+.medium-font{
+    font-family: 'TTHoves-Medium', sans-serif;
+    font-weight: normal;
+    font-size: 17px;
+}
+
+
+.regular-font{
+    font-family: 'TTHoves-Regular', sans-serif;
+}
+
+.demibold-font{
+    font-family: 'TTHoves-DemiBold', sans-serif;
+}
+
 
 body {
     font-family: 'TTHoves-DemiBold', sans-serif;
@@ -128,14 +143,14 @@ body {
     box-sizing: border-box;
     height: 80vh;
     width: 250px;
-    padding: 5px 1em;
+    padding: 20px 1em;
     margin: 30px 10px 20px 40px;
-    background: rgba(255, 255, 255, 0.2);
+    background: #f1eee8;
     /* Semi-transparent */
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(255, 255, 255, 0.784);
+    backdrop-filter: blur(15px);
     /* Frosted glass effect */
-    -webkit-backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(15px);
     /* Safari support */
     position: fixed;
     align-self: start;
@@ -183,12 +198,7 @@ body {
     list-style: none;
 }
 
-#sidebar>ul>li:first-child {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-}
+
 
 .logo {
     font-weight: 600;
@@ -313,10 +323,7 @@ main p {
 }
 
 .container {
-    /* border: 1px solid var(--line-clr); */
-    /* border-radius: 1em; */
-    /* margin-bottom: 20px; */
-    /* padding: min(3em, 15%); */
+  max-width: 100%;
 }
 
 .container h2,
@@ -836,12 +843,6 @@ tbody td i {
     margin-bottom: 20px;
 }
 
-/* Label */
-.filters .inp-cont label {
-    font-size: 17px;
-    font-weight: 600;
-    color: #555;
-}
 
 /* Input */
 .filters .inp-cus {

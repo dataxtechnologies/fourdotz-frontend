@@ -31,7 +31,7 @@ import { OwnerServiceService } from '../../services/owner/owner-service.service'
 })
 export class DashboardLayoutComponent {
   sidebarItems: SidebarItem[] = SIDEBAR_ITEMS;
-  sidebarClosed = true;
+  sidebarClosed = false;
   currentRoute = '';
   loadingUserData = false; // flag to control loader visibility
 showFooter = false;

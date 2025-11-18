@@ -5,13 +5,13 @@
 
 
             <div class="summary-card light-blue">
-                <h4>Monthly Paid Total</h4>
-                <p>₹{{ MaintenanceListAmount?.monthly_invoice_total_amount || 0 }}</p>
+                <h4 class="medium-font">Monthly Paid Total</h4>
+                <p class="regular-font">₹{{ MaintenanceListAmount?.monthly_invoice_total_amount || 0 }}</p>
             </div>
 
             <div class="summary-card light-yellow">
-                <h4>Monthly Unpaid Total</h4>
-                <p>₹{{ MaintenanceListAmount?.monthly_invoice_pending_amount || 0 }}</p>
+                <h4 class="medium-font">Monthly Unpaid Total</h4>
+                <p class="regular-font">₹{{ MaintenanceListAmount?.monthly_invoice_pending_amount || 0 }}</p>
             </div>
 
 
@@ -31,19 +31,19 @@
 
                         <!-- Date Range -->
                         <div class="filter-item">
-                            <label>From Date</label>
-                            <input type="date" [(ngModel)]="filters.fromDate" (change)="applyFilters()">
+                            <label class="medium-font">From Date</label>
+                            <input type="date" [(ngModel)]="filters.fromDate" (change)="applyFilters()" class="regular-font">
                         </div>
 
                         <div class="filter-item">
-                            <label>To Date</label>
-                            <input type="date" [(ngModel)]="filters.toDate" (change)="applyFilters()">
+                            <label class="medium-font">To Date</label>
+                            <input type="date" [(ngModel)]="filters.toDate" (change)="applyFilters()" class="regular-font">
                         </div>
 
                         <!-- Status Filter -->
                         <div class="filter-item">
-                            <label>Status</label>
-                            <select [(ngModel)]="filters.status" (change)="applyFilters()">
+                            <label class="medium-font">Status</label>
+                            <select [(ngModel)]="filters.status" (change)="applyFilters()" class="regular-font">
                                 <option value="">All</option>
                                 <option value="Paid">Paid</option>
                                 <option value="Pending">Pending</option>
@@ -53,9 +53,9 @@
 
                         <!-- Search -->
                         <div class="filter-item">
-                            <label>Search</label>
-                            <input type="text" placeholder="Resident Name / Property No" [(ngModel)]="filters.search"
-                                (input)="applyFilters()">
+                            <label class="medium-font">Search</label>
+                            <input type="text" placeholder="Resident Name" [(ngModel)]="filters.search"
+                                (input)="applyFilters()" class="regular-font">
                         </div>
 
                         <div class="filters-right">
@@ -69,21 +69,21 @@
                         <table class="styled-table">
                             <thead>
                                 <tr>
-                                    <th>Maintenance Amount</th>
-                                    <th>Resident Name</th>
-                                    <th>Resident Type</th>
-                                    <th>Date</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th>View</th>
+                                    <th class="medium-font">Maintenance Amount</th>
+                                    <th class="medium-font">Resident Name</th>
+                                    <th class="medium-font">Resident Type</th>
+                                    <th class="medium-font">Date</th>
+                                    <th class="medium-font">Type</th>
+                                    <th class="medium-font">Status</th>
+                                    <th class="medium-font">View</th>
                                 </tr>
                             </thead>
 
-                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
                                 <!-- No Data -->
                                 <ng-container *ngIf="MaintenanceList2?.length === 0; else datashow">
                                     <tr>
-                                        <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
+                                        <td colspan="6" class="regular-font" style="text-align: center;  color: gray;">
                                             No Data Found
                                         </td>
                                     </tr>
@@ -165,7 +165,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="MaintenanceList1" class="pagination-container ">
+        <div *ngIf="MaintenanceList1" class="pagination-container regular-font">
             <p class="pagination-info">
                 Showing {{ MaintenanceList1.startIndex + 1 }} to {{ MaintenanceList1.endIndex + 1 }} of {{
                 MaintenanceList1.totalData }} entries
@@ -176,7 +176,7 @@
                 <li>
                     <button [disabled]="MaintenanceList1.currentPage === 1" (click)="MaintenanceList1.prevPage()"
                         class="page-btn arrow-btn">
-                        &#x276E;
+                        <i class="fa-solid fa-angle-left"></i>
                     </button>
                 </li>
 
@@ -191,7 +191,7 @@
                 <li>
                     <button [disabled]="MaintenanceList1.currentPage === MaintenanceList1.totalPages"
                         (click)="MaintenanceList1.nextPage()" class="page-btn arrow-btn">
-                        &#x276F;
+                       <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </li>
             </ul>

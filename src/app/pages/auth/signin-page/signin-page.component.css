@@ -48,14 +48,11 @@
 
 .logo-img h4 {
     margin-bottom: 5px;
-    font-size: 20px;
-    font-weight: 600;
     color: #181818;
 }
 
 .logo-img p {
     font-family: 'TTHoves-Regular', sans-serif;
-    font-size: 16px;
     color: #444;
     margin: 0;
 }
@@ -173,7 +170,6 @@
    ================================================ */
 .error-text {
     color: var(--primary-color2);
-    font-size: 13px;
     font-weight: 500;
 }
 

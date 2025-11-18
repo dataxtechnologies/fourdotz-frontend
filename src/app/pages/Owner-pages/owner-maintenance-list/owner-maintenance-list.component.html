@@ -5,30 +5,30 @@
                 <h2>Maintenance List</h2>
             </div>
             <div>
-                <button class="btn-add" (click)="generateMaintenance()">+ Generate Maintenance</button>
+                <button class="btn-add" (click)="generateMaintenance()">+ Create Manual Invoice</button>
             </div>
         </div>
         <div class="container">
 
             <div class="item">
                 <div class="table-cont">
-                    <div class="filter-container">
+                    <div class="filter-container medium-font">
 
                         <!-- Date Range -->
                         <div class="filter-item">
-                            <label>From Date</label>
-                            <input type="date" [(ngModel)]="filters.fromDate" (change)="applyFilters()">
+                            <label class="medium-font">From Date</label>
+                            <input type="date" [(ngModel)]="filters.fromDate" (change)="applyFilters()" class="regular-font">
                         </div>
 
                         <div class="filter-item">
-                            <label>To Date</label>
-                            <input type="date" [(ngModel)]="filters.toDate" (change)="applyFilters()">
+                            <label class="medium-font">To Date</label>
+                            <input type="date" [(ngModel)]="filters.toDate" (change)="applyFilters()" class="regular-font">
                         </div>
 
                         <!-- Status Filter -->
                         <div class="filter-item">
-                            <label>Status</label>
-                            <select [(ngModel)]="filters.status" (change)="applyFilters()">
+                            <label class="medium-font">Status</label>
+                            <select [(ngModel)]="filters.status" (change)="applyFilters()" class="regular-font">
                                 <option value="">All</option>
                                 <option value="Paid">Paid</option>
                                 <option value="Pending">Pending</option>
@@ -39,8 +39,8 @@
                         <!-- Search -->
                         <div class="filter-item">
                             <label>Search</label>
-                            <input type="text" placeholder="Resident Name / Property No" [(ngModel)]="filters.search"
-                                (input)="applyFilters()">
+                            <input type="text" placeholder="Resident Name" [(ngModel)]="filters.search"
+                                (input)="applyFilters()" class="regular-font">
                         </div>
 
                         <div class="filters-right">
@@ -54,13 +54,13 @@
                         <table class="styled-table">
                             <thead>
                                 <tr>
-                                    <th>Maintenance Amount</th>
-                                    <th>Resident Name</th>
-                                    <th>Resident Type</th>
-                                    <th>Association Name</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th class="medium-font">Maintenance Amount</th>
+                                    <th class="medium-font">Resident Name</th>
+                                    <th class="medium-font">Resident Type</th>
+                                    <th class="medium-font">Association Name</th>
+                                    <th class="medium-font">Date</th>
+                                    <th class="medium-font">Status</th>
+                                    <th class="medium-font">Action</th>
                                 </tr>
                             </thead>
                             <!-- <tr>
@@ -72,7 +72,7 @@
                                 <td data-label="Status">Paid</td>
                                 <td data-label="View"><i class="fa-solid fa-file-lines"></i></td>
                             </tr> -->
-                            <tbody *ngIf="!tableLoading; else tableSkeleton">
+                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
                                 <ng-container *ngIf="maintenancelist2?.length === 0; else datashow">
                                     <tr>
                                         <td colspan="7" style="text-align: center; font-weight: 600; color: gray;">
@@ -112,6 +112,12 @@
                                                     <button class="pay-btn"
                                                         (click)="CreatePaymentforInvoiceId(item.invoice_no)">Pay
                                                         Now</button>
+                                                          <!-- <div class="loader">
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div></div>
+                                                        </div> -->
                                                 </ng-container>
                                                 <ng-template #viewDetails>
                                                     <img src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
@@ -170,7 +176,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="maintenancelist1" class="pagination-container ">
+        <div *ngIf="maintenancelist1" class="pagination-container regular-font">
             <p class="pagination-info">
                 Showing {{ maintenancelist1.startIndex + 1 }} to {{ maintenancelist1.endIndex + 1 }} of {{
                 maintenancelist1.totalData }} entries
@@ -181,7 +187,7 @@
                 <li>
                     <button [disabled]="maintenancelist1.currentPage === 1" (click)="maintenancelist1.prevPage()"
                         class="page-btn arrow-btn">
-                        &#x276E;
+                       <i class="fa-solid fa-angle-left"></i>
                     </button>
                 </li>
 
@@ -196,7 +202,7 @@
                 <li>
                     <button [disabled]="maintenancelist1.currentPage === maintenancelist1.totalPages"
                         (click)="maintenancelist1.nextPage()" class="page-btn arrow-btn">
-                        &#x276F;
+                       <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </li>
             </ul>

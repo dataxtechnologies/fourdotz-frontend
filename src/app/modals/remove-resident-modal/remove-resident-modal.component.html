@@ -5,16 +5,16 @@
     </div>
 
     <div class="form-body">
-        <p class="warning-text">
+        <p class="warning-text regular-font">
             <strong>Warning:</strong> This action cannot be undone. If you delete this
             resident, all tenants belonging to this owner will also be permanently
             deleted and will no longer have access to the tenant portal.
         </p>
 
         <div class="inp-cont">
-            <label for="confirmText">To confirm, type <span class="highlight">DELETE</span> below:</label>
+            <label class="medium-font" for="confirmText">To confirm, type <span class="highlight">DELETE</span> below:</label>
             <input id="confirmText" type="text" [(ngModel)]="confirmationText" placeholder="Type DELETE to confirm"
-                class="inp-cus" />
+                class="inp-cus regular-font" />
         </div>
 
         <div class="popup-actions">

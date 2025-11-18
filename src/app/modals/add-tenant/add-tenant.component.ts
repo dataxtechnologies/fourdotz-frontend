@@ -25,7 +25,7 @@ export class AddTenantComponent {
   submitbtn: boolean = true;
    formattedDate: string = '';
   showDatePicker = false;
- days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
+ days = Array.from({ length: 28 }, (_, i) => this.getOrdinal(i + 1));
   constructor(private Modal: ModalService, private fb: FormBuilder, private apiService: ApiserviceService, private Toast: ToastrService, private AssociationService: AssociationServiceService,
     private OwnerService : OwnerServiceService
 

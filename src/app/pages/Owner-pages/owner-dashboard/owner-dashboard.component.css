@@ -5,6 +5,10 @@
     gap: 8px;
 }
 
+.whole-div{
+    margin-top: 20px;
+}
+
 .div1 {
     grid-column: span 3 / span 3;
     grid-row: span 3 / span 3;
@@ -100,7 +104,6 @@
 }
 
 .transaction-name {
-    font-weight: 600;
     color: var(--text-black);
     font-size: 0.95rem;
 }
