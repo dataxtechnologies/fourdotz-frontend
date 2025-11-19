@@ -18,7 +18,7 @@
 .table-cont {
     background-color: #faf9f4;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 12px !important;
 }
 
 .styled-table thead {
@@ -40,7 +40,7 @@
 
 .new-cards {
     background: #fff;
-    border-radius: 1rem;
+    border-radius: 12px !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: center;
@@ -71,7 +71,7 @@
     font-weight: 700;
     padding: 10px 8px;
     background: #faf9f4;
-    border-radius: 20px;
+    border-radius: 12px !important;
     border: 2px solid var(--primary-color1);
 }
 
@@ -98,7 +98,7 @@ tbody td i {
   flex-wrap: wrap;
   gap: 1rem;
   padding: 15px 20px;
-  border-radius: 10px;
+  border-radius: 12px !important;
 }
 
 .filters-left {
@@ -117,7 +117,7 @@ tbody td i {
 .filter-item input,
 .filter-item select {
   padding: 8px 10px;
-  border-radius: 6px;
+  border-radius: 12px !important;
   border: 1px solid #ccc;
   font-size: 14px;
 }
@@ -132,7 +132,7 @@ tbody td i {
   background: transparent;
   color: #ff4d4d;
   border: none;
-  border-radius: 6px;
+  border-radius: 12px !important;
   cursor: pointer;
   font-weight: 600;
 }

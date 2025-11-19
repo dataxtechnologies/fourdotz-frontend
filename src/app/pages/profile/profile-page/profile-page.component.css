@@ -4,7 +4,7 @@
   margin: 10px auto;
   padding: 30px;
   background-color: #faf9f4;
-  border-radius: 20px;
+  border-radius: 12px !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   /* padding: 0 !important; */
   margin: 0 !important;
@@ -60,7 +60,7 @@
   color: var(--primary-color1);
   border:2px solid var(--primary-color1);
   padding: 6px 20px;
-  border-radius: 20px;
+  border-radius: 12px !important;
   cursor: pointer;
   font-size: 18px;
   width: 100px;
@@ -94,7 +94,7 @@
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #e0e0e0;
-  border-radius: 5px;
+  border-radius: 12px !important;
   font-size: 15px;
   color: #333333;
   background-color: #fcfcfc;
@@ -132,7 +132,7 @@
   color: white;
   border: none;
   padding: 10px 25px;
-  border-radius: 5px;
+  border-radius: 12px !important;
   cursor: pointer;
   font-size: 15px;
   font-weight: 500;
@@ -164,7 +164,7 @@
   padding: 12px 15px;
   background-color: #fcfcfc;
   border: 1px solid #e0e0e0;
-  border-radius: 5px;
+  border-radius: 12px !important;
   margin-bottom: 15px;
 }
 
@@ -222,7 +222,7 @@
   height: 100%;
   background-color: #dd4b39; /* Gmail red */
   color: white;
-  border-radius: 3px;
+  border-radius: 12px !important;
   font-weight: bold;
   font-size: 18px;
 }
@@ -233,7 +233,7 @@
 .inp-cus {
     padding: 12px 14px;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 12px !important;
     background: #faf9f4;
     font-size: 1rem;
     transition: all 0.3s ease;

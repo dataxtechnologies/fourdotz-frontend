@@ -12,7 +12,7 @@
 
             <!-- Items Header -->
             <div class="inp-cont items-header">
-                <label  class="label-style medium-font">Additional Items</label>
+                <label  class="label-style medium-font">Click here to</label>
                 <button type="button" class="btn-add" (click)="addItem()">+ Add Item</button>
             </div>
 
@@ -21,11 +21,14 @@
                 <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-wrapper">
 
                     <!-- Row 1 -->
+                    <div class="remove-btn">
+                        <button type="button" class="btn-cancel regular-font" (click)="removeItem(i)">Remove</button>
+                    </div>
                     <div class="item-row">
                         <div>
-                            <label class="medium-font">Property No</label>
+                            <label class="medium-font">Property No.</label>
                             <select formControlName="propertyNo" class="inp-cus regular-font">
-                                <option value="" disabled>Select Property No</option>
+                                <option value="" disabled>Select Property No.</option>
                                 <option *ngFor="let property of TenantList2" [value]="property._id">
                                     {{ property.property_no }}
                                 </option>
@@ -51,10 +54,9 @@
                         </div>
 
                         <!-- Remove button on row 2 -->
-                        <button type="button" class="btn-cancel regular-font" (click)="removeItem(i)">Cancel</button>
+                        
                     </div>
 
-                    <hr />
                 </div>
             </div>
 

@@ -7,7 +7,7 @@
   /* width: 100%; */
   margin: 40px auto;
   padding: 20px 30px;
-  border-radius: 10px;
+  border-radius: 12px !important;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
@@ -53,7 +53,7 @@
 .inp-cus {
   padding: 10px 14px;
   border: 1px solid #ddd;
-  border-radius: 10px;
+  border-radius: 12px !important;
   background: #faf9f4;
   font-size: 15px;
   outline: none;
@@ -105,7 +105,7 @@
   position: relative;
   width: 100px;
   height: 100px;
-  border-radius: 8px;
+  border-radius: 12px !important;
   overflow: hidden;
   border: 1px solid #ccc;
 }
@@ -144,7 +144,7 @@
 .cancel-btn,
 .delete-btn {
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 12px !important;
   font-weight: 600;
   cursor: pointer;
   border: none;

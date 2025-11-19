@@ -103,14 +103,14 @@
                                             <img src="assets/icons/view-post.svg" alt="view-post"
                                                 style=" cursor: pointer;" (click)="viewpost(post)">
                                             <!-- Already pinned -->
-                                            <img src="assets/icons/pinfilled.png" *ngIf="!post.pin"
-                                                style="width: 25px; cursor: pointer;"
-                                                (click)="Createpinannouncement(post._id)" />
+                                           <img src="assets/icons/pinfilled.png" *ngIf="!post.pin"
+                                            style="width: 25px; cursor: pointer;"
+                                            (click)="Createpinannouncement(post._id)" />
 
-                                            <!-- Not pinned -->
-                                            <img src="assets/icons/pinoutline.png" *ngIf="post.pin"
-                                                style="width: 25px; cursor: pointer;"
-                                                (click)="Createpinannouncement(post._id)" />
+                                        <!-- Not pinned -->
+                                        <img src="assets/icons/pinoutline.png" *ngIf="post.pin"
+                                            style="width: 25px; cursor: pointer;"
+                                            (click)="Createpinannouncement(post._id)" />
                                             <span class="badge regular-font">{{ post.category }}</span>
                                         </div>
                                     </div>

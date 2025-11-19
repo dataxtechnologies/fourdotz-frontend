@@ -5,15 +5,11 @@
                 <h2>Rental Invoice List</h2>
             </div>
             <div>
-  <button
-    class="btn-add"
-    (click)="generateRental()"
-    [disabled]="!isTenantPresent"
-    [title]="!isTenantPresent ? 'You don’t have any tenant to generate rent invoice' : ''"
-  >
-    + Generate Rental Invoice
-  </button>
-</div>
+                <button class="btn-add" (click)="generateRental()" [disabled]="!isTenantPresent"
+                    [title]="!isTenantPresent ? 'You don’t have any tenant to generate rent invoice' : ''">
+                    + Generate Rental Invoice
+                </button>
+            </div>
         </div>
         <div class="container">
 
@@ -28,7 +24,7 @@
                                 <!-- Status Dropdown -->
                                 <div class="filter-item">
                                     <label for="status" class="medium-font">Payment Status</label>
-                                    <select formControlName="status">
+                                    <select formControlName="status" class="regular-font">
                                         <option value="">All</option>
                                         <option value="Paid">Paid</option>
                                         <option value="Pending">Pending</option>
@@ -38,21 +34,29 @@
 
                                 <!-- Search -->
                                 <div class="filter-item">
-                                    <label for="residentSearch" class="medium-font" id="select-tag">Search</label>
-                                    <input type="text" placeholder="Enter Tenant Phone, Name"
-                                        formControlName="residentSearch" />
+                                    <label for="residentSearch" class="medium-font" id="select-tag">Search
+                                        <div class="tooltip-wrapper">
+                                            <img src="assets/icons/info-circle.svg" class="info-icon" alt="info" />
+
+                                            <div class="tooltip-box">
+                                                Search for Tenanr name or property number here
+                                            </div>
+                                        </div>
+                                    </label>
+                                    <input type="text" placeholder="Enter Phone or Name"
+                                        formControlName="residentSearch" class="regular-font" />
                                 </div>
 
                                 <!-- From Date -->
                                 <div class="filter-item">
                                     <label for="fromDate" class="medium-font">From Date</label>
-                                    <input type="date" formControlName="fromDate" />
+                                    <input type="date" formControlName="fromDate" class="regular-font" />
                                 </div>
 
                                 <!-- To Date -->
                                 <div class="filter-item">
                                     <label for="toDate" class="medium-font">To Date</label>
-                                    <input type="date" formControlName="toDate" />
+                                    <input type="date" formControlName="toDate" class="regular-font" />
                                 </div>
 
                             </div>
@@ -60,7 +64,7 @@
                             <!-- RIGHT Reset Button -->
                             <div class="filters-right">
                                 <button type="button" class="reset-btn" (click)="resetFilters()"><i
-                                    class="fa-solid fa-arrow-rotate-right"></i> Reset</button>
+                                        class="fa-solid fa-arrow-rotate-right"></i> Reset</button>
                             </div>
 
                         </div>
@@ -70,13 +74,13 @@
                         <table class="styled-table">
                             <thead>
                                 <tr>
-                                    <th  class="medium-font">Rental Amount</th>
-                                    <th  class="medium-font">Association Name</th>
-                                    <th  class="medium-font">Resident Name</th>
-                                    <th  class="medium-font">Resident Phone</th>
-                                    <th  class="medium-font">Issue At</th>
-                                    <th  class="medium-font">Status</th>
-                                    <th  class="medium-font">Action</th>
+                                    <th class="medium-font">Rental Amount</th>
+                                    <th class="medium-font">Association Name</th>
+                                    <th class="medium-font">Resident Name</th>
+                                    <th class="medium-font">Resident Phone</th>
+                                    <th class="medium-font">Issue at</th>
+                                    <th class="medium-font">Status</th>
+                                    <th class="medium-font">Action</th>
                                 </tr>
                             </thead>
                             <!-- <tbody class="tbody-dd">
@@ -187,7 +191,7 @@
                 <li>
                     <button [disabled]="rentalinvoicelist1.currentPage === rentalinvoicelist1.totalPages"
                         (click)="rentalinvoicelist1.nextPage()" class="page-btn arrow-btn">
-                       <i class="fa-solid fa-angle-right"></i>
+                        <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </li>
             </ul>

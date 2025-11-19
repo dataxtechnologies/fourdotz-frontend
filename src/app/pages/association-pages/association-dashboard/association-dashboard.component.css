@@ -7,7 +7,6 @@ section{
 
 /* ===== No Data Placeholder Style ===== */
 .nodata-container {
-  background-color: #eae9e3; /* Light pastel beige */
   height: 70vh;
   display: flex;
   flex-direction: column;
@@ -28,7 +27,7 @@ section{
 .nodata-img {
   width: 420px;
   height: auto;
-  border-radius: 10px;
+  border-radius: 12px !important;
 }
 
 .nodata-text h3 {
@@ -48,7 +47,7 @@ section{
   color: var(--primary-color1);
   border: none;
   padding: 10px 20px;
-  border-radius: 25px;
+  border-radius: 12px !important;
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -76,7 +75,7 @@ section{
 .div3,
 .div4 {
     background-color: #faf9f4;
-    border-radius: 16px;
+    border-radius: 12px !important;
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -108,7 +107,7 @@ section{
 .div5 {
     grid-column: span 5;
     background: #faf9f4;
-    border-radius: 16px;
+    border-radius: 12px !important;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     overflow: hidden;
@@ -156,7 +155,7 @@ p {
     max-height: 500px;
     /* scrollable area */
     overflow-y: auto;
-    border-radius: 8px;
+    border-radius: 12px !important;
 }
 
 .styled-table {

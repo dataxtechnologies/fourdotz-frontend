@@ -12,7 +12,7 @@
 /* Center Card Popup */
 .logout-card {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 12px !important;
   width: 90%;
   max-width: 580px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
@@ -92,7 +92,7 @@
 .cancel-btn,
 .delete-btn {
   padding: 10px 20px;
-  border-radius: 8px;
+  border-radius: 12px !important;
   font-weight: 600;
   cursor: pointer;
   font-size: 15px;

@@ -32,12 +32,14 @@
                         <!-- Date Range -->
                         <div class="filter-item">
                             <label class="medium-font">From Date</label>
-                            <input type="date" [(ngModel)]="filters.fromDate" (change)="applyFilters()" class="regular-font">
+                            <input type="date" [(ngModel)]="filters.fromDate" (change)="applyFilters()"
+                                class="regular-font">
                         </div>
 
                         <div class="filter-item">
                             <label class="medium-font">To Date</label>
-                            <input type="date" [(ngModel)]="filters.toDate" (change)="applyFilters()" class="regular-font">
+                            <input type="date" [(ngModel)]="filters.toDate" (change)="applyFilters()"
+                                class="regular-font">
                         </div>
 
                         <!-- Status Filter -->
@@ -53,7 +55,15 @@
 
                         <!-- Search -->
                         <div class="filter-item">
-                            <label class="medium-font">Search</label>
+                            <label class="medium-font">Search 
+                                <div class="tooltip-wrapper">
+                                    <img src="assets/icons/info-circle.svg" class="info-icon" alt="info" />
+
+                                    <div class="tooltip-box">
+                                        Search for resident name or property number here
+                                    </div>
+                                </div>
+                            </label>
                             <input type="text" placeholder="Resident Name" [(ngModel)]="filters.search"
                                 (input)="applyFilters()" class="regular-font">
                         </div>
@@ -191,7 +201,7 @@
                 <li>
                     <button [disabled]="MaintenanceList1.currentPage === MaintenanceList1.totalPages"
                         (click)="MaintenanceList1.nextPage()" class="page-btn arrow-btn">
-                       <i class="fa-solid fa-angle-right"></i>
+                        <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </li>
             </ul>

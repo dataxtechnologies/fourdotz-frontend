@@ -9,7 +9,7 @@
     min-height: 297mm;
     background: #fff;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 12px !important;
     margin: auto;
     padding: 12px;
     position: relative;
@@ -101,7 +101,6 @@
 .section-title {
     margin: 0;
     font-size: 14px;
-    font-weight: bold;
     color: #000;
 }
 
@@ -166,7 +165,6 @@
 
 .line-items-table th {
     background-color: #fef9ff;
-    font-weight: bold;
     color: #000;
     font-size: 14px;
     text-align: center;
@@ -267,7 +265,6 @@
 }
 
 .footer-title {
-    font-weight: bold;
     border-bottom: 1px solid #ccc;
     padding: 3px;
     margin: 0;
@@ -333,7 +330,6 @@
 
 .footer-table1 td:first-child {
     width: 35%;
-    font-weight: bold;
 }
 
 /* --- QR Box --- */
@@ -549,6 +545,6 @@
     width: 150px;
     border: 1px solid var(--primary-color2);
     background-color: #fff;
-    border-radius: 12px;
+    border-radius: 12px !important;
     font-size: 14px;
 }

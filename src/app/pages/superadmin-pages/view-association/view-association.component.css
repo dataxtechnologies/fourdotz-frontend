@@ -1,5 +1,5 @@
 .sec-cont {
-    border-radius: 20px;
+    border-radius: 12px !important;
     background-color: #fff;
     padding: 8px;
     margin: 20px auto;
@@ -15,7 +15,7 @@
     align-items: center;
     background-color: #EAE9E3;
     padding: 15px 15px;
-    border-radius: 15px;
+    border-radius: 12px !important;
     flex-grow: 1;
     flex-wrap: wrap;
     /* allow wrapping */
@@ -115,13 +115,13 @@
 .tab-content {
     background: #fff;
     padding: 15px;
-    border-radius: 8px;
+    border-radius: 12px !important;
     border: 1px solid #ddd;
 }
 
 .table-cont {
     border: 1px solid #ccc;
-    border-radius: 10px;
+    border-radius: 12px !important;
     margin-top: 30px;
 }
 
@@ -134,7 +134,7 @@
     max-height: 450px;
     overflow-y: auto;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 12px !important;
 }
 
 .table-container::-webkit-scrollbar {
@@ -190,7 +190,7 @@
   justify-content: center;
   background: #fff;
   border: 1px solid #e0e0e0;
-  border-radius: 12px;
+  border-radius: 12px !important;
   padding: 12px 18px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.05);
   transition: all 0.3s ease;
@@ -302,7 +302,7 @@
 
 .transaction-card {
   background: linear-gradient(180deg, #ffffff, #ffeffc);
-  border-radius: 14px;
+  border-radius: 12px !important;
   padding: 24px;
   border: 1px solid #f0a5fa;
   box-shadow: 0 6px 18px rgba(122, 0, 128, 0.08);
@@ -318,7 +318,7 @@
   margin: 0 auto 10px;
   background: rgba(0, 128, 0, 0.08);
   color: #8B4095;
-  border-radius: 12px;
+  border-radius: 12px !important;
   display: flex;
   align-items: center;
   justify-content: center;

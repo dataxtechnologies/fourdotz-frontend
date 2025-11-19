@@ -10,10 +10,10 @@
 
                 <!-- Property Dropdown -->
                 <div class="inp-cont">
-                    <label class="medium-font">Property No <span class="required">*</span></label>
+                    <label class="medium-font">Property No. <span class="required">*</span></label>
                     <div class="custom-select">
                         <div class="select-selected regular-font" (click)="toggleDropdown()">
-                            {{ selectedProperty || 'Select Property No' }}
+                            {{ selectedProperty || 'Select Property No.' }}
                             <i class="fa-solid" [ngClass]="{
           'fa-chevron-down': !dropdownOpen,
           'fa-chevron-up': dropdownOpen
@@ -36,7 +36,7 @@
 
                     <div *ngIf="ownerForm.get('property_id')?.touched && ownerForm.get('property_id')?.invalid"
                         class="error-text">
-                        Property No is required
+                        Property No. is required
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@
 
                 <!-- Owned At -->
                 <div class="inp-cont">
-                    <label class="medium-font">Owned At <span class="required">*</span></label>
+                    <label class="medium-font">Owned at <span class="required">*</span></label>
 
                     <div class="date-input-wrapper">
                         <input type="text" id="rentedAt" class="inp-cus placeholder-font" formControlName="ownedAt"

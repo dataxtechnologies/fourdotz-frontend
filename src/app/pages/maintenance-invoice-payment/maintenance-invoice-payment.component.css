@@ -17,7 +17,7 @@
     width: 150px;
     border: 1px solid var(--primary-color2);
     background-color: #fff;
-    border-radius: 12px;
+    border-radius: 12px !important;
     font-size: 14px;
 }
 
@@ -26,7 +26,7 @@
     min-height: 257mm;
     background: #fff;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 12px !important;
     margin: auto;
     padding: 12px;
     position: relative;

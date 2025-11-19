@@ -5,7 +5,7 @@
     background: #ffffff;
     width: 550px !important;
     /* Keep desktop width */
-    border-radius: 20px;
+    border-radius: 12px !important;
     border: 1px solid #c9c8c8;
     padding: 20px;
     margin: 40px auto;
@@ -83,7 +83,7 @@
 .inp-cus {
     padding: 12px 14px;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 12px !important;
     background: #f9f9f9;
     font-size: 1rem;
     transition: all 0.3s ease;
@@ -139,7 +139,7 @@
 .login-btn {
     width: 100%;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 12px !important;
     font-size: 18px;
     font-family: 'TTHoves-Regular', sans-serif;
     font-weight: 600;
@@ -161,7 +161,7 @@
 .processing-btn {
     background: var(--primary-color2);
     color: #fff;
-     border-radius: 8px;
+     border-radius: 12px !important;
     border: 1px solid var(--primary-color2);
 }
 
@@ -258,7 +258,7 @@
 @media (max-width: 599px) {
     .bg {
         width: 95%;
-        border-radius: 12px;
+        border-radius: 12px !important;
         padding: 15px;
         margin: 15px auto;
     }

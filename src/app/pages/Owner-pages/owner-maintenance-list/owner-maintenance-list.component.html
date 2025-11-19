@@ -38,7 +38,16 @@
 
                         <!-- Search -->
                         <div class="filter-item">
-                            <label>Search</label>
+                            <label>Search 
+                                <div class="tooltip-wrapper">
+                                    <img src="assets/icons/info-circle.svg" class="info-icon" alt="info" />
+
+                                    <div class="tooltip-box">
+                                        Search for resident name or property number here
+                                    </div>
+                                </div>
+                                
+                            </label>
                             <input type="text" placeholder="Resident Name" [(ngModel)]="filters.search"
                                 (input)="applyFilters()" class="regular-font">
                         </div>

@@ -3,7 +3,7 @@
     display: flex;
     max-width: 90%;
     margin: 20px auto;
-    border-radius: 12px;
+    border-radius: 12px !important;
     overflow: hidden;
     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
     background: #fff;
@@ -38,7 +38,7 @@
     font-weight: 500;
     padding: 10px 8px;
     background: #FFFFFF;
-    border-radius: 20px;
+    border-radius: 12px !important;
     width: 200px !important;
     border: 2px solid var(--primary-color2);
 }
@@ -49,7 +49,7 @@
     font-weight: 500;
     padding: 10px 8px;
     background: #FFFFFF;
-    border-radius: 20px;
+    border-radius: 12px !important;
     width: 200px !important;
     border: 2px solid var(--primary-color2);
 }
@@ -177,7 +177,7 @@
 .inp-cus {
     padding: 12px 14px;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 12px !important;
     background: #f9f9f9;
     font-size: 1rem;
     transition: all 0.3s ease;
@@ -205,7 +205,7 @@
     margin-top: 10px;
     border: 1px solid #e9ecef;
     padding: 20px;
-    border-radius: 6px;
+    border-radius: 12px !important;
 }
 
 .file-upload-item {
@@ -226,7 +226,7 @@
 .file-upload-item input[type="file"] {
     flex-basis: 40%;
     border: 1px solid #e9ecef;
-    border-radius: 4px;
+    border-radius: 12px !important;
     padding: 4px;
     font-size: 14px;
 }
@@ -240,7 +240,7 @@
 
 .form-navigation .btn {
     padding: 12px 25px;
-    border-radius: 6px;
+    border-radius: 12px !important;
     font-weight: 600;
     cursor: pointer;
     margin-left: 10px;
@@ -273,7 +273,7 @@
 .review-block {
     border: 1px solid #e9ecef;
     padding: 15px;
-    border-radius: 6px;
+    border-radius: 12px !important;
     margin-top: 20px;
 }
 
@@ -293,7 +293,7 @@
   background-color: #fdecea; /* light red background */
   border-left: 4px solid #e74c3c; /* darker red border */
   color: #a94442; /* red text tone */
-  border-radius: 8px;
+  border-radius: 12px !important;
   padding: 12px 16px;
   margin-top: 10px;
   margin-bottom: 15px;

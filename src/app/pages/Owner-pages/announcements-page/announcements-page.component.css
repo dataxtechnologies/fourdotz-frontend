@@ -32,7 +32,7 @@
     gap: 8px;
     background: #fff;
     border: 1px solid #e0e0e0;
-    border-radius: 10px;
+    border-radius: 12px !important;
     padding: 6px 10px;
     font-size: 14px;
     color: #333;
@@ -72,7 +72,7 @@
 .sidebar,
 .pinned-sidebar {
     background-color: #fff;
-    border-radius: 16px;
+    border-radius: 12px !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     padding: 20px;
 }
@@ -87,7 +87,7 @@
 .add-button {
     padding: 6px;
     width: 120px;
-    border-radius: 12px;
+    border-radius: 12px !important;
     background-color: #fff;
     color: var(--primary-color1);
     border: 1px solid var(--primary-color1);
@@ -108,7 +108,7 @@
 
 .sidebar ul li {
     padding: 10px 12px;
-    border-radius: 8px;
+    border-radius: 12px !important;
     cursor: pointer;
     font-weight: 500;
     transition: 0.25s ease;
@@ -131,7 +131,7 @@
 ============================================================ */
 .create-announcement {
     background-color: #fff;
-    border-radius: 16px;
+    border-radius: 12px !important;
     padding: 16px;
     margin-bottom: 20px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -140,7 +140,7 @@
 .create-announcement input {
     width: 100%;
     padding: 10px;
-    border-radius: 8px;
+    border-radius: 12px !important;
     background-color: #f1f3f5;
     border: none;
     outline: none;
@@ -174,7 +174,7 @@
 
 .option-btn:hover {
     background-color: #f5f5f5;
-    border-radius: 10px;
+    border-radius: 12px !important;
 }
 
 .option-btn.video i {
@@ -208,7 +208,7 @@
 ============================================================ */
 .announcement-card {
     background-color: #fff;
-    border-radius: 16px;
+    border-radius: 12px !important;
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
@@ -248,7 +248,7 @@
 .single-video {
     width: 100%;
     height: 700px;              /* FIXED HEIGHT */
-    border-radius: 12px;
+    border-radius: 12px !important;
     object-fit: contain;        /* KEEP ENTIRE IMAGE/VIDEO */
     background: #f1f1f1;        /* OPTIONAL: GRAY BACKGROUND */
     display: block;
@@ -265,7 +265,7 @@
 .two-img-grid video {
     width: 100%;
     height: 350px;              /* Half of 500px, adjust as needed */
-    border-radius: 12px;
+    border-radius: 12px !important;
     object-fit: contain;
     background: #f1f1f1;
 }
@@ -297,7 +297,7 @@
     gap: 10px;
     background: #fff;
     padding: 8px 12px;
-    border-radius: 50px;
+    border-radius: 12px !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     opacity: 0;
     visibility: hidden;
@@ -343,7 +343,7 @@
 
 .pinned-scroll::-webkit-scrollbar-thumb {
     background: #ccc;
-    border-radius: 4px;
+    border-radius: 12px !important;
 }
 
 .pinned-item {
@@ -386,7 +386,7 @@
     background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
     background-size: 400% 100%;
     animation: shimmer 1.5s infinite;
-    border-radius: 10px;
+    border-radius: 12px !important;
 }
 
 .skeleton-card {
@@ -395,7 +395,7 @@
 
 .skeleton-line {
     height: 50px;
-    border-radius: 8px;
+    border-radius: 12px !important;
 }
 
 @keyframes shimmer {

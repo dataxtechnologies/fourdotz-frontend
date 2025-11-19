@@ -6,7 +6,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { TableService } from '../../../services/tableservice.service';
-
+import { PaymentSuccessPopupComponent } from '../../../modals/payment-success-popup/payment-success-popup.component';
+import { ActivatedRoute } from '@angular/router';
+import { PaymentFailurePopupComponent } from '../../../modals/payment-failure-popup/payment-failure-popup.component';
 @Component({
   selector: 'app-owner-maintenance-list',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
@@ -30,7 +32,8 @@ export class OwnerMaintenanceListComponent {
   constructor(
     private ModalService: ModalService,
     private route: Router,
-    private Apiservice: ApiserviceService
+    private Apiservice: ApiserviceService,
+    private Acroute: ActivatedRoute
   ) {
     this.maintenancelist1 = new TableService();
     this.maintenancelist1.initialize(this.maintenancelist2, 10);
@@ -39,6 +42,15 @@ export class OwnerMaintenanceListComponent {
   ngOnInit(): void {
     this.usertype = localStorage.getItem('user_type');
     this.MaintenanceListinOwner();
+    this.Acroute.queryParams.subscribe(params => {
+    const status = params['success'];
+
+    if (status && status.toLowerCase() === 'true') {
+      this.OpenSuccessPopup();
+    }else if (status && status.toLowerCase() === 'false'){
+      this.openfailurepopup();
+    }
+  });
   }
 
   applyFilters() {
@@ -84,6 +96,34 @@ export class OwnerMaintenanceListComponent {
 
   generateMaintenance() {
     this.ModalService.open(GenerateMaintenanceComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+
+  OpenSuccessPopup() {
+    this.ModalService.open(PaymentSuccessPopupComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+  openfailurepopup() {
+    this.ModalService.open(PaymentFailurePopupComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
         leave: 'fade-out 0.5s',

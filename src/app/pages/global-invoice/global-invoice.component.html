@@ -13,7 +13,7 @@
         <header class="invoice-header">
             <div class="logo-and-details">
                 <div class="logo-section">
-                    <img src="assets/logo/fourdotz1.png" alt="fourdotz-logo" style="width: 150px;">
+                    <img src="assets/logo/fourdotz-withname.png" alt="fourdotz-logo" style="width: 150px;">
                 </div>
                 <div class="company-address">
                     <p>5th Cross Rd</p>
@@ -33,7 +33,7 @@
         <table class="gst-invoice-table">
             <tr>
                 <td class="gst-cell">
-                    <h5 class="section-title">GSTIN: 33AOPPV0720H1ZW</h5>
+                    <h5 class="section-title medium-font">GSTIN: 33AOPPV0720H1ZW</h5>
                 </td>
                 <td class="invoice-title-cell">
                     <h3 class="inv-title">{{ formatInvoiceTypeCaps(invoiceData.invoice_type) }}</h3>
@@ -49,9 +49,9 @@
             <div class="left-details">
                 <h5 class="inv-table-title">Tenant Details</h5>
                 <div class="customer-info">
-                    <p class="Table-Body"><strong>M/S</strong>: {{ invoiceData.tenant_name }}</p>
-                    <p class="Table-Body"><strong>Email</strong>: {{ invoiceData.tenant_email }}</p>
-                    <p class="Table-Body"><strong>Phone</strong>: {{ invoiceData.tenant_mobile }}</p>
+                    <p class="Table-Body regular-font"><strong>M/S</strong>: {{ invoiceData.tenant_name }}</p>
+                    <p class="Table-Body regular-font"><strong>Email</strong>: {{ invoiceData.tenant_email }}</p>
+                    <p class="Table-Body regular-font"><strong>Phone</strong>: {{ invoiceData.tenant_mobile }}</p>
                 </div>
             </div>
             <div class="center-details">
@@ -81,22 +81,22 @@
         <table class="line-items-table">
             <thead>
                 <tr>
-                    <th>S.No.</th>
-                    <th>Invoice Type</th>
-                    <th>Amount</th>
-                    <th>Description</th>
-                    <th>Total</th>
+                    <th class="medium-font">S.No.</th>
+                    <th class="medium-font">Invoice Type</th>
+                    <th class="medium-font">Amount</th>
+                    <th class="medium-font">Description</th>
+                    <th class="medium-font">Total</th>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="regular-font">
                 <!-- Actual invoice data -->
                 <tr *ngFor="let item of invoiceItems">
                     <td>{{ 1 }}</td>
                     <td>{{ formatInvoiceType(item.invoice_type) }}</td>
                     <td>{{ item.amount }}</td>
                     <td>{{ item.description }}</td>
-                    <td style="color: #EA4531;">{{ item.total_amount  | currency:'INR'}}</td>
+                    <td >{{ item.total_amount  | currency:'INR'}}</td>
                 </tr>
 
                 <!-- Auto filler rows -->
@@ -112,7 +112,7 @@
                 <tr class="total-row">
                     <td colspan="3"></td>
                     <td style="text-align:right;">Total</td>
-                    <td style="color: #EA4531;">{{ invoiceData.total_amount | currency:'INR'}}</td>
+                    <td >{{ invoiceData.total_amount | currency:'INR'}}</td>
                 </tr>
             </tbody>
         </table>
@@ -120,8 +120,8 @@
         <section class="footer-details">
             <!-- Top full-width row -->
             <div class="footer-top">
-                <p class="footer-title">Total in words</p>
-                <p class="footer-cont"><strong>{{ convertAmountToWords(invoiceData?.total_amount) }}</strong></p>
+                <p class="footer-title medium-font">Total in words</p>
+                <p class="footer-cont regular-font"><strong>{{ convertAmountToWords(invoiceData?.total_amount) }}</strong></p>
             </div>
 
             <!-- Bank Details + QR + Signature -->
@@ -135,12 +135,12 @@
                                 <!-- Bank Details -->
                                 <table class="footer-table1">
                                     <tr>
-                                        <td><strong>Name :</strong></td>
-                                        <td>{{ invoiceData.owner_name }}</td>
+                                        <td class="medium-font">Name :</td>
+                                        <td class="regular-font">{{ invoiceData.owner_name }}</td>
                                     </tr>
                                     <tr>
-                                        <td><strong>UPI ID :</strong></td>
-                                        <td>{{ invoiceData.owner_upi_id }}</td>
+                                        <td class="medium-font">UPI ID :</td>
+                                        <td class="regular-font">{{ invoiceData.owner_upi_id }}</td>
                                     </tr>
                                 </table>
 

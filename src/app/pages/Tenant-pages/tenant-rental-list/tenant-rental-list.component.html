@@ -51,7 +51,7 @@
                                     <th class="medium-font">Association Name</th>
                                     <th class="medium-font">Owner Name</th>
                                     <!-- <th>Owner Phone</th> -->
-                                    <th class="medium-font">Issue At</th>
+                                    <th class="medium-font">Issue at</th>
                                     <th class="medium-font">Status</th>
                                     <th class="medium-font">Actions</th>
                                 </tr>
@@ -77,12 +77,13 @@
                                             <span *ngIf="p.payment_status === true" style="color: #226942;">Paid</span>
                                         </td>
                                         <td>
-                                            <span ><img
+                                            <!-- <img
+                                                    src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
+                                                     /> -->
+                                            <span *ngIf="p.payment_status === false" (click)="viewInvoice(p.invoice_no)"><p style="font-size: 16px;">Pay Now</p></span>
+                                             <span *ngIf="p.payment_status === true"><img
                                                     src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
                                                     (click)="viewInvoice(p.invoice_no)" /></span>
-                                            <!--*ngIf="p.payment_status === false" <span *ngIf="p.payment_status === true"><img
-                                                    src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
-                                                    (click)="viewInvoice(p.invoice_no)" /></span> -->
                                         </td>
                                     </tr>
                                 </ng-template>

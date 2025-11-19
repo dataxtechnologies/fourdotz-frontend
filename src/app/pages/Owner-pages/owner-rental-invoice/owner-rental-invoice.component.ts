@@ -135,33 +135,51 @@ export class OwnerRentalInvoiceComponent {
   }
 
   RentalInvoicelistinowner() {
+    this.tableLoading = true;
+
     this.apiService.RentalInvoicelistinowner<any>().subscribe({
       next: (res: any) => {
-        if (res?.success) {
-          this.rentalinvoicelist2 = res.data || [];
-          this.filteredProperties = [...this.rentalinvoicelist2];
+        try {
+          if (res?.success && Array.isArray(res.data)) {
+            this.rentalinvoicelist2 = res.data;
+            this.filteredProperties = [...this.rentalinvoicelist2];
 
-          // Initialize TableService
-          this.rentalinvoicelist1 = new TableService();
-          this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10);
+            // Initialize TableService AFTER data loads
+            this.rentalinvoicelist1 = new TableService();
+            this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10);
 
-          // If backend provides pagination info
-          this.pages = Array.from(
-            { length: res.data?.totalPages || 1 },
-            (_, i) => i + 1
-          );
-
-          this.tableLoading = false;
-        } else {
+            // Pagination if backend sends it
+            this.pages = Array.from(
+              { length: res?.data?.totalPages || 1 },
+              (_, i) => i + 1
+            );
+          } else {
+            console.warn(res?.message || 'No rental invoices found.');
+            this.rentalinvoicelist2 = [];
+            this.filteredProperties = [];
+            this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10);
+          }
+        } catch (e) {
+          console.error('Processing error:', e);
           this.rentalinvoicelist2 = [];
+          this.filteredProperties = [];
+          this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10);
+        } finally {
           this.tableLoading = false;
-          //console.warn(res.message || 'Failed to load properties.');
         }
       },
+
       error: (err: any) => {
+        console.error('API error:', err);
+
+        if (err?.status === 403 || err?.error?.message === 'Session expired') {
+          this.router.navigate(['/auth/sign-in']);
+        }
+
         this.rentalinvoicelist2 = [];
+        this.filteredProperties = [];
+        this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10);
         this.tableLoading = false;
-        //console.error('Property list fetch failed:', err);
       },
     });
   }
@@ -178,7 +196,6 @@ export class OwnerRentalInvoiceComponent {
           );
 
           console.log('this.isTenantPresent', this.isTenantPresent);
-          
 
           // If backend provides pagination info
           this.pages = Array.from(
@@ -188,10 +205,12 @@ export class OwnerRentalInvoiceComponent {
 
           this.tableLoading = false;
         } else {
+          this.isTenantPresent = false;
           this.tableLoading = false;
         }
       },
       error: (err: any) => {
+        this.isTenantPresent = false;
         this.tableLoading = false;
       },
     });

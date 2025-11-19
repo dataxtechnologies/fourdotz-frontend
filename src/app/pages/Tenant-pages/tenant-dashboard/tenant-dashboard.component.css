@@ -37,7 +37,7 @@
 
 .properties-div{
     padding: 30px;
-    border-radius: 30px;
+    border-radius: 12px !important;
 }
 
 
@@ -131,7 +131,7 @@
 .table-cont {
     background-color: #faf9f4 !important;
     padding: 10px;
-    border-radius: 20px !important;
+    border-radius: 12px !important;
 }
 
 .styled-table thead {
@@ -147,7 +147,7 @@ img.rounded-circle {
     padding: 30px;
     height: 100%;
      background-color: #faf9f4 !important;;
-     border-radius: 30px;
+     border-radius: 12px !important;
 }
 
 .profile-img img {
@@ -169,7 +169,7 @@ img.rounded-circle {
 .table-cont {
     background-color: #faf9f4;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 12px !important;
 }
 
 .styled-table thead {

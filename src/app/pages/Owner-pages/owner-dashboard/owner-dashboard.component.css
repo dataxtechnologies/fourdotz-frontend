@@ -41,7 +41,7 @@
 
 .properties-div{
     padding: 30px;
-    border-radius: 30px;
+    border-radius: 12px !important;
 }
 
 
@@ -138,13 +138,13 @@
 .table-cont {
     background-color: #faf9f4;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 12px !important;
     height: 250px !important;
 }
 .table-cont1 {
     background-color: #faf9f4;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 12px !important;
     height: 250px !important;
 }
 

@@ -3,7 +3,7 @@
     max-width: 95%;
     height: 80vh;
     background: #fff;
-    border-radius: 14px;
+    border-radius: 12px !important;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -80,7 +80,7 @@
     width: 400px;
     height: 350px;
     object-fit: contain;
-    border-radius: 8px;
+    border-radius: 12px !important;
     border: 1px solid #ddd;
 }
 
@@ -98,7 +98,7 @@
     border: none;
     background: #444;
     color: #fff;
-    border-radius: 8px;
+    border-radius: 12px !important;
     cursor: pointer;
     font-weight: 600;
 }
@@ -125,7 +125,7 @@
     width: 400px;
     height: 350px;
     object-fit: contain;
-    border-radius: 10px;
+    border-radius: 12px !important;
     border: 1px solid #ddd;
     background: #fafafa;
 }

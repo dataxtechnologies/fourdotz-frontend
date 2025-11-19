@@ -87,7 +87,7 @@
                 <p class="regular-font">{{ TenantPropertyData[0].owner_email }}</p>
             </div>
             <!-- <div class="user-info">
-                <h5 class="label medium-font">Owned At</h5>
+                <h5 class="label medium-font">Owned at</h5>
                 <p class="regular-font">{{ TenantPropertyData[0].owner_details.onboarded_time.$date | date:'dd-MMM-yyyy'}}</p>
             </div> -->
 
@@ -132,7 +132,7 @@
           {label: 'Estimated Rent', value: TenantPropertyData[0]?.monthly_rent_amount},
           {label: 'Maintenance Amount', value: TenantPropertyData[0]?.maintenance_amount},
           {label: 'Maintenance Paid By', value: TenantPropertyData[0]?.maintenance_paid_by},
-          {label: 'Rented At', value: TenantPropertyData[0].tenant_rented_at?.$date | date:'dd-MMM-yyyy'}
+          {label: 'Rented at', value: TenantPropertyData[0].tenant_rented_at?.$date | date:'dd-MMM-yyyy'}
         ]">
                                     <div class="user-info">
                                         <h5 class="label medium-font">{{field.label}}</h5>
