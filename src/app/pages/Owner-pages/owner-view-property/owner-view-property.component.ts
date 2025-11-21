@@ -13,6 +13,7 @@ import { EditTenantDataComponent } from '../../../modals/edit-tenant-data/edit-t
 import { RemoveTenantModalComponent } from '../../../modals/remove-tenant-modal/remove-tenant-modal.component';
 import { EditPetDataComponent } from '../../../modals/edit-pet-data/edit-pet-data.component';
 import { EditVehicleDataComponent } from '../../../modals/edit-vehicle-data/edit-vehicle-data.component';
+import { AssociationServiceService } from '../../../services/association/association-service.service';
 
 @Component({
   selector: 'app-owner-view-property',
@@ -31,6 +32,7 @@ export class OwnerViewPropertyComponent {
     private route: ActivatedRoute,
     private apiService: ApiserviceService,
     private OwnerService: OwnerServiceService,
+    private AssociationService: AssociationServiceService,
     private router: Router
   ) {}
 
@@ -55,6 +57,12 @@ export class OwnerViewPropertyComponent {
 
     this.OwnerService.VehicleStatus$.subscribe((AddVehicle) => {
       if (AddVehicle) {
+        this.ViewpropertybyId(this.propertiesId);
+      }
+    });
+
+        this.AssociationService.RemoveResidentStatus$.subscribe((removeresident) => {
+      if (removeresident) {
         this.ViewpropertybyId(this.propertiesId);
       }
     });

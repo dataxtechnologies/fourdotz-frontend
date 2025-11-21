@@ -27,7 +27,7 @@ export class GenerateRentalInvoiceComponent implements OnInit {
   TenantList1;
   pages: any;
   tableLoading = true;
-
+  btnloading = false
   propertyNumbers: any;
 
   constructor(
@@ -74,6 +74,7 @@ export class GenerateRentalInvoiceComponent implements OnInit {
 
   // Submit
   onSubmit(): void {
+    this.btnloading= true
     if (this.maintenanceForm.valid) {
       //console.log('this.TenantList2', this.TenantList2);
 
@@ -93,15 +94,18 @@ export class GenerateRentalInvoiceComponent implements OnInit {
       this.apiService.RentalInvoicegeninOwner<any>(payload).subscribe({
         next: (res: any) => {
           if (res?.success) {
+            this.btnloading= false
             this.Toast.success(res.message, 'Success');
             this.OwnerService.triggerRentalGeneratedInvoice(res);
             this.closeModal();
           } else {
+            this.btnloading= false
             this.Toast.warning(res.message, 'Warning');
             // this.loginbtn = true;
           }
         },
         error: (err: any) => {
+          this.btnloading= false
           this.Toast.error(err.error.error.error, 'Failed');
           //console.error('Login failed:', err.error.error.data);
           // alert(err.message || 'Login failed, please try again.');

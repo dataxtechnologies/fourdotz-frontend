@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'ngx-modal-ease';
 import { GenerateMaintenanceComponent } from '../../../modals/generate-maintenance/generate-maintenance.component';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { TableService } from '../../../services/tableservice.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PaymentFailurePopupComponent } from '../../../modals/payment-failure-popup/payment-failure-popup.component';
+import { PaymentSuccessPopupComponent } from '../../../modals/payment-success-popup/payment-success-popup.component';
 
 @Component({
   selector: 'app-tenant-maintenance-list',
@@ -23,7 +25,8 @@ export class TenantMaintenanceListComponent {
   constructor(
     private ModalService: ModalService,
     private route: Router,
-    private Apiservice: ApiserviceService
+    private Apiservice: ApiserviceService,
+    private Acroute: ActivatedRoute
   ) {
     this.maintenancelist1 = new TableService();
     this.maintenancelist1.initialize(this.maintenancelist2, 10);
@@ -33,7 +36,44 @@ export class TenantMaintenanceListComponent {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.TenantMaintenanceList();
+
+    this.Acroute.queryParams.subscribe(params => {
+    const status = params['success'];
+
+    if (status && status.toLowerCase() === 'true') {
+      this.OpenSuccessPopup();
+    }else if (status && status.toLowerCase() === 'false'){
+      this.openfailurepopup();
+    }
+  });
   }
+
+  OpenSuccessPopup() {
+      this.ModalService.open(PaymentSuccessPopupComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
+    openfailurepopup() {
+      this.ModalService.open(PaymentFailurePopupComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
 
   isOverdue(createdDate: any): boolean {
     const created = new Date(createdDate);
@@ -85,6 +125,6 @@ export class TenantMaintenanceListComponent {
 
 
   CreatePaymentforInvoiceId(data: any) {
-  this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paid`);
+  this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paynow`);
 }
 }
