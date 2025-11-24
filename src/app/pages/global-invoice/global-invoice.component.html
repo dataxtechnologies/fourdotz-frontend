@@ -3,8 +3,10 @@
         <div class="custom-loader"></div>
     </div>
     <div class="download-btn" *ngIf="!globalloading">
-        <button (click)="downloadPDF()" *ngIf="!downloadbtnloading"><i class="fa-solid fa-download"></i> Download</button>
-        <button *ngIf="downloadbtnloading" style="cursor: not-allowed;"><i class="fa-solid fa-download"></i> Downloading...</button>
+        <button (click)="downloadPDF()" *ngIf="!downloadbtnloading"><i class="fa-solid fa-download"></i>
+            Download</button>
+        <button *ngIf="downloadbtnloading" style="cursor: not-allowed;"><i class="fa-solid fa-download"></i>
+            Downloading...</button>
     </div>
     <div class="invoice-container" id="invoice-download" *ngIf="!globalloading">
         <!-- Watermark -->
@@ -67,8 +69,9 @@
                 <h5 class="inv-table-title">Invoice Details</h5>
                 <table class="customer-info">
                     <p class="Table-Body"><strong>Invoice No. </strong>{{ invoiceData.invoice_no }}</p>
-                    <p class="Table-Body"><strong>Invoice Date: </strong>{{ invoiceData.created_time.$date | date:'dd-MMM-yyyy'}}</p>
-                    <p class="Table-Body"><strong>Due Date: </strong>{{ invoiceData.due_date  | date:'dd-MMM-yyyy'}}</p>
+                    <p class="Table-Body"><strong>Invoice Date: </strong>{{ invoiceData.created_time.$date |
+                        date:'dd-MMM-yyyy'}}</p>
+                    <p class="Table-Body"><strong>Due Date: </strong>{{ invoiceData.due_date | date:'dd-MMM-yyyy'}}</p>
                 </table>
             </div>
             <!-- <table>
@@ -96,7 +99,7 @@
                     <td>{{ formatInvoiceType(item.invoice_type) }}</td>
                     <td>{{ item.amount }}</td>
                     <td>{{ item.description }}</td>
-                    <td >{{ item.total_amount  | currency:'INR'}}</td>
+                    <td>{{ item.total_amount | currency:'INR'}}</td>
                 </tr>
 
                 <!-- Auto filler rows -->
@@ -112,7 +115,7 @@
                 <tr class="total-row">
                     <td colspan="3"></td>
                     <td style="text-align:right;">Total</td>
-                    <td >{{ invoiceData.total_amount | currency:'INR'}}</td>
+                    <td>{{ invoiceData.total_amount | currency:'INR'}}</td>
                 </tr>
             </tbody>
         </table>
@@ -121,7 +124,8 @@
             <!-- Top full-width row -->
             <div class="footer-top">
                 <p class="footer-title medium-font">Total in words</p>
-                <p class="footer-cont regular-font"><strong>{{ convertAmountToWords(invoiceData?.total_amount) }}</strong></p>
+                <p class="footer-cont regular-font"><strong>{{ convertAmountToWords(invoiceData?.total_amount)
+                        }}</strong></p>
             </div>
 
             <!-- Bank Details + QR + Signature -->
@@ -145,6 +149,22 @@
                                 </table>
 
                                 <!-- QR Box -->
+                                <div class="notes-div">
+                                    <ul>
+                                        <li><span style="color: var(--primary-color2);">*</span> The payment you pay is
+                                            paid to your owner only.</li>
+                                        <li><span style="color: var(--primary-color2);">*</span> Fourdotz does not take
+                                            any ownership or liability for this payment.</li>
+                                        <li><span style="color: var(--primary-color2);">*</span> In case of any
+                                            disputes, please contact your respective owner directly.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+
+                        <!-- Right: Signature -->
+                        <td class="footer-right-td">
+                            <div class="sign-section">
                                 <div class="qr-box">
                                     <div class="qr-wrapper" [class.disabled]="isPaid">
                                         <img *ngIf="qrImage" [src]="qrImage" alt="UPI QR" class="qr-image">
@@ -159,24 +179,6 @@
                                     </div>
                                     <p class="upi-text" *ngIf="!isPaid">Pay using UPI</p>
                                     <p class="upi-text" *ngIf="isPaid">Payment Completed</p>
-                                </div>
-                            </div>
-                        </td>
-
-                        <!-- Right: Signature -->
-                        <td class="footer-right-td">
-                            <div class="sign-section">
-                                <div class="sign-top">
-                                    <p class="signature-text">
-                                        Certified that the particulars given above are true and correct.
-                                    </p>
-                                    <p class="for-company"><strong>For FOURDOTZ</strong></p>
-                                </div>
-
-                                <div class="sign-space"></div>
-
-                                <div class="sign-bottom">
-                                    <p class="auth-text">Authorised Signatory</p>
                                 </div>
                             </div>
                         </td>

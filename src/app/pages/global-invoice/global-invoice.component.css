@@ -312,12 +312,13 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    flex-direction: column;
     gap: 15px;
 }
 
 /* --- Bank Table --- */
 .footer-table1 {
-    width: 70%;
+    width: 90%;
     border-collapse: collapse;
     font-size: 16px;
 }
@@ -336,7 +337,7 @@
 .qr-box {
     border: 1px solid #d7acdd;
     background-color: #fff;
-    width: 160px;
+    width: 100%;
     height: 160px;
     display: flex;
     flex-direction: column;
@@ -406,7 +407,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    min-height: 220px;
+    /* min-height: 220px; */
     /* adjust height as needed */
     border-collapse: collapse;
 }
@@ -547,4 +548,23 @@
     background-color: #fff;
     border-radius: 12px !important;
     font-size: 14px;
+}
+
+.notes-div {
+    background: #f8f8f8;
+    padding: 12px 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #555;
+}
+
+.notes-div ul {
+    margin: 0;
+    padding-left: 16px;
+    list-style-type: none;
+}
+
+.notes-div li {
+    margin-bottom: 6px;
+    line-height: 1.4;
 }
