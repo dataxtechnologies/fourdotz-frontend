@@ -1,0 +1,95 @@
+<div class="review-container">
+
+    <!-- Filters / Top Bar -->
+    <div class="filters-row">
+        <div class="filters-left">
+            <div class="head-btn">
+                <h2>Request Management</h2>
+                <button class="create-btn" (click)="OpenCreateRequest()">+ Create</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Beautiful Filters -->
+    <!-- <div class="filter-container">
+
+        <div class="filters-left">
+
+            <div class="filter-item">
+                <label class="medium-font">Date Range</label>
+                <select class="regular-font">
+                    <option>Date Range</option>
+                </select>
+            </div>
+
+            <div class="filter-item">
+                <label class="medium-font">Sort By</label>
+                <select class="regular-font">
+                    <option>Sort By</option>
+                </select>
+            </div>
+
+        </div>
+
+    </div> -->
+    <!-- Cards -->
+    <div class="cards-wrapper">
+
+        <div class="no-data-box" *ngIf="requestlist1.paginatedData.length === 0; else requestList">
+            <img src="assets/logo/no-pin-announcement.jpg" class="no-data-img" />
+            <h3>No Requests Found</h3>
+            <p class="regular-font">You haven’t created any requests yet.</p>
+
+            <button class="create-btn" (click)="OpenCreateRequest()">+ Create New Request</button>
+        </div>
+
+        <ng-template #requestList>
+
+            <!-- LOOP DYNAMICALLY -->
+            <div class="review-card" *ngFor="let item of requestlist1.paginatedData">
+
+                <div class="review-header">
+                    <span class="Request-heading medium-font">Request to Maintenance</span>
+
+                    <div class="d-flex gap-2 align-items-center">
+                        <span class="date regular-font">
+                            {{ item.created_time.$date | date: 'MMM d, y' }}
+                        </span>
+
+                        <span class="view-btn" (click)="OpenViewRequest(item)">
+                            view
+                        </span>
+                    </div>
+                </div>
+
+                <h5 class="req-head medium-font">{{ item.title }}</h5>
+
+                <p class="review-text regular-font">
+                    {{ item.description }}
+                </p>
+
+                <!-- SHOW IMAGES / VIDEOS -->
+                <div class="user-info">
+
+                    <!-- IMAGES -->
+                    <ng-container *ngFor="let img of item.images">
+                        <img *ngIf="isImage(img)" class="avatar" [src]="img" (click)="openLink(img)" />
+                    </ng-container>
+
+                    <!-- VIDEOS -->
+                    <ng-container *ngFor="let vid of item.images">
+                        <div class="video-wrapper" *ngIf="isVideo(vid)">
+                            <video class="avatar video-thumb" [src]="vid" muted></video>
+
+                            <!-- Play Icon Overlay -->
+                            <i class="fa-solid fa-play play-icon" (click)="openLink(vid)"></i>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+        </ng-template>
+
+    </div>
+
+</div>

@@ -31,6 +31,25 @@ export class AssociationServiceService {
   private AnnouncementCreatedSubject = new BehaviorSubject<any>(null);
   AnnouncementCreatedStatus$ = this.AnnouncementCreatedSubject.asObservable();
 
+
+  private CreateAdminSubject = new BehaviorSubject<any>(null);
+  CreateAdminStatus$ = this.CreateAdminSubject.asObservable();
+
+
+  private ChangeRequeststatusSubject = new BehaviorSubject<any>(null);
+  ChangeRequeststatusStatus$ = this.ChangeRequeststatusSubject.asObservable();
+
+  // triggerChangeRequestStatus
+  triggerChangeRequestStatus(ChangeRequestStatus: any): void {
+    //console.log('addassociation', ChangeRequestStatus);
+    this.ChangeRequeststatusSubject.next(ChangeRequestStatus);
+  }
+
+  triggerCreateAdmin(CreateAdmin: any): void {
+    //console.log('addassociation', CreateAdmin);
+    this.CreateAdminSubject.next(CreateAdmin);
+  }
+
   triggerAdminAssociation(AddProperty: any): void {
     //console.log('addassociation', AddProperty);
     this.PropertySubject.next(AddProperty);

@@ -61,6 +61,9 @@ export class SigninPageComponent implements OnInit {
       case 'tenant':
         this.route.navigateByUrl('/Tenant/Dashboard');
         break;
+      case 'service_admin':
+        this.route.navigateByUrl('/Service-admin/manage-requests');
+        break;
       default:
         localStorage.clear();
         this.route.navigateByUrl('/auth/sign-in');

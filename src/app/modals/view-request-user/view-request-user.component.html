@@ -1,0 +1,139 @@
+<section class="hero-div">
+
+    <div class="invite-card">
+
+
+        <!-- LEFT SIDE -->
+        <div class="left-section">
+
+            <div class="brand-block">
+
+                <h5>Resident Details</h5>
+
+                <h3 class="brand-name">
+                    {{ residentDetails?.name || 'N/A' }}
+                    ({{ propertyDetails?.property_no }})
+                </h3>
+
+                <p class="sub-text">{{ residentDetails?.mobile }}</p>
+                <p class="sub-text">{{ residentDetails?.email }}</p>
+
+                <div class="received-date">
+                    RECEIVED ON<br />
+                    <span>{{ RequestData.created_time.$date | date: 'MMM d, y' }}</span>
+                </div>
+
+                <!-- ⭐ MEDIA SECTION - AUTO IMAGE + VIDEO -->
+                <div class="media-container">
+
+                    <!-- IMAGE -->
+                    <ng-container *ngFor="let file of RequestData.images">
+                        <img *ngIf="isImage(file)" [src]="file" class="media-item" (click)="openMedia(file)" />
+                    </ng-container>
+
+                    <!-- VIDEO -->
+                    <ng-container *ngFor="let file of RequestData.images">
+                        <video *ngIf="isVideo(file)" [src]="file" class="media-item" controls (click)="openMedia(file)">
+                        </video>
+                    </ng-container>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CENTER MESSAGE -->
+        <div class="msg-section">
+
+            <div class="to-block">
+                <p class="req-to medium-font">{{ RequestData.title }}</p>
+            </div>
+
+            <div class="msg-label">MESSAGE:</div>
+
+            <div class="msg-box">
+                {{ RequestData.description }}
+            </div>
+
+        </div>
+
+        <div class="chat-wrapper">
+
+            <div class="chat-section">
+
+                <!-- HEADER -->
+                <div class="chat-header">
+                    <h3 class="medium-font">Chat with {{ residentDetails?.name }}</h3>
+                    <i class="fa-solid fa-arrow-rotate-right" style="cursor: pointer;" (click)="listcommentsforrequest(RequestData._id)"></i>
+                </div>
+
+                <!-- CHAT BODY -->
+                <div class="chat-box">
+                    <ng-container *ngFor="let msg of messages.slice().reverse()">
+
+                        <!-- RECEIVED MESSAGE (Left) -->
+                        <div class="chat-row left" *ngIf="msg.user_type !== loggedUserType">
+
+                            <div>
+                                <!-- USER TYPE TEXT -->
+                                <div class="user-type left-user-type">
+                                    {{ msg.user_type | titlecase }}
+                                </div>
+
+                                <!-- BUBBLE -->
+                                <div class="bubble left-bubble">
+                                    <p class="regular-font mb-0">{{ msg.comments }}</p>
+                                </div>
+
+                                <!-- TIME -->
+                                <div class="time-text left-time">
+                                    {{ msg.created_time.$date | date: 'MMM d, h:mm a' }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- SENT MESSAGE (Right) -->
+                        <div class="chat-row right" *ngIf="msg.user_type === loggedUserType">
+
+                            <div>
+
+                                <!-- USER TYPE TEXT -->
+                                <div class="user-type right-user-type">
+                                    {{ msg.user_type | titlecase }}
+                                </div>
+
+                                <!-- BUBBLE -->
+                                <div class="bubble right-bubble">
+                                    <p class="regular-font mb-0">{{ msg.comments }}</p>
+                                </div>
+
+                                <!-- TIME -->
+                                <div class="time-text right-time">
+                                    {{ msg.created_time.$date | date: 'MMM d, h:mm a' }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </ng-container>
+                </div>
+
+                <!-- INPUT AREA -->
+                <div class="chat-input">
+                    <input type="text" placeholder="Type message" [(ngModel)]="comment" />
+                    <img src="assets/icons/Send-icon.png" class="send-icon" alt="send"
+                        (click)="CommentsAddforRequest()">
+                </div>
+
+            </div>
+
+            <!-- CLOSE BUTTON -->
+            <button class="close-btn" (click)="closemodal()">Close</button>
+
+        </div>
+    </div>
+
+</section>

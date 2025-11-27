@@ -38,6 +38,9 @@ import { AnnouncementsTenantPageComponent } from './pages/Tenant-pages/announcem
 import { authGuard } from './auth.guard';
 import { MaintenanceInvoicePaymentComponent } from './pages/maintenance-invoice-payment/maintenance-invoice-payment.component';
 import { InvoiceLayoutComponent } from './layouts/invoice-layout/invoice-layout.component';
+import { ListRequestsUserComponent } from './pages/request-management/list-requests-user/list-requests-user.component';
+import { ListRequestsAssociationComponent } from './pages/request-management/list-requests-association/list-requests-association.component';
+import { ListRequestsAdminComponent } from './pages/request-management/list-requests-admin/list-requests-admin.component';
 
 export const routes: Routes = [
   {
@@ -109,6 +112,10 @@ export const routes: Routes = [
       { path: 'residents-list', component: ResidentsListComponent },
       { path: 'Maintenance-list', component: MaintenanceListComponent },
       {
+        path: 'request-management/list',
+        component: ListRequestsAssociationComponent,
+      },
+      {
         path: 'view-properties/:propertiesId',
         component: PropertyViewComponent,
       },
@@ -134,6 +141,7 @@ export const routes: Routes = [
       { path: 'Maintenance-list', component: OwnerMaintenanceListComponent },
       { path: 'Rental-invoice-list', component: OwnerRentalInvoiceComponent },
       { path: 'announcement/owner', component: AnnouncementsPageComponent },
+      { path: 'request-management/list', component: ListRequestsUserComponent },
       {
         path: 'view-properties/:propertiesId',
         component: OwnerViewPropertyComponent,
@@ -157,6 +165,7 @@ export const routes: Routes = [
       },
       { path: 'Maintenance-list', component: TenantMaintenanceListComponent },
       { path: 'Rental-invoice-list', component: TenantRentalListComponent },
+      { path: 'request-management/list', component: ListRequestsUserComponent },
       {
         path: 'announcement/tenant',
         component: AnnouncementsTenantPageComponent,
@@ -168,7 +177,7 @@ export const routes: Routes = [
     ],
   },
 
-        {
+  {
     path: 'Global-invoice',
     component: InvoiceLayoutComponent,
     children: [
@@ -176,7 +185,19 @@ export const routes: Routes = [
         path: ':invoice_id',
         component: GlobalInvoiceComponent,
       },
+    ],
+  },
 
+
+
+  {
+    path: 'Service-admin',
+    component: DashboardLayoutComponent,
+    children: [
+      {
+        path: 'manage-requests',
+        component: ListRequestsAdminComponent,
+      },
     ],
   },
 
@@ -188,7 +209,6 @@ export const routes: Routes = [
         path: ':userType/:invoiceid',
         component: MaintenanceInvoicePaymentComponent,
       },
-
     ],
   },
 

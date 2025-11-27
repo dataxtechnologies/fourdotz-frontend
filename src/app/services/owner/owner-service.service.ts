@@ -29,6 +29,14 @@ export class OwnerServiceService {
   private OwnerUPIidUpdateSubject = new BehaviorSubject<any>(null);
   OwnerUpiIdUpdatedStatus$ = this.OwnerUPIidUpdateSubject.asObservable();
 
+  private RequestUserSubject = new BehaviorSubject<any>(null);
+  RequestUserStatus$ = this.RequestUserSubject.asObservable();
+
+  triggerRequestUser(RequestUser: any): void {
+    //console.log('addassociation', RequestUser);
+    this.RequestUserSubject.next(RequestUser);
+  }
+
   triggerTenantAdd(AddTenant: any): void {
     //console.log('addassociation', AddTenant);
     this.TenantSubject.next(AddTenant);

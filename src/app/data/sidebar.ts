@@ -2,8 +2,8 @@ export interface SidebarItem {
   label: string;
   icon: string;
   //activeicon: string;
-  route: string;         // always a direct route
-  allowedRole: string;   // required for role-based access
+  route: string; // always a direct route
+  allowedRole: string; // required for role-based access
 }
 
 export const SIDEBAR_ITEMS: SidebarItem[] = [
@@ -21,7 +21,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     allowedRole: 'superadmin',
     //activeicon: ''
   },
-  
+
   {
     label: 'Dashboard',
     icon: '/assets/icons/grids1.svg',
@@ -42,7 +42,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     route: '/Association/residents-list',
     allowedRole: 'association',
     //activeicon: ''
-  }, 
+  },
   {
     label: 'Maintenance',
     icon: '/assets/icons/money-recive.svg',
@@ -54,6 +54,13 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Announcement',
     icon: '/assets/icons/chart-3.svg',
     route: '/Association/announcement',
+    allowedRole: 'association',
+    //activeicon: ''
+  },
+    {
+    label: 'Manage Request',
+    icon: '/assets/icons/chart-3.svg',
+    route: '/Association/request-management/list',
     allowedRole: 'association',
     //activeicon: ''
   },
@@ -100,6 +107,13 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     //activeicon: ''
   },
   {
+    label: 'Manage Request',
+    icon: '/assets/icons/chart-3.svg',
+    route: '/Owner/request-management/list',
+    allowedRole: 'owner',
+    //activeicon: ''
+  },
+  {
     label: 'Dashboard',
     icon: '/assets/icons/grids1.svg',
     route: '/Tenant/Dashboard',
@@ -132,6 +146,22 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/chart-3.svg',
     route: '/Tenant/announcement/tenant',
     allowedRole: 'tenant',
+    //activeicon: ''
+  },
+
+  {
+    label: 'Manage Request',
+    icon: '/assets/icons/chart-3.svg',
+    route: '/Tenant/request-management/list',
+    allowedRole: 'tenant',
+    //activeicon: ''
+  },
+
+      {
+    label: 'Manage Request',
+    icon: '/assets/icons/chart-3.svg',
+    route: '/Association/request-management/list',
+    allowedRole: 'service_admin',
     //activeicon: ''
   },
 ];

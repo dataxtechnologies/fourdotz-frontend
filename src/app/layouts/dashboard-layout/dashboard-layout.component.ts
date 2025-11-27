@@ -34,8 +34,8 @@ export class DashboardLayoutComponent {
   sidebarClosed = false;
   currentRoute = '';
   loadingUserData = false; // flag to control loader visibility
-showFooter = false;
-footerTimeout: any;
+  showFooter = false;
+  footerTimeout: any;
   user_type = localStorage.getItem('user_type');
   user_id = localStorage.getItem('user_id');
   access_token = localStorage.getItem('access_token');
@@ -55,39 +55,35 @@ footerTimeout: any;
       });
   }
 
-
-
-@HostListener('window:scroll', [])
+  @HostListener('window:scroll', [])
   onWindowScroll(): void {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
     const docHeight = document.documentElement.scrollHeight;
-    
+
     // Check if user is near the bottom (within 100px)
-    const IS_NEAR_BOTTOM = (windowHeight + scrollTop + 100) >= docHeight;
+    const IS_NEAR_BOTTOM = windowHeight + scrollTop + 100 >= docHeight;
 
     if (IS_NEAR_BOTTOM) {
       // 1. Clear any pending hide timeout
       clearTimeout(this.footerTimeout);
-      
+
       // 2. Show footer immediately
       if (!this.showFooter) {
         this.showFooter = true;
       }
-      
     } else {
       // User is scrolling up/in the middle
-      
+
       // 1. Clear any previous timeout to reset the delay
       clearTimeout(this.footerTimeout);
-      
+
       // 2. Set a new timeout to hide the footer after 1 second
       this.footerTimeout = setTimeout(() => {
         this.showFooter = false;
       }, 1000);
     }
   }
-
 
   ngOnInit(): void {
     // Check token before calling API
@@ -97,13 +93,11 @@ footerTimeout: any;
       this.getUserData(this.user_type);
     }
 
-    this.OwnerService.OwnerUpiIdUpdatedStatus$.subscribe(
-      (UpdateUPI) => {
-        if (UpdateUPI) {
-         this.getUserData(this.user_type);
-        }
+    this.OwnerService.OwnerUpiIdUpdatedStatus$.subscribe((UpdateUPI) => {
+      if (UpdateUPI) {
+        this.getUserData(this.user_type);
       }
-    );
+    });
   }
 
   // Toggle sidebar
@@ -141,30 +135,30 @@ footerTimeout: any;
 
   // Get user data with proper token
   getUserData(data: any) {
-     if (this.user_type === 'association') {
-    this.loadingUserData = true; // show loader before API call
-  }
+    if (this.user_type === 'association') {
+      this.loadingUserData = true; // show loader before API call
+    }
     this.apiService.UserInfo<any>(data).subscribe({
       next: (res: any) => {
-      if (res?.success) {
-        const userdata = res.data;
-        localStorage.setItem('userdata', JSON.stringify(userdata));
+        if (res?.success) {
+          const userdata = res.data;
+          localStorage.setItem('userdata', JSON.stringify(userdata));
 
-        if (this.user_type === 'association') {
-          if (userdata.document_uploaded === false) {
-            this.router.navigateByUrl('/onboarding/user-data');
-          } 
-        }else if (this.user_type === 'owner'){
-          if (userdata.upi_submit_status === false) {
-            this.UPIidAddModal()
-            // this.router.navigateByUrl('/onboarding/user-data');
-          } 
+          if (this.user_type === 'association') {
+            if (userdata.document_uploaded === false) {
+              this.router.navigateByUrl('/onboarding/user-data');
+            }
+          } else if (this.user_type === 'owner') {
+            if (userdata.upi_submit_status === false) {
+              this.UPIidAddModal();
+              // this.router.navigateByUrl('/onboarding/user-data');
+            }
+          }
         }
-      }
 
-      // ✅ hide loader after check completes (success or not)
-      this.loadingUserData = false;
-    },
+        // ✅ hide loader after check completes (success or not)
+        this.loadingUserData = false;
+      },
 
       error: (err: any) => {
         //console.log('tata');
@@ -182,32 +176,31 @@ footerTimeout: any;
     this.router.navigateByUrl('/auth/sign-in');
   }
 
-    logoutmodal() {
-      this.ModalService.open(LogoutModalComponent, {
-        modal: {
-          enter: 'enter-going-down 0.3s ease-out',
-          leave: 'fade-out 0.5s',
-        },
-        overlay: { leave: 'fade-out 0.5s' },
-        actions: {
-          click: false,
-          escape: false,
-        },
-      });
-    }
+  logoutmodal() {
+    this.ModalService.open(LogoutModalComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
 
-
-    UPIidAddModal() {
-      this.ModalService.open(AddUPIIdComponent, {
-        modal: {
-          enter: 'enter-going-down 0.3s ease-out',
-          leave: 'fade-out 0.5s',
-        },
-        overlay: { leave: 'fade-out 0.5s' },
-        actions: {
-          click: false,
-          escape: false,
-        },
-      });
-    }
+  UPIidAddModal() {
+    this.ModalService.open(AddUPIIdComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
 }

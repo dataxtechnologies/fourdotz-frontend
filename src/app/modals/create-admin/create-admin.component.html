@@ -1,0 +1,62 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3 class="heading-font">Create Admin</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="adminForm">
+
+            <!-- First Name -->
+            <div class="inp-cont">
+                <label class="medium-font">First Name <span class="required">*</span></label>
+                <input type="text" formControlName="firstName" class="inp-cus regular-font" placeholder="Enter First Name">
+                <div *ngIf="adminForm.get('firstName')?.touched && adminForm.get('firstName')?.invalid" class="error-text">
+                    First Name is required
+                </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="inp-cont">
+                <label class="medium-font">Last Name <span class="required">*</span></label>
+                <input type="text" formControlName="lastName" class="inp-cus regular-font" placeholder="Enter Last Name">
+                <div *ngIf="adminForm.get('lastName')?.touched && adminForm.get('lastName')?.invalid" class="error-text">
+                    Last Name is required
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="inp-cont">
+                <label class="medium-font">Email ID <span class="required">*</span></label>
+                <input type="email" formControlName="email" class="inp-cus regular-font" placeholder="Enter Email ID">
+                <div *ngIf="adminForm.get('email')?.touched && adminForm.get('email')?.errors?.['required']" class="error-text">
+                    Email is required
+                </div>
+                <div *ngIf="adminForm.get('email')?.touched && adminForm.get('email')?.errors?.['email']" class="error-text">
+                    Enter a valid email
+                </div>
+            </div>
+
+            <!-- Mobile -->
+            <div class="inp-cont">
+                <label class="medium-font">Mobile Number <span class="required">*</span></label>
+                <input type="tel" formControlName="mobile" maxlength="10" class="inp-cus regular-font" placeholder="Enter Mobile Number">
+                <div *ngIf="adminForm.get('mobile')?.touched && adminForm.get('mobile')?.errors?.['required']" class="error-text">
+                    Mobile number is required
+                </div>
+                <div *ngIf="adminForm.get('mobile')?.touched && adminForm.get('mobile')?.errors?.['pattern']" class="error-text">
+                    Mobile must be 10 digits
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="submit-btn" (click)="onSubmit()" *ngIf="submitbtn">Submit</button>
+
+                <button type="button" class="processing-btn" *ngIf="!submitbtn">
+                    Processing...
+                </button>
+            </div>
+
+        </form>
+    </div>
+</section>

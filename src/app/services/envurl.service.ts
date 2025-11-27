@@ -84,4 +84,20 @@ export class EnvurlService {
   public listpinannouncement = '/announcements/list_pin_announcements'
   public ListAnnouncementinOwnerTenant = '/announcements/list_association_announcements'
 
+
+  // Request Management
+  public CreateRequestUser = '/request_management/create_request'
+  public ListRequestUser = '/request_management/list_request'
+  public CommentsAddforRequest = '/request_management_comments/create_comments'
+  public listcommentsforrequest = '/request_management_comments/list_comments'
+  public StartWorkonRequest = '/request_management/start_work'
+  public CompleteWorkonRequest = '/request_management/complete_work'
+  public ListAllRequestinAssociation = '/request_management/list_allrequest'
+
+  // Service Admin
+
+  public CreateServiceAdmin = '/service_admin/create_service_admin'
+  public ListServiceAdmin = '/service_admin/list_service_admin'
+  public ListAllrequestinServiceAdmin = '/request_management/list_serviceadmin_request'
+
 }

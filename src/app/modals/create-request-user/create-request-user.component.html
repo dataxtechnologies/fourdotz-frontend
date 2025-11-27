@@ -1,0 +1,111 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3>Create Request</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="requestForm">
+            <div class="form-grid">
+
+                <!-- Property No. -->
+                <div class="inp-cont" style="grid-column: span 2;">
+                    <label class="medium-font">Property No. <span class="required">*</span></label>
+
+                    <div class="custom-select">
+                        <div class="select-selected regular-font" (click)="toggleDropdown()">
+                            {{ selectedProperty || 'Select Property No.' }}
+                            <i class="fa-solid"
+                                [ngClass]="{ 'fa-chevron-down': !dropdownOpen, 'fa-chevron-up': dropdownOpen }"
+                                style="float: right; font-size: 0.7rem; margin-top: 4px;">
+                            </i>
+                        </div>
+
+                        <div class="select-items" [class.select-hide]="!dropdownOpen">
+                            <input type="text" placeholder="Search property..." class="dropdown-search regular-font"
+                                (input)="onSearchChange($event)" />
+
+                            <div class="regular-font" *ngFor="let property of filteredList"
+                                (click)="selectProperty(property)">
+                                {{ property.property_no }}
+                            </div>
+
+                            <div *ngIf="filteredList.length === 0" class="no-results regular-font">
+                                No properties found
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="requestForm.get('property_id')?.touched && requestForm.get('property_id')?.invalid"
+                        class="error-text">
+                        Property No. is required
+                    </div>
+                </div>
+
+                <!-- Title -->
+                <div class="inp-cont" style="grid-column: span 2;">
+                    <label class="medium-font">Title <span class="required">*</span></label>
+                    <input type="text" formControlName="title" class="inp-cus regular-font" placeholder="Enter Title">
+                    <div *ngIf="requestForm.get('title')?.touched && requestForm.get('title')?.invalid"
+                        class="error-text">
+                        Title is required
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="inp-cont" style="grid-column: span 2;">
+                    <label class="medium-font">Description <span class="required">*</span></label>
+                    <textarea formControlName="description" class="inp-cus regular-font" rows="4"
+                        placeholder="Enter Description"></textarea>
+                    <div *ngIf="requestForm.get('description')?.touched && requestForm.get('description')?.invalid"
+                        class="error-text">
+                        Description is required
+                    </div>
+                </div>
+
+                <!-- Attachments -->
+                <div class="inp-cont" style="grid-column: span 2;">
+                    <label class="medium-font">Attachments (Max 2 – Image/Video) <span class="required">*</span></label>
+
+                    <div class="upload-box-large" (click)="fileInput.click()">
+                        <i class="fa-solid fa-upload upload-big-icon"></i>
+                        <p class="regular-font">Click to upload</p>
+                        <small class="regular-font">Allowed: 2 images, 2 videos, or 1 image + 1 video</small>
+                    </div>
+
+                    <input #fileInput type="file" multiple style="display:none" (change)="onFileSelect($event)" />
+
+                    <p class="error-text" *ngIf="attachmentError">{{ attachmentError }}</p>
+
+                    <!-- Preview -->
+                    <div class="attachment-preview-wrapper" *ngIf="attachments.length > 0">
+                        <div class="attach-preview" *ngFor="let file of attachments; let i = index">
+
+                            <!-- Image preview -->
+                            <ng-container *ngIf="allowedImageTypes.includes(file.type)">
+                                <img [src]="URL.createObjectURL(file)" class="preview-thumb">
+                            </ng-container>
+
+                            <!-- Video preview -->
+                            <ng-container *ngIf="allowedVideoTypes.includes(file.type)">
+                                <video [src]="URL.createObjectURL(file)" class="preview-thumb" muted></video>
+                            </ng-container>
+
+                            <span class="remove-attach" (click)="removeAttachment(i)">✖</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <div class="mb-3">
+            <button type="button" class="submit-btn" (click)="submitRequest()" *ngIf="!submitLoading">
+                Submit
+            </button>
+            <button type="button" class="submit-btn" style="cursor: not-allowed;" *ngIf="submitLoading">
+                Submitting...
+            </button>
+        </div>
+    </div>
+</section>
