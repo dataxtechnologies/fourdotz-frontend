@@ -1,0 +1,122 @@
+<section>
+    <div>
+        <div class="container header-cont">
+            <div class="head-cont">
+                <h2>Service Admin List</h2>
+            </div>
+            <div>
+                <button class="btn-add" (click)="OpenCreateAdmin()">+ Create Service Admin</button>
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="item">
+                <div class="table-cont">
+                    
+                    <div class="table-container">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th class="medium-font">Name</th>
+                                    <th class="medium-font">Mobile</th>
+                                    <th class="medium-font">Email</th>
+                                    <th class="medium-font">Onboarded at</th>
+                                    <!-- <th class="medium-font">Date</th>
+                                    <th class="medium-font">Status</th>
+                                    <th class="medium-font">Action</th> -->
+                                </tr>
+                            </thead>
+                            <!-- <tr>
+                                <td data-label="Maintenance Amount">₹2,500</td>
+                                <td data-label="Resident Name">Arun Kumar</td>
+                                <td data-label="Resident Type">Owner</td>
+                                <td data-label="Resident Type">Lakeview</td>
+                                <td data-label="Date">2025-09-01</td>
+                                <td data-label="Status">Paid</td>
+                                <td data-label="View"><i class="fa-solid fa-file-lines"></i></td>
+                            </tr> -->
+                            <tbody *ngIf="!adminLoading; else tableSkeleton" class="regular-font">
+                                <ng-container *ngIf="adminList2?.length === 0; else datashow">
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; font-weight: 600; color: gray;">
+                                            No Data Found
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                                <ng-template #datashow>
+                                    <tr *ngFor="let item of adminList1.paginatedData">
+                                        <td data-label="Maintenance Amount">{{ item.name }}</td>
+                                        <td data-label="Resident Name">{{ item.mobile }}</td>
+                                        <td data-label="Resident Type">{{ item.email }}</td>
+                                        <td data-label="Association Name">{{ item.onboarded_time.$date | date:'dd-MMM-yyyy' }}</td>
+                                       
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                            <ng-template #tableSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                    <td>
+                                        <span class="placeholder col-10 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-8 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-6 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-7 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-5 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="adminList1" class="pagination-container regular-font">
+            <p class="pagination-info">
+                Showing {{ adminList1.startIndex + 1 }} to {{ adminList1.endIndex + 1 }} of {{
+                adminList1.totalData }} entries
+            </p>
+
+            <ul class="pagination">
+                <!-- First Page -->
+                <li>
+                    <button [disabled]="adminList1.currentPage === 1" (click)="adminList1.prevPage()"
+                        class="page-btn arrow-btn">
+                       <i class="fa-solid fa-angle-left"></i>
+                    </button>
+                </li>
+
+                <!-- Current Page -->
+                <li>
+                    <span class="page-btn active">
+                        {{ adminList1.currentPage }}
+                    </span>
+                </li>
+
+                <!-- Next Page -->
+                <li>
+                    <button [disabled]="adminList1.currentPage === adminList1.totalPages"
+                        (click)="adminList1.nextPage()" class="page-btn arrow-btn">
+                       <i class="fa-solid fa-angle-right"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

@@ -68,7 +68,7 @@ export class EditPetDataComponent implements OnInit {
       type: pet.type ?? '',
       breed: pet.breed ?? '',
       age: pet.age ?? '',
-      ownedBy: pet.pet_owned_by ? this.capitalize(pet.pet_owned_by) : '', // converts 'owner' -> 'Owner'
+      ownedBy: pet.pet_owned_by ?? '', // converts 'owner' -> 'Owner'
     });
   }
 

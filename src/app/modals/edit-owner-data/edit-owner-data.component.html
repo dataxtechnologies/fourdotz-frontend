@@ -50,7 +50,7 @@
                     <input type="text" id="rentedAt" class="inp-cus placeholder-font regular-font" formControlName="ownedAt"
                         placeholder="Select date" readonly (click)="openDatePicker()" />
                     <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
-                    <input #hiddenDatePicker type="date" class="hidden-date-input" (change)="onDateSelected($event)" />
+                    <input #hiddenDatePicker type="date" class="hidden-date-input" (change)="onDateSelected($event)" readonly/>
                 </div>
                 <!-- <input type="date" formControlName="ownedAt" class="inp-cus"> -->
                 <div *ngIf="ownerForm.get('ownedAt')?.touched && ownerForm.get('ownedAt')?.invalid" class="error-text regular-font">

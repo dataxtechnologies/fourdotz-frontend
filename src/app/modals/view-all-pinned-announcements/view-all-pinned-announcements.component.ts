@@ -16,29 +16,28 @@ export class ViewAllPinnedAnnouncementsComponent {
 
   constructor(private Modal: ModalService) {}
 
-ngOnInit(): void {
-  if (this.PinnedAnnouncement?.length > 0) {
-    this.activePost = this.PinnedAnnouncement[0];
-  } else {
-    this.activePost = null;
+  ngOnInit(): void {
+    if (this.PinnedAnnouncement?.length > 0) {
+      this.activePost = this.PinnedAnnouncement[0];
+    } else {
+      this.activePost = null;
+    }
   }
-}
 
   setActive(post: any) {
     this.activePost = post;
   }
 
   // Detect image file
-  isImage(url: string): boolean {
-    return /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
-  }
-
-  // Detect video file
-  isVideo(url: string): boolean {
-    return /\.(mp4|mov|avi|mkv|webm)$/i.test(url);
-  }
-
   closeModal() {
     this.Modal.close();
+  }
+
+  isImage(url: string): boolean {
+    return /\.(jpg|jpeg|png|webp)$/i.test(url);
+  }
+
+  isVideo(url: string): boolean {
+    return /\.(mp4|mkv|mov)$/i.test(url);
   }
 }

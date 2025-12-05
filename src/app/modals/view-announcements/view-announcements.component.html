@@ -23,7 +23,7 @@
         <!-- Event Date (only when category = events) -->
         <div class="info-block" *ngIf="Postdetails?.category === 'events'">
             <label class="medium-font">Event Date:</label>
-            <p class="regular-font">{{ Postdetails?.event_date | date:'dd MMM yyyy' }}</p>
+            <p class="regular-font">{{ Postdetails?.event_date.$date | date:'dd MMM yyyy' }}</p>
         </div>
 
         <!-- Title -->
@@ -40,21 +40,26 @@
 
         <!-- Images -->
         <!-- Attachments (Images + Videos) -->
-        <div class="attachment-section" *ngIf="Postdetails?.images?.length > 0">
-            <label class="medium-font">Attachments:</label>
-
-            <div class="attachment-grid">
-                <ng-container *ngFor="let file of Postdetails.images">
-
-                    <!-- Image Preview -->
-                    <img *ngIf="isImage(file)" [src]="file" class="attachment-item" alt="Attachment" />
-
-                    <!-- Video Preview -->
-                    <video *ngIf="isVideo(file)" [src]="file" class="attachment-item" controls></video>
-
-                </ng-container>
-            </div>
+        <div class="attachment-section" *ngIf="Postdetails?.images?.length === 0;else ShowAttchments">
+            <label class="medium-font">No Attachments Found</label>
         </div>
+        <ng-template #ShowAttchments>
+            <div class="attachment-section">
+                <label class="medium-font">Attachments:</label>
+
+                <div class="attachment-grid">
+                    <ng-container *ngFor="let file of Postdetails.images">
+
+                        <!-- Image Preview -->
+                        <img *ngIf="isImage(file)" [src]="file" class="attachment-item" alt="Attachment" />
+
+                        <!-- Video Preview -->
+                        <video *ngIf="isVideo(file)" [src]="file" class="attachment-item" controls></video>
+
+                    </ng-container>
+                </div>
+            </div>
+        </ng-template>
 
     </div>
 

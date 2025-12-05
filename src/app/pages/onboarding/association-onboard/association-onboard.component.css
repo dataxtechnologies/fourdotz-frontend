@@ -275,6 +275,14 @@
     padding: 15px;
     border-radius: 12px !important;
     margin-top: 20px;
+    text-wrap: unset;
+}
+
+.address-wrap {
+  display: block;
+  max-width: 600px;
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 .review-block h3 {

@@ -14,6 +14,8 @@ import { RemoveTenantModalComponent } from '../../../modals/remove-tenant-modal/
 import { EditPetDataComponent } from '../../../modals/edit-pet-data/edit-pet-data.component';
 import { EditVehicleDataComponent } from '../../../modals/edit-vehicle-data/edit-vehicle-data.component';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
+import { ToastrService } from 'ngx-toastr';
+import { RemovePetVehicleComponent } from '../../../modals/remove-pet-vehicle/remove-pet-vehicle.component';
 
 @Component({
   selector: 'app-owner-view-property',
@@ -33,7 +35,8 @@ export class OwnerViewPropertyComponent {
     private apiService: ApiserviceService,
     private OwnerService: OwnerServiceService,
     private AssociationService: AssociationServiceService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -92,23 +95,30 @@ export class OwnerViewPropertyComponent {
       },
     });
   }
-  addTenant(data: any) {
-    // AddOwnerComponent
-    this.ModalService.open(AddTenantComponent, {
-      modal: {
-        enter: 'enter-going-down 0.3s ease-out',
-        leave: 'fade-out 0.5s',
-      },
-      overlay: { leave: 'fade-out 0.5s' },
-      data: {
-        PropertyIddata: data,
-      },
-      actions: {
-        click: false,
-        escape: false,
-      },
-    });
+addTenant(data: any) {
+
+  // 🔥 Check resident type before opening modal
+  if (this.Propertiesdata?.resident_type !== 'owner') {
+    this.toastr.error('Add owner first to add tenant', 'Error');
+    return;
   }
+
+  // ✔ If owner → open the popup
+  this.ModalService.open(AddTenantComponent, {
+    modal: {
+      enter: 'enter-going-down 0.3s ease-out',
+      leave: 'fade-out 0.5s',
+    },
+    overlay: { leave: 'fade-out 0.5s' },
+    data: {
+      PropertyIddata: data,
+    },
+    actions: {
+      click: false,
+      escape: false,
+    },
+  });
+}
   addpet(data: any) {
     // AddOwnerComponent
     this.ModalService.open(AddPetComponent, {
@@ -216,6 +226,44 @@ export class OwnerViewPropertyComponent {
       },
     });
   }
+
+  RemovePet(associationId: any) {
+      // AddOwnerComponent
+      this.ModalService.open(RemovePetVehicleComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        data: {
+          associationId: associationId,
+          type: 'pet',
+        },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
+  
+    RemoveVehicle(associationId: any) {
+      // AddOwnerComponent
+      this.ModalService.open(RemovePetVehicleComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        data: {
+          associationId: associationId,
+          type: 'vehicle',
+        },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
 
   ViewpropertybyId(data: any) {
     this.apiService.ViewpropertybyId<any>(data).subscribe({

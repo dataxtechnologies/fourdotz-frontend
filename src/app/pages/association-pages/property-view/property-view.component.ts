@@ -16,6 +16,8 @@ import { EditPetDataComponent } from '../../../modals/edit-pet-data/edit-pet-dat
 import { EditVehicleDataComponent } from '../../../modals/edit-vehicle-data/edit-vehicle-data.component';
 import { RemoveResidentModalComponent } from '../../../modals/remove-resident-modal/remove-resident-modal.component';
 import { RemoveTenantModalComponent } from '../../../modals/remove-tenant-modal/remove-tenant-modal.component';
+import { ToastrService } from 'ngx-toastr';
+import { RemovePetVehicleComponent } from '../../../modals/remove-pet-vehicle/remove-pet-vehicle.component';
 
 @Component({
   selector: 'app-property-view',
@@ -34,7 +36,8 @@ export class PropertyViewComponent {
     private Router: Router,
     private apiService: ApiserviceService,
     private route: ActivatedRoute,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +49,12 @@ export class PropertyViewComponent {
 
     this.AssociationService.OwnerStatus$.subscribe((AddOwner) => {
       if (AddOwner) {
+        this.ViewpropertybyId(this.PropertyId);
+      }
+    });
+
+    this.AssociationService.OwnerUpdateStatus$.subscribe((OwnerUpdate) => {
+      if (OwnerUpdate) {
         this.ViewpropertybyId(this.PropertyId);
       }
     });
@@ -68,12 +77,13 @@ export class PropertyViewComponent {
       }
     });
 
-
-    this.AssociationService.RemoveResidentStatus$.subscribe((removeresident) => {
-      if (removeresident) {
-        this.ViewpropertybyId(this.PropertyId);
+    this.AssociationService.RemoveResidentStatus$.subscribe(
+      (removeresident) => {
+        if (removeresident) {
+          this.ViewpropertybyId(this.PropertyId);
+        }
       }
-    });
+    );
 
     this.ViewpropertybyId(this.PropertyId);
   }
@@ -121,8 +131,14 @@ export class PropertyViewComponent {
       },
     });
   }
-  addTenant(propertyId: any) {
-    // AddOwnerComponent
+  addTenant(data: any) {
+    // 🔥 Check resident type before opening modal
+    if (this.Associationdata?.resident_type !== 'owner') {
+      this.toastr.error('Add owner first to add tenant', 'Error');
+      return;
+    }
+
+    // ✔ If owner → open the popup
     this.ModalService.open(AddTenantComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
@@ -130,7 +146,7 @@ export class PropertyViewComponent {
       },
       overlay: { leave: 'fade-out 0.5s' },
       data: {
-        PropertyIddata: propertyId,
+        PropertyIddata: data,
       },
       actions: {
         click: false,
@@ -192,7 +208,6 @@ export class PropertyViewComponent {
     });
   }
 
-
   EditOwner(propertyId: any, ownerData: any) {
     // AddOwnerComponent
     this.ModalService.open(EditOwnerDataComponent, {
@@ -212,7 +227,6 @@ export class PropertyViewComponent {
     });
   }
 
-
   EditTenant(propertydata: any) {
     // AddOwnerComponent
     this.ModalService.open(EditTenantDataComponent, {
@@ -223,7 +237,6 @@ export class PropertyViewComponent {
       overlay: { leave: 'fade-out 0.5s' },
       data: {
         TenantDetails: propertydata,
-
       },
       actions: {
         click: false,
@@ -232,8 +245,7 @@ export class PropertyViewComponent {
     });
   }
 
-
-    EditPet(PetData: any, propertyId: any) {
+  EditPet(PetData: any, propertyId: any) {
     // AddOwnerComponent
     this.ModalService.open(EditPetDataComponent, {
       modal: {
@@ -243,8 +255,7 @@ export class PropertyViewComponent {
       overlay: { leave: 'fade-out 0.5s' },
       data: {
         PetDetails: PetData,
-        propertyId:propertyId
-
+        propertyId: propertyId,
       },
       actions: {
         click: false,
@@ -253,8 +264,7 @@ export class PropertyViewComponent {
     });
   }
 
-
-    EditVehicle(VehicleData: any, associationId: any) {
+  EditVehicle(VehicleData: any, associationId: any) {
     // AddOwnerComponent
     this.ModalService.open(EditVehicleDataComponent, {
       modal: {
@@ -264,8 +274,7 @@ export class PropertyViewComponent {
       overlay: { leave: 'fade-out 0.5s' },
       data: {
         vehicleDetails: VehicleData,
-        associationId: associationId
-
+        associationId: associationId,
       },
       actions: {
         click: false,
@@ -275,7 +284,45 @@ export class PropertyViewComponent {
   }
 
 
-  RemoveOwner(associationId:any){
+  RemovePet(associationId: any) {
+    // AddOwnerComponent
+    this.ModalService.open(RemovePetVehicleComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        associationId: associationId,
+        type: 'pet',
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  RemoveVehicle(associationId: any) {
+    // AddOwnerComponent
+    this.ModalService.open(RemovePetVehicleComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        associationId: associationId,
+        type: 'vehicle',
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  RemoveOwner(associationId: any) {
     this.ModalService.open(RemoveResidentModalComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
@@ -283,8 +330,7 @@ export class PropertyViewComponent {
       },
       overlay: { leave: 'fade-out 0.5s' },
       data: {
-        associationId: associationId
-
+        associationId: associationId,
       },
       actions: {
         click: false,
@@ -293,8 +339,7 @@ export class PropertyViewComponent {
     });
   }
 
-
-  RemoveTenant(associationId:any){
+  RemoveTenant(associationId: any) {
     this.ModalService.open(RemoveTenantModalComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
@@ -302,8 +347,7 @@ export class PropertyViewComponent {
       },
       overlay: { leave: 'fade-out 0.5s' },
       data: {
-        associationId: associationId
-
+        associationId: associationId,
       },
       actions: {
         click: false,

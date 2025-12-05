@@ -1,4 +1,4 @@
-<section>
+<section class="mt-3">
 
     <div>
 
@@ -7,192 +7,149 @@
             <div class="head-cont">
                 <h2>Request Management</h2>
             </div>
-            <div>
-                <button class="btn-add Buttons-font" (click)="OpenCreateAdmin()">+ Create Admin</button>
-            </div>
+
         </div>
 
-        <div class="parent">
-            <div class="div1">
-                <div class="container">
-                    <div class="item">
-                        <div class="table-cont">
-                            <div class="table-container">
 
-                                <table class="styled-table">
+        <div class="container">
+            <div class="item">
+                <div class="table-cont">
+                    <div class="table-container">
 
-                                    <thead>
-                                        <tr>
-                                            <th class="medium-font">Property No.</th>
-                                            <th class="medium-font">Request Title</th>
-                                            <th class="medium-font">Resident Name</th>
-                                            <th class="medium-font">Resident Type</th>
-                                            <th class="medium-font">Mobile</th>
-                                            <th class="medium-font">Work Status</th>
-                                            <th class="medium-font">Action</th>
-                                        </tr>
-                                    </thead>
+                        <table class="styled-table">
 
-                                    <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+                            <thead>
+                                <tr>
+                                    <th class="medium-font">Property No.</th>
+                                    <th class="medium-font">Request Title</th>
+                                    <th class="medium-font">Resident Name</th>
+                                    <th class="medium-font">Resident Type</th>
+                                    <th class="medium-font">Mobile</th>
+                                    <th class="medium-font">Work Status</th>
+                                    <th class="medium-font">Action</th>
+                                </tr>
+                            </thead>
 
-                                        <!-- NO DATA FOUND -->
-                                        <ng-container *ngIf="RequestList2.length === 0; else showData">
-                                            <tr>
-                                                <td colspan="8" style="
+                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                                <!-- NO DATA FOUND -->
+                                <ng-container *ngIf="RequestList2.length === 0; else showData">
+                                    <tr>
+                                        <td colspan="8" style="
                                             text-align:center; 
                                             font-weight:600; 
                                             color:gray;
                                             height:60px;">
-                                                    No Request Found
-                                                </td>
-                                            </tr>
-                                        </ng-container>
+                                            No Request Found
+                                        </td>
+                                    </tr>
+                                </ng-container>
 
-                                        <!-- DATA -->
-                                        <ng-template #showData>
+                                <!-- DATA -->
+                                <ng-template #showData>
 
-                                            <tr *ngFor="let req of RequestList1.paginatedData">
+                                    <tr *ngFor="let req of RequestList1.paginatedData">
 
-                                                <!-- PROPERTY NO -->
-                                                <td>{{ req.property_no }}</td>
+                                        <!-- PROPERTY NO -->
+                                        <td>{{ req.property_no }}</td>
 
-                                                <!-- TITLE -->
-                                                <td>
-                                                    {{ req.title?.length > 20 ? (req.title | slice:0:20) + '...' :
-                                                    req.title }}
-                                                </td>
+                                        <!-- TITLE -->
+                                        <td>
+                                            {{ req.title?.length > 20 ? (req.title | slice:0:20) + '...' :
+                                            req.title }}
+                                        </td>
 
-                                                <!-- RESIDENT NAME -->
-                                                <td>
-                                                    {{ req.resident_name }}
-                                                </td>
+                                        <!-- RESIDENT NAME -->
+                                        <td>
+                                            {{ req.resident_name }}
+                                        </td>
 
-                                                <!-- RESIDENT TYPE -->
-                                                <td>{{ req.user_type | titlecase }}</td>
+                                        <!-- RESIDENT TYPE -->
+                                        <td>{{ req.user_type | titlecase }}</td>
 
-                                                <!-- MOBILE -->
-                                                <td>
-                                                    {{ req.resident_mobile
-                                                    }}
-                                                </td>
+                                        <!-- MOBILE -->
+                                        <td>
+                                            {{ req.resident_mobile
+                                            }}
+                                        </td>
 
-                                                <!-- WORK STATUS -->
-                                                <td>
-                                                    <span class="status-pill" [ngClass]="req.work_status">
-                                                        {{ req.work_status | titlecase }}
-                                                    </span>
-                                                </td>
+                                        <!-- WORK STATUS -->
+                                        <td>
+                                            <span class="status-pill" [ngClass]="req.work_status">
+                                                {{ req.work_status | titlecase }}
+                                            </span>
+                                        </td>
 
 
-                                                <!-- ACTION (VIEW) -->
-                                                <td>
-                                                    <i class="fa-regular fa-eye view-icon"
-                                                        (click)="OpenViewRequest(req)">
-                                                    </i>
-                                                </td>
+                                        <!-- ACTION (VIEW) -->
+                                        <td>
+                                            <i class="fa-regular fa-eye view-icon" (click)="OpenViewRequest(req)">
+                                            </i>
+                                        </td>
 
-                                            </tr>
+                                    </tr>
 
-                                        </ng-template>
+                                </ng-template>
 
-                                    </tbody>
+                            </tbody>
 
-                                    <!-- SKELETON LOADER -->
-                                    <ng-template #tableSkeleton>
-                                        <tr *ngFor="let i of [1,2,3,4,5]" style="height:55px;">
-                                            <td colspan="8">
-                                                <span class="placeholder placeholder-glow"
-                                                    style="height:14px;width:90%;display:inline-block;border-radius:4px;background:#e0e0e0;">
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </ng-template>
+                            <!-- SKELETON LOADER -->
+                            <ng-template #tableSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height:55px;">
+                                    <td colspan="8">
+                                        <span class="placeholder placeholder-glow"
+                                            style="height:14px;width:90%;display:inline-block;border-radius:4px;background:#e0e0e0;">
+                                        </span>
+                                    </td>
+                                </tr>
+                            </ng-template>
 
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PAGINATION -->
-                <div *ngIf="RequestList1" class="pagination-container regular-font">
-
-                    <p class="pagination-info">
-                        Showing {{ RequestList1.startIndex + 1 }}
-                        to {{ RequestList1.endIndex + 1 }}
-                        of {{ RequestList1.totalData }} entries
-                    </p>
-
-                    <ul class="pagination">
-
-                        <!-- PREVIOUS PAGE -->
-                        <li>
-                            <button class="page-btn arrow-btn" [disabled]="RequestList1.currentPage === 1"
-                                (click)="RequestList1.prevPage()">
-                                <i class="fa-solid fa-angle-left"></i>
-                            </button>
-                        </li>
-
-                        <!-- CURRENT PAGE -->
-                        <li>
-                            <span class="page-btn active">
-                                {{ RequestList1.currentPage }}
-                            </span>
-                        </li>
-
-                        <!-- NEXT PAGE -->
-                        <li>
-                            <button class="page-btn arrow-btn"
-                                [disabled]="RequestList1.currentPage === RequestList1.totalPages"
-                                (click)="RequestList1.nextPage()">
-                                <i class="fa-solid fa-angle-right"></i>
-                            </button>
-                        </li>
-
-                    </ul>
-
-                </div>
-            </div>
-            <div class="div2">
-
-                <div class="product-list">
-
-                    <div class="product-card" *ngFor="let admin of adminList2">
-
-                        <!-- Avatar with First Letter -->
-                        <div class="img-box">
-                            {{ admin.name.charAt(0) }}
-                        </div>
-
-                        <div class="card-body-details">
-
-                            <h3 class="title">{{ admin.name }} {{ admin.last_name }}</h3>
-
-                            <p class="detail-text regular-font">
-                                📞 {{ admin.mobile }}
-                            </p>
-
-                            <p class="detail-text regular-font m-0">
-                                ✉️ {{ admin.email }}
-                            </p>
-
-                            <p class="detail-text small-text regular-font">
-                                Onboarded: {{ admin.onboarded_time.$date | date:'MMM d, y' }}
-                            </p>
-
-                        </div>
+                        </table>
 
                     </div>
-
                 </div>
-
             </div>
         </div>
 
-        <!-- TABLE -->
+        <!-- PAGINATION -->
+        <div *ngIf="RequestList1" class="pagination-container regular-font">
 
+            <p class="pagination-info">
+                Showing {{ RequestList1.startIndex + 1 }}
+                to {{ RequestList1.endIndex + 1 }}
+                of {{ RequestList1.totalData }} entries
+            </p>
 
+            <ul class="pagination">
+
+                <!-- PREVIOUS PAGE -->
+                <li>
+                    <button class="page-btn arrow-btn" [disabled]="RequestList1.currentPage === 1"
+                        (click)="RequestList1.prevPage()">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </button>
+                </li>
+
+                <!-- CURRENT PAGE -->
+                <li>
+                    <span class="page-btn active">
+                        {{ RequestList1.currentPage }}
+                    </span>
+                </li>
+
+                <!-- NEXT PAGE -->
+                <li>
+                    <button class="page-btn arrow-btn" [disabled]="RequestList1.currentPage === RequestList1.totalPages"
+                        (click)="RequestList1.nextPage()">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </button>
+                </li>
+
+            </ul>
+
+        </div>
     </div>
+
+
 
 </section>

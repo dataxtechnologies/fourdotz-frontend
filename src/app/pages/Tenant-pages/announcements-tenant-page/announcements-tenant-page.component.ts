@@ -170,6 +170,7 @@ export class AnnouncementsTenantPageComponent {
         this.loadingPosts = false;
         if (res?.success) {
           this.listpinannouncement();
+          this.ListAnnouncementinOwnerTenant();
         } else {
           // this.posts = [];
         }

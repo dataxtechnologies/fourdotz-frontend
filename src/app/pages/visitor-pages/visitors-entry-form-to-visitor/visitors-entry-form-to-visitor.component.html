@@ -1,0 +1,152 @@
+<section>
+    <div class="div-cont">
+        <div class="container">
+
+            <!-- Logo -->
+            <div class="brand-logo">
+                <img src="assets/logo/fourdotz-logo.png" alt="Fourdotz logo" />
+            </div>
+
+            <!-- Title -->
+            <div class="title">Visitor Registration Form</div>
+
+            <!-- Form -->
+            <div class="content">
+
+                <form [formGroup]="visitorForm" (ngSubmit)="submitVisitorForm()">
+                    <div class="user-details">
+
+                        <!-- Full Name -->
+                        <div class="input-box">
+                            <label class="details medium-font">Full Name<span class="required">*</span></label>
+                            <input type="text" class="inp-cus regular-font" formControlName="full_name"
+                                placeholder="Enter your name" />
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('full_name')?.touched && visitorForm.get('full_name')?.invalid">
+                                Full Name is required.
+                            </span>
+                        </div>
+
+                        <div class="input-box">
+                            <label class="details medium-font">Phone (WhatsApp)<span class="required">*</span></label>
+                            <input type="text" class="inp-cus regular-font" formControlName="whatsapp"
+                                placeholder="Enter WhatsApp number" />
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('whatsapp')?.touched && visitorForm.get('whatsapp')?.errors?.['required']">
+                                WhatsApp number is required.
+                            </span>
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('whatsapp')?.touched && visitorForm.get('whatsapp')?.errors?.['pattern']">
+                                Enter a valid 10-digit WhatsApp number.
+                            </span>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="input-box">
+                            <label class="details medium-font">Gender<span class="required">*</span></label>
+                            <select formControlName="gender" class="inp-cus regular-font">
+                                <option value="" disabled>Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Others">Others</option>
+                            </select>
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('gender')?.touched && visitorForm.get('gender')?.invalid">
+                                Gender is required.
+                            </span>
+                        </div>
+
+                        <!-- Property No -->
+                        <div class="input-box">
+                            <label class="details medium-font">Property No<span class="required">*</span></label>
+                            <div class="custom-select">
+                                <div class="select-selected regular-font" (click)="toggleDropdown()">
+                                    {{ selectedProperty || 'Select Property No.' }}
+                                    <i class="fa-solid" [ngClass]="{
+          'fa-chevron-down': !dropdownOpen,
+          'fa-chevron-up': dropdownOpen
+        }" style="float: right; font-size: 0.7rem; margin-top: 4px;"></i>
+                                </div>
+
+                                <div class="select-items" [class.select-hide]="!dropdownOpen">
+                                    <input type="text" placeholder="Search property..."
+                                        class="dropdown-search regular-font" (input)="onSearchChange($event)" />
+
+                                    <div class="regular-font" *ngFor="let property of filteredList"
+                                        (click)="selectProperty(property)">
+                                        {{ property.property_no }}
+                                    </div>
+
+                                    <div *ngIf="filteredList.length === 0" class="no-results regular-font">
+                                        No properties found
+                                    </div>
+                                </div>
+                            </div>
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('property_no')?.touched && visitorForm.get('property_no')?.invalid">
+                                Property Number is required.
+                            </span>
+                        </div>
+
+                        <!-- Gate No -->
+                        <div class="input-box">
+                            <label class="details medium-font">Gate No<span class="required">*</span></label>
+                            <input type="text" class="inp-cus regular-font" formControlName="gate_no"
+                                placeholder="Enter Gate No" />
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('gate_no')?.touched && visitorForm.get('gate_no')?.invalid">
+                                Gate Number is required.
+                            </span>
+                        </div>
+
+                        <!-- Visitor Count -->
+                        <div class="input-box">
+                            <label class="details medium-font">Visitor Count<span class="required">*</span></label>
+                            <input type="number" class="inp-cus regular-font" formControlName="count"
+                                placeholder="Enter count" />
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('count')?.touched && visitorForm.get('count')?.invalid">
+                                Visitor count is required.
+                            </span>
+                        </div>
+
+                        <!-- Reason -->
+                        <div class="input-box">
+                            <label class="details medium-font">Reason for Visit<span class="required">*</span></label>
+                            <input type="text" class="inp-cus regular-font" formControlName="reason"
+                                placeholder="Enter reason" />
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('reason')?.touched && visitorForm.get('reason')?.invalid">
+                                Reason is required.
+                            </span>
+                        </div>
+                        <!-- Exit Time -->
+                        <div class="input-box">
+                            <label class="details medium-font">Exit Time<span class="required">*</span></label>
+                            <input type="datetime-local" class="inp-cus regular-font" formControlName="exit_time" />
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('exit_time')?.touched && visitorForm.get('exit_time')?.invalid">
+                                Exit time is required.
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="button">
+                        <input type="submit" value="Register" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>

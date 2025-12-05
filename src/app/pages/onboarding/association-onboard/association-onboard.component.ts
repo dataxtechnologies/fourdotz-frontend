@@ -30,12 +30,12 @@ interface Step {
 export class AssociationOnboardComponent implements OnInit {
   user_id = localStorage.getItem('user_id');
   userData: any;
-  passport_sizephoto: File | null = null;
-  RentalAggrement: File | null = null;
   selectedFile: File | null = null;
-  ChequeLeaf: File | null = null;
-  Pancard: File | null = null;
-  Company_proof: File | null = null;
+passport_sizephoto: File | null = null;
+RentalAggrement: File | null = null;
+ChequeLeaf: File | null = null;
+Pancard: File | null = null;
+Company_proof: File | null = null;
   submitbtnloading = false;
   steps: Step[] = [
     {
@@ -91,6 +91,11 @@ export class AssociationOnboardComponent implements OnInit {
     this.userData = userJson ? JSON.parse(userJson) : {};
   }
 
+toUpperCaseInput(event: any) {
+  const value = event.target.value.toUpperCase();
+  this.accountForm.get('ifsc_code')?.setValue(value, { emitEvent: false });
+}
+
   initializeForms(): void {
     this.inputForm = this.fb.group({
       alternate_number: [
@@ -102,10 +107,14 @@ export class AssociationOnboardComponent implements OnInit {
       address: ['', Validators.required],
     });
 
-    this.documentForm = this.fb.group({
-      company_proof_type: ['', Validators.required],
-     
-    });
+this.documentForm = this.fb.group({
+  company_proof_type: ['', Validators.required],
+  passport_size_photo: [null, Validators.required],
+  rental_agreement: [null, Validators.required],
+  cancelled_cheque_leaf: [null, Validators.required],
+  pan_card: [null, Validators.required],
+  company_proof: [null, Validators.required]
+});
 
     this.accountForm = this.fb.group({
       account_holder_name: ['', Validators.required],
@@ -114,10 +123,10 @@ export class AssociationOnboardComponent implements OnInit {
         [Validators.required, Validators.pattern('^[0-9]{9,18}$')],
       ],
       account_type: ['', Validators.required],
-      ifsc_code: [
-        '',
-        [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')],
-      ],
+ifsc_code: [
+  '',
+  [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')],
+],
     });
   }
 
@@ -162,37 +171,47 @@ export class AssociationOnboardComponent implements OnInit {
 
   /** File Upload **/
   onFilePassportChange(event: Event) {
-  const file = event.target as HTMLInputElement;
-  if (file.files && file.files.length > 0) {
-      this.passport_sizephoto = file.files[0];
-    }
-  // if (file) this.passport_sizephoto = file.files[0];
+  const file = (event.target as HTMLInputElement).files?.[0];
+  if (file) {
+    this.passport_sizephoto = file;
+    this.documentForm.patchValue({ passport_size_photo: file });
+  }
 }
+
 onFileRentalChange(event: Event) {
   const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) this.RentalAggrement = file;
+  if (file) {
+    this.RentalAggrement = file;
+    this.documentForm.patchValue({ rental_agreement: file });
+  }
 }
+
 onFileChequeChange(event: Event) {
   const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) this.ChequeLeaf = file;
+  if (file) {
+    this.ChequeLeaf = file;
+    this.documentForm.patchValue({ cancelled_cheque_leaf: file });
+  }
 }
+
 onFilePanChange(event: Event) {
   const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) this.Pancard = file;
+  if (file) {
+    this.Pancard = file;
+    this.documentForm.patchValue({ pan_card: file });
+  }
 }
+
 onFileCompanyChange(event: Event) {
   const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) this.Company_proof = file;
+  if (file) {
+    this.Company_proof = file;
+    this.documentForm.patchValue({ company_proof: file });
+  }
 }
 
 isDocumentsValid(): boolean {
-  return (
-    this.passport_sizephoto != null &&
-    this.RentalAggrement != null &&
-    this.ChequeLeaf != null &&
-    this.Pancard != null &&
-    this.Company_proof != null
-  );
+  return this.documentForm.valid;
 }
   /** Submit Input Form **/
   submitInputForm(): void {
@@ -230,49 +249,30 @@ isDocumentsValid(): boolean {
   }
 
   /** Submit Document Form **/
-  submitDocumentForm(): void {
-    this.submitbtnloading = true;
-    const formData = new FormData();
+ submitDocumentForm(): void {
+  this.submitbtnloading = true;
 
-    if (this.passport_sizephoto)
-      formData.append('passport_size_photo', this.passport_sizephoto);
-    if (this.RentalAggrement)
-      formData.append('rental_agreement', this.RentalAggrement);
-    if (this.ChequeLeaf)
-      formData.append('cancelled_cheque_leaf', this.ChequeLeaf);
-    if (this.Pancard) formData.append('pan_card', this.Pancard);
-    if (this.Company_proof)
-      formData.append('company_proof', this.Company_proof);
-    formData.append(
-      'company_proof_type',
-      this.documentForm.get('company_proof_type')?.value
-    );
+  const formData = new FormData();
+  Object.keys(this.documentForm.value).forEach(key => {
+    formData.append(key, this.documentForm.value[key]);
+  });
 
-    //console.log('Uploaded files:');
-    formData.forEach((value, key) => {
-      //console.log(key, value);
-    });
-
-    this.apiService.AssociationDocumentOnboard<FormData>(formData).subscribe({
-      next: (res: any) => {
-        if (res?.success) {
-          this.submitbtnloading = true;
-          this.Toast.success(res.message, 'Success');
-          this.router.navigateByUrl('/Association/Dashboard');
-          //console.log('Documents uploaded successfully');
-        } else {
-          this.submitbtnloading = true;
-          this.Toast.warning(res.message, 'Warning');
-          //console.warn('Document upload failed');
-        }
-      },
-      error: (err: any) => {
-        this.submitbtnloading = true;
-        this.Toast.error(err.error.error.message, 'Failed');
-        //console.error('Error uploading documents:', err);
-      },
-    });
-  }
+  this.apiService.AssociationDocumentOnboard<FormData>(formData).subscribe({
+    next: (res: any) => {
+      this.submitbtnloading = false;
+      if (res?.success) {
+        this.Toast.success(res.message, 'Success');
+        this.router.navigateByUrl('/Association/Dashboard');
+      } else {
+        this.Toast.warning(res.message, 'Warning');
+      }
+    },
+    error: (err: any) => {
+      this.submitbtnloading = false;
+      this.Toast.error(err.error.error.message, 'Failed');
+    }
+  });
+}
 
   /** Submit Account Details **/
   // submitAccountForm(): void {

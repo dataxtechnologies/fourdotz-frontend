@@ -1,9 +1,10 @@
 export interface SidebarItem {
   label: string;
   icon: string;
-  //activeicon: string;
-  route: string; // always a direct route
-  allowedRole: string; // required for role-based access
+  route?: string;
+  allowedRole: string;
+  children?: SidebarItem[]; // 👈 add submenu support
+  open?: boolean; // 👈 Add this line
 }
 
 export const SIDEBAR_ITEMS: SidebarItem[] = [
@@ -57,11 +58,48 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     allowedRole: 'association',
     //activeicon: ''
   },
-    {
+  {
     label: 'Manage Request',
-    icon: '/assets/icons/chart-3.svg',
+    icon: '/assets/icons/request-manage2.svg',
     route: '/Association/request-management/list',
     allowedRole: 'association',
+    children: [
+      {
+        label: 'Request List',
+        icon: '/assets/icons/request-manage2.svg',
+        route: '/Association/request-management/list',
+        allowedRole: 'association',
+      },
+      {
+        label: 'Service Admin List',
+        icon: '/assets/icons/ai-users.svg',
+        route: '/Association/service-admin/list',
+        allowedRole: 'association',
+      },
+    ],
+    //activeicon: ''
+  },
+
+  {
+    label: 'Manage Visitors',
+    icon: '/assets/icons/manage.svg',
+    route: '/visitors-management/visitors-list',
+    allowedRole: 'association',
+    children: [
+      {
+        label: 'Manage QR',
+        icon: '/assets/icons/qr-code.svg',
+        route: '/visitors-management/qr-manager',
+        allowedRole: 'association',
+      },
+      {
+        label: 'Visitors List',
+        icon: '/assets/icons/visitor.svg',
+        route: '/visitors-management/visitors-list',
+        allowedRole: 'association',
+      },
+      
+    ],
     //activeicon: ''
   },
   {
@@ -108,7 +146,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   },
   {
     label: 'Manage Request',
-    icon: '/assets/icons/chart-3.svg',
+    icon: '/assets/icons/request-manage2.svg',
     route: '/Owner/request-management/list',
     allowedRole: 'owner',
     //activeicon: ''
@@ -151,15 +189,15 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 
   {
     label: 'Manage Request',
-    icon: '/assets/icons/chart-3.svg',
+    icon: '/assets/icons/request-manage2.svg',
     route: '/Tenant/request-management/list',
     allowedRole: 'tenant',
     //activeicon: ''
   },
 
-      {
+  {
     label: 'Manage Request',
-    icon: '/assets/icons/chart-3.svg',
+    icon: '/assets/icons/request-manage2.svg',
     route: '/Association/request-management/list',
     allowedRole: 'service_admin',
     //activeicon: ''

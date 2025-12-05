@@ -58,8 +58,7 @@ patchVehicleData(data: any) {
     model: data.modal ?? '',
     vehicleNumber: data.number ?? '',
     ownedBy: data.vehicle_owned_by
-      ? data.vehicle_owned_by.charAt(0).toUpperCase() + data.vehicle_owned_by.slice(1)
-      : '',
+      ?? '',
   });
 }
 

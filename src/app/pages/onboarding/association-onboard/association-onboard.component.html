@@ -159,25 +159,40 @@
                         <label class="medium-font" for="Passport">Passport Size Photo</label>
                         <input type="file" class="inp-cus regular-font" (change)="onFilePassportChange($event)"
                             accept="image/*,.pdf" />
+                              <div *ngIf="documentForm.get('passport_size_photo')?.value">
+                                ✔ Selected: {{ documentForm.get('passport_size_photo')?.value.name }}
+                            </div>
                     </div>
                     <div class="form-group">
                         <label class="medium-font" for="Passport">Rental Agreement</label>
                         <input type="file" class="inp-cus regular-font" (change)="onFileRentalChange($event)"
                             accept="image/*,.pdf" />
+                              <div *ngIf="documentForm.get('rental_agreement')?.value">
+    ✔ Selected: {{ documentForm.get('rental_agreement')?.value.name }}
+  </div>
                     </div>
                     <div class="form-group">
                         <label class="medium-font" for="Passport">Cancelled Cheque Leaf</label>
                         <input type="file" class="inp-cus regular-font" (change)="onFileChequeChange($event)"
                             accept="image/*,.pdf" />
+                              <div *ngIf="documentForm.get('cancelled_cheque_leaf')?.value">
+    ✔ Selected: {{ documentForm.get('cancelled_cheque_leaf')?.value.name }}
+  </div>
                     </div>
                     <div class="form-group">
                         <label class="medium-font" for="Passport">Pan Card</label>
                         <input type="file" class="inp-cus regular-font" (change)="onFilePanChange($event)" accept="image/*,.pdf" />
+                          <div *ngIf="documentForm.get('pan_card')?.value">
+    ✔ Selected: {{ documentForm.get('pan_card')?.value.name }}
+  </div>
                     </div>
                     <div class="form-group">
                         <label class="medium-font" for="Passport">Company Proof</label>
                         <input type="file" class="inp-cus regular-font" (change)="onFileCompanyChange($event)"
                             accept="image/*,.pdf" />
+                              <div *ngIf="documentForm.get('company_proof')?.value">
+    ✔ Selected: {{ documentForm.get('company_proof')?.value.name }}
+  </div>
                     </div>
                 </div>
                 <!-- </div> -->
@@ -245,14 +260,18 @@
                 <!-- IFSC Code -->
                 <div class="form-group">
                     <label class="medium-font">IFSC Code <span class="required">*</span></label>
-                    <input type="text" formControlName="ifsc_code" class="inp-cus regular-font" placeholder="e.g., SBIN0001234"
-                        maxlength="11" style="text-transform: uppercase" />
+                    <input type="text"
+       formControlName="ifsc_code"
+       class="inp-cus regular-font"
+       placeholder="e.g., SBIN0001234"
+       maxlength="11"
+       (input)="toUpperCaseInput($event)" />
                     <div *ngIf="accountForm.get('ifsc_code')?.touched" class="error">
                         <div *ngIf="accountForm.get('ifsc_code')?.errors?.['required']">
                             IFSC Code is required.
                         </div>
                         <div *ngIf="accountForm.get('ifsc_code')?.errors?.['pattern']">
-                            Enter a valid IFSC Code (e.g., SBIN0XXXXXX — 4 letters, 0, 6 alphanumeric).
+                            Enter a valid IFSC Code in all Capital format (e.g., SBIN0XXXXXX — 4 letters, 0, 6 alphanumeric).
                         </div>
                     </div>
                 </div>
@@ -277,19 +296,22 @@
 
             <div class="review-block">
                 <h3>Association Details</h3>
-                <p class="regular-font"><strong>Alternate Contact:</strong> {{ inputForm.value.alternate_number }}</p>
-                <p class="regular-font"><strong>GST:</strong> {{ inputForm.value.gst_number }}</p>
-                <p class="regular-font"><strong>Reg. No:</strong> {{ inputForm.value.registration_number }}</p>
-                <p class="regular-font"><strong>Address:</strong> {{ inputForm.value.address }}</p>
+                <p class="regular-font address-wrap"><strong>Alternate Contact:</strong> {{ inputForm.value.alternate_number }}</p>
+                <p class="regular-font address-wrap"><strong>GST:</strong> {{ inputForm.value.gst_number }}</p>
+                <p class="regular-font address-wrap"><strong>Reg. No:</strong> {{ inputForm.value.registration_number }}</p>
+               <p class="regular-font address-wrap">
+  <strong>Address:</strong> {{ inputForm.value.address }}
+</p>
             </div>
 
             <div class="review-block">
                 <h3>Account Details</h3>
-                <p class="regular-font"><strong>Holder Name:</strong> {{ accountForm.value.account_holder_name }}</p>
-                <p class="regular-font"><strong>Account No:</strong> {{ accountForm.value.account_number }}</p>
-                <p class="regular-font"><strong>Type:</strong> {{ accountForm.value.account_type }}</p>
-                <p class="regular-font"><strong>IFSC:</strong> {{ accountForm.value.ifsc_code }}</p>
+                <p class="regular-font address-wrap"><strong>Holder Name:</strong> {{ accountForm.value.account_holder_name }}</p>
+                <p class="regular-font address-wrap"><strong>Account No:</strong> {{ accountForm.value.account_number }}</p>
+                <p class="regular-font address-wrap"><strong>Type:</strong> {{ accountForm.value.account_type }}</p>
+                <p class="regular-font address-wrap"><strong>IFSC:</strong> {{ accountForm.value.ifsc_code }}</p>
             </div>
+            
 
             <div class="review-block">
                 <h3>Uploaded Documents</h3>

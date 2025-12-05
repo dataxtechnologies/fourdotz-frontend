@@ -33,17 +33,17 @@
 
     </div> -->
     <!-- Cards -->
+    
+    <div class="no-data-box" *ngIf="requestlist1.paginatedData.length === 0; else requestList">
+        <img src="assets/logo/no-pin-announcement.jpg" class="no-data-img" />
+        <h3>No Requests Found</h3>
+        <p class="regular-font">You haven’t created any requests yet.</p>
+        
+        <button class="create-btn" (click)="OpenCreateRequest()">+ Create New Request</button>
+    </div>
+    
+    <ng-template #requestList>
     <div class="cards-wrapper">
-
-        <div class="no-data-box" *ngIf="requestlist1.paginatedData.length === 0; else requestList">
-            <img src="assets/logo/no-pin-announcement.jpg" class="no-data-img" />
-            <h3>No Requests Found</h3>
-            <p class="regular-font">You haven’t created any requests yet.</p>
-
-            <button class="create-btn" (click)="OpenCreateRequest()">+ Create New Request</button>
-        </div>
-
-        <ng-template #requestList>
 
             <!-- LOOP DYNAMICALLY -->
             <div class="review-card" *ngFor="let item of requestlist1.paginatedData">
@@ -88,8 +88,8 @@
 
                 </div>
             </div>
-        </ng-template>
-
-    </div>
+            
+        </div>
+    </ng-template>
 
 </div>

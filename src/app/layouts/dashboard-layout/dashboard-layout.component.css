@@ -1,38 +1,38 @@
-/* ================= SIDEBAR ================= */
+/* ================= GLOBAL SIDEBAR BASE ================= */
 #sidebar {
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: space-between;
 }
 
+/* base UL */
 #sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-#sidebar ul li {
-  display: flex;
+/* main LI items (but NOT submenu items) */
+#sidebar > ul > li {
+  display: block;
 }
 
-#sidebar ul li a,
-#sidebar ul li button {
+/* main item anchor */
+#sidebar > ul > li > a,
+#sidebar > ul > li > button {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 16px;
-  text-decoration: none;
+  padding: 12px 12px;
   width: 100%;
   border-radius: 8px;
+  text-decoration: none;
 }
 
-#sidebar ul li a i {
-  font-size: 1.3rem;
-}
-
-/* Toggle button */
-.toggle-btn-li {
-  margin-bottom: 10px;
+/* submenu SHOULD NEVER inherit flex from global CSS */
+#sidebar ul ul li,
+#sidebar ul ul li a {
+  display: block !important;
 }
 
 /* Footer stays at bottom */
@@ -40,18 +40,41 @@
   margin-top: auto;
 }
 
-/* Collapsed state hides text */
+/* collapsed sidebar hide text */
 #sidebar.close ul li a span {
   display: none;
 }
 
-/* Hide toggle & footer in mobile */
+/* mobile adjustments */
 @media (max-width: 800px) {
   .toggle-btn-li,
   .footer-list li {
     display: none !important;
   }
 }
+
+/* submenu title in global */
+.submenu-title {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.submenu-title:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+/* submenu list */
+.submenu-list {
+  padding-left: 10px;
+}
+.submenu-list li {
+  padding: 6px 0;
+  height: 50px;
+}
+.submenu-list a {
+  font-size: 14px;
+}
+
 
 /* ================= HEADER ================= */
 .navbar-header-main {
@@ -83,16 +106,23 @@
   margin-top: 70px; /* Matches header height */
 }
 
+/* ========== CONTENT ADJUSTMENT ========== */
 .content {
-  margin-left: 290px;
-  transition: margin-left 0.3s ease;
-  padding: 1em;
-  width: 100%;
+    margin-left: 290px;
+    transition: margin-left 0.3s ease;
 }
 
-/* When sidebar closed */
 #sidebar.close ~ .content {
-  margin-left: 120px;
+    margin-left: 120px;
+}
+
+/* icon-img override */
+.icon-img{
+  width:35px;
+}
+
+.subicon-img1{
+  width: 25px;
 }
 
 /* ================= USER INFO ================= */
@@ -337,5 +367,5 @@
 }
 
 .icon-img{
-  width: 35px;
+  width: 30px;
 }

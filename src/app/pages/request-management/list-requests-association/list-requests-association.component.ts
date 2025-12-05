@@ -66,22 +66,33 @@ export class ListRequestsAssociationComponent implements OnInit {
   }
 
   /* FETCH ALL ADMINS */
-  ListServiceAdmin() {
-    this.adminLoading = true;
+ListServiceAdmin() {
+  this.adminLoading = true;
 
-    this.api.ListServiceAdmin<any>().subscribe({
-      next: (res) => {
-        this.adminList2 = res?.success ? res.data : [];
+  this.api.ListServiceAdmin<any>().subscribe({
+    next: (res) => {
+      if (res?.success && Array.isArray(res.data)) {
+        // SUCCESS → assign data
+        this.adminList2 = res.data;
         this.adminList1.initialize(this.adminList2, 10);
-        this.adminLoading = false;
-      },
-      error: () => {
+      } else {
+        // FAILED RESPONSE → assign empty
         this.adminList2 = [];
         this.adminList1.initialize([], 10);
-        this.adminLoading = false;
-      },
-    });
-  }
+        console.warn('ListServiceAdmin: API responded without success flag');
+      }
+      this.adminLoading = false;
+    },
+    error: (err) => {
+      // EXCEPTION → assign empty
+      console.error('ListServiceAdmin Error:', err);
+      this.adminList2 = [];
+      this.adminList1.initialize([], 10);
+      this.adminLoading = false;
+    },
+  });
+}
+
 
   /* OPEN CREATE ADMIN MODAL */
   OpenCreateAdmin() {

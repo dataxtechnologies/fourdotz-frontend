@@ -31,7 +31,7 @@ export class CreateRequestUserComponent {
     property_id: new FormControl('', Validators.required),
     title: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-});
+  });
 
   attachments: File[] = [];
   attachmentError = '';
@@ -39,18 +39,22 @@ export class CreateRequestUserComponent {
   allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
   allowedVideoTypes = ['video/mp4', 'video/webm', 'video/ogg'];
 
-  constructor(private apiService: ApiserviceService, private Modal : ModalService, private toast: ToastrService, private OwnerService: OwnerServiceService) {}
-
+  constructor(
+    private apiService: ApiserviceService,
+    private Modal: ModalService,
+    private toast: ToastrService,
+    private OwnerService: OwnerServiceService
+  ) {}
 
   ngOnInit(): void {
     // this.getpropertiesdata()
     this.loggedUserType = localStorage.getItem('user_type') || '';
 
-  if (this.loggedUserType === 'owner') {
-    this.getOwnerProperties();
-  } else if (this.loggedUserType === 'tenant') {
-    this.getTenantProperties();
-  }
+    if (this.loggedUserType === 'owner') {
+      this.getOwnerProperties();
+    } else if (this.loggedUserType === 'tenant') {
+      this.getTenantProperties();
+    }
   }
 
   selectProperty(property: any) {
@@ -83,41 +87,41 @@ export class CreateRequestUserComponent {
     }
   }
 
-getOwnerProperties() {
-  this.apiService.ownerproperties<any>().subscribe({
-    next: (res: any) => {
-      if (res?.success && Array.isArray(res.data)) {
-        this.associationId1 = res.data;
-        this.filteredList = [...this.associationId1];
-      } else {
+  getOwnerProperties() {
+    this.apiService.ownerproperties<any>().subscribe({
+      next: (res: any) => {
+        if (res?.success && Array.isArray(res.data)) {
+          this.associationId1 = res.data;
+          this.filteredList = [...this.associationId1];
+        } else {
+          this.associationId1 = [];
+          this.filteredList = [];
+        }
+      },
+      error: () => {
         this.associationId1 = [];
         this.filteredList = [];
-      }
-    },
-    error: () => {
-      this.associationId1 = [];
-      this.filteredList = [];
-    },
-  });
-}
+      },
+    });
+  }
 
-getTenantProperties() {
-  this.apiService.TenantPropertyDatas<any>().subscribe({
-    next: (res: any) => {
-      if (res?.success && Array.isArray(res.data)) {
-        this.associationId1 = res.data;
-        this.filteredList = [...this.associationId1];
-      } else {
+  getTenantProperties() {
+    this.apiService.TenantPropertyDatas<any>().subscribe({
+      next: (res: any) => {
+        if (res?.success && Array.isArray(res.data)) {
+          this.associationId1 = res.data;
+          this.filteredList = [...this.associationId1];
+        } else {
+          this.associationId1 = [];
+          this.filteredList = [];
+        }
+      },
+      error: () => {
         this.associationId1 = [];
         this.filteredList = [];
-      }
-    },
-    error: () => {
-      this.associationId1 = [];
-      this.filteredList = [];
-    },
-  });
-}
+      },
+    });
+  }
 
   onFileSelect(event: any) {
     this.attachmentError = '';
@@ -154,11 +158,13 @@ getTenantProperties() {
 
     if (this.requestForm.invalid) {
       this.requestForm.markAllAsTouched();
+      this.submitLoading = false;
       return;
     }
 
     if (this.attachments.length === 0) {
       this.attachmentError = 'Please upload at least 1 attachment.';
+      this.submitLoading = false;
       return;
     }
 
@@ -171,11 +177,13 @@ getTenantProperties() {
 
     if (this.attachments.length > 2) {
       this.attachmentError = 'Maximum 2 attachments allowed.';
+      
       return;
     }
 
     if (images.length > 2 || videos.length > 2) {
       this.attachmentError = 'Cannot upload more than 2 images or 2 videos.';
+      
       return;
     }
 
@@ -192,12 +200,11 @@ getTenantProperties() {
 
     this.apiService.CreateRequestUser<any>(formData).subscribe({
       next: (res: any) => {
-        
         if (res?.success) {
           this.submitLoading = false;
           this.OwnerService.triggerRequestUser(res);
           // this.AssociationSer.triggerAnnouncementCreated(res);
-          this.toast.success(res.message ,'Success');
+          this.toast.success(res.message, 'Success');
           this.closeModal();
         } else {
           this.submitLoading = false;

@@ -46,7 +46,7 @@ export class AddTenantComponent {
 ngOnInit(): void {
     this.tenantForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(1)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]], // 10 digits
       rentedAt: ['', Validators.required],

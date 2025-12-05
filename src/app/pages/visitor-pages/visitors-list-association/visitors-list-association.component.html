@@ -1,0 +1,135 @@
+<section>
+    <div>
+        <div class=" header-cont">
+            <div class=" container head-cont">
+                <h4>Visitors List</h4>
+            </div>
+            <div>
+                <!-- <button class="btn-add" (click)="generateMaintenance()">+ Generate Maintenance</button> -->
+            </div>
+        </div>
+        <div class="container">
+
+            <div class="item">
+                <div class="table-cont"> <!-- &#64; -->
+                    <div class="table-container">
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th class="medium-font">Property No.</th>
+                                    <th class="medium-font">Visitor Details</th>
+                                    <th class="medium-font">Resident Details</th>
+                                    <th class="medium-font">Gate No.</th>
+                                    <th class="medium-font">Count</th>
+                                    <th class="medium-font">Entry Time</th>
+                                    <th class="medium-font">Exit Time</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+                                <ng-container *ngIf="maintenancelist2?.length === 0; else datashow">
+                                    <tr>
+                                        <td colspan="7" class="regular-font" style="text-align: center; color: gray;">
+                                            No Data Found
+                                        </td>
+                                    </tr>
+                                </ng-container>
+
+                                <ng-template #datashow>
+                                    <tr *ngFor="let item of maintenancelist1.paginatedData">
+                                        <td data-label="Maintenance Amount">{{ item.property_no }}</td>
+                                        <td>
+                                            <div class="td-main">{{ item.visitor_name }}</div>
+                                            <div class="td-sub">{{ item.visitor_mobile }}</div>
+                                        </td>
+                                        <td>
+                                            <div class="td-main">{{ item.resident_name }}</div>
+                                            <div class="td-sub">{{ item.resident_mobile }} / {{ item.resident_type }}</div>
+                                        </td>
+                                        <td data-label="Resident Name">{{ item.gate }}</td>
+                                        <td data-label="Resident Type">{{ item.visitor_count }}</td>
+                                        <td>
+                                            <div class="td-main">{{ item.created_time.$date | date:'dd-MMM-yyyy'}}</div>
+                                            <div class="td-sub">{{ item.created_time.$date | date:'h:mm a' }}</div>
+                                        </td>
+
+                                        <td>
+                                            <div class="td-main">{{ item.exit_time.$date | date:'dd-MMM-yyyy'}}</div>
+                                            <div class="td-sub">{{ item.exit_time.$date | date:'h:mm a' }}</div>
+                                        </td>
+
+
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                            <ng-template #tableSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5,6]" style="height: 50px;"> <!-- taller row -->
+                                    <td>
+                                        <span class="placeholder col-10 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-8 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-6 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-7 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-5 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td>
+                                        <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="maintenancelist1" class="pagination-container regular-font">
+            <p class="pagination-info">
+                Showing {{ maintenancelist1.startIndex + 1 }} to {{ maintenancelist1.endIndex + 1 }} of {{
+                maintenancelist1.totalData }} entries
+            </p>
+
+            <ul class="pagination">
+                <!-- First Page -->
+                <li>
+                    <button [disabled]="maintenancelist1.currentPage === 1" (click)="maintenancelist1.prevPage()"
+                        class="page-btn arrow-btn">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </button>
+                </li>
+
+                <!-- Current Page -->
+                <li>
+                    <span class="page-btn active">
+                        {{ maintenancelist1.currentPage }}
+                    </span>
+                </li>
+
+                <!-- Next Page -->
+                <li>
+                    <button [disabled]="maintenancelist1.currentPage === maintenancelist1.totalPages"
+                        (click)="maintenancelist1.nextPage()" class="page-btn arrow-btn">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

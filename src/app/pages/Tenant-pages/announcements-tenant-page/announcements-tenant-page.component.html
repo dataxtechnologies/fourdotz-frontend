@@ -82,7 +82,7 @@
                         <!-- 🔹 No Data Found -->
 
                         <div *ngIf="!loadingPosts">
-                            <div *ngIf="posts?.length === 0; else announcementpost" class="no-data">
+                            <div *ngIf="filteredPosts?.length === 0; else announcementpost" class="no-data">
                                 <img src="assets/logo/no-announcement.jpg" alt="No data" style="width: 600px;" />
                                 <!-- <p>No announcements found.</p> -->
                             </div>

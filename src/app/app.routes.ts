@@ -41,6 +41,11 @@ import { InvoiceLayoutComponent } from './layouts/invoice-layout/invoice-layout.
 import { ListRequestsUserComponent } from './pages/request-management/list-requests-user/list-requests-user.component';
 import { ListRequestsAssociationComponent } from './pages/request-management/list-requests-association/list-requests-association.component';
 import { ListRequestsAdminComponent } from './pages/request-management/list-requests-admin/list-requests-admin.component';
+import { ServiceAdminListComponent } from './pages/request-management/service-admin-list/service-admin-list.component';
+import { GenerateQrAssociationComponent } from './pages/visitor-pages/generate-qr-association/generate-qr-association.component';
+import { VisitorsListAssociationComponent } from './pages/visitor-pages/visitors-list-association/visitors-list-association.component';
+import { VisitorsEntryFormToVisitorComponent } from './pages/visitor-pages/visitors-entry-form-to-visitor/visitors-entry-form-to-visitor.component';
+import { VisitorsEntryFormSubmittedComponent } from './pages/visitor-pages/visitors-entry-form-submitted/visitors-entry-form-submitted.component';
 
 export const routes: Routes = [
   {
@@ -114,6 +119,10 @@ export const routes: Routes = [
       {
         path: 'request-management/list',
         component: ListRequestsAssociationComponent,
+      },
+      {
+        path: 'service-admin/list',
+        component: ServiceAdminListComponent,
       },
       {
         path: 'view-properties/:propertiesId',
@@ -211,6 +220,31 @@ export const routes: Routes = [
       },
     ],
   },
+
+
+  {
+    path: 'visitors-management',
+    component: DashboardLayoutComponent,
+    children: [
+      {
+        path: 'qr-manager',
+        component: GenerateQrAssociationComponent,
+      },
+      {
+        path: 'visitors-list',
+        component: VisitorsListAssociationComponent,
+      },
+    ],
+  },
+
+  {
+    path: 'visitor-entry-form/:associationId',
+    component:VisitorsEntryFormToVisitorComponent
+  },
+  {
+    path: 'visitor-entry-form-submitted',
+    component:VisitorsEntryFormSubmittedComponent
+  }
 
   // maintenance-invoice/owner/IN-NYYN-PM-5330?status=paynow
 ];

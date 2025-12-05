@@ -185,35 +185,32 @@
 
                             <div class="transaction-card">
                                 <div class="icon"><i class="fa-solid fa-file-invoice"></i></div>
-                                <div class="title medium-font">Monthly Invoice Total</div>
-                                <div class="amount regular-font">{{ monthly_invoice_total_amount | currency:'INR':'symbol':'1.0-0' }}
+                                <div class="title medium-font">Monthly Invoice Pending</div>
+                                <div class="amount regular-font">{{ (amountdata.monthly_invoice_pending_amount || 0) | currency:'INR':'symbol':'1.0-0' }}
                                 </div>
                                 <div class="desc regular-font">Invoices generated this month</div>
                             </div>
 
                             <div class="transaction-card">
                                 <div class="icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                                <div class="title medium-font">Monthly Rent Total</div>
-                                <div class="amount regular-font">{{ monthly_rent_invoices_total_amount |
-                                    currency:'INR':'symbol':'1.0-0' }}</div>
+                                <div class="title medium-font">Monthly Invoice Paid</div>
+                                <div class="amount regular-font">{{ (amountdata.monthly_invoice_total_amount || 0) | currency:'INR':'symbol':'1.0-0' }}</div>
                                 <div class="desc regular-font">Total rent collected this month</div>
                             </div>
 
                             <div class="transaction-card">
                                 <div class="icon"><i class="fa-solid fa-money-check-dollar"></i></div>
-                                <div class="title medium-font">Payout (Maintenance)</div>
-                                <div class="amount regular-font">{{ payout_maintenance_total_amount | currency:'INR':'symbol':'1.0-0'
-                                    }}</div>
+                                <div class="title medium-font">Payout Total</div>
+                                <div class="amount regular-font">{{ (amountdata.payout_maintenance_total_amount || 0) | currency:'INR':'symbol':'1.0-0' }}</div>
                                 <div class="desc regular-font">Maintenance payouts processed</div>
                             </div>
 
-                            <div class="transaction-card">
+                            <!-- <div class="transaction-card">
                                 <div class="icon"><i class="fa-solid fa-building-user"></i></div>
                                 <div class="title medium-font">Payout (Rent)</div>
-                                <div class="amount regular-font">{{ payout_rent_invoices_total_amount |
-                                    currency:'INR':'symbol':'1.0-0' }}</div>
+                                <div class="amount regular-font">{{ (amountdata.monthly_invoice_pending_amount ?? 0) | currency:'INR':'symbol':'1.0-0' }}</div>
                                 <div class="desc regular-font">Rent payouts processed</div>
-                            </div>
+                            </div> -->
 
                         </div>
                     </div>

@@ -1,0 +1,34 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3>{{ headerTitle }}</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <p class="warning-text regular-font">
+            <strong>Warning:</strong>
+            {{ warningMessage }}
+        </p>
+
+        <div class="inp-cont">
+            <label class="medium-font" for="confirmText">
+                To confirm, type <span class="highlight">DELETE</span> below:
+            </label>
+            <input id="confirmText" type="text" [(ngModel)]="confirmationText" placeholder="Type DELETE to confirm"
+                class="inp-cus regular-font" />
+        </div>
+
+        <div class="popup-actions">
+            <button class="cancel-btn" (click)="closeModal()">No, Cancel</button>
+
+            <button class="delete-btn" [disabled]="!canDelete()" (click)="confirmDelete(associationId)"
+                *ngIf="!showprocessingbtn">
+                {{ actionButtonText }}
+            </button>
+
+            <button class="delete-btn" disabled *ngIf="showprocessingbtn">
+                Processing...
+            </button>
+        </div>
+    </div>
+</section>

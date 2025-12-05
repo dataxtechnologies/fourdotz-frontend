@@ -11,7 +11,6 @@ import {
 import { filter } from 'rxjs/operators';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ToastrService } from 'ngx-toastr';
-import { catchError, throwError } from 'rxjs';
 import { ModalService } from 'ngx-modal-ease';
 import { LogoutModalComponent } from '../../modals/logout-modal/logout-modal.component';
 import { AddUPIIdComponent } from '../../modals/add-upi-id/add-upi-id.component';
@@ -19,6 +18,7 @@ import { OwnerServiceService } from '../../services/owner/owner-service.service'
 
 @Component({
   selector: 'app-dashboard-layout',
+  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -30,12 +30,14 @@ import { OwnerServiceService } from '../../services/owner/owner-service.service'
   styleUrl: './dashboard-layout.component.css',
 })
 export class DashboardLayoutComponent {
+  
   sidebarItems: SidebarItem[] = SIDEBAR_ITEMS;
   sidebarClosed = false;
   currentRoute = '';
-  loadingUserData = false; // flag to control loader visibility
+  loadingUserData = false;
   showFooter = false;
   footerTimeout: any;
+
   user_type = localStorage.getItem('user_type');
   user_id = localStorage.getItem('user_id');
   access_token = localStorage.getItem('access_token');
@@ -47,7 +49,7 @@ export class DashboardLayoutComponent {
     private ModalService: ModalService,
     private OwnerService: OwnerServiceService
   ) {
-    // Track the current route
+    // Track route
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: any) => {
@@ -55,38 +57,7 @@ export class DashboardLayoutComponent {
       });
   }
 
-  @HostListener('window:scroll', [])
-  onWindowScroll(): void {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const windowHeight = window.innerHeight;
-    const docHeight = document.documentElement.scrollHeight;
-
-    // Check if user is near the bottom (within 100px)
-    const IS_NEAR_BOTTOM = windowHeight + scrollTop + 100 >= docHeight;
-
-    if (IS_NEAR_BOTTOM) {
-      // 1. Clear any pending hide timeout
-      clearTimeout(this.footerTimeout);
-
-      // 2. Show footer immediately
-      if (!this.showFooter) {
-        this.showFooter = true;
-      }
-    } else {
-      // User is scrolling up/in the middle
-
-      // 1. Clear any previous timeout to reset the delay
-      clearTimeout(this.footerTimeout);
-
-      // 2. Set a new timeout to hide the footer after 1 second
-      this.footerTimeout = setTimeout(() => {
-        this.showFooter = false;
-      }, 1000);
-    }
-  }
-
   ngOnInit(): void {
-    // Check token before calling API
     if (!this.access_token || !this.user_type) {
       this.clearSessionAndRedirect('Session invalid. Please log in.');
     } else {
@@ -103,14 +74,42 @@ export class DashboardLayoutComponent {
   // Toggle sidebar
   toggleSidebar() {
     this.sidebarClosed = !this.sidebarClosed;
+
+    // NEW 🔥 If sidebar shrinks → close all submenus
+    if (this.sidebarClosed) {
+      this.sidebarItems.forEach((item) => (item.open = false));
+    }
   }
 
-  // Profile redirect
+  // NEW 🔥 toggle submenu
+  toggleSubmenu(item: SidebarItem) {
+    item.open = !item.open;
+  }
+
+  // Footer show/hide on scroll
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+
+    const IS_NEAR_BOTTOM = windowHeight + scrollTop + 100 >= docHeight;
+
+    if (IS_NEAR_BOTTOM) {
+      clearTimeout(this.footerTimeout);
+      this.showFooter = true;
+    } else {
+      clearTimeout(this.footerTimeout);
+      this.footerTimeout = setTimeout(() => {
+        this.showFooter = false;
+      }, 1000);
+    }
+  }
+
   profileredirect() {
     this.router.navigateByUrl('Account/profile');
   }
 
-  // Logout function
   logout(): void {
     this.apiService.logoutApi<any>().subscribe({
       next: (res: any) => {
@@ -123,7 +122,6 @@ export class DashboardLayoutComponent {
         }
       },
       error: (err: any) => {
-        //console.error('Logout failed:', err);
         this.toastr.error(
           err?.error?.error?.message || 'Logout failed',
           'Failed'
@@ -133,11 +131,11 @@ export class DashboardLayoutComponent {
     });
   }
 
-  // Get user data with proper token
-  getUserData(data: any) {
+  public getUserData(data: any) {
     if (this.user_type === 'association') {
-      this.loadingUserData = true; // show loader before API call
+      this.loadingUserData = true;
     }
+
     this.apiService.UserInfo<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {
@@ -151,25 +149,19 @@ export class DashboardLayoutComponent {
           } else if (this.user_type === 'owner') {
             if (userdata.upi_submit_status === false) {
               this.UPIidAddModal();
-              // this.router.navigateByUrl('/onboarding/user-data');
             }
           }
         }
 
-        // ✅ hide loader after check completes (success or not)
         this.loadingUserData = false;
       },
 
       error: (err: any) => {
-        //console.log('tata');
-        // this.tableLoading = false;
-        //console.error('Logout failed:', err);
-        // alert(err.message || 'Logout failed, please try again.');
+        this.loadingUserData = false;
       },
     });
   }
 
-  // Clear session and redirect to login
   private clearSessionAndRedirect(message: string = 'Session expired') {
     localStorage.clear();
     this.toastr.info(message, 'Info');
@@ -183,10 +175,7 @@ export class DashboardLayoutComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-      actions: {
-        click: false,
-        escape: false,
-      },
+      actions: { click: false, escape: false },
     });
   }
 

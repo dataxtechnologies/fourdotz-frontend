@@ -53,20 +53,38 @@
 
             <!-- Sidebar Menu Items -->
             <ng-container *ngFor="let item of sidebarItems">
-                <li *ngIf="!item.allowedRole || item.allowedRole === user_type" routerLinkActive="active"
-                    [class.active]="item.route === currentRoute" class="position-relative">
 
-                    <a [routerLink]="item.route" data-toggle="tooltip" data-placement="right" [attr.title]="item.label"
-                        class="d-flex align-items-center">
-                        <!-- <ng-container *ngIf="sidebarClosed; else activeicon"> -->
-                        <img [src]="item.icon" alt="icon" class="icon-img me-2" />
-                        <!-- </ng-container> -->
-                        <!-- <ng-template #activeicon> -->
-                        <!-- <img [src]="item.activeicon" alt="icon" class="icon-img me-2" /> -->
-                        <!-- </ng-template> -->
+                <!-- If item has submenu -->
+                <li *ngIf="item.children && item.allowedRole === user_type" class="submenu">
+
+                    <div class="submenu-title d-flex justify-content-between align-items-center" (click)="item.open = !item.open">
+                        <img [src]="item.icon" class="icon-img me-2 ">
+                        <span class="mx-1">{{ item.label }}</span>
+                        <i class="fa-solid" style="font-size: 12px;" [ngClass]="item.open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    </div>
+
+                    <ul class="submenu-list mx-4" *ngIf="item.open">
+                        <li *ngFor="let child of item.children" routerLinkActive="active">
+                            <a [routerLink]="child.route" class="d-flex align-items-center">
+                                <img [src]="child.icon" class="subicon-img1 me-2">
+                                <span>{{ child.label }}</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+
+                <!-- Normal items -->
+                <li *ngIf="!item.children && item.allowedRole === user_type" routerLinkActive="active"
+                    [class.active]="item.route === currentRoute">
+
+                    <a [routerLink]="item.route" class="d-flex align-items-center">
+                        <img [src]="item.icon" class="icon-img me-2">
                         <span>{{ item.label }}</span>
                     </a>
+
                 </li>
+
             </ng-container>
 
         </ul>

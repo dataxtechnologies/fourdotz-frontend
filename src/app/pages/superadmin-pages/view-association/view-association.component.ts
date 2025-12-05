@@ -22,16 +22,16 @@ export class ViewAssociationComponent {
   propertyTable: boolean = true;
   properties1;
   properties2: any;
-monthly_invoice_total_amount = 0
-monthly_rent_invoices_total_amount = 0
-payout_maintenance_total_amount = 0
-payout_rent_invoices_total_amount = 0
+  amountdata: any;
+  monthly_rent_invoices_total_amount = 0;
+  payout_maintenance_total_amount = 0;
+  payout_rent_invoices_total_amount = 0;
   documents: { [key: string]: string }[] = [];
 
   constructor(
     private apiService: ApiserviceService,
     private route: ActivatedRoute,
-    private router : Router,
+    private router: Router,
     private ModalService: ModalService,
     private AdminServices: AdmindataService
   ) {
@@ -48,7 +48,7 @@ payout_rent_invoices_total_amount = 0
       this.AssociationId = params['associationId'] || null;
     });
 
-     this.AdminServices.AssociationStatus$.subscribe((addassociation) => {
+    this.AdminServices.AssociationStatus$.subscribe((addassociation) => {
       if (addassociation) {
         this.getAssociationList(this.AssociationId);
       }
@@ -60,16 +60,16 @@ payout_rent_invoices_total_amount = 0
   }
 
   goback() {
-    this.router.navigateByUrl('/Superadmin/Association-list')
+    this.router.navigateByUrl('/Superadmin/Association-list');
   }
 
-getKey(doc: { [key: string]: string }): string {
-  return Object.keys(doc)[0];
-}
+  getKey(doc: { [key: string]: string }): string {
+    return Object.keys(doc)[0];
+  }
 
-getValue(doc: { [key: string]: string }): string {
-  return doc[Object.keys(doc)[0]];
-}
+  getValue(doc: { [key: string]: string }): string {
+    return doc[Object.keys(doc)[0]];
+  }
 
   getAssociationList(data: any) {
     this.apiService.getAssociationbyId<any>(data).subscribe({
@@ -79,12 +79,12 @@ getValue(doc: { [key: string]: string }): string {
           this.documents = this.Associationdata.document;
           this.header_loading = false; // stop loading
         } else {
-          this.documents=[]
+          this.documents = [];
           this.header_loading = false; // stop loading even if error
         }
       },
       error: (err: any) => {
-        this.documents=[]
+        this.documents = [];
         this.header_loading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
@@ -119,19 +119,18 @@ getValue(doc: { [key: string]: string }): string {
     });
   }
 
-
   AmountforAssociationinSA(data: any) {
     // this.propertyTable = true;
 
     this.apiService.AmountforAssociationinSA<any>(data).subscribe({
       next: (res: any) => {
-        if (res?.success && res.data?.length > 0) {
-          // this.properties2 = res.data; // array of properties
+        if (res?.success ) {
+          this.amountdata = res.data; // array of properties
           // this.properties1 = new TableService();
           // this.properties1.initialize(this.properties2);
         } else {
           //console.log('Data not found');
-          // this.properties2 = [];
+          this.amountdata = [];
           // this.properties1 = new TableService();
           // this.properties1.initialize(this.properties2);
         }
@@ -139,7 +138,7 @@ getValue(doc: { [key: string]: string }): string {
       },
       error: (err: any) => {
         //console.log('Data not found', err.message);
-        // this.properties2 = [];
+        this.amountdata = [];
         // this.properties1 = new TableService();
         // this.properties1.initialize(this.properties2);
         // this.propertyTable = false;
@@ -147,25 +146,23 @@ getValue(doc: { [key: string]: string }): string {
     });
   }
 
-
-      editassociation(Associationdata: any) {
-      // AddOwnerComponent
-      this.ModalService.open(EditAssociationModalComponent, {
-        modal: {
-          enter: 'enter-going-down 0.3s ease-out',
-          leave: 'fade-out 0.5s',
-        },
-        overlay: { leave: 'fade-out 0.5s' },
-        data: {
-          Associationdata: Associationdata,
-  
-        },
-        actions: {
-          click: false,
-          escape: false,
-        },
-      });
-    }
+  editassociation(Associationdata: any) {
+    // AddOwnerComponent
+    this.ModalService.open(EditAssociationModalComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        Associationdata: Associationdata,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
 
   // EditAssociationModalComponent
 }

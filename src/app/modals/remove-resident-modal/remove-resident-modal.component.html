@@ -20,7 +20,7 @@
         <div class="popup-actions">
             <button class="cancel-btn" (click)="closeModal()">No, Cancel</button>
            <button class="delete-btn" [disabled]="!canDelete()" (click)="confirmDelete(associationId)" *ngIf="!showprocessingbtn">
-                Yes, Remove Tenant
+                Yes, Remove Owner
             </button>
             <button class="delete-btn"  disabled *ngIf="showprocessingbtn" (click)="confirmDelete(associationId)">
                 Processing...

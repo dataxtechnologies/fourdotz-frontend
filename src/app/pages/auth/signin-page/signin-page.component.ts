@@ -114,7 +114,7 @@ export class SigninPageComponent implements OnInit {
           localStorage.setItem('session_key', err.error.error.data.session_key);
           this.route.navigateByUrl(`/auth/Change-password/${newuseremail}`);
         }
-        this.toastr.error(err.error?.error?.message || 'Login failed', 'Error');
+        this.toastr.info(err.error?.error?.message || 'Login failed', 'Info');
       },
     });
   }

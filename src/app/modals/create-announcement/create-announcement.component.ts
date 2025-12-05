@@ -20,8 +20,8 @@ import { AssociationServiceService } from '../../services/association/associatio
 })
 export class CreateAnnouncementComponent {
   announcementForm!: FormGroup;
-previewFiles: { url: string, type: 'image' | 'video' }[] = [];
-attachments: File[] = [];
+  previewFiles: { url: string; type: 'image' | 'video' }[] = [];
+  attachments: File[] = [];
   showprocessingbtn = false;
 
   constructor(
@@ -66,63 +66,80 @@ attachments: File[] = [];
 
   /** Image Upload Handler */
   onFileSelected(event: any) {
-  const files: FileList = event.target.files;
-  if (!files.length) return;
+    const files: FileList = event.target.files;
+    if (!files.length) return;
 
-  // Max 2 total files limit
-  if (this.attachments.length + files.length > 2) {
-    this.toast.warning('You can only upload a maximum of 2 attachments.');
-    return;
+    // Max 2 total files
+    if (this.attachments.length + files.length > 2) {
+      this.toast.warning('You can only upload a maximum of 2 attachments.');
+      return;
+    }
+
+    // Allowed extensions
+    const allowedImages = ['jpg', 'jpeg', 'png', 'webp'];
+    const allowedVideos = ['mp4', 'mkv', 'mov'];
+
+    Array.from(files).forEach((file) => {
+      const ext = file.name.split('.').pop()?.toLowerCase();
+
+      if (!ext) {
+        this.toast.error('Invalid file type.');
+        return;
+      }
+
+      const isImage = allowedImages.includes(ext);
+      const isVideo = allowedVideos.includes(ext);
+
+      // ❌ Not allowed
+      if (!isImage && !isVideo) {
+        this.toast.error(
+          'Allowed formats: JPG, JPEG, PNG, WEBP (images) and MP4, MKV, MOV (videos)'
+        );
+        event.target.value = '';
+        return;
+      }
+
+      // ============================
+      //  IMAGE HANDLING
+      // ============================
+      if (isImage) {
+        this.attachments.push(file);
+
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.previewFiles.push({ url: e.target.result, type: 'image' });
+        };
+        reader.readAsDataURL(file);
+        return;
+      }
+
+      // ============================
+      //  VIDEO HANDLING (With duration check)
+      // ============================
+      if (isVideo) {
+        const videoURL = URL.createObjectURL(file);
+        const video = document.createElement('video');
+        video.src = videoURL;
+
+        video.onloadedmetadata = () => {
+          if (video.duration > 300) {
+            this.toast.error('Video must be under 5 minutes.');
+            URL.revokeObjectURL(videoURL);
+            return;
+          }
+
+          this.attachments.push(file);
+          this.previewFiles.push({ url: videoURL, type: 'video' });
+        };
+      }
+    });
   }
 
-  Array.from(files).forEach((file) => {
-    // Only allow image or video
-    if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) {
-      this.toast.error('Only image and video files are allowed.');
-      return;
-    }
-
-    // Handle images
-    if (file.type.startsWith('image/')) {
-      this.attachments.push(file);
-
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.previewFiles.push({ url: e.target.result, type: 'image' });
-      };
-      reader.readAsDataURL(file);
-      return;
-    }
-
-    // Handle videos (Validate duration < 5 min)
-    if (file.type.startsWith('video/')) {
-      const videoURL = URL.createObjectURL(file);
-      const video = document.createElement('video');
-
-      video.src = videoURL;
-
-      video.onloadedmetadata = () => {
-        const duration = video.duration;
-
-        if (duration > 300) {
-          this.toast.error('Video must be under 5 minutes.');
-          URL.revokeObjectURL(videoURL);
-          return;
-        }
-
-        // Accept file
-        this.attachments.push(file);
-        this.previewFiles.push({ url: videoURL, type: 'video' });
-      };
-    }
-  });
-}
-
   /** Remove image */
-removeAttachment(index: number) {
-  this.previewFiles.splice(index, 1);
-  this.attachments.splice(index, 1);
-}
+  removeAttachment(index: number) {
+    this.previewFiles.splice(index, 1);
+    this.attachments.splice(index, 1);
+  }
 
   /** Submit form */
   submitAnnouncement() {
@@ -161,7 +178,7 @@ removeAttachment(index: number) {
 
         if (res?.success) {
           this.AssociationSer.triggerAnnouncementCreated(res);
-          this.toast.success(res.message ,'Success');
+          this.toast.success(res.message, 'Success');
           this.closeModal();
         } else {
           this.toast.warning(res.message || 'Something went wrong.', 'Warning');

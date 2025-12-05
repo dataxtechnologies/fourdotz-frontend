@@ -3,6 +3,8 @@ import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChi
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ModalService } from 'ngx-modal-ease';
+import { ToastrService } from 'ngx-toastr';
+import { AssociationServiceService } from '../../services/association/association-service.service';
 
 @Component({
   selector: 'app-edit-owner-data',
@@ -22,7 +24,9 @@ export class EditOwnerDataComponent implements OnInit {
     @ViewChild('hiddenDatePicker')
   hiddenDatePicker!: ElementRef<HTMLInputElement>;
 
-  constructor(private fb: FormBuilder, private apiService: ApiserviceService, private Modal : ModalService) {
+  constructor(private fb: FormBuilder, private apiService: ApiserviceService, private Modal : ModalService, private Toast: ToastrService, 
+    private Association : AssociationServiceService
+  ) {
     this.initForm();
   }
 
@@ -33,6 +37,8 @@ export class EditOwnerDataComponent implements OnInit {
   // }
 
   ngOnInit(): void {
+    console.log('PropertyIddata', this.PropertyIddata);
+    
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
       this.patchOwnerData(this.OwnerDetails)
@@ -70,28 +76,30 @@ export class EditOwnerDataComponent implements OnInit {
 
     this.submitbtn = false;
 
-    // const payload = {
-    //   property_id: this.PropertyIddata,
-    //   owner_id: this.OwnerDetails?._id,
-    //   ...this.ownerForm.value
-    // };
+    const payload = {
+      name: this.ownerForm.value.firstName,
+      last_name: this.ownerForm.value.lastName,
+      id: this.PropertyIddata
+    };
 
-    // this.apiService.EditOwner(payload).subscribe({
-    //   next: (res: any) => {
-    //     this.submitbtn = true;
-    //     if (res?.success) {
-    //       alert('✅ Owner details updated successfully!');
-    //       this.closeModal();
-    //     } else {
-    //       alert(res?.message || 'Something went wrong.');
-    //     }
-    //   },
-    //   error: (err) => {
-    //     this.submitbtn = true;
-    //     //console.error('Error updating owner:', err);
-    //     alert('❌ Failed to update owner details.');
-    //   }
-    // });
+    this.apiService.UpdateOwnerDetails(payload).subscribe({
+      next: (res: any) => {
+        this.submitbtn = true;
+        if (res?.success) {
+          this.Toast.success(res?.message, 'Success');
+          this.Association.triggerOwnerUpdate(res);
+          this.closeModal();
+        } else {
+          this.Toast.warning(res?.message, 'Warning');
+        }
+      },
+      error: (err) => {
+        this.submitbtn = true;
+        this.Toast.error(err?.error?.message, 'Error');
+        //console.error('Error updating owner:', err);
+       
+      }
+    });
   }
 
   closeModal() {

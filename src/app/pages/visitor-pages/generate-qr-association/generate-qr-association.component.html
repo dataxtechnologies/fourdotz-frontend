@@ -1,0 +1,110 @@
+<section class="container" *ngIf="noqr; else showqr">
+    <div class="qr-container">
+        <h4 class="qr-title">Manage Your QR</h4>
+        <div class="qr-empty-box">
+            <h5 class="qr-empty-title">You Didn’t Generate a QR Yet</h5>
+            <p class="qr-empty-sub">Create your first QR code to get started.</p>
+            <button class="generate-btn" (click)="updateQRCode()">
+                Generate the QR Here
+            </button>
+        </div>
+
+    </div>
+</section>
+
+<ng-template #showqr>
+    <div class="container1">
+        <div class="qr-container">
+            <h4 class="qr-title">Manage Your QR</h4>
+        </div>
+
+        <section class="container qr-wrapper">
+            <div class="qr-card">
+                <div class="qr-left" *ngIf="customiseoptions">
+                    <h3 class="qr-heading mb-4">Customize Tools</h3>
+
+                    <div class="two-column">
+                        <div class="column-block">
+                            <h4 class="block-title">Pattern Type</h4>
+                            <div class="icon-grid">
+                                <img class="img-pattern img-bordered" src="assets/icons/01.svg"
+                                    (click)="update_pattern('dots')" />
+                                <img class="img-pattern img-bordered" src="assets/icons/02.svg"
+                                    (click)="update_pattern('square')" />
+                            </div>
+                        </div>
+
+                        <div class="column-block">
+                            <h4 class="block-title">Eyes</h4>
+                            <div class="icon-grid">
+                                <img class="img-pattern img-bordered" src="assets/icons/3.svg"
+                                    (click)="update_eye('square','square','dots')" />
+                                <img class="img-pattern img-bordered" src="assets/icons/4.svg"
+                                    (click)="update_eye('square','dot','dots')" />
+                                <img class="img-pattern img-bordered" src="assets/icons/5.svg"
+                                    (click)="update_eye('dot','square','dots')" />
+                                <img class="img-pattern img-bordered" src="assets/icons/6.svg"
+                                    (click)="update_eye('dot','dot','dots')" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="color-section">
+                        <p class="tool-label">Color</p>
+                        <div class="color-row">
+                            <div>
+                                <label class="color-label">Pattern</label>
+                                <input type="color" class="color-picker" (input)="on_pattern_ColorChange($event)" />
+                            </div>
+                            <!-- <div class="logo-upload-block">
+                                <label class="btn-css-2">
+                                    <input type="file" (change)="onLogoUpload($event)" accept="image/*" hidden />
+                                    <i class="fa fa-plus"></i> Add Logo
+                                </label>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qr-right">
+                    <h3 class="preview-title">QR Code Preview</h3>
+
+                    <div class="qr-preview-box" #pdfContent>
+                        <div class="qr-box" #qrBox>
+
+                            <!-- IF customiseoptions = false → show generated QR -->
+                            <ng-container *ngIf="customiseoptions; else savedQRTemplate">
+                                <ngx-qrcode-styling [config]="config" #qrCodeRef>
+                                </ngx-qrcode-styling>
+                            </ng-container>
+
+                            <!-- Saved QR Image Template -->
+                            <ng-template #savedQRTemplate>
+                                <img [src]="qrimagedata?.qr_code" alt="Saved QR" class="saved-qr-img" />
+                            </ng-template>
+
+                            <!-- Powered By -->
+                            <p class="poweredby">
+                                Powered by
+                                <img src="assets/logo/wowly.png" alt="provider-logo" />
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <button class="download-btn" (click)="onSaveQR()" *ngIf="customiseoptions">
+                        Save QR
+                    </button>
+
+                    <button class="download-btn" (click)="downloadPDF()" *ngIf="!customiseoptions">
+                        Download QR
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+
+    </div>
+</ng-template>

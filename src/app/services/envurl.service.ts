@@ -56,6 +56,9 @@ export class EnvurlService {
   public TenantListinOwner = '/property/list_tenant_details'
   public RentalInvoicegeninOwner = '/rental_invoice/create_rental_invoice'
   public OwnerUpdateUPI = '/owner/update_upi'
+  public UpdateOwnerDetails = '/owner/update_owner_details'
+  public RemovePet = '/pet/remove_pet'
+  public RemoveVehicle = '/vehicle/remove_vehicle'
 
 
   // Tenant Endpoints
@@ -99,5 +102,13 @@ export class EnvurlService {
   public CreateServiceAdmin = '/service_admin/create_service_admin'
   public ListServiceAdmin = '/service_admin/list_service_admin'
   public ListAllrequestinServiceAdmin = '/request_management/list_serviceadmin_request'
+
+
+  // visitor
+  public GetAssociationQR = '/visitors/list_association_gateentry'
+  public SaveQRcodeAssociation = '/visitors/association_gateentry'
+  public ListpropertybasedonAssociationIdtoVisitors = '/property/list_all_resident_property'
+  public CreateVisitorEntry = '/visitors/create_visitor_entry'
+  public ListAllVisitors = '/visitors/list_all_visitor'
 
 }

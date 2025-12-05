@@ -120,8 +120,8 @@
                                     *ngIf="!Associationdata.owner_details?._id">+ Add Owner</button>
                                 <button class="btn-add" (click)="RemoveOwner(PropertyId)"
                                     *ngIf="Associationdata.owner_details?._id">Remove Owner</button>
-                                <!-- <button class="btn-add" (click)="EditOwner(PropertyId, Associationdata.owner_details)"
-                                    *ngIf="Associationdata.owner_details?._id">Edit Owner</button> -->
+                                <button class="btn-add" (click)="EditOwner(PropertyId, Associationdata.owner_details)"
+                                    *ngIf="Associationdata.owner_details?._id">Edit Owner</button>
                             </div>
                         </div>
 
@@ -134,7 +134,7 @@
         ]">
                                 <div class="user-info">
                                     <h5 class="label medium-font">{{field.label}}</h5>
-                                    <p class="regular-font">{{field.value}}</p>
+                                    <p class="regular-font ">{{field.value}}</p>
                                 </div>
                             </ng-container>
                         </div>
@@ -193,12 +193,20 @@
                     <div class="resident-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="medium-font">Pet Details</h5>
-                            <button class="btn-add" (click)="addpet(Associationdata._id)"
-                                *ngIf="!Associationdata.pet || Associationdata.pet.length === 0">+ Add Pet</button>
-                            <button class="btn-add" (click)="EditPet(Associationdata.pet[0], PropertyId)"
-                                *ngIf="Associationdata.pet && Associationdata.pet.length > 0">
-                                Edit Pet
-                            </button>
+                            <div>
+                                <button class="btn-add" (click)="addpet(Associationdata._id)"
+                                    *ngIf="!Associationdata.pet || Associationdata.pet.length === 0">+ Add Pet</button>
+                                <div class="d-flex gap-2">
+                                    <button class="btn-add" (click)="EditPet(Associationdata.pet[0], PropertyId)"
+                                        *ngIf="Associationdata.pet && Associationdata.pet.length > 0">
+                                        Edit Pet
+                                    </button>
+                                    <button class="btn-add" (click)="RemovePet(PropertyId)"
+                                        *ngIf="Associationdata.pet && Associationdata.pet.length > 0">
+                                        Remove Pet
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card-body" *ngIf="Associationdata.pet?.length > 0; else nodata">
@@ -228,13 +236,22 @@
                     <div class="resident-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="medium-font">Vehicle Details</h5>
-                            <button class="btn-add" (click)="addVehicle(Associationdata._id)"
-                                *ngIf="!Associationdata.vehicle || Associationdata.vehicle.length === 0">+ Add
-                                Vehicle</button>
-                                 <button class="btn-add" (click)="EditVehicle(Associationdata.vehicle[0], PropertyId)"
-                                *ngIf="Associationdata.vehicle && Associationdata.vehicle.length > 0">
-                                Edit vehicle
-                            </button>
+                            <div>
+                                <button class="btn-add" (click)="addVehicle(Associationdata._id)"
+                                    *ngIf="!Associationdata.vehicle || Associationdata.vehicle.length === 0">+ Add
+                                    Vehicle</button>
+                                <div class="d-flex gap-2">
+                                    <button class="btn-add"
+                                        (click)="EditVehicle(Associationdata.vehicle[0], PropertyId)"
+                                        *ngIf="Associationdata.vehicle && Associationdata.vehicle.length > 0">
+                                        Edit vehicle
+                                    </button>
+                                    <button class="btn-add" (click)="RemoveVehicle(PropertyId)"
+                                        *ngIf="Associationdata.vehicle && Associationdata.vehicle.length > 0">
+                                        Remove vehicle
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card-body" *ngIf="Associationdata.vehicle?.length > 0; else nodatavehicle">

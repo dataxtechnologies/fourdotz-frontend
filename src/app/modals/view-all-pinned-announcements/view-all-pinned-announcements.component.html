@@ -35,13 +35,13 @@
     <section class="preview-panel">
 
         <!-- ⭐ NO ACTIVE POST -->
-        <div *ngIf="!activePost" >
+        <div *ngIf="!activePost">
             <div class="close-btn">
                 <i class="fa-solid fa-xmark close-btn" style="cursor: pointer;" (click)="closeModal()"></i>
             </div>
-           <div class="no-active-post">
-             <p>No pinned announcement selected</p>
-           </div>
+            <div class="no-active-post">
+                <p>No pinned announcement selected</p>
+            </div>
         </div>
 
         <!-- ⭐ SHOW ACTIVE POST ONLY WHEN AVAILABLE -->
@@ -56,8 +56,8 @@
                         {{ activePost?.created_time?.$date | date:'dd MMM yyyy, hh:mm a' }}
                     </p>
                 </div>
-<i class="fa-solid fa-xmark close-btn" style="cursor: pointer;" (click)="closeModal()"></i>
-                
+                <i class="fa-solid fa-xmark close-btn" style="cursor: pointer;" (click)="closeModal()"></i>
+
             </div>
 
             <div class="announcement-body">
@@ -69,7 +69,7 @@
 
                 <div class="info-block" *ngIf="activePost?.category === 'events'">
                     <label>Event Date:</label>
-                    <p>{{ activePost?.event_date | date:'dd MMM yyyy' }}</p>
+                    <p>{{ activePost?.event_date?.$date | date:'dd MMM yyyy' }}</p>
                 </div>
 
                 <div class="info-block">
@@ -82,20 +82,28 @@
                     <p>{{ activePost?.summary }}</p>
                 </div>
 
-                <!-- ⭐ ATTACHMENTS -->
-                <div class="attachment-section" *ngIf="activePost?.images?.length > 0">
-                    <label>Attachments:</label>
 
-                    <div class="attachment-grid">
-                        <ng-container *ngFor="let file of activePost.images">
-
-                            <img *ngIf="isImage(file)" [src]="file" class="attachment-item" />
-
-                            <video *ngIf="isVideo(file)" [src]="file" class="attachment-item" controls></video>
-
-                        </ng-container>
-                    </div>
+                <div class="attachment-section" *ngIf="activePost?.images?.length === 0;else ShowAttchments">
+                    <label class="medium-font">No Attachments Found</label>
                 </div>
+                <ng-template #ShowAttchments>
+                    <div class="attachment-section">
+                        <label class="medium-font">Attachments:</label>
+
+                        <div class="attachment-grid">
+                            <ng-container *ngFor="let file of activePost.images">
+
+                                <!-- Image Preview -->
+                                <img *ngIf="isImage(file)" [src]="file" class="attachment-item" alt="Attachment" />
+
+                                <!-- Video Preview -->
+                                <video *ngIf="isVideo(file)" [src]="file" class="attachment-item" controls></video>
+
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-template>
+
 
             </div>
 

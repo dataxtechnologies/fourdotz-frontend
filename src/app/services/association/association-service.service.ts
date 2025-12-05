@@ -13,6 +13,9 @@ export class AssociationServiceService {
   private OwnerSubject = new BehaviorSubject<any>(null);
   OwnerStatus$ = this.OwnerSubject.asObservable();
 
+  private OwnerUpdateSubject = new BehaviorSubject<any>(null);
+  OwnerUpdateStatus$ = this.OwnerUpdateSubject.asObservable();
+
   private PetSubject = new BehaviorSubject<any>(null);
   petStatus$ = this.PetSubject.asObservable();
 
@@ -38,6 +41,13 @@ export class AssociationServiceService {
 
   private ChangeRequeststatusSubject = new BehaviorSubject<any>(null);
   ChangeRequeststatusStatus$ = this.ChangeRequeststatusSubject.asObservable();
+
+
+
+  triggerOwnerUpdate(OwnerUpdate: any): void {
+    //console.log('addassociation', OwnerUpdate);
+    this.OwnerUpdateSubject.next(OwnerUpdate);
+  }
 
   // triggerChangeRequestStatus
   triggerChangeRequestStatus(ChangeRequestStatus: any): void {

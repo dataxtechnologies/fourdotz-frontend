@@ -66,7 +66,7 @@
                 <p class="regular-font">{{ Propertiesdata.due_date }} of Month</p>
             </div>
             <!-- <div > -->
-                <!-- <div class="user-info" *ngIf="Propertiesdata.property_type === 'apartment'">
+            <!-- <div class="user-info" *ngIf="Propertiesdata.property_type === 'apartment'">
                     <h5 class="label medium-font">Building Type</h5>
                     <p class="regular-font">{{ Propertiesdata.property_no }}</p>
                 </div>
@@ -78,10 +78,10 @@
                     <h5 class="label medium-font">Block Name</h5>
                     <p class="regular-font">{{ Propertiesdata.property_no }}</p>
                 </div> -->
-                <div class="user-info" *ngIf="Propertiesdata.property_type === 'apartment'">
-                    <h5 class="label medium-font">Floor</h5>
-                    <p class="regular-font">{{ Propertiesdata.floor }}</p>
-                </div>
+            <div class="user-info" *ngIf="Propertiesdata.property_type === 'apartment'">
+                <h5 class="label medium-font">Floor</h5>
+                <p class="regular-font">{{ Propertiesdata.floor }}</p>
+            </div>
             <!-- </div> -->
 
 
@@ -129,7 +129,7 @@
                                 <div class="d-flex gap-3">
                                     <button class="btn-add" (click)="addTenant(propertiesId)"
                                         *ngIf="!Propertiesdata.tenant_details?._id">+ Add Tenant</button>
-                                   <button class="btn-add" (click)="RemoveTenant(propertiesId)"
+                                    <button class="btn-add" (click)="RemoveTenant(propertiesId)"
                                         *ngIf="Propertiesdata.tenant_details?._id">Remove Tenant</button>
                                     <button class="btn-add" (click)="EditTenant(Propertiesdata)"
                                         *ngIf="Propertiesdata.tenant_details?._id">Edit Tenant</button>
@@ -169,12 +169,20 @@
                     <div class="resident-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Pet Details</h5>
-                            <button class="btn-add" (click)="addpet(propertiesId)"
-                                *ngIf="!Propertiesdata.pet || Propertiesdata.pet.length === 0">+ Add pet</button>
-                                 <button class="btn-add" (click)="EditPet(Propertiesdata.pet[0], propertiesId)"
-                                *ngIf="Propertiesdata.pet && Propertiesdata.pet.length > 0">
-                                Edit Pet
-                            </button>
+                            <div>
+                                <button class="btn-add" (click)="addpet(propertiesId)"
+                                    *ngIf="!Propertiesdata.pet || Propertiesdata.pet.length === 0">+ Add pet</button>
+                                <div class="d-flex gap-2">
+                                    <button class="btn-add" (click)="EditPet(Propertiesdata.pet[0], propertiesId)"
+                                        *ngIf="Propertiesdata.pet && Propertiesdata.pet.length > 0">
+                                        Edit Pet
+                                    </button>
+                                    <button class="btn-add" (click)="RemovePet(propertiesId)"
+                                        *ngIf="Propertiesdata.pet && Propertiesdata.pet.length > 0">
+                                        Remove Pet
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card-body" *ngIf="Propertiesdata.pet?.length > 0; else nodata">
@@ -204,13 +212,22 @@
                     <div class="resident-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Vehicle Details</h5>
-                            <button class="btn-add" (click)="addVehicle(propertiesId)"
-                                *ngIf="!Propertiesdata.vehicle || Propertiesdata.vehicle.length === 0">+ Add
-                                Vehicle</button>
-                                 <button class="btn-add" (click)="EditVehicle(Propertiesdata.vehicle[0], propertiesId)"
-                                *ngIf="Propertiesdata.vehicle && Propertiesdata.vehicle.length > 0">
-                                Edit vehicle
-                            </button>
+                            <div>
+                                <button class="btn-add" (click)="addVehicle(propertiesId)"
+                                    *ngIf="!Propertiesdata.vehicle || Propertiesdata.vehicle.length === 0">+ Add
+                                    Vehicle</button>
+                                <div class="d-flex gap-2">
+                                    <button class="btn-add"
+                                        (click)="EditVehicle(Propertiesdata.vehicle[0], propertiesId)"
+                                        *ngIf="Propertiesdata.vehicle && Propertiesdata.vehicle.length > 0">
+                                        Edit vehicle
+                                    </button>
+                                    <button class="btn-add" (click)="RemoveVehicle(propertiesId)"
+                                        *ngIf="Propertiesdata.vehicle && Propertiesdata.vehicle.length > 0">
+                                        Remove vehicle
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card-body" *ngIf="Propertiesdata.vehicle?.length > 0; else nodatavehicle">
