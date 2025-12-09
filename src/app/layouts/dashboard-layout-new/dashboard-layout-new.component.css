@@ -1,0 +1,340 @@
+/* ================= HEADER ================= */
+.navbar-header-main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--bg-primary);
+    z-index: 1000;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    border-bottom: 1px solid #ccc;
+    border-radius: 20px;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-header {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 1em;
+}
+
+/* ================= USER INFO ================= */
+.user-greeting {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.user-image {
+    width: 50px;
+    height: 50px;
+    margin-left: -10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.user-name {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+/* ================= NAVBAR ACTIONS ================= */
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    background: rgba(255, 255, 255, 0.2);
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+}
+
+/* ================= FOOTER ================= */
+.app-footer {
+    width: 100%;
+    background: #EAE9E3;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 40px;
+    font-size: 0.95em;
+    position: fixed;
+    bottom: -80px;
+    left: 0;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.6s ease-in-out;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-footer.visible {
+    bottom: 0;
+    opacity: 1;
+}
+
+/* ================= CONTENT SPACING ================= */
+.content {
+    margin-left: 290px;
+    transition: margin-left 0.3s ease;
+    padding: 1em;
+    width: 100%;
+    padding-bottom: 70px;
+}
+
+/* ================= SIDEBAR COLLAPSED (DESKTOP) ================= */
+#asidebar.asidebar-close ~ .content {
+    margin-left: 120px;
+}
+
+/* ================= ASIDEBAR BASE ================= */
+#asidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 260px;
+    height: 85vh;
+    padding: 10px;
+    position: fixed;
+    background: transparent;
+    top: 80px;
+      background: #f1eee8;
+    left: 20px;
+    border-radius: 30px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    z-index: 1000;
+}
+
+/* CONTAINER */
+.asidebar-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.35s ease;
+}
+
+/* HEADER stays fixed at top */
+.asidebar-header {
+    padding: 10px;
+    flex-shrink: 0; /* prevents shrinking */
+}
+
+/* CONTENT SCROLL HERE */
+.asidebar-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-grow: 1; /* takes remaining height */
+}
+
+/* Smooth scrollbar (optional) */
+.asidebar-content::-webkit-scrollbar {
+    width: 2px;
+}
+
+.asidebar-content::-webkit-scrollbar-thumb {
+    background: #cfcfcf;
+    border-radius: 12px;
+}
+
+.asidebar-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+/* OPEN STATE */
+#asidebar.asidebar-open {
+    transform: translateX(0);
+}
+
+/* CLOSED STATE */
+#asidebar.asidebar-close {
+    transform: translateX(-280px);
+}
+
+/* SIDEBAR CONTENT */
+.asidebar-content {
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.asidebar-content ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.asidebar-content ul li {
+    margin-bottom: 10px;
+}
+
+.asidebar-content ul li a {
+    padding: 10px;
+    display: block;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.asidebar-content ul li a:hover {
+    background: #f1eee8;
+}
+
+/* OVERLAY */
+.asidebar-overlay {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(3px);
+    z-index: 900;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+    #asidebar {
+        transform: translateX(-260px);
+    }
+
+    .content {
+        margin-left: 0 !important;
+    }
+}
+
+/* ================= MOBILE FOOTER ================= */
+@media (max-width: 768px) {
+    .app-footer {
+        flex-direction: column;
+        padding: 12px 10px;
+        gap: 8px;
+    }
+}
+
+/* ============================================================
+   🔥 ENHANCED FIXES (NO DESIGN CHANGE, ONLY CORRECTION)
+   ============================================================ */
+
+/* Make the sidebar-container move together with asidebar */
+#asidebar.asidebar-open .asidebar-container {
+    transform: translateX(0);
+}
+
+#asidebar.asidebar-close .asidebar-container {
+    transform: translateX(-20px);
+    opacity: 0.7;
+}
+
+/* Smooth content shift on desktop */
+@media (min-width: 1025px) {
+    #asidebar.asidebar-close ~ .content {
+        margin-left: 120px !important;
+    }
+}
+
+/* Smooth slider animation */
+#asidebar {
+    will-change: transform;
+}
+
+.layout {
+  display: flex;
+  margin-top: 50px; /* Matches header height */
+}
+
+
+
+/* ================= FOOTER ================= */
+.app-footer {
+  width: 100%;
+  background: #EAE9E3;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 40px;
+  font-size: 13px;
+  position: fixed;
+  bottom: -80px; /* hidden by default */
+  left: 0;
+  border-radius: 20px;
+  border-top: 1px solid #ccc;
+  z-index: 3000;
+  opacity: 0;
+  transition: all 0.6s ease-in-out; /* smooth fade + slide */
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-footer.visible {
+  bottom: 0;
+  opacity: 1;
+}
+
+/* Links */
+.app-footer a {
+  color: #333;
+  text-decoration: none;
+  margin: 0 6px;
+  transition: color 0.3s ease;
+}
+.app-footer a:hover {
+  color: #EA4531;
+  text-decoration: underline;
+}
+
+
+/* ================= LOADER ================= */
+.loader-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loader-img {
+  width: 420px;
+  height: auto;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}

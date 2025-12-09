@@ -1,0 +1,145 @@
+<!-- HEADER -->
+ <section *ngIf="user_type === 'association' && loadingUserData" class="loader-section">
+    <img src="assets/logo/fourdotz-logo.png" alt="Loading..." class="loader-img" />
+</section>
+<section>
+    <header class="navbar-header-main" *ngIf="!loadingUserData">
+        <div class="navbar-header">
+
+            <div class="user-greeting">
+
+                <!-- Mobile / Tablet Sidebar Toggle -->
+                <label class="hamburger" *ngIf="isTabletOrMobile" (click)="toggleAsidebar()">
+
+                    <!-- Arrow → when closed -->
+                    <ng-container *ngIf="asidebarClosed">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M14.4301 5.92969L20.5001 11.9997L14.4301 18.0697" stroke="#000" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path opacity="0.4" d="M3.5 12H20.33" stroke="#000" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </ng-container>
+
+                    <!-- Arrow ← when open -->
+                    <ng-container *ngIf="!asidebarClosed">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M9.57 5.92969L3.5 11.9997L9.57 18.0697" stroke="#000" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path opacity="0.4" d="M20.5 12H3.67004" stroke="#000" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </ng-container>
+
+                </label>
+
+                <!-- USER IMAGE -->
+                <div class="user-image">
+                    <img src="assets/logo/fourdotz1.png" alt="User Icon" />
+                </div>
+
+                <!-- GREETING -->
+                <div class="greeting-text">
+                    <h3 class="user-name">Hello, {{ user_type }}!</h3>
+                </div>
+
+            </div>
+
+            <!-- RIGHT PROFILE BUTTON -->
+            <div class="navbar-actions">
+                <button class="icon-btn" (click)="profileredirect()">
+                    <img src="/assets/icons/profile.svg">
+                </button>
+            </div>
+
+        </div>
+    </header>
+</section>
+
+<section>
+
+    <!-- SIDEBAR -->
+    <aside id="asidebar" [class.asidebar-open]="!asidebarClosed" [class.asidebar-close]="asidebarClosed">
+
+        <div class="asidebar-container">
+
+            <div class="asidebar-content">
+                <ul class="menu-list">
+
+                    <!-- LOOP -->
+                    <ng-container *ngFor="let item of sidebarItems">
+
+                        <!-- SUBMENU -->
+                        <li *ngIf="item.children && item.allowedRole === user_type" class="submenu">
+
+                            <div class="submenu-title d-flex justify-content-between align-items-center"
+                                (click)="toggleSubmenu(item)">
+
+                                <img [src]="item.icon" class="icon-img me-2">
+
+                                <span class="mx-1" *ngIf="!asidebarClosed">{{ item.label }}</span>
+
+                                <i class="fa-solid" [ngClass]="item.open ? 'fa-chevron-up' : 'fa-chevron-down'"
+                                    style="font-size: 12px;"></i>
+                            </div>
+
+                            <ul class="submenu-list" *ngIf="item.open" [class.floating-submenu]="asidebarClosed">
+
+                                <li *ngFor="let child of item.children" routerLinkActive="active">
+                                    <a [routerLink]="child.route">
+                                        <img [src]="child.icon" class="subicon-img1 me-2">
+                                        <span *ngIf="!asidebarClosed">{{ child.label }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </li>
+
+                        <!-- NORMAL MENU -->
+                        <li *ngIf="!item.children && item.allowedRole === user_type" routerLinkActive="active"
+                            [class.active]="item.route === currentRoute">
+
+                            <a [routerLink]="item.route">
+                                <img [src]="item.icon" class="icon-img me-2">
+                                <span *ngIf="!asidebarClosed">{{ item.label }}</span>
+                            </a>
+                        </li>
+
+                    </ng-container>
+                </ul>
+
+                <!-- FOOTER -->
+                <ul class="footer-list">
+                    <li style="cursor: pointer;">
+                        <a (click)="logoutmodal()">
+                            <img src="/assets/icons/logout.svg">
+                            <span *ngIf="!asidebarClosed">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </aside>
+
+   <div class="layout">
+     <main class="content">
+        <router-outlet></router-outlet>
+    </main>
+
+    <footer class="app-footer" [class.visible]="showFooter">
+        <div class="footer-left">
+            © 2025 All Rights Reserved <span style="color: var(--primary-color1);">Datax Technologies</span>
+        </div>
+        <div class="footer-right">
+            <a href="https://fourdotz.com/privacy-policy/" target="_blank">Privacy Policy</a> |
+            <a href="https://fourdotz.com/terms-of-service/" target="_blank">Terms & Conditions</a> |
+            <a href="https://fourdotz.com/refund-policy/" target="_blank">Refund Policy</a>
+        </div>
+    </footer>
+   </div>
+
+    <!-- MOBILE OVERLAY -->
+    <div class="asidebar-overlay" *ngIf="!asidebarClosed && isTabletOrMobile" (click)="closeAsidebar()"></div>
+
+</section>

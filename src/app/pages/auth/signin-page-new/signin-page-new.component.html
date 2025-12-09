@@ -1,0 +1,65 @@
+<section class="login-wrapper">
+
+  <form [formGroup]="loginForm" class="login-container">
+
+      <!-- Logo -->
+      <div>
+          <img src="assets/logo/fourdotz-logo.png" alt="fourdotz-logo" class="logo-img">
+      </div>
+
+      <div class="login-box">
+
+          <!-- Heading + Description -->
+          <div>
+              <h2 class="medium-font">Sign in</h2>
+              <p class="description regular-font">
+                  You can sign in using your registered email<br />
+                  or your mobile number.
+              </p>
+          </div>
+
+          <!-- Form Fields -->
+          <div>
+
+              <div class="inp-cont">
+                  <label for="emailPhone" class="medium-font">
+                      Email or Phone <span class="required">*</span>
+                  </label>
+
+                  <input
+                      type="text"
+                      id="emailPhone"
+                      placeholder="Enter email or phone"
+                      class="inp-cus regular-font"
+                      formControlName="username"
+                      (input)="validateInput()"
+                  />
+
+                  <!-- Error Text -->
+                  <small class="error-text" *ngIf="errorMessage">
+                      {{ errorMessage }}
+                  </small>
+              </div>
+
+              <!-- Submit Button -->
+              <button
+                  type="button"
+                  class="login-btn"
+                  (click)="submitLogin()"
+                  [disabled]="!loginForm.valid || errorMessage"
+              >
+                  Sign in
+              </button>
+
+              <!-- Forgot Password -->
+              <div class="forgot-password">
+                  <p>Forgot password?</p>
+              </div>
+
+          </div>
+
+      </div>
+
+  </form>
+
+</section>

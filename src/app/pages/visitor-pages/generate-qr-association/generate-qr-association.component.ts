@@ -103,23 +103,40 @@ export class GenerateQrAssociationComponent implements OnInit {
   }
 
   downloadPDF() {
-    const DATA = this.pdfContent.nativeElement;
 
-    html2canvas(DATA, {
-      scale: 3,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: '#ffffff',
-    }).then((canvas) => {
-      const imgWidth = 210; // A4 width in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      const imgData = canvas.toDataURL('image/png');
+  // CASE 1 → customiseoptions = false → download saved QR image directly
+if (!this.customiseoptions) {
+  if (!this.qrimagedata?.qr_code) return;
 
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      pdf.save('Visitor-QR.pdf');
-    });
-  }
+  const imageUrl = this.qrimagedata.qr_code;
+
+  const link = document.createElement("a");
+  link.href = imageUrl;
+  link.target = "_blank";     // 🔥 Open image in new tab
+  link.rel = "noopener";      // optional safety
+  link.click();
+
+  return;
+}
+
+  // CASE 2 → customiseoptions = true → generate PDF from preview
+  const DATA = this.pdfContent.nativeElement;
+
+  html2canvas(DATA, {
+    scale: 3,
+    useCORS: true,
+    allowTaint: true,
+    backgroundColor: '#ffffff',
+  }).then((canvas) => {
+    const imgWidth = 210; // A4 width in mm
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const imgData = canvas.toDataURL('image/png');
+
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    pdf.save('Visitor-QR.pdf');
+  });
+}
 
   private getCanvas(): HTMLCanvasElement | null {
     return this.qrBox?.nativeElement.querySelector('canvas') || null;

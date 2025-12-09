@@ -30,7 +30,6 @@ import { OwnerServiceService } from '../../services/owner/owner-service.service'
   styleUrl: './dashboard-layout.component.css',
 })
 export class DashboardLayoutComponent {
-  
   sidebarItems: SidebarItem[] = SIDEBAR_ITEMS;
   sidebarClosed = false;
   currentRoute = '';
@@ -69,6 +68,8 @@ export class DashboardLayoutComponent {
         this.getUserData(this.user_type);
       }
     });
+
+    this.adjustSidebarForScreen(); // run on page load
   }
 
   // Toggle sidebar
@@ -78,6 +79,21 @@ export class DashboardLayoutComponent {
     // NEW 🔥 If sidebar shrinks → close all submenus
     if (this.sidebarClosed) {
       this.sidebarItems.forEach((item) => (item.open = false));
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.adjustSidebarForScreen();
+  }
+
+  adjustSidebarForScreen() {
+    if (window.innerWidth < 1024) {
+      // Auto collapse for tablet + mobile
+      this.sidebarClosed = true;
+    } else {
+      // Desktop normal
+      this.sidebarClosed = false;
     }
   }
 

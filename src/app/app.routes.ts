@@ -46,6 +46,11 @@ import { GenerateQrAssociationComponent } from './pages/visitor-pages/generate-q
 import { VisitorsListAssociationComponent } from './pages/visitor-pages/visitors-list-association/visitors-list-association.component';
 import { VisitorsEntryFormToVisitorComponent } from './pages/visitor-pages/visitors-entry-form-to-visitor/visitors-entry-form-to-visitor.component';
 import { VisitorsEntryFormSubmittedComponent } from './pages/visitor-pages/visitors-entry-form-submitted/visitors-entry-form-submitted.component';
+import { SigninPageNewComponent } from './pages/auth/signin-page-new/signin-page-new.component';
+import { PasswordOtpPageComponent } from './pages/auth/password-otp-page/password-otp-page.component';
+import { ChangePasswordNewComponent } from './pages/auth/change-password-new/change-password-new.component';
+import { VisitorsExitFormToVisitorComponent } from './pages/visitor-pages/visitors-exit-form-to-visitor/visitors-exit-form-to-visitor.component';
+import { DashboardLayoutNewComponent } from './layouts/dashboard-layout-new/dashboard-layout-new.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +66,15 @@ export const routes: Routes = [
     // canActivate: [authGuard],
     children: [
       { path: 'sign-in', component: SigninPageComponent },
+      { path: 'user-signin', component: SigninPageNewComponent },
+      {
+        path: 'user-authentication/:authtype/:authvalue',
+        component: PasswordOtpPageComponent,
+      },
+      // {
+      //   path: 'Change-password/:usermail',
+      //   component: ChangePasswordComponent,
+      // },
       {
         path: 'Change-password/:usermail',
         component: ChangePasswordComponent,
@@ -84,7 +98,7 @@ export const routes: Routes = [
   {
     path: 'Account',
     //  canActivate: [authGuard],
-    component: DashboardLayoutComponent,
+    component: DashboardLayoutNewComponent,
     children: [
       {
         path: 'profile',
@@ -96,7 +110,7 @@ export const routes: Routes = [
   {
     path: 'Superadmin',
     // canActivate: [authGuard],
-    component: DashboardLayoutComponent,
+    component: DashboardLayoutNewComponent,
     children: [
       { path: 'Dashboard', component: SuperadminDashboardComponent },
       { path: 'Association-list', component: AssociationListComponent },
@@ -110,7 +124,7 @@ export const routes: Routes = [
   {
     path: 'Association',
     // canActivate: [authGuard],
-    component: DashboardLayoutComponent,
+    component: DashboardLayoutNewComponent,
     children: [
       { path: 'Dashboard', component: AssociationDashboardComponent },
       { path: 'properties-list', component: PropertyListComponent },
@@ -142,7 +156,7 @@ export const routes: Routes = [
   {
     path: 'Owner',
     // canActivate: [authGuard],
-    component: DashboardLayoutComponent,
+    component: DashboardLayoutNewComponent,
     children: [
       { path: 'Dashboard', component: OwnerDashboardComponent },
       { path: 'properties-list', component: OwnerPropertiesComponent },
@@ -165,7 +179,7 @@ export const routes: Routes = [
   {
     path: 'Tenant',
     // canActivate: [authGuard],
-    component: DashboardLayoutComponent,
+    component: DashboardLayoutNewComponent,
     children: [
       { path: 'Dashboard', component: TenantDashboardComponent },
       {
@@ -197,11 +211,9 @@ export const routes: Routes = [
     ],
   },
 
-
-
   {
     path: 'Service-admin',
-    component: DashboardLayoutComponent,
+    component: DashboardLayoutNewComponent,
     children: [
       {
         path: 'manage-requests',
@@ -221,10 +233,9 @@ export const routes: Routes = [
     ],
   },
 
-
   {
     path: 'visitors-management',
-    component: DashboardLayoutComponent,
+    component: DashboardLayoutNewComponent,
     children: [
       {
         path: 'qr-manager',
@@ -239,12 +250,25 @@ export const routes: Routes = [
 
   {
     path: 'visitor-entry-form/:associationId',
-    component:VisitorsEntryFormToVisitorComponent
+    component: VisitorsEntryFormToVisitorComponent,
   },
   {
     path: 'visitor-entry-form-submitted',
-    component:VisitorsEntryFormSubmittedComponent
-  }
+    component: VisitorsEntryFormSubmittedComponent,
+  },
+  {
+    path: 'visitor-exit-form-submitted',
+    component: VisitorsExitFormToVisitorComponent,
+  },
 
   // maintenance-invoice/owner/IN-NYYN-PM-5330?status=paynow
+
+  {
+    path: 'dashboard',
+    component: DashboardLayoutNewComponent,
+    children: [
+      { path: 'dashboard', component: SuperadminDashboardComponent },
+     
+    ],
+  }
 ];

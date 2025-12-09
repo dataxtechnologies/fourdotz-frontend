@@ -1,0 +1,210 @@
+/* ================================================
+   MAIN LOGIN WRAPPER (CENTER EVERYTHING)
+================================================ */
+.login-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-left: 40px;
+    box-sizing: border-box;
+}
+
+/* ================================================
+   LOGIN CARD
+================================================ */
+.login-container {
+    width: 450px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    padding: 25px 22px;
+    border-radius: 14px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+    transition: 0.3s ease;
+}
+
+/* Logo */
+.logo-img {
+    width: 260px;
+    height: auto;
+}
+
+/* Content Box */
+.login-box {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Heading */
+.login-box h2 {
+    font-size: 28px;
+    text-align: center;
+    color: #222;
+}
+
+/* Description */
+.description {
+    font-size: 18px;
+    text-align: center;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* ================================================
+   INPUT GROUP
+================================================ */
+.inp-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.inp-cont label {
+    font-size: 16px;
+    color: #181818;
+    font-family: 'TTHoves-Regular', sans-serif;
+}
+
+.inp-cus {
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 12px !important;
+    background: #f9f9f9;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+    width: 100%;
+}
+
+.inp-cus:focus {
+    background: #fff;
+    box-shadow: 0 0 6px #4f504f4d;
+}
+
+/* Placeholder */
+.inp-cus::placeholder {
+    color: #aaa;
+    font-size: 0.95rem;
+}
+
+/* ================================================
+   Forgot Password
+================================================ */
+.forgot-password {
+    text-align: right;
+}
+
+.forgot-password p {
+    font-size: 16px;
+    color: #434343;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* ================================================
+   BUTTONS
+================================================ */
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px !important;
+    font-size: 18px;
+    margin-top: 10px;
+    font-weight: 600;
+    background: var(--primary-color2);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.login-btn:hover {
+    opacity: 0.9;
+}
+
+/* Processing State */
+.processing-btn {
+    background: var(--primary-color2);
+    border-radius: 12px !important;
+    border: 1px solid var(--primary-color2);
+    color: #fff;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* ================================================
+   Error Message
+================================================ */
+.error-text {
+    color: var(--primary-color2);
+    font-weight: 500;
+}
+
+/* ==========================================================
+   RESPONSIVE DESIGN — MOBILE → TABLET → DESKTOP
+========================================================== */
+
+/* 1️⃣ Small Mobile (320px - 480px) */
+@media (max-width: 480px) {
+    .login-container {
+        width: 100%;
+        padding: 18px;
+        border-radius: 10px;
+        box-shadow: none;
+    }
+
+    .logo-img {
+        width: 200px;
+    }
+
+    .login-box h2 {
+        font-size: 24px;
+    }
+
+    .description {
+        font-size: 16px;
+    }
+}
+
+/* 2️⃣ Modern Mobile (360px - 414px) */
+@media (max-width: 414px) {
+    .login-container {
+        width: 100%;
+    }
+}
+
+/* 3️⃣ Tablet Portrait (768px - 800px) */
+@media (max-width: 800px) {
+    .login-container {
+        width: 420px;
+        padding: 25px;
+    }
+}
+
+/* 4️⃣ Tablet Landscape / Small Laptop (1024px - 1200px) */
+@media (max-width: 1200px) {
+    .login-container {
+        width: 440px;
+    }
+}
+
+/* 5️⃣ Desktop (1280px - 1440px) */
+/* No major change needed — looks perfect */
+
+/* 6️⃣ Large Desktop / 4K Screens (1920px+) */
+@media (min-width: 1920px) {
+    .login-container {
+        transform: scale(1.1);
+    }
+}

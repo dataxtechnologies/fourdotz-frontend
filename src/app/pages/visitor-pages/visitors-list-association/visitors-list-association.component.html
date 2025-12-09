@@ -12,6 +12,61 @@
 
             <div class="item">
                 <div class="table-cont"> <!-- &#64; -->
+                    <form [formGroup]="filterForm">
+                        <div class="filter-container">
+
+                            <!-- LEFT Filters -->
+                            <div class="filters-left">
+
+                                <!-- Visitor Search -->
+                                <div class="filter-item">
+                                    <label class="medium-font">Visitor (Name / Phone)</label>
+                                    <input type="text" formControlName="visitorSearch"
+                                        placeholder="Enter visitor phone or name" class="regular-font" />
+                                </div>
+
+                                <!-- Resident Search -->
+                                <div class="filter-item">
+                                    <label class="medium-font">Resident (Name / Phone)</label>
+                                    <input type="text" formControlName="residentSearch"
+                                        placeholder="Enter resident phone or name" class="regular-font" />
+                                </div>
+
+                                <!-- Property No -->
+                                <div class="filter-item">
+                                    <label class="medium-font">Property No.</label>
+                                    <input type="text" formControlName="propertyNo" placeholder="Property No."
+                                        class="regular-font" />
+                                </div>
+
+                                <!-- Gate No -->
+                                <div class="filter-item">
+                                    <label class="medium-font">Gate No.</label>
+                                    <input type="text" formControlName="gateNo"
+                                        placeholder="Enter gate No." class="regular-font" />
+                                 
+                                </div>
+
+                                <!-- <div class="filter-item">
+                                    <label class="medium-font">From Date</label>
+                                    <input type="date" formControlName="fromDate" class="regular-font" />
+                                </div>
+
+                                <div class="filter-item">
+                                    <label class="medium-font">To Date</label>
+                                    <input type="date" formControlName="toDate" class="regular-font" />
+                                </div> -->
+
+                            </div>
+
+                            <div class="filters-right">
+                                <button type="button" class="reset-btn" (click)="resetFilters()">
+                                    <i class="fa-solid fa-arrow-rotate-right"></i> Reset
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
                     <div class="table-container">
                         <table class="styled-table">
                             <thead>
@@ -25,9 +80,9 @@
                                     <th class="medium-font">Exit Time</th>
                                 </tr>
                             </thead>
-                            
+
                             <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                <ng-container *ngIf="maintenancelist2?.length === 0; else datashow">
+                                <ng-container *ngIf="maintenancelist2.length === 0; else datashow">
                                     <tr>
                                         <td colspan="7" class="regular-font" style="text-align: center; color: gray;">
                                             No Data Found
@@ -44,7 +99,8 @@
                                         </td>
                                         <td>
                                             <div class="td-main">{{ item.resident_name }}</div>
-                                            <div class="td-sub">{{ item.resident_mobile }} / {{ item.resident_type }}</div>
+                                            <div class="td-sub">{{ item.resident_mobile }} / {{ item.resident_type }}
+                                            </div>
                                         </td>
                                         <td data-label="Resident Name">{{ item.gate }}</td>
                                         <td data-label="Resident Type">{{ item.visitor_count }}</td>

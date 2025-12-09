@@ -2,7 +2,6 @@
     <img src="assets/logo/fourdotz-logo.png" alt="Loading..." class="loader-img" />
 </section>
 
-
 <header class="navbar-header-main" *ngIf="!loadingUserData">
     <div class="navbar-header">
         <div class="user-greeting">
@@ -15,17 +14,7 @@
         </div>
 
         <div class="navbar-actions">
-            <!-- <div class="search-container">
-                <input type="text" placeholder="Search Anything..." class="search-input" />
-                <button class="search-btn">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </div> -->
             <div class="notification-icons">
-
-                <!-- <button class="icon-btn">
-                    <img src="/assets/icons/notification-bing.svg" alt="">
-                </button> -->
                 <button class="icon-btn" (click)="profileredirect()">
                     <img src="/assets/icons/profile.svg" alt="">
                 </button>
@@ -36,20 +25,18 @@
 
 <!-- Layout wrapper -->
 <div class="layout">
+
     <!-- Sidebar -->
     <nav id="sidebar" [class.close]="sidebarClosed">
+
         <ul class="menu-list">
-            <!-- Toggle Button -->
-            <!-- <li class="toggle-btn-li">
-                <button (click)="toggleSidebar()" id="toggle-btn">
-                    <ng-container *ngIf="sidebarClosed; else openIcon">
-                        <img src="assets/icons/arrow-circle-right.svg" alt="Right Arrow" width="30">
-                    </ng-container>
-                    <ng-template #openIcon>
-                        <img src="assets/icons/arrow-circle-left.svg" alt="Left Arrow" width="30">
-                    </ng-template>
+
+            <!-- NEW: toggle button visible only when collapsed -->
+            <li class="toggle-btn-li" *ngIf="sidebarClosed">
+                <button (click)="toggleSidebar()" id="toggle-btn-mini">
+                    <i class="fa-solid fa-bars"></i>
                 </button>
-            </li> -->
+            </li>
 
             <!-- Sidebar Menu Items -->
             <ng-container *ngFor="let item of sidebarItems">
@@ -57,32 +44,44 @@
                 <!-- If item has submenu -->
                 <li *ngIf="item.children && item.allowedRole === user_type" class="submenu">
 
-                    <div class="submenu-title d-flex justify-content-between align-items-center" (click)="item.open = !item.open">
-                        <img [src]="item.icon" class="icon-img me-2 ">
-                        <span class="mx-1">{{ item.label }}</span>
-                        <i class="fa-solid" style="font-size: 12px;" [ngClass]="item.open ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                    <div class="submenu-title d-flex justify-content-between align-items-center"
+                        (click)="item.open = !item.open">
+
+                        <img [src]="item.icon" class="icon-img me-2">
+
+                        <!-- Hide label only -->
+                        <span class="mx-1" *ngIf="!sidebarClosed">{{ item.label }}</span>
+
+                        <!-- Show toggle ALWAYS -->
+                        <i class="fa-solid" style="font-size: 12px;"
+                            [ngClass]="item.open ? 'fa-chevron-up' : 'fa-chevron-down'">
+                        </i>
                     </div>
 
-                    <ul class="submenu-list mx-4" *ngIf="item.open">
+                    <!-- Submenu (expanded mode + collapsed mode) -->
+                    <ul class="submenu-list mx-4" *ngIf="item.open" [class.floating-submenu]="sidebarClosed">
+
                         <li *ngFor="let child of item.children" routerLinkActive="active">
                             <a [routerLink]="child.route" class="d-flex align-items-center">
                                 <img [src]="child.icon" class="subicon-img1 me-2">
-                                <span>{{ child.label }}</span>
+
+                                <!-- LABEL HIDDEN ONLY WHEN COLLAPSED -->
+                                <span *ngIf="!sidebarClosed">{{ child.label }}</span>
                             </a>
                         </li>
+
                     </ul>
 
                 </li>
 
-                <!-- Normal items -->
+                <!-- Normal menu items -->
                 <li *ngIf="!item.children && item.allowedRole === user_type" routerLinkActive="active"
                     [class.active]="item.route === currentRoute">
 
                     <a [routerLink]="item.route" class="d-flex align-items-center">
                         <img [src]="item.icon" class="icon-img me-2">
-                        <span>{{ item.label }}</span>
+                        <span *ngIf="!sidebarClosed">{{ item.label }}</span>
                     </a>
-
                 </li>
 
             </ng-container>
@@ -94,11 +93,11 @@
             <li style="cursor: pointer;">
                 <a (click)="logoutmodal()">
                     <img src="/assets/icons/logout.svg" alt="logout">
-                    <span>Logout</span>
+                    <span *ngIf="!sidebarClosed">Logout</span>
                 </a>
             </li>
-
         </ul>
+
     </nav>
 
     <!-- Main content -->
@@ -116,4 +115,5 @@
             <a href="https://fourdotz.com/refund-policy/" target="_blank">Refund Policy</a>
         </div>
     </footer>
+
 </div>

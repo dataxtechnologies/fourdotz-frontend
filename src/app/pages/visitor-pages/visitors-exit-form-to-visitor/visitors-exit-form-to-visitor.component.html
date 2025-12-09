@@ -1,0 +1,75 @@
+<section>
+    <div class="div-cont">
+        <div class="container">
+
+            <!-- Logo -->
+            <div class="brand-logo">
+                <img src="assets/logo/fourdotz-logo.png" alt="Fourdotz logo" />
+            </div>
+
+            <!-- Title -->
+            <div class="title">Visitor Exit Form</div>
+
+            <!-- Form -->
+            <div class="content">
+
+                <form [formGroup]="visitorForm" (ngSubmit)="submitVisitorForm()">
+                    <div class="user-details">
+
+                        <!-- Visitor Unique ID -->
+                        <div class="input-box">
+                            <label class="details medium-font">Visitor Unique ID <span class="required">*</span></label>
+
+                            <input type="text" class="inp-cus regular-font" formControlName="visitor_unique_id"
+                                placeholder="Enter your unique ID" />
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('visitor_unique_id')?.touched && visitorForm.get('visitor_unique_id')?.invalid">
+                                Visitor Unique ID is required.
+                            </span>
+                        </div>
+
+                        <!-- Exit Status -->
+                        <div class="input-box">
+                            <label class="details medium-font">Exit Status <span class="required">*</span></label>
+
+                            <select formControlName="exit_status" class="inp-cus regular-font">
+                                <option value="" disabled>Select Status</option>
+                                <option value="exited_now">Exited Now</option>
+                                <option value="left_earlier">Left Earlier</option>
+                                <option value="still_inside">Still Inside (Need Extension)</option>
+                            </select>
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('exit_status')?.touched && visitorForm.get('exit_status')?.invalid">
+                                Exit Status is required.
+                            </span>
+                        </div>
+
+                        <!-- Exit Time (conditional) -->
+                        <div class="input-box"
+                            *ngIf="visitorForm.get('exit_status')?.value !== 'exited_now' && visitorForm.get('exit_status')?.value">
+
+                            <label class="details medium-font">Exit Time <span class="required">*</span></label>
+
+                            <input type="datetime-local" class="inp-cus regular-font" formControlName="exit_time" />
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('exit_time')?.touched && visitorForm.get('exit_time')?.invalid">
+                                Exit time is required.
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="button">
+                        <input type="submit" value="Submit Exit Details" />
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
