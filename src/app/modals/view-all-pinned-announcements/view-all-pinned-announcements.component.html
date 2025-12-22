@@ -1,7 +1,10 @@
 <div class="popup-wrapper">
 
+    <!-- OVERLAY -->
+    <div class="sidebar-overlay" [class.active]="sidebarOpen" (click)="closeSidebar()"></div>
+
     <!-- LEFT SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" [class.open]="sidebarOpen">
 
         <h4 class="sidebar-title">Pinned Announcements</h4>
 
@@ -14,7 +17,9 @@
 
             <!-- ⭐ LIST ITEMS -->
             <div class="sidebar-item" *ngFor="let item of PinnedAnnouncement"
-                [class.active-item]="activePost?.announcement_id === item.announcement_id" (click)="setActive(item)">
+                [class.active-item]="activePost?.announcement_id === item.announcement_id"
+                (click)="setActive(item); closeSidebar()">
+
                 <h5>{{ item.title }}</h5>
 
                 <p class="sidebar-date">
@@ -22,92 +27,87 @@
                 </p>
 
                 <p class="sidebar-summary">
-                    {{ item.summary | slice: 0: 20 }}{{ item.summary.length > 20 ? '...' : '' }}
+                    {{ item.summary | slice:0:20 }}{{ item.summary.length > 20 ? '...' : '' }}
                 </p>
+
             </div>
 
         </div>
 
     </aside>
 
-
     <!-- RIGHT PREVIEW PANEL -->
     <section class="preview-panel">
 
-        <!-- ⭐ NO ACTIVE POST -->
-        <div *ngIf="!activePost">
-            <div class="close-btn">
-                <i class="fa-solid fa-xmark close-btn" style="cursor: pointer;" (click)="closeModal()"></i>
+        <div class="announcement-header">
+
+            <!-- TOGGLE BUTTON (MOBILE / TABLET) -->
+            <div class="sidebar-toggle-btn" (click)="toggleSidebar()">☰</div>
+
+            <div>
+                <h3 *ngIf="activePost">{{ activePost?.association_name }}</h3>
+
+                <p class="post-date" *ngIf="activePost">
+                    {{ activePost?.created_time?.$date | date:'dd MMM yyyy, hh:mm a' }}
+                </p>
             </div>
-            <div class="no-active-post">
-                <p>No pinned announcement selected</p>
-            </div>
+
+            <i class="fa-solid fa-xmark close-btn" style="cursor: pointer;" (click)="closeModal()"></i>
         </div>
 
-        <!-- ⭐ SHOW ACTIVE POST ONLY WHEN AVAILABLE -->
-        <ng-container *ngIf="activePost">
+        <!-- ⭐ NO ACTIVE POST -->
+        <div *ngIf="!activePost" class="no-active-post">
+            <p>No pinned announcement selected</p>
+        </div>
 
-            <div class="announcement-header">
+        <!-- ⭐ ACTIVE POST DETAILS -->
+        <div class="announcement-body" *ngIf="activePost">
 
-                <div>
-                    <h3>{{ activePost?.association_name }}</h3>
-
-                    <p class="post-date">
-                        {{ activePost?.created_time?.$date | date:'dd MMM yyyy, hh:mm a' }}
-                    </p>
-                </div>
-                <i class="fa-solid fa-xmark close-btn" style="cursor: pointer;" (click)="closeModal()"></i>
-
+            <div class="info-block">
+                <label>Category:</label>
+                <span>{{ activePost?.category | titlecase }}</span>
             </div>
 
-            <div class="announcement-body">
+            <div class="info-block" *ngIf="activePost?.category === 'events'">
+                <label>Event Date:</label>
+                <p>{{ activePost?.event_date?.$date | date:'dd MMM yyyy' }}</p>
+            </div>
 
-                <div class="info-block">
-                    <label>Category:</label>
-                    <span>{{ activePost?.category | titlecase }}</span>
-                </div>
+            <div class="info-block">
+                <label>Title:</label>
+                <p>{{ activePost?.title }}</p>
+            </div>
 
-                <div class="info-block" *ngIf="activePost?.category === 'events'">
-                    <label>Event Date:</label>
-                    <p>{{ activePost?.event_date?.$date | date:'dd MMM yyyy' }}</p>
-                </div>
+            <div class="info-block">
+                <label>Summary:</label>
+                <p>{{ activePost?.summary }}</p>
+            </div>
 
-                <div class="info-block">
-                    <label>Title:</label>
-                    <p>{{ activePost?.title }}</p>
-                </div>
+            <div class="attachment-section" *ngIf="activePost?.images?.length === 0; else showAttachments">
+                <label>No Attachments Found</label>
+            </div>
 
-                <div class="info-block">
-                    <label>Summary:</label>
-                    <p>{{ activePost?.summary }}</p>
-                </div>
+            <ng-template #showAttachments>
+                <div class="attachment-section">
+                    <label>Attachments:</label>
 
+                    <div class="attachment-grid">
 
-                <div class="attachment-section" *ngIf="activePost?.images?.length === 0;else ShowAttchments">
-                    <label class="medium-font">No Attachments Found</label>
-                </div>
-                <ng-template #ShowAttchments>
-                    <div class="attachment-section">
-                        <label class="medium-font">Attachments:</label>
+                        <ng-container *ngFor="let file of activePost.images">
 
-                        <div class="attachment-grid">
-                            <ng-container *ngFor="let file of activePost.images">
+                            <!-- Image Preview -->
+                            <img *ngIf="isImage(file)" [src]="file" class="attachment-item" alt="Attachment" />
 
-                                <!-- Image Preview -->
-                                <img *ngIf="isImage(file)" [src]="file" class="attachment-item" alt="Attachment" />
+                            <!-- Video Preview -->
+                            <video *ngIf="isVideo(file)" [src]="file" class="attachment-item" controls></video>
 
-                                <!-- Video Preview -->
-                                <video *ngIf="isVideo(file)" [src]="file" class="attachment-item" controls></video>
+                        </ng-container>
 
-                            </ng-container>
-                        </div>
                     </div>
-                </ng-template>
+                </div>
+            </ng-template>
 
-
-            </div>
-
-        </ng-container>
+        </div>
 
     </section>
 

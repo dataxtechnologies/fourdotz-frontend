@@ -14,6 +14,9 @@ export class ViewAllPinnedAnnouncementsComponent {
 
   activePost: any = null;
 
+  // 👇 NEW: Sidebar toggle state
+  sidebarOpen: boolean = false;
+
   constructor(private Modal: ModalService) {}
 
   ngOnInit(): void {
@@ -24,19 +27,37 @@ export class ViewAllPinnedAnnouncementsComponent {
     }
   }
 
+  // ⭐ SELECT POST
   setActive(post: any) {
     this.activePost = post;
+
+    // ⭐ Auto-close sidebar on mobile/tablet
+    if (window.innerWidth <= 1024) {
+      this.sidebarOpen = false;
+    }
   }
 
-  // Detect image file
+  // ⭐ Toggle Sidebar (For Mobile / Tablet)
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  // ⭐ Close Sidebar when clicking overlay
+  closeSidebar() {
+    this.sidebarOpen = false;
+  }
+
+  // ⭐ Close Modal
   closeModal() {
     this.Modal.close();
   }
 
+  // ⭐ Detect image file
   isImage(url: string): boolean {
     return /\.(jpg|jpeg|png|webp)$/i.test(url);
   }
 
+  // ⭐ Detect video file
   isVideo(url: string): boolean {
     return /\.(mp4|mkv|mov)$/i.test(url);
   }

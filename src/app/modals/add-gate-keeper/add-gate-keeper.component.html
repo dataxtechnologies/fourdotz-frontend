@@ -1,0 +1,62 @@
+<section class="form-section container">
+  <div class="form-header">
+    <h3>Add Gate Keeper</h3>
+    <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+  </div>
+
+  <div class="form-body">
+    <form [formGroup]="gatekeeperForm" (ngSubmit)="addGateKeeper()">
+
+      <!-- NAME -->
+      <div class="inp-cont">
+        <label class="medium-font">Name <span class="required">*</span></label>
+        <input 
+          type="text"
+          class="inp-cus regular-font"
+          placeholder="Enter Gate Keeper Name"
+          formControlName="name"
+        />
+        <small class="text-danger" *ngIf="isInvalid('name')">
+          Name is required.
+        </small>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="inp-cont">
+        <label class="medium-font">Email <span class="required">*</span></label>
+        <input 
+          type="email"
+          class="inp-cus regular-font"
+          placeholder="Enter Email"
+          formControlName="email"
+        />
+        <small class="text-danger" *ngIf="isInvalid('email')">
+          Enter a valid email address.
+        </small>
+      </div>
+
+      <!-- PHONE NUMBER -->
+      <div class="inp-cont">
+        <label class="medium-font">Phone Number <span class="required">*</span></label>
+        <input 
+          type="text"
+          maxlength="10"
+          class="inp-cus regular-font"
+          placeholder="Enter Phone Number"
+          formControlName="phone"
+          (keypress)="restrictPhoneInput($event)"
+        />
+        <small class="text-danger" *ngIf="isInvalid('phone')">
+          Phone must start with 6-9 and be 10 digits.
+        </small>
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="mb-3">
+        <button class="submit-btn" type="submit" *ngIf="submitbtn">Submit</button>
+        <button class="processing-btn" type="button" *ngIf="!submitbtn">Processing...</button>
+      </div>
+
+    </form>
+  </div>
+</section>

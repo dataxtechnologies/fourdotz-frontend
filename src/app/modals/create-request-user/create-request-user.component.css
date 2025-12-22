@@ -258,7 +258,7 @@
 
 @media (max-width: 1024px) {
     .form-section {
-        width: 95%;
+        width: 600px;
     }
 
     .form-grid {

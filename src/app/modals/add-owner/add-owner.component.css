@@ -153,6 +153,34 @@
     }
 }
 
+@media (max-width: 1024px) {
+    .form-section {
+        width:  90% !important;
+        max-width: 600px !important;
+    }
+
+    .form-body form {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* two columns */
+        gap: 20px 25px; /* row-gap, column-gap */
+    }
+
+    /* Make buttons full width row */
+    .form-body form .mb-3 {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .form-body form {
+        grid-template-columns: 1fr; /* back to single column */
+    }
+
+    .form-section {
+        width: 95% !important;
+    }
+}
+
 
 .date-picker-container {
   position: relative;

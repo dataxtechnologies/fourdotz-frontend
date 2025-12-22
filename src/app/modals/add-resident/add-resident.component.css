@@ -1,6 +1,7 @@
 .form-section {
     background-color: #faf9f4 !important;
     width: 800px;
+    height: 80vh;
     margin: 40px auto;
     padding: 35px 35px;
     padding-left: 45px;
@@ -158,7 +159,7 @@ select.inp-cus {
 /* Responsive for tablet & mobile */
 @media (max-width: 1024px) {
     .form-section {
-        width: 95%;
+        width: 700px !important;
     }
 
     .form-grid {
@@ -181,8 +182,8 @@ select.inp-cus {
 
 /* Responsive for tablet & mobile */
 @media (max-width: 1024px) {
-    .form-section {
-        width: 95%;
+   .form-section {
+        width: 700px !important;
     }
 
     .form-grid {
@@ -207,7 +208,7 @@ select.inp-cus {
 
     .form-section,
     .container {
-        width: 95%;
+        width: 700px;
 
     }
 

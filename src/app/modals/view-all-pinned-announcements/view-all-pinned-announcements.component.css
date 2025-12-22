@@ -5,9 +5,10 @@
   height: 75vh;
   display: flex;
   background: white;
-  border-radius: 12px !important;
+  border-radius: 12px;
   overflow: hidden;
   max-height: 90vh;
+  position: relative;
 }
 
 /* LEFT SIDEBAR */
@@ -18,6 +19,7 @@
   border-right: 1px solid #ddd;
   display: flex;
   flex-direction: column;
+  transition: left 0.3s ease;
 }
 
 .sidebar-title {
@@ -44,7 +46,7 @@
   padding: 15px 18px;
   cursor: pointer;
   border-bottom: 1px solid #eee;
-  transition: 0.2s ease-in-out;
+  transition: 0.2s;
 }
 
 .sidebar-item:hover {
@@ -72,8 +74,6 @@
   font-size: 13px;
   color: #555;
 }
-
-
 
 /* RIGHT PANEL */
 .preview-panel {
@@ -122,8 +122,6 @@
   margin-top: 5px;
 }
 
-
-
 /* ATTACHMENTS */
 .attachment-section label {
   font-weight: 700;
@@ -142,7 +140,7 @@
   width: 100%;
   height: 350px;
   object-fit: contain;
-  border-radius: 12px !important;
+  border-radius: 12px;
   border: 1px solid #ddd;
   background: #fafafa;
 }
@@ -151,23 +149,74 @@ video.attachment-item {
   background: #000;
 }
 
-
-
-/* SCROLLBAR */
-.sidebar-list::-webkit-scrollbar,
-.announcement-body::-webkit-scrollbar {
-  width: 6px;
+/* NO ACTIVE POST */
+.no-active-post {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #777;
+  font-size: 18px;
+  font-weight: 500;
+  background: #fafafa;
 }
 
-.sidebar-list::-webkit-scrollbar-thumb,
-.announcement-body::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 10px;
+.close-btn {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 10px;
 }
 
+/* ================= SIDEBAR TOGGLE ≤ 1024px ================= */
+.sidebar-toggle-btn {
+  display: none;
+  font-size: 25px;
+  cursor: pointer;
+}
 
+/* Overlay */
+.sidebar-overlay {
+  display: none;
+}
 
-/* RESPONSIVE DESIGN */
+.sidebar-overlay.active {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1500;
+}
+
+/* Mobile / Tablet Sidebar */
+@media (max-width: 1024px) {
+
+  .sidebar {
+    left: -100%;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 75%;
+    max-width: 320px;
+    z-index: 2000;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .sidebar-toggle-btn {
+    display: block;
+  }
+
+  .preview-panel {
+    width: 100%;
+  }
+}
 
 /* Tablets */
 @media (max-width: 992px) {
@@ -176,20 +225,8 @@ video.attachment-item {
     height: 85vh;
   }
 
-  .sidebar {
-    width: 100%;
-    height: 35%;
-    border-right: none;
-    border-bottom: 1px solid #ddd;
-  }
-
   .preview-panel {
-    width: 100%;
     height: 65%;
-  }
-
-  .attachment-item {
-    height: 300px;
   }
 }
 
@@ -206,14 +243,6 @@ video.attachment-item {
     height: 90vh;
   }
 
-  .sidebar {
-    height: 40%;
-  }
-
-  .preview-panel {
-    height: 60%;
-  }
-
   .attachment-grid {
     grid-template-columns: 1fr;
   }
@@ -223,29 +252,9 @@ video.attachment-item {
   }
 }
 
-/* Very Small Mobile */
+/* Very small screens */
 @media (max-width: 400px) {
   .attachment-item {
     height: 200px;
   }
-}
-
-.no-active-post {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: #777;
-  font-size: 18px;
-  font-weight: 500;
-  background: #fafafa;
-}
-
-.close-btn{
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  padding: 10px;
-
 }

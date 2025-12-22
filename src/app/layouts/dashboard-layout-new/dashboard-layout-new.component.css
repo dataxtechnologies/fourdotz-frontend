@@ -103,8 +103,15 @@
     margin-left: 290px;
     transition: margin-left 0.3s ease;
     padding: 1em;
-    width: 100%;
+    width: calc(100% - 290px);
     padding-bottom: 70px;
+}
+
+@media (max-width: 1280px) {
+    .content {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
 }
 
 /* ================= SIDEBAR COLLAPSED (DESKTOP) ================= */
@@ -269,6 +276,7 @@
 
 .layout {
   display: flex;
+  width: 100% !important;
   margin-top: 50px; /* Matches header height */
 }
 

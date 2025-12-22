@@ -155,7 +155,7 @@ select.inp-cus {
 /* Responsive for tablet & mobile */
 @media (max-width: 1024px) {
     .form-section {
-        width: 95%;
+        width: 700px !important;
     }
 
     .form-grid {
@@ -178,8 +178,8 @@ select.inp-cus {
 
 /* Responsive for tablet & mobile */
 @media (max-width: 1024px) {
-    .form-section {
-        width: 95%;
+   .form-section {
+        width: 700px !important;
     }
 
     .form-grid {

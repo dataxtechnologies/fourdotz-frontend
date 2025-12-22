@@ -1,5 +1,5 @@
 <!-- HEADER -->
- <section *ngIf="user_type === 'association' && loadingUserData" class="loader-section">
+<section *ngIf="user_type === 'association' && loadingUserData" class="loader-section">
     <img src="assets/logo/fourdotz-logo.png" alt="Loading..." class="loader-img" />
 </section>
 <section>
@@ -9,10 +9,11 @@
             <div class="user-greeting">
 
                 <!-- Mobile / Tablet Sidebar Toggle -->
-                <label class="hamburger" *ngIf="isTabletOrMobile" (click)="toggleAsidebar()">
+                <label class="hamburger" style="cursor: pointer;" *ngIf="isTabletOrMobile" (click)="toggleAsidebar()">
 
-                    <!-- Arrow → when closed -->
-                    <ng-container *ngIf="asidebarClosed">
+                    <img src="assets/icons/firstline-1.svg" alt="lines">
+
+                    <!-- <ng-container *ngIf="asidebarClosed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M14.4301 5.92969L20.5001 11.9997L14.4301 18.0697" stroke="#000" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round" />
@@ -20,8 +21,6 @@
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </ng-container>
-
-                    <!-- Arrow ← when open -->
                     <ng-container *ngIf="!asidebarClosed">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M9.57 5.92969L3.5 11.9997L9.57 18.0697" stroke="#000" stroke-width="1.5"
@@ -29,7 +28,7 @@
                             <path opacity="0.4" d="M20.5 12H3.67004" stroke="#000" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                    </ng-container>
+                    </ng-container> -->
 
                 </label>
 
@@ -122,22 +121,22 @@
         </div>
     </aside>
 
-   <div class="layout">
-     <main class="content">
-        <router-outlet></router-outlet>
-    </main>
+    <div class="layout">
+        <main class="content">
+            <router-outlet></router-outlet>
+        </main>
 
-    <footer class="app-footer" [class.visible]="showFooter">
-        <div class="footer-left">
-            © 2025 All Rights Reserved <span style="color: var(--primary-color1);">Datax Technologies</span>
-        </div>
-        <div class="footer-right">
-            <a href="https://fourdotz.com/privacy-policy/" target="_blank">Privacy Policy</a> |
-            <a href="https://fourdotz.com/terms-of-service/" target="_blank">Terms & Conditions</a> |
-            <a href="https://fourdotz.com/refund-policy/" target="_blank">Refund Policy</a>
-        </div>
-    </footer>
-   </div>
+        <footer class="app-footer" [class.visible]="showFooter">
+            <div class="footer-left">
+                © 2025 All Rights Reserved <span style="color: var(--primary-color1);">Datax Technologies</span>
+            </div>
+            <div class="footer-right">
+                <a href="https://fourdotz.com/privacy-policy/" target="_blank">Privacy Policy</a> |
+                <a href="https://fourdotz.com/terms-of-service/" target="_blank">Terms & Conditions</a> |
+                <a href="https://fourdotz.com/refund-policy/" target="_blank">Refund Policy</a>
+            </div>
+        </footer>
+    </div>
 
     <!-- MOBILE OVERLAY -->
     <div class="asidebar-overlay" *ngIf="!asidebarClosed && isTabletOrMobile" (click)="closeAsidebar()"></div>

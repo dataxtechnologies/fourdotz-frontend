@@ -9,6 +9,8 @@ export class EnvurlService {
   public UpdateTempPass = '/auth/update_new_pwd'
   public forgetpassword = '/auth/forgot_password_send_otp'
   public updateforgetpassword = '/auth/update_forgot_password'
+  public SendOTPtoMobile = '/auth/send_otp'
+  public verify_otp = '/auth/verify_otp'
 
   public UserInfo = '/auth/user_info'
 
@@ -111,4 +113,8 @@ export class EnvurlService {
   public CreateVisitorEntry = '/visitors/create_visitor_entry'
   public ListAllVisitors = '/visitors/list_all_visitor'
 
+
+
+  // gate Keeper Endpoints
+  public ListVisitorinGateKeeper = '/visitors/list_visitors'
 }

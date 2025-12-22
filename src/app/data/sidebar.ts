@@ -58,6 +58,29 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     allowedRole: 'association',
     //activeicon: ''
   },
+
+  {
+    label: 'Manage Helpers',
+    icon: '/assets/icons/manage-users1.svg',
+    route: '/Association/request-management/list',
+    allowedRole: 'association',
+    children: [
+      {
+        label: 'Gate Keeper',
+        icon: '/assets/icons/security.svg',
+        route: '/Association/manage-helpers/gate-keeper',
+        allowedRole: 'association',
+      },
+      // {
+      //   label: 'Service Admin List',
+      //   icon: '/assets/icons/ai-users.svg',
+      //   route: '/Association/service-admin/list',
+      //   allowedRole: 'association',
+      // },
+    ],
+    //activeicon: ''
+  },
+
   {
     label: 'Manage Request',
     icon: '/assets/icons/request-manage2.svg',
@@ -72,7 +95,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
       },
       {
         label: 'Service Admin List',
-        icon: '/assets/icons/ai-users.svg',
+        icon: '/assets/icons/ai-users1.svg',
         route: '/Association/service-admin/list',
         allowedRole: 'association',
       },
@@ -93,12 +116,23 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         allowedRole: 'association',
       },
       {
-        label: 'Visitors List',
-        icon: '/assets/icons/visitor.svg',
-        route: '/visitors-management/visitors-list',
+        label: 'QR Visitors List',
+        icon: '/assets/icons/qr-scan.svg',
+        route: '/visitors-management/qr-visitors-list',
         allowedRole: 'association',
       },
-      
+      {
+        label: 'Spot Visitors List',
+        icon: '/assets/icons/visitor.svg',
+        route: '/visitors-management/spot-visitors-list',
+        allowedRole: 'association',
+      },
+      {
+        label: 'Pre-Visitors List',
+        icon: '/assets/icons/pre-visitor.svg',
+        route: '/visitors-management/pre-visitors-list',
+        allowedRole: 'association',
+      },
     ],
     //activeicon: ''
   },
@@ -200,6 +234,28 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/request-manage2.svg',
     route: '/Association/request-management/list',
     allowedRole: 'service_admin',
+    //activeicon: ''
+  },
+
+  {
+    label: 'Manage Visitors',
+    icon: '/assets/icons/personalcard.svg',
+    route: '/',
+    allowedRole: 'gate_keeper',
+    children: [
+      {
+        label: 'Visitors List',
+        icon: '/assets/icons/visitor.svg',
+        route: '/Gate-keeper/visitors-management/visitors-list',
+        allowedRole: 'gate_keeper',
+      },
+      {
+        label: 'Pre-visitors List',
+        icon: '/assets/icons/pre-visitor.svg',
+        route: '/Gate-keeper/visitors-management/pre-visitors-list',
+        allowedRole: 'gate_keeper',
+      },
+    ],
     //activeicon: ''
   },
 ];

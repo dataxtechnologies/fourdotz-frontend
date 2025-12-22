@@ -51,6 +51,11 @@ import { PasswordOtpPageComponent } from './pages/auth/password-otp-page/passwor
 import { ChangePasswordNewComponent } from './pages/auth/change-password-new/change-password-new.component';
 import { VisitorsExitFormToVisitorComponent } from './pages/visitor-pages/visitors-exit-form-to-visitor/visitors-exit-form-to-visitor.component';
 import { DashboardLayoutNewComponent } from './layouts/dashboard-layout-new/dashboard-layout-new.component';
+import { GateKeeperVisitorListComponent } from './pages/gate-keeper-pages/gate-keeper-visitor-list/gate-keeper-visitor-list.component';
+import { GateKeeperPreVisitorComponent } from './pages/gate-keeper-pages/gate-keeper-pre-visitor/gate-keeper-pre-visitor.component';
+import { GateKeeperGatesComponent } from './pages/association-pages/manage-helpers/gate-keeper-gates/gate-keeper-gates.component';
+import { PreVisitorsComponent } from './pages/association-pages/manage-visitors/pre-visitors/pre-visitors.component';
+import { SpotVisitorsComponent } from './pages/association-pages/manage-visitors/spot-visitors/spot-visitors.component';
 
 export const routes: Routes = [
   {
@@ -65,8 +70,8 @@ export const routes: Routes = [
     component: AuthLayoutComponent,
     // canActivate: [authGuard],
     children: [
-      { path: 'sign-in', component: SigninPageComponent },
-      { path: 'user-signin', component: SigninPageNewComponent },
+      { path: 'sign-in', component: SigninPageNewComponent },
+      // { path: 'user-signin', component: SigninPageNewComponent },
       {
         path: 'user-authentication/:authtype/:authvalue',
         component: PasswordOtpPageComponent,
@@ -76,8 +81,8 @@ export const routes: Routes = [
       //   component: ChangePasswordComponent,
       // },
       {
-        path: 'Change-password/:usermail',
-        component: ChangePasswordComponent,
+        path: 'Change-password/:username',
+        component: ChangePasswordNewComponent,
       },
       { path: 'forget-password', component: ForgetPasswordComponent },
     ],
@@ -130,6 +135,7 @@ export const routes: Routes = [
       { path: 'properties-list', component: PropertyListComponent },
       { path: 'residents-list', component: ResidentsListComponent },
       { path: 'Maintenance-list', component: MaintenanceListComponent },
+      { path: 'manage-helpers/gate-keeper', component: GateKeeperGatesComponent },
       {
         path: 'request-management/list',
         component: ListRequestsAssociationComponent,
@@ -242,7 +248,15 @@ export const routes: Routes = [
         component: GenerateQrAssociationComponent,
       },
       {
-        path: 'visitors-list',
+        path: 'pre-visitors-list',
+        component: PreVisitorsComponent,
+      },
+      {
+        path: 'spot-visitors-list',
+        component: SpotVisitorsComponent,
+      },
+      {
+        path: 'qr-visitors-list',
         component: VisitorsListAssociationComponent,
       },
     ],
@@ -268,6 +282,16 @@ export const routes: Routes = [
     component: DashboardLayoutNewComponent,
     children: [
       { path: 'dashboard', component: SuperadminDashboardComponent },
+     
+    ],
+  },
+
+  {
+    path: 'Gate-keeper',
+    component: DashboardLayoutNewComponent,
+    children: [
+      { path: 'visitors-management/visitors-list', component: GateKeeperVisitorListComponent },
+      { path: 'visitors-management/pre-visitors-list', component: GateKeeperPreVisitorComponent },
      
     ],
   }

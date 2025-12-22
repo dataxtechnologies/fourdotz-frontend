@@ -46,7 +46,7 @@ export class VisitorsListAssociationComponent {
   }
 
   ngOnInit(): void {
-    this.ListAllVisitors();
+    this.ListAllVisitors('qr_code_entry');
 
     // Trigger filter whenever form changes
     this.filterForm.valueChanges.subscribe(() => {
@@ -57,8 +57,8 @@ export class VisitorsListAssociationComponent {
   /* ===========================
      FETCH VISITORS LIST
      =========================== */
-  ListAllVisitors() {
-    this.Apiservice.ListAllVisitors<any>().subscribe({
+  ListAllVisitors(data : any) {
+    this.Apiservice.ListVisitorinGateKeeper<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.maintenancelist2 = res.data;

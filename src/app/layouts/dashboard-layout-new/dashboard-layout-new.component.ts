@@ -52,6 +52,7 @@ export class DashboardLayoutNewComponent {
      USER STORAGE
      ============================== */
   user_type = localStorage.getItem('user_type');
+  // user_type = 'gate_keeper';
   access_token = localStorage.getItem('access_token');
   user_id = localStorage.getItem('user_id');
 
@@ -64,15 +65,15 @@ export class DashboardLayoutNewComponent {
   ) {
     /* Detect route changes */
     this.router.events
-  .pipe(filter((event) => event instanceof NavigationEnd))
-  .subscribe((event: any) => {
-    this.currentRoute = event.urlAfterRedirects;
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.currentRoute = event.urlAfterRedirects;
 
-    // AUTO CLOSE SIDEBAR on mobile/tablet after clicking a menu
-    if (this.isTabletOrMobile) {
-      this.asidebarClosed = true;
-    }
-  });
+        // AUTO CLOSE SIDEBAR on mobile/tablet after clicking a menu
+        if (this.isTabletOrMobile) {
+          this.asidebarClosed = true;
+        }
+      });
   }
 
   /* ==============================

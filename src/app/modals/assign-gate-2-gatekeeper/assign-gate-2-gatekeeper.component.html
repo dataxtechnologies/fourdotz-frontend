@@ -1,0 +1,73 @@
+<section class="logout-modal">
+  <div class="logout-card">
+
+    <!-- HEADER -->
+    <div class="logout-header">
+      <h3><i class="fa-solid fa-door-open"></i> Assign Gate Confirmation</h3>
+      <i class="fa-solid fa-xmark close-icon" (click)="closeModal()"></i>
+    </div>
+
+    <!-- FORM BODY -->
+    <form [formGroup]="assignForm">
+      <div class="logout-body">
+
+        <!-- SELECT GATE DROPDOWN -->
+        <div class="inp-cont mb-3">
+          <label class="medium-font">Select Gate <span class="required">*</span></label>
+
+          <select class="inp-cus regular-font" formControlName="gateId" (change)="updateGateName()">
+            <option value="" disabled>Select Gate</option>
+
+            <option *ngFor="let gate of gateList" [value]="gate.id">
+              {{ gate.name }}
+            </option>
+          </select>
+
+          <small class="text-danger" *ngIf="isInvalid('gateId')">
+            Please select a gate.
+          </small>
+        </div>
+
+        <!-- CONFIRMATION MESSAGE -->
+        <p class="logout-warning regular-font mt-2">
+          <strong class="medium-font">
+            Are you sure you want to assign
+            <span class="highlight">{{ gateKeeperName }}</span>
+            to <br>
+            <span class="highlight">{{ selectedGateName || '...' }}</span>?
+          </strong>
+        </p>
+
+        <!-- CONFIRM TEXT -->
+        <div class="inp-cont">
+          <label class="medium-font">Type <b>CONFIRM</b> to proceed:</label>
+
+          <input type="text" class="inp-cus regular-font" formControlName="confirmText" placeholder="Type CONFIRM" />
+
+          <small class="text-danger" *ngIf="isInvalid('confirmText')">
+            You must type CONFIRM to enable the Assign button.
+          </small>
+        </div>
+
+      </div>
+    </form>
+
+    <!-- ACTION BUTTONS -->
+    <div class="logout-actions">
+
+      <button class="cancel-btn" (click)="closeModal()">Cancel</button>
+
+      <!-- ENABLE WHEN FORM IS VALID -->
+      <button class="delete-btn" (click)="assignGate()" [disabled]="assignForm.invalid || showprocessingbtn"
+        *ngIf="!showprocessingbtn">
+        <i class="fa-solid fa-check-circle me-1"></i> Assign Gate
+      </button>
+
+      <button class="delete-btn" disabled *ngIf="showprocessingbtn">
+        <i class="fa-solid fa-spinner fa-spin"></i> Processing...
+      </button>
+
+    </div>
+
+  </div>
+</section>
