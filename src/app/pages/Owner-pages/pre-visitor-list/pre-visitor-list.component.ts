@@ -10,12 +10,12 @@ import { AssociationServiceService } from '../../../services/association/associa
 import { VisitorExitFormComponent } from '../../../modals/visitor-exit-form/visitor-exit-form.component';
 
 @Component({
-  selector: 'app-gate-keeper-pre-visitor',
+  selector: 'app-pre-visitor-list',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './gate-keeper-pre-visitor.component.html',
-  styleUrl: './gate-keeper-pre-visitor.component.css'
+  templateUrl: './pre-visitor-list.component.html',
+  styleUrl: './pre-visitor-list.component.css'
 })
-export class GateKeeperPreVisitorComponent {
+export class PreVisitorListComponent {
 user_id = localStorage.getItem('user_id');
   spotVisitorlist1;
   spotvisitorlist2: any;

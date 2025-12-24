@@ -1,0 +1,180 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3>Spot Visitor Entry</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="visitorForm">
+            <div class="form-grid">
+
+                <!-- Property Dropdown -->
+                <div class="inp-cont">
+                    <label class="medium-font">
+                        Property No. <span class="required">*</span>
+                    </label>
+
+                    <div class="custom-select">
+                        <div class="select-selected regular-font" (click)="toggleDropdown()">
+                            {{ selectedProperty || 'Select Property No.' }}
+                            <i class="fa-solid" [ngClass]="{
+                   'fa-chevron-down': !dropdownOpen,
+                   'fa-chevron-up': dropdownOpen
+                 }" style="float: right; font-size: 0.7rem; margin-top: 4px;">
+                            </i>
+                        </div>
+
+                        <div class="select-items" [class.select-hide]="!dropdownOpen">
+                            <input type="text" placeholder="Search property..." class="dropdown-search regular-font"
+                                (input)="onSearchChange($event)" />
+
+                            <div class="regular-font" *ngFor="let property of filteredList"
+                                (click)="selectProperty(property)">
+                                {{ property.property_no }}
+                            </div>
+
+                            <div *ngIf="filteredList.length === 0" class="no-results regular-font">
+                                No properties found
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="visitorForm.get('property_id')?.touched &&
+                      visitorForm.get('property_id')?.invalid" class="error-text">
+                        Property No. is required
+                    </div>
+                </div>
+
+                <!-- Visitor Name -->
+                <div class="inp-cont">
+                    <label class="medium-font">
+                        Visitor Name <span class="required">*</span>
+                    </label>
+                    <input type="text" formControlName="visitor_name" class="inp-cus regular-font"
+                        placeholder="Enter Visitor Name" />
+                    <div *ngIf="visitorForm.get('visitor_name')?.touched &&
+                      visitorForm.get('visitor_name')?.invalid" class="error-text">
+                        Visitor name is required
+                    </div>
+                </div>
+
+                <!-- Visitor Email -->
+                <div class="inp-cont">
+                    <label class="medium-font">Email ID</label>
+                    <input type="email" formControlName="visitor_email" class="inp-cus regular-font"
+                        placeholder="Enter Email" />
+                </div>
+
+                <!-- Visitor Mobile -->
+                <div class="inp-cont">
+                    <label class="medium-font">
+                        Phone Number <span class="required">*</span>
+                    </label>
+                    <input type="tel" formControlName="visitor_mobile" class="inp-cus regular-font"
+                        placeholder="Enter Phone Number" maxlength="10" />
+                    <div *ngIf="visitorForm.get('visitor_mobile')?.touched &&
+                      visitorForm.get('visitor_mobile')?.errors?.['required']" class="error-text">
+                        Phone number is required
+                    </div>
+                    <div *ngIf="visitorForm.get('visitor_mobile')?.touched &&
+                      visitorForm.get('visitor_mobile')?.errors?.['pattern']" class="error-text">
+                        Phone must be 10 digits
+                    </div>
+                </div>
+
+                <!-- Gate Select -->
+                <div class="inp-cont">
+                    <label class="medium-font">
+                        Gate <span class="required">*</span>
+                    </label>
+                    <select class="inp-cus regular-font" formControlName="gate">
+                        <option value="" disabled selected>Select Gate</option>
+                        <option *ngFor="let g of Gatelist2" [value]="g._id">
+                            {{ g.gate }}
+                        </option>
+                    </select>
+                    <div *ngIf="visitorForm.get('gate')?.touched &&
+                      visitorForm.get('gate')?.invalid" class="error-text">
+                        Gate is required
+                    </div>
+                </div>
+
+                <!-- Purpose -->
+                <div class="inp-cont">
+                    <label class="medium-font">
+                        Purpose of Visit <span class="required">*</span>
+                    </label>
+                    <input type="text" formControlName="purpose_of_visit" class="inp-cus regular-font"
+                        placeholder="Purpose of Visit" />
+                    <div *ngIf="visitorForm.get('purpose_of_visit')?.touched &&
+                      visitorForm.get('purpose_of_visit')?.invalid" class="error-text">
+                        Purpose is required
+                    </div>
+                </div>
+
+                <!-- Visitor Count -->
+                <div class="inp-cont">
+                    <label class="medium-font">
+                        Visitor Count <span class="required">*</span>
+                    </label>
+                    <input type="number" min="1" formControlName="visitor_count" class="inp-cus regular-font"
+                        placeholder="Enter Count" />
+                    <div *ngIf="visitorForm.get('visitor_count')?.touched &&
+                      visitorForm.get('visitor_count')?.invalid" class="error-text">
+                        Visitor count is required
+                    </div>
+                </div>
+
+                <!-- Gender -->
+                <div class="inp-cont">
+                    <label class="medium-font">
+                        Gender <span class="required">*</span>
+                    </label>
+                    <select class="inp-cus regular-font" formControlName="gender">
+                        <option value="" disabled>Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div *ngIf="visitorForm.get('gender')?.touched &&
+                      visitorForm.get('gender')?.invalid" class="error-text">
+                        Gender is required
+                    </div>
+                </div>
+
+                <!-- Exit Time -->
+                <div class="inp-cont">
+                    <label class="medium-font">
+                        Exit Time <span class="required">*</span>
+                    </label>
+
+                    <div class="date-input-wrapper">
+                        <input type="text" class="inp-cus placeholder-font" formControlName="ownedAt"
+                            placeholder="Select date" readonly (click)="openDatePicker()" />
+                        <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
+
+                        <input #hiddenDatePicker type="datetime-local" class="hidden-date-input"
+                            (change)="onDateSelected($event)" />
+                    </div>
+
+                    <div *ngIf="visitorForm.get('ownedAt')?.touched &&
+                      visitorForm.get('ownedAt')?.invalid" class="error-text">
+                        Exit time is required
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+        <!-- Submit Buttons -->
+        <div class="mb-3">
+            <button type="button" class="submit-btn" (click)="onSubmit()" *ngIf="!submitbtnloading">
+                Submit
+            </button>
+
+            <button type="button" class="submit-btn" style="cursor: not-allowed;" *ngIf="submitbtnloading">
+                Submitting...
+            </button>
+        </div>
+    </div>
+</section>

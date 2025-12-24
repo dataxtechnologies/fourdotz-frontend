@@ -42,6 +42,33 @@ export class AssociationServiceService {
   private ChangeRequeststatusSubject = new BehaviorSubject<any>(null);
   ChangeRequeststatusStatus$ = this.ChangeRequeststatusSubject.asObservable();
 
+  private GateCreateSubject = new BehaviorSubject<any>(null);
+  GateCreateStatus$ = this.GateCreateSubject.asObservable();
+
+
+  private GateKeeperSubject = new BehaviorSubject<any>(null);
+  GateKeeperStatus$ = this.GateKeeperSubject.asObservable();
+
+  private GateKeeperAssignedSubject = new BehaviorSubject<any>(null);
+  GateKeeperAssignedStatus$ = this.GateKeeperAssignedSubject.asObservable();
+
+
+  triggerGatekeeperAssigned(gatekeeper: any): void {
+    //console.log('addassociation', AddProperty);
+    this.GateKeeperAssignedSubject.next(gatekeeper);
+  }
+
+
+  triggerGatekeeperAdded(gatekeeper: any): void {
+    //console.log('addassociation', AddProperty);
+    this.GateKeeperSubject.next(gatekeeper);
+  }
+
+  triggerGateCreate(gatecreated: any): void {
+    //console.log('addassociation', AddProperty);
+    this.GateCreateSubject.next(gatecreated);
+  }
+
 
 
   triggerOwnerUpdate(OwnerUpdate: any): void {

@@ -17,7 +17,7 @@ export class PasswordOtpPageComponent implements OnInit {
   loginForm!: FormGroup;
   authtype = '';
   authvalue = '';
-  loginbtn = true;
+  processingbtn = false;
 
   constructor(
     private fb: FormBuilder,
@@ -62,7 +62,7 @@ export class PasswordOtpPageComponent implements OnInit {
   submit() {
     if (this.loginForm.invalid) return;
 
-    this.loginbtn = false;
+    this.processingbtn = true;
 
     if (this.authtype === 'password') {
       this.loginWithPassword();
@@ -82,18 +82,19 @@ export class PasswordOtpPageComponent implements OnInit {
 
     this.apiService.loginApi<any>(payload).subscribe({
       next: (res: any) => {
-        this.loginbtn = true;
-
+        
         if (res?.success) {
+          this.processingbtn = false;
           this.storeAuthData(res);
           this.toastr.success(res.message, 'Success');
           this.redirectUser(res.data.userType);
         } else {
+          this.processingbtn = false
           this.toastr.info(res.message, 'Information');
         }
       },
       error: (err: any) => {
-        this.loginbtn = true;
+        this.processingbtn = false;
 
         if (err.error?.error?.data?.update_password === false) {
           localStorage.setItem(
@@ -120,7 +121,7 @@ export class PasswordOtpPageComponent implements OnInit {
   verifyOtp() {
     const payload = {
       otp: (this.loginForm.value.otp).toString(),
-      otp_token: sessionStorage.getItem('otp_token')
+      otp_token: localStorage.getItem('otp_token')
     };
 
     console.log('payload', payload);
@@ -128,29 +129,30 @@ export class PasswordOtpPageComponent implements OnInit {
 
     this.apiService.VerifyOTPtoMObile(payload).subscribe({
       next: (res: any) => {
-        this.loginbtn = true;
-
+        
         if (res?.success) {
           const tokenData = res.data?.token;
           const userType = res.data?.userType;
           const user_id = res.data?.user_id;
-          sessionStorage.clear();
+          localStorage.clear();
           if (tokenData) {
             localStorage.setItem('access_token', tokenData.AccessToken);
             localStorage.setItem('refresh_token', tokenData.RefreshToken);
           }
           localStorage.setItem('user_type', userType);
           localStorage.setItem('user_id', user_id);
-
+          
+          this.processingbtn = false;
           this.toastr.success(res.message, 'Success');
           this.redirectUser(userType);
         } else {
+          this.processingbtn = false
           this.toastr.info(res.message, 'Information');
         }
       },
       error: (err: any) => {
-        this.loginbtn = true;
-        sessionStorage.clear();
+        this.processingbtn = false;
+        // localStorage.clear();
         if (err.error?.error?.data?.update_password === false) {
           localStorage.setItem('session_key', err.error.error.data.session_key);
           this.router.navigateByUrl(`/auth/Change-password/${this.authvalue}`);

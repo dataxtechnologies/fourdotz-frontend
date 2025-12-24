@@ -112,7 +112,7 @@ export class SigninPageNewComponent {
             this.loginbtbloading = false;
             const otp_token = res.data;
             const stringOTP = otp_token.toString();
-            sessionStorage.setItem('otp_token', stringOTP);
+            localStorage.setItem('otp_token', stringOTP);
 
             this.router.navigateByUrl(
               `/auth/user-authentication/${this.authtype}/${this.authvalue}`
@@ -146,5 +146,9 @@ export class SigninPageNewComponent {
         `/auth/user-authentication/password/${this.authvalue}`
       );
     }
+  }
+
+    forgetpassscreen(): void {
+    this.route.navigateByUrl('/auth/forget-password');
   }
 }

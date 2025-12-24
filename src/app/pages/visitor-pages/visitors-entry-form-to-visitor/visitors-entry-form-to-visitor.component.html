@@ -95,15 +95,24 @@
 
                         <!-- Gate No -->
                         <div class="input-box">
-                            <label class="details medium-font">Gate No<span class="required">*</span></label>
-                            <input type="text" class="inp-cus regular-font" formControlName="gate_no"
-                                placeholder="Enter Gate No" />
+                            <label class="details medium-font">
+                                Gate No<span class="required">*</span>
+                            </label>
+
+                            <select class="inp-cus regular-font" formControlName="gate_no">
+                                <option value="" disabled selected>Select Gate No</option>
+
+                                <option *ngFor="let gate of Gatelist2" [value]="gate._id">
+                                    {{ gate.gate }}
+                                </option>
+                            </select>
 
                             <span class="error-text regular-font"
                                 *ngIf="visitorForm.get('gate_no')?.touched && visitorForm.get('gate_no')?.invalid">
                                 Gate Number is required.
                             </span>
                         </div>
+
 
                         <!-- Visitor Count -->
                         <div class="input-box">

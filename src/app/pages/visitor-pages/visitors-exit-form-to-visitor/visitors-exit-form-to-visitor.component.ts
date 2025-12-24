@@ -19,16 +19,26 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class VisitorsExitFormToVisitorComponent implements OnInit {
   visitorForm!: FormGroup;
+  Gatelist2: any
 
   constructor(
     private fb: FormBuilder,
     private apiService: ApiserviceService,
     private Toast: ToastrService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
+
+    this.listGate();
+    // React to visitor_unique_id change
+    this.route.params.subscribe((params) => {
+      this.visitorForm
+        .get('visitor_unique_id')
+        ?.setValue(params['visitorUniqueId']);
+    });
 
     // React to exit_status change
     this.visitorForm.get('exit_status')?.valueChanges.subscribe((status) => {
@@ -70,27 +80,46 @@ export class VisitorsExitFormToVisitorComponent implements OnInit {
     }
 
     const payload = {
-      visitor_unique_id: form.visitor_unique_id,
+      visitor_no: form.visitor_unique_id,
       exit_status: form.exit_status,
       exit_time: finalExitTime,
+      gate: form.gate_no,
+      extension_time: form.exit_time,
     };
 
     console.log('Payload Sent:', payload);
 
-    // this.apiService.SubmitVisitorExit<any>(payload).subscribe({
-    //   next: (res: any) => {
-    //     if (res?.success) {
-    //       this.Toast.success(res.message, 'Success');
-    //       this.visitorForm.reset();
-    //       this.router.navigateByUrl('/exit-form-submitted');
-    //     } else {
-    //       this.Toast.warning(res.message, 'Warning');
-    //     }
-    //   },
-    //   error: (err: any) => {
-    //     console.error('API Error:', err);
-    //     this.Toast.error('Something went wrong', 'Failed');
-    //   },
-    // });
+    this.apiService.ExitQRVisitor<any>(payload).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.Toast.success(res.message, 'Success');
+          this.visitorForm.reset();
+          this.router.navigateByUrl('/exit-form-submitted');
+        } else {
+          this.Toast.warning(res.message, 'Warning');
+        }
+      },
+      error: (err: any) => {
+        console.error('API Error:', err);
+        this.Toast.error('Something went wrong', 'Failed');
+      },
+    });
+  }
+
+   listGate() {
+    this.apiService.listGate<any>().subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.Gatelist2 = res.data;
+        } else {
+          this.Gatelist2 = [];
+        }
+      },
+      error: (err) => {
+        console.log('err', err.error.message);
+        this.Gatelist2 = [];
+        console.log('err', err);
+      },
+    });
   }
 }

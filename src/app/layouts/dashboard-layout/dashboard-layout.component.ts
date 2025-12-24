@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   Router,
-  RouterLink,
   NavigationEnd,
   RouterOutlet,
+  RouterModule,
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ApiserviceService } from '../../services/api/apiservice.service';
@@ -23,8 +23,8 @@ import { OwnerServiceService } from '../../services/owner/owner-service.service'
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterLink,
     RouterOutlet,
+    RouterModule,
   ],
   templateUrl: './dashboard-layout.component.html',
   styleUrl: './dashboard-layout.component.css',
@@ -45,73 +45,81 @@ export class DashboardLayoutComponent {
     private router: Router,
     private apiService: ApiserviceService,
     private toastr: ToastrService,
-    private ModalService: ModalService,
-    private OwnerService: OwnerServiceService
+    private modalService: ModalService,
+    private ownerService: OwnerServiceService
   ) {
-    // Track route
+    // 🔥 Route tracking + submenu auto-open
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
+      .subscribe((event: NavigationEnd) => {
         this.currentRoute = event.urlAfterRedirects;
+
+        this.sidebarItems.forEach((item) => {
+          if (item.children) {
+            item.open = item.children.some(
+              (child) => child.route === this.currentRoute
+            );
+          }
+        });
       });
   }
 
   ngOnInit(): void {
     if (!this.access_token || !this.user_type) {
       this.clearSessionAndRedirect('Session invalid. Please log in.');
-    } else {
-      this.getUserData(this.user_type);
+      return;
     }
 
-    this.OwnerService.OwnerUpiIdUpdatedStatus$.subscribe((UpdateUPI) => {
-      if (UpdateUPI) {
+    this.getUserData(this.user_type);
+
+    this.ownerService.OwnerUpiIdUpdatedStatus$.subscribe((updated) => {
+      if (updated) {
         this.getUserData(this.user_type);
       }
     });
 
-    this.adjustSidebarForScreen(); // run on page load
+    this.adjustSidebarForScreen();
   }
 
-  // Toggle sidebar
+  // ✅ Sidebar toggle
   toggleSidebar() {
     this.sidebarClosed = !this.sidebarClosed;
 
-    // NEW 🔥 If sidebar shrinks → close all submenus
     if (this.sidebarClosed) {
       this.sidebarItems.forEach((item) => (item.open = false));
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  // ✅ FIXED HostListener (NO ERROR)
+  @HostListener('window:resize')
   onResize() {
     this.adjustSidebarForScreen();
   }
 
   adjustSidebarForScreen() {
-    if (window.innerWidth < 1024) {
-      // Auto collapse for tablet + mobile
-      this.sidebarClosed = true;
-    } else {
-      // Desktop normal
-      this.sidebarClosed = false;
-    }
+    this.sidebarClosed = window.innerWidth < 1024;
   }
 
-  // NEW 🔥 toggle submenu
-  toggleSubmenu(item: SidebarItem) {
-    item.open = !item.open;
+  // ✅ ONE submenu at a time
+  toggleSubmenu(clickedItem: SidebarItem) {
+    this.sidebarItems.forEach((item) => {
+      if (item !== clickedItem) {
+        item.open = false;
+      }
+    });
+
+    clickedItem.open = !clickedItem.open;
   }
 
-  // Footer show/hide on scroll
-  @HostListener('window:scroll', [])
+  @HostListener('window:scroll')
   onWindowScroll(): void {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const windowHeight = window.innerHeight;
     const docHeight = document.documentElement.scrollHeight;
 
-    const IS_NEAR_BOTTOM = windowHeight + scrollTop + 100 >= docHeight;
+    const isNearBottom = windowHeight + scrollTop + 100 >= docHeight;
 
-    if (IS_NEAR_BOTTOM) {
+    if (isNearBottom) {
       clearTimeout(this.footerTimeout);
       this.showFooter = true;
     } else {
@@ -126,55 +134,28 @@ export class DashboardLayoutComponent {
     this.router.navigateByUrl('Account/profile');
   }
 
-  logout(): void {
+  logout() {
     this.apiService.logoutApi<any>().subscribe({
-      next: (res: any) => {
-        if (res?.success) {
-          this.clearSessionAndRedirect(
-            res.message || 'Logged out successfully'
-          );
-        } else {
-          this.toastr.error(res.message || 'Logout failed', 'Failed');
-        }
+      next: (res) => {
+        this.clearSessionAndRedirect(res?.message || 'Logged out');
       },
-      error: (err: any) => {
-        this.toastr.error(
-          err?.error?.error?.message || 'Logout failed',
-          'Failed'
-        );
+      error: () => {
         this.clearSessionAndRedirect();
       },
     });
   }
 
-  public getUserData(data: any) {
-    if (this.user_type === 'association') {
-      this.loadingUserData = true;
-    }
+  getUserData(type: any) {
+    this.loadingUserData = true;
 
-    this.apiService.UserInfo<any>(data).subscribe({
-      next: (res: any) => {
+    this.apiService.UserInfo<any>(type).subscribe({
+      next: (res) => {
         if (res?.success) {
-          const userdata = res.data;
-          localStorage.setItem('userdata', JSON.stringify(userdata));
-
-          if (this.user_type === 'association') {
-            if (userdata.document_uploaded === false) {
-              this.router.navigateByUrl('/onboarding/user-data');
-            }
-          } else if (this.user_type === 'owner') {
-            if (userdata.upi_submit_status === false) {
-              this.UPIidAddModal();
-            }
-          }
+          localStorage.setItem('userdata', JSON.stringify(res.data));
         }
-
         this.loadingUserData = false;
       },
-
-      error: (err: any) => {
-        this.loadingUserData = false;
-      },
+      error: () => (this.loadingUserData = false),
     });
   }
 
@@ -185,27 +166,18 @@ export class DashboardLayoutComponent {
   }
 
   logoutmodal() {
-    this.ModalService.open(LogoutModalComponent, {
-      modal: {
-        enter: 'enter-going-down 0.3s ease-out',
-        leave: 'fade-out 0.5s',
-      },
+    this.modalService.open(LogoutModalComponent, {
+      modal: { enter: 'enter-going-down 0.3s', leave: 'fade-out 0.5s' },
       overlay: { leave: 'fade-out 0.5s' },
       actions: { click: false, escape: false },
     });
   }
 
   UPIidAddModal() {
-    this.ModalService.open(AddUPIIdComponent, {
-      modal: {
-        enter: 'enter-going-down 0.3s ease-out',
-        leave: 'fade-out 0.5s',
-      },
+    this.modalService.open(AddUPIIdComponent, {
+      modal: { enter: 'enter-going-down 0.3s', leave: 'fade-out 0.5s' },
       overlay: { leave: 'fade-out 0.5s' },
-      actions: {
-        click: false,
-        escape: false,
-      },
+      actions: { click: false, escape: false },
     });
   }
 }

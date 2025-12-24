@@ -297,6 +297,16 @@ main p {
     transform: rotate(180deg);
 }
 
+/* Parent submenu highlight when open */
+.submenu > .submenu-title {
+  transition: background-color 0.3s ease;
+}
+
+.submenu > .submenu-title.active-parent {
+  background-color: #deb1e3;
+  border-radius: 8px;
+}
+
 /* Toggle button */
 #toggle-btn {
     margin-left: auto;

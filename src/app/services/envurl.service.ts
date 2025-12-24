@@ -112,6 +112,19 @@ export class EnvurlService {
   public ListpropertybasedonAssociationIdtoVisitors = '/property/list_all_resident_property'
   public CreateVisitorEntry = '/visitors/create_visitor_entry'
   public ListAllVisitors = '/visitors/list_all_visitor'
+  public ExitQRVisitor = '/visitors/visitor_exit_history'
+
+
+  // gate and gate keeper
+  public Listgatekeeper = '/gate_keeper/list_gate_keeper'
+  public GateKeeperCreate = '/gate_keeper/create_gate_keeper'
+  public CreateGate = '/gate/create_gate'
+  public listGate = '/gate/list_gate'
+  public AssignGateKeeper = '/assigned_gatekeeper/assign_gatekeeper'
+  public UnassignGateKeeper = '/assigned_gatekeeper/unassign_gatekeeper'
+  public GetPropertyData = '/property/list_resident_property_gatekeeper'
+  public AddSpotVisitorinGateKeeper = '/visitors/gate_visitors_entry'
+  public VisitorExit = '/visitors/visitor_exit'
 
 
 

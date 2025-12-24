@@ -71,6 +71,12 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         route: '/Association/manage-helpers/gate-keeper',
         allowedRole: 'association',
       },
+      {
+        label: 'Service Admin',
+        icon: '/assets/icons/ai-users1.svg',
+        route: '/Association/service-admin/list',
+        allowedRole: 'association',
+      },
       // {
       //   label: 'Service Admin List',
       //   icon: '/assets/icons/ai-users.svg',
@@ -93,12 +99,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         route: '/Association/request-management/list',
         allowedRole: 'association',
       },
-      {
-        label: 'Service Admin List',
-        icon: '/assets/icons/ai-users1.svg',
-        route: '/Association/service-admin/list',
-        allowedRole: 'association',
-      },
+      
     ],
     //activeicon: ''
   },
@@ -186,6 +187,13 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     //activeicon: ''
   },
   {
+    label: 'Pre-Visitor',
+    icon: '/assets/icons/pre-visitor.svg',
+    route: '/Owner/pre-visitor/list',
+    allowedRole: 'owner',
+    //activeicon: ''
+  },
+  {
     label: 'Dashboard',
     icon: '/assets/icons/grids1.svg',
     route: '/Tenant/Dashboard',
@@ -253,6 +261,12 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         label: 'Pre-visitors List',
         icon: '/assets/icons/pre-visitor.svg',
         route: '/Gate-keeper/visitors-management/pre-visitors-list',
+        allowedRole: 'gate_keeper',
+      },
+      {
+        label: 'QR-visitors List',
+        icon: '/assets/icons/qr-scan.svg',
+        route: '/Gate-keeper/visitors-management/qr-visitors-list',
         allowedRole: 'gate_keeper',
       },
     ],

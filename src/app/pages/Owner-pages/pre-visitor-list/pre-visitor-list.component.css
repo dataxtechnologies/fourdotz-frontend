@@ -1,0 +1,124 @@
+.container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 0 !important;
+    
+}
+
+.item:nth-child(1),
+.item:nth-child(2) {
+    flex-grow: 1;
+}
+
+.item:nth-child(3) {
+    width: 100%;
+}
+
+.table-cont {
+    background-color: #faf9f4;
+    padding: 10px;
+    border-radius: 12px !important;
+}
+
+.styled-table thead {
+    background-color: #ddd;
+}
+
+.head-cont {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.header-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.new-cards {
+    background: #fff;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    max-width: 280px !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 10px;
+}
+
+.item h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.item p {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color2);
+    /* fallback green */
+    margin: 0;
+}
+
+
+
+.btn-add {
+    color: var(--primary-color1);
+    font-weight: 700;
+    padding: 10px 8px;
+    background: #faf9f4 !important;
+    border-radius: 12px !important;
+    border: 2px solid var(--primary-color1);
+}
+
+
+tbody td i {
+    color: var(--primary-color1);
+}
+
+
+@media (max-width: 768px) {
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+        text-align: right;
+        white-space: nowrap;
+    }
+}
+
+
+.visitor-details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    justify-content: center;
+}
+
+.visitor-data{
+    display: flex;
+    gap: 5px;
+    font-size: 14px;
+    color: #777;
+}
+
+.action-btn{
+    color: var(--primary-color1);
+    font-weight: bold;
+    border: 2px solid var(--primary-color1);
+    padding: 4px 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    border-radius: 12px;
+    background-color: #fff;
+
+
+}

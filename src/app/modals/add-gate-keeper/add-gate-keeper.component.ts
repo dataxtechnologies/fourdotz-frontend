@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ToastrService } from 'ngx-toastr';
+import { AssociationServiceService } from '../../services/association/association-service.service';
 
 @Component({
   selector: 'app-add-gate-keeper',
@@ -24,7 +25,8 @@ export class AddGateKeeperComponent implements OnInit {
     private fb: FormBuilder,
     private modal: ModalService,
     private apiService: ApiserviceService,
-    private Toast: ToastrService
+    private Toast: ToastrService,
+    private associationService: AssociationServiceService
   ) {}
 
   ngOnInit(): void {
@@ -59,21 +61,23 @@ export class AddGateKeeperComponent implements OnInit {
       }
     };
 
-    // this.apiService.AddGateKeeper(payload).subscribe({
-    //   next: (res: any) => {
-    //     this.submitbtn = true;
-    //     if (res?.success) {
-    //       this.Toast.success(res.message, 'Success');
-    //       this.closeModal();
-    //     } else {
-    //       this.Toast.warning(res.message, 'Warning');
-    //     }
-    //   },
-    //   error: (err: any) => {
-    //     this.submitbtn = true;
-    //     this.Toast.error(err?.error?.message || 'Failed to add Gate Keeper', 'Error');
-    //   }
-    // });
+    this.apiService.GateKeeperCreate(payload).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.submitbtn = true;
+          this.associationService.triggerGatekeeperAdded(res.data);
+          this.Toast.success(res.message, 'Success');
+          this.closeModal();
+        } else {
+          this.submitbtn = true;
+          this.Toast.warning(res.message, 'Warning');
+        }
+      },
+      error: (err: any) => {
+        this.submitbtn = true;
+        this.Toast.error(err?.error?.message || 'Failed to add Gate Keeper', 'Error');
+      }
+    });
   }
 
   isInvalid(controlName: string) {

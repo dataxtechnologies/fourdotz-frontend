@@ -7,6 +7,8 @@ import { TableService } from '../../../services/tableservice.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
+import { SpotVisitorEntryComponent } from '../../../modals/spot-visitor-entry/spot-visitor-entry.component';
+import { VisitorExitFormComponent } from '../../../modals/visitor-exit-form/visitor-exit-form.component';
 
 @Component({
   selector: 'app-gate-keeper-visitor-list',
@@ -42,20 +44,39 @@ export class GateKeeperVisitorListComponent {
     }
     this.ListVisitorinGateKeeper('gate_visitor_entry');
 
-    this.AssociationService.PropertyStatus$.subscribe((AddProperty) => {
-      if (AddProperty) {
+    this.AssociationService.GateKeeperStatus$.subscribe((gatekeeper) => {
+      if (gatekeeper) {
         this.ListVisitorinGateKeeper('gate_visitor_entry');
       }
     });
   }
 
-  Addproperty() {
-    this.ModalService.open(AddPropertyComponent, {
+  SpotVisitorEntry() {
+    this.ModalService.open(SpotVisitorEntryComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
+     
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+
+  VisitorExit(data: any) {
+    this.ModalService.open(VisitorExitFormComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+       data:{
+        visitorNo: data
+      },
       actions: {
         click: false,
         escape: false,

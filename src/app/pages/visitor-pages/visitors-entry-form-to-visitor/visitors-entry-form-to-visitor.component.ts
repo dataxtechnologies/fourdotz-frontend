@@ -21,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
 export class VisitorsEntryFormToVisitorComponent implements OnInit {
   visitorForm!: FormGroup;
   associationId: any;
+  Gatelist2: any
 
   dropdownOpen = false;
   selectedProperty: string | null = null;
@@ -41,6 +42,8 @@ export class VisitorsEntryFormToVisitorComponent implements OnInit {
     // Extract associationId from URL
     this.associationId = this.route.snapshot.paramMap.get('associationId');
     console.log('Association ID:', this.associationId);
+
+    this.listGate()
 
     // Load association properties
     this.ListpropertybasedonAssociationIdtoVisitors();
@@ -151,6 +154,23 @@ export class VisitorsEntryFormToVisitorComponent implements OnInit {
       error: (err: any) => {
         console.error('API Error:', err);
         this.Toast.error(err.error.error.message, 'Failed');
+      },
+    });
+  }
+
+     listGate() {
+    this.apiService.listGate<any>().subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.Gatelist2 = res.data;
+        } else {
+          this.Gatelist2 = [];
+        }
+      },
+      error: (err) => {
+        console.log('err', err.error.message);
+        this.Gatelist2 = [];
+        console.log('err', err);
       },
     });
   }

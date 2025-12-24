@@ -38,7 +38,7 @@
                                 </thead>
 
                                 <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                    <ng-container *ngIf="gates.length === 0; else datashow">
+                                    <ng-container *ngIf="GateKeeperlist2.length === 0; else datashow">
                                         <tr>
                                             <td colspan="6" class="regular-font"
                                                 style="text-align: center; color: gray;">
@@ -48,15 +48,15 @@
                                     </ng-container>
 
                                     <ng-template #datashow>
-                                        <tr *ngFor="let k of gateKeepers">
+                                        <tr *ngFor="let k of GateKeeperlist1.paginatedData">
                                             <td>{{ k.name }}</td>
-                                            <td>{{ k.phone }}</td>
+                                            <td>{{ k.mobile }}</td>
                                             <td>{{ k.email }}</td>
-                                            <td>{{ k.assigned_gate }}</td>
+                                            <td>{{ k.assigned_gate || '--'}}</td>
                                             <td class="table-last">
                                                 <div>
-                                                    <button class="btn-add" (click)="AssignGates()">Assign Gate</button>
-                                                    <button class="btn-add">Unassign Gate</button>
+                                                    <button class="btn-add" (click)="AssignGates(k)" *ngIf="!k.assigned_gate">Assign Gate</button>
+                                                    <button class="btn-add" (click)="unAssignGates(k)" *ngIf="k.assigned_gate">Unassign Gate</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -140,14 +140,12 @@
                                 <thead>
                                     <tr>
                                         <th class="medium-font">Gate No.</th>
-                                        <th class="medium-font">Gate Keeper</th>
-                                        <th class="medium-font">Gate Keeper Phone</th>
                                         <th class="medium-font table-last">Action</th>
                                     </tr>
                                 </thead>
 
                                 <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                    <ng-container *ngIf="gates.length === 0; else datashow">
+                                    <ng-container *ngIf="Gatelist2.length === 0; else datashow">
                                         <tr>
                                             <td colspan="6" class="regular-font"
                                                 style="text-align: center; color: gray;">
@@ -157,10 +155,8 @@
                                     </ng-container>
 
                                     <ng-template #datashow>
-                                        <tr *ngFor="let g of gates">
-                                            <td>{{ g.gateNo }}</td>
-                                            <td>{{ g.keeper }}</td>
-                                            <td>{{ g.phone }}</td>
+                                        <tr *ngFor="let g of Gatelist1.paginatedData">
+                                            <td>{{ g.gate }}</td>
                                             <td class="table-last">
                                                 <div>
                                                     <button class="btn-add">Delete Gate</button>

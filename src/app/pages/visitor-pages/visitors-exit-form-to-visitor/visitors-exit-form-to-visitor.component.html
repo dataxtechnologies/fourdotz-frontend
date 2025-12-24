@@ -21,11 +21,30 @@
                             <label class="details medium-font">Visitor Unique ID <span class="required">*</span></label>
 
                             <input type="text" class="inp-cus regular-font" formControlName="visitor_unique_id"
-                                placeholder="Enter your unique ID" />
+                                placeholder="Enter your unique ID" readonly/>
 
                             <span class="error-text regular-font"
                                 *ngIf="visitorForm.get('visitor_unique_id')?.touched && visitorForm.get('visitor_unique_id')?.invalid">
                                 Visitor Unique ID is required.
+                            </span>
+                        </div>
+
+                        <div class="input-box">
+                            <label class="details medium-font">
+                                Gate No<span class="required">*</span>
+                            </label>
+
+                            <select class="inp-cus regular-font" formControlName="gate_no">
+                                <option value="" disabled selected>Select Gate No</option>
+
+                                <option *ngFor="let gate of Gatelist2" [value]="gate.gate">
+                                    {{ gate.gate }}
+                                </option>
+                            </select>
+
+                            <span class="error-text regular-font"
+                                *ngIf="visitorForm.get('gate_no')?.touched && visitorForm.get('gate_no')?.invalid">
+                                Gate Number is required.
                             </span>
                         </div>
 

@@ -17,6 +17,7 @@ export class ForgetPasswordComponent {
   loadingOtp = false;
   loadingSubmit = false;
   showPasswordField = false;
+  otptoken : any
 
   constructor(
     private fb: FormBuilder,
@@ -25,22 +26,24 @@ export class ForgetPasswordComponent {
     private toast: ToastrService
   ) {
     this.forgetForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       otp: ['', [Validators.required, Validators.minLength(4)]],
       newPassword: ['', [Validators.minLength(6)]]
     });
   }
 
+
+  
   /** 🔹 Send OTP */
   sendOtp() {
-    if (this.forgetForm.get('email')?.invalid) {
-      this.forgetForm.get('email')?.markAsTouched();
-      this.toast.warning('Please enter a valid email before sending OTP.');
+    if (this.forgetForm.get('username')?.invalid) {
+      this.forgetForm.get('username')?.markAsTouched();
+      this.toast.warning('Please enter a valid email or Phone before sending OTP.');
       return;
     }
 
-    const email = this.forgetForm.get('email')?.value;
-    const payload = { email };
+    const username = this.forgetForm.get('username')?.value;
+    const payload = { username };
 
     this.loadingOtp = true;
 
@@ -50,7 +53,7 @@ export class ForgetPasswordComponent {
         if (res?.success) {
           this.toast.success(res.message || 'OTP sent successfully!');
           this.showPasswordField = true;
-
+          this.otptoken = res.data;
           // Make password field required only after OTP sent
           this.forgetForm.get('newPassword')?.addValidators(Validators.required);
           this.forgetForm.get('newPassword')?.updateValueAndValidity();
@@ -76,8 +79,9 @@ export class ForgetPasswordComponent {
     this.loadingSubmit = true;
 
     const payload = {
-      email: this.forgetForm.get('email')?.value,
-      code: this.forgetForm.get('otp')?.value,
+      username: this.forgetForm.get('username')?.value,
+      otp: this.forgetForm.get('otp')?.value,
+      otp_token: this.otptoken,
       password: this.forgetForm.get('newPassword')?.value
     };
 
@@ -121,6 +125,9 @@ export class ForgetPasswordComponent {
             case 'tenant':
               this.route.navigateByUrl('/Tenant/Dashboard');
               break;
+               case 'gate_keeper':
+        this.route.navigateByUrl('/Gate-keeper/visitors-management/visitors-list');
+        break;
             default:
               //console.warn('Unknown user type:', userType);
               this.route.navigateByUrl('/');
@@ -132,7 +139,9 @@ export class ForgetPasswordComponent {
       },
       error: (err: any) => {
         this.loadingSubmit = false;
-        this.toast.error(err?.error?.message || 'Something went wrong.');
+        console.log('errr', err);
+        
+        this.toast.error(err?.error?.error.message || 'Something went wrong.');
       }
     });
   }

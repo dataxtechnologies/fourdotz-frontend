@@ -56,6 +56,9 @@ import { GateKeeperPreVisitorComponent } from './pages/gate-keeper-pages/gate-ke
 import { GateKeeperGatesComponent } from './pages/association-pages/manage-helpers/gate-keeper-gates/gate-keeper-gates.component';
 import { PreVisitorsComponent } from './pages/association-pages/manage-visitors/pre-visitors/pre-visitors.component';
 import { SpotVisitorsComponent } from './pages/association-pages/manage-visitors/spot-visitors/spot-visitors.component';
+import { GateKeeperQrVisitorComponent } from './pages/gate-keeper-pages/gate-keeper-qr-visitor/gate-keeper-qr-visitor.component';
+import { PreVisitorListComponent } from './pages/Owner-pages/pre-visitor-list/pre-visitor-list.component';
+import { VisitorExitedScreenComponent } from './pages/visitor-pages/visitor-exited-screen/visitor-exited-screen.component';
 
 export const routes: Routes = [
   {
@@ -135,7 +138,10 @@ export const routes: Routes = [
       { path: 'properties-list', component: PropertyListComponent },
       { path: 'residents-list', component: ResidentsListComponent },
       { path: 'Maintenance-list', component: MaintenanceListComponent },
-      { path: 'manage-helpers/gate-keeper', component: GateKeeperGatesComponent },
+      {
+        path: 'manage-helpers/gate-keeper',
+        component: GateKeeperGatesComponent,
+      },
       {
         path: 'request-management/list',
         component: ListRequestsAssociationComponent,
@@ -171,6 +177,7 @@ export const routes: Routes = [
       { path: 'Rental-invoice-list', component: OwnerRentalInvoiceComponent },
       { path: 'announcement/owner', component: AnnouncementsPageComponent },
       { path: 'request-management/list', component: ListRequestsUserComponent },
+      { path: 'pre-visitor/list', component: PreVisitorListComponent },
       {
         path: 'view-properties/:propertiesId',
         component: OwnerViewPropertyComponent,
@@ -271,7 +278,11 @@ export const routes: Routes = [
     component: VisitorsEntryFormSubmittedComponent,
   },
   {
-    path: 'visitor-exit-form-submitted',
+    path: 'exit-form-submitted',
+    component: VisitorExitedScreenComponent,
+  },
+  {
+    path: 'visitor-exit-form-submitted/:visitorUniqueId',
     component: VisitorsExitFormToVisitorComponent,
   },
 
@@ -280,19 +291,25 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardLayoutNewComponent,
-    children: [
-      { path: 'dashboard', component: SuperadminDashboardComponent },
-     
-    ],
+    children: [{ path: 'dashboard', component: SuperadminDashboardComponent }],
   },
 
   {
     path: 'Gate-keeper',
     component: DashboardLayoutNewComponent,
     children: [
-      { path: 'visitors-management/visitors-list', component: GateKeeperVisitorListComponent },
-      { path: 'visitors-management/pre-visitors-list', component: GateKeeperPreVisitorComponent },
-     
+      {
+        path: 'visitors-management/visitors-list',
+        component: GateKeeperVisitorListComponent,
+      },
+      {
+        path: 'visitors-management/pre-visitors-list',
+        component: GateKeeperPreVisitorComponent,
+      },
+      {
+        path: 'visitors-management/qr-visitors-list',
+        component: GateKeeperQrVisitorComponent,
+      },
     ],
-  }
+  },
 ];
