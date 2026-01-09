@@ -19,6 +19,7 @@ export class ListRequestsUserComponent {
   requestlist2: any[] = [];
   pages: any;
   tableLoading: boolean = true;
+  residentType : any
 
   constructor(
     private Modal: ModalService,
@@ -31,6 +32,7 @@ export class ListRequestsUserComponent {
 
   ngOnInit(): void {
     this.ListRequestUser();
+    this.getOwnerProperties();
 
     this.OwnerService.RequestUserStatus$.subscribe((res: any) => {
       if (res?.success) {
@@ -49,6 +51,21 @@ export class ListRequestsUserComponent {
 
   openLink(url: string) {
     window.open(url, '_blank');
+  }
+
+    getOwnerProperties() {
+    this.apiService.ownerproperties<any>().subscribe({
+      next: (res: any) => {
+        if (res?.success && Array.isArray(res.data)) {
+          this.residentType = res.data[0].resident_type;
+        } else {
+          
+        }
+      },
+      error: () => {
+        
+      },
+    });
   }
 
   OpenViewRequest(data: any) {

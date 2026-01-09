@@ -62,7 +62,7 @@
 
             <!-- Submit -->
             <div class="form-actions">
-                <button class="submit-btn" type="submit" *ngIf="!btnloading" [disabled]="maintenanceForm.invalid">
+                <button class="submit-btn" type="submit" *ngIf="!btnloading" >
                     Generate
                 </button>
                 <button class="submit-btn" type="button" style="cursor: not-allowed;" [disabled]="maintenanceForm.invalid" *ngIf="btnloading">

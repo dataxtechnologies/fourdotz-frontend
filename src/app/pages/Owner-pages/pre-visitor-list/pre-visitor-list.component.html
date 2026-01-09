@@ -2,7 +2,15 @@
     <div>
         <div class="container header-cont">
             <div class="head-cont">
-                <h2>Pre Visitors List</h2>
+                <h2>Pre Visitors List
+                    <div class="tooltip-wrapper">
+                                    <img src="assets/icons/info-circle.svg" class="info-icon" alt="info" />
+
+                                    <div class="tooltip-box">
+    Pre-visitor entries can be added through the mobile app
+</div>
+                                </div>
+                </h2>
             </div>
             <div>
                 <!-- <button class="btn-add" (click)="Addproperty()">+ Add Properties</button> -->
@@ -21,7 +29,7 @@
                                     <th class="medium-font">Resident Details</th>
                                     <th class="medium-font">Purpose</th>
                                     <th class="medium-font">Status</th>
-                                    <th class="medium-font">Action</th>
+                                    <!-- <th class="medium-font">Action</th> -->
                                 </tr>
                             </thead>
 
@@ -53,11 +61,11 @@
                                         <td data-label="Invitation Status">
                                             {{ item.visitor_status}}
                                         </td>
-                                        <td (click)="VisitorExit(item.visitor_no)">
+                                        <!-- <td (click)="VisitorExit(item.visitor_no)">
                                             <button  class="action-btn">
                                                 Exit
                                             </button>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </ng-template>
                             </tbody>

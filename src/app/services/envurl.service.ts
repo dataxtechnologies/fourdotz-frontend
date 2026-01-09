@@ -120,6 +120,7 @@ export class EnvurlService {
   public GateKeeperCreate = '/gate_keeper/create_gate_keeper'
   public CreateGate = '/gate/create_gate'
   public listGate = '/gate/list_gate'
+  public listGateKeeper = '/gate/list_gates_gatekeeper'
   public AssignGateKeeper = '/assigned_gatekeeper/assign_gatekeeper'
   public UnassignGateKeeper = '/assigned_gatekeeper/unassign_gatekeeper'
   public GetPropertyData = '/property/list_resident_property_gatekeeper'
@@ -130,4 +131,22 @@ export class EnvurlService {
 
   // gate Keeper Endpoints
   public ListVisitorinGateKeeper = '/visitors/list_visitors'
+  public OwnerLoginPreVisitor = '/visitors/list_created_pre_visitor_entry'
+
+
+
+  // Agreements Endpoints
+  public ListAgreementTemplates = '/agreement_template/list_agreement_template'
+  public CreateAgreementTemplates = '/agreement_template/create_agreement_template'
+  public ListCreatedAgreements = '/agreement/list_created_agreement'
+  public listagreementTemplatesbyID = '/agreement_template/list_agreement_template_byid'
+  public listAgreementbyId = '/agreement_template/list_agreement_template_byid'
+  public CreateAgreementtosign = '/agreement/create_agreement'
+  public ViewCreatedAgreementbyId = '/agreement/list_agreement_byid'
+  public SendOTPforVerifySign = '/agreement/send_otp'
+  public VerifyOTPforSign = '/agreement/verify_otp'
+  public signAgreement = '/agreement/upload_signature'
+  public SendAgreement = '/agreement/generate_agreement'
+  public ListAgreementforusers = '/agreement/list_agreement'
+  public OwnerListTemplatebyAssociation = '/agreement_template/list_template_by_associationid'
 }

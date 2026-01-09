@@ -41,11 +41,11 @@ user_id = localStorage.getItem('user_id');
       this.associationId = parsedData._id; 
     } else {
     }
-    this.ListVisitorinGateKeeper('pre_visitor_entry');
+    this.ListVisitorinGateKeeper();
 
     this.AssociationService.GateKeeperStatus$.subscribe((gatekeeper) => {
       if (gatekeeper) {
-        this.ListVisitorinGateKeeper('pre_visitor_entry');
+        this.ListVisitorinGateKeeper();
       }
     });
   }
@@ -85,8 +85,8 @@ user_id = localStorage.getItem('user_id');
       });
     }
 
-  ListVisitorinGateKeeper(data: any) {
-    this.apiService.ListVisitorinGateKeeper<any>(data).subscribe({
+  ListVisitorinGateKeeper() {
+    this.apiService.OwnerLoginPreVisitor<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.spotvisitorlist2 = res.data;

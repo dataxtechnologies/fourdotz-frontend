@@ -5,7 +5,7 @@
         <div class="filters-left">
             <div class="head-btn">
                 <h2>Request Management</h2>
-                <button class="create-btn" (click)="OpenCreateRequest()">+ Create</button>
+                <button class="create-btn" (click)="OpenCreateRequest()" *ngIf="residentType === 'owner'">+ Create</button>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
             <div class="review-card" *ngFor="let item of requestlist1.paginatedData">
 
                 <div class="review-header">
-                    <span class="Request-heading medium-font">Request to Maintenance</span>
+                    <span class="Request-heading medium-font">Request to Maintenance <span class="work-status">{{ item.work_status }}</span></span>
 
                     <div class="d-flex gap-2 align-items-center">
                         <span class="date regular-font">
@@ -62,7 +62,7 @@
                     </div>
                 </div>
 
-                <h5 class="req-head medium-font">{{ item.title }}</h5>
+                <h5 class="req-head medium-font">{{ item.title }} </h5>
 
                 <p class="review-text regular-font">
                     {{ item.description }}

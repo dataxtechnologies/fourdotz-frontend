@@ -22,19 +22,19 @@ export class MaintenanceListComponent {
   pages: any;
   tableLoading: boolean = true;
   MaintenanceListAmount: any;
-  usertype = localStorage.getItem('user_type')
-filters = {
-  fromDate: '',
-  toDate: '',
-  status: '',
-  search: ''
-};
+  usertype = localStorage.getItem('user_type');
+  filters = {
+    fromDate: '',
+    toDate: '',
+    status: '',
+    search: '',
+  };
   constructor(
     private ModalService: ModalService,
     private route: Router,
     private apiService: ApiserviceService,
     private AssociationService: AssociationServiceService,
-    private Toast : ToastrService
+    private Toast: ToastrService
   ) {
     this.MaintenanceList1 = new TableService();
     this.MaintenanceList1.initialize(this.MaintenanceList2, 10);
@@ -55,46 +55,60 @@ filters = {
   }
 
   applyFilters() {
-  let filtered = [...this.MaintenanceList2]; // original data
+    let filtered = [...this.MaintenanceList2]; // original data
 
-  // 🔹 Filter by From Date
-  if (this.filters.fromDate) {
-    const from = new Date(this.filters.fromDate).getTime();
-    filtered = filtered.filter(item => new Date(item.created_time.$date).getTime() >= from);
+    // 🔹 From Date (start of day)
+    if (this.filters.fromDate) {
+      const from = new Date(this.filters.fromDate);
+      from.setHours(0, 0, 0, 0); // start of day
+
+      filtered = filtered.filter(
+        (item) => new Date(item.created_time.$date).getTime() >= from.getTime()
+      );
+    }
+
+    // 🔹 To Date (END of day) ✅ FIX
+    if (this.filters.toDate) {
+      const to = new Date(this.filters.toDate);
+      to.setHours(23, 59, 59, 999); // 🔥 end of day
+
+      filtered = filtered.filter(
+        (item) => new Date(item.created_time.$date).getTime() <= to.getTime()
+      );
+    }
+
+    // 🔹 Status
+    if (this.filters.status) {
+      filtered = filtered.filter(
+        (item) => this.getStatus(item) === this.filters.status
+      );
+    }
+
+    // 🔹 Search
+    if (this.filters.search?.trim()) {
+      const s = this.filters.search.toLowerCase();
+
+      filtered = filtered.filter(
+        (item) =>
+          item.resident_name?.toLowerCase().includes(s) ||
+          item.property_no?.toLowerCase().includes(s)
+      );
+    }
+
+    // 🔹 Reset Pagination
+    this.MaintenanceList1.initialize(filtered, 10);
   }
 
-  // 🔹 Filter by To Date
-  if (this.filters.toDate) {
-    const to = new Date(this.filters.toDate).getTime();
-    filtered = filtered.filter(item => new Date(item.created_time.$date).getTime() <= to);
-  }
-
-  // 🔹 Filter by Status
-  if (this.filters.status) {
-    filtered = filtered.filter(item => this.getStatus(item) === this.filters.status);
-  }
-
-  // 🔹 Search (name or property number)
-  if (this.filters.search.trim() !== '') {
-    const s = this.filters.search.toLowerCase();
-
-    filtered = filtered.filter(item =>
-      item.resident_name?.toLowerCase().includes(s) ||
-      item.property_id?.toLowerCase().includes(s)
+  viewInvoice(data: any) {
+    this.route.navigateByUrl(
+      `maintenance-invoice/${this.usertype}/${data}?status=paynow&&user=Association`
     );
   }
 
-  // Reset Pagination With Filtered Data
-  this.MaintenanceList1.initialize(filtered, 10);
-}
-
-  viewInvoice(data : any){
-    this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paynow&&user=Association`);
-  }
-
-
-  viewpaidInvoice(data : any){
-    this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paid&&user=Association`);
+  viewpaidInvoice(data: any) {
+    this.route.navigateByUrl(
+      `maintenance-invoice/${this.usertype}/${data}?status=paid&&user=Association`
+    );
   }
 
   isOverdue(createdDate: any): boolean {
@@ -108,31 +122,38 @@ filters = {
     return today > created;
   }
 
-  getStatus(item: any) {
-    const today = new Date().getTime();
-    const itemDate = new Date(item.created_time?.$date).getTime();
+getStatus(item: any): 'Paid' | 'Pending' | 'Overdue' | '' {
 
-    if (item.payment_status === true) {
-      return 'Paid';
-    } else if (item.payment_status === false) {
-      // Check if overdue based on date
-      return today > itemDate ? 'Overdue' : 'Pending';
-    } else {
-      return '';
-    }
+  // ✅ Paid always wins
+  if (item.payment_status === true) {
+    return 'Paid';
   }
 
+  // ✅ If not paid, decide by DUE DATE
+  if (item.payment_status === false && item.due_date) {
 
-    resetFilters() {
-  this.filters = {
-    fromDate: '',
-    toDate: '',
-    status: '',
-    search: ''
-  };
-  this.applyFilters();
+    // due_date format: "06-Jan-2026"
+    const due = new Date(item.due_date);
+    due.setHours(23, 59, 59, 999);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return today > due ? 'Overdue' : 'Pending';
+  }
+
+  return '';
 }
 
+  resetFilters() {
+    this.filters = {
+      fromDate: '',
+      toDate: '',
+      status: '',
+      search: '',
+    };
+    this.applyFilters();
+  }
 
   generateMaintenance() {
     this.ModalService.open(GenerateMaintenanceComponent, {
@@ -208,14 +229,14 @@ filters = {
         if (res?.success) {
           this.Toast.success(res.message);
         } else {
-           this.Toast.warning(res.message);
+          this.Toast.warning(res.message);
 
           // this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
-         this.Toast.error(err.err.error.message);
+        this.Toast.error(err.err.error.message);
 
         // this.tableLoading = false;
         //console.error('Logout failed:', err);

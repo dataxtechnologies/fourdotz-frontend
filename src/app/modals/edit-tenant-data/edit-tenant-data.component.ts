@@ -50,7 +50,7 @@ days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
   initForm() {
     this.tenantForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(2)]],
+      lastName: ['', [Validators.required, Validators.minLength(1)]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       rentedAt: ['', Validators.required],
@@ -63,8 +63,8 @@ days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
 
   patchTenantData(data: any) {
     const tenant = data?.tenant_details ?? {};
-    const rentedAtDate = data?.tenant_rented_at?.$date
-      ? new Date(data.tenant_rented_at.$date).toISOString().split('T')[0]
+    const rentedAtDate = data?.tenant_details.onboarded_time?.$date
+      ? new Date(data.tenant_details.onboarded_time.$date).toISOString().split('T')[0]
       : '';
 
     this.tenantForm.patchValue({
@@ -89,11 +89,11 @@ days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
     this.submitbtn = false;
 
        const payload = {
-      name: this.tenantForm.get('firstName')?.value,
-      last_name: this.tenantForm.get('lastName')?.value,
+      tenant_name: this.tenantForm.get('firstName')?.value,
+      tenant_last_name: this.tenantForm.get('lastName')?.value,
       email: this.tenantForm.get('email')?.value,
       mobile: this.tenantForm.get('phone')?.value,
-      rented_at: this.tenantForm.get('rentedAt')?.value,
+      tenant_rented_at: this.tenantForm.get('rentedAt')?.value,
       advance_amount: this.tenantForm.get('advancePaid')?.value,
       monthly_rent_amount: this.tenantForm.get('estimatedRent')?.value,
       monthly_rent_due_date: this.tenantForm.get('monthly_rent_due_date')?.value,

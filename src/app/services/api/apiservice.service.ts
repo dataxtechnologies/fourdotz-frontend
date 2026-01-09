@@ -1609,7 +1609,7 @@ export class ApiserviceService {
 
     // Use POST if sending payload
     return this.http
-      .put<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .put<T>(serviceURL, payload, { headers: this.getHeadersforFormdata() })
       .pipe(
         catchError((error) => {
           // 🔥 1. Handle 403 Unauthorized -> logout & redirect
@@ -2223,8 +2223,7 @@ export class ApiserviceService {
     );
   }
 
-
-  public ListVisitorinGateKeeper<T>(payload : any): Observable<T> {
+  public ListVisitorinGateKeeper<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.ListVisitorinGateKeeper
     }?type_of_visit=${payload}`;
@@ -2252,7 +2251,34 @@ export class ApiserviceService {
       })
     );
   }
+  public OwnerLoginPreVisitor<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.OwnerLoginPreVisitor
+    }`;
 
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
 
   public SendOTPtoMobile<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
@@ -2287,11 +2313,8 @@ export class ApiserviceService {
       );
   }
 
-
   public VerifyOTPtoMObile<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.verify_otp
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.verify_otp}`;
 
     // Use POST if sending payload
     return this.http
@@ -2320,7 +2343,6 @@ export class ApiserviceService {
         })
       );
   }
-
 
   public GateKeeperCreate<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
@@ -2356,9 +2378,7 @@ export class ApiserviceService {
   }
 
   public CreateGate<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.CreateGate
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CreateGate}`;
 
     // Use POST if sending payload
     return this.http
@@ -2388,11 +2408,8 @@ export class ApiserviceService {
       );
   }
 
-
   public listGate<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.listGate
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.listGate}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2418,6 +2435,34 @@ export class ApiserviceService {
     );
   }
 
+  public listGateKeeper<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.listGateKeeper
+    }`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
 
   public Listgatekeeper<T>(): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
@@ -2543,7 +2588,7 @@ export class ApiserviceService {
     );
   }
 
-   public AddSpotVisitorinGateKeeper<T>(payload: any): Observable<T> {
+  public AddSpotVisitorinGateKeeper<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.AddSpotVisitorinGateKeeper
     }`;
@@ -2576,8 +2621,7 @@ export class ApiserviceService {
       );
   }
 
-
-   public VisitorExit<T>(payload: any): Observable<T> {
+  public VisitorExit<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.VisitorExit
     }`;
@@ -2610,8 +2654,7 @@ export class ApiserviceService {
       );
   }
 
-
-   public ExitQRVisitor<T>(payload: any): Observable<T> {
+  public ExitQRVisitor<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.ExitQRVisitor
     }`;
@@ -2642,5 +2685,401 @@ export class ApiserviceService {
           }));
         })
       );
+  }
+
+  public ListAgreementTemplates<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.ListAgreementTemplates
+    }`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public CreateAgreementTemplates<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.CreateAgreementTemplates
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+  public ListCreatedAgreements<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.ListCreatedAgreements
+    }`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+  public listagreementTemplatesbyID<T>(payload : any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.listagreementTemplatesbyID
+    }?id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public listAgreementbyId<T>(payload : any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.listAgreementbyId
+    }?id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public ViewCreatedAgreementbyId<T>(payload : any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.ViewCreatedAgreementbyId
+    }?id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public CreateAgreementtosign<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.CreateAgreementtosign
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+  public SendOTPforVerifySign<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.SendOTPforVerifySign
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, {}, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+  public VerifyOTPforSign<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.VerifyOTPforSign
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+  public signAgreement<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.signAgreement
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+  public SendAgreement<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.SendAgreement
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+  public ListAgreementforusers<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.ListAgreementforusers
+    }`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public OwnerListTemplatebyAssociation<T>(payload : any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.OwnerListTemplatebyAssociation
+    }?hoa_admin_id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
   }
 }

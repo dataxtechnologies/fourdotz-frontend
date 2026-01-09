@@ -1,0 +1,128 @@
+.sign-layout {
+  display: flex;
+  gap: 20px;
+}
+
+.document {
+  flex: 2;
+  background: #FFFFFF;
+  padding: 20px;
+}
+
+.page-container .page {
+  background: #fff;
+  margin-bottom: 20px;
+}
+
+.fill-form {
+  flex: 1;
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+.field {
+  margin-bottom: 12px;
+}
+
+.field input {
+  width: 100%;
+  padding: 6px;
+}
+
+.apply {
+  background: #0d6efd;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+
+.variable {
+  background: #fff3cd;
+  border: 1px dashed #e0b800;
+  padding: 0 4px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.signature-field {
+  display: inline-block;
+  border-bottom: 2px solid #000;
+  padding: 8px 40px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+/* COMMON SIGNATURE BASE */
+.typed-signature {
+  display: inline-block;
+  font-size: 30px;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: #000;
+}
+
+/* Signature Fonts */
+.sig-alex-brush {
+  font-family: 'Alex Brush', cursive;
+}
+
+.sig-great-vibes {
+  font-family: 'Great Vibes', cursive;
+}
+
+.sig-dancing-script {
+  font-family: 'Dancing Script', cursive;
+}
+
+.sig-allura {
+  font-family: 'Allura', cursive;
+}
+
+.sig-satisfy {
+  font-family: 'Satisfy', cursive;
+}
+
+/* Signed state */
+.signature-field.signed {
+  border-bottom: none;
+  cursor: default;
+}/* COMMON SIGNATURE BASE */
+.typed-signature {
+  display: inline-block;
+  font-size: 30px;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: #000;
+}
+
+/* Signature Fonts */
+.sig-alex-brush {
+  font-family: 'Alex Brush', cursive;
+}
+
+.sig-great-vibes {
+  font-family: 'Great Vibes', cursive;
+}
+
+.sig-dancing-script {
+  font-family: 'Dancing Script', cursive;
+}
+
+.sig-allura {
+  font-family: 'Allura', cursive;
+}
+
+.sig-satisfy {
+  font-family: 'Satisfy', cursive;
+}
+
+.signature-field {
+  pointer-events: auto !important;
+  z-index: 10;
+  position: relative;
+}
+

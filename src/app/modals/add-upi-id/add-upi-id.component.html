@@ -16,18 +16,37 @@
         <form [formGroup]="upiForm" (ngSubmit)="confirmUPISubmit()">
             <div class="inp-cont">
                 <label class="medium-font" for="upiId">Enter your UPI ID: <Span class="required">*</Span></label>
-                <input id="upiId" type="text" formControlName="upiId" placeholder="e.g., john.doe@upi" class="inp-cus regular-font"
+                <input id="upiId" type="text" formControlName="upiId" placeholder="e.g., john.doe@upi"
+                    class="inp-cus regular-font"
                     [class.invalid]="upiForm.get('upiId')?.invalid && upiForm.get('upiId')?.touched" />
 
                 <!--  Validation Errors -->
                 <small class="error-text regular-font"
                     *ngIf="upiForm.get('upiId')?.touched && upiForm.get('upiId')?.hasError('required')">
-                     UPI ID is required.
+                    UPI ID is required.
                 </small>
 
                 <small class="error-text regular-font"
                     *ngIf="upiForm.get('upiId')?.touched && upiForm.get('upiId')?.hasError('pattern')">
-                     Please enter a valid UPI ID format (example: name&#64;bank)
+                    Please enter a valid UPI ID format (example: name&#64;bank)
+                </small>
+            </div>
+
+            <!-- SIGNATURE UPLOAD -->
+            <div class="inp-cont mt-3">
+                <label class="medium-font">
+                    Upload Signature <span class="required">*</span>
+                </label>
+
+                <input type="file" accept="image/png,image/jpeg" class="inp-cus regular-font"
+                    (change)="onSignatureSelect($event)" />
+
+                <small class="hint-text">
+                    Allowed formats: JPG, PNG | Maximum file size: 100 KB
+                </small>
+
+                <small class="error-text" *ngIf="signatureError">
+                    {{ signatureError }}
                 </small>
             </div>
 
@@ -36,16 +55,17 @@
                 <button type="button" class="cancel-btn" (click)="confirmlogout()" *ngIf="!showprocessingbtn">
                     <i class="fa-solid fa-right-from-bracket"></i> Logout
                 </button>
-                <button type="button" class="cancel-btn" style="cursor: not-allowed;" disabled *ngIf="showprocessingbtn">
+                <button type="button" class="cancel-btn" style="cursor: not-allowed;" disabled
+                    *ngIf="showprocessingbtn">
                     <i class="fa-solid fa-right-from-bracket"></i> Processing...
                 </button>
 
-                <button type="submit" class="btn-add" [disabled]="upiForm.invalid"
-                    *ngIf="!showsubmitprocessingbtn">
+                <button type="submit" class="btn-add" [disabled]="upiForm.invalid" *ngIf="!showsubmitprocessingbtn">
                     Submit UPI
                 </button>
 
-                <button class="btn-add" style="cursor: not-allowed;" disabled *ngIf="showsubmitprocessingbtn">Processing...</button>
+                <button class="btn-add" style="cursor: not-allowed;" disabled
+                    *ngIf="showsubmitprocessingbtn">Processing...</button>
             </div>
         </form>
     </div>

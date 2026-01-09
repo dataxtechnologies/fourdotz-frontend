@@ -70,24 +70,42 @@ export class OwnerRentalInvoiceComponent {
     // this.filteredProperties = [...this.rentalinvoicelist2];
   }
 
-  applyFilters(): void {
-    const { status, residentSearch, fromDate, toDate } = this.filterForm.value;
+applyFilters(): void {
+  const { status, residentSearch, fromDate, toDate } = this.filterForm.value;
 
-    this.filteredProperties = this.rentalinvoicelist2.filter((p: any) => {
-      const matchStatus = !status || p.status === status;
+  const filtered = this.rentalinvoicelist2.filter((p: any) => {
 
-      const matchResident =
-        !residentSearch ||
-        p.name.toLowerCase().includes(residentSearch.toLowerCase()) ||
-        p.phone.includes(residentSearch);
+    // ✅ Status filter
+    const matchStatus =
+      !status ||
+      (status === 'Paid' && p.payment_status === true) ||
+      (status === 'Pending' && p.payment_status === false);
 
-      const matchDate =
-        (!fromDate || new Date(p.date) >= new Date(fromDate)) &&
-        (!toDate || new Date(p.date) <= new Date(toDate));
+    // ✅ Name / Phone filter
+    const search = residentSearch?.toLowerCase() || '';
+    const matchResident =
+      !search ||
+      p.tenant_name?.toLowerCase().includes(search) ||
+      p.tenant_mobile?.includes(search);
 
-      return matchStatus && matchResident && matchDate;
-    });
-  }
+    // ✅ Date filter
+    const invoiceDate = new Date(p.created_time?.$date);
+
+    const matchFromDate =
+      !fromDate || invoiceDate >= new Date(fromDate);
+
+    const matchToDate =
+      !toDate || invoiceDate <= new Date(toDate);
+
+    return matchStatus && matchResident && matchFromDate && matchToDate;
+  });
+
+  // 🔥 IMPORTANT: rebind pagination to filtered data
+  this.filteredProperties = filtered;
+
+  this.rentalinvoicelist1 = new TableService();
+  this.rentalinvoicelist1.initialize(this.filteredProperties, 10);
+}
 
   resetFilters(): void {
     this.filterForm.reset();

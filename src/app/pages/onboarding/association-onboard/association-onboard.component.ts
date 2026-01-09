@@ -31,11 +31,11 @@ export class AssociationOnboardComponent implements OnInit {
   user_id = localStorage.getItem('user_id');
   userData: any;
   selectedFile: File | null = null;
-passport_sizephoto: File | null = null;
-RentalAggrement: File | null = null;
-ChequeLeaf: File | null = null;
-Pancard: File | null = null;
-Company_proof: File | null = null;
+  passport_sizephoto: File | null = null;
+  RentalAggrement: File | null = null;
+  ChequeLeaf: File | null = null;
+  Pancard: File | null = null;
+  Company_proof: File | null = null;
   submitbtnloading = false;
   steps: Step[] = [
     {
@@ -91,30 +91,31 @@ Company_proof: File | null = null;
     this.userData = userJson ? JSON.parse(userJson) : {};
   }
 
-toUpperCaseInput(event: any) {
-  const value = event.target.value.toUpperCase();
-  this.accountForm.get('ifsc_code')?.setValue(value, { emitEvent: false });
-}
+  toUpperCaseInput(event: any) {
+    const value = event.target.value.toUpperCase();
+    this.accountForm.get('ifsc_code')?.setValue(value, { emitEvent: false });
+  }
 
   initializeForms(): void {
     this.inputForm = this.fb.group({
       alternate_number: [
-  '',
-  [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')],
-],
+        '',
+        [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')],
+      ],
       gst_number: ['', [Validators.required, Validators.maxLength(15)]],
       registration_number: ['', Validators.required],
       address: ['', Validators.required],
     });
 
-this.documentForm = this.fb.group({
-  company_proof_type: ['', Validators.required],
-  passport_size_photo: [null, Validators.required],
-  rental_agreement: [null, Validators.required],
-  cancelled_cheque_leaf: [null, Validators.required],
-  pan_card: [null, Validators.required],
-  company_proof: [null, Validators.required]
-});
+    this.documentForm = this.fb.group({
+      company_proof_type: ['', Validators.required],
+      passport_size_photo: [null, Validators.required],
+      rental_agreement: [null, Validators.required],
+      cancelled_cheque_leaf: [null, Validators.required],
+      pan_card: [null, Validators.required],
+      company_proof: [null, Validators.required],
+      signature: [null, Validators.required], // 👈 NEW
+    });
 
     this.accountForm = this.fb.group({
       account_holder_name: ['', Validators.required],
@@ -123,10 +124,10 @@ this.documentForm = this.fb.group({
         [Validators.required, Validators.pattern('^[0-9]{9,18}$')],
       ],
       account_type: ['', Validators.required],
-ifsc_code: [
-  '',
-  [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')],
-],
+      ifsc_code: [
+        '',
+        [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')],
+      ],
     });
   }
 
@@ -139,10 +140,11 @@ ifsc_code: [
       this.steps[0].isComplete = true;
       this.currentStep = 2;
     } else if (this.currentStep === 2) {
-      if (this.documentForm.invalid) {
-        this.documentForm.markAllAsTouched();
-        return;
-      }
+        if (this.documentForm.invalid) {
+    this.documentForm.markAllAsTouched();
+    this.Toast.error('All documents are required', 'Validation Error');
+    return;
+  }
       this.steps[1].isComplete = true;
       this.currentStep = 3;
     } else if (this.currentStep === 3) {
@@ -171,48 +173,56 @@ ifsc_code: [
 
   /** File Upload **/
   onFilePassportChange(event: Event) {
-  const file = (event.target as HTMLInputElement).files?.[0];
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.passport_sizephoto = file;
+      this.documentForm.patchValue({ passport_size_photo: file });
+    }
+  }
+
+  onFileRentalChange(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.RentalAggrement = file;
+      this.documentForm.patchValue({ rental_agreement: file });
+    }
+  }
+
+  onFileChequeChange(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.ChequeLeaf = file;
+      this.documentForm.patchValue({ cancelled_cheque_leaf: file });
+    }
+  }
+
+  onFilePanChange(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.Pancard = file;
+      this.documentForm.patchValue({ pan_card: file });
+    }
+  }
+
+  onFileCompanyChange(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.Company_proof = file;
+      this.documentForm.patchValue({ company_proof: file });
+    }
+  }
+
+  onFileSignatureChange(event: any) {
+  const file = event.target.files[0];
   if (file) {
-    this.passport_sizephoto = file;
-    this.documentForm.patchValue({ passport_size_photo: file });
+    this.documentForm.patchValue({ signature: file });
+    this.documentForm.get('signature')?.markAsTouched();
   }
 }
 
-onFileRentalChange(event: Event) {
-  const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) {
-    this.RentalAggrement = file;
-    this.documentForm.patchValue({ rental_agreement: file });
+  isDocumentsValid(): boolean {
+    return this.documentForm.valid;
   }
-}
-
-onFileChequeChange(event: Event) {
-  const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) {
-    this.ChequeLeaf = file;
-    this.documentForm.patchValue({ cancelled_cheque_leaf: file });
-  }
-}
-
-onFilePanChange(event: Event) {
-  const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) {
-    this.Pancard = file;
-    this.documentForm.patchValue({ pan_card: file });
-  }
-}
-
-onFileCompanyChange(event: Event) {
-  const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) {
-    this.Company_proof = file;
-    this.documentForm.patchValue({ company_proof: file });
-  }
-}
-
-isDocumentsValid(): boolean {
-  return this.documentForm.valid;
-}
   /** Submit Input Form **/
   submitInputForm(): void {
     this.submitbtnloading = true;
@@ -249,30 +259,30 @@ isDocumentsValid(): boolean {
   }
 
   /** Submit Document Form **/
- submitDocumentForm(): void {
-  this.submitbtnloading = true;
+  submitDocumentForm(): void {
+    this.submitbtnloading = true;
 
-  const formData = new FormData();
-  Object.keys(this.documentForm.value).forEach(key => {
-    formData.append(key, this.documentForm.value[key]);
-  });
+    const formData = new FormData();
+    Object.keys(this.documentForm.value).forEach((key) => {
+      formData.append(key, this.documentForm.value[key]);
+    });
 
-  this.apiService.AssociationDocumentOnboard<FormData>(formData).subscribe({
-    next: (res: any) => {
-      this.submitbtnloading = false;
-      if (res?.success) {
-        this.Toast.success(res.message, 'Success');
-        this.router.navigateByUrl('/Association/Dashboard');
-      } else {
-        this.Toast.warning(res.message, 'Warning');
-      }
-    },
-    error: (err: any) => {
-      this.submitbtnloading = false;
-      this.Toast.error(err.error.error.message, 'Failed');
-    }
-  });
-}
+    this.apiService.AssociationDocumentOnboard<FormData>(formData).subscribe({
+      next: (res: any) => {
+        this.submitbtnloading = false;
+        if (res?.success) {
+          this.Toast.success(res.message, 'Success');
+          this.router.navigateByUrl('/Association/Dashboard');
+        } else {
+          this.Toast.warning(res.message, 'Warning');
+        }
+      },
+      error: (err: any) => {
+        this.submitbtnloading = false;
+        this.Toast.error(err.error.error.message, 'Failed');
+      },
+    });
+  }
 
   /** Submit Account Details **/
   // submitAccountForm(): void {

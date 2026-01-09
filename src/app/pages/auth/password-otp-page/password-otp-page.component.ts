@@ -18,6 +18,7 @@ export class PasswordOtpPageComponent implements OnInit {
   authtype = '';
   authvalue = '';
   processingbtn = false;
+  showPassword = false;
 
   constructor(
     private fb: FormBuilder,
@@ -55,6 +56,10 @@ export class PasswordOtpPageComponent implements OnInit {
 
     this.loginForm.updateValueAndValidity();
   }
+
+  togglePassword() {
+  this.showPassword = !this.showPassword;
+}
 
   // ----------------------------------------------------
   // SUBMIT

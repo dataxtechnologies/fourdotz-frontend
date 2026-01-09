@@ -51,7 +51,7 @@ export class AddResidentComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      phone: ['', [Validators.required,  Validators.pattern('^[6-9][0-9]{9}$')]],
       ownedAt: ['', Validators.required],
     });
   }
@@ -94,15 +94,15 @@ export class AddResidentComponent implements OnInit {
   }
 
   // 👇 Handle date selection and format the date
-  onDateSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (!input.value) return;
+onDateSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (!input.value) return;
 
-    const selectedDate = new Date(input.value);
-    const formattedDate = this.formatDate(selectedDate);
+  const selectedDate = new Date(input.value);
+  const formattedDate = this.formatDate(selectedDate);
 
-    this.ownerForm.get('ownedAt')?.setValue(formattedDate);
-  }
+  this.ownerForm.get('ownedAt')?.setValue(formattedDate);
+}
 
   // 👇 Helper function to format as dd-MMM-yyyy (e.g. 22-Jun-2025)
   private formatDate(date: Date): string {

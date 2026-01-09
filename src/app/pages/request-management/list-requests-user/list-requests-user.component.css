@@ -303,3 +303,11 @@
 .no-data-box .create-btn:hover {
     background: var(--primary-color2);
 }
+
+.work-status{
+  background-color: var(--primary-color2);
+  border-radius: 30px;
+  padding: 5px 10px;
+  color: white;
+  font-size: 12px;
+}

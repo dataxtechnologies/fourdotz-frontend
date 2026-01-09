@@ -40,7 +40,7 @@ export class EditVehicleDataComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}/),
+          Validators.pattern(/[A-Z]{2}\d{2}[A-Z]{2}\d{4}/),
         ],
       ],
       ownedBy: ['', Validators.required],
@@ -67,13 +67,13 @@ patchVehicleData(data: any) {
     return control ? control.invalid && control.touched : false;
   }
 
-  onVehicleNumberInput(event: KeyboardEvent) {
-    // Allow only letters, numbers, and dashes
-    const pattern = /[A-Z0-9-]/;
-    if (!pattern.test(event.key)) {
-      event.preventDefault();
-    }
-  }
+onVehicleNumberInput(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+  input.value = value;
+  this.vehicleForm.get('vehicleNumber')?.setValue(value, { emitEvent: false });
+}
 
   EditVehicle() {
     if (this.vehicleForm.invalid) {

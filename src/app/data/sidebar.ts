@@ -58,6 +58,40 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     allowedRole: 'association',
     //activeicon: ''
   },
+  {
+    label: 'Manage Agreement',
+    icon: '/assets/icons/agreement.svg',
+    route: '/Association/request-management/list',
+    allowedRole: 'association',
+    children: [
+      {
+        label: 'Templates',
+        icon: '',
+        route: '/agreement/association/list-template',
+        allowedRole: 'association',
+      },
+      {
+        label: 'Agreements',
+        icon: '',
+        route: '/agreement/association/list-agreement',
+        allowedRole: 'association',
+      },
+      // {
+      //   label: 'Service Admin List',
+      //   icon: '/assets/icons/ai-users.svg',
+      //   route: '/Association/service-admin/list',
+      //   allowedRole: 'association',
+      // },
+    ],
+    //activeicon: ''
+  },
+  // {
+  //   label: ' Template',
+  //   icon: '/assets/icons/.svg',
+  //   route: '/agreement/association/list-template',
+  //   allowedRole: 'association',
+  //   //activeicon: ''
+  // },
 
   {
     label: 'Manage Helpers',
@@ -67,13 +101,13 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     children: [
       {
         label: 'Gate Keeper',
-        icon: '/assets/icons/security.svg',
+        icon: '',
         route: '/Association/manage-helpers/gate-keeper',
         allowedRole: 'association',
       },
       {
         label: 'Service Admin',
-        icon: '/assets/icons/ai-users1.svg',
+        icon: '',
         route: '/Association/service-admin/list',
         allowedRole: 'association',
       },
@@ -95,7 +129,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     children: [
       {
         label: 'Request List',
-        icon: '/assets/icons/request-manage2.svg',
+        icon: '',
         route: '/Association/request-management/list',
         allowedRole: 'association',
       },
@@ -112,25 +146,25 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     children: [
       {
         label: 'Manage QR',
-        icon: '/assets/icons/qr-code.svg',
+        icon: '',
         route: '/visitors-management/qr-manager',
         allowedRole: 'association',
       },
       {
         label: 'QR Visitors List',
-        icon: '/assets/icons/qr-scan.svg',
+        icon: '',
         route: '/visitors-management/qr-visitors-list',
         allowedRole: 'association',
       },
       {
         label: 'Spot Visitors List',
-        icon: '/assets/icons/visitor.svg',
+        icon: '',
         route: '/visitors-management/spot-visitors-list',
         allowedRole: 'association',
       },
       {
         label: 'Pre-Visitors List',
-        icon: '/assets/icons/pre-visitor.svg',
+        icon: '',
         route: '/visitors-management/pre-visitors-list',
         allowedRole: 'association',
       },
@@ -180,6 +214,35 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     //activeicon: ''
   },
   {
+    label: 'Manage Agreement',
+    icon: '/assets/icons/agreement.svg',
+    route: '/',
+    allowedRole: 'owner',
+    children: [
+      {
+        label: 'Create Agreement',
+        icon: '',
+        route: '/agreement/owner/list-created-agreement',
+        allowedRole: 'association',
+      },
+      {
+        label: 'Sign Agreements',
+        icon: '',
+        route: '/agreement/owner/list-signing-agreement',
+        allowedRole: 'owner',
+      },
+
+      // {
+      //   label: 'Service Admin List',
+      //   icon: '/assets/icons/ai-users.svg',
+      //   route: '/Association/service-admin/list',
+      //   allowedRole: 'association',
+      // },
+    ],
+    //activeicon: ''
+  },
+  
+  {
     label: 'Manage Request',
     icon: '/assets/icons/request-manage2.svg',
     route: '/Owner/request-management/list',
@@ -228,6 +291,12 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     allowedRole: 'tenant',
     //activeicon: ''
   },
+   {
+        label: 'Sign Agreements',
+        icon: '/assets/icons/agreement.svg',
+        route: '/agreement/owner/list-signing-agreement',
+        allowedRole: 'tenant',
+      },
 
   {
     label: 'Manage Request',
@@ -236,14 +305,22 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     allowedRole: 'tenant',
     //activeicon: ''
   },
+   {
+    label: 'Pre-Visitor',
+    icon: '/assets/icons/pre-visitor.svg',
+    route: '/Tenant/pre-visitor/list',
+    allowedRole: 'tenant',
+    //activeicon: ''
+  },
 
   {
     label: 'Manage Request',
     icon: '/assets/icons/request-manage2.svg',
-    route: '/Association/request-management/list',
+    route: '/Service-admin/manage-requests',
     allowedRole: 'service_admin',
     //activeicon: ''
   },
+  
 
   {
     label: 'Manage Visitors',
@@ -253,19 +330,19 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     children: [
       {
         label: 'Visitors List',
-        icon: '/assets/icons/visitor.svg',
+        icon: '',
         route: '/Gate-keeper/visitors-management/visitors-list',
         allowedRole: 'gate_keeper',
       },
       {
         label: 'Pre-visitors List',
-        icon: '/assets/icons/pre-visitor.svg',
+        icon: '',
         route: '/Gate-keeper/visitors-management/pre-visitors-list',
         allowedRole: 'gate_keeper',
       },
       {
         label: 'QR-visitors List',
-        icon: '/assets/icons/qr-scan.svg',
+        icon: '',
         route: '/Gate-keeper/visitors-management/qr-visitors-list',
         allowedRole: 'gate_keeper',
       },

@@ -130,7 +130,7 @@ export class SpotVisitorEntryComponent implements OnInit {
   }
 
   listGate() {
-    this.apiService.listGate<any>().subscribe({
+    this.apiService.listGateKeeper<any>().subscribe({
       next: (res: any) => {
         this.Gatelist2 = res?.success ? res.data : [];
       },

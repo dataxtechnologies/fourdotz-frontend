@@ -1,0 +1,56 @@
+<section class="agreement-modal">
+    <div class="agreement-card">
+
+        <!-- HEADER -->
+        <div class="agreement-header">
+            <h3>Select Agreement Template</h3>
+            <i class="fa-solid fa-xmark close-icon" (click)="closeModal()"></i>
+        </div>
+
+        <!-- BODY -->
+        <div class="inp-cont">
+            <label class="medium-font">
+                Agreement Template <span class="required">*</span>
+            </label>
+
+            <div class="custom-select">
+
+                <!-- Selected -->
+                <div class="select-selected regular-font" (click)="toggleDropdown()">
+                    {{ selectedTemplate?.template_name || 'Select Agreement Template' }}
+
+                    <i class="fa-solid" [ngClass]="dropdownOpen ? 'fa-chevron-up' : 'fa-chevron-down'"
+                        style="float:right;font-size:0.7rem;margin-top:4px;">
+                    </i>
+                </div>
+
+                <!-- Dropdown -->
+                <div class="select-items" *ngIf="dropdownOpen">
+
+                    <input type="text" class="dropdown-search regular-font" placeholder="Search template..."
+                        (input)="onSearchChange($event)" />
+
+                    <div class="regular-font option-item" *ngFor="let tpl of filteredTemplates"
+                        (click)="selectTemplate(tpl)">
+                        {{ tpl.template_name }}
+                    </div>
+
+                    <div *ngIf="filteredTemplates.length === 0" class="no-results regular-font">
+                        No templates found
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="agreement-actions">
+            <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+
+            <button class="btn-proceed" [disabled]="!selectedTemplate" (click)="proceed()">
+                Proceed
+            </button>
+        </div>
+
+    </div>
+</section>

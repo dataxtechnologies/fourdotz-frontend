@@ -1,0 +1,101 @@
+<section class="agreement-builder">
+
+    <!-- ================= HEADER ================= -->
+    <div class="builder-header">
+        <h3>Create Template</h3>
+
+        <div class="header-actions">
+            <button class="btn" (click)="openVariableModal()">＋ Variable</button>
+            <button class="btn-save" (click)="saveTemplate()">Save Template</button>
+        </div>
+    </div>
+
+    <!-- ================= BODY ================= -->
+    <div class="builder-body">
+
+        <!-- LEFT : CONTROLS -->
+        <div class="builder-controls">
+            <h4>Add Content</h4>
+
+            <button class="btn" (click)="addHeading()" [disabled]="headingAdded">
+                ➕ Add Heading
+            </button>
+
+            <button class="btn" (click)="addParagraph()">
+                ➕ Add Paragraph
+            </button>
+
+            <button class="btn" (click)="addSignature()" [disabled]="signatureAdded">
+                ✍️ Add Signature Area
+            </button>
+
+            <p class="hint">
+                * Heading & Signature can be added only once
+            </p>
+        </div>
+
+        <!-- RIGHT : PREVIEW / EDITOR -->
+        <div class="builder-preview">
+
+            <!-- A4 PAGE -->
+            <div class="page">
+
+                <ng-container *ngFor="let block of blocks; let i = index">
+
+                    <!-- ========== HEADING BLOCK ========== -->
+                    <h1 *ngIf="block.type === 'heading'" class="doc-heading editable" contenteditable="true"
+                        spellcheck="false" (focus)="lastFocusedBlockIndex = i" (input)="updateBlockValue($event, i)">
+                        {{ block.value || 'Type agreement heading here' }}
+                    </h1>
+
+                    <!-- ========== PARAGRAPH BLOCK ========== -->
+                    <p *ngIf="block.type === 'paragraph'" class="doc-para editable" contenteditable="true"
+                        spellcheck="false" (focus)="lastFocusedBlockIndex = i" (input)="updateBlockValue($event, i)">
+                        {{ block.value || 'Type paragraph content here...' }}
+                    </p>
+
+                    <!-- spacing between paragraphs -->
+                    <div *ngIf="block.type === 'paragraph'" class="para-gap"></div>
+
+                    <!-- ========== SIGNATURE BLOCK ========== -->
+                    <div *ngIf="block.type === 'signature'" class="signature-section">
+
+                        <div class="sign-box" *ngFor="let name of block.signNames; let si = index">
+                            <!-- Signer Name -->
+                            <p class="editable sign-name" contenteditable="true" spellcheck="false"
+                                (input)="updateSignName($event, i, si)">
+                                {{ name }}
+                            </p>
+
+                            <!-- Signature placeholder (font/image later) -->
+                            <div class="sign-placeholder">
+                                Sign Here
+                            </div>
+                        </div>
+
+                    </div>
+
+                </ng-container>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= VARIABLE MODAL ================= -->
+    <div class="modal-backdrop" *ngIf="showVariableModal">
+        <div class="modal-card">
+
+            <h4>Add Variable</h4>
+
+            <input placeholder="Key (tenant_name)" [(ngModel)]="variableForm.key" />
+
+            <div class="modal-actions">
+                <button (click)="addVariable()">Add</button>
+                <button (click)="closeVariableModal()">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+</section>

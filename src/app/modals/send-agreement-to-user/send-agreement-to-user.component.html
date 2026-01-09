@@ -1,0 +1,58 @@
+<section class="form-section container">
+    <div class="form-header">
+        <h3>Select Resident to Send Agreement</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="form">
+
+            <!-- PROPERTY DROPDOWN -->
+            <div class="body-div">
+                <div class="inp-cont">
+                <label class="medium-font">Select Resident <span class="required">*</span></label>
+                <div class="custom-select">
+                    <div class="select-selected regular-font" (click)="toggleDropdown()">
+                        {{ selectedowner || 'Select Property No.' }}
+                        <i class="fa-solid" [ngClass]="{
+          'fa-chevron-down': !dropdownOpen,
+          'fa-chevron-up': dropdownOpen
+        }" style="float: right; font-size: 0.7rem; margin-top: 4px;"></i>
+                    </div>
+
+                    <div class="select-items" [class.select-hide]="!dropdownOpen">
+                        <input type="text" placeholder="Search property..." class="dropdown-search regular-font"
+                            (input)="onSearchChange($event)" />
+
+                        <div class="regular-font" *ngFor="let property of filteredList"
+                            (click)="selectProperty(property)">
+                            {{ property.owner_name }} | {{ property.owner_email }} | {{ property.owner_mobile }} | {{ property.property_no }}
+                        </div>
+
+                        <div *ngIf="filteredList.length === 0" class="no-results regular-font">
+                            No properties found
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="form.get('property_id')?.touched && form.get('property_id')?.invalid"
+                    class="error-text">
+                    Property No. is required
+                </div>
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="mt-3">
+                <button type="button" class="submit-btn" (click)="submit()" *ngIf="!submitLoading">
+                    Send Agreement
+                </button>
+
+                <button type="button" class="submit-btn" disabled *ngIf="submitLoading">
+                    Sending...
+                </button>
+            </div>
+            </div>
+
+        </form>
+    </div>
+</section>

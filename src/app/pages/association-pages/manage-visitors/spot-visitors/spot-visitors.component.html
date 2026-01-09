@@ -21,7 +21,7 @@
                                     <th class="medium-font">Resident Details</th>
                                     <th class="medium-font">Purpose</th>
                                     <th class="medium-font">Status</th>
-                                    <th class="medium-font">Action</th>
+                                    <th class="medium-font" *ngIf="user_type != 'association'">Action</th>
                                 </tr>
                             </thead>
 
@@ -53,7 +53,7 @@
                                         <td data-label="Invitation Status">
                                             {{ item.visitor_status}}
                                         </td>
-                                        <td (click)="viewproperty(item._id)">
+                                        <td (click)="viewproperty(item._id)" *ngIf="user_type != 'association'">
                                             <button  class="action-btn">
                                                 Exit
                                             </button>

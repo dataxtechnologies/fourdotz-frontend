@@ -1,0 +1,96 @@
+<div class="sig-backdrop">
+    <div class="sig-modal">
+
+        <!-- HEADER -->
+        <div class="sig-header">
+            <div>
+                <h3>Add Signature</h3>
+                <p class="sub-text">Choose how you want to sign this document</p>
+            </div>
+            <button class="close-btn" (click)="closeModal()">✕</button>
+        </div>
+
+        <!-- TABS -->
+        <div class="sig-tabs">
+            <button [class.active]="activeTab === 'type'" [disabled]="isOtpPhase"
+                (click)="!isOtpPhase && (activeTab = 'type')">
+                ✍ Type
+            </button>
+
+            <button [class.active]="activeTab === 'upload'" [disabled]="isOtpPhase"
+                (click)="!isOtpPhase && (activeTab = 'upload')">
+                ⬆ Upload
+            </button>
+        </div>
+
+        <!-- ================= TYPE SIGNATURE ================= -->
+        <div *ngIf="activeTab === 'type'" class="sig-content">
+
+            <label class="field-label">Your Name</label>
+
+            <input type="text" placeholder="Enter your full name" [(ngModel)]="typedName"
+                (ngModelChange)="typedNameError = false" />
+
+            <small class="error-text" *ngIf="typedNameError">
+                Signature name is required
+            </small>
+
+            <label class="field-label">Signature Style</label>
+            <select [(ngModel)]="selectedFont">
+                <option value="Arial">Arial</option>
+                <option value="sig-alex-brush">Alex Brush</option>
+                <option value="sig-great-vibes">Great Vibes</option>
+                <option value="sig-dancing-script">Dancing Script</option>
+                <option value="sig-allura">Allura</option>
+                <option value="sig-satisfy">Satisfy</option>
+            </select>
+
+            <div class="sig-preview-box">
+                <span class="typed-signature" [ngClass]="selectedFont">
+                    {{ typedName || 'Signature Preview' }}
+                </span>
+            </div>
+
+        </div>
+
+        <!-- ================= UPLOAD SIGNATURE ================= -->
+        <div *ngIf="activeTab === 'upload'" class="sig-content">
+
+            <div class="previous-sign-box">
+                <p class="info-text">
+                    Your previously uploaded signature will be used for signing this document.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- ================= ACTIONS ================= -->
+        <div class="sig-actions">
+            <button class="cancel" (click)="closeModal()">
+                Cancel
+            </button>
+
+            <button class="apply" (click)="sendotp()" [disabled]="isOtpPhase" *ngIf="!sendotpbtn">
+                Send OTP
+            </button>
+            <button class="apply" style="cursor: not-allowed;" disabled *ngIf="sendotpbtn">
+                Sending...
+            </button>
+        </div>
+
+        <!-- ================= OTP VERIFICATION (AFTER APPLY) ================= -->
+        <div *ngIf="requireOtpVerification" class="otp-section inp-cont">
+
+            <label class="form-label">Verify OTP</label>
+
+            <input type="text" class="inp-cus" placeholder="Enter OTP" [(ngModel)]="otp" />
+
+            <button class="btn-add" (click)="verifyOtp()">
+                Verify OTP
+            </button>
+
+        </div>
+
+    </div>
+</div>

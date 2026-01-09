@@ -101,9 +101,15 @@
                             (change)="onDateSelected($event)" />
                     </div>
                     <!-- <input type="date" formControlName="ownedAt" class="inp-cus  regular-font"> -->
-                    <div *ngIf="ownerForm.get('ownedAt')?.touched" class="error-text">
-                        Owned date is required
-                    </div>
+                   <div
+  *ngIf="
+    ownerForm.get('ownedAt')?.touched &&
+    ownerForm.get('ownedAt')?.invalid
+  "
+  class="error-text"
+>
+  Owned date is required
+</div>
 
 
                     <!-- Submit Buttons -->

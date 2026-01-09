@@ -47,7 +47,7 @@ export class DashboardLayoutNewComponent {
   loadingUserData = false;
   showFooter = false;
   footerTimeout: any;
-
+currentYear: number = new Date().getFullYear();
   /* ==============================
      USER STORAGE
      ============================== */
@@ -86,8 +86,10 @@ export class DashboardLayoutNewComponent {
       this.getUserData(this.user_type);
     }
 
-    this.OwnerService.OwnerUpiIdUpdatedStatus$.subscribe(() => {
-      this.getUserData(this.user_type);
+   this.OwnerService.OwnerUpiIdUpdatedStatus$.subscribe((updated) => {
+      if (updated) {
+        this.getUserData(this.user_type);
+      }
     });
 
     this.adjustSidebarForScreen(); // responsive start
@@ -203,7 +205,7 @@ export class DashboardLayoutNewComponent {
             if (userdata.document_uploaded === false) {
               this.router.navigateByUrl('/onboarding/user-data');
             }
-          } else if (this.user_type === 'owner') {
+          } else if (this.user_type === 'owner' || this.user_type === 'tenant') {
             if (userdata.upi_submit_status === false) {
               this.UPIidAddModal();
             }

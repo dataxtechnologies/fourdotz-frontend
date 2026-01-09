@@ -169,7 +169,7 @@
                     <div class="resident-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Pet Details</h5>
-                            <div>
+                            <div *ngIf="Propertiesdata?.owner_details && (Propertiesdata.owner_details | keyvalue).length > 0">
                                 <button class="btn-add" (click)="addpet(propertiesId)"
                                     *ngIf="!Propertiesdata.pet || Propertiesdata.pet.length === 0">+ Add pet</button>
                                 <div class="d-flex gap-2">
@@ -212,7 +212,7 @@
                     <div class="resident-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Vehicle Details</h5>
-                            <div>
+                            <div *ngIf="Propertiesdata?.owner_details && (Propertiesdata.owner_details | keyvalue).length > 0">
                                 <button class="btn-add" (click)="addVehicle(propertiesId)"
                                     *ngIf="!Propertiesdata.vehicle || Propertiesdata.vehicle.length === 0">+ Add
                                     Vehicle</button>

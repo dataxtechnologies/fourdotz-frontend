@@ -29,7 +29,7 @@ export class CreateAdminComponent {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]]
+      mobile: ['', [Validators.required,  Validators.pattern('^[6-9][0-9]{9}$')]]
     });
   }
 

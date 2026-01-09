@@ -281,12 +281,7 @@ main p {
     align-items: center;
 }
 
-.submenu-list {
-    margin-left: 20px;
-    padding-left: 10px;
-    border-left: 2px solid #ccc;
-    transition: all 0.3s ease;
-}
+
 
 .submenu-title i {
     font-size: 12px;
@@ -847,7 +842,7 @@ tbody td i {
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   min-width: 180px;
-
+    font-size: 14px;
   /* Hidden by default */
   opacity: 0;
   visibility: hidden;

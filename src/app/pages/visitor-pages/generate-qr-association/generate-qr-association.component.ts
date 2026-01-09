@@ -37,7 +37,8 @@ export class GenerateQrAssociationComponent implements OnInit {
   background_color: string = '#ffffff';
   pattern_color: string = '#000';
   logoDataURL: string = 'assets/logo/fourdotz1.png';
-  userURL: string = `https://dashboard.fourdotz.com/visitor-entry-form/${this.associationAdminId}`; //production
+  baseUrl = window.location.origin;
+  userURL: string = `${this.baseUrl}/visitor-entry-form/${this.associationAdminId}`; //production
   // userURL: string = `https://dev.fourdotz.com/visitor-entry-form/${this.associationAdminId}`; //development
 
   customiseoptions = true; // 👉 Start in customise mode
@@ -48,7 +49,7 @@ export class GenerateQrAssociationComponent implements OnInit {
   config: Options = {
     width: 250,
     height: 250,
-    data: `https://dashboard.fourdotz.com/visitor-entry-form/${this.associationAdminId}`, //production
+    data: `${this.baseUrl}/visitor-entry-form/${this.associationAdminId}`, //production
     // data: `https://dev.fourdotz.com/visitor-entry-form/${this.associationAdminId}`, //development
     image: this.logoDataURL,
     dotsOptions: {

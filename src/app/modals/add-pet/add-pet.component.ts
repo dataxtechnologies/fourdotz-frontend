@@ -57,7 +57,7 @@ export class AddPetComponent implements OnInit {
       pet: [
         {
           pet_name: this.petForm.value.petName,
-         type: this.petForm.value.type.toLowerCase(),
+         type: this.petForm.value.type,
           breed: this.petForm.value.breed,
           age: this.petForm.value.age,
           pet_owned_by: this.petForm.value.ownedBy.toLowerCase(), // tenant/owner in lowercase

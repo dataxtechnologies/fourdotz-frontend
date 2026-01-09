@@ -21,7 +21,7 @@
                             <div class="inp-cont">
                                 <label for="association"  class="medium-font">Select Association</label>
                                 <select formControlName="association" class="inp-cus regular-font">
-                                    <option value="" selected>All Associations</option>
+                                    <option value="">All Associations</option>
                                     <option *ngFor="let assoc of filteredProperties" [value]="assoc._id">
                                         {{ assoc.association_name }}
                                     </option>

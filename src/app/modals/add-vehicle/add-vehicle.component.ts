@@ -34,7 +34,7 @@ export class AddVehicleComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}$/)
+          Validators.pattern(/^[A-Z]{2}\d{2}[A-Z]{2}\d{4}$/)
         ],
       ],
       ownedBy: ['', Validators.required],
@@ -95,21 +95,11 @@ export class AddVehicleComponent implements OnInit {
   }
 
   // Optional: restrict input dynamically while typing
-  onVehicleNumberInput(event: KeyboardEvent) {
-    const allowedChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-';
-    const key = event.key.toUpperCase();
+onVehicleNumberInput(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
 
-    // Allow backspace, delete, arrows
-    if (
-      ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(
-        key
-      )
-    ) {
-      return;
-    }
-
-    if (!allowedChars.includes(key)) {
-      event.preventDefault();
-    }
-  }
+  input.value = value;
+  this.vehicleForm.get('vehicleNumber')?.setValue(value, { emitEvent: false });
+}
 }

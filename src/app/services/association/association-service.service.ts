@@ -5,6 +5,27 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AssociationServiceService {
+
+   private activeSignField!: HTMLElement;
+
+  private signatureSubject = new BehaviorSubject<string | null>(null);
+  signature$ = this.signatureSubject.asObservable();
+
+  /* store clicked sign field */
+  setActiveField(el: HTMLElement) {
+    this.activeSignField = el;
+  }
+
+  getActiveField(): HTMLElement {
+    return this.activeSignField;
+  }
+
+  /* send signature html */
+  insertSignature(html: string) {
+    this.signatureSubject.next(html);
+  }
+
+  
   constructor() {}
 
   private PropertySubject = new BehaviorSubject<any>(null);
@@ -51,6 +72,15 @@ export class AssociationServiceService {
 
   private GateKeeperAssignedSubject = new BehaviorSubject<any>(null);
   GateKeeperAssignedStatus$ = this.GateKeeperAssignedSubject.asObservable();
+
+
+  private AgreementSignedNewSubject = new BehaviorSubject<any>(null);
+  NewAgreementSignedStatus$ = this.AgreementSignedNewSubject.asObservable();
+
+  triggerNewAgreementSigned(agreementsigned: any): void {
+    //console.log('addassociation', agreementsigned);
+    this.AgreementSignedNewSubject.next(agreementsigned);
+  }
 
 
   triggerGatekeeperAssigned(gatekeeper: any): void {

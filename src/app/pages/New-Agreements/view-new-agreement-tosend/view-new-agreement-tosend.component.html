@@ -1,0 +1,54 @@
+<div class="mt-4 header-btn">
+    <div class="d-flex gap-3 align-items-center ">
+        <i class="fa-solid fa-arrow-left" style="cursor: pointer;" (click)="goback()"></i>
+        <h3>View Template</h3>
+    </div>
+    <button class="btn-add" (click)="saveAndSignAgreement()" *ngIf="Savesignloading">Save & Sign Agreement</button>
+    <button class="btn-add" style="cursor: not-allowed;" disabled *ngIf="Savesignloading">Processing...</button>
+</div>
+
+<section class="agreement-viewer" *ngIf="template">
+
+    <!-- LEFT : VARIABLE FORM -->
+    <div class="variable-panel">
+        <h4>Fill Details</h4>
+
+        <div class="field" *ngFor="let key of variableKeys; trackBy: trackByKey">
+            <label>{{ key | titlecase }}</label>
+            <input [(ngModel)]="variables[key]" placeholder="Enter {{ key }}" />
+        </div>
+    </div>
+
+    <!-- RIGHT : PREVIEW -->
+    <div class="preview-panel">
+        <div class="page">
+
+            <ng-container *ngFor="let block of template.blocks">
+
+                <!-- HEADING -->
+                <h1 *ngIf="block.type === 'heading'" class="doc-heading">
+                    {{ block.value }}
+                </h1>
+
+                <!-- PARAGRAPH -->
+                <p *ngIf="block.type === 'paragraph'" class="doc-para">
+                    {{ renderText(block.value) }}
+                </p>
+
+                <!-- SIGNATURE -->
+                <div *ngIf="block.type === 'signature'" class="signature-section">
+                    <div class="sign-box" *ngFor="let signer of block.signers">
+                        <p class="sign-name">{{ signer.name | titlecase }}</p>
+                        <div class="sign-placeholder"></div>
+
+                        <div *ngIf="block.includeDate" class="sign-date">
+                            Date: {{ variables['agreement_date'] || '__________' }}
+                        </div>
+                    </div>
+                </div>
+
+            </ng-container>
+
+        </div>
+    </div>
+</section>

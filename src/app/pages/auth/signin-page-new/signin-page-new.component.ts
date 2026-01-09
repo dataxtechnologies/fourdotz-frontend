@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
@@ -13,41 +13,57 @@ import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signin-page-new',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './signin-page-new.component.html',
   styleUrl: './signin-page-new.component.css',
 })
-export class SigninPageNewComponent {
+export class SigninPageNewComponent implements OnInit {
+
   loginForm!: FormGroup;
   errorMessage = '';
 
-  authtype: string = '';
-  authvalue: string = '';
+  authtype: 'otp' | 'password' | '' = '';
+  authvalue = '';
   loginbtbloading = false;
+  usermail: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private authService: ApiserviceService,
     private toastr: ToastrService,
-    private route: Router
+    private activatedRoute: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required]],
+      username: ['', Validators.required],
     });
   }
 
-
+  // -----------------------------------------------------
+  // INIT – READ QUERY PARAM & PATCH VALUE
+  // -----------------------------------------------------
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.usermail = params['usermail'] || null;
 
+      if (this.usermail) {
+        this.loginForm.patchValue({
+          username: this.usermail
+        });
+
+        // 🔥 IMPORTANT: auto-detect email/phone
+        this.validateInput();
+      }
+    });
   }
+
   // -----------------------------------------------------
   // VALIDATE INPUT FORMAT (EMAIL OR PHONE)
   // -----------------------------------------------------
-  validateInput() {
-    const input = this.loginForm.get('username')?.value.trim();
+  validateInput(): void {
+    const input = (this.loginForm.get('username')?.value || '').trim();
+
     this.errorMessage = '';
     this.authtype = '';
     this.authvalue = '';
@@ -60,95 +76,78 @@ export class SigninPageNewComponent {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[6-9]\d{9}$/;
 
-    // EMAIL VALIDATION
     if (emailRegex.test(input)) {
       this.authtype = 'password';
       this.authvalue = input;
       return;
     }
 
-    // PHONE VALIDATION
     if (phoneRegex.test(input)) {
       this.authtype = 'otp';
       this.authvalue = input;
       return;
     }
 
-    // INVALID FORMAT
     this.errorMessage = 'Enter a valid email or 10-digit mobile number.';
   }
 
   // -----------------------------------------------------
-  // SUBMIT
+  // SUBMIT LOGIN
   // -----------------------------------------------------
-  // submitLogin() {
-
-  //   if (this.errorMessage || !this.authtype || !this.authvalue) {
-  //     this.errorMessage = "Enter a valid email or phone.";
-  //     return;
-  //   }
-
-  //   const url =
-  //     `/user-authentication/${this.authtype}/${this.authvalue}`;
-
-  //   this.router.navigateByUrl(`/auth/user-authentication/${this.authtype}/${this.authvalue}`);
-  // }
-
-  submitLogin() {
+  submitLogin(): void {
     this.loginbtbloading = true;
+
     if (this.errorMessage || !this.authtype || !this.authvalue) {
       this.errorMessage = 'Enter a valid email or phone.';
+      this.loginbtbloading = false; // ✅ FIX
       return;
     }
 
-    // ✅ PHONE → CALL API → REDIRECT
+    // ✅ PHONE → OTP FLOW
     if (this.authtype === 'otp') {
-      const payload = {
-        mobile: this.authvalue,
-      };
+      const payload = { mobile: this.authvalue };
+
       this.authService.SendOTPtoMobile<any>(payload).subscribe({
         next: (res: any) => {
+          this.loginbtbloading = false;
+
           if (res?.success) {
-            this.loginbtbloading = false;
-            const otp_token = res.data;
-            const stringOTP = otp_token.toString();
-            localStorage.setItem('otp_token', stringOTP);
+            localStorage.setItem('otp_token', String(res.data));
 
             this.router.navigateByUrl(
-              `/auth/user-authentication/${this.authtype}/${this.authvalue}`
+              `/auth/user-authentication/otp/${this.authvalue}`
             );
 
-            // localStorage.setItem('user_id', user_id);
-
             this.toastr.success(res.message, 'Success');
-            // this.redirectUser(userType);
           } else {
-            this.loginbtbloading = false;
-            this.toastr.info(res.message, 'Information');
+            this.toastr.info(res.message, 'Info');
           }
         },
         error: (err: any) => {
           this.loginbtbloading = false;
-          // const newuseremail = this.loginForm.get('username')?.value;
-          // if (err.error?.error?.data?.update_password === false) {
-          //   localStorage.setItem('session_key', err.error.error.data.session_key);
-          //   this.route.navigateByUrl(`/auth/Change-password/${newuseremail}`);
-          // }
-          this.toastr.info(err.error?.error?.message || 'Login failed', 'Info');
+          this.toastr.info(
+            err?.error?.error?.message || 'Login failed',
+            'Info'
+          );
         },
       });
+
       return;
     }
 
-    // ✅ EMAIL → DIRECT REDIRECT (NO API CALL)
+    // ✅ EMAIL → PASSWORD FLOW
     if (this.authtype === 'password') {
+      this.loginbtbloading = false;
       this.router.navigateByUrl(
         `/auth/user-authentication/password/${this.authvalue}`
       );
     }
   }
 
-    forgetpassscreen(): void {
-    this.route.navigateByUrl('/auth/forget-password');
+  // -----------------------------------------------------
+  // FORGOT PASSWORD
+  // -----------------------------------------------------
+  forgetpassscreen(): void {
+    this.router.navigateByUrl('/auth/forget-password');
   }
 }

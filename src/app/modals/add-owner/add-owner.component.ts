@@ -38,7 +38,7 @@ export class AddOwnerComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      phone: ['', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]],
       ownedAt: ['', Validators.required],
     });
   }

@@ -41,11 +41,11 @@ export class OwnerPropertiesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterForm = this.fb.group({
-      association: [''],
-      residentType: [''],
-      propertyNo: [''],
-    });
+   this.filterForm = this.fb.group({
+  association: [''],
+  residentType: [''],
+  propertyNo: ['']
+});
 
     this.filterForm.valueChanges.subscribe(() => this.applyFilters());
 
@@ -64,10 +64,15 @@ export class OwnerPropertiesComponent implements OnInit {
     });
   }
 
-  resetFilters() {
-    this.filterForm.reset();
-    this.filteredProperties = [...this.propertieslist2];
-  }
+resetFilters() {
+  this.filterForm.reset({
+    association: '',
+    residentType: '',
+    propertyNo: ''
+  });
+
+  this.filteredProperties = [...this.propertieslist2];
+}
 
   addProperty() {
     this.modalService.open(AddPropertyComponent, {

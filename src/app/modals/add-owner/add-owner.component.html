@@ -41,7 +41,7 @@
                 <div *ngIf="ownerForm.get('phone')?.touched && ownerForm.get('phone')?.errors?.['required']"
                     class="error-text">Phone number is required</div>
                 <div *ngIf="ownerForm.get('phone')?.touched && ownerForm.get('phone')?.errors?.['pattern']"
-                    class="error-text">Phone must be 10 digits</div>
+                    class="error-text">Phone must be 10 digits & must starts with 6-9</div>
             </div>
 
             <div class="inp-cont">

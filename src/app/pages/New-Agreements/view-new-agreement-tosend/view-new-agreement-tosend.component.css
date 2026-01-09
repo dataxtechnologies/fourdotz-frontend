@@ -1,0 +1,163 @@
+/* ================= HEADER ================= */
+.header-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* ================= ROOT ================= */
+.agreement-viewer {
+  display: flex;
+  height: auto;
+  background: #f4f6f8;
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* ================= LEFT PANEL ================= */
+.variable-panel {
+    width: 320px;
+    background: #ffffff;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 4px 0 16px rgba(0, 0, 0, 0.08);
+}
+
+.variable-panel h4 {
+    margin: 0 0 16px;
+    font-size: 16px;
+}
+
+.field {
+    margin-bottom: 14px;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.field input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #cccccc;
+    font-size: 14px;
+}
+
+/* ================= PREVIEW PANEL ================= */
+.preview-panel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+
+    /* 🔥 breathing space */
+    padding: 20px 20px 140px;
+
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.preview-panel::-webkit-scrollbar {
+    display: none;
+}
+
+/* ================= A4 PAGE ================= */
+.page {
+    width: 210mm;
+
+    /* 🔥 let page grow naturally */
+    min-height: 297mm;
+    height: auto;
+
+    background: #ffffff;
+
+    /* 🔥 internal bottom space */
+    padding: 20mm 20mm 35mm;
+
+    /* 🔥 space after page */
+    margin-bottom: 100px;
+
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+    border-radius: 4px;
+}
+
+/* ================= DOCUMENT ================= */
+.doc-heading {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 32px;
+    letter-spacing: 0.5px;
+}
+
+.doc-para {
+    font-size: 14.5px;
+    line-height: 1.85;
+    text-align: justify;
+    margin-bottom: 14px;
+}
+
+/* ================= SIGNATURE ================= */
+.signature-section {
+    margin-top: 90px;
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+}
+
+.sign-box {
+    width: 45%;
+    text-align: center;
+}
+
+.sign-name {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.sign-placeholder {
+    height: 42px;
+    border-bottom: 2px solid #000000;
+    margin-bottom: 6px;
+}
+
+.sign-date {
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+/* ================= PRINT ================= */
+@media print {
+    body {
+        background: #ffffff;
+        overflow: visible;
+    }
+
+    .header-btn,
+    .variable-panel {
+        display: none !important;
+    }
+
+    .agreement-viewer {
+        height: auto;
+    }
+
+    .preview-panel {
+        padding: 0;
+    }
+
+    .page {
+        box-shadow: none;
+        margin: 0;
+        padding: 30mm;
+    }
+}

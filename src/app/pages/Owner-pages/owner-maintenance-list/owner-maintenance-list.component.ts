@@ -54,45 +54,48 @@ export class OwnerMaintenanceListComponent {
   }
 
   applyFilters() {
-    let filtered = [...this.maintenancelist2]; // original data
+  let filtered = [...this.maintenancelist2]; // original data
 
-    // 🔹 Filter by From Date
-    if (this.filters.fromDate) {
-      const from = new Date(this.filters.fromDate).getTime();
-      filtered = filtered.filter(
-        (item) => new Date(item.created_time.$date).getTime() >= from
-      );
-    }
+  // 🔹 From Date (start of day)
+  if (this.filters.fromDate) {
+    const from = new Date(this.filters.fromDate);
+    from.setHours(0, 0, 0, 0); // start of day
 
-    // 🔹 Filter by To Date
-    if (this.filters.toDate) {
-      const to = new Date(this.filters.toDate).getTime();
-      filtered = filtered.filter(
-        (item) => new Date(item.created_time.$date).getTime() <= to
-      );
-    }
-
-    // 🔹 Filter by Status
-    if (this.filters.status) {
-      filtered = filtered.filter(
-        (item) => this.getStatus(item) === this.filters.status
-      );
-    }
-
-    // 🔹 Search (name or property number)
-    if (this.filters.search.trim() !== '') {
-      const s = this.filters.search.toLowerCase();
-
-      filtered = filtered.filter(
-        (item) =>
-          item.resident_name?.toLowerCase().includes(s) ||
-          item.property_id?.toLowerCase().includes(s)
-      );
-    }
-
-    // Reset Pagination With Filtered Data
-    this.maintenancelist1.initialize(filtered, 10);
+    filtered = filtered.filter(item =>
+      new Date(item.created_time.$date).getTime() >= from.getTime()
+    );
   }
+
+  // 🔹 To Date (END of day) ✅ FIX
+  if (this.filters.toDate) {
+    const to = new Date(this.filters.toDate);
+    to.setHours(23, 59, 59, 999); // 🔥 end of day
+
+    filtered = filtered.filter(item =>
+      new Date(item.created_time.$date).getTime() <= to.getTime()
+    );
+  }
+
+  // 🔹 Status
+  if (this.filters.status) {
+    filtered = filtered.filter(
+      item => this.getStatus(item) === this.filters.status
+    );
+  }
+
+  // 🔹 Search
+  if (this.filters.search?.trim()) {
+    const s = this.filters.search.toLowerCase();
+
+    filtered = filtered.filter(item =>
+      item.resident_name?.toLowerCase().includes(s) ||
+      item.property_no?.toLowerCase().includes(s)
+    );
+  }
+
+  // 🔹 Reset Pagination
+  this.maintenancelist1.initialize(filtered, 10);
+}
 
   generateMaintenance() {
     this.ModalService.open(GenerateMaintenanceComponent, {
@@ -151,19 +154,28 @@ export class OwnerMaintenanceListComponent {
     return today > created;
   }
 
-    getStatus(item: any) {
-    const today = new Date().getTime();
-    const itemDate = new Date(item.created_time?.$date).getTime();
+getStatus(item: any): 'Paid' | 'Pending' | 'Overdue' | '' {
 
-    if (item.payment_status === true) {
-      return 'Paid';
-    } else if (item.payment_status === false) {
-      // Check if overdue based on date
-      return today > itemDate ? 'Overdue' : 'Pending';
-    } else {
-      return '';
-    }
+  // ✅ Paid always wins
+  if (item.payment_status === true) {
+    return 'Paid';
   }
+
+  // ✅ If not paid, decide by DUE DATE
+  if (item.payment_status === false && item.due_date) {
+
+    // due_date format: "06-Jan-2026"
+    const due = new Date(item.due_date);
+    due.setHours(23, 59, 59, 999);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return today > due ? 'Overdue' : 'Pending';
+  }
+
+  return '';
+}
 
   resetFilters() {
   this.filters = {

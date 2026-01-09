@@ -12,7 +12,7 @@
       <div class="logout-body">
 
         <!-- SELECT GATE DROPDOWN -->
-        <div class="inp-cont mb-3" *ngIf="actionD === 'Assign'">
+        <div class="inp-cont mb-3" *ngIf="actionD === 'Assign' ">
           <label class="medium-font">Select Gate <span class="required">*</span></label>
 
           <select class="inp-cus regular-font" formControlName="gateId" (change)="updateGateName()">
@@ -29,7 +29,7 @@
         </div>
 
         <!-- CONFIRMATION MESSAGE -->
-        <p class="logout-warning regular-font mt-2" *ngIf="actionD === 'Assign'">
+        <p class="logout-warning regular-font mt-2" *ngIf="actionD === 'Assign' && selectedGateName" >
           <strong class="medium-font">
             Are you sure you want to {{ actionD }}
             <span class="highlight">"{{ gateKeeperdata.name }}"</span>

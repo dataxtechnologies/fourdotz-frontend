@@ -48,7 +48,7 @@ ngOnInit(): void {
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(1)]],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]], // 10 digits
+      phone: ['', [Validators.required,  Validators.pattern('^[6-9][0-9]{9}$')]], // 10 digits
       rentedAt: ['', Validators.required],
       monthly_rent_due_date: ['', Validators.required],
       advancePaid: ['', [Validators.required, Validators.min(0)]],

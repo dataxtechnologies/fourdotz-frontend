@@ -1,0 +1,89 @@
+<div class="mt-4 header-btn">
+    <div class="d-flex gap-3 align-items-center">
+        <i class="fa-solid fa-arrow-left" style="cursor: pointer;" (click)="goback()"></i>
+
+        <h3>Sign Agreement</h3>
+    </div>
+
+<div *ngIf="!areBothSignersSigned()">
+
+  <!-- First signer NOT signed -->
+  <button
+    class="btn-add"
+    (click)="openSignModal()"
+    *ngIf="!isSecondSignerSigned()">
+    Sign Agreement
+  </button>
+
+  <!-- First signer signed, second NOT signed -->
+  <!-- <button
+    class="btn-add"
+    (click)="sendAgreement()"
+    *ngIf="isFirstSignerSigned() && !isSecondSignerSigned()">
+    Send Agreement
+  </button> -->
+
+</div>
+    <!-- <button class="btn-add" (click)="sendAgreementUser()" *ngIf="hasCurrentUserSigned()">
+        Send Agreement
+    </button> -->
+</div>
+
+<section class="agreement-viewer" *ngIf="template">
+
+    <div class="preview-panel">
+        <div class="page">
+
+            <ng-container *ngFor="let block of template.blocks">
+
+                <!-- HEADING -->
+                <h1 *ngIf="block.type === 'heading'" class="doc-heading">
+                    {{ block.value }}
+                </h1>
+
+                <!-- PARAGRAPH -->
+                <p *ngIf="block.type === 'paragraph'" class="doc-para">
+                    {{ renderText(block.value) }}
+                </p>
+
+                <!-- SIGNATURE BLOCK -->
+                <div *ngIf="block.type === 'signature'" class="signature-section">
+                    <div class="sign-box" *ngFor="let signer of block.signers">
+
+                        <p class="sign-name">
+                            {{ signer.name | titlecase }}
+                        </p>
+
+                        <div class="sign-placeholder">
+
+                            <!-- ===== NOT SIGNED ===== -->
+                            <span *ngIf="!signer.signed">
+                                Signature Pending
+                            </span>
+
+                            <!-- ===== TYPED SIGNATURE (FONT STYLE APPLIED) ===== -->
+                            <span *ngIf="signer.signed && signer.Signer_type === 'type'" class="typed-signature"
+                                [ngClass]="signer.Signer_font">
+                                {{ signer.signer_name }}
+                            </span>
+
+                            <!-- ===== IMAGE SIGNATURE ===== -->
+                            <img *ngIf="signer.signed && signer.Signer_type === 'image'" [src]="signer.signer_name"
+                                class="signature-img" alt="Signature" />
+
+                        </div>
+
+                        <!-- ===== SIGNED DATE ===== -->
+                        <div *ngIf="block.includeDate" class="sign-date">
+                            Date:
+                            {{ signer.signed_date ? signer.signed_date : 'Not signed yet' }}
+                        </div>
+
+                    </div>
+                </div>
+
+            </ng-container>
+
+        </div>
+    </div>
+</section>

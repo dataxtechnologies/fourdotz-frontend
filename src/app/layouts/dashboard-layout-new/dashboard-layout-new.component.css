@@ -228,6 +228,109 @@
     z-index: 900;
 }
 
+#sidebar-menu{
+    padding-left: 65px !important;
+}
+
+
+/* ================== SIDEBAR BASE ================== */
+#sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Reset */
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* MAIN MENU ITEMS */
+#sidebar > ul > li > a,
+#sidebar > ul > li > button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ------------------------------------
+   SUBMENU CONTAINER (LINE STYLE)
+------------------------------------ */
+.submenu-list {
+  position: relative;
+  margin-top: 8px;
+  margin-left: 30px;
+  padding-left: 18px;
+}
+
+/* EACH SUB ITEM */
+.submenu-list li {
+  position: relative;
+  margin: 10px 0;
+}
+
+
+
+/* SUBMENU LINK */
+.submenu-link {
+  display: block;
+  padding: 6px 10px;
+  font-size: 14px;
+  color: #4b5563;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+/* HOVER */
+.submenu-link:hover {
+  background: #f2f2f2;
+  color: #111;
+}
+
+/* ACTIVE ITEM */
+.submenu-list li.active .submenu-link {
+  font-weight: 600;
+  color: #000;
+}
+
+/* ------------------------------
+   COLLAPSED SIDEBAR MODE
+-------------------------------- */
+.collapsed .submenu-list {
+  position: absolute;
+  left: 70px;
+  top: 0;
+  background: #fff;
+  padding: 10px 14px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+}
+
+.collapsed .submenu-list li::before {
+  display: none;
+}
+
+/* HIDE TEXT WHEN COLLAPSED */
+.collapsed .submenu-link span {
+  display: none;
+}
+
+/* MOBILE SAFETY */
+@media (max-width: 800px) {
+  .toggle-btn-li,
+  .footer-list li {
+    display: none !important;
+  }
+}
+
+
 /* ================= RESPONSIVE ================= */
 @media (max-width: 1024px) {
     #asidebar {

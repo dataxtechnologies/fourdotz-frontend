@@ -34,10 +34,10 @@
             <div class="inp-cont">
                 <label class="medium-font">Vehicle Number <span class="required">*</span></label>
                 <input type="text" class="inp-cus regular-font" formControlName="vehicleNumber" placeholder="TN-01-AB-1234"
-                    maxlength="13" pattern="[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}" title="Format must be TN-01-AB-1234"
+                    maxlength="13" pattern="[A-Z]{2}\d{2}[A-Z]{2}\d{4}" title="Format must be TN-01-AB-1234"
                     (keypress)="onVehicleNumberInput($event)" />
                 <small class="text-danger regular-font" *ngIf="isInvalid('vehicleNumber')">
-                    Vehicle Number must be in format TN-01-AB-1234
+                    Vehicle Number must be in format TN01AB1234
                 </small>
             </div>
 

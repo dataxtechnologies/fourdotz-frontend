@@ -7,37 +7,42 @@
     <div class="form-body">
         <form [formGroup]="vehicleForm" (ngSubmit)="addVehicle()">
             <div class="inp-cont">
-        <label class="medium-font">Vehicle Type <span class="required">*</span></label>
-        <select class="inp-cus regular-font" formControlName="vehicleType">
-          <option value="" disabled selected>Select Vehicle Type</option>
-          <option value="2 Wheeler">2 Wheeler</option>
-          <option value="4 Wheeler">4 Wheeler</option>
-          <option value="Others">Others</option>
-        </select>
-        <small class="text-danger" *ngIf="isInvalid('vehicleType')">
-          Vehicle Type is required.
-        </small>
-      </div>
+                <label class="medium-font">Vehicle Type <span class="required">*</span></label>
+                <select class="inp-cus regular-font" formControlName="vehicleType">
+                    <option value="" disabled selected>Select Vehicle Type</option>
+                    <option value="2 Wheeler">2 Wheeler</option>
+                    <option value="4 Wheeler">4 Wheeler</option>
+                    <option value="Others">Others</option>
+                </select>
+                <small class="text-danger" *ngIf="isInvalid('vehicleType')">
+                    Vehicle Type is required.
+                </small>
+            </div>
 
             <div class="inp-cont">
                 <label class="medium-font">Brand <span class="required">*</span></label>
-                <input type="text" class="inp-cus regular-font" formControlName="brand" placeholder="Enter your Brand" />
+                <input type="text" class="inp-cus regular-font" formControlName="brand"
+                    placeholder="Enter your Brand" />
                 <small class="text-danger" *ngIf="isInvalid('brand')">Brand is required.</small>
             </div>
 
             <div class="inp-cont">
                 <label class="medium-font">Vehicle Model <span class="required">*</span></label>
-                <input type="text" class="inp-cus regular-font" formControlName="model" placeholder="Enter your Vehicle Model" />
+                <input type="text" class="inp-cus regular-font" formControlName="model"
+                    placeholder="Enter your Vehicle Model" />
                 <small class="text-danger" *ngIf="isInvalid('model')">Vehicle Model is required.</small>
             </div>
 
             <div class="inp-cont">
-                <label class="medium-font">Vehicle Number <span class="required">*</span></label>
-                <input type="text" class="inp-cus regular-font" formControlName="vehicleNumber" placeholder="TN-01-AB-1234"
-                    maxlength="13" pattern="[A-Z]{2}-\d{2}-[A-Z]{2}-\d{4}" title="Format must be TN-01-AB-1234"
-                    (keypress)="onVehicleNumberInput($event)" />
+                <label class="medium-font">
+                    Vehicle Number <span class="required">*</span>
+                </label>
+
+                <input type="text" class="inp-cus regular-font" formControlName="vehicleNumber" placeholder="TN01AB1234"
+                    maxlength="10" (input)="onVehicleNumberInput($event)" />
+
                 <small class="text-danger" *ngIf="isInvalid('vehicleNumber')">
-                    Vehicle Number must be in format TN-01-AB-1234
+                    Vehicle Number must be in format TN01AB1234
                 </small>
             </div>
 

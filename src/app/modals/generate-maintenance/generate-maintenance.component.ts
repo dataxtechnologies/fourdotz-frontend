@@ -63,13 +63,9 @@ export class GenerateMaintenanceComponent implements OnInit {
     const user_type = localStorage.getItem('user_type');
     const user_id = userdata?._id;
 
-    if(user_type == 'owner'){
-      this.propertylist()
-    }else{
-      if (user_id) {
-      this.getPropertiesData(user_id);
-    }
-    }
+
+      this.getPropertiesData();
+
 
     
 
@@ -78,8 +74,8 @@ export class GenerateMaintenanceComponent implements OnInit {
   }
 
   // ✅ Fetch property list API
-  getPropertiesData(user_id: any) {
-    this.apiService.propertiesbyAssociation<any>(user_id).subscribe({
+  getPropertiesData() {
+    this.apiService.ResidentedProperty<any>().subscribe({
       next: (res: any) => {
         if (res?.success && Array.isArray(res.data)) {
           this.propertylist2 = res.data;
@@ -100,7 +96,7 @@ export class GenerateMaintenanceComponent implements OnInit {
   }
 
   propertylist() {
-    this.apiService.ownerproperties<any>().subscribe({
+    this.apiService.PropertyListinAssociation<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.propertylist2 = res.data || [];

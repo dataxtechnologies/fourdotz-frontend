@@ -37,7 +37,7 @@ export class AddGateKeeperComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.pattern(/^[6-9]\d{9}$/)   // Starts 6-9 & 10 digits
+           Validators.pattern('^[6-9][0-9]{9}$')   // Starts 6-9 & 10 digits
         ]
       ]
     });
@@ -53,12 +53,11 @@ export class AddGateKeeperComponent implements OnInit {
     }
 
     const payload = {
-      associationId: this.associationId,
-      gatekeeper: {
+
         name: this.gatekeeperForm.value.name,
         email: this.gatekeeperForm.value.email,
-        phone: this.gatekeeperForm.value.phone
-      }
+        mobile: this.gatekeeperForm.value.phone
+
     };
 
     this.apiService.GateKeeperCreate(payload).subscribe({

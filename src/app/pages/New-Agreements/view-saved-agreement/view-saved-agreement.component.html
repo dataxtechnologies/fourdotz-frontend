@@ -1,0 +1,51 @@
+<div class="mt-4 header-btn">
+    <h4>View Template</h4>
+    <button class="btn-add">Save & Send Agreement</button>
+</div>
+<section class="agreement-viewer">
+
+
+    <!-- LEFT : VARIABLE FORM -->
+    <div class="variable-panel">
+        <h4>Fill Details</h4>
+
+        <div class="field" *ngFor="let key of variableKeys; trackBy: trackByKey">
+            <label>{{ key | titlecase }}</label>
+            <input [(ngModel)]="variables[key]" placeholder="Enter {{ key }}" />
+        </div>
+    </div>
+
+    <!-- RIGHT : PREVIEW -->
+    <div class="preview-panel">
+
+        <div class="page">
+
+            <ng-container *ngFor="let block of template.blocks">
+
+                <!-- HEADING -->
+                <h1 *ngIf="block.type === 'heading'" class="doc-heading">
+                    {{ block.value }}
+                </h1>
+
+                <!-- PARAGRAPH -->
+                <p *ngIf="block.type === 'paragraph'" class="doc-para">
+                    {{ renderText(block.value!) }}
+                </p>
+
+                <!-- SIGNATURE -->
+                <div *ngIf="block.type === 'signature'" class="signature-section">
+                    <div class="sign-box" *ngFor="let name of block.signNames">
+                        <p class="sign-name">{{ name }}</p>
+                        <div class="sign-placeholder"></div>
+                        <div *ngIf="block.includeDate" class="sign-date">
+                            Date: {{ variables['agreement_date'] || '__________' }}
+                        </div>
+                    </div>
+                </div>
+
+            </ng-container>
+
+        </div>
+
+    </div>
+</section>

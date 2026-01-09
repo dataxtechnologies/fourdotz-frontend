@@ -59,21 +59,33 @@ import { SpotVisitorsComponent } from './pages/association-pages/manage-visitors
 import { GateKeeperQrVisitorComponent } from './pages/gate-keeper-pages/gate-keeper-qr-visitor/gate-keeper-qr-visitor.component';
 import { PreVisitorListComponent } from './pages/Owner-pages/pre-visitor-list/pre-visitor-list.component';
 import { VisitorExitedScreenComponent } from './pages/visitor-pages/visitor-exited-screen/visitor-exited-screen.component';
+import { CreateTemplateComponent } from './pages/Aggreement/create-template/create-template.component';
+import { ViewTemplateComponent } from './pages/Aggreement/view-template/view-template.component';
+import { ListTemplateComponent } from './pages/Aggreement/list-template/list-template.component';
+import { ListAllTemplatesComponent } from './pages/New-Agreements/list-all-templates/list-all-templates.component';
+import { CreateTemplateAssociationComponent } from './pages/New-Agreements/create-template-association/create-template-association.component';
+import { ViewSavedAgreementComponent } from './pages/New-Agreements/view-saved-agreement/view-saved-agreement.component';
+import { ViewSavedTemplateComponent } from './pages/New-Agreements/view-saved-template/view-saved-template.component';
+import { ListSavedAgreementComponent } from './pages/New-Agreements/list-saved-agreement/list-saved-agreement.component';
+import { ViewNewAgreementTosendComponent } from './pages/New-Agreements/view-new-agreement-tosend/view-new-agreement-tosend.component';
+import { ViewSigningAgreementComponent } from './pages/New-Agreements/view-signing-agreement/view-signing-agreement.component';
+import { OwnerSigingAgreementListComponent } from './pages/New-Agreements/owner-siging-agreement-list/owner-siging-agreement-list.component';
+import { OwnerViewSigningAgreementComponent } from './pages/New-Agreements/owner-view-signing-agreement/owner-view-signing-agreement.component';
+import { OwnerCreatedAgreementListComponent } from './pages/New-Agreements/owner-created-agreement-list/owner-created-agreement-list.component';
 
 export const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'auth/sign-in',
-    // redirectTo: 'Superadmin/Dashboard',
-  },
+  path: '',
+  pathMatch: 'full',
+  redirectTo: 'auth/sign-in',
+},
 
   {
     path: 'auth',
     component: AuthLayoutComponent,
     // canActivate: [authGuard],
     children: [
-      { path: 'sign-in', component: SigninPageNewComponent },
+     { path: 'sign-in', component: SigninPageNewComponent },
       // { path: 'user-signin', component: SigninPageNewComponent },
       {
         path: 'user-authentication/:authtype/:authvalue',
@@ -202,6 +214,7 @@ export const routes: Routes = [
       { path: 'Maintenance-list', component: TenantMaintenanceListComponent },
       { path: 'Rental-invoice-list', component: TenantRentalListComponent },
       { path: 'request-management/list', component: ListRequestsUserComponent },
+      { path: 'pre-visitor/list', component: PreVisitorListComponent },
       {
         path: 'announcement/tenant',
         component: AnnouncementsTenantPageComponent,
@@ -309,6 +322,53 @@ export const routes: Routes = [
       {
         path: 'visitors-management/qr-visitors-list',
         component: GateKeeperQrVisitorComponent,
+      },
+    ],
+  },
+
+  {
+    path: 'agreement',
+    component: DashboardLayoutNewComponent,
+    children: [
+      {
+        path: 'association/create-template',
+        component: CreateTemplateAssociationComponent,
+      },
+      {
+        path: 'association/list-template',
+        component: ListAllTemplatesComponent,
+      },
+      {
+        path: 'association/view-template',
+        component: ViewSavedTemplateComponent,
+      },
+      {
+        path: 'association/list-agreement',
+        component: ListSavedAgreementComponent,
+      },
+      {
+        path: 'owner/list-signing-agreement',
+        component: OwnerSigingAgreementListComponent,
+      },
+      {
+        path: 'owner/list-created-agreement',
+        component: OwnerCreatedAgreementListComponent,
+      },
+      {
+        path: 'association/view-agreement',
+        component: ViewSavedAgreementComponent,
+      },
+      {
+        path: 'association/view-new-agreement/:templateId',
+        component: ViewNewAgreementTosendComponent,
+      },
+      {
+        path: 'association/view-signing-agreement/:templateId',
+        component: ViewSigningAgreementComponent,
+      },
+      {
+        path: 'owner/owner-view-signing-agreement/:templateId',
+        component: OwnerViewSigningAgreementComponent,
       },
     ],
   },

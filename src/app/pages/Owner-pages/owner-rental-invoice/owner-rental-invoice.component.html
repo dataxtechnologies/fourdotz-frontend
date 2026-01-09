@@ -24,7 +24,7 @@
                                 <!-- Status Dropdown -->
                                 <div class="filter-item">
                                     <label for="status" class="medium-font">Payment Status</label>
-                                    <select formControlName="status" class="regular-font">
+                                    <select formControlName="status" class="regular-font" (click)="applyFilters()">
                                         <option value="">All</option>
                                         <option value="Paid">Paid</option>
                                         <option value="Pending">Pending</option>
@@ -39,24 +39,24 @@
                                             <img src="assets/icons/info-circle.svg" class="info-icon" alt="info" />
 
                                             <div class="tooltip-box">
-                                                Search for Tenanr name or property number here
+                                                Search for Tenant name or property number here
                                             </div>
                                         </div>
                                     </label>
                                     <input type="text" placeholder="Enter Phone or Name"
-                                        formControlName="residentSearch" class="regular-font" />
+                                        formControlName="residentSearch" class="regular-font"  (click)="applyFilters()"/>
                                 </div>
 
                                 <!-- From Date -->
                                 <div class="filter-item">
                                     <label for="fromDate" class="medium-font">From Date</label>
-                                    <input type="date" formControlName="fromDate" class="regular-font" />
+                                    <input type="date" formControlName="fromDate" class="regular-font"  (click)="applyFilters()"/>
                                 </div>
 
                                 <!-- To Date -->
                                 <div class="filter-item">
                                     <label for="toDate" class="medium-font">To Date</label>
-                                    <input type="date" formControlName="toDate" class="regular-font" />
+                                    <input type="date" formControlName="toDate" class="regular-font" (click)="applyFilters()" />
                                 </div>
 
                             </div>
@@ -122,7 +122,7 @@
                                                     src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
                                                     (click)="viewInvoice(p.invoice_no)" /></span>
                                             <span *ngIf="p.payment_status === false"
-                                                style="color: var(--primary-color1);"
+                                                style="color: var(--primary-color1); border: 2px solid var(--primary-color1); padding: 4px 6px;  border-radius: 12px;"
                                                 (click)="changetopaidstatus(p.invoice_no)">Paid</span>
                                         </td>
                                     </tr>

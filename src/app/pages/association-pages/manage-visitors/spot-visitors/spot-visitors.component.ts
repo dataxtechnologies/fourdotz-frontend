@@ -21,6 +21,7 @@ user_id = localStorage.getItem('user_id');
   tableLoading: boolean = true;
   pages: any;
   associationId: any;
+  user_type: any
 
   constructor(
     private ModalService: ModalService,
@@ -34,6 +35,7 @@ user_id = localStorage.getItem('user_id');
 
   ngOnInit(): void {
     const userdata = localStorage.getItem('userdata');
+   this.user_type = localStorage.getItem('user_type');
 
     if (userdata) {
       const parsedData = JSON.parse(userdata);

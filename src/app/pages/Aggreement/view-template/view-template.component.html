@@ -1,0 +1,23 @@
+<div class="sign-layout">
+
+    <!-- DOCUMENT PREVIEW -->
+    <div class="document">
+        <div #doc class="page-container" [innerHTML]="templateHTML"></div>
+    </div>
+
+    <!-- FILL FORM -->
+    <div class="fill-form">
+        <h4>Fill Details</h4>
+
+        <div *ngFor="let v of variables" class="field">
+            <label>{{ v.label }}</label>
+
+            <input *ngIf="v.type === 'text'" [(ngModel)]="formData[v.key]" />
+            <input *ngIf="v.type === 'date'" type="date" [(ngModel)]="formData[v.key]" />
+            <input *ngIf="v.type === 'number'" type="number" [(ngModel)]="formData[v.key]" />
+        </div>
+
+        <button class="apply" (click)="applyValues()">Apply & Review</button>
+    </div>
+
+</div>

@@ -49,7 +49,7 @@ export class VisitorExitFormComponent implements OnInit {
 
   // ---------------- GATE LIST ----------------
   listGate() {
-    this.apiService.listGate<any>().subscribe({
+    this.apiService.listGateKeeper<any>().subscribe({
       next: (res: any) => {
         this.gateList = res?.success ? res.data : [];
       },
@@ -97,7 +97,7 @@ export class VisitorExitFormComponent implements OnInit {
       },
       error: (err: any) => {
         this.submitbtn = true;
-        this.toast.error(err?.error?.message || 'Exit failed', 'Error');
+        this.toast.error(err?.error.error?.message || 'Exit failed', 'Error');
       },
     });
   }
