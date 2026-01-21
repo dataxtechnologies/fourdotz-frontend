@@ -1,26 +1,26 @@
 <section>
     <div>
+
+        <!-- HEADER -->
         <div class="container header-cont">
             <div class="head-cont">
                 <h2 class="demibold-font">Properties List</h2>
             </div>
-            <div>
-                <!-- <button class="btn-add" (click)="Addproperty()">+ Add Properties</button> -->
-            </div>
         </div>
+
+        <!-- TABLE -->
         <div class="container">
-
-
-            <!-- 🏠 Table Section -->
             <div class="item">
-                <div class="table-cont">
-                    <!-- 🔍 Filter Section -->
+
+                <div class="new-table-wrapper">
+
+                    <!-- FILTERS -->
                     <form [formGroup]="filterForm">
                         <div class="filters">
-                            <!-- Association Dropdown -->
-                            <div class="inp-cont">
-                                <label for="association"  class="medium-font">Select Association</label>
-                                <select formControlName="association" class="inp-cus regular-font">
+
+                            <div class="search-box">
+                                <label class="medium-font">Select Association</label>
+                                <select formControlName="association" class="regular-font">
                                     <option value="">All Associations</option>
                                     <option *ngFor="let assoc of filteredProperties" [value]="assoc._id">
                                         {{ assoc.association_name }}
@@ -28,131 +28,127 @@
                                 </select>
                             </div>
 
-                            <div class="inp-cont">
-                                <label for="tenants"  class="medium-font">Select Resident</label>
-                                <!-- Resident Type Dropdown -->
-                                <select formControlName="residentType" class="inp-cus regular-font">
-                                    <option value=""  class="regular-font">All Types</option>
-                                    <option value="owner"  class="regular-font">Owner</option>
-                                    <option value="tenant"  class="regular-font">Tenant</option>
+                            <div class="search-box">
+                                <label class="medium-font">Select Resident</label>
+                                <select formControlName="residentType" class="regular-font">
+                                    <option value="">All Types</option>
+                                    <option value="owner">Owner</option>
+                                    <option value="tenant">Tenant</option>
                                 </select>
                             </div>
 
-                            <!-- Property No. Input -->
-                            <div class="inp-cont">
-                                <label for="Property"   class="medium-font">Property No.</label>
-                                <input type="text" placeholder="Search Property No." class="inp-cus regular-font"
-                                    formControlName="propertyNo" />
+                            <div class="search-box">
+                                <label class="medium-font">Property No.</label>
+                                <input type="text" placeholder="Search Property No." formControlName="propertyNo"
+                                    class="regular-font" />
                             </div>
 
-                            <!-- Reset Button -->
-                            <div class="btn">
-                                <button type="button" class="btn-remove btn-btn Buttons-font" (click)="resetFilters()">Reset</button>
-                            </div>
+                            <button type="button" class="filter-reset-btn" (click)="resetFilters()">
+                                Reset
+                            </button>
+
                         </div>
                     </form>
-                    <div class="table-container">
-                        <table class="styled-table">
-                            <thead class="medium-font">
-                                <tr>
-                                    <th class="medium-font">Property No.</th>
-                                    <th class="medium-font">Property Type</th>
-                                    <th class="medium-font">Association</th>
-                                    <th class="medium-font">Area</th>
-                                    <th class="medium-font">Residential Type</th>
-                                    <th class="medium-font">View</th>
-                                </tr>
-                            </thead>
-                           
-                             <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                <ng-container *ngIf="propertieslist2.length === 0; else datashow">
-                                    <tr>
-                                        <td colspan="6" style="text-align: center; font-weight: 600; color: gray;">
-                                             No Data Found
+
+                    <!-- SCROLL WRAPPER -->
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
+
+                            <table class="new-table">
+
+                                <!-- HEADER -->
+                                <thead>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Property No.</th>
+                                        <th>Property Type</th>
+                                        <th>Association</th>
+                                        <th>Area</th>
+                                        <th>Residential Type</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+
+                                <!-- BODY -->
+                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                                    <!-- DATA -->
+                                    <tr *ngFor="let property of filteredProperties">
+
+                                        <!-- STICKY COLUMN -->
+                                        <td class="sticky-col lead-col">
+                                            {{ property.property_no }}
+                                        </td>
+
+                                        <td>{{ property.property_type }}</td>
+                                        <td>{{ property.association_name }}</td>
+                                        <td>{{ property.area }}</td>
+                                        <td>{{ property.resident_type }}</td>
+
+                                        <td (click)="viewProperty(property._id)">
+                                            <button class="table-btn">View</button>
+                                        </td>
+
+                                    </tr>
+
+                                    <!-- NO DATA -->
+                                    <tr *ngIf="filteredProperties.length === 0">
+                                        <td colspan="6" style="text-align:center;color:gray;font-weight:600;">
+                                            No Data Found
                                         </td>
                                     </tr>
-                                </ng-container>
-                                <ng-template #datashow>
-                                    <tr *ngFor="let property of filteredProperties">
-                                    <td>{{ property.property_no }}</td>
-                                    <td>{{ property.property_type }}</td>
-                                    <td>{{ property.association_name }}</td>
-                                    <td>{{ property.area }}</td>
-                                    <td>{{ property.resident_type }}</td>
-                                    <td (click)="viewProperty(property._id)">
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </td>
-                                </tr>
-                                </ng-template>
-                            </tbody>
+
+                                </tbody>
+                            </table>
+
+                            <!-- SKELETON -->
                             <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
-                                    <td>
-                                        <span class="placeholder col-10 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                                    <td class="sticky-col lead-col">
+                                        <span class="placeholder col-10"></span>
                                     </td>
-                                    <td>
-                                        <span class="placeholder col-8 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-6 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-7 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-5 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-3 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-3 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
+                                    <td><span class="placeholder col-8"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-7"></span></td>
+                                    <td><span class="placeholder col-5"></span></td>
+                                    <td><span class="placeholder col-3"></span></td>
                                 </tr>
                             </ng-template>
-                        </table>
+
+                        </div>
                     </div>
+
+                    <!-- PAGINATION -->
+                    <div class="crm-pagination" *ngIf="propertieslist1">
+                        <div class="regular-font">
+                            Showing
+                            <span class="medium-font">{{ propertieslist1.startIndex + 1 }}</span>
+                            to
+                            <span class="medium-font">{{ propertieslist1.endIndex + 1 }}</span>
+                            of
+                            <span class="medium-font">{{ propertieslist1.totalData }}</span>
+                            entries
+                        </div>
+
+                        <div class="d-flex gap-3 regular-font">
+                            <button class="nav-btn" (click)="propertieslist1.prevPage()"
+                                [disabled]="propertieslist1.currentPage === 1">
+                                ‹ Prev
+                            </button>
+
+                            <button class="page-btn active">
+                                {{ propertieslist1.currentPage }}
+                            </button>
+
+                            <button class="nav-btn" (click)="propertieslist1.nextPage()"
+                                [disabled]="propertieslist1.currentPage === propertieslist1.totalPages">
+                                Next ›
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
-        </div>
-
-        <div *ngIf="propertieslist1" class="pagination-container medium-font">
-            <p class="pagination-info">
-                Showing {{ propertieslist1.startIndex + 1 }} to {{ propertieslist1.endIndex + 1 }} of {{
-                propertieslist1.totalData }} entries
-            </p>
-
-            <ul class="pagination">
-                <!-- First Page -->
-                <li>
-                    <button [disabled]="propertieslist1.currentPage === 1" (click)="propertieslist1.prevPage()"
-                        class="page-btn arrow-btn">
-                        <i class="fa-solid fa-angle-left"></i>
-                    </button>
-                </li>
-
-                <!-- Current Page -->
-                <li>
-                    <span class="page-btn active">
-                        {{ propertieslist1.currentPage }}
-                    </span>
-                </li>
-
-                <!-- Next Page -->
-                <li>
-                    <button [disabled]="propertieslist1.currentPage === propertieslist1.totalPages"
-                        (click)="propertieslist1.nextPage()" class="page-btn arrow-btn">
-                       <i class="fa-solid fa-angle-right"></i>
-                    </button>
-                </li>
-            </ul>
         </div>
 
     </div>

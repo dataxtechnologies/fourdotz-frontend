@@ -27,6 +27,7 @@ export class ViewAssociationComponent {
   payout_maintenance_total_amount = 0;
   payout_rent_invoices_total_amount = 0;
   documents: { [key: string]: string }[] = [];
+  
 
   constructor(
     private apiService: ApiserviceService,
@@ -165,4 +166,21 @@ export class ViewAssociationComponent {
   }
 
   // EditAssociationModalComponent
+
+   association = {
+    property_name: 'Wowelse-internal association',
+    mobile: '9361280082',
+    email: 'fourdotz.datax@gmail.com',
+    property_type: ['villa', 'apartment', 'townhouse'],
+    invitation_status: true,
+  };
+
+  properties = [
+    {
+      name: 'Wowelse-internal association',
+      number: 'F100',
+      type: 'Villa',
+      facing: 'North',
+    },
+  ];
 }

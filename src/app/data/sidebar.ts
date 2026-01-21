@@ -10,57 +10,58 @@ export interface SidebarItem {
 export const SIDEBAR_ITEMS: SidebarItem[] = [
   {
     label: 'Dashboard',
-    icon: '/assets/icons/SA-home.svg',
+    icon: '/assets/icons/sidebar/Dashboard.png',
     route: '/Superadmin/Dashboard',
     allowedRole: 'superadmin',
     //activeicon: ''
   },
   {
     label: 'Association',
-    icon: '/assets/icons/SA-Association.svg',
+    icon: '/assets/icons/sidebar/Association-list.png',
     route: '/Superadmin/Association-list',
     allowedRole: 'superadmin',
     //activeicon: ''
   },
 
+
   {
     label: 'Dashboard',
-    icon: '/assets/icons/grids1.svg',
+    icon: '/assets/icons/sidebar/Dashboard.png',
     route: '/Association/Dashboard',
     allowedRole: 'association',
     //activeicon: ''
   },
   {
     label: 'Properties',
-    icon: '/assets/icons/house.svg',
+    icon: '/assets/icons/sidebar/property.png',
     route: '/Association/properties-list',
     allowedRole: 'association',
     //activeicon: ''
   },
   {
     label: 'Residents',
-    icon: '/assets/icons/ai-users.svg',
+    icon: '/assets/icons/sidebar/resident.png',
     route: '/Association/residents-list',
     allowedRole: 'association',
     //activeicon: ''
   },
   {
     label: 'Maintenance',
-    icon: '/assets/icons/money-recive.svg',
+    icon: '/assets/icons/sidebar/maintenance.png',
     route: '/Association/Maintenance-list',
     allowedRole: 'association',
     //activeicon: ''
   },
   {
     label: 'Announcement',
-    icon: '/assets/icons/chart-3.svg',
+    icon: '/assets/icons/sidebar/announcement.png',
     route: '/Association/announcement',
     allowedRole: 'association',
     //activeicon: ''
   },
   {
     label: 'Manage Agreement',
-    icon: '/assets/icons/agreement.svg',
+    icon: '/assets/icons/sidebar/Agreement.png',
     route: '/Association/request-management/list',
     allowedRole: 'association',
     children: [
@@ -95,7 +96,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 
   {
     label: 'Manage Helpers',
-    icon: '/assets/icons/manage-users1.svg',
+    icon: '/assets/icons/sidebar/helpers.png',
     route: '/Association/request-management/list',
     allowedRole: 'association',
     children: [
@@ -123,7 +124,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 
   {
     label: 'Manage Request',
-    icon: '/assets/icons/request-manage2.svg',
+    icon: '/assets/icons/sidebar/request.png',
     route: '/Association/request-management/list',
     allowedRole: 'association',
     children: [
@@ -140,7 +141,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 
   {
     label: 'Manage Visitors',
-    icon: '/assets/icons/manage.svg',
+    icon: '/assets/icons/sidebar/visitors.png',
     route: '/visitors-management/visitors-list',
     allowedRole: 'association',
     children: [
@@ -173,49 +174,49 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   },
   {
     label: 'Dashboard',
-    icon: '/assets/icons/grids1.svg',
+    icon: '/assets/icons/sidebar/Dashboard.png',
     route: '/Owner/Dashboard',
     allowedRole: 'owner',
     //activeicon: '/assets/icons/Dashboard-outline.svg',
   },
   {
     label: 'Property',
-    icon: '/assets/icons/house.svg',
+    icon: '/assets/icons/sidebar/property.png',
     route: '/Owner/properties-list',
     allowedRole: 'owner',
     //activeicon: ''
   },
   {
     label: 'Tenants',
-    icon: '/assets/icons/user-tag.svg',
+    icon: '/assets/icons/sidebar/tenant.png',
     route: '/Owner/tenants-list',
     allowedRole: 'owner',
     //activeicon: ''
   },
   {
     label: 'Maintenance',
-    icon: '/assets/icons/money-recive.svg',
+    icon: '/assets/icons/sidebar/maintenance.png',
     route: '/Owner/Maintenance-list',
     allowedRole: 'owner',
     //activeicon: ''
   },
   {
     label: 'Rental Invoice',
-    icon: '/assets/icons/receipt-text.svg',
+    icon: '/assets/icons/sidebar/invoice.png',
     route: '/Owner/Rental-invoice-list',
     allowedRole: 'owner',
     //activeicon: ''
   },
   {
     label: 'Announcement',
-    icon: '/assets/icons/chart-3.svg',
+    icon: '/assets/icons/sidebar/announcement.png',
     route: '/Owner/announcement/owner',
     allowedRole: 'owner',
     //activeicon: ''
   },
   {
     label: 'Manage Agreement',
-    icon: '/assets/icons/agreement.svg',
+    icon: '/assets/icons/sidebar/Agreement.png',
     route: '/',
     allowedRole: 'owner',
     children: [
@@ -244,70 +245,70 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   
   {
     label: 'Manage Request',
-    icon: '/assets/icons/request-manage2.svg',
+    icon: '/assets/icons/sidebar/request.png',
     route: '/Owner/request-management/list',
     allowedRole: 'owner',
     //activeicon: ''
   },
   {
     label: 'Pre-Visitor',
-    icon: '/assets/icons/pre-visitor.svg',
+    icon: '/assets/icons/sidebar/visitors.png',
     route: '/Owner/pre-visitor/list',
     allowedRole: 'owner',
     //activeicon: ''
   },
   {
     label: 'Dashboard',
-    icon: '/assets/icons/grids1.svg',
+    icon: '/assets/icons/sidebar/Dashboard.png',
     route: '/Tenant/Dashboard',
     allowedRole: 'tenant',
     //activeicon: ''
   },
   {
     label: 'Rented property',
-    icon: '/assets/icons/house-2.svg',
+    icon: '/assets/icons/sidebar/property.png',
     route: '/Tenant/properties-list',
     allowedRole: 'tenant',
     //activeicon: ''
   },
   {
     label: 'Maintenance',
-    icon: '/assets/icons/money-recive.svg',
+    icon: '/assets/icons/sidebar/maintenance.png',
     route: '/Tenant/Maintenance-list',
     allowedRole: 'tenant',
     //activeicon: ''
   },
   {
     label: 'Rental Invoice',
-    icon: '/assets/icons/receipt-text.svg',
+    icon: '/assets/icons/sidebar/invoice.png',
     route: '/Tenant/Rental-invoice-list',
     allowedRole: 'tenant',
     //activeicon: ''
   },
   {
     label: 'Announcement',
-    icon: '/assets/icons/chart-3.svg',
+    icon: '/assets/icons/sidebar/announcement.png',
     route: '/Tenant/announcement/tenant',
     allowedRole: 'tenant',
     //activeicon: ''
   },
    {
         label: 'Sign Agreements',
-        icon: '/assets/icons/agreement.svg',
+        icon: '/assets/icons/sidebar/Agreement.png',
         route: '/agreement/owner/list-signing-agreement',
         allowedRole: 'tenant',
       },
 
   {
     label: 'Manage Request',
-    icon: '/assets/icons/request-manage2.svg',
+    icon: '/assets/icons/sidebar/request.png',
     route: '/Tenant/request-management/list',
     allowedRole: 'tenant',
     //activeicon: ''
   },
    {
     label: 'Pre-Visitor',
-    icon: '/assets/icons/pre-visitor.svg',
+    icon: '/assets/icons/sidebar/visitors.png',
     route: '/Tenant/pre-visitor/list',
     allowedRole: 'tenant',
     //activeicon: ''
@@ -315,7 +316,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 
   {
     label: 'Manage Request',
-    icon: '/assets/icons/request-manage2.svg',
+    icon: '/assets/icons/sidebar/request.png',
     route: '/Service-admin/manage-requests',
     allowedRole: 'service_admin',
     //activeicon: ''
@@ -324,7 +325,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 
   {
     label: 'Manage Visitors',
-    icon: '/assets/icons/personalcard.svg',
+    icon: '/assets/icons/sidebar/visitors.png',
     route: '/',
     allowedRole: 'gate_keeper',
     children: [

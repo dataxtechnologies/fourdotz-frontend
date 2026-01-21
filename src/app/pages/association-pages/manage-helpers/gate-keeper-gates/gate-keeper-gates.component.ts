@@ -7,6 +7,7 @@ import { AssignGate2GatekeeperComponent } from '../../../../modals/assign-gate-2
 import { ApiserviceService } from '../../../../services/api/apiservice.service';
 import { AssociationServiceService } from '../../../../services/association/association-service.service';
 import { TableService } from '../../../../services/tableservice.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-gate-keeper-gates',
@@ -28,7 +29,8 @@ export class GateKeeperGatesComponent {
   constructor(
     private ModalService: ModalService,
     private apiService: ApiserviceService,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private Toast : ToastrService
   ) {
     this.Gatelist1 = new TableService();
     this.Gatelist1.initialize(this.Gatelist2, 10);
@@ -59,6 +61,28 @@ export class GateKeeperGatesComponent {
         this.Listgatekeeper();
       }
     });
+  }
+
+    SendmailAgain(data: any){
+
+    const payload ={
+      username : data
+    }
+
+    this.apiService.SendmailAgain<any>(payload).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.listGate();
+          this.Listgatekeeper();
+        } else {
+          this.Toast.error(res.message, 'Failed');
+        }
+      },
+      error: (err: any) => {
+        this.Toast.error(err.error.error.message, 'Failed');
+      },
+    });
+
   }
 
   switchTab(tab: string) {

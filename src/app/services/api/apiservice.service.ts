@@ -2777,7 +2777,7 @@ export class ApiserviceService {
       })
     );
   }
-  public listagreementTemplatesbyID<T>(payload : any): Observable<T> {
+  public listagreementTemplatesbyID<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.listagreementTemplatesbyID
     }?id=${payload}`;
@@ -2806,7 +2806,7 @@ export class ApiserviceService {
     );
   }
 
-  public listAgreementbyId<T>(payload : any): Observable<T> {
+  public listAgreementbyId<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.listAgreementbyId
     }?id=${payload}`;
@@ -2835,7 +2835,7 @@ export class ApiserviceService {
     );
   }
 
-  public ViewCreatedAgreementbyId<T>(payload : any): Observable<T> {
+  public ViewCreatedAgreementbyId<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.ViewCreatedAgreementbyId
     }?id=${payload}`;
@@ -3054,7 +3054,7 @@ export class ApiserviceService {
     );
   }
 
-  public OwnerListTemplatebyAssociation<T>(payload : any): Observable<T> {
+  public OwnerListTemplatebyAssociation<T>(payload: any): Observable<T> {
     const serviceURL = `${this.urlHelper.getAPIURL()}${
       this.envUrl.OwnerListTemplatebyAssociation
     }?hoa_admin_id=${payload}`;
@@ -3081,5 +3081,72 @@ export class ApiserviceService {
         }));
       })
     );
+  }
+
+   public UpdateUPI<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.UpdateUPI
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .put<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+
+  public SendmailAgain<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${
+      this.envUrl.SendmailAgain
+    }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
   }
 }

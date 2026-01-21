@@ -96,6 +96,9 @@ export class OwnerCreatedAgreementListComponent {
         enter: 'enter-going-down 0.3s ease-out',
         leave: 'fade-out 0.5s',
       },
+      data:{
+        for : 'owner'
+      },
       overlay: { leave: 'fade-out 0.5s' },
 
       actions: {

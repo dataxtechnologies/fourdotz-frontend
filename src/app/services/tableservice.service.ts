@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
+
 interface TableItem {
-  id?:number;
+  id?: number;
 }
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class TableService <T extends TableItem> {
-[x: string]: any;
+export class TableService<T extends TableItem> {
+  [x: string]: any;
+
   tableData!: any[];
   order: string = 'ASC';
   itemsPerPage!: number;
   currentPage: number = 1;
 
-  constructor() { }
+  constructor() {}
 
   initialize(initialData: T[], perPage: number = 10) {
     this.tableData = initialData;
     this.itemsPerPage = perPage;
+    this.currentPage = 1;
   }
 
   sortData(col: string) {
@@ -56,7 +60,9 @@ export class TableService <T extends TableItem> {
 
   search(term: string) {
     const filteredData = this.tableData.filter((item: any) =>
-      Object.values(item).some((value: any) => String(value).toLowerCase().includes(term.toLowerCase()))
+      Object.values(item).some((value: any) =>
+        String(value).toLowerCase().includes(term.toLowerCase()),
+      ),
     );
     this.tableData = filteredData;
     this.currentPage = 1;
@@ -64,6 +70,13 @@ export class TableService <T extends TableItem> {
 
   paginate(page: number) {
     this.currentPage = page;
+  }
+
+  /* ✅ ADDED FUNCTION (ONLY FIX) */
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
   }
 
   nextPage() {
@@ -93,7 +106,10 @@ export class TableService <T extends TableItem> {
   }
 
   get endIndex() {
-    return Math.min(this.startIndex + this.itemsPerPage - 1, this.tableData.length - 1);
+    return Math.min(
+      this.startIndex + this.itemsPerPage - 1,
+      this.tableData.length - 1,
+    );
   }
 
   get totalData() {
@@ -102,11 +118,15 @@ export class TableService <T extends TableItem> {
 
   handleSelect(event: any) {
     const { checked, name } = event.target;
+
     if (name === 'select-all') {
-      this.tableData = this.tableData.map((item: any) => ({ ...item, isChecked: checked }));
+      this.tableData = this.tableData.map((item: any) => ({
+        ...item,
+        isChecked: checked,
+      }));
     } else {
       this.tableData = this.tableData.map((item: any) =>
-        item.title == name ? { ...item, isChecked: checked } : item
+        item.title == name ? { ...item, isChecked: checked } : item,
       );
     }
   }

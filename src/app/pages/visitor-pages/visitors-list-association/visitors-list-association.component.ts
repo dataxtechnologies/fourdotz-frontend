@@ -10,6 +10,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { ViewVisitorDetailsComponent } from '../../../modals/view-visitor-details/view-visitor-details.component';
 
 @Component({
   selector: 'app-visitors-list-association',
@@ -150,4 +151,21 @@ export class VisitorsListAssociationComponent {
     this.filterForm.reset();
     this.applyFilters();
   }
+
+    visitorView(data : any){
+       this.ModalService.open(ViewVisitorDetailsComponent, {
+        modal: {
+          enter: 'enter-going-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        data: {
+          visitor_details : data
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        actions: {
+          click: false,
+          escape: false,
+        },
+      });
+    }
 }

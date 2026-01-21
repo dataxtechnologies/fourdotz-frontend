@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { SpotVisitorEntryComponent } from '../../../modals/spot-visitor-entry/spot-visitor-entry.component';
 import { VisitorExitFormComponent } from '../../../modals/visitor-exit-form/visitor-exit-form.component';
+import { ViewVisitorDetailsComponent } from '../../../modals/view-visitor-details/view-visitor-details.component';
 
 @Component({
   selector: 'app-gate-keeper-visitor-list',
@@ -77,6 +78,23 @@ export class GateKeeperVisitorListComponent {
        data:{
         visitorNo: data
       },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+    visitorView(data : any){
+     this.ModalService.open(ViewVisitorDetailsComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      data: {
+        visitor_details : data
+      },
+      overlay: { leave: 'fade-out 0.5s' },
       actions: {
         click: false,
         escape: false,

@@ -1,85 +1,94 @@
-<section>
-    <div class="container">
-        <!-- Back Button -->
-        <button (click)="goback()" class="back-button">
-            <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-                <path
-                    d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z">
-                </path>
-            </svg>
-            <span>Back</span>
-        </button>
-    </div>
-
-    <div class="profile-container">
-        <!-- Profile Header -->
-        <div class="profile-header">
-            <div class="user-info">
-                <div class="avatar-circle">
-                    <img src="/assets/images/superadmin-avatar.png" alt="User Avatar" />
-                </div>
-                <div class="text-info">
-                    <h3 class="user-name medium-font">{{ profileForm.get('firstName')?.value }} {{
-                        profileForm.get('lastName')?.value }}</h3>
-                    <p class="user-email regular-font">{{ profileForm.get('email')?.value }}</p>
-                </div>
+<section class="page-wrapper">
+    <!-- Back Button --> <button (click)="goback()" class="back-button"> <svg height="16" width="16"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+            <path
+                d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z">
+            </path>
+        </svg> <span>Back</span> </button>
+    <!-- HEADER -->
+    <div class="profile-header">
+        <div class="left">
+            <div class="company-info">
+                <h2 class="medium-font">{{ user.name }}</h2>
+                <p class="regular-font">{{ user.email }} / {{ user_type }}</p>
             </div>
-            <!-- Edit Button -->
-            <!-- <button class="edit-button" (click)="toggleEditMode()" *ngIf="showeditbtn">
-                {{ isEditMode ? 'Cancel' : 'Edit' }}
-            </button> -->
         </div>
 
-        <!-- Profile Form -->
-        <form [formGroup]="profileForm" class="profile-form">
-            <div class="form-grid">
-                <!-- First Name -->
-                <div class="form-group">
-                    <label class="medium-font" for="firstName">First Name</label>
-                    <input id="firstName" type="text" formControlName="firstName" class="inp-cus regular-font"
-                        placeholder="Your First Name" [readonly]="!isEditMode" />
-                    <div *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched"
-                        class="error-message regular-font">
-                        First Name is required.
-                    </div>
-                </div>
+        <div class="right" *ngIf="user_type == 'owner' || user_type == 'tenant'">
+            <button class="btn-outline" (click)="enableEdit()" *ngIf="!editUpi">
+                Edit Profile
+            </button>
+        </div>
+    </div>
 
-                <!-- Last Name -->
-                <div class="form-group">
-                    <label class="medium-font" for="lastName">Last Name</label>
-                    <input id="lastName" type="text" formControlName="lastName" class="inp-cus regular-font"
-                        placeholder="Your Last Name" [readonly]="!isEditMode" />
-                </div>
+    <!-- CARD -->
+    <div class="card">
 
-                <!-- Email -->
-                <div class="form-group">
-                    <label class="medium-font" for="email">Email Address</label>
-                    <input id="email" type="email" formControlName="email" class="inp-cus regular-font"
-                        placeholder="your.email@example.com" [readonly]="!isEditMode" />
-                    <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched"
-                        class="error-message regular-font">
-                        Please enter a valid email.
-                    </div>
-                </div>
+        <h3 class="medium-font">Profile Details</h3>
 
-                <!-- Phone -->
-                <div class="form-group">
-                    <label class="medium-font" for="phone">Phone Number</label>
-                    <input id="phone" type="tel" formControlName="phone" class="inp-cus regular-font"
-                        placeholder="Enter your phone number" [readonly]="!isEditMode" />
-                    <div *ngIf="profileForm.get('phone')?.invalid && profileForm.get('phone')?.touched"
-                        class="error-message regular-font">
-                        Please enter a valid phone number.
-                    </div>
-                </div>
+        <!-- NAME -->
+        <div class="form-row">
+            <div class="label">
+                <h4 class="medium-font">Name</h4>
+            </div>
+            <div class="inputs">
+                <span class="regular-font">{{ user.name }}</span>
+            </div>
+        </div>
+
+        <!-- <hr /> -->
+
+        <!-- EMAIL -->
+        <div class="form-row">
+            <div class="label">
+                <h4 class="medium-font">Email</h4>
+            </div>
+            <div class="inputs">
+                <span class="regular-font">{{ user.email }}</span>
+            </div>
+        </div>
+
+        <!-- <hr /> -->
+
+        <!-- PHONE -->
+        <div class="form-row">
+            <div class="label">
+                <h4 class="medium-font">Phone Number</h4>
+            </div>
+            <div class="inputs">
+                <span class="regular-font">{{ user.mobile }}</span>
+            </div>
+        </div>
+
+        <!-- <hr /> -->
+
+        <!-- UPI -->
+        <div class="form-row" *ngIf="user_type == 'owner' || user_type == 'tenant'">
+            <div class="label">
+                <h4 class="medium-font">UPI ID</h4>
+
             </div>
 
-            <!-- Form Actions -->
-            <div class="form-actions" *ngIf="isEditMode">
-                <button type="button" class="btn-add" (click)="saveProfile()" [disabled]="profileForm.invalid">
-                    Save Changes
-                </button>
+            <div class="inputs">
+                <span *ngIf="!editUpi" class="regular-font">
+                    {{ user.upi_id || 'Not Added' }}
+                </span>
+
+                <input *ngIf="editUpi" type="text" [(ngModel)]="editableUpi" class="upi-input"
+                    placeholder="example@upi" />
             </div>
-        </form>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions" *ngIf="editUpi">
+            <button class="btn-light" (click)="cancelEdit()" [disabled]="editbtnloading">
+                Cancel
+            </button>
+
+            <button class="btn-dark" (click)="saveUpi()" [disabled]="editbtnloading">
+                {{ editbtnloading ? 'Processing...' : 'Save changes' }}
+            </button>
+        </div>
+
     </div>
 </section>

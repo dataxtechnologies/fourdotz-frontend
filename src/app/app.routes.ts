@@ -72,20 +72,22 @@ import { ViewSigningAgreementComponent } from './pages/New-Agreements/view-signi
 import { OwnerSigingAgreementListComponent } from './pages/New-Agreements/owner-siging-agreement-list/owner-siging-agreement-list.component';
 import { OwnerViewSigningAgreementComponent } from './pages/New-Agreements/owner-view-signing-agreement/owner-view-signing-agreement.component';
 import { OwnerCreatedAgreementListComponent } from './pages/New-Agreements/owner-created-agreement-list/owner-created-agreement-list.component';
+import { OwnerViewAgreementToSendComponent } from './pages/New-Agreements/owner-view-agreement-to-send/owner-view-agreement-to-send.component';
+import { TableComponent } from './pages/Demo-check/table/table.component';
 
 export const routes: Routes = [
   {
-  path: '',
-  pathMatch: 'full',
-  redirectTo: 'auth/sign-in',
-},
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'auth/sign-in',
+  },
 
   {
     path: 'auth',
     component: AuthLayoutComponent,
     // canActivate: [authGuard],
     children: [
-     { path: 'sign-in', component: SigninPageNewComponent },
+      { path: 'sign-in', component: SigninPageNewComponent },
       // { path: 'user-signin', component: SigninPageNewComponent },
       {
         path: 'user-authentication/:authtype/:authvalue',
@@ -118,7 +120,7 @@ export const routes: Routes = [
   {
     path: 'Account',
     //  canActivate: [authGuard],
-    component: DashboardLayoutNewComponent,
+    component: DashboardLayoutComponent,
     children: [
       {
         path: 'profile',
@@ -130,7 +132,7 @@ export const routes: Routes = [
   {
     path: 'Superadmin',
     // canActivate: [authGuard],
-    component: DashboardLayoutNewComponent,
+    component: DashboardLayoutComponent,
     children: [
       { path: 'Dashboard', component: SuperadminDashboardComponent },
       { path: 'Association-list', component: AssociationListComponent },
@@ -144,7 +146,7 @@ export const routes: Routes = [
   {
     path: 'Association',
     // canActivate: [authGuard],
-    component: DashboardLayoutNewComponent,
+    component: DashboardLayoutComponent,
     children: [
       { path: 'Dashboard', component: AssociationDashboardComponent },
       { path: 'properties-list', component: PropertyListComponent },
@@ -180,7 +182,7 @@ export const routes: Routes = [
   {
     path: 'Owner',
     // canActivate: [authGuard],
-    component: DashboardLayoutNewComponent,
+    component: DashboardLayoutComponent,
     children: [
       { path: 'Dashboard', component: OwnerDashboardComponent },
       { path: 'properties-list', component: OwnerPropertiesComponent },
@@ -204,7 +206,7 @@ export const routes: Routes = [
   {
     path: 'Tenant',
     // canActivate: [authGuard],
-    component: DashboardLayoutNewComponent,
+    component: DashboardLayoutComponent,
     children: [
       { path: 'Dashboard', component: TenantDashboardComponent },
       {
@@ -239,7 +241,7 @@ export const routes: Routes = [
 
   {
     path: 'Service-admin',
-    component: DashboardLayoutNewComponent,
+    component: DashboardLayoutComponent,
     children: [
       {
         path: 'manage-requests',
@@ -261,7 +263,7 @@ export const routes: Routes = [
 
   {
     path: 'visitors-management',
-    component: DashboardLayoutNewComponent,
+    component: DashboardLayoutComponent,
     children: [
       {
         path: 'qr-manager',
@@ -303,13 +305,13 @@ export const routes: Routes = [
 
   {
     path: 'dashboard',
-    component: DashboardLayoutNewComponent,
+    component: DashboardLayoutComponent,
     children: [{ path: 'dashboard', component: SuperadminDashboardComponent }],
   },
 
   {
     path: 'Gate-keeper',
-    component: DashboardLayoutNewComponent,
+    component: DashboardLayoutComponent,
     children: [
       {
         path: 'visitors-management/visitors-list',
@@ -328,7 +330,7 @@ export const routes: Routes = [
 
   {
     path: 'agreement',
-    component: DashboardLayoutNewComponent,
+    component: DashboardLayoutComponent,
     children: [
       {
         path: 'association/create-template',
@@ -363,12 +365,27 @@ export const routes: Routes = [
         component: ViewNewAgreementTosendComponent,
       },
       {
+        path: 'owner/view-new-agreement/:templateId',
+        component: OwnerViewAgreementToSendComponent,
+      },
+      {
         path: 'association/view-signing-agreement/:templateId',
         component: ViewSigningAgreementComponent,
       },
       {
         path: 'owner/owner-view-signing-agreement/:templateId',
         component: OwnerViewSigningAgreementComponent,
+      },
+    ],
+  },
+
+  {
+    path: 'Demo-check',
+    component: DashboardLayoutComponent,
+    children: [
+      {
+        path: 'table',
+        component: TableComponent,
       },
     ],
   },

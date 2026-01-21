@@ -37,6 +37,7 @@ export class AssociationOnboardComponent implements OnInit {
   Pancard: File | null = null;
   Company_proof: File | null = null;
   submitbtnloading = false;
+  MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB
   steps: Step[] = [
     {
       id: 1,
@@ -142,7 +143,7 @@ export class AssociationOnboardComponent implements OnInit {
     } else if (this.currentStep === 2) {
         if (this.documentForm.invalid) {
     this.documentForm.markAllAsTouched();
-    this.Toast.error('All documents are required', 'Validation Error');
+    this.Toast.error('All feilds are required', 'Validation Error');
     return;
   }
       this.steps[1].isComplete = true;
@@ -172,45 +173,65 @@ export class AssociationOnboardComponent implements OnInit {
   }
 
   /** File Upload **/
-  onFilePassportChange(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.passport_sizephoto = file;
-      this.documentForm.patchValue({ passport_size_photo: file });
-    }
-  }
+onFilePassportChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
 
-  onFileRentalChange(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.RentalAggrement = file;
-      this.documentForm.patchValue({ rental_agreement: file });
-    }
-  }
+  if (file) {
+    if (!this.validateFileSize(file, 'passport_size_photo', input)) return;
 
-  onFileChequeChange(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.ChequeLeaf = file;
-      this.documentForm.patchValue({ cancelled_cheque_leaf: file });
-    }
+    this.passport_sizephoto = file;
+    this.documentForm.patchValue({ passport_size_photo: file });
   }
+}
 
-  onFilePanChange(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.Pancard = file;
-      this.documentForm.patchValue({ pan_card: file });
-    }
-  }
+onFileRentalChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
 
-  onFileCompanyChange(event: Event) {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      this.Company_proof = file;
-      this.documentForm.patchValue({ company_proof: file });
-    }
+  if (file) {
+    if (!this.validateFileSize(file, 'rental_agreement', input)) return;
+
+    this.RentalAggrement = file;
+    this.documentForm.patchValue({ rental_agreement: file });
   }
+}
+
+onFileChequeChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+
+  if (file) {
+    if (!this.validateFileSize(file, 'cancelled_cheque_leaf', input)) return;
+
+    this.ChequeLeaf = file;
+    this.documentForm.patchValue({ cancelled_cheque_leaf: file });
+  }
+}
+
+onFilePanChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+
+  if (file) {
+    if (!this.validateFileSize(file, 'pan_card', input)) return;
+
+    this.Pancard = file;
+    this.documentForm.patchValue({ pan_card: file });
+  }
+}
+
+onFileCompanyChange(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+
+  if (file) {
+    if (!this.validateFileSize(file, 'company_proof', input)) return;
+
+    this.Company_proof = file;
+    this.documentForm.patchValue({ company_proof: file });
+  }
+}
 
   onFileSignatureChange(event: any) {
   const file = event.target.files[0];
@@ -218,6 +239,19 @@ export class AssociationOnboardComponent implements OnInit {
     this.documentForm.patchValue({ signature: file });
     this.documentForm.get('signature')?.markAsTouched();
   }
+}
+
+private validateFileSize(
+  file: File,
+  controlName: string,
+  inputElement: HTMLInputElement
+): boolean {
+  if (file.size > this.MAX_FILE_SIZE) {
+    this.documentForm.get(controlName)?.setErrors({ fileSize: true });
+    inputElement.value = ''; // reset file input
+    return false;
+  }
+  return true;
 }
 
   isDocumentsValid(): boolean {
@@ -242,7 +276,7 @@ export class AssociationOnboardComponent implements OnInit {
       next: (res: any) => {
         if (res?.success) {
           this.submitbtnloading = false;
-          this.Toast.success(res.message, 'Success');
+          // this.Toast.success(res.message, 'Success');
           this.submitDocumentForm();
         } else {
           this.submitbtnloading = false;

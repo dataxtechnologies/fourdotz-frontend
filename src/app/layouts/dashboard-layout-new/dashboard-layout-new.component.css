@@ -229,7 +229,7 @@
 }
 
 #sidebar-menu{
-    padding-left: 65px !important;
+    padding-left:50px !important;
 }
 
 
@@ -299,6 +299,19 @@
   color: #000;
 }
 
+.ln{
+    color: #000;
+}
+
+.footer-list li a{
+  display: flex;
+  gap: 10px !important;
+}
+
+
+.log-img{
+    width:25px !important;
+}
 /* ------------------------------
    COLLAPSED SIDEBAR MODE
 -------------------------------- */
@@ -320,6 +333,10 @@
 /* HIDE TEXT WHEN COLLAPSED */
 .collapsed .submenu-link span {
   display: none;
+}
+
+.icon-img{
+    width:28px !important;
 }
 
 /* MOBILE SAFETY */

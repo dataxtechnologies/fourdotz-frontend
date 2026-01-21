@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ApiserviceService } from '../../../services/api/apiservice.service';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ApiserviceService } from '../../../services/api/apiservice.service';
+
+/* ================= TYPES ================= */
 
 type BlockType = 'heading' | 'paragraph' | 'signature';
 
@@ -14,24 +16,29 @@ interface SignatureSigner {
 }
 
 interface Block {
+  id: number;
   type: BlockType;
-  value?: string;
+  value: string;
   signers?: SignatureSigner[];
   includeDate?: boolean;
 }
+
+/* ================= COMPONENT ================= */
 
 @Component({
   selector: 'app-create-template-association',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './create-template-association.component.html',
-  styleUrl: './create-template-association.component.css',
+  styleUrls: ['./create-template-association.component.css'],
 })
 export class CreateTemplateAssociationComponent {
   blocks: Block[] = [];
+  private idCounter = 1;
+
   headingAdded = false;
   signatureAdded = false;
-  submitbtn= true
+  submitbtn = true;
 
   /* VARIABLE MODAL */
   showVariableModal = false;
@@ -44,48 +51,77 @@ export class CreateTemplateAssociationComponent {
   /* CURSOR */
   private savedRange: Range | null = null;
 
-  constructor(private ApiserviceService: ApiserviceService, private Toast: ToastrService, private router: Router) {}
+  constructor(
+    private api: ApiserviceService,
+    private toast: ToastrService,
+    private router: Router
+  ) {}
 
-  /* ADD BLOCKS */
+  /* ================= ADD BLOCKS ================= */
+
   addHeading() {
     if (this.headingAdded) return;
-    this.blocks.unshift({ type: 'heading', value: '' });
+
+    this.blocks.push({
+      id: this.idCounter++,
+      type: 'heading',
+      value: '',
+    });
+
     this.headingAdded = true;
   }
 
   addParagraph() {
-    this.blocks.push({ type: 'paragraph', value: '' });
-  }
-
-  openSignatureModal() {
-    if (this.signatureAdded) return;
-
-    const count = Number(prompt('How many signers?'));
-    if (!count || count < 1) return;
-
-    const signers: SignatureSigner[] = [];
-    for (let i = 0; i < count; i++) {
-      const name = prompt(`Signer ${i + 1} name`) || `Signer ${i + 1}`;
-      signers.push({ name, signed: false });
-    }
-
     this.blocks.push({
-      type: 'signature',
-      signers,
-      includeDate: true,
+      id: this.idCounter++,
+      type: 'paragraph',
+      value: '',
     });
-
-    this.signatureAdded = true;
   }
 
-  /* EDITING */
-  updateBlockValue(event: Event, index: number) {
+ openSignatureModal() {
+  if (this.signatureAdded) return;
+
+  const count = Number(prompt('How many signers? (1 or 2 only)'));
+
+  // ✅ Allow only 1 or 2
+  if (!count || count < 1 || count > 2) {
+    alert('Only 1 or 2 signers are allowed');
+    return;
+  }
+
+  const signers: SignatureSigner[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const name =
+      prompt(`Signer ${i + 1} name`)?.trim() || `Signer ${i + 1}`;
+
+    signers.push({
+      name,
+      signed: false,
+    });
+  }
+
+  this.blocks.push({
+    id: this.idCounter++,
+    type: 'signature',
+    value: '',
+    signers,
+    includeDate: true,
+  });
+
+  this.signatureAdded = true;
+}
+
+  /* ================= EDITING ================= */
+
+  updateBlockValue(event: Event, block: Block) {
     const el = event.target as HTMLElement;
-    this.blocks[index].value = el.innerText;
-    this.saveCursor();
+    block.value = el.innerHTML; // ✅ READ ONLY
   }
 
-  /* CURSOR */
+  /* ================= CURSOR ================= */
+
   saveCursor() {
     const sel = window.getSelection();
     if (sel && sel.rangeCount > 0) {
@@ -100,7 +136,8 @@ export class CreateTemplateAssociationComponent {
     sel?.addRange(this.savedRange);
   }
 
-  /* VARIABLE */
+  /* ================= VARIABLES ================= */
+
   openVariableModal() {
     this.saveCursor();
     this.variableForm.key = '';
@@ -132,44 +169,31 @@ export class CreateTemplateAssociationComponent {
     sel.removeAllRanges();
     sel.addRange(range);
 
+    // 🔥 Sync block value after insert
+    const editable = span.closest('.editable') as HTMLElement;
+    if (editable) {
+      const blockId = Number(editable.dataset['id']);
+      const block = this.blocks.find((b) => b.id === blockId);
+      if (block) {
+        block.value = editable.innerHTML;
+      }
+    }
+
     this.closeVariableModal();
   }
 
-  /* SAVE */
-  openTemplateNameModal() {
-    this.templateName = '';
-    this.showTemplateNameModal = true;
-  }
-
-  closeTemplateNameModal() {
-    this.showTemplateNameModal = false;
-  }
-
-  getAgreementStatus() {
-    const sig = this.blocks.find((b) => b.type === 'signature');
-    if (!sig || !sig.signers) {
-      return { completed: false, pending: null };
-    }
-    const pending = sig.signers.find((s) => !s.signed);
-    return {
-      completed: !pending,
-      pending: pending ? pending.name : null,
-    };
-  }
+  /* ================= VARIABLES EXTRACT ================= */
 
   extractVariablesFromBlocks() {
     const regex = /{{(.*?)}}/g;
-    const variableMap = new Map<string, any>();
+    const map = new Map<string, any>();
 
     this.blocks.forEach((block) => {
-      if (!block.value) return;
-
       let match;
       while ((match = regex.exec(block.value)) !== null) {
         const key = match[1].trim();
-
-        if (!variableMap.has(key)) {
-          variableMap.set(key, {
+        if (!map.has(key)) {
+          map.set(key, {
             key,
             label: key
               .replace(/_/g, ' ')
@@ -180,61 +204,74 @@ export class CreateTemplateAssociationComponent {
       }
     });
 
-    return Array.from(variableMap.values());
+    return Array.from(map.values());
+  }
+
+  /* ================= SAVE ================= */
+
+  openTemplateNameModal() {
+    this.templateName = '';
+    this.showTemplateNameModal = true;
+  }
+
+  closeTemplateNameModal() {
+    this.showTemplateNameModal = false;
   }
 
   confirmSaveTemplate() {
     if (!this.templateName.trim()) {
-      alert('Template name required');
+      this.toast.warning('Template name required');
       return;
     }
 
-    this.submitbtn = false
+    this.submitbtn = false;
 
-    // const statusInfo = this.getAgreementStatus();
+    const variables = this.extractVariablesFromBlocks();
 
-    const variables = this.extractVariablesFromBlocks(); // ✅ NEW
+    if (variables.length === 0) {
+      this.toast.warning('No variables added');
+      this.submitbtn = true;
+      return;
+    }
 
     const payload = {
       template_name: this.templateName.trim(),
       template_type: 'agreement',
-
-      variables, // ✅ ARRAY OF OBJECTS
+      variables,
       blocks: this.blocks,
-
       meta: {
         created_by: 'association',
         created_at: new Date().toISOString(),
       },
     };
 
-    // const payloadString = JSON.stringify(payload, null, 2);
-    // navigator.clipboard.writeText(payloadString);
+    console.log('PAYLOAD:', payload);
 
-    // alert('Template payload copied to clipboard');
-
-    this.ApiserviceService.CreateAgreementTemplates<any>(payload).subscribe({
+    this.api.CreateAgreementTemplates<any>(payload).subscribe({
       next: (res: any) => {
+        this.submitbtn = true;
         if (res?.success) {
-          this.submitbtn = true
-          this.Toast.success(res.message, 'Success')
-          this.goback()
+          this.toast.success(res.message || 'Template created');
           this.closeTemplateNameModal();
+          this.goback();
         } else {
-          this.submitbtn = true
-          this.Toast.warning(res.message, 'Error')
-          this.closeTemplateNameModal();
+          this.toast.warning(res.message || 'Failed');
         }
       },
       error: (err: any) => {
-        this.submitbtn = true
-        this.Toast.error(err?.err?.error?.message, 'Error')
-        this.closeTemplateNameModal();
+        this.submitbtn = true;
+        this.toast.error(err?.error?.message || 'Server error');
       },
     });
   }
 
-  goback(){
-    this.router.navigateByUrl('/agreement/association/list-template')
+  /* ================= UTIL ================= */
+
+  trackById(index: number, block: Block) {
+    return block.id;
+  }
+
+  goback() {
+    this.router.navigateByUrl('/agreement/association/list-template');
   }
 }

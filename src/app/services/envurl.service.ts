@@ -13,6 +13,8 @@ export class EnvurlService {
   public verify_otp = '/auth/verify_otp'
 
   public UserInfo = '/auth/user_info'
+  public UpdateUPI = '/owner/update_user_upi'
+  public SendmailAgain = '/auth/reset_password'
 
 
   // Superadmin Endpoints
@@ -149,4 +151,5 @@ export class EnvurlService {
   public SendAgreement = '/agreement/generate_agreement'
   public ListAgreementforusers = '/agreement/list_agreement'
   public OwnerListTemplatebyAssociation = '/agreement_template/list_template_by_associationid'
+  
 }

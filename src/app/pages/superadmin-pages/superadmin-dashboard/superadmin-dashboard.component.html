@@ -6,7 +6,7 @@
                 <span class="card-head-font medium-font">Total Associations</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font regular-font">{{ DashboardData.hoa_total_count || 0}}</span>
+                <span class="card-font regular-font">{{ DashboardData?.hoa_total_count || 0}}</span>
 
             </div>
         </div>
@@ -15,7 +15,7 @@
                 <span class="card-head-font medium-font">Number of Properties</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font regular-font">{{ DashboardData.property_total_count || 0}}</span>
+                <span class="card-font regular-font">{{ DashboardData?.property_total_count || 0}}</span>
 
             </div>
 
@@ -25,86 +25,118 @@
                 <span class="card-head-font medium-font">Total Tenants</span>
             </div>
             <div class="flex flex-col mt-4">
-                <span class="card-font regular-font">{{ DashboardData.tenant_total_count || 0}}</span>
+                <span class="card-font regular-font">{{ DashboardData?.tenant_total_count || 0}}</span>
 
             </div>
         </div>
-        <div class="div4 bg-white rounded-2xl shadow-md flex flex-col p-3">
+        <div class="div4 rounded-2xl shadow-md flex flex-col p-3 new-table-wrapper" >
             <div class="transaction-header12 d-flex justify-content-between align-items-start mb-3">
                 <h3>Associations</h3>
                 <a class="link-text" (click)="redirecttoAssociationlist()">See All</a>
             </div>
 
-            <div class="table-container">
+            <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
 
-                <table class="styled-table">
-                    <thead>
-                        <tr>
-                            <th class="medium-font">Property Name</th>
-                            <th class="medium-font">Email</th>
-                            <th class="medium-font">Phone</th>
-                            <th class="medium-font">Property Type</th>
-                            <th class="medium-font">Invitation Status</th>
-                            <th class="medium-font">View</th>
-                        </tr>
-                    </thead>
+                            <table class="new-table">
 
-                    <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                        <!-- Show rows if data is available -->
-                        <tr *ngFor="let item of Associationlist1.paginatedData; let i = index">
-                            <td data-label="Property Name">{{ item.property_name }}</td>
-                            <td data-label="Email">{{ item.email }}</td>
-                            <td data-label="Phone">+91 {{ item.mobile }}</td>
-                            <td data-label="Property Type">{{ item.property_type.join(', ') }}</td>
-                            <td data-label="Invitation Status">
-                                {{ item.invitation_status ? 'Accepted' : 'Pending/Declined' }}
-                            </td>
-                            <td data-label="Property Details" (click)="viewassociation(item.user_id)">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                            </td>
-                        </tr>
+                                <!-- HEADER -->
+                                <thead>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Association Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Property Type</th>
+                                        <th>Property Type</th>
+                                        <th>Property Type</th>
+                                        <th>Invitation Status</th>
+                                        <th>View</th>
+                                        <th>View</th>
+                                        <th>View</th>
+                                        <th>View</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
 
-                        <!-- Show "No Data Found" if array is empty -->
-                        <tr *ngIf="Associationlist1.paginatedData.length === 0">
-                            <td colspan="6" class="regular-font" style="text-align: center;  color: gray;">
-                                No Data Found
-                            </td>
-                        </tr>
-                    </tbody>
+                                <!-- BODY -->
+                                <tbody *ngIf="!tableLoading; else tableSkeleton">
 
+                                    <tr *ngFor="let item of Associationlist1.paginatedData" class="regular-font">
 
-                    <!-- Skeleton Loader -->
-                    <ng-template #tableSkeleton>
-                        <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
-                            <td>
-                                <span class="placeholder col-10 placeholder-glow"
-                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-8 placeholder-glow"
-                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-6 placeholder-glow"
-                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-7 placeholder-glow"
-                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-5 placeholder-glow"
-                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
-                            </td>
-                            <td>
-                                <span class="placeholder col-3 placeholder-glow"
-                                    style="height: 12px !important; display: inline-block !important; border-radius: 4px !important; background: #e0e0e0 !important;"></span>
-                            </td>
-                        </tr>
-                    </ng-template>
+                                        <td class="sticky-col lead-col">
+                                            <div class="lead-info">
+                                                <div>
+                                                    <div class="data-1"> {{ item.property_name }}</div>
+                                                    <div class="data-2"> {{ item.name }}</div>
+                                                </div>
+                                            </div>
 
-                </table>
-            </div>
+                                        </td>
+
+                                        <td>{{ item.email }}</td>
+                                        <td>+91 {{ item.mobile }}</td>
+
+                                        <td>{{ item.property_type.join(', ') }}</td>
+                                        <td>{{ item.property_type.join(', ') }}</td>
+                                        <td>{{ item.property_type.join(', ') }}</td>
+
+                                        <td>
+                                            {{ item.invitation_status ? 'Accepted' : 'Pending/Declined' }}
+                                        </td>
+
+                                        <td (click)="viewassociation(item.user_id)">
+                                            <button class="table-btn">view</button>
+                                        </td>
+                                        <td (click)="viewassociation(item.user_id)">
+                                            <button class="table-btn">view</button>
+                                        </td>
+                                        <td (click)="viewassociation(item.user_id)">
+                                            <button class="table-btn">view</button>
+                                        </td>
+                                        <td (click)="viewassociation(item.user_id)">
+                                            <button class="table-btn">view</button>
+                                        </td>
+
+                                        <td (click)="SendmailAgain(item.email)">
+                                            <span class="table-btn">Send Mail</span>
+                                        </td>
+
+                                    </tr>
+
+                                    <!-- Show "No Data Found" if array is empty -->
+                                    <tr *ngIf="Associationlist1.paginatedData.length === 0">
+                                        <td colspan="6" class="regular-font" style="text-align: center; color: gray;">
+                                            No Data Found </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <ng-template #tableSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                    <td> <span class="placeholder col-10 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td> <span class="placeholder col-8 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td> <span class="placeholder col-6 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td> <span class="placeholder col-7 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td> <span class="placeholder col-5 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td> <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                        </div>
+                    </div>
         </div>
     </div>
 

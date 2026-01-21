@@ -27,6 +27,7 @@ export class AddSignatureModalComponent {
 
   uploadedSignature!: string;
   sendotpbtn = false;
+  showprocessingbtn  = false
 
   currentSignerIndex = 0;
 
@@ -163,6 +164,7 @@ export class AddSignatureModalComponent {
 
   /* ===== VERIFY OTP ===== */
   verifyOtp() {
+    this.showprocessingbtn = true
     if (!this.otp || !this.otpToken) {
       this.Toast.warning('OTP is required');
       return;
@@ -178,6 +180,7 @@ export class AddSignatureModalComponent {
     this.apiService.VerifyOTPforSign<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
+          this.showprocessingbtn = false
           this.Toast.success(res.message);
 
           // ✅ OTP VERIFIED → PROCEED TO SIGN
@@ -186,11 +189,13 @@ export class AddSignatureModalComponent {
 
           this.applySignature();
         } else {
+          this.showprocessingbtn = false
           this.Toast.error(res.message || 'Invalid OTP', 'Failed');
           // this.sendotpbtn = false;
         }
       },
       error: (err: any) => {
+        this.showprocessingbtn = false
         this.Toast.error(
           err?.error?.error?.message || 'OTP verification failed',
           'Failed'

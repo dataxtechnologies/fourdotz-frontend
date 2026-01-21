@@ -1,0 +1,89 @@
+<section class="page-wrapper mt-4">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb  medium-font">
+        Associations / <span> {{ association.property_name }}</span>
+    </div>
+
+    <!-- HEADER -->
+    <div class="page-header">
+
+        <div class="title">
+            <div class="logo-circle">
+                {{ association.property_name[0] }}
+            </div>
+            <h1>{{ association.property_name }}</h1>
+        </div>
+
+        <button class="edit-btn">
+            Edit Association
+        </button>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+
+        <div class="stat">
+            <label class="medium-font">Status</label>
+            <span class="regular-font">
+                {{ association.invitation_status ? 'Accepted' : 'Pending' }}
+            </span>
+        </div>
+
+        <div class="stat">
+            <label class="medium-font">Phone</label>
+            <span class="regular-font">{{ association.mobile }}</span>
+        </div>
+
+        <div class="stat">
+            <label class="medium-font">Email</label>
+            <span class="regular-font">{{ association.email }}</span>
+        </div>
+
+        <div class="stat">
+            <label class="medium-font">Property Types</label>
+            <span class="regular-font">{{ association.property_type.join(', ') }}</span>
+        </div>
+
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+        <span class="active">Properties</span>
+        <span>Documents</span>
+        <span>Transaction Amounts</span>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <div class="section">
+            <h3>Property List</h3>
+
+            <div>
+                <table class="simple-table">
+                    <thead>
+                        <tr class="medium-font">
+                            <th>Property Name</th>
+                            <th>Property No.</th>
+                            <th>Property Type</th>
+                            <th>Facing</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let p of properties" class="regular-font">
+                            <td>{{ p.name }}</td>
+                            <td>{{ p.number }}</td>
+                            <td>{{ p.type }}</td>
+                            <td>{{ p.facing }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</section>

@@ -8,6 +8,7 @@ import { TableService } from '../../../services/tableservice.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-residents-list',
@@ -27,7 +28,8 @@ export class ResidentsListComponent {
     private ModalService: ModalService,
     private route: Router,
     private apiService: ApiserviceService,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private Toast: ToastrService
   ) {
     this.Residentlist1 = new TableService();
     this.Residentlist1.initialize(this.Residentlist2, 11);
@@ -51,6 +53,27 @@ export class ResidentsListComponent {
         this.getpropertiesdata();
       }
     });
+  }
+
+    SendmailAgain(data: any){
+
+    const payload ={
+      username : data
+    }
+
+    this.apiService.SendmailAgain<any>(payload).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.getpropertiesdata();
+        } else {
+          this.Toast.error(res.message, 'Failed');
+        }
+      },
+      error: (err: any) => {
+        this.Toast.error(err.error.error.message, 'Failed');
+      },
+    });
+
   }
 
   AddResident(data: any) {

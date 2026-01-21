@@ -18,6 +18,7 @@ import { SendAgreementToTenantComponent } from '../../../modals/send-agreement-t
   styleUrl: './view-signing-agreement.component.css',
 })
 export class ViewSigningAgreementComponent implements OnInit {
+  user_type = localStorage.getItem('user_type');
   template: any = null;
   AgreementId: any;
 
@@ -66,62 +67,54 @@ export class ViewSigningAgreementComponent implements OnInit {
     });
   }
 
+  getSignatureSigners(): any[] {
+    if (!this.template?.blocks) return [];
 
-getSignatureSigners(): any[] {
-  if (!this.template?.blocks) return [];
+    const block = this.template.blocks.find((b: any) => b.type === 'signature');
 
-  const block = this.template.blocks.find(
-    (b: any) => b.type === 'signature'
-  );
+    return block?.signers || [];
+  }
 
-  return block?.signers || [];
-}
+  isFirstSignerSigned(): boolean {
+    const signers = this.getSignatureSigners();
+    return signers.length > 0 && signers[0].signed === true;
+  }
 
-isFirstSignerSigned(): boolean {
-  const signers = this.getSignatureSigners();
-  return signers.length > 0 && signers[0].signed === true;
-}
+  isSecondSignerSigned(): boolean {
+    const signers = this.getSignatureSigners();
+    return signers.length > 1 && signers[1].signed === true;
+  }
 
-isSecondSignerSigned(): boolean {
-  const signers = this.getSignatureSigners();
-  return signers.length > 1 && signers[1].signed === true;
-}
+  areBothSignersSigned(): boolean {
+    const signers = this.getSignatureSigners();
+    return signers.length > 1 && signers.every((s) => s.signed === true);
+  }
+  hasCurrentUserSigned(): boolean {
+    if (!this.currentUserId) return false;
 
-areBothSignersSigned(): boolean {
-  const signers = this.getSignatureSigners();
-  return signers.length > 1 && signers.every(s => s.signed === true);
-}
-hasCurrentUserSigned(): boolean {
-  if (!this.currentUserId) return false;
+    const signers = this.getSignatureSigners();
+    if (signers.length < 1) return false;
 
-  const signers = this.getSignatureSigners();
-  if (signers.length < 1) return false;
+    const firstSigner = signers[0];
 
-  const firstSigner = signers[0];
+    return (
+      firstSigner.signed === true &&
+      firstSigner.Signer_user_id === this.currentUserId
+    );
+  }
 
-  return (
-    firstSigner.signed === true &&
-    firstSigner.Signer_user_id === this.currentUserId
-  );
-}
+  // areBothSignersSigned(): boolean {
+  //   const signers = this.getSignatureSigners();
 
+  //   if (signers.length < 2) return false;
 
+  //   return signers[0].signed === true && signers[1].signed === true;
+  // }
 
-// areBothSignersSigned(): boolean {
-//   const signers = this.getSignatureSigners();
-
-//   if (signers.length < 2) return false;
-
-//   return signers[0].signed === true && signers[1].signed === true;
-// }
-
-
-/* ===== FORMAT SIGNED DATE ===== */
-getSignedDate(signer: any): string {
-  return signer?.signed_date
-    ? signer.signed_date
-    : 'Not signed yet';
-}
+  /* ===== FORMAT SIGNED DATE ===== */
+  getSignedDate(signer: any): string {
+    return signer?.signed_date ? signer.signed_date : 'Not signed yet';
+  }
 
   /* ===== INIT VARIABLES WITH VALUES ===== */
   initVariablesFromApi() {
@@ -135,14 +128,24 @@ getSignedDate(signer: any): string {
   }
 
   /* ===== RENDER TEXT WITH VALUES ===== */
-  renderText(text: string): string {
-    if (!text) return '';
+renderText(html: string): string {
+  if (!html) return '';
 
-    return text.replace(/{{(.*?)}}/g, (_, key) => {
+  // 1️⃣ Replace variable spans
+  let output = html.replace(
+    /<span class="variable"[^>]*>{{(.*?)}}<\/span>/g,
+    (_match, key) => {
       const k = key.trim();
       return this.variables[k] || '__________';
-    });
-  }
+    }
+  );
+
+  // 2️⃣ Convert &nbsp; to normal spaces
+  output = output.replace(/&nbsp;/g, ' ');
+
+  return output;
+}
+
 
   /* ===== OPEN SIGNATURE MODAL ===== */
   openSignModal() {
@@ -177,21 +180,24 @@ getSignedDate(signer: any): string {
 
   /* ===== NAVIGATION ===== */
   goback() {
+    if(this.user_type == 'association'){
     this.Router.navigateByUrl('/agreement/association/list-agreement');
+    }else if(this.user_type == 'owner' || this.user_type == 'tenant'){
+    this.Router.navigateByUrl('/agreement/owner/list-created-agreement');
+    }
   }
 
-  sendAgreement(){
+  sendAgreement() {
     const usertype = localStorage.getItem('user_type');
 
-    if(usertype == 'association'){
+    if (usertype == 'association') {
       this.sendAgreementUser();
-    }else if (usertype == 'owner'){
+    } else if (usertype == 'owner') {
       this.sendAgreementtoTenant();
     }
   }
 
-
-  sendAgreementUser(){
+  sendAgreementUser() {
     this.modal.open(SendAgreementToUserComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
@@ -199,7 +205,7 @@ getSignedDate(signer: any): string {
       },
       data: {
         agreementId: this.AgreementId,
-        by : 'association'
+        by: 'association',
       },
       overlay: { leave: 'fade-out 0.5s' },
       actions: {
@@ -209,7 +215,7 @@ getSignedDate(signer: any): string {
     });
   }
 
-  sendAgreementtoTenant(){
+  sendAgreementtoTenant() {
     this.modal.open(SendAgreementToTenantComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',

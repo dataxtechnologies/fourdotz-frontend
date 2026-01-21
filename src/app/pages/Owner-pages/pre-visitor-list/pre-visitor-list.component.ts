@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { VisitorExitFormComponent } from '../../../modals/visitor-exit-form/visitor-exit-form.component';
+import { ViewVisitorDetailsComponent } from '../../../modals/view-visitor-details/view-visitor-details.component';
 
 @Component({
   selector: 'app-pre-visitor-list',
@@ -55,6 +56,23 @@ user_id = localStorage.getItem('user_id');
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
         leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+  visitorView(data : any){
+     this.ModalService.open(ViewVisitorDetailsComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      data: {
+        visitor_details : data
       },
       overlay: { leave: 'fade-out 0.5s' },
       actions: {

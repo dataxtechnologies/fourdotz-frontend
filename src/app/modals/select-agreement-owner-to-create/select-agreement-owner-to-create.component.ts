@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalService } from 'ngx-modal-ease';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { ApiserviceService } from '../../services/api/apiservice.service';
   styleUrl: './select-agreement-owner-to-create.component.css',
 })
 export class SelectAgreementOwnerToCreateComponent {
+  @Input() for: any;
   templates: any[] = [];
   filteredTemplates: any[] = [];
   associationid: any;
@@ -72,9 +73,17 @@ export class SelectAgreementOwnerToCreateComponent {
   proceed() {
     if (!this.selectedTemplate) return;
 
-    this.router.navigateByUrl(
+    if(this.for === 'owner'){
+this.router.navigateByUrl(
+      `/agreement/owner/view-new-agreement/${this.selectedTemplate._id}`
+    );
+    }else{
+      this.router.navigateByUrl(
       `/agreement/association/view-new-agreement/${this.selectedTemplate._id}`
     );
+    }
+
+    
 
     this.closeModal();
   }

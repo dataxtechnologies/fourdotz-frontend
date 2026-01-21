@@ -7,6 +7,7 @@ import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { TableService } from '../../../services/tableservice.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-owner-tenants-list',
@@ -27,7 +28,7 @@ export class OwnerTenantsListComponent {
 
 
   constructor(private ModalService: ModalService, private route: Router,
-    private apiService: ApiserviceService
+    private apiService: ApiserviceService, private Toast : ToastrService
   ) {
     this.TenantList1 = new TableService()
     this.TenantList1.initialize(this.TenantList2, 10)
@@ -39,6 +40,27 @@ export class OwnerTenantsListComponent {
     this.TenantListinOwner()
   }
 
+
+    SendmailAgain(data: any){
+
+    const payload ={
+      username : data
+    }
+
+    this.apiService.SendmailAgain<any>(payload).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.TenantListinOwner();
+        } else {
+          this.Toast.error(res.message, 'Failed');
+        }
+      },
+      error: (err: any) => {
+        this.Toast.error(err.error.error.message, 'Failed');
+      },
+    });
+
+  }
   
   Addtenant() {
     this.ModalService.open(AddTenantComponent, {

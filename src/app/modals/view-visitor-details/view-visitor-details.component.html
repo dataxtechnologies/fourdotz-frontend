@@ -1,0 +1,112 @@
+<section class="visitor-details">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h3>Visitor Details</h3>
+        <button class="close-btn" (click)="closeModal()">✕</button>
+    </div>
+
+    <!-- VISITOR INFO -->
+    <div class="details-card">
+        <h4 class="section-title">Visitor Information</h4>
+
+        <div class="details-grid">
+            <div class="row">
+                <span class="label">Visitor No</span>
+                <span class="value">{{ visitor_details?.visitor_no }}</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Visitor Name</span>
+                <span class="value">{{ visitor_details?.visitor_name }}</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Visitor Mobile</span>
+                <span class="value">{{ visitor_details?.visitor_mobile }}</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Visitor Email</span>
+                <span class="value">
+                    {{ visitor_details?.visitor_email || '-' }}
+                </span>
+            </div>
+
+            <div class="row">
+                <span class="label">Visitor Count</span>
+                <span class="value">{{ visitor_details?.visitor_count }}</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Purpose of Visit</span>
+                <span class="value">{{ visitor_details?.purpose_of_visit }}</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Type of Visit</span>
+                <span class="value">
+                    {{ visitor_details?.type_of_visit | titlecase }}
+                </span>
+            </div>
+
+            <div class="row" *ngIf="visitor_details.type_of_visit !== 'pre_visitor_entry'">
+                <span class="label" >Entry Time</span>
+                <span class="value ">
+                    {{ visitor_details?.created_time.$date | date:'dd-MMM-yyyy h:mm a' }}
+                </span>
+            </div>
+            <div class="row" *ngIf="visitor_details.type_of_visit == 'pre_visitor_entry'">
+                <span class="label" >Expected Entry Time</span>
+                <span class="value ">
+                    {{ visitor_details?.expected_arrival_time.$date | date:'dd-MMM-yyyy h:mm a' }}
+                </span>
+            </div>
+            <div class="row" *ngIf="visitor_details.type_of_visit !== 'pre_visitor_entry'">
+                <span class="label" >Exit Time</span>
+                <span class="value ">
+                    {{ visitor_details?.exit_time.$date | date:'dd-MMM-yyyy h:mm a' }}
+                </span>
+            </div>
+            <div class="row">
+                <span class="label">Status</span>
+                <span class="value status">
+                    {{ visitor_details?.visitor_status | titlecase }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESIDENT INFO -->
+    <div class="details-card">
+        <h4 class="section-title">Resident Information</h4>
+
+        <div class="details-grid">
+            <div class="row">
+                <span class="label">Resident Name</span>
+                <span class="value">{{ visitor_details?.resident_name }}</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Resident Mobile</span>
+                <span class="value">{{ visitor_details?.resident_mobile }}</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Resident Type</span>
+                <span class="value">{{ visitor_details?.resident_type | titlecase }}</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Property No</span>
+                <span class="value">{{ visitor_details?.property_no }}</span>
+            </div>
+
+            <div class="row">
+                <span class="label">Association</span>
+                <span class="value">{{ visitor_details?.association_name }}</span>
+            </div>
+        </div>
+    </div>
+
+</section>

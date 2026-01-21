@@ -1,40 +1,29 @@
+/* ================= FIX CONTAINER ================= */
 .container {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    display: block;
+    /* IMPORTANT */
+    padding: 0 !important;
     margin: 0 !important;
 }
 
-.item:nth-child(1),
-.item:nth-child(2) {
-    flex-grow: 1;
-}
-
-.item:nth-child(3) {
-    width: 100%;
-}
-
-.table-cont {
-    background-color: #faf9f4;
-    padding: 10px;
-    border-radius: 12px !important;
-}
-
-.styled-table thead {
-    background-color: #ddd;
-}
-
-.head-cont {
-    font-size: 20px;
-    margin-bottom: 20px;
-}
-
+/* ================= HEADER ================= */
 .header-cont {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.head-cont h2 {
+    font-size: 30px;
+}
+
+
+/* ================= ACTION ================= */
+.mail-btn {
+    color: var(--primary-color1);
+    font-weight: bold;
+    cursor: pointer;
+}
 
 
 .new-cards {
@@ -48,22 +37,6 @@
     margin: 10px;
 }
 
-.item h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.item p {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-color2);
-    /* fallback green */
-    margin: 0;
-}
-
-
 
 .btn-add {
     color: var(--primary-color1);
@@ -75,11 +48,6 @@
 }
 
 
-tbody td i {
-    color: var(--primary-color1);
-}
-
-
 @media (max-width: 768px) {
 
     .styled-table th,
@@ -88,15 +56,6 @@ tbody td i {
         text-align: left;
         white-space: nowrap;
     }
-}
-
-.tbody-dd tr td i{
-    font-size: 25px;
-
-}
-
-.notify-icon{
-    color: var(--primary-color2) !important;
 }
 
 

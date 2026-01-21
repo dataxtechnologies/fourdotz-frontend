@@ -12,6 +12,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { AdmindataService } from '../../../services/adminservice/admindata.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-association-list',
@@ -32,7 +33,8 @@ export class AssociationListComponent {
     private route: Router,
     private apiService: ApiserviceService,
     private AdminServices: AdmindataService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private Toast: ToastrService,
   ) {
     this.Associationlist1 = new TableService();
     this.Associationlist1.initialize(this.Associationlist2, 8);
@@ -44,7 +46,6 @@ export class AssociationListComponent {
       residentSearch: [''], // Search by property name/email/phone
     });
 
-    
     this.AdminServices.AssociationStatus$.subscribe((addassociation) => {
       if (addassociation) {
         this.getAssociationList();
@@ -85,6 +86,11 @@ export class AssociationListComponent {
 
     // Update pagination if needed
     this.Associationlist1.initialize(this.filteredProperties, 8);
+
+    this.pages = Array.from(
+      { length: this.Associationlist1.totalPages },
+      (_, i) => i + 1,
+    );
   }
 
   AddAssociation() {
@@ -106,36 +112,57 @@ export class AssociationListComponent {
   }
 
   getAssociationList() {
+    this.tableLoading = true;
     this.apiService.getAssociations<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.Associationlist2 = res.data;
+
           this.Associationlist1.initialize(this.Associationlist2, 8);
+
           this.pages = Array.from(
-            { length: this.Associationlist2.totalPages },
-            (_, i) => i + 1
+            { length: this.Associationlist1.totalPages },
+            (_, i) => i + 1,
           );
+
           this.tableLoading = false;
         } else {
-          this.Associationlist2 = []
-          this.Associationlist1.initialize(this.Associationlist2, 8);
-          this.tableLoading = false;
-          // alert(res.message || 'Logout failed, please try again.');
+          this.resetTable();
         }
       },
-      error: (err: any) => {
-        this.Associationlist2 = []
-        this.Associationlist1.initialize(this.Associationlist2, 8);
-        this.tableLoading = false;
-        //console.error('Logout failed:', err);
-        // alert(err.message || 'Logout failed, please try again.');
-      },
+      error: () => this.resetTable(),
     });
+  }
+
+  resetTable() {
+    this.Associationlist2 = [];
+    this.Associationlist1.initialize([], 8);
+    this.pages = [];
+    this.tableLoading = false;
   }
 
   resetFilters(): void {
     this.filterForm.reset({ status: '', residentSearch: '' });
     this.filteredProperties = [...this.Associationlist2];
     this.Associationlist1.initialize(this.filteredProperties, 8);
+  }
+
+  SendmailAgain(data: any) {
+    const payload = {
+      username: data,
+    };
+
+    this.apiService.SendmailAgain<any>(payload).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.getAssociationList();
+        } else {
+          this.Toast.error(res.message, 'Failed');
+        }
+      },
+      error: (err: any) => {
+        this.Toast.error(err.error.error.message, 'Failed');
+      },
+    });
   }
 }

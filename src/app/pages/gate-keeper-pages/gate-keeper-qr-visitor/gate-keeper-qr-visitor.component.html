@@ -1,61 +1,48 @@
 <section>
     <div>
-        <div class=" header-cont">
-            <div class=" container head-cont">
+
+        <!-- HEADER -->
+        <div class="container header-cont">
+            <div class="head-cont">
                 <h4>QR Visitors List</h4>
             </div>
-            <div>
-                <!-- <button class="btn-add" (click)="generateMaintenance()">+ Generate Maintenance</button> -->
-            </div>
         </div>
-        <div class="container">
 
+        <!-- TABLE -->
+        <div class="container">
             <div class="item">
-                <div class="table-cont"> <!-- &#64; -->
+
+                <div class="new-table-wrapper">
+
+                    <!-- FILTERS -->
                     <form [formGroup]="filterForm">
                         <div class="filter-container">
 
-                            <!-- LEFT Filters -->
                             <div class="filters-left">
 
-                                <!-- Visitor Search -->
                                 <div class="filter-item">
                                     <label class="medium-font">Visitor (Name / Phone)</label>
                                     <input type="text" formControlName="visitorSearch"
                                         placeholder="Enter visitor phone or name" class="regular-font" />
                                 </div>
 
-                                <!-- Resident Search -->
                                 <div class="filter-item">
                                     <label class="medium-font">Resident (Name / Phone)</label>
                                     <input type="text" formControlName="residentSearch"
                                         placeholder="Enter resident phone or name" class="regular-font" />
                                 </div>
 
-                                <!-- Property No -->
                                 <div class="filter-item">
                                     <label class="medium-font">Property No.</label>
                                     <input type="text" formControlName="propertyNo" placeholder="Property No."
                                         class="regular-font" />
                                 </div>
 
-                                <!-- Gate No -->
                                 <div class="filter-item">
                                     <label class="medium-font">Gate No.</label>
-                                    <input type="text" formControlName="gateNo"
-                                        placeholder="Enter gate No." class="regular-font" />
-                                 
+                                    <input type="text" formControlName="gateNo" placeholder="Enter Gate No."
+                                        class="regular-font" />
                                 </div>
-
-                                <!-- <div class="filter-item">
-                                    <label class="medium-font">From Date</label>
-                                    <input type="date" formControlName="fromDate" class="regular-font" />
-                                </div>
-
-                                <div class="filter-item">
-                                    <label class="medium-font">To Date</label>
-                                    <input type="date" formControlName="toDate" class="regular-font" />
-                                </div> -->
 
                             </div>
 
@@ -67,125 +54,132 @@
 
                         </div>
                     </form>
-                    <div class="table-container">
-                        <table class="styled-table">
-                            <thead>
-                                <tr>
-                                    <th class="medium-font">Property No.</th>
-                                    <th class="medium-font">Visitor Details</th>
-                                    <th class="medium-font">Resident Details</th>
-                                    <th class="medium-font">Gate No.</th>
-                                    <th class="medium-font">Count</th>
-                                    <th class="medium-font">Entry Time</th>
-                                    <th class="medium-font">Exit Time</th>
-                                </tr>
-                            </thead>
 
-                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                <ng-container *ngIf="maintenancelist2.length === 0; else datashow">
-                                    <tr>
-                                        <td colspan="7" class="regular-font" style="text-align: center; color: gray;">
-                                            No Data Found
-                                        </td>
+                    <!-- SCROLL -->
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
+
+                            <table class="new-table">
+
+                                <!-- HEADER -->
+                                <thead>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Property No.</th>
+                                        <th>Visitor Details</th>
+                                        <th>Resident Details</th>
+                                        <th>Gate No.</th>
+                                        <th>Count</th>
+                                        <th>Entry Time</th>
+                                        <th>Exit Time</th>
                                     </tr>
-                                </ng-container>
+                                </thead>
 
-                                <ng-template #datashow>
+                                <!-- BODY -->
+                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                                    <!-- DATA -->
                                     <tr *ngFor="let item of maintenancelist1.paginatedData">
-                                        <td data-label="Maintenance Amount">{{ item.property_no }}</td>
+
+                                        <!-- STICKY -->
+                                        <td class="sticky-col lead-col">
+                                            {{ item.property_no }}
+                                        </td>
+
                                         <td>
                                             <div class="td-main">{{ item.visitor_name }}</div>
                                             <div class="td-sub">{{ item.visitor_mobile }}</div>
                                         </td>
+
                                         <td>
                                             <div class="td-main">{{ item.resident_name }}</div>
-                                            <div class="td-sub">{{ item.resident_mobile }} / {{ item.resident_type }}
+                                            <div class="td-sub">
+                                                {{ item.resident_mobile }} / {{ item.resident_type }}
                                             </div>
                                         </td>
-                                        <td data-label="Resident Name">{{ item.gate }}</td>
-                                        <td data-label="Resident Type">{{ item.visitor_count }}</td>
+
+                                        <td>{{ item.gate }}</td>
+
+                                        <td>{{ item.visitor_count }}</td>
+
                                         <td>
-                                            <div class="td-main">{{ item.created_time.$date | date:'dd-MMM-yyyy'}}</div>
-                                            <div class="td-sub">{{ item.created_time.$date | date:'h:mm a' }}</div>
+                                            <div class="td-main">
+                                                {{ item.created_time.$date | date:'dd-MMM-yyyy' }}
+                                            </div>
+                                            <div class="td-sub">
+                                                {{ item.created_time.$date | date:'h:mm a' }}
+                                            </div>
                                         </td>
 
                                         <td>
-                                            <div class="td-main">{{ item.exit_time.$date | date:'dd-MMM-yyyy'}}</div>
-                                            <div class="td-sub">{{ item.exit_time.$date | date:'h:mm a' }}</div>
+                                            <div class="td-main">
+                                                {{ item.exit_time?.$date | date:'dd-MMM-yyyy' }}
+                                            </div>
+                                            <div class="td-sub">
+                                                {{ item.exit_time?.$date | date:'h:mm a' }}
+                                            </div>
                                         </td>
-
 
                                     </tr>
-                                </ng-template>
-                            </tbody>
+
+                                    <!-- NO DATA -->
+                                    <tr *ngIf="maintenancelist1.paginatedData.length === 0">
+                                        <td colspan="7" style="text-align:center;color:gray;font-weight:600;">
+                                            No Data Found
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <!-- SKELETON -->
                             <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3,4,5,6]" style="height: 50px;"> <!-- taller row -->
-                                    <td>
-                                        <span class="placeholder col-10 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-8 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-6 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-7 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-5 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-3 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-3 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
+                                <tr *ngFor="let i of [1,2,3,4,5,6]" style="height:50px">
+                                    <td class="sticky-col lead-col"><span class="placeholder col-10"></span></td>
+                                    <td><span class="placeholder col-8"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-7"></span></td>
+                                    <td><span class="placeholder col-5"></span></td>
+                                    <td><span class="placeholder col-3"></span></td>
+                                    <td><span class="placeholder col-3"></span></td>
                                 </tr>
                             </ng-template>
-                        </table>
 
+                        </div>
                     </div>
+
+                    <!-- PAGINATION -->
+                    <div class="crm-pagination" *ngIf="maintenancelist1">
+                        <div class="regular-font">
+                            Showing
+                            <span class="medium-font">{{ maintenancelist1.startIndex + 1 }}</span>
+                            to
+                            <span class="medium-font">{{ maintenancelist1.endIndex + 1 }}</span>
+                            of
+                            <span class="medium-font">{{ maintenancelist1.totalData }}</span>
+                            entries
+                        </div>
+
+                        <div class="d-flex gap-3 regular-font">
+                            <button class="nav-btn" (click)="maintenancelist1.prevPage()"
+                                [disabled]="maintenancelist1.currentPage === 1">
+                                ‹ Prev
+                            </button>
+
+                            <button class="page-btn active">
+                                {{ maintenancelist1.currentPage }}
+                            </button>
+
+                            <button class="nav-btn" (click)="maintenancelist1.nextPage()"
+                                [disabled]="maintenancelist1.currentPage === maintenancelist1.totalPages">
+                                Next ›
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
         </div>
-        <div *ngIf="maintenancelist1" class="pagination-container regular-font">
-            <p class="pagination-info">
-                Showing {{ maintenancelist1.startIndex + 1 }} to {{ maintenancelist1.endIndex + 1 }} of {{
-                maintenancelist1.totalData }} entries
-            </p>
 
-            <ul class="pagination">
-                <!-- First Page -->
-                <li>
-                    <button [disabled]="maintenancelist1.currentPage === 1" (click)="maintenancelist1.prevPage()"
-                        class="page-btn arrow-btn">
-                        <i class="fa-solid fa-angle-left"></i>
-                    </button>
-                </li>
-
-                <!-- Current Page -->
-                <li>
-                    <span class="page-btn active">
-                        {{ maintenancelist1.currentPage }}
-                    </span>
-                </li>
-
-                <!-- Next Page -->
-                <li>
-                    <button [disabled]="maintenancelist1.currentPage === maintenancelist1.totalPages"
-                        (click)="maintenancelist1.nextPage()" class="page-btn arrow-btn">
-                        <i class="fa-solid fa-angle-right"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
     </div>
 </section>

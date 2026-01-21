@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QrVisitorsComponent } from './qr-visitors.component';
+import { TableComponent } from './table.component';
 
-describe('QrVisitorsComponent', () => {
-  let component: QrVisitorsComponent;
-  let fixture: ComponentFixture<QrVisitorsComponent>;
+describe('TableComponent', () => {
+  let component: TableComponent;
+  let fixture: ComponentFixture<TableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QrVisitorsComponent]
+      imports: [TableComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(QrVisitorsComponent);
+    fixture = TestBed.createComponent(TableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

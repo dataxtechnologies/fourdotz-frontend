@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PaymentFailurePopupComponent } from '../../../modals/payment-failure-popup/payment-failure-popup.component';
 import { CreateAdminComponent } from '../../../modals/create-admin/create-admin.component';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-service-admin-list',
@@ -37,7 +38,8 @@ export class ServiceAdminListComponent {
     private route: Router,
     private Apiservice: ApiserviceService,
     private Acroute: ActivatedRoute,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private Toast : ToastrService
   ) {
     this.adminList1 = new TableService();
     this.adminList1.initialize(this.adminList2, 10);
@@ -61,6 +63,27 @@ export class ServiceAdminListComponent {
       overlay: { leave: 'fade-out 0.5s' },
       actions: { click: false, escape: false },
     });
+  }
+
+    SendmailAgain(data: any){
+
+    const payload ={
+      username : data
+    }
+
+    this.Apiservice.SendmailAgain<any>(payload).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.ListServiceAdmin();
+        } else {
+          this.Toast.error(res.message, 'Failed');
+        }
+      },
+      error: (err: any) => {
+        this.Toast.error(err.error.error.message, 'Failed');
+      },
+    });
+
   }
 
   ListServiceAdmin() {

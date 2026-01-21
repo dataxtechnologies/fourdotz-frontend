@@ -58,9 +58,9 @@
 }
 
 .sig-tabs button.active {
-  background: #0d6efd;
+  background: var(--primary-color1);
   color: #fff;
-  border-color: #0d6efd;
+  border-color: var(--primary-color1);
 }
 
 /* CONTENT */
@@ -134,7 +134,7 @@
 }
 
 .sig-actions .apply {
-  background: #0d6efd;
+  background: var(--primary-color1);
   color: #fff;
 }
 

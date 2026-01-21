@@ -1,13 +1,9 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ApiserviceService } from '../../../services/api/apiservice.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile-page',
@@ -17,61 +13,119 @@ import {
   styleUrls: ['./profile-page.component.css'],
 })
 export class ProfilePageComponent {
-  profileForm: FormGroup;
-  isEditMode: boolean = false;
-  showeditbtn: boolean = false;
+  /** UI STATES */
+  editUpi = false;
+  loadingUserData = false;
+  editbtnloading = false;
+
+  /** USER DATA */
   user_type = localStorage.getItem('user_type');
-  userData: any;
 
-  constructor(private fb: FormBuilder, private location: Location) {
-    // Fetch user data from localStorage
+  user = {
+    name: 'User name',
+    email: 'mi@xpaytech.co',
+    mobile: '+20-01274318900',
+    upi_id: '',
+  };
+
+  /** TEMP VARIABLE FOR EDIT MODE */
+  editableUpi = '';
+
+  constructor(
+    private ApiService: ApiserviceService,
+    private router: Router,
+    private toastr: ToastrService,
+    private location: Location,
+  ) {
     const userJson = localStorage.getItem('userdata');
-    this.userData = userJson ? JSON.parse(userJson) : {};
-
-    // Initialize form with localStorage data
-    this.profileForm = this.fb.group({
-      firstName: [this.userData.name || '', Validators.required],
-      lastName: [this.userData.last_name || ''], // Assuming last_name might exist
-      email: [
-        this.userData.email || '',
-        [Validators.required, Validators.email],
-      ],
-      phone: [this.userData.mobile || '', Validators.pattern('^[0-9]*$')],
-    });
-  }
-
-  ngOnInit(): void {
-    this.profileForm.disable(); // Disable by default
-    this.showeditbtn = this.user_type !== 'superadmin';
-  }
-
-  goback() {
-    this.location.back();
-  }
-
-  toggleEditMode(): void {
-    this.isEditMode = !this.isEditMode;
-    this.isEditMode ? this.profileForm.enable() : this.profileForm.disable();
-  }
-
-  saveProfile(): void {
-    if (this.profileForm.valid) {
-      const updatedProfile = this.profileForm.value;
-      //console.log('Profile saved:', updatedProfile);
-      alert('Profile updated successfully!');
-      this.toggleEditMode();
-    } else {
-      this.profileForm.markAllAsTouched();
+    if (userJson) {
+      this.user = { ...this.user, ...JSON.parse(userJson) };
     }
   }
 
-  cancelEdit(): void {
-    this.profileForm.patchValue({
-      firstName: this.userData.name || '',
-      lastName: this.userData.last_name || '',
-      email: this.userData.email || '',
-      phone: this.userData.mobile || '',
+  /* =========================
+      EDIT MODE ENABLE
+     ========================= */
+  enableEdit() {
+    this.editableUpi = this.user.upi_id || '';
+    this.editUpi = true;
+  }
+
+  /* =========================
+      CANCEL EDIT
+     ========================= */
+  cancelEdit() {
+    this.editableUpi = this.user.upi_id || '';
+    this.editUpi = false;
+  }
+
+  /* =========================
+      SAVE UPI
+     ========================= */
+  saveUpi() {
+    if (!this.editableUpi || !this.editableUpi.trim()) {
+      this.toastr.warning('Please enter a valid UPI ID');
+      return;
+    }
+
+    this.editbtnloading = true;
+
+    const payload = {
+      upi_id: this.editableUpi.trim(),
+    };
+
+    this.ApiService.UpdateUPI<any>(payload).subscribe({
+      next: (res) => {
+        this.editbtnloading = false;
+
+        if (res?.success) {
+          this.toastr.success('UPI ID updated successfully');
+
+          // update local user
+          this.user.upi_id = this.editableUpi;
+
+          // refresh user data
+          this.getUserData(this.user_type);
+
+          // exit edit mode
+          this.editUpi = false;
+        } else {
+          this.toastr.error(res?.message || 'Failed to update UPI ID');
+        }
+      },
+      error: () => {
+        this.editbtnloading = false;
+        this.toastr.error('Failed to update UPI ID', 'Error');
+      },
     });
-    this.toggleEditMode();
+  }
+
+  /* =========================
+      FETCH USER DATA
+     ========================= */
+  getUserData(type: any) {
+    if (this.user_type === 'association') {
+      this.loadingUserData = true;
+    }
+
+    this.ApiService.UserInfo<any>(type).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          localStorage.setItem('userdata', JSON.stringify(res.data));
+          this.user = { ...this.user, ...res.data };
+        }
+        this.loadingUserData = false;
+      },
+      error: () => {
+        this.loadingUserData = false;
+      },
+    });
+  }
+
+  /* =========================
+      BACK NAVIGATION
+     ========================= */
+  goback() {
+    this.location.back();
   }
 }

@@ -1,226 +1,190 @@
-<section>
-    <div class="back-button-div">
-        <!-- From Uiverse.io by karthik092726122003 -->
-        <div class="d-flex gap-3 align-items-center">
-            <button (click)="goback()" class="back-button">
-                <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
-                    <path
-                        d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z">
-                    </path>
-                </svg>
-                <span>Back</span>
-            </button>
-            <div class="ass-h">
-                <p class="demibold-font">{{ Associationdata.property_name }}</p>
+<section class="page-wrapper mt-4">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb  medium-font">
+        <span (click)="goback()" style="cursor: pointer;"><i class="fa-solid fa-arrow-left mt-1"></i> Associations</span> / <span> {{ Associationdata.property_name
+            }}</span>
+    </div>
+
+    <!-- HEADER -->
+    <div class="page-header">
+
+        <div class="title">
+            <div class="logo-circle">
+                {{ Associationdata.property_name[0] }}
             </div>
+            <h1>{{ Associationdata.property_name }}</h1>
         </div>
 
-        <div>
-            <button class="submit-btn" (click)="editassociation(Associationdata)">Edit Association</button>
+        <button class="edit-btn" (click)="editassociation(Associationdata)">
+            Edit Association
+        </button>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="stats">
+
+        <div class="stat">
+            <label class="medium-font">Status</label>
+            <span class="regular-font">
+                {{ Associationdata.invitation_status ? 'Accepted' : 'Pending' }}
+            </span>
+        </div>
+
+        <div class="stat">
+            <label class="medium-font">Phone</label>
+            <span class="regular-font">{{ Associationdata.mobile }}</span>
+        </div>
+
+        <div class="stat">
+            <label class="medium-font">Email</label>
+            <span class="regular-font">{{ Associationdata.email }}</span>
+        </div>
+
+        <div class="stat">
+            <label class="medium-font">Property Types</label>
+            <span class="regular-font">{{ Associationdata.property_type.join(', ') }}</span>
+        </div>
+
+        <div class="stat">
+            <label class="medium-font">Created at</label>
+            <span class="regular-font">{{ Associationdata.onboarded_time?.$date | date:'dd MMM yyyy, hh:mm a' }}</span>
         </div>
 
     </div>
-    <div class="bg-white sec-cont">
-        <!-- Header -->
-        <div class="header-cont" *ngIf="!header_loading; else skeleton">
-            <div class="user-info">
-                <h5 class="label medium-font">Name</h5>
-                <p class="regular-font">{{ Associationdata.name || '--' }}</p>
-            </div>
 
-            <div class="user-info">
-                <h5 class="label medium-font">Phone</h5>
-                <p class="regular-font">{{ Associationdata.mobile || '--' }}</p>
-            </div>
-
-            <div class="user-info">
-                <h5 class="label medium-font">Email</h5>
-                <p class="regular-font">{{ Associationdata.email || '--' }}</p>
-            </div>
-
-            <div class="user-info">
-                <h5 class="label medium-font">Property Type(s)</h5>
-                <p class="regular-font">{{ Associationdata.property_type || '--' }}</p>
-            </div>
-
-            <div class="user-info">
-                <h5 class="label medium-font">Property Name</h5>
-                <p class="regular-font">{{ Associationdata.property_name || '--' }}</p>
-            </div>
-
-            <div class="user-info">
-                <h5 class="label medium-font">Invitation Status</h5>
-                <p class="regular-font">{{ Associationdata.invitation_status ? 'Accepted' : 'Pending/Declined' }}</p>
-            </div>
-
-            <div class="user-info">
-                <h5 class="label medium-font">Created at</h5>
-                <p class="regular-font">{{ Associationdata.onboarded_time?.$date | date:'dd MMM yyyy, hh:mm a' }}</p>
-            </div>
-        </div>
-
-        <ng-template #skeleton>
-            <div class="container ">
-                <div class="row g-3">
-                    <div class="col-12 col-md-6 col-lg-4" *ngFor="let i of [1,2,3,4,5,6,7]">
-                        <div class="placeholder-glow">
-                            <span class="placeholder col-8 mb-2" style="height: 20px;"></span>
-                            <span class="placeholder col-5" style="height: 14px;"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ng-template>
-
-        <!-- Section Content -->
-        <div class="main-cont">
-            <div class="tabs">
-                <button class="tab-btn" [class.active]="activeTab === 'Properties'" (click)="setTab('Properties')">
-                    Properties
-                </button>
-                <button class="tab-btn" [class.active]="activeTab === 'Documents'" (click)="setTab('Documents')">
-                    Documents
-                </button>
-                <button class="tab-btn" [class.active]="activeTab === 'Transactions'" (click)="setTab('Transactions')">
-                    Transaction Amounts
-                </button>
-            </div>
-
-            <!-- Tab Content -->
-            <div class="tab-content">
-                <div *ngIf="activeTab === 'Properties'">
-                    <h4 class="medium-font">Property List</h4>
-                    <div class="table-cont">
-                        <div class="table-container">
-                            <!-- Skeleton loader while fetching -->
-                            <!-- Skeleton loader -->
-                            <div *ngIf="header_loading" class="table-responsive">
-                                <table class="styled-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="medium-font">Property Name</th>
-                                            <th class="medium-font">Email</th>
-                                            <th class="medium-font">Phone</th>
-                                            <th class="medium-font">Property Type</th>
-                                            <th class="medium-font">Invitation Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">
-                                            <td><span class="placeholder col-6 placeholder-glow"></span></td>
-                                            <td><span class="placeholder col-8 placeholder-glow"></span></td>
-                                            <td><span class="placeholder col-5 placeholder-glow"></span></td>
-                                            <td><span class="placeholder col-6 placeholder-glow"></span></td>
-                                            <td><span class="placeholder col-5 placeholder-glow"></span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <!-- Actual table -->
-                            <div *ngIf="!header_loading" class="table-responsive">
-                                <table class="styled-table">
-                                    <thead>
-                                        <tr>
-                                            <th class="medium-font">Property Name</th>
-                                            <th class="medium-font">Property No.</th>
-                                            <th class="medium-font">Property Type</th>
-                                            <th class="medium-font">Facing</th>
-                                            <!-- <th class="medium-font">Owner ID</th> -->
-                                        </tr>
-                                    </thead>
-                                    <tbody class="regular-font"> 
-                                        <!-- If data exists, show rows -->
-                                        <ng-container *ngIf="properties2.length > 0; else noDataRow">
-                                            <tr *ngFor="let property of properties2">
-                                                <td>{{ property.association_name }}</td>
-                                                <td>{{ property.property_no }}</td>
-                                                <td>{{ property.property_type }}</td>
-                                                <td>{{ property.facing }}</td>
-                                                <!-- <td>{{ property.owner_user_id || '-' }}</td> -->
-                                            </tr>
-                                        </ng-container>
-
-                                        <!-- No data row inside tbody -->
-                                        <ng-template #noDataRow>
-                                            <tr>
-                                                <td colspan="5" class="text-center text-muted py-4 regular-font">
-                                                    No Data Found
-                                                </td>
-                                            </tr>
-                                        </ng-template>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="activeTab === 'Documents'">
-                    <h4 class="medium-font">Association Document</h4>
-                    <div class="doc-div" *ngIf="documents && documents.length > 0; else noData">
-                        <div class="file-card" *ngFor="let doc of documents">
-                            <div class="file-preview">
-                                <p class="regular-font"><i class="fa-solid fa-file"></i> Preview</p>
-                            </div>
-                            <div class="file-info">
-                                <p class="file-name regular-font">
-                                    {{ getKey(doc) | titlecase }} |
-                                    <a [href]="getValue(doc)" target="_blank">
-                                        <i class="fa-solid fa-eye" style="color: var(--primary-color1);"></i>
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <ng-template #noData>
-                        <p class="no-data regular-font">No Data Found</p>
-                    </ng-template>
-                </div>
-                <div *ngIf="activeTab === 'Transactions'">
-                    <h4 class="medium-font">Transaction Amounts</h4>
-
-                    <div class="transaction-section">
-                        <div class="transaction-grid">
-
-                            <div class="transaction-card">
-                                <div class="icon"><i class="fa-solid fa-file-invoice"></i></div>
-                                <div class="title medium-font">Monthly Invoice Pending</div>
-                                <div class="amount regular-font">{{ (amountdata.monthly_invoice_pending_amount || 0) | currency:'INR':'symbol':'1.0-0' }}
-                                </div>
-                                <div class="desc regular-font">Invoices generated this month</div>
-                            </div>
-
-                            <div class="transaction-card">
-                                <div class="icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                                <div class="title medium-font">Monthly Invoice Paid</div>
-                                <div class="amount regular-font">{{ (amountdata.monthly_invoice_total_amount || 0) | currency:'INR':'symbol':'1.0-0' }}</div>
-                                <div class="desc regular-font">Total rent collected this month</div>
-                            </div>
-
-                            <div class="transaction-card">
-                                <div class="icon"><i class="fa-solid fa-money-check-dollar"></i></div>
-                                <div class="title medium-font">Payout Total</div>
-                                <div class="amount regular-font">{{ (amountdata.payout_maintenance_total_amount || 0) | currency:'INR':'symbol':'1.0-0' }}</div>
-                                <div class="desc regular-font">Maintenance payouts processed</div>
-                            </div>
-
-                            <!-- <div class="transaction-card">
-                                <div class="icon"><i class="fa-solid fa-building-user"></i></div>
-                                <div class="title medium-font">Payout (Rent)</div>
-                                <div class="amount regular-font">{{ (amountdata.monthly_invoice_pending_amount ?? 0) | currency:'INR':'symbol':'1.0-0' }}</div>
-                                <div class="desc regular-font">Rent payouts processed</div>
-                            </div> -->
-
-                        </div>
-                    </div>
-
-                    <ng-template #noData>
-                        <p class="no-data">No Data Found</p>
-                    </ng-template>
-                </div>
-
-            </div>
-        </div>
+    <!-- TABS -->
+    <div class="tabs">
+        <span [class.active]="activeTab === 'Properties'" (click)="setTab('Properties')">Properties</span>
+        <span [class.active]="activeTab === 'Documents'" (click)="setTab('Documents')">Documents</span>
+        <span [class.active]="activeTab === 'Transactions'" (click)="setTab('Transactions')">Transaction Amounts</span>
     </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <div class="section" *ngIf="activeTab === 'Properties'">
+            <h3>Property List</h3>
+
+            <div *ngIf="header_loading" class="table-responsive">
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th class="medium-font">Property Name</th>
+                            <th class="medium-font">Email</th>
+                            <th class="medium-font">Phone</th>
+                            <th class="medium-font">Property Type</th>
+                            <th class="medium-font">Invitation Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">
+                            <td><span class="placeholder col-6 placeholder-glow"></span></td>
+                            <td><span class="placeholder col-8 placeholder-glow"></span></td>
+                            <td><span class="placeholder col-5 placeholder-glow"></span></td>
+                            <td><span class="placeholder col-6 placeholder-glow"></span></td>
+                            <td><span class="placeholder col-5 placeholder-glow"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="!header_loading" class="table-responsive">
+                <table class="simple-table">
+                    <thead>
+                        <tr class="medium-font">
+                            <th>Property Name</th>
+                            <th>Property No.</th>
+                            <th>Property Type</th>
+                            <th>Facing</th>
+                            <th>Resident Type</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <ng-container *ngIf="properties2.length > 0; else noDataRow">
+                            <tr *ngFor="let property of properties2" class="regular-font">
+                                <td>{{ property.association_name }}</td>
+                                <td>{{ property.property_no }}</td>
+                                <td>{{ property.property_type }}</td>
+                                <td>{{ property.facing }}</td>
+                                <td>{{ property.resident_type }}</td>
+                            </tr>
+                        </ng-container>
+
+                        <!-- No data row inside tbody -->
+                        <ng-template #noDataRow>
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4 regular-font">
+                                    No Data Found
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" *ngIf="activeTab === 'Documents'">
+            <div class="doc-div" *ngIf="documents && documents.length > 0; else noData">
+                <div class="file-card" *ngFor="let doc of documents">
+                    <div class="file-preview">
+                        <p class="regular-font"><i class="fa-solid fa-file"></i> Preview</p>
+                    </div>
+                    <div class="file-info">
+                        <p class="file-name regular-font">
+                            {{ getKey(doc) | titlecase }} |
+                            <a [href]="getValue(doc)" target="_blank">
+                                <i class="fa-solid fa-eye" style="color: var(--primary-color1);"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <ng-template #noData>
+                <p class="no-data regular-font">No Data Found</p>
+            </ng-template>
+        </div>
+        <div *ngIf="activeTab === 'Transactions'">
+
+            <div class="transaction-section">
+                <div class="transaction-grid">
+
+                    <div class="transaction-card">
+                        <div class="icon"><i class="fa-solid fa-file-invoice"></i></div>
+                        <div class="title medium-font">Monthly Invoice Pending</div>
+                        <div class="amount regular-font">{{ (amountdata.monthly_invoice_pending_amount || 0) |
+                            currency:'INR':'symbol':'1.0-0' }}
+                        </div>
+                        <div class="desc regular-font">Invoices generated this month</div>
+                    </div>
+
+                    <div class="transaction-card">
+                        <div class="icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                        <div class="title medium-font">Monthly Invoice Paid</div>
+                        <div class="amount regular-font">{{ (amountdata.monthly_invoice_total_amount || 0) |
+                            currency:'INR':'symbol':'1.0-0' }}</div>
+                        <div class="desc regular-font">Total rent collected this month</div>
+                    </div>
+
+                    <div class="transaction-card">
+                        <div class="icon"><i class="fa-solid fa-money-check-dollar"></i></div>
+                        <div class="title medium-font">Payout Total</div>
+                        <div class="amount regular-font">{{ (amountdata.payout_maintenance_total_amount || 0) |
+                            currency:'INR':'symbol':'1.0-0' }}</div>
+                        <div class="desc regular-font">Maintenance payouts processed</div>
+                    </div>
+
+                </div>
+            </div>
+
+            <ng-template #noData>
+                <p class="no-data">No Data Found</p>
+            </ng-template>
+        </div>
+
+    </div>
+
 </section>

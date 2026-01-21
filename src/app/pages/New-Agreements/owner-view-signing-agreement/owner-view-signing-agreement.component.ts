@@ -109,14 +109,24 @@ getSignedDate(signer: any): string {
   }
 
   /* ===== RENDER TEXT WITH VALUES ===== */
-  renderText(text: string): string {
-    if (!text) return '';
+renderText(html: string): string {
+  if (!html) return '';
 
-    return text.replace(/{{(.*?)}}/g, (_, key) => {
+  // 1️⃣ Replace variable spans
+  let output = html.replace(
+    /<span class="variable"[^>]*>{{(.*?)}}<\/span>/g,
+    (_match, key) => {
       const k = key.trim();
       return this.variables[k] || '__________';
-    });
-  }
+    }
+  );
+
+  // 2️⃣ Convert &nbsp; to normal spaces
+  output = output.replace(/&nbsp;/g, ' ');
+
+  return output;
+}
+
 
   /* ===== OPEN SIGNATURE MODAL ===== */
   openSignModal() {

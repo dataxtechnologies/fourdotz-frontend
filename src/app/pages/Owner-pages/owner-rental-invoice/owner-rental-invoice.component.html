@@ -1,5 +1,7 @@
 <section>
     <div>
+
+        <!-- HEADER -->
         <div class="container header-cont">
             <div class="head-cont">
                 <h2>Rental Invoice List</h2>
@@ -11,190 +13,177 @@
                 </button>
             </div>
         </div>
+
+        <!-- TABLE -->
         <div class="container">
-
             <div class="item">
-                <div class="table-cont"> <!-- &#64; -->
+
+                <div class="new-table-wrapper">
+
+                    <!-- FILTERS -->
                     <form [formGroup]="filterForm">
-                        <div class="filter-container">
+                        <div class="filters">
 
-                            <!-- LEFT Filters -->
-                            <div class="filters-left">
+                            <div class="search-box">
+                                <label class="medium-font">Payment Status</label>
+                                <select formControlName="status" class="regular-font" (change)="applyFilters()">
+                                    <option value="">All</option>
+                                    <option value="Paid">Paid</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Overdue">Overdue</option>
+                                </select>
+                            </div>
 
-                                <!-- Status Dropdown -->
-                                <div class="filter-item">
-                                    <label for="status" class="medium-font">Payment Status</label>
-                                    <select formControlName="status" class="regular-font" (click)="applyFilters()">
-                                        <option value="">All</option>
-                                        <option value="Paid">Paid</option>
-                                        <option value="Pending">Pending</option>
-                                        <option value="Overdue">Overdue</option>
-                                    </select>
-                                </div>
-
-                                <!-- Search -->
-                                <div class="filter-item">
-                                    <label for="residentSearch" class="medium-font" id="select-tag">Search
-                                        <div class="tooltip-wrapper">
-                                            <img src="assets/icons/info-circle.svg" class="info-icon" alt="info" />
-
-                                            <div class="tooltip-box">
-                                                Search for Tenant name or property number here
-                                            </div>
+                            <div class="search-box">
+                                <label class="medium-font">
+                                    Search
+                                    <div class="tooltip-wrapper">
+                                        <img src="assets/icons/info-circle.svg" class="info-icon" />
+                                        <div class="tooltip-box">
+                                            Search for Tenant name or property number here
                                         </div>
-                                    </label>
-                                    <input type="text" placeholder="Enter Phone or Name"
-                                        formControlName="residentSearch" class="regular-font"  (click)="applyFilters()"/>
-                                </div>
-
-                                <!-- From Date -->
-                                <div class="filter-item">
-                                    <label for="fromDate" class="medium-font">From Date</label>
-                                    <input type="date" formControlName="fromDate" class="regular-font"  (click)="applyFilters()"/>
-                                </div>
-
-                                <!-- To Date -->
-                                <div class="filter-item">
-                                    <label for="toDate" class="medium-font">To Date</label>
-                                    <input type="date" formControlName="toDate" class="regular-font" (click)="applyFilters()" />
-                                </div>
-
+                                    </div>
+                                </label>
+                                <input type="text" placeholder="Enter Phone or Name" formControlName="residentSearch"
+                                    class="regular-font" (input)="applyFilters()" />
                             </div>
 
-                            <!-- RIGHT Reset Button -->
-                            <div class="filters-right">
-                                <button type="button" class="reset-btn" (click)="resetFilters()"><i
-                                        class="fa-solid fa-arrow-rotate-right"></i> Reset</button>
+                            <div class="search-box">
+                                <label class="medium-font">From Date</label>
+                                <input type="date" formControlName="fromDate" class="regular-font"
+                                    (change)="applyFilters()" />
                             </div>
+
+                            <div class="search-box">
+                                <label class="medium-font">To Date</label>
+                                <input type="date" formControlName="toDate" class="regular-font"
+                                    (change)="applyFilters()" />
+                            </div>
+
+                            <button type="button" class="filter-reset-btn" (click)="resetFilters()">
+                                Reset
+                            </button>
 
                         </div>
                     </form>
 
-                    <div class="table-container">
-                        <table class="styled-table">
-                            <thead>
-                                <tr>
-                                    <th class="medium-font">Rental Amount</th>
-                                    <th class="medium-font">Association Name</th>
-                                    <th class="medium-font">Resident Name</th>
-                                    <th class="medium-font">Resident Phone</th>
-                                    <th class="medium-font">Issue at</th>
-                                    <th class="medium-font">Status</th>
-                                    <th class="medium-font">Action</th>
-                                </tr>
-                            </thead>
-                            <!-- <tbody class="tbody-dd">
-                                <tr *ngFor="let p of filteredProperties">
-                                    <td>₹{{ p.amount }}</td>
-                                    <td>{{ p.association }}</td>
-                                    <td>{{ p.name }}</td>
-                                    <td>{{ p.phone }}</td>
-                                    <td>{{ p.date }}</td>
-                                    <td>
-                                        {{ p.status }}
-                                        <span *ngIf="p.status === 'Paid' && p.paidDate"> ({{ p.paidDate }})</span>
-                                    </td>
-                                </tr>
-                            </tbody> -->
-                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                <ng-container *ngIf="rentalinvoicelist2?.length === 0; else datashow">
-                                    <tr>
-                                        <td colspan="7" style="text-align: center; font-weight: 600; color: gray;">
-                                            No Data Found
-                                        </td>
-                                    </tr>
-                                </ng-container>
+                    <!-- SCROLL -->
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
 
-                                <ng-template #datashow>
+                            <table class="new-table">
+
+                                <!-- HEADER -->
+                                <thead>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Rental Amount</th>
+                                        <th>Association Name</th>
+                                        <th>Resident Name</th>
+                                        <th>Resident Phone</th>
+                                        <th>Issued At</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <!-- BODY -->
+                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                                    <!-- DATA -->
                                     <tr *ngFor="let p of filteredProperties">
-                                        <td>₹{{ p.total_amount }}</td>
+
+                                        <td class="sticky-col lead-col">
+                                            ₹{{ p.total_amount }}
+                                        </td>
+
                                         <td>{{ p.association_name }}</td>
                                         <td>{{ p.tenant_name }}</td>
                                         <td>{{ p.tenant_mobile }}</td>
                                         <td>{{ p.created_time.$date | date:'dd-MMM-yyyy' }}</td>
+
                                         <td>
-                                            <span *ngIf="p.payment_status === false">Pending</span>
-                                            <span *ngIf="p.payment_status === true"
-                                                style="color: #226942 !important;">Paid</span>
+                                            <span *ngIf="!p.payment_status" class="status pending">
+                                                Pending
+                                            </span>
+                                            <span *ngIf="p.payment_status" class="status paid">
+                                                Paid
+                                            </span>
                                         </td>
+
                                         <td>
-                                            <span *ngIf="p.payment_status === true"> <img
-                                                    src="assets/icons/paid-invoice1.svg" alt="paid-invoice-icon"
-                                                    (click)="viewInvoice(p.invoice_no)" /></span>
-                                            <span *ngIf="p.payment_status === false"
-                                                style="color: var(--primary-color1); border: 2px solid var(--primary-color1); padding: 4px 6px;  border-radius: 12px;"
-                                                (click)="changetopaidstatus(p.invoice_no)">Paid</span>
+                                            <ng-container *ngIf="p.payment_status; else markPaid">
+                                                <img src="assets/icons/paid-invoice1.svg"
+                                                    (click)="viewInvoice(p.invoice_no)" />
+                                            </ng-container>
+
+                                            <ng-template #markPaid>
+                                                <span class="table-btn" (click)="changetopaidstatus(p.invoice_no)">
+                                                    Mark Paid
+                                                </span>
+                                            </ng-template>
+                                        </td>
+
+                                    </tr>
+
+                                    <!-- NO DATA -->
+                                    <tr *ngIf="filteredProperties.length === 0">
+                                        <td colspan="7" style="text-align:center;font-weight:600;color:gray;">
+                                            No Data Found
                                         </td>
                                     </tr>
-                                </ng-template>
-                            </tbody>
+
+                                </tbody>
+                            </table>
+
+                            <!-- SKELETON -->
                             <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3,4,5,6]" style="height: 50px;"> <!-- taller row -->
-                                    <td>
-                                        <span class="placeholder col-10 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-8 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-6 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-7 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-5 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-3 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-3 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                                    <td class="sticky-col lead-col"><span class="placeholder col-10"></span></td>
+                                    <td><span class="placeholder col-8"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-7"></span></td>
+                                    <td><span class="placeholder col-5"></span></td>
+                                    <td><span class="placeholder col-3"></span></td>
+                                    <td><span class="placeholder col-3"></span></td>
                                 </tr>
                             </ng-template>
-                        </table>
+
+                        </div>
                     </div>
+
+                    <!-- PAGINATION -->
+                    <div class="crm-pagination" *ngIf="rentalinvoicelist1">
+                        <div class="regular-font">
+                            Showing
+                            <span class="medium-font">{{ rentalinvoicelist1.startIndex + 1 }}</span>
+                            to
+                            <span class="medium-font">{{ rentalinvoicelist1.endIndex + 1 }}</span>
+                            of
+                            <span class="medium-font">{{ rentalinvoicelist1.totalData }}</span>
+                            entries
+                        </div>
+
+                        <div class="d-flex gap-3 regular-font">
+                            <button class="nav-btn" (click)="rentalinvoicelist1.prevPage()"
+                                [disabled]="rentalinvoicelist1.currentPage === 1">
+                                ‹ Prev
+                            </button>
+
+                            <button class="page-btn active">
+                                {{ rentalinvoicelist1.currentPage }}
+                            </button>
+
+                            <button class="nav-btn" (click)="rentalinvoicelist1.nextPage()"
+                                [disabled]="rentalinvoicelist1.currentPage === rentalinvoicelist1.totalPages">
+                                Next ›
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
         </div>
-        <div *ngIf="rentalinvoicelist1" class="pagination-container regular-font">
-            <p class="pagination-info">
-                Showing {{ rentalinvoicelist1.startIndex + 1 }} to {{ rentalinvoicelist1.endIndex + 1 }} of {{
-                rentalinvoicelist1.totalData }} entries
-            </p>
 
-            <ul class="pagination">
-                <!-- First Page -->
-                <li>
-                    <button [disabled]="rentalinvoicelist1.currentPage === 1" (click)="rentalinvoicelist1.prevPage()"
-                        class="page-btn arrow-btn">
-                        <i class="fa-solid fa-angle-left"></i>
-                    </button>
-                </li>
-
-                <!-- Current Page -->
-                <li>
-                    <span class="page-btn active">
-                        {{ rentalinvoicelist1.currentPage }}
-                    </span>
-                </li>
-
-                <!-- Next Page -->
-                <li>
-                    <button [disabled]="rentalinvoicelist1.currentPage === rentalinvoicelist1.totalPages"
-                        (click)="rentalinvoicelist1.nextPage()" class="page-btn arrow-btn">
-                        <i class="fa-solid fa-angle-right"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
     </div>
 </section>

@@ -1,117 +1,127 @@
 <section>
     <div>
+
+        <!-- HEADER -->
         <div class="container header-cont">
             <div class="head-cont">
                 <h2>List Agreements</h2>
             </div>
             <div>
-                <!-- <button class="btn-add" (click)="openSelectAgreementModal()">+ Create Agreement</button> -->
+                <!-- button intentionally hidden as in your code -->
             </div>
         </div>
+
+        <!-- TABLE -->
         <div class="container">
-
             <div class="item">
-                <div class="table-cont">
-                    <div class="table-container">
-                        <table class="styled-table">
-                            <thead>
-                                <tr>
-                                    <th class="medium-font">Agreement Name</th>
-                                    <th class="medium-font">Created at</th>
-                                    <th class="medium-font">Action</th>
-                                </tr>
-                            </thead>
 
-                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                <ng-container *ngIf="spotvisitorlist2?.length === 0; else datashow">
-                                    <tr>
-                                        <td colspan="7" class="regular-font" style="text-align: center; color: gray;">
-                                             No Data Found
+                <div class="new-table-wrapper">
+
+                    <!-- SCROLL -->
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
+
+                            <table class="new-table">
+
+                                <!-- HEADER -->
+                                <thead>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Agreement Name</th>
+                                        <th>Created At</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <!-- BODY -->
+                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                                    <!-- DATA -->
+                                    <tr *ngFor="let item of spotVisitorlist1.paginatedData">
+
+                                        <!-- AGREEMENT NAME -->
+                                        <td class="sticky-col lead-col">
+                                            {{ item.template_name }}
+                                        </td>
+
+                                        <!-- CREATED DATE -->
+                                        <td>
+                                            {{ item.created_time.$date | date:'dd-MMM-yyyy' }}
+                                        </td>
+
+                                        <!-- ACTION -->
+                                        <td>
+                                            <span class="action-link"
+                                                style="color: var(--primary-color1); font-weight: 600; cursor:pointer"
+                                                (click)="openagreement(item._id)">
+                                                View
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                    <!-- NO DATA -->
+                                    <tr *ngIf="spotVisitorlist1.paginatedData.length === 0">
+                                        <td colspan="3" style="text-align:center;color:gray;">
+                                            No Data Found
                                         </td>
                                     </tr>
-                                </ng-container>
 
-                                <ng-template #datashow>
-                                    <tr *ngFor="let item of spotVisitorlist1.paginatedData">
-                                       
-                                        <td data-label="Property Name"><div class="visitor-details">
-                                            <span class="property-name">{{ item.template_name }}</span>
-                                           
-                                        </div></td>
-                                        
-                                        <td data-label="Phone"><div class="visitor-details">
-                                            <span class="property-name">{{ item.created_time.$date | date:'dd-MMM-yyyy'}}</span>
-                                           
-                                        </div></td>
-                                        <td data-label="Property Type" style="color: var(--primary-color1); font-weight: bold;" (click)="openagreement(item._id)">view</td>
-                                        
-                                    </tr>
-                                </ng-template>
-                            </tbody>
+                                </tbody>
+                            </table>
+
+                            <!-- SKELETON -->
                             <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
-                                    <td>
-                                        <span class="placeholder col-10 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                                    <td class="sticky-col lead-col">
+                                        <span class="placeholder col-8"></span>
                                     </td>
                                     <td>
-                                        <span class="placeholder col-8 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                        <span class="placeholder col-5"></span>
                                     </td>
                                     <td>
-                                        <span class="placeholder col-6 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-7 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-5 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-3 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                        <span class="placeholder col-3"></span>
                                     </td>
                                 </tr>
                             </ng-template>
 
-                        </table>
+                        </div>
                     </div>
+
+                    <!-- CRM PAGINATION -->
+                    <div *ngIf="spotVisitorlist1" class="crm-pagination">
+
+                        <div class="regular-font">
+                            Showing
+                            <span class="medium-font">{{ spotVisitorlist1.startIndex + 1 }}</span>
+                            to
+                            <span class="medium-font">{{ spotVisitorlist1.endIndex + 1 }}</span>
+                            of
+                            <span class="medium-font">{{ spotVisitorlist1.totalData }}</span>
+                            entries
+                        </div>
+
+                        <div class="d-flex gap-3 regular-font">
+
+                            <button class="nav-btn" (click)="spotVisitorlist1.prevPage()"
+                                [disabled]="spotVisitorlist1.currentPage === 1">
+                                ‹ Prev
+                            </button>
+
+                            <button class="page-btn active">
+                                {{ spotVisitorlist1.currentPage }}
+                            </button>
+
+                            <button class="nav-btn" (click)="spotVisitorlist1.nextPage()"
+                                [disabled]="spotVisitorlist1.currentPage === spotVisitorlist1.totalPages">
+                                Next ›
+                            </button>
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-        <div *ngIf="spotVisitorlist1" class="pagination-container regular-font">
-            <p class="pagination-info">
-                Showing {{ spotVisitorlist1.startIndex + 1 }} to {{ spotVisitorlist1.endIndex + 1 }} of {{
-                spotVisitorlist1.totalData }} entries
-            </p>
 
-            <ul class="pagination">
-                <!-- First Page -->
-                <li>
-                    <button [disabled]="spotVisitorlist1.currentPage === 1" (click)="spotVisitorlist1.prevPage()"
-                        class="page-btn arrow-btn">
-                        <i class="fa-solid fa-angle-left"></i>
-                    </button>
-                </li>
-
-                <!-- Current Page -->
-                <li>
-                    <span class="page-btn active">
-                        {{ spotVisitorlist1.currentPage }}
-                    </span>
-                </li>
-
-                <!-- Next Page -->
-                <li>
-                    <button [disabled]="spotVisitorlist1.currentPage === spotVisitorlist1.totalPages"
-                        (click)="spotVisitorlist1.nextPage()" class="page-btn arrow-btn">
-                       <i class="fa-solid fa-angle-right"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
     </div>
 </section>

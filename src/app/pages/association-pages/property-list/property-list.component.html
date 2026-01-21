@@ -1,120 +1,162 @@
 <section>
     <div>
+
+        <!-- HEADER -->
         <div class="container header-cont">
             <div class="head-cont">
                 <h2>Properties List</h2>
             </div>
-            <div>
+            <div class="mt-4">
                 <button class="btn-add" (click)="Addproperty()">+ Add Properties</button>
             </div>
         </div>
+
+        <!-- TABLE CARD -->
         <div class="container">
-
             <div class="item">
-                <div class="table-cont">
-                    <div class="table-container">
-                        <table class="styled-table">
-                            <thead>
-                                <tr>
-                                    <th class="medium-font">Property No.</th>
-                                    <th class="medium-font">Property Type</th>
-                                    <th class="medium-font">Area</th>
-                                    <!-- <th>BHK</th> -->
-                                    <th class="medium-font">Facing</th>
-                                    <!-- <th>Residental Type</th> -->
-                                    <th class="medium-font">Maintenance Paid By</th>
-                                    <th class="medium-font">View</th>
-                                </tr>
-                            </thead>
 
-                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                <ng-container *ngIf="propertylist2?.length === 0; else datashow">
-                                    <tr>
-                                        <td colspan="6" class="regular-font" style="text-align: center; color: gray;">
-                                             No Data Found
-                                        </td>
+                <div class="new-table-wrapper">
+
+                    <!-- FILTERS -->
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
+
+                            <!-- SEARCH -->
+                            <div class="search-box">
+                                <input type="text" placeholder="Search Property No / Type" formControlName="search"
+                                    class="regular-font" />
+                            </div>
+
+                            <!-- PROPERTY TYPE -->
+                            <div class="search-box">
+                                <select formControlName="propertyType" class="regular-font">
+                                    <option value="">All Property Types</option>
+                                    <option value="Apartment">Apartment</option>
+                                    <option value="Villa">Villa</option>
+                                    <option value="Commercial">Commercial</option>
+                                </select>
+                            </div>
+
+                            <!-- RESET -->
+                            <button type="button" class="filter-reset-btn" (click)="resetFilters()">
+                                Reset
+                            </button>
+
+                        </div>
+                    </form>
+
+                    <!-- SCROLL WRAPPER -->
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
+
+                            <table class="new-table">
+
+                                <!-- HEADER -->
+                                <thead>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Property No.</th>
+
+                                        <th>Property Type</th>
+
+                                        <th>Area</th>
+                                        <th>Facing</th>
+                                        <th>Maintenance Paid By</th>
+                                        <th>View</th>
                                     </tr>
-                                </ng-container>
+                                </thead>
 
-                                <ng-template #datashow>
+                                <!-- BODY -->
+                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                                    <!-- DATA -->
                                     <tr *ngFor="let item of propertylist1.paginatedData">
-                                        <td data-label="Property Name">{{ item.property_no }}</td>
-                                        <td data-label="Email">{{ item.property_type }}</td>
-                                        <td data-label="Phone">{{ item.area }} Sq.ft</td>
-                                        <td data-label="Property Type">{{ item.facing }}</td>
-                                        <td data-label="Invitation Status">
+
+                                        <!-- STICKY COLUMN -->
+                                        <td class="sticky-col lead-col">
+                                            {{ item.property_no }}
+                                        </td>
+
+                                        <!-- SCROLLABLE COLUMNS -->
+                                        <td>{{ item.property_type }}</td>
+
+                                        <td>{{ item.area }} Sq.ft</td>
+                                        <td>{{ item.facing }}</td>
+
+                                        <td>
                                             {{ item.maintenance_paid_by || 'No Resident Found' }}
                                         </td>
-                                        <td data-label="Property Details" (click)="viewproperty(item._id)">
-                                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                                        <td (click)="viewproperty(item._id)">
+                                            <button class="table-btn">View</button>
+                                        </td>
+
+                                    </tr>
+
+                                    <!-- NO DATA -->
+                                    <tr *ngIf="propertylist1.paginatedData.length === 0">
+                                        <td colspan="11" class="regular-font" style="text-align:center;color:gray;">
+                                            No Data Found
                                         </td>
                                     </tr>
-                                </ng-template>
-                            </tbody>
+
+                                </tbody>
+                            </table>
+
+                            <!-- SKELETON -->
                             <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
-                                    <td>
-                                        <span class="placeholder col-10 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                                    <td class="sticky-col lead-col">
+                                        <span class="placeholder col-8"></span>
                                     </td>
-                                    <td>
-                                        <span class="placeholder col-8 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-6 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-7 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-5 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-3 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-4"></span></td>
                                 </tr>
                             </ng-template>
 
-                        </table>
+                        </div>
                     </div>
+
+                    <!-- PAGINATION -->
+                    <div class="crm-pagination">
+                        <div class="regular-font">
+                            Showing
+                            <span class="medium-font">{{ propertylist1.startIndex + 1 }}</span>
+                            to
+                            <span class="medium-font">{{ propertylist1.endIndex + 1 }}</span>
+                            of
+                            <span class="medium-font">{{ propertylist1.totalData }}</span>
+                            entries
+                        </div>
+
+                        <div class="d-flex gap-3 regular-font">
+                            <button class="nav-btn" (click)="propertylist1.prevPage()"
+                                [disabled]="propertylist1.currentPage === 1">
+                                ‹ Prev
+                            </button>
+
+                            <button class="page-btn active">
+                                {{ propertylist1.currentPage }}
+                            </button>
+
+                            <button class="nav-btn" (click)="propertylist1.nextPage()"
+                                [disabled]="propertylist1.currentPage === propertylist1.totalPages">
+                                Next ›
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
         </div>
-        <div *ngIf="propertylist1" class="pagination-container regular-font">
-            <p class="pagination-info">
-                Showing {{ propertylist1.startIndex + 1 }} to {{ propertylist1.endIndex + 1 }} of {{
-                propertylist1.totalData }} entries
-            </p>
 
-            <ul class="pagination">
-                <!-- First Page -->
-                <li>
-                    <button [disabled]="propertylist1.currentPage === 1" (click)="propertylist1.prevPage()"
-                        class="page-btn arrow-btn">
-                        <i class="fa-solid fa-angle-left"></i>
-                    </button>
-                </li>
-
-                <!-- Current Page -->
-                <li>
-                    <span class="page-btn active">
-                        {{ propertylist1.currentPage }}
-                    </span>
-                </li>
-
-                <!-- Next Page -->
-                <li>
-                    <button [disabled]="propertylist1.currentPage === propertylist1.totalPages"
-                        (click)="propertylist1.nextPage()" class="page-btn arrow-btn">
-                       <i class="fa-solid fa-angle-right"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
     </div>
 </section>

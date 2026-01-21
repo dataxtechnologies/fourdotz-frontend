@@ -99,4 +99,23 @@ export class SuperadminDashboardComponent {
     });
   }
 
+  SendmailAgain(data: any) {
+    const payload = {
+      username: data,
+    };
+
+    this.apiService.SendmailAgain<any>(payload).subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+          this.getAssociationList();
+        } else {
+          this.Toastr.error(res.message, 'Failed');
+        }
+      },
+      error: (err: any) => {
+        this.Toastr.error(err.error.error.message, 'Failed');
+      },
+    });
+  }
+
 }

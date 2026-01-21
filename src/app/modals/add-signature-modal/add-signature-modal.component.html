@@ -86,8 +86,11 @@
 
             <input type="text" class="inp-cus" placeholder="Enter OTP" [(ngModel)]="otp" />
 
-            <button class="btn-add" (click)="verifyOtp()">
+            <button class="btn-add" (click)="verifyOtp()" *ngIf="!showprocessingbtn">
                 Verify OTP
+            </button>
+            <button class="btn-add" style="cursor: not-allowed;" disabled *ngIf="showprocessingbtn">
+                Processing...
             </button>
 
         </div>

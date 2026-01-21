@@ -2,17 +2,14 @@
 
     <!-- ================= HEADER ================= -->
     <div class="builder-header">
-        <div class="d-flex gap-3 align-items-center ">
-            <i class="fa-solid fa-arrow-left" style="cursor: pointer;" (click)="goback()"></i>
+        <div class="d-flex gap-3 align-items-center">
+            <i class="fa-solid fa-arrow-left" style="cursor:pointer" (click)="goback()"></i>
             <h3>Create Template</h3>
         </div>
 
         <div class="header-actions">
-            <button class="btn-add  mx-1" (click)="openVariableModal()">＋ Variable</button>
-            
-            <button class="btn-add mx-1" (click)="openTemplateNameModal()" >
-                Save Template
-            </button>
+            <button class="btn-add mx-1" (click)="openVariableModal()">＋ Variable</button>
+            <button class="btn-add mx-1" (click)="openTemplateNameModal()">Save Template</button>
         </div>
     </div>
 
@@ -40,28 +37,27 @@
             </p>
         </div>
 
-        <!-- RIGHT : PREVIEW / EDITOR -->
+        <!-- RIGHT : EDITOR -->
         <div class="builder-preview">
-
             <div class="page">
 
-                <ng-container *ngFor="let block of blocks; let i = index">
+                <ng-container *ngFor="let block of blocks; trackBy: trackById">
 
-                    <!-- HEADING -->
+                    <!-- ========== HEADING ========== -->
                     <h1 *ngIf="block.type === 'heading'" class="doc-heading editable" contenteditable="true"
-                        spellcheck="false" (focus)="saveCursor()" (input)="updateBlockValue($event, i)">
-                        {{ block.value || 'Type agreement heading here' }}
+                        spellcheck="false" data-placeholder="Type agreement heading here" [attr.data-id]="block.id"
+                        (focus)="saveCursor()" (input)="updateBlockValue($event, block)">
                     </h1>
 
-                    <!-- PARAGRAPH -->
+                    <!-- ========== PARAGRAPH ========== -->
                     <p *ngIf="block.type === 'paragraph'" class="doc-para editable" contenteditable="true"
-                        spellcheck="false" (focus)="saveCursor()" (input)="updateBlockValue($event, i)">
-                        {{ block.value || 'Type paragraph content here...' }}
+                        spellcheck="false" data-placeholder="Type paragraph content here..." [attr.data-id]="block.id"
+                        (focus)="saveCursor()" (input)="updateBlockValue($event, block)">
                     </p>
 
                     <div *ngIf="block.type === 'paragraph'" class="para-gap"></div>
 
-                    <!-- SIGNATURE -->
+                    <!-- ========== SIGNATURE ========== -->
                     <div *ngIf="block.type === 'signature'" class="signature-section">
 
                         <div class="sign-box" *ngFor="let signer of block.signers">
@@ -92,8 +88,8 @@
             <input placeholder="Key (tenant_name)" [(ngModel)]="variableForm.key" />
 
             <div class="modal-actions">
-                <button (click)="addVariable()">Add</button>
-                <button (click)="closeVariableModal()">Cancel</button>
+                <button class="btn-add" (click)="addVariable()">Add</button>
+                <button class="btn-cancel" (click)="closeVariableModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -106,10 +102,14 @@
             <input placeholder="Template Name" [(ngModel)]="templateName" />
 
             <div class="modal-actions">
-                <button class="btn-add" (click)="confirmSaveTemplate()" *ngIf="submitbtn">Save</button>
-                <button class="btn-add mx-1" *ngIf="!submitbtn">
-                Saving...
-            </button>
+                <button class="btn-add" *ngIf="submitbtn" (click)="confirmSaveTemplate()">
+                    Save
+                </button>
+
+                <button class="btn-add mx-1" *ngIf="!submitbtn" disabled>
+                    Saving...
+                </button>
+
                 <button class="btn-cancel" (click)="closeTemplateNameModal()">Cancel</button>
             </div>
         </div>

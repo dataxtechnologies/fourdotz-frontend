@@ -1,10 +1,11 @@
 <section class="mt-4">
 
-    <div>
+
         <div class="container header-cont">
-            <div class="head-cont mt-2">
-                <h4>Manage Gate Keeper</h4>
+            <div class="head-cont">
+                <h2>Manage Gate Keeper</h2>
             </div>
+
             <div class="tabs">
                 <div class="tab" [class.active]="activeTab === 'keeper'" (click)="switchTab('keeper')">
                     Gate Keeper
@@ -16,218 +17,155 @@
             </div>
         </div>
 
-        <div>
-            <div class="container" *ngIf="activeTab === 'keeper'">
+        <div class="container" *ngIf="activeTab === 'keeper'">
+            <div class="item">
 
-                <div class="item">
-                    <div class="table-cont">
-                        <div class="table-head">
-                            <h4>Gate Keeper List</h4>
-                            <button class="btn-add1" (click)="OpenAddGateKeeper()">+ Add Gate Keeper</button>
-                        </div>
-                        <div class="table-container">
-                            <table class="styled-table">
+                <div class="new-table-wrapper">
+
+                    <div class="table-head">
+                        <h4>Gate Keeper List</h4>
+                        <button class="btn-add" (click)="OpenAddGateKeeper()">
+                            + Add Gate Keeper
+                        </button>
+                    </div>
+
+                    <!-- SCROLL -->
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
+
+                            <table class="new-table">
+
                                 <thead>
-                                    <tr>
-                                        <th class="medium-font">Name</th>
-                                        <th class="medium-font">Phone</th>
-                                        <th class="medium-font">Email</th>
-                                        <th class="medium-font">Assigned Gate No.</th>
-                                        <th class="medium-font table-last">Action</th>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Name</th>
+                                        <th>Phone</th>
+                                        <th>Email</th>
+                                        <th>Assigned Gate No.</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
-                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                    <ng-container *ngIf="GateKeeperlist2.length === 0; else datashow">
-                                        <tr>
-                                            <td colspan="6" class="regular-font"
-                                                style="text-align: center; color: gray;">
-                                                No Data Found
-                                            </td>
-                                        </tr>
-                                    </ng-container>
+                                <tbody *ngIf="!tableLoading; else keeperSkeleton" class="regular-font">
 
-                                    <ng-template #datashow>
-                                        <tr *ngFor="let k of GateKeeperlist1.paginatedData">
-                                            <td>{{ k.name }}</td>
-                                            <td>{{ k.mobile }}</td>
-                                            <td>{{ k.email }}</td>
-                                            <td>{{ k.assigned_gate || '--'}}</td>
-                                            <td class="table-last">
-                                                <div>
-                                                    <button class="btn-add" (click)="AssignGates(k)" *ngIf="!k.assigned_gate">Assign Gate</button>
-                                                    <button class="btn-add" (click)="unAssignGates(k)" *ngIf="k.assigned_gate">Unassign Gate</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </ng-template>
-                                </tbody>
-                                <ng-template #tableSkeleton>
-                                    <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;">
+                                    <tr *ngFor="let k of GateKeeperlist1.paginatedData">
+
+                                        <td class="sticky-col lead-col">{{ k.name }}</td>
+                                        <td>{{ k.mobile }}</td>
+                                        <td>{{ k.email }}</td>
+                                        <td>{{ k.assigned_gate || '--' }}</td>
+
                                         <td>
-                                            <span class="placeholder col-10 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                            <div class="d-flex gap-2">
+                                                <button class="btn-add" *ngIf="!k.assigned_gate"
+                                                    (click)="AssignGates(k)">
+                                                    Assign Gate
+                                                </button>
+
+                                                <button class="btn-add" *ngIf="k.assigned_gate"
+                                                    (click)="unAssignGates(k)">
+                                                    Unassign Gate
+                                                </button>
+
+                                                <span class="mail-btn" (click)="SendmailAgain(k.email)">
+                                                    Send Mail
+                                                </span>
+                                            </div>
                                         </td>
-                                        <td>
-                                            <span class="placeholder col-8 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                        </td>
-                                        <td>
-                                            <span class="placeholder col-6 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                        </td>
-                                        <td>
-                                            <span class="placeholder col-7 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                        </td>
-                                        <td>
-                                            <span class="placeholder col-5 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                        </td>
-                                        <td>
-                                            <span class="placeholder col-3 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+
+                                    </tr>
+
+                                    <!-- NO DATA -->
+                                    <tr *ngIf="GateKeeperlist1.paginatedData.length === 0">
+                                        <td colspan="5" class="no-data">
+                                            No Data Found
                                         </td>
                                     </tr>
-                                </ng-template>
 
+                                </tbody>
                             </table>
+
+                            <!-- SKELETON -->
+                            <ng-template #keeperSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                                    <td class="sticky-col lead-col">
+                                        <span class="placeholder col-6"></span>
+                                    </td>
+                                    <td><span class="placeholder col-5"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-4"></span></td>
+                                    <td><span class="placeholder col-5"></span></td>
+                                </tr>
+                            </ng-template>
+
                         </div>
                     </div>
+
                 </div>
             </div>
-            <!-- <div *ngIf="propertylist1" class="pagination-container regular-font">
-            <p class="pagination-info">
-                Showing {{ propertylist1.startIndex + 1 }} to {{ propertylist1.endIndex + 1 }} of {{
-                propertylist1.totalData }} entries
-            </p>
-
-            <ul class="pagination">
-                <li>
-                    <button [disabled]="propertylist1.currentPage === 1" (click)="propertylist1.prevPage()"
-                        class="page-btn arrow-btn">
-                        <i class="fa-solid fa-angle-left"></i>
-                    </button>
-                </li>
-
-                <li>
-                    <span class="page-btn active">
-                        {{ propertylist1.currentPage }}
-                    </span>
-                </li>
-
-                <li>
-                    <button [disabled]="propertylist1.currentPage === propertylist1.totalPages"
-                        (click)="propertylist1.nextPage()" class="page-btn arrow-btn">
-                       <i class="fa-solid fa-angle-right"></i>
-                    </button>
-                </li>
-            </ul>
-        </div> -->
         </div>
 
-        <div>
-            <div class="container" *ngIf="activeTab === 'gate'">
+        <div class="container" *ngIf="activeTab === 'gate'">
+            <div class="item">
 
-                <div class="item">
-                    <div class="table-cont">
-                        <div class="table-head">
-                            <h4>Gate List</h4>
-                            <button class="btn-add1" (click)="OpenAddGate()">+ Add Gate</button>
-                        </div>
-                        <div class="table-container">
-                            <table class="styled-table">
+                <div class="new-table-wrapper">
+
+                    <div class="table-head">
+                        <h4>Gate List</h4>
+                        <button class="btn-add" (click)="OpenAddGate()">
+                            + Add Gate
+                        </button>
+                    </div>
+
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
+
+                            <table class="new-table">
+
                                 <thead>
-                                    <tr>
-                                        <th class="medium-font">Gate No.</th>
-                                        <th class="medium-font table-last">Action</th>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Gate No.</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
-                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                    <ng-container *ngIf="Gatelist2.length === 0; else datashow">
-                                        <tr>
-                                            <td colspan="6" class="regular-font"
-                                                style="text-align: center; color: gray;">
-                                                No Data Found
-                                            </td>
-                                        </tr>
-                                    </ng-container>
+                                <tbody *ngIf="!tableLoading; else gateSkeleton" class="regular-font">
 
-                                    <ng-template #datashow>
-                                        <tr *ngFor="let g of Gatelist1.paginatedData">
-                                            <td>{{ g.gate }}</td>
-                                            <td class="table-last">
-                                                <div>
-                                                    <button class="btn-add">Delete Gate</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </ng-template>
-                                </tbody>
-                                <ng-template #tableSkeleton>
-                                    <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;">
+                                    <tr *ngFor="let g of Gatelist1.paginatedData">
+
+                                        <td class="sticky-col lead-col">{{ g.gate }}</td>
+
                                         <td>
-                                            <span class="placeholder col-10 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                            <button class="btn-danger">
+                                                Delete Gate
+                                            </button>
                                         </td>
-                                        <td>
-                                            <span class="placeholder col-8 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                        </td>
-                                        <td>
-                                            <span class="placeholder col-6 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                        </td>
-                                        <td>
-                                            <span class="placeholder col-7 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                        </td>
-                                        <td>
-                                            <span class="placeholder col-5 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                        </td>
-                                        <td>
-                                            <span class="placeholder col-3 placeholder-glow"
-                                                style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+
+                                    </tr>
+
+                                    <tr *ngIf="Gatelist1.paginatedData.length === 0">
+                                        <td colspan="2" class="no-data">
+                                            No Data Found
                                         </td>
                                     </tr>
-                                </ng-template>
 
+                                </tbody>
                             </table>
+
+                            <!-- SKELETON -->
+                            <ng-template #gateSkeleton>
+                                <tr *ngFor="let i of [1,2,3]" style="height:50px">
+                                    <td class="sticky-col lead-col">
+                                        <span class="placeholder col-6"></span>
+                                    </td>
+                                    <td><span class="placeholder col-4"></span></td>
+                                </tr>
+                            </ng-template>
+
                         </div>
                     </div>
+
                 </div>
             </div>
-            <!-- <div *ngIf="propertylist1" class="pagination-container regular-font">
-            <p class="pagination-info">
-                Showing {{ propertylist1.startIndex + 1 }} to {{ propertylist1.endIndex + 1 }} of {{
-                propertylist1.totalData }} entries
-            </p>
-
-            <ul class="pagination">
-                <li>
-                    <button [disabled]="propertylist1.currentPage === 1" (click)="propertylist1.prevPage()"
-                        class="page-btn arrow-btn">
-                        <i class="fa-solid fa-angle-left"></i>
-                    </button>
-                </li>
-
-                <li>
-                    <span class="page-btn active">
-                        {{ propertylist1.currentPage }}
-                    </span>
-                </li>
-
-                <li>
-                    <button [disabled]="propertylist1.currentPage === propertylist1.totalPages"
-                        (click)="propertylist1.nextPage()" class="page-btn arrow-btn">
-                       <i class="fa-solid fa-angle-right"></i>
-                    </button>
-                </li>
-            </ul>
-        </div> -->
         </div>
-    </div>
 
 </section>

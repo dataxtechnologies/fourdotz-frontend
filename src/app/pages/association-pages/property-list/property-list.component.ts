@@ -5,7 +5,7 @@ import { AddPropertyComponent } from '../../../modals/add-property/add-property.
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { TableService } from '../../../services/tableservice.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 
 @Component({
@@ -21,13 +21,22 @@ export class PropertyListComponent {
   tableLoading: boolean = true;
   pages: any;
   associationId: any;
+  filterForm !: FormGroup
 
   constructor(
     private ModalService: ModalService,
     private route: Router,
     private apiService: ApiserviceService,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private fb: FormBuilder
   ) {
+
+    this.filterForm = this.fb.group({
+  search: [''],
+  propertyType: ['']
+});
+
+
     this.propertylist1 = new TableService();
     this.propertylist1.initialize(this.propertylist2, 12);
   }
@@ -50,7 +59,13 @@ export class PropertyListComponent {
         this.getpropertiesdata();
       }
     });
+
+    
   }
+
+  resetFilters() {
+  this.filterForm.reset();
+}
 
   Addproperty() {
     this.ModalService.open(AddPropertyComponent, {

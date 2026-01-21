@@ -1,130 +1,145 @@
 <section>
     <div>
+
+        <!-- HEADER -->
         <div class="container header-cont">
             <div class="head-cont">
                 <h2>Pre Visitors List</h2>
             </div>
-            <div>
-                <!-- <button class="btn-add" (click)="Addproperty()">+ Add Properties</button> -->
-            </div>
         </div>
+
+        <!-- TABLE -->
         <div class="container">
-
             <div class="item">
-                <div class="table-cont">
-                    <div class="table-container">
-                        <table class="styled-table">
-                            <thead>
-                                <tr>
-                                    <th class="medium-font">Visitor Details</th>
-                                    <th class="medium-font">Property No.</th>
-                                    <th class="medium-font">Resident Details</th>
-                                    <th class="medium-font">Purpose</th>
-                                    <th class="medium-font">Status</th>
-                                    <th class="medium-font">Action</th>
-                                </tr>
-                            </thead>
 
-                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                                <ng-container *ngIf="spotvisitorlist2?.length === 0; else datashow">
-                                    <tr>
-                                        <td colspan="7" class="regular-font" style="text-align: center; color: gray;">
-                                             No Data Found
-                                        </td>
+                <div class="new-table-wrapper">
+
+                    <!-- SCROLL -->
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
+
+                            <table class="new-table">
+
+                                <!-- HEADER -->
+                                <thead>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Visitor Details</th>
+                                        <th>Property No.</th>
+                                        <th>Resident Details</th>
+                                        <th>Purpose</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                        <th>View</th>
                                     </tr>
-                                </ng-container>
+                                </thead>
 
-                                <ng-template #datashow>
+                                <!-- BODY -->
+                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                                    <!-- DATA -->
                                     <tr *ngFor="let item of spotVisitorlist1.paginatedData">
-                                        <td data-label="Property Name"><div class="visitor-details">
-                                            <span class="property-name">{{ item.visitor_no }}</span>
-                                            <div class="visitor-data">
-                                                <span>{{ item.visitor_name }}</span> | <span>{{ item.visitor_mobile }}</span>
+
+                                        <!-- STICKY -->
+                                        <td class="sticky-col lead-col">
+                                            <div class="visitor-details">
+                                                <span class="property-name">{{ item.visitor_no }}</span>
+                                                <div class="visitor-data">
+                                                    <span>{{ item.visitor_name }}</span> |
+                                                    <span>{{ item.visitor_mobile }}</span>
+                                                </div>
                                             </div>
-                                        </div></td>
-                                        <td data-label="Email">{{ item.property_no }}</td>
-                                        <td data-label="Phone"><div class="visitor-details">
-                                            <span class="property-name">{{ item.resident_name }}</span>
-                                            <div class="visitor-data">
-                                                <span>{{ item.resident_mobile }}</span> | <span>{{ item.resident_type }}</span>
-                                            </div>
-                                        </div></td>
-                                        <td data-label="Property Type">{{ item.purpose_of_visit }}</td>
-                                        <td data-label="Invitation Status">
-                                            {{ item.visitor_status}}
                                         </td>
-                                        <td (click)="VisitorExit(item.visitor_no)">
-                                            <button  class="action-btn">
-                                                Exit
+
+                                        <td>{{ item.property_no }}</td>
+
+                                        <td>
+                                            <div class="visitor-details">
+                                                <span class="property-name">{{ item.resident_name }}</span>
+                                                <div class="visitor-data">
+                                                    <span>{{ item.resident_mobile }}</span> |
+                                                    <span>{{ item.resident_type }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>{{ item.purpose_of_visit }}</td>
+
+                                        <td>{{ item.visitor_status }}</td>
+
+                                        <!-- EXIT -->
+                                        <td>
+                                            <button class="action-btn" [disabled]="item.visitor_status === 'exited'"
+                                                (click)="item.visitor_status !== 'exited' && VisitorExit(item.visitor_no)">
+                                                {{ item.visitor_status === 'exited' ? 'Exited' : 'Exit' }}
                                             </button>
                                         </td>
+
+                                        <!-- VIEW -->
+                                        <td (click)="visitorView(item)">
+                                            <i class="fa-regular fa-eye" style="font-size:18px"></i>
+                                        </td>
+
                                     </tr>
-                                </ng-template>
-                            </tbody>
+
+                                    <!-- NO DATA -->
+                                    <tr *ngIf="spotVisitorlist1.paginatedData.length === 0">
+                                        <td colspan="7" style="text-align:center;color:gray;font-weight:600;">
+                                            No Data Found
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <!-- SKELETON -->
                             <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
-                                    <td>
-                                        <span class="placeholder col-10 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-8 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-6 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-7 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-5 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
-                                    <td>
-                                        <span class="placeholder col-3 placeholder-glow"
-                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                    </td>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                                    <td class="sticky-col lead-col"><span class="placeholder col-10"></span></td>
+                                    <td><span class="placeholder col-8"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-7"></span></td>
+                                    <td><span class="placeholder col-5"></span></td>
+                                    <td><span class="placeholder col-3"></span></td>
+                                    <td><span class="placeholder col-3"></span></td>
                                 </tr>
                             </ng-template>
 
-                        </table>
+                        </div>
                     </div>
+
+                    <!-- PAGINATION -->
+                    <div class="crm-pagination" *ngIf="spotVisitorlist1">
+                        <div class="regular-font">
+                            Showing
+                            <span class="medium-font">{{ spotVisitorlist1.startIndex + 1 }}</span>
+                            to
+                            <span class="medium-font">{{ spotVisitorlist1.endIndex + 1 }}</span>
+                            of
+                            <span class="medium-font">{{ spotVisitorlist1.totalData }}</span>
+                            entries
+                        </div>
+
+                        <div class="d-flex gap-3 regular-font">
+                            <button class="nav-btn" (click)="spotVisitorlist1.prevPage()"
+                                [disabled]="spotVisitorlist1.currentPage === 1">
+                                ‹ Prev
+                            </button>
+
+                            <button class="page-btn active">
+                                {{ spotVisitorlist1.currentPage }}
+                            </button>
+
+                            <button class="nav-btn" (click)="spotVisitorlist1.nextPage()"
+                                [disabled]="spotVisitorlist1.currentPage === spotVisitorlist1.totalPages">
+                                Next ›
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
         </div>
-        <div *ngIf="spotVisitorlist1" class="pagination-container regular-font">
-            <p class="pagination-info">
-                Showing {{ spotVisitorlist1.startIndex + 1 }} to {{ spotVisitorlist1.endIndex + 1 }} of {{
-                spotVisitorlist1.totalData }} entries
-            </p>
 
-            <ul class="pagination">
-                <!-- First Page -->
-                <li>
-                    <button [disabled]="spotVisitorlist1.currentPage === 1" (click)="spotVisitorlist1.prevPage()"
-                        class="page-btn arrow-btn">
-                        <i class="fa-solid fa-angle-left"></i>
-                    </button>
-                </li>
-
-                <!-- Current Page -->
-                <li>
-                    <span class="page-btn active">
-                        {{ spotVisitorlist1.currentPage }}
-                    </span>
-                </li>
-
-                <!-- Next Page -->
-                <li>
-                    <button [disabled]="spotVisitorlist1.currentPage === spotVisitorlist1.totalPages"
-                        (click)="spotVisitorlist1.nextPage()" class="page-btn arrow-btn">
-                       <i class="fa-solid fa-angle-right"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
     </div>
 </section>

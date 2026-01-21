@@ -1,14 +1,16 @@
-import { Component, HostListener } from '@angular/core';
-import { SidebarItem, SIDEBAR_ITEMS } from '../../data/sidebar';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   Router,
   NavigationEnd,
-  RouterOutlet,
+  RouterLink,
   RouterModule,
+  RouterOutlet,
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
+
+import { SidebarItem, SIDEBAR_ITEMS } from '../../data/sidebar';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from 'ngx-modal-ease';
@@ -21,56 +23,77 @@ import { OwnerServiceService } from '../../services/owner/owner-service.service'
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     FormsModule,
-    RouterOutlet,
+    ReactiveFormsModule,
+    RouterLink,
     RouterModule,
+    RouterOutlet,
   ],
   templateUrl: './dashboard-layout.component.html',
   styleUrl: './dashboard-layout.component.css',
 })
-export class DashboardLayoutComponent {
+export class DashboardLayoutComponent implements OnInit {
+  /* ===============================
+     SIDEBAR DATA
+  =============================== */
   sidebarItems: SidebarItem[] = SIDEBAR_ITEMS;
-  sidebarClosed = false;
   currentRoute = '';
-  loadingUserData = false;
-  showFooter = false;
-  footerTimeout: any;
 
+  /* ===============================
+     SIDEBAR STATE
+  =============================== */
+  asidebarClosed = false;
+  isTabletOrMobile = false;
+
+  /* ===============================
+     USER PROFILE DROPDOWN
+  =============================== */
+  profileMenuOpen = false;
+
+  /* ===============================
+     FOOTER
+  =============================== */
+  currentYear: number = new Date().getFullYear();
+
+  /* ===============================
+     USER DATA
+  =============================== */
   user_type = localStorage.getItem('user_type');
-  user_id = localStorage.getItem('user_id');
   access_token = localStorage.getItem('access_token');
+  user_id = localStorage.getItem('user_id');
+
+  loadingUserData = false;
 
   constructor(
     private router: Router,
     private apiService: ApiserviceService,
     private toastr: ToastrService,
     private modalService: ModalService,
-    private ownerService: OwnerServiceService
+    private ownerService: OwnerServiceService,
   ) {
-    // 🔥 Route tracking + submenu auto-open
+    /* CLOSE SIDEBAR ON ROUTE CHANGE (MOBILE) */
     this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.currentRoute = event.urlAfterRedirects;
+  .pipe(filter((event) => event instanceof NavigationEnd))
+  .subscribe(() => {
+    this.syncSidebarWithRoute();
 
-        this.sidebarItems.forEach((item) => {
-          if (item.children) {
-            item.open = item.children.some(
-              (child) => child.route === this.currentRoute
-            );
-          }
-        });
-      });
+    if (this.isTabletOrMobile) {
+      this.asidebarClosed = true;
+    }
+  });
   }
 
+  /* ===============================
+     INIT
+  =============================== */
   ngOnInit(): void {
     if (!this.access_token || !this.user_type) {
-      this.clearSessionAndRedirect('Session invalid. Please log in.');
+      this.clearSessionAndRedirect();
       return;
     }
 
     this.getUserData(this.user_type);
+    this.adjustSidebarForScreen();
 
     this.ownerService.OwnerUpiIdUpdatedStatus$.subscribe((updated) => {
       if (updated) {
@@ -78,106 +101,118 @@ export class DashboardLayoutComponent {
       }
     });
 
-    this.adjustSidebarForScreen();
+    this.syncSidebarWithRoute();
   }
 
-  // ✅ Sidebar toggle
-  toggleSidebar() {
-    this.sidebarClosed = !this.sidebarClosed;
-
-    if (this.sidebarClosed) {
-      this.sidebarItems.forEach((item) => (item.open = false));
-    }
-  }
-
-  // ✅ FIXED HostListener (NO ERROR)
+  /* ===============================
+     RESPONSIVE
+  =============================== */
   @HostListener('window:resize')
-  onResize() {
+  onResize(): void {
     this.adjustSidebarForScreen();
   }
 
-  adjustSidebarForScreen() {
-    this.sidebarClosed = window.innerWidth < 1024;
-  }
-
-  // ✅ ONE submenu at a time
-  toggleSubmenu(clickedItem: SidebarItem) {
-    this.sidebarItems.forEach((item) => {
-      if (item !== clickedItem) {
-        item.open = false;
-      }
-    });
-
-    clickedItem.open = !clickedItem.open;
-  }
-
-  @HostListener('window:scroll')
-  onWindowScroll(): void {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const windowHeight = window.innerHeight;
-    const docHeight = document.documentElement.scrollHeight;
-
-    const isNearBottom = windowHeight + scrollTop + 100 >= docHeight;
-
-    if (isNearBottom) {
-      clearTimeout(this.footerTimeout);
-      this.showFooter = true;
+  adjustSidebarForScreen(): void {
+    if (window.innerWidth < 1280) {
+      this.isTabletOrMobile = true;
+      this.asidebarClosed = true;
     } else {
-      clearTimeout(this.footerTimeout);
-      this.footerTimeout = setTimeout(() => {
-        this.showFooter = false;
-      }, 1000);
+      this.isTabletOrMobile = false;
+      this.asidebarClosed = false;
     }
   }
 
-  profileredirect() {
-    this.router.navigateByUrl('Account/profile');
+  toggleAsidebar(): void {
+    this.asidebarClosed = !this.asidebarClosed;
   }
 
-  logout() {
-    this.apiService.logoutApi<any>().subscribe({
-      next: (res) => {
-        this.clearSessionAndRedirect(res?.message || 'Logged out');
-      },
-      error: () => {
-        this.clearSessionAndRedirect();
-      },
+  closeAsidebar(): void {
+    this.asidebarClosed = true;
+  }
+
+  /* ===============================
+     SIDEBAR LOGIC (IMPORTANT)
+  =============================== */
+  toggleSubmenuExclusive(item: SidebarItem): void {
+    this.sidebarItems.forEach((i) => {
+      if (i !== item) i.open = false;
     });
+    item.open = !item.open;
   }
 
-  getUserData(type: any) {
-    this.loadingUserData = true;
+  closeAllSubmenus(): void {
+    this.sidebarItems.forEach((i) => (i.open = false));
+  }
 
-    this.apiService.UserInfo<any>(type).subscribe({
+  /* ===============================
+     API / USER
+  =============================== */
+  getUserData(role: any): void {
+    this.apiService.UserInfo<any>(role).subscribe({
       next: (res) => {
         if (res?.success) {
-          localStorage.setItem('userdata', JSON.stringify(res.data));
+          const userdata = res.data;
+          localStorage.setItem('userdata', JSON.stringify(userdata));
+
+          if (role === 'association' && userdata.document_uploaded === false) {
+            this.router.navigateByUrl('/onboarding/user-data');
+          }
+
+          if (
+            (role === 'owner' || role === 'tenant') &&
+            userdata.upi_submit_status === false
+          ) {
+            this.openUPIModal();
+          }
         }
-        this.loadingUserData = false;
       },
-      error: () => (this.loadingUserData = false),
     });
   }
 
-  private clearSessionAndRedirect(message: string = 'Session expired') {
+  /* ===============================
+     PROFILE / LOGOUT
+  =============================== */
+  profileredirect(): void {
+    this.router.navigateByUrl('/Account/profile');
+  }
+
+  logoutmodal(): void {
+    this.modalService.open(LogoutModalComponent, {
+      modal: { enter: 'enter-going-down 0.3s', leave: 'fade-out 0.4s' },
+      overlay: { leave: 'fade-out 0.4s' },
+      actions: { click: false, escape: false },
+    });
+  }
+
+  openUPIModal(): void {
+    this.modalService.open(AddUPIIdComponent, {
+      modal: { enter: 'enter-going-down 0.3s', leave: 'fade-out 0.4s' },
+      overlay: { leave: 'fade-out 0.4s' },
+      actions: { click: false, escape: false },
+    });
+  }
+
+  clearSessionAndRedirect(message: string = 'Session expired'): void {
     localStorage.clear();
     this.toastr.info(message, 'Info');
     this.router.navigateByUrl('/auth/sign-in');
   }
 
-  logoutmodal() {
-    this.modalService.open(LogoutModalComponent, {
-      modal: { enter: 'enter-going-down 0.3s', leave: 'fade-out 0.5s' },
-      overlay: { leave: 'fade-out 0.5s' },
-      actions: { click: false, escape: false },
-    });
-  }
 
-  UPIidAddModal() {
-    this.modalService.open(AddUPIIdComponent, {
-      modal: { enter: 'enter-going-down 0.3s', leave: 'fade-out 0.5s' },
-      overlay: { leave: 'fade-out 0.5s' },
-      actions: { click: false, escape: false },
-    });
-  }
+  private syncSidebarWithRoute(): void {
+  const currentUrl = this.router.url;
+
+  this.sidebarItems.forEach((item) => {
+    if (item.children && item.allowedRole === this.user_type) {
+      // check if any child route matches
+      const hasActiveChild = item.children.some((child) =>
+        currentUrl.startsWith(child.route!)
+      );
+
+      item.open = hasActiveChild;
+    } else {
+      item.open = false;
+    }
+  });
+}
 }
