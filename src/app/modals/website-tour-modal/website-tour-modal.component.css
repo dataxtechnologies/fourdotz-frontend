@@ -1,0 +1,287 @@
+/* ================================
+   OUTER WRAPPER
+================================ */
+.tour-backdrop-top {
+    width: 100% !important;
+    height: 80vh !important;
+}
+
+/* ================================
+   BACKDROP
+================================ */
+.tour-backdrop {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================================
+   MODAL
+================================ */
+.tour-modal {
+    width: 1000px;
+    max-width: 100%;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+}
+
+/* ================================
+   HEADER
+================================ */
+.tour-header {
+    padding: 18px 28px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #ccc;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tour-header h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.step-count {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* ================================
+   BODY LAYOUT
+================================ */
+.tour-body {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    min-height: 420px;
+}
+
+/* ================================
+   IMAGE SIDE
+================================ */
+.tour-image {
+    background: #FFFFFF;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tour-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* ================================
+   CONTENT SIDE
+================================ */
+.tour-content {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tour-content h3 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.tour-content p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #475569;
+    margin-bottom: 26px;
+}
+
+/* ================================
+   PROGRESS BAR
+================================ */
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 28px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary-color2);
+    transition: width 0.4s ease;
+}
+
+/* ================================
+   ACTION BUTTONS
+================================ */
+.tour-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.btn {
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn.primary {
+    background: var(--primary-color1);
+    color: #fff;
+}
+
+.btn.secondary {
+    background: #e5e7eb;
+    color: #1f2933;
+}
+
+.btn.success {
+    background: var(--primary-color1);
+    color: #fff;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* ================================
+   ANIMATION
+================================ */
+.fade-slide {
+    animation: fadeSlideIn 0.5s ease forwards;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    .tour-body {
+        grid-template-columns: 1fr;
+    }
+
+    .tour-image {
+        display: none;
+    }
+
+    .tour-modal {
+        width: 95%;
+    }
+}
+
+
+
+/* ================================
+   CAROUSEL
+================================ */
+.carousel {
+  position: relative;
+  width: 100%;
+}
+
+.carousel-image {
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  animation: slideFade 0.4s ease;
+}
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ================================
+   ARROWS
+================================ */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.carousel-btn.left {
+  left: 10px;
+}
+
+.carousel-btn.right {
+  right: 10px;
+}
+
+.carousel-btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ================================
+   DOTS
+================================ */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.carousel-dots span {
+  width: 8px;
+  height: 8px;
+  background: #cbd5e1;
+  border-radius: 50%;
+}
+
+.carousel-dots span.active {
+  background: var(--primary-color2);
+}

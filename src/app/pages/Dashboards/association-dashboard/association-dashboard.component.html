@@ -1,0 +1,260 @@
+<section>
+
+
+    <div class="parent">
+        <!-- CARD 1 -->
+        <div class="div1 stat-card green">
+            <div class="card-header">
+                <span>Total Properties</span>
+                <button class="icon-btn1" (click)="gotopropertylist()">↗</button>
+            </div>
+            <h2>{{ dashboarddata.total_properties }}</h2>
+
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="div2 stat-card">
+            <div class="card-header">
+                <span>Total Residents</span>
+                <button class="icon-btn" (click)="gotoResidentlist()">↗</button>
+            </div>
+            <h2>{{ dashboarddata.owner_count }}</h2>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="div3 stat-card">
+            <div class="card-header">
+                <span>Total Open Requests</span>
+                <button class="icon-btn" (click)="gotoRequestlist()">↗</button>
+            </div>
+            <h2>{{ dashboarddata.tenant_count }}</h2>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="div4 stat-card">
+            <div class="card-header">
+                <span>Unpaid Maintenance</span>
+                <button class="icon-btn" (click)="gotomaintenancelist()">↗</button>
+            </div>
+            <h2>{{ dashboarddata.paid_invoices }}</h2>
+        </div>
+        <div class="div5 table-card">
+            <div class="d-flex justify-content-between align-content-center mb-1 table-hhh">
+                <h5>Maintenance list</h5>
+                <button class="regular-font"  (click)="gotomaintenancelist()">↗ view all</button>
+            </div>
+            <div class="table-scroll-wrapper">
+                <div class="table-scroll">
+
+                    <table class="new-table">
+
+                        <!-- HEADER -->
+                        <thead>
+                            <tr class="medium-font">
+                                <th class="sticky-col lead-col">Amount</th>
+                                <th>Resident Name</th>
+                                <th>Resident Type</th>
+                                <th>Date</th>
+                                <th>Invoice Type</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <!-- BODY -->
+                        <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                            <!-- DATA -->
+                            <tr *ngFor="let item of MaintenanceList1.paginatedData">
+
+                                <td class="sticky-col lead-col">
+                                    {{ item.total_amount | currency:'INR':'symbol' }}
+                                </td>
+
+                                <td>{{ item.resident_name }}</td>
+                                <td>{{ item.resident_type }}</td>
+                                <td>{{ item.created_time.$date | date:'dd-MMM-yyyy' }}</td>
+                                <td>{{ item.invoice_type }}</td>
+
+                                <!-- STATUS -->
+                                <td>
+                                    <ng-container *ngIf="item.payment_status; else unpaid">
+                                        <span class="status paid">Paid</span>
+                                    </ng-container>
+
+                                    <ng-template #unpaid>
+                                        <span class="status" [ngClass]="{
+                                overdue: isOverdue(item.created_time.$date),
+                                pending: !isOverdue(item.created_time.$date)
+                              }">
+                                            {{ isOverdue(item.created_time.$date) ? 'Overdue' : 'Pending' }}
+                                        </span>
+                                    </ng-template>
+                                </td>
+
+
+                            </tr>
+
+                            <!-- NO DATA -->
+                            <tr *ngIf="MaintenanceList1.paginatedData.length === 0">
+                                <td colspan="7" class="no-data-cell">
+                                    <div class="no-data">
+                                        <img src="assets/images/no-data-found.png" alt="No data" />
+                                        <p>No records found</p>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <!-- SKELETON -->
+                    <ng-template #tableSkeleton>
+                        <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                            <td class="sticky-col lead-col"><span class="placeholder col-10"></span></td>
+                            <td><span class="placeholder col-8"></span></td>
+                            <td><span class="placeholder col-6"></span></td>
+                            <td><span class="placeholder col-7"></span></td>
+                            <td><span class="placeholder col-5"></span></td>
+                            <td><span class="placeholder col-3"></span></td>
+                            <td><span class="placeholder col-2"></span></td>
+                        </tr>
+                    </ng-template>
+
+                </div>
+            </div>
+        </div>
+        <div class="div6 announcement-card">
+
+            <div class="announcement-header table-hhh">
+                <h3>Announcement</h3>
+                 <button class="regular-font"  (click)="gotomaintenancelist()">↗ view all</button>
+            </div>
+
+            <!-- LIST -->
+            <div class="announcement-list" *ngIf="posts.length > 0; else noAnnouncement">
+
+                <div class="announcement-item" *ngFor="let post of posts">
+                    <div class="item-left">
+                        <h4>
+                            {{ post.title }}
+                            <span class="date-time">
+                                {{ formatDateTime(post.created_at) }}
+                            </span>
+                        </h4>
+
+                        <p class="truncate">
+                            {{ sliceText(post.description, 200) }}
+                        </p>
+                    </div>
+
+                    <div class="item-right">›</div>
+                </div>
+
+            </div>
+
+            <!-- NO DATA -->
+            <ng-template #noAnnouncement>
+                <div class="no-data">
+                    <img src="assets/images/no-data-found.png" alt="No announcements" />
+                    <p>No announcements found</p>
+                </div>
+            </ng-template>
+
+        </div>
+        <div class="div7 table-card">
+            <div class="d-flex justify-content-between align-content-center mb-1 table-hhh">
+                <h5>Requests list</h5>
+                <button class="regular-font"  (click)="gotoRequestlist()">↗ view all</button>
+            </div>
+            <div class="table-scroll-wrapper">
+                <div class="table-scroll">
+
+                    <table class="new-table">
+
+                        <!-- TABLE HEADER -->
+                        <thead>
+                            <tr class="medium-font">
+                                <th class="sticky-col lead-col">Property No.</th>
+                                <th>Request Title</th>
+                                <th>Resident Name</th>
+                                <th>Resident Type</th>
+                                <th>Mobile</th>
+                                <th>Work Status</th>
+                            </tr>
+                        </thead>
+
+                        <!-- TABLE BODY -->
+                        <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                            <!-- DATA -->
+                            <tr *ngFor="let req of RequestList1.paginatedData">
+
+                                <!-- STICKY COL -->
+                                <td class="sticky-col lead-col">
+                                    {{ req.property_no }}
+                                </td>
+
+                                <!-- TITLE -->
+                                <td>
+                                    {{ req.title?.length > 20
+                                    ? (req.title | slice:0:20) + '...'
+                                    : req.title }}
+                                </td>
+
+                                <!-- RESIDENT -->
+                                <td>{{ req.resident_name }}</td>
+
+                                <td>{{ req.user_type | titlecase }}</td>
+
+                                <td>{{ req.resident_mobile }}</td>
+
+                                <!-- STATUS -->
+                                <td>
+                                    <span class="status-pill" [ngClass]="req.work_status">
+                                        {{ req.work_status | titlecase }}
+                                    </span>
+                                </td>
+
+
+
+                            </tr>
+
+                            <!-- NO DATA -->
+                            <tr *ngIf="RequestList1.paginatedData.length === 0">
+                                <td colspan="7" style="text-align:center;color:gray;font-weight:600;height:60px;">
+                                    No Request Found
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    <!-- SKELETON -->
+                    <ng-template #tableSkeleton>
+                        <tr *ngFor="let i of [1,2,3,4,5]" style="height:55px;">
+                            <td class="sticky-col lead-col">
+                                <span class="placeholder col-6"></span>
+                            </td>
+                            <td><span class="placeholder col-8"></span></td>
+                            <td><span class="placeholder col-6"></span></td>
+                            <td><span class="placeholder col-4"></span></td>
+                            <td><span class="placeholder col-5"></span></td>
+                            <td><span class="placeholder col-4"></span></td>
+                            <td><span class="placeholder col-3"></span></td>
+                        </tr>
+                    </ng-template>
+
+                </div>
+            </div>
+        </div>
+        <div class="div8 stat-card">
+            <div class="card-header">
+                <span>Paid Maintenance</span>
+                <button class="icon-btn"  (click)="gotomaintenancelist()">↗</button>
+            </div>
+            <h2>{{unpaidmaintenance }}</h2>
+
+        </div>
+    </div>
+
+</section>

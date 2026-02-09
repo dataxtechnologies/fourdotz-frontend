@@ -7,25 +7,52 @@
                 <h2>Residents List</h2>
             </div>
             <div class="mt-4">
-                <button class="btn-add" (click)="AddResident(unowned_properties)">
+                <button class="btn-add" id="tour-add-resident" (click)="AddResident(unowned_properties)">
                     + Add Residents
                 </button>
             </div>
         </div>
 
+        <div class="main-head-cont mt-3">
+            <p class="text-muted mb-0 regular-font">
+                This is the Residents List page where you manage all residents.
+                You can add, edit, and view residents here.
+            </p>
+            <button class="tout-btn" *ngIf="Residentlist1.paginatedData.length > 0" (click)="startTour()">
+                🎯 Take a Tour
+            </button>
+        </div>
+
         <!-- TABLE CARD -->
-        <div class="container">
+        <div class="container" id="tour-resident-list">
             <div class="item">
 
                 <div class="new-table-wrapper">
 
-                    <!-- FILTERS (optional – keep consistent) -->
-                    <!-- <form [formGroup]="filterForm">
+                    <!-- 🔽 FILTERS ADDED (NO DESIGN CHANGE) -->
+                    <form [formGroup]="filterForm">
                         <div class="filters">
 
                             <div class="search-box">
-                                <input type="text" placeholder="Search Resident / Property" formControlName="search"
+                                <input type="text" placeholder="Search Name / Email / Property" formControlName="search"
                                     class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <select formControlName="propertyType" class="regular-font">
+                                    <option value="">All Property Types</option>
+                                    <option value="Apartment">Apartment</option>
+                                    <option value="Villa">Villa</option>
+                                    <option value="Commercial">Commercial</option>
+                                </select>
+                            </div>
+
+                            <div class="search-box">
+                                <select formControlName="residentType" class="regular-font">
+                                    <option value="">All Residents</option>
+                                    <option value="owner">Owner</option>
+                                    <option value="tenant">Tenant</option>
+                                </select>
                             </div>
 
                             <button type="button" class="filter-reset-btn" (click)="resetFilters()">
@@ -33,9 +60,9 @@
                             </button>
 
                         </div>
-                    </form> -->
+                    </form>
+                    <!-- 🔼 END FILTER -->
 
-                    <!-- SCROLL WRAPPER -->
                     <div class="table-scroll-wrapper">
                         <div class="table-scroll">
 
@@ -58,10 +85,8 @@
                                 <!-- BODY -->
                                 <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
 
-                                    <!-- DATA -->
-                                    <tr *ngFor="let item of Residentlist1.paginatedData">
+                                    <tr *ngFor="let item of Residentlist1.paginatedData; let i = index">
 
-                                        <!-- STICKY COLUMN -->
                                         <td class="sticky-col lead-col">
                                             <div class="lead-info">
                                                 <div>
@@ -94,20 +119,27 @@
                                         <td>{{ item.resident_type || '--' }}</td>
 
                                         <td (click)="viewresident(item._id)">
-                                            <button class="table-btn">View</button>
+                                            <button class="table-btn" id="tour-view-resident">View</button>
                                         </td>
 
                                         <td (click)="SendmailAgain(
                         item.resident_type === 'tenant'
                           ? item.tenant_email
-                          : item.owner_email
+                          : item.owner_email,
+                        i
                       )">
-                                            <span class="table-btn">Send Mail</span>
+
+                                            <span class="table-btn" style="cursor: pointer;"
+                                                *ngIf="!loadingIndexMap[i]">
+                                                Send Mail
+                                            </span>
+
+                                            <span *ngIf="loadingIndexMap[i]" class="loader"></span>
+
                                         </td>
 
                                     </tr>
 
-                                    <!-- NO DATA -->
                                     <tr *ngIf="Residentlist1.paginatedData.length === 0">
                                         <td colspan="8" class="regular-font" style="text-align:center;color:gray;">
                                             No Data Found

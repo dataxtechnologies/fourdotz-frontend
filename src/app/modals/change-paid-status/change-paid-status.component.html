@@ -1,4 +1,4 @@
-<section class="form-section container">
+<section class="form-section ">
     <div class="form-header">
         <h3>Invoice Paid Status Change</h3>
         <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
@@ -14,7 +14,7 @@
         <!-- ✅ Payment Mode Selection -->
         <div class="inp-cont">
             <label class="medium-font" for="paymentMode">Select Payment Mode:</label>
-            <select id="paymentMode" [(ngModel)]="selectedPaymentMode" class="inp-cus select-cus regular-font">
+            <select id="paymentMode" [(ngModel)]="selectedPaymentMode" class="input-custom-style select-cus regular-font">
                 <option value="" disabled selected>Select a payment mode</option>
                 <option value="CASH">Cash</option>
                 <option value="UPI">UPI</option>
@@ -28,7 +28,7 @@
                 To confirm, type <span class="highlight-yellow">CONFIRM</span> below:
             </label>
             <input id="confirmText" type="text" [(ngModel)]="confirmationText"
-                placeholder="Type CONFIRM to confirm payment" class="inp-cus regular-font" />
+                placeholder="Type CONFIRM to confirm payment" class="input-custom-style regular-font" />
         </div>
 
         <!-- ✅ Action Buttons -->

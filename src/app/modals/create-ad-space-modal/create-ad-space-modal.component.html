@@ -1,0 +1,101 @@
+<section class="form-section " [formGroup]="adForm">
+    <div class="form-header">
+        <h3>Create Ad Space</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+
+        <!-- Title -->
+        <div class="inp-cont">
+            <label class="medium-font">Title <span class="required">*</span></label>
+            <input type="text" class="input-custom-style regular-font" placeholder="Enter ad title" formControlName="title" />
+            <small class="error-text regular-font" *ngIf="f['title'].touched && f['title'].invalid">
+                Title is required.
+            </small>
+        </div>
+
+        <!-- Ad Space Type -->
+        <div class="inp-cont">
+            <label class="medium-font">Ad Space Type <span class="required">*</span></label>
+            <select class="input-custom-style regular-font" formControlName="advertisement_space_type">
+                <option value="">Select Type</option>
+                <!-- <option value="web">Web</option> -->
+                <option value="mobile">Mobile</option>
+            </select>
+            <small class="error-text regular-font"
+                *ngIf="f['advertisement_space_type'].touched && f['advertisement_space_type'].invalid">
+                Ad space type is required.
+            </small>
+        </div>
+
+        <!-- Display Area -->
+        <div class="inp-cont">
+            <label class="medium-font">Display Area <span class="required">*</span></label>
+            <select class="input-custom-style regular-font" formControlName="advertisement_display_area">
+                <option value="">Select Area</option>
+                <option value="mobile_header">Mobile Header</option>
+                <option value="mobile_footer">Mobile Footer</option>
+                <option value="mobile_floating">Mobile Floating</option>
+                <option value="mobile_home_page_icon">Mobile Home Page Icon</option>
+                <option value="mobile_homepage_dropdown">Mobile Homepage Dropdown</option>
+            </select>
+            <small class="error-text regular-font"
+                *ngIf="f['advertisement_display_area'].touched && f['advertisement_display_area'].invalid">
+                Display area is required.
+            </small>
+        </div>
+
+        <!-- Description -->
+        <div class="inp-cont">
+            <label class="medium-font">Description <span class="required">*</span></label>
+            <textarea class="input-custom-style regular-font" rows="4" placeholder="Enter description..."
+                formControlName="description"></textarea>
+            <small class="error-text regular-font" *ngIf="f['description'].touched && f['description'].invalid">
+                Description is required.
+            </small>
+        </div>
+
+        <!-- Main Image -->
+        <div class="inp-cont">
+            <label class="medium-font">Main Image <span class="required">*</span></label>
+            <input type="file" class="input-custom-style regular-font" (change)="onMainImageSelected($event)" accept="image/*" />
+
+            <div class="preview-container" *ngIf="mainImagePreview">
+                <div class="preview-item">
+                    <img [src]="mainImagePreview" />
+                    <span class="remove-btn" (click)="removeMainImage()">×</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Images -->
+        <div class="inp-cont">
+            <label class="medium-font">Additional Images</label>
+            <input type="file" class="input-custom-style regular-font" (change)="onImagesSelected($event)" multiple
+                accept="image/*" />
+
+            <div class="preview-container" *ngIf="previewImages.length > 0">
+                <div class="preview-item" *ngFor="let img of previewImages; let i = index">
+                    <img [src]="img" />
+                    <span class="remove-btn" (click)="removeImage(i)">×</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="popup-actions">
+            <button class="cancel-btn" type="button" (click)="closeModal()">Cancel</button>
+
+            <button class="delete-btn" type="button" (click)="submitAdSpace()" [disabled]="adForm.invalid"
+                *ngIf="!showprocessingbtn">
+                Create
+            </button>
+
+            <button class="delete-btn" type="button" *ngIf="showprocessingbtn" style="cursor:not-allowed;">
+                Creating...
+            </button>
+        </div>
+
+    </div>
+</section>

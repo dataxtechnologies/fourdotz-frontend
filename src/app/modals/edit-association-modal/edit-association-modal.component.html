@@ -1,4 +1,4 @@
-<section class="form-section container">
+<section class="form-section ">
     <div class="form-header">
         <h3>Edit Association</h3>
         <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
@@ -8,13 +8,13 @@
         <form [formGroup]="associationForm" (ngSubmit)="createAssociation()">
             <div class="inp-cont">
                 <label class="medium-font" for="name">Name <span class="required">*</span></label>
-                <input type="text" id="name" class="inp-cus regular-font" placeholder="Enter your Name" formControlName="name">
+                <input type="text" id="name" class="input-custom-style regular-font" placeholder="Enter your Name" formControlName="name">
                 <small *ngIf="isInvalid('name')" class="error-text">Name is required</small>
             </div>
 
             <div class="inp-cont">
                 <label class="medium-font" for="email">Email ID <span class="required">*</span></label>
-                <input type="email" id="email" class="inp-cus regular-font" placeholder="Enter your Email" formControlName="email"
+                <input type="email" id="email" class="input-custom-style regular-font" placeholder="Enter your Email" formControlName="email"
                     readonly>
 
                 <small *ngIf="isInvalid('email')" class="error-text">Valid email is required</small>
@@ -22,7 +22,7 @@
 
             <div class="inp-cont">
                 <label class="medium-font" for="phone">Phone Number <span class="required">*</span></label>
-                <input type="tel" id="phone" class="inp-cus regular-font" placeholder="Enter your Phone Number"
+                <input type="tel" id="phone" class="input-custom-style regular-font" placeholder="Enter your Phone Number"
                     formControlName="phone" maxlength="10" readonly>
                 <!-- <small *ngIf="isInvalid('phone')" class="error-text">Valid 10-digit phone number is required</small> -->
                 <small
@@ -35,7 +35,7 @@
 
             <div class="inp-cont">
                 <label class="medium-font" for="associationName">Association Name <span class="required">*</span></label>
-                <input type="text" id="associationName" class="inp-cus regular-font" placeholder="Enter your Association Name"
+                <input type="text" id="associationName" class="input-custom-style regular-font" placeholder="Enter your Association Name"
                     formControlName="associationName">
                 <small *ngIf="isInvalid('associationName')" class="error-text">Association Name is required</small>
             </div>

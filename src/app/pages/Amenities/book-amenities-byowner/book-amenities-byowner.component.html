@@ -1,0 +1,234 @@
+<section>
+
+     <div class="d-flex align-items-center gap-3">
+           <div class="d-flex align-items-center gap-2" (click)="goback()">
+             <div class="mb-2">
+                <i class="fa-solid fa-arrow-left"></i>
+            </div>
+            <div class="mb-2">
+
+                <Button class="backbtn">Back</Button>
+            </div>
+           </div>
+
+            <div>
+                <h3 class="" style="font-size: 22px;">Book Amenities</h3>
+            </div>
+        </div>
+    <div>
+        <form [formGroup]="bookingForm" (ngSubmit)="submitBooking()">
+
+            <div class="booking-container">
+
+                <!-- LEFT -->
+                <div class="booking-left">
+
+                    <!-- RESOURCE -->
+                    <div class="card">
+                        <h3>Select Resource</h3>
+
+                        <div class="resource-grid">
+
+                            <label class="resource-card" *ngFor="let res of visibleResources"
+                                (click)="selectResource(res)"
+                                [ngClass]="{'active': selectedResource?.resource_id === res.resource_id}">
+
+                                <input type="radio" formControlName="resource" [value]="res.resource_id" />
+
+                                <!-- IMAGE FIXED -->
+                                <img [src]="res.icon" />
+
+                                <p class="regular-font">{{ res.name }}</p>
+
+                            </label>
+
+                        </div>
+
+                        <!-- SHOW MORE -->
+                        <div class="show-more-wrapper" *ngIf="resourcesDetails?.length > visibleCount">
+                            <button class="show-more-btn regular-font" (click)="showMoreResources()">
+                                Show more
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- SLOT -->
+                    <div class="card" *ngIf="showslot">
+                        <h3>Select a Slot</h3>
+                        <p class="today-date regular-font">{{ today | date:'EEEE, dd MMM yyyy' }}</p>
+                        <div class="no-slot regular-font" *ngIf="!generatedSlotsFromApi.length">
+                            No slots found for this date
+                        </div>
+                        <div class="time-row">
+
+                            <label class="time" *ngFor="let slot of generatedSlotsFromApi" [ngClass]="{
+  'active': bookingForm.value.slot === slot.slot_id && 
+            selectedSlotFull?.display === slot.display,
+  'disabled': slot.disabled
+}">
+
+                                <input type="radio" formControlName="slot" [value]="slot.slot_id"
+                                    (change)="onSlotSelect(slot)" [attr.disabled]="slot.disabled ? true : null" />
+
+                                {{ slot.display }}
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <!-- RULES -->
+                    <div class="card" *ngIf="showslot">
+                        <h3>Slot Rules</h3>
+
+                        <div class="guide-items">
+
+                            <div class="guide-card">
+                                <p class="label medium-font">Available Days</p>
+
+                                <h4 *ngIf="isAllDays(slotulesdetails?.[0]?.days_of_week)"
+                                    class="all-days-text regular-font">
+                                    all days available
+                                </h4>
+
+                                <div class="days-pill-container" *ngIf="!isAllDays(slotulesdetails?.[0]?.days_of_week)">
+                                    <span class="day-pill regular-font"
+                                        *ngFor="let day of getDayNames(slotulesdetails?.[0]?.days_of_week)">
+                                        {{ day }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="guide-card">
+                                <p class="label medium-font">Start Time</p>
+                                <h4 class="regular-font">
+                                    {{ slotulesdetails?.[0]?.start_time?.$date | date:'shortTime' }}
+                                </h4>
+                            </div>
+
+                            <div class="guide-card">
+                                <p class="label medium-font">End Time</p>
+                                <h4 class="regular-font">
+                                    {{ slotulesdetails?.[0]?.end_time?.$date | date:'shortTime' }}
+                                </h4>
+                            </div>
+
+                            <div class="guide-card">
+                                <p class="label medium-font">Max Capacity</p>
+                                <h4 class="regular-font">
+                                    {{ slotulesdetails?.[0]?.max_capacity }} persons
+                                </h4>
+                            </div>
+                            <div class="guide-card">
+                                <p class="label medium-font">Slot Duration</p>
+                                <h4 class="regular-font">
+                                    {{ formatDuration(selectedResource?.slot_duration) }}
+                                </h4>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card slide-down" *ngIf="propertiesList.length && selectedSlotFull">
+                        <h3>Select Property</h3>
+
+                        <div class="time-row">
+
+                            <label class="time" *ngFor="let prop of propertiesList"
+                                [ngClass]="{'active': bookingForm.value.property === prop._id}">
+
+                                <input type="radio" formControlName="property" [value]="prop._id" />
+
+                                Property No: {{ prop.property_no }}
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <div class="card slide-down" *ngIf="selectedSlotFull && bookingForm.value.property">
+                        <h3>Booking Person Details</h3>
+
+                        <div class="form-row">
+                            <div>
+                                <label for="name" class="medium-font">Person Name <span
+                                        style="color: red;">*</span></label>
+                                <input type="text" class="input-custom-style regular-font" placeholder="Name"
+                                    formControlName="personName" />
+                            </div>
+
+                            <div>
+                                <label for="Mobile" class="medium-font">Person Mobile Number <span
+                                        style="color: red;">*</span></label>
+                                <input type="text" class="input-custom-style regular-font" placeholder="Mobile"
+                                    formControlName="personMobile" />
+                            </div>
+
+                            <div>
+                                <label for="age" class="medium-font">Person Age <span
+                                        style="color: red;">*</span></label>
+                                <input type="text" class="input-custom-style regular-font" placeholder="Age"
+                                    formControlName="personAge" />
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="booking-right">
+
+                    <div class="summary-card">
+
+                        <h3>Booking Details</h3>
+
+                        <div class="summary-item">
+                            <span class="medium-font">Resource</span>
+                            <strong class="regular-font">
+                                {{ bookingForm.value.name || 'No resource selected' }}
+                            </strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span class="medium-font">Slot</span>
+                            <strong class="regular-font">
+                                {{ selectedSlotFull?.display || 'No slot selected' }}
+                            </strong>
+                        </div>
+
+                        <div class="summary-item">
+                            <span class="medium-font">Amount</span>
+                            <strong class="regular-font">
+                                {{ slotAmount === 'Free' ? 'Free' : ('₹ ' + slotAmount) }}
+                            </strong>
+                        </div>
+
+                        <hr>
+
+                        <div class="summary-item total">
+                            <span class="medium-font">Total</span>
+                            <strong class="regular-font">
+                                {{ slotAmount === 'Free' ? 'Free' : ('₹ ' + slotAmount) }}
+                            </strong>
+                        </div>
+
+                        <button class="pay-btn" type="submit"
+                            [disabled]="!bookingForm.value.resource || !bookingForm.value.slot || !bookingForm.value.property"
+                            *ngIf="!savebtnloading">
+                            Book Now
+                        </button>
+
+                        <button class="pay-btn" type="button" disabled style="cursor: not-allowed;"
+                            *ngIf="savebtnloading">
+                            Processing...
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</section>

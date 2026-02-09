@@ -74,6 +74,21 @@ import { OwnerViewSigningAgreementComponent } from './pages/New-Agreements/owner
 import { OwnerCreatedAgreementListComponent } from './pages/New-Agreements/owner-created-agreement-list/owner-created-agreement-list.component';
 import { OwnerViewAgreementToSendComponent } from './pages/New-Agreements/owner-view-agreement-to-send/owner-view-agreement-to-send.component';
 import { TableComponent } from './pages/Demo-check/table/table.component';
+import { NewAssociationDashboardComponent } from './pages/Dashboards/association-dashboard/association-dashboard.component';
+import { AssociationSlotsManagementComponent } from './pages/Amenities/association-slots-management/association-slots-management.component';
+import { AssociationManageResourcesComponent } from './pages/Amenities/association-manage-resources/association-manage-resources.component';
+import { CreateResourcesInassociationComponent } from './pages/Amenities/create-resources-inassociation/create-resources-inassociation.component';
+import { SetSlotRulesForResourcesInassociationComponent } from './pages/Amenities/set-slot-rules-for-resources-inassociation/set-slot-rules-for-resources-inassociation.component';
+import { CreateSlotResourcesInassociationComponent } from './pages/Amenities/create-slot-resources-inassociation/create-slot-resources-inassociation.component';
+import { ViewResourcesAssociationComponent } from './pages/Amenities/view-resources-association/view-resources-association.component';
+import { ListBookingsInOwnerComponent } from './pages/Amenities/list-bookings-in-owner/list-bookings-in-owner.component';
+import { BookAmenitiesByownerComponent } from './pages/Amenities/book-amenities-byowner/book-amenities-byowner.component';
+import { ViewBookingDetailsComponent } from './pages/Amenities/view-booking-details/view-booking-details.component';
+import { BookAmenitiesBytenantComponent } from './pages/Amenities/book-amenities-bytenant/book-amenities-bytenant.component';
+import { AdSpaceListComponent } from './pages/superadmin-pages/ad-space-list/ad-space-list.component';
+import { ViewQrCodeComponent } from './pages/gate-keeper-pages/view-qr-code/view-qr-code.component';
+import { SpotVisitorListComponent } from './pages/Owner-pages/spot-visitor-list/spot-visitor-list.component';
+import { QrVisitorListComponent } from './pages/Owner-pages/qr-visitor-list/qr-visitor-list.component';
 
 export const routes: Routes = [
   {
@@ -136,6 +151,7 @@ export const routes: Routes = [
     children: [
       { path: 'Dashboard', component: SuperadminDashboardComponent },
       { path: 'Association-list', component: AssociationListComponent },
+      { path: 'Ad-space/list', component: AdSpaceListComponent },
       {
         path: 'view-association/:associationId',
         component: ViewAssociationComponent,
@@ -148,10 +164,16 @@ export const routes: Routes = [
     // canActivate: [authGuard],
     component: DashboardLayoutComponent,
     children: [
-      { path: 'Dashboard', component: AssociationDashboardComponent },
+      { path: 'Dashboard', component: NewAssociationDashboardComponent },
       { path: 'properties-list', component: PropertyListComponent },
       { path: 'residents-list', component: ResidentsListComponent },
       { path: 'Maintenance-list', component: MaintenanceListComponent },
+      { path: 'manage-amenities/resources', component: AssociationManageResourcesComponent },
+      { path: 'manage-amenities/slot-booking', component: AssociationSlotsManagementComponent },
+      { path: 'manage-amenities/resources/create-resources', component: CreateResourcesInassociationComponent },
+      { path: 'manage-amenities/resources/set-slot-rules/:resource_id', component: SetSlotRulesForResourcesInassociationComponent },
+      { path: 'manage-amenities/resources/view-resources-details/:resource_id', component: ViewResourcesAssociationComponent },
+      { path: 'manage-amenities/resources/create-slot-resources', component: CreateSlotResourcesInassociationComponent },
       {
         path: 'manage-helpers/gate-keeper',
         component: GateKeeperGatesComponent,
@@ -192,6 +214,11 @@ export const routes: Routes = [
       { path: 'announcement/owner', component: AnnouncementsPageComponent },
       { path: 'request-management/list', component: ListRequestsUserComponent },
       { path: 'pre-visitor/list', component: PreVisitorListComponent },
+      { path: 'qr-visitor/list', component: QrVisitorListComponent },
+      { path: 'spot-visitor/list', component: SpotVisitorListComponent },
+      { path: 'amenities/list-book-amenities', component: ListBookingsInOwnerComponent },
+      { path: 'amenities/book-amenities/book-now', component: BookAmenitiesByownerComponent },
+      { path: 'amenities/book-amenities/booking-details/:booking_id', component: ViewBookingDetailsComponent },
       {
         path: 'view-properties/:propertiesId',
         component: OwnerViewPropertyComponent,
@@ -217,6 +244,7 @@ export const routes: Routes = [
       { path: 'Rental-invoice-list', component: TenantRentalListComponent },
       { path: 'request-management/list', component: ListRequestsUserComponent },
       { path: 'pre-visitor/list', component: PreVisitorListComponent },
+      { path: 'amenities/book-amenities/book-now', component: BookAmenitiesBytenantComponent },
       {
         path: 'announcement/tenant',
         component: AnnouncementsTenantPageComponent,
@@ -324,6 +352,10 @@ export const routes: Routes = [
       {
         path: 'visitors-management/qr-visitors-list',
         component: GateKeeperQrVisitorComponent,
+      },
+      {
+        path: 'QR/view-qr',
+        component: ViewQrCodeComponent,
       },
     ],
   },

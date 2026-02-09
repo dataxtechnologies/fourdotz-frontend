@@ -58,101 +58,86 @@
             </div>
         </div>
         <div class="div3">
-            <div class="table-cont"> <!-- &#64; -->
-                <div class="table-container">
-                    <table class="styled-table">
+            <div class="table-scroll-wrapper">
+                <div class="table-scroll">
+
+                    <table class="new-table">
+
+                        <!-- HEADER -->
                         <thead>
-                            <tr>
-                                <th class="medium-font">Property No.</th>
-                                <th class="medium-font">Maintenance Amount</th>
-                                <th class="medium-font">Owner Name</th>
-                                <th class="medium-font">Association</th>
-                                <th class="medium-font">Issue Date</th>
-                                <th class="medium-font">Status</th>
-                                <!-- <th class="medium-font">Action</th> -->
+                            <tr class="medium-font">
+                                <th class="sticky-col lead-col">Property No.</th>
+                                <th>Maintenance Amount</th>
+                                <th>Owner Name</th>
+                                <th>Association</th>
+                                <th>Issue Date</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
+
+                        <!-- BODY -->
                         <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-                            <ng-container *ngIf="maintenancelist2?.length === 0; else datashow">
-                                <tr>
-                                    <td colspan="7" class="regular-font" style="text-align: center;  color: gray;">
-                                        No Data Found
-                                    </td>
-                                </tr>
-                            </ng-container>
 
-                            <ng-template #datashow>
-                                <tr *ngFor="let item of maintenancelist1.paginatedData">
-                                    <td data-label="Maintenance Amount">₹{{ item.total_amount }}</td>
-                                    <td data-label="Resident Name">{{ item.resident_name }}</td>
-                                    <td data-label="Resident Type">{{ item.resident_type }}</td>
-                                    <td data-label="Association Name">{{ item.association_name }}</td>
-                                    <td data-label="Date">{{ item.created_time.$date | date: 'dd-MMM-yyyy' }}</td>
+                            <!-- DATA -->
+                            <tr *ngFor="let item of maintenancelist1.paginatedData">
 
-                                    <!-- ✅ Status Column -->
-                                    <td data-label="Status">
-                                        <ng-container *ngIf="item.payment_status; else notPaid">
-                                            <span class="status paid">Paid</span>
-                                        </ng-container>
-                                        <ng-template #notPaid>
-                                            <span class="status" [ngClass]="{
-                                                    overdue: isOverdue(item.created_time.$date),
-                                                    pending: !isOverdue(item.created_time.$date)
-                                                    }">
-                                                {{ isOverdue(item.created_time.$date) ? 'Overdue' : 'Pending' }}
-                                            </span>
-                                        </ng-template>
-                                    </td>
+                                <!-- STICKY COLUMN -->
+                                <td class="sticky-col lead-col">
+                                    {{ item.property_no }}
+                                </td>
 
-                                    <!-- ✅ Conditional Action
-                                    <td data-label="Actions">
-                                        <ng-container *ngIf="!item.payment_status; else viewDetails">
-                                            <button class="pay-btn">Pay Now</button>
-                                        </ng-container>
-                                        <ng-template #viewDetails>
-                                            <i class="fa-solid fa-arrow-up-right-from-square"
-                                                style="cursor: pointer;"></i>
-                                        </ng-template>
-                                    </td> -->
-                                </tr>
-                            </ng-template>
-                        </tbody>
-                        <ng-template #tableSkeleton>
-                            <tr *ngFor="let i of [1,2,3,4,5,6]" style="height: 50px;"> <!-- taller row -->
+                                <td>₹{{ item.total_amount }}</td>
+                                <td>{{ item.resident_name }}</td>
+                                <td>{{ item.association_name }}</td>
+                                <td>{{ item.created_time.$date | date:'dd-MMM-yyyy' }}</td>
+
+                                <!-- STATUS -->
                                 <td>
-                                    <span class="placeholder col-10 placeholder-glow"
-                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    <ng-container *ngIf="item.payment_status; else unpaid">
+                                        <span class="status paid">Paid</span>
+                                    </ng-container>
+
+                                    <ng-template #unpaid>
+                                        <span class="status" [ngClass]="{
+                                overdue: isOverdue(item.created_time.$date),
+                                pending: !isOverdue(item.created_time.$date)
+                              }">
+                                            {{ isOverdue(item.created_time.$date) ? 'Overdue' : 'Pending' }}
+                                        </span>
+                                    </ng-template>
                                 </td>
-                                <td>
-                                    <span class="placeholder col-8 placeholder-glow"
-                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                </td>
-                                <td>
-                                    <span class="placeholder col-6 placeholder-glow"
-                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                </td>
-                                <td>
-                                    <span class="placeholder col-7 placeholder-glow"
-                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                </td>
-                                <td>
-                                    <span class="placeholder col-5 placeholder-glow"
-                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                </td>
-                                <td>
-                                    <span class="placeholder col-3 placeholder-glow"
-                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
-                                </td>
-                                <td>
-                                    <span class="placeholder col-3 placeholder-glow"
-                                        style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+
+                                <!-- ACTION -->
+
+
+                            </tr>
+
+                            <!-- NO DATA -->
+                            <tr *ngIf="maintenancelist1.paginatedData.length === 0">
+                                <td colspan="7" style="text-align:center;color:gray;font-weight:600;">
+                                    No Data Found
                                 </td>
                             </tr>
-                        </ng-template>
+
+                        </tbody>
                     </table>
+
+                    <!-- SKELETON -->
+                    <ng-template #tableSkeleton>
+                        <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                            <td class="sticky-col lead-col"><span class="placeholder col-10"></span></td>
+                            <td><span class="placeholder col-8"></span></td>
+                            <td><span class="placeholder col-6"></span></td>
+                            <td><span class="placeholder col-7"></span></td>
+                            <td><span class="placeholder col-5"></span></td>
+                            <td><span class="placeholder col-3"></span></td>
+                            <td><span class="placeholder col-3"></span></td>
+                        </tr>
+                    </ng-template>
 
                 </div>
             </div>
+
         </div>
     </div>
 </section>

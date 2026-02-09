@@ -1,15 +1,42 @@
 <section>
-    <div>
-
+    <div class="mt-3">
+<div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2 class="mb-1">Tenants List</h2>
+                    </div>
+                    <div>
+                        <button class="btn-add" (click)="addTenant()">+ Add Tenant</button>
+                    </div>
+                </div>
         <!-- HEADER -->
         <div class="container header-cont">
+            
             <div class="head-cont">
-                <h2>Tenants List</h2>
+
+                
+
+                <!-- Para + Button Row -->
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                    <!-- Left: Description -->
+                    <p class="text-muted mb-0 tenant-desc regular-font">
+                        This list shows all tenants assigned to your properties.
+                        You can view tenant details, update records, and manage occupancy information here.
+                    </p>
+
+                    <!-- Right: Tour Button -->
+                    <button class="tout-btn" *ngIf="TenantList2.length > 0" (click)="startTour()">
+                        🎯 Take a Tour
+                    </button>
+
+                </div>
+
             </div>
         </div>
 
+
         <!-- TABLE -->
-        <div class="container">
+        <div class="container" id="tour-tenant-list">
             <div class="item">
 
                 <div class="new-table-wrapper">
@@ -61,12 +88,16 @@
                                     </tr>
 
                                     <!-- NO DATA -->
-                                    <tr *ngIf="TenantList2?.length === 0">
+
+
+                                </tbody>
+
+                                <tbody>
+                                    <tr *ngIf="!TenantList2 || TenantList2.length === 0">
                                         <td colspan="8" style="text-align:center;font-weight:600;color:gray;">
                                             No Data Found
                                         </td>
                                     </tr>
-
                                 </tbody>
                             </table>
 

@@ -125,6 +125,7 @@ export class AssociationOnboardComponent implements OnInit {
         [Validators.required, Validators.pattern('^[0-9]{9,18}$')],
       ],
       account_type: ['', Validators.required],
+      bank_name: ['', Validators.required],
       ifsc_code: [
         '',
         [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')],
@@ -267,6 +268,7 @@ private validateFileSize(
       address: this.inputForm.value.address,
       account_name: this.accountForm.value.account_holder_name,
       account_number: this.accountForm.value.account_number,
+      bank_name: this.accountForm.value.bank_name,
       account_type: this.accountForm.value.account_type,
       ifsc_code: this.accountForm.value.ifsc_code,
       id: this.userData._id,

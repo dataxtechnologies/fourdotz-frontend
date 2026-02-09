@@ -43,7 +43,7 @@ export class VisitorsEntryFormToVisitorComponent implements OnInit {
     this.associationId = this.route.snapshot.paramMap.get('associationId');
     console.log('Association ID:', this.associationId);
 
-    this.listGate()
+    this.getGatelistinQrformExternal(this.associationId)
 
     // Load association properties
     this.ListpropertybasedonAssociationIdtoVisitors();
@@ -158,8 +158,8 @@ export class VisitorsEntryFormToVisitorComponent implements OnInit {
     });
   }
 
-     listGate() {
-    this.apiService.listGate<any>().subscribe({
+     getGatelistinQrformExternal(data : any) {
+    this.apiService.getGatelistinQrformExternal<any>(data).subscribe({
       next: (res) => {
         if (res?.success) {
           this.Gatelist2 = res.data;

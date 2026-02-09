@@ -1,33 +1,43 @@
 <section>
-    <div>
+    <div  id="tour-header">
 
         <!-- HEADER -->
         <div class="container header-cont">
             <div class="head-cont">
                 <h2>Properties List</h2>
             </div>
+
             <div class="mt-4">
-                <button class="btn-add" (click)="Addproperty()">+ Add Properties</button>
+                <button id="tour-add-property" class="btn-add" (click)="Addproperty()">
+                    + Add Properties
+                </button>
             </div>
+        </div>
+
+        <div class="main-head-cont mt-3">
+            <p class="text-muted mb-0 regular-font">
+                This is the Properties List page where you manage all properties.
+                You can add, edit, and delete properties here.
+            </p>
+            <button class="tout-btn" (click)="startPropertyTour()">
+                🎯 Take a Tour
+            </button>
         </div>
 
         <!-- TABLE CARD -->
         <div class="container">
             <div class="item">
-
                 <div class="new-table-wrapper">
 
                     <!-- FILTERS -->
                     <form [formGroup]="filterForm">
-                        <div class="filters">
+                        <div class="filters" id="tour-filters">
 
-                            <!-- SEARCH -->
                             <div class="search-box">
                                 <input type="text" placeholder="Search Property No / Type" formControlName="search"
                                     class="regular-font" />
                             </div>
 
-                            <!-- PROPERTY TYPE -->
                             <div class="search-box">
                                 <select formControlName="propertyType" class="regular-font">
                                     <option value="">All Property Types</option>
@@ -37,7 +47,6 @@
                                 </select>
                             </div>
 
-                            <!-- RESET -->
                             <button type="button" class="filter-reset-btn" (click)="resetFilters()">
                                 Reset
                             </button>
@@ -45,98 +54,58 @@
                         </div>
                     </form>
 
-                    <!-- SCROLL WRAPPER -->
-                    <div class="table-scroll-wrapper">
-                        <div class="table-scroll">
+                    <!-- TABLE -->
+                    <div id="tour-table">
+                        <div class="table-scroll-wrapper">
+                            <div class="table-scroll">
 
-                            <table class="new-table">
+                                <table class="new-table">
+                                    <thead>
+                                        <tr class="medium-font">
+                                            <th class="sticky-col lead-col">Property No.</th>
+                                            <th>Property Type</th>
+                                            <th>Area</th>
+                                            <th>Facing</th>
+                                            <th>Maintenance Paid By</th>
+                                            <th>View</th>
+                                        </tr>
+                                    </thead>
 
-                                <!-- HEADER -->
-                                <thead>
-                                    <tr class="medium-font">
-                                        <th class="sticky-col lead-col">Property No.</th>
+                                    <tbody *ngIf="!tableLoading; else tableSkeleton">
+                                        <tr *ngFor="let item of propertylist1.paginatedData">
+                                            <td class="sticky-col lead-col">{{ item.property_no }}</td>
+                                            <td>{{ item.property_type }}</td>
+                                            <td>{{ item.area }} Sq.ft</td>
+                                            <td>{{ item.facing }}</td>
+                                            <td>{{ item.maintenance_paid_by || 'No Resident Found' }}</td>
+                                            <td >
+                                                <button class="table-btn"  id="tour-view-property" (click)="viewproperty(item._id)">View</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                                        <th>Property Type</th>
-
-                                        <th>Area</th>
-                                        <th>Facing</th>
-                                        <th>Maintenance Paid By</th>
-                                        <th>View</th>
-                                    </tr>
-                                </thead>
-
-                                <!-- BODY -->
-                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
-
-                                    <!-- DATA -->
-                                    <tr *ngFor="let item of propertylist1.paginatedData">
-
-                                        <!-- STICKY COLUMN -->
-                                        <td class="sticky-col lead-col">
-                                            {{ item.property_no }}
-                                        </td>
-
-                                        <!-- SCROLLABLE COLUMNS -->
-                                        <td>{{ item.property_type }}</td>
-
-                                        <td>{{ item.area }} Sq.ft</td>
-                                        <td>{{ item.facing }}</td>
-
-                                        <td>
-                                            {{ item.maintenance_paid_by || 'No Resident Found' }}
-                                        </td>
-
-                                        <td (click)="viewproperty(item._id)">
-                                            <button class="table-btn">View</button>
-                                        </td>
-
-                                    </tr>
-
-                                    <!-- NO DATA -->
-                                    <tr *ngIf="propertylist1.paginatedData.length === 0">
-                                        <td colspan="11" class="regular-font" style="text-align:center;color:gray;">
-                                            No Data Found
+                                <ng-template #tableSkeleton>
+                                    <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                                        <td colspan="6">
+                                            <span class="placeholder col-8"></span>
                                         </td>
                                     </tr>
+                                </ng-template>
 
-                                </tbody>
-                            </table>
-
-                            <!-- SKELETON -->
-                            <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
-                                    <td class="sticky-col lead-col">
-                                        <span class="placeholder col-8"></span>
-                                    </td>
-                                    <td><span class="placeholder col-6"></span></td>
-                                    <td><span class="placeholder col-6"></span></td>
-                                    <td><span class="placeholder col-6"></span></td>
-                                    <td><span class="placeholder col-6"></span></td>
-                                    <td><span class="placeholder col-6"></span></td>
-                                    <td><span class="placeholder col-6"></span></td>
-                                    <td><span class="placeholder col-6"></span></td>
-                                    <td><span class="placeholder col-6"></span></td>
-                                    <td><span class="placeholder col-6"></span></td>
-                                    <td><span class="placeholder col-4"></span></td>
-                                </tr>
-                            </ng-template>
-
+                            </div>
                         </div>
                     </div>
 
                     <!-- PAGINATION -->
-                    <div class="crm-pagination">
+                    <div class="crm-pagination" id="tour-pagination">
                         <div class="regular-font">
-                            Showing
-                            <span class="medium-font">{{ propertylist1.startIndex + 1 }}</span>
-                            to
-                            <span class="medium-font">{{ propertylist1.endIndex + 1 }}</span>
-                            of
-                            <span class="medium-font">{{ propertylist1.totalData }}</span>
-                            entries
+                            Showing {{ propertylist1.startIndex + 1 }}
+                            to {{ propertylist1.endIndex + 1 }}
+                            of {{ propertylist1.totalData }} entries
                         </div>
 
-                        <div class="d-flex gap-3 regular-font">
+                        <div class="d-flex gap-3">
                             <button class="nav-btn" (click)="propertylist1.prevPage()"
                                 [disabled]="propertylist1.currentPage === 1">
                                 ‹ Prev
@@ -154,7 +123,6 @@
                     </div>
 
                 </div>
-
             </div>
         </div>
 

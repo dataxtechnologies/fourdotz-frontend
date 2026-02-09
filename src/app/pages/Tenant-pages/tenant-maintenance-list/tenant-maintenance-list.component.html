@@ -14,6 +14,51 @@
 
         <div class="new-table-wrapper">
 
+          <!-- 🔽 FILTERS ADDED -->
+          <form [formGroup]="filterForm">
+            <div class="filters">
+
+              <div class="search-box">
+                <input type="text"
+                       placeholder="Property No"
+                       formControlName="propertySearch"
+                       class="regular-font"/>
+              </div>
+
+              <div class="search-box">
+                <input type="text"
+                       placeholder="Resident Name"
+                       formControlName="residentSearch"
+                       class="regular-font"/>
+              </div>
+
+              <div class="search-box">
+                <select formControlName="status" class="regular-font">
+                  <option value="">All Status</option>
+                  <option value="paid">Paid</option>
+                  <option value="pending">Pending</option>
+                  <option value="overdue">Overdue</option>
+                </select>
+              </div>
+
+              <div class="search-box">
+                <input type="date" formControlName="fromDate" class="regular-font"/>
+              </div>
+
+              <div class="search-box">
+                <input type="date" formControlName="toDate" class="regular-font"/>
+              </div>
+
+              <button type="button"
+                      class="filter-reset-btn"
+                      (click)="resetFilters()">
+                Reset
+              </button>
+
+            </div>
+          </form>
+          <!-- 🔼 FILTER END -->
+
           <!-- SCROLL -->
           <div class="table-scroll-wrapper">
             <div class="table-scroll">
@@ -37,10 +82,8 @@
                 <tbody *ngIf="!tableLoading; else tableSkeleton"
                        class="regular-font">
 
-                  <!-- DATA -->
                   <tr *ngFor="let item of maintenancelist1.paginatedData">
 
-                    <!-- STICKY COLUMN -->
                     <td class="sticky-col lead-col">
                       {{ item.property_no }}
                     </td>
@@ -70,7 +113,6 @@
                     <!-- ACTION -->
                     <td>
 
-                      <!-- TENANT PAY -->
                       <ng-container *ngIf="item.maintenance_paid_by === 'tenant'; else ownerView">
 
                         <ng-container *ngIf="!item.payment_status; else paidView">
@@ -87,7 +129,6 @@
 
                       </ng-container>
 
-                      <!-- OWNER VIEW -->
                       <ng-template #ownerView>
                         <ng-container *ngIf="item.payment_status; else ownerUnpaid">
                           <img src="assets/icons/paid-invoice1.svg"
@@ -109,7 +150,6 @@
 
                   </tr>
 
-                  <!-- NO DATA -->
                   <tr *ngIf="maintenancelist1.paginatedData.length === 0">
                     <td colspan="7"
                         style="text-align:center;color:gray;font-weight:600;">

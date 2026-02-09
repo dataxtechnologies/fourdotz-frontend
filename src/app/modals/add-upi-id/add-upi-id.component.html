@@ -1,4 +1,4 @@
-<section class="form-section container">
+<section class="form-section ">
     <div class="form-header">
         <h3>Add Your UPI ID</h3>
     </div>
@@ -17,7 +17,7 @@
             <div class="inp-cont">
                 <label class="medium-font" for="upiId">Enter your UPI ID: <Span class="required">*</Span></label>
                 <input id="upiId" type="text" formControlName="upiId" placeholder="e.g., john.doe@upi"
-                    class="inp-cus regular-font"
+                    class="input-custom-style regular-font"
                     [class.invalid]="upiForm.get('upiId')?.invalid && upiForm.get('upiId')?.touched" />
 
                 <!--  Validation Errors -->
@@ -38,7 +38,7 @@
                     Upload Signature <span class="required">*</span>
                 </label>
 
-                <input type="file" accept="image/png,image/jpeg" class="inp-cus regular-font"
+                <input type="file" accept="image/png,image/jpeg" class="input-custom-style regular-font"
                     (change)="onSignatureSelect($event)" />
 
                 <small class="hint-text">

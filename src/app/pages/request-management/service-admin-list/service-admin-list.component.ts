@@ -12,6 +12,7 @@ import { PaymentFailurePopupComponent } from '../../../modals/payment-failure-po
 import { CreateAdminComponent } from '../../../modals/create-admin/create-admin.component';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { ShepherdService } from 'angular-shepherd';
 
 @Component({
   selector: 'app-service-admin-list',
@@ -39,7 +40,8 @@ export class ServiceAdminListComponent {
     private Apiservice: ApiserviceService,
     private Acroute: ActivatedRoute,
     private AssociationService: AssociationServiceService,
-    private Toast : ToastrService
+    private Toast : ToastrService,
+    private shepherd: ShepherdService,
   ) {
     this.adminList1 = new TableService();
     this.adminList1.initialize(this.adminList2, 10);
@@ -111,5 +113,94 @@ export class ServiceAdminListComponent {
         this.adminLoading = false;
       },
     });
+  }
+
+   startTour() {
+    const SHOULD_RUN_TOUR = true;
+    if (!SHOULD_RUN_TOUR) return;
+
+    if (this.shepherd.tourObject) {
+      this.shepherd.cancel();
+    }
+
+    this.shepherd.modal = true;
+
+    this.shepherd.defaultStepOptions = {
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      cancelIcon: { enabled: false },
+      classes: 'shepherd-dark-theme',
+    };
+
+    this.shepherd.addSteps([
+      // 1️⃣ Header
+      {
+        id: 'service-admin-list',
+        title: 'Service Admin List',
+        text: 'This list shows all the service admins created by the association.',
+        attachTo: { element: '#tour-service-admin-list', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+      {
+        id: 'create-service-admin',
+        title: 'Create Service Admin',
+        text: 'Click here to create a new service admin.',
+        attachTo: { element: '#tour-create-service-admin', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+     
+      {
+        id: 'send-mail',
+        title: 'Send Mail',
+        text: 'Click here to resend the welcome mail to the service admin.',
+        attachTo: { element: '#tour-send-mail', on: 'bottom' },
+        buttons: [
+         {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Finish',
+            classes: 'shepherd-btn-primary',
+            action: () => this.GotoTourNextpage(),
+          },
+        ],
+      },
+
+    ]);
+
+    this.shepherd.start();
+  }
+
+   finishTourthispage() {
+    // this.SkipTourthispage();
+    this.shepherd.complete();
+  }
+
+  GotoTourNextpage() {
+    // this.TourtoNextpage();
+    this.shepherd.complete();
   }
 }

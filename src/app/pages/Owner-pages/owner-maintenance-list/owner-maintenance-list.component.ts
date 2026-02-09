@@ -9,6 +9,8 @@ import { TableService } from '../../../services/tableservice.service';
 import { PaymentSuccessPopupComponent } from '../../../modals/payment-success-popup/payment-success-popup.component';
 import { ActivatedRoute } from '@angular/router';
 import { PaymentFailurePopupComponent } from '../../../modals/payment-failure-popup/payment-failure-popup.component';
+import { ShepherdService } from 'angular-shepherd';
+import { DashboardLayoutService } from '../../../layouts/dashboard-layout/dashboard-layout.service';
 @Component({
   selector: 'app-owner-maintenance-list',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
@@ -33,7 +35,9 @@ export class OwnerMaintenanceListComponent {
     private ModalService: ModalService,
     private route: Router,
     private Apiservice: ApiserviceService,
-    private Acroute: ActivatedRoute
+    private Acroute: ActivatedRoute,
+    private shepherd: ShepherdService,
+    private DashboardService: DashboardLayoutService,
   ) {
     this.maintenancelist1 = new TableService();
     this.maintenancelist1.initialize(this.maintenancelist2, 10);
@@ -51,6 +55,13 @@ export class OwnerMaintenanceListComponent {
       this.openfailurepopup();
     }
   });
+
+  //  const menu = JSON.parse(sessionStorage.getItem('user_menu') || '{}');
+
+  //   if (!menu.ownermaintenancelisttour) {
+  //     this.startTour();
+  //   }
+
   }
 
   applyFilters() {
@@ -246,5 +257,112 @@ getStatus(item: any): 'Paid' | 'Pending' | 'Overdue' | '' {
     this.route.navigateByUrl(
       `maintenance-invoice/${this.usertype}/${data}?status=paid`
     );
+  }
+
+
+
+
+
+
+  startTour() {
+    const SHOULD_RUN_TOUR = true;
+    if (!SHOULD_RUN_TOUR) return;
+
+    if (this.shepherd.tourObject) {
+      this.shepherd.cancel();
+    }
+
+    this.shepherd.modal = true;
+
+    this.shepherd.defaultStepOptions = {
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      cancelIcon: { enabled: false },
+      classes: 'shepherd-dark-theme',
+    };
+
+    this.shepherd.addSteps([
+      // 1️⃣ Header
+      {
+        id: 'maintenance-list',
+        title: 'Maintenance List',
+        text: 'This will show all the maintenance History of the resident',
+        attachTo: { element: '#tour-maintenance-list', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+      {
+        id: 'action-button',
+        title: 'Action Button',
+        text: 'In this section, you can make a payment or view the payment status details of the invoice.',
+        attachTo: { element: '#tour-pay-button', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Finish',
+            classes: 'shepherd-btn-primary',
+            action: () => this.GotoTourNextpage(),
+          },
+        ],
+      },
+    ]);
+
+    this.shepherd.start();
+  }
+
+  finishTourthispage() {
+    // this.SkipTourthispage();
+    this.shepherd.complete();
+  }
+
+  GotoTourNextpage() {
+    // this.TourtoNextpage();
+    this.shepherd.complete();
+  }
+
+  SkipTourthispage() {
+    const payload = {
+      menu: {
+        ownermaintenancelisttour: true,
+      },
+    };
+
+    this.Apiservice.AddTourdatas<any>(payload).subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.DashboardService.triggerTourApiStatusUpdate(res);
+        }
+      },
+    });
+  }
+
+  TourtoNextpage() {
+    const payload = {
+      menu: {
+        ownermaintenancelisttour: true,
+      },
+    };
+
+    this.Apiservice.AddTourdatas<any>(payload).subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.DashboardService.triggerTourApiStatusUpdate(res);
+          this.route.navigateByUrl('/Owner/Rental-invoice-list');
+        }
+      },
+    });
   }
 }

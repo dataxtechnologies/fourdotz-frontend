@@ -24,20 +24,29 @@
                 <h2>Maintenance List</h2>
             </div>
             <div>
-                <button class="btn-add" (click)="generateMaintenance()">
+                <button class="btn-add" (click)="generateMaintenance()" id="tour-add-maintenance">
                     + Create Manual Invoice
                 </button>
             </div>
         </div>
+        <div class="main-head-cont mt-3">
+            <p class="text-muted mb-0 regular-font">
+                This is the Maintenance List page where you manage all the maintenance history of the residents.
+                You can generate maintenance invoice and view the invoice details here. 
+            </p>
+            <button class="tout-btn" *ngIf="MaintenanceList1.paginatedData.length > 0" (click)="startTour()">
+                🎯 Take a Tour
+            </button>
+        </div>
 
         <!-- TABLE -->
-        <div class="container">
+        <div class="container" id="tour-maintenance-list">
             <div class="item">
 
                 <div class="new-table-wrapper">
 
                     <!-- FILTERS -->
-                    <div class="filters">
+                    <div class="filters" id="tour-filter-maintenance">
 
                         <div class="search-box">
                             <label class="medium-font">From Date</label>
@@ -132,7 +141,7 @@
                                         </td>
 
                                         <!-- ACTIONS -->
-                                        <td>
+                                        <td id="tour-view-maintenance">
                                             <img src="assets/icons/paid-invoice1.svg" *ngIf="item.payment_status"
                                                 (click)="viewpaidInvoice(item.invoice_no)" />
 

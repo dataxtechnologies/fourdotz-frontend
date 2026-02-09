@@ -8,6 +8,51 @@
     <!-- HEADER -->
     <div class="profile-header">
         <div class="left">
+            <div class="profile-image-section">
+
+                <div class="avatar-wrapper">
+
+                    <!-- PROFILE IMAGE -->
+                    <img *ngIf="user.profile_image && !imagePreview" [src]="user.profile_image" class="profile-img" />
+
+                    <!-- PREVIEW -->
+                    <img *ngIf="imagePreview" [src]="imagePreview" class="profile-img" />
+
+                    <!-- PLACEHOLDER -->
+                    <div *ngIf="!user.profile_image && !imagePreview" class="avatar-placeholder">
+                        {{ user.name.charAt(0) }}
+                    </div>
+
+                    <!-- HOVER OVERLAY -->
+                    <div class="avatar-overlay">
+
+                        <input type="file" accept="image/*" (change)="onImageSelected($event)" hidden #fileInput />
+
+                        <div class="overlay-actions">
+
+                            <button class="icon-btn" (click)="fileInput.click()">
+                                <i class="fa fa-pen"></i>
+                            </button>
+
+                            <!-- <button class="icon-btn delete" *ngIf="user.profile_image" (click)="removeProfileImage()">
+                                <i class="fa fa-trash"></i>
+                            </button> -->
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- SAVE / CANCEL -->
+                <div class="image-action-row" *ngIf="imagePreview">
+                    <button class="btn-light" (click)="cancelImage()">Cancel</button>
+                    <button class="btn-dark" (click)="uploadProfileImage()" [disabled]="imageUploading">
+                        {{ imageUploading ? 'Uploading...' : 'Save Photo' }}
+                    </button>
+                </div>
+
+            </div>
+
             <div class="company-info">
                 <h2 class="medium-font">{{ user.name }}</h2>
                 <p class="regular-font">{{ user.email }} / {{ user_type }}</p>

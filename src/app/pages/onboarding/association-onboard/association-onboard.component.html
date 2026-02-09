@@ -309,6 +309,18 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="medium-font">Bank Name <span class="required">*</span></label>
+                    <input type="text" formControlName="bank_name" class="inp-cus regular-font"
+                        placeholder="Enter Bank Name" />
+                    <div *ngIf="accountForm.get('bank_name')?.touched" class="error">
+                        <div *ngIf="accountForm.get('bank_name')?.errors?.['required']">
+                            Bank Name is required.
+                        </div>
+                        
+                    </div>
+                </div>
+
                 <!-- Account Type -->
                 <div class="form-group">
                     <label class="medium-font">Account Type <span class="required">*</span></label>

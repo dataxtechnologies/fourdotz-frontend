@@ -26,6 +26,7 @@
     grid-column: span 5 / span 5;
     grid-row: span 3 / span 3;
     grid-row-start: 4;
+    background-color: #fff;
     /* margin-top: -150px !important; */
 }
 

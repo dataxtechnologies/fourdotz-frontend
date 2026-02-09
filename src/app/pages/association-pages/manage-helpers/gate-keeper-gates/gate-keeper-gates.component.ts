@@ -8,6 +8,8 @@ import { ApiserviceService } from '../../../../services/api/apiservice.service';
 import { AssociationServiceService } from '../../../../services/association/association-service.service';
 import { TableService } from '../../../../services/tableservice.service';
 import { ToastrService } from 'ngx-toastr';
+import { ShepherdService } from 'angular-shepherd';
+import { DashboardLayoutService } from '../../../../layouts/dashboard-layout/dashboard-layout.service';
 
 @Component({
   selector: 'app-gate-keeper-gates',
@@ -30,7 +32,9 @@ export class GateKeeperGatesComponent {
     private ModalService: ModalService,
     private apiService: ApiserviceService,
     private AssociationService: AssociationServiceService,
-    private Toast : ToastrService
+    private Toast: ToastrService,
+    private shepherd: ShepherdService,
+    private DashboardService: DashboardLayoutService,
   ) {
     this.Gatelist1 = new TableService();
     this.Gatelist1.initialize(this.Gatelist2, 10);
@@ -63,11 +67,10 @@ export class GateKeeperGatesComponent {
     });
   }
 
-    SendmailAgain(data: any){
-
-    const payload ={
-      username : data
-    }
+  SendmailAgain(data: any) {
+    const payload = {
+      username: data,
+    };
 
     this.apiService.SendmailAgain<any>(payload).subscribe({
       next: (res: any) => {
@@ -82,7 +85,6 @@ export class GateKeeperGatesComponent {
         this.Toast.error(err.error.error.message, 'Failed');
       },
     });
-
   }
 
   switchTab(tab: string) {
@@ -124,7 +126,7 @@ export class GateKeeperGatesComponent {
       overlay: { leave: 'fade-out 0.5s' },
       data: {
         gateKeeperdata: data,
-        actionD : 'Assign'
+        actionD: 'Assign',
       },
       actions: {
         click: false,
@@ -142,7 +144,7 @@ export class GateKeeperGatesComponent {
       overlay: { leave: 'fade-out 0.5s' },
       data: {
         gateKeeperdata: data,
-        actionD : 'Unassign'
+        actionD: 'Unassign',
       },
       actions: {
         click: false,
@@ -196,5 +198,208 @@ export class GateKeeperGatesComponent {
         this.GateKeeperlist1.initialize(this.GateKeeperlist2, 0);
       },
     });
+  }
+
+  startTour() {
+    const SHOULD_RUN_TOUR = true;
+    if (!SHOULD_RUN_TOUR) return;
+
+    if (this.shepherd.tourObject) {
+      this.shepherd.cancel();
+    }
+
+    // this.switchTab('keeper')
+
+    this.shepherd.modal = true;
+
+    this.shepherd.defaultStepOptions = {
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      cancelIcon: { enabled: false },
+      classes: 'shepherd-dark-theme',
+    };
+
+    this.shepherd.addSteps([
+      // 1️⃣ Header
+      {
+        id: 'gate-keeper-list',
+        title: 'Gate Keeper List',
+        text: 'This list shows the complete gate keepers list',
+        attachTo: { element: '#tour-gate-keeper-list', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+      {
+        id: 'add-gate-keeper',
+        title: 'Add Gate Keeper',
+        text: 'Click here to add a new gate keeper.',
+        attachTo: { element: '#tour-add-gate-keeper', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      {
+        id: 'assign-gate',
+        title: 'Assign / Unassign Gate',
+        text: 'Click here to assign or unassign a gate to a gate keeper.',
+        attachTo: { element: '#tour-assign-gate', on: 'bottom' },
+        buttons: [
+          {
+            text: 'skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+      {
+        id: 'send-mail',
+        title: 'Send Mail',
+        text: 'Click here to resend the welcome mail to the gate keeper.',
+        attachTo: { element: '#tour-send-mail', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      {
+        id: 'gate-keeper-tab',
+        title: 'Gate Keeper Tab',
+        text: 'This tab manage the gate keepers',
+        attachTo: { element: '#tour-gate-keeper-tab', on: 'top' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+      {
+        id: 'gate-tab',
+        title: 'Gate Tab',
+        text: 'This tab manage the all the gates',
+        attachTo: { element: '#tour-gate-tab', on: 'top' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => {
+              this.switchTab('gate');
+              this.shepherd.next();
+            },
+          },
+        ],
+      },
+      {
+        id: 'gate-list',
+        title: 'Gate List',
+        text: 'This list shows the complete gate list',
+        attachTo: { element: '#tour-gate-list', on: 'top' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+      {
+        id: 'gate-add',
+        title: 'Add Gate',
+        text: 'Click here to add a new gate.',
+        attachTo: { element: '#tour-add-gate', on: 'top' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      {
+        id: 'delete-gate',
+        title: 'Delete Gate',
+        text: 'Click here to delete a gate.',
+        attachTo: { element: '#tour-delete-gate', on: 'top' },
+        buttons: [
+           {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Finish',
+            classes: 'shepherd-btn-primary',
+            action: () => this.GotoTourNextpage(),
+          },
+        ],
+      },
+    ]);
+
+    this.shepherd.start();
+  }
+
+  finishTourthispage() {
+    // this.SkipTourthispage();
+    this.shepherd.complete();
+  }
+
+  GotoTourNextpage() {
+    // this.TourtoNextpage();
+    this.shepherd.complete();
   }
 }

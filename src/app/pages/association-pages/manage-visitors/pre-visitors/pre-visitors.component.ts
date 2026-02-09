@@ -5,9 +5,10 @@ import { AddPropertyComponent } from '../../../../modals/add-property/add-proper
 import { ApiserviceService } from '../../../../services/api/apiservice.service';
 import { TableService } from '../../../../services/tableservice.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { AssociationServiceService } from '../../../../services/association/association-service.service';
 import { ViewVisitorDetailsComponent } from '../../../../modals/view-visitor-details/view-visitor-details.component';
+
 @Component({
   selector: 'app-pre-visitors',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
@@ -15,34 +16,51 @@ import { ViewVisitorDetailsComponent } from '../../../../modals/view-visitor-det
   styleUrl: './pre-visitors.component.css'
 })
 export class PreVisitorsComponent {
-user_id = localStorage.getItem('user_id');
-  spotVisitorlist1;
+
+  user_id = localStorage.getItem('user_id');
+  spotVisitorlist1: any;
   spotvisitorlist2: any;
+  filteredVisitors: any[] = [];
   tableLoading: boolean = true;
   pages: any;
   associationId: any;
-  user_type: any
+  user_type: any;
+
+  filterForm!: FormGroup;
 
   constructor(
     private ModalService: ModalService,
     private route: Router,
     private apiService: ApiserviceService,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private fb: FormBuilder
   ) {
     this.spotVisitorlist1 = new TableService();
     this.spotVisitorlist1.initialize(this.spotvisitorlist2, 12);
+
+    this.filterForm = this.fb.group({
+      visitor: [''],
+      resident: [''],
+      propertyNo: [''],
+      gate: ['']
+    });
   }
 
   ngOnInit(): void {
+
     const userdata = localStorage.getItem('userdata');
     this.user_type = localStorage.getItem('user_type');
 
     if (userdata) {
       const parsedData = JSON.parse(userdata);
-      this.associationId = parsedData._id; 
-    } else {
+      this.associationId = parsedData._id;
     }
+
     this.ListVisitorinGateKeeper('pre_visitor_entry');
+
+    this.filterForm.valueChanges.subscribe(() => {
+      this.applyFilters();
+    });
 
     this.AssociationService.PropertyStatus$.subscribe((AddProperty) => {
       if (AddProperty) {
@@ -58,27 +76,19 @@ user_id = localStorage.getItem('user_id');
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-      actions: {
-        click: false,
-        escape: false,
-      },
+      actions: { click: false, escape: false },
     });
   }
 
-    visitorView(data : any){
-     this.ModalService.open(ViewVisitorDetailsComponent, {
+  visitorView(data: any) {
+    this.ModalService.open(ViewVisitorDetailsComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
         leave: 'fade-out 0.5s',
       },
-      data: {
-        visitor_details : data
-      },
+      data: { visitor_details: data },
       overlay: { leave: 'fade-out 0.5s' },
-      actions: {
-        click: false,
-        escape: false,
-      },
+      actions: { click: false, escape: false },
     });
   }
 
@@ -90,24 +100,70 @@ user_id = localStorage.getItem('user_id');
     this.apiService.ListVisitorinGateKeeper<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {
+
           this.spotvisitorlist2 = res.data;
-          this.spotVisitorlist1.initialize(this.spotvisitorlist2, 12);
-          this.pages = Array.from(
-            { length: this.spotvisitorlist2.totalPages },
-            (_, i) => i + 1
-          );
+
+          this.filteredVisitors = [...this.spotvisitorlist2];
+          this.spotVisitorlist1.initialize(this.filteredVisitors, 12);
+
           this.tableLoading = false;
+
         } else {
           this.spotvisitorlist2 = [];
-          this.spotVisitorlist1.initialize(this.spotvisitorlist2, 12);
+          this.filteredVisitors = [];
+          this.spotVisitorlist1.initialize([], 12);
           this.tableLoading = false;
         }
       },
-      error: (err: any) => {
+      error: () => {
         this.spotvisitorlist2 = [];
-        this.spotVisitorlist1.initialize(this.spotvisitorlist2, 12);
+        this.filteredVisitors = [];
+        this.spotVisitorlist1.initialize([], 12);
         this.tableLoading = false;
       },
     });
+  }
+
+  applyFilters() {
+
+    if (!this.spotvisitorlist2) return;
+
+    const { visitor, resident, propertyNo, gate } = this.filterForm.value;
+
+    this.filteredVisitors = this.spotvisitorlist2.filter((item: any) => {
+
+      const visitorText = visitor?.toLowerCase() || '';
+      const residentText = resident?.toLowerCase() || '';
+      const propertyText = propertyNo?.toLowerCase() || '';
+      const gateText = gate?.toLowerCase() || '';
+
+      const matchVisitor =
+        !visitorText ||
+        item.visitor_name?.toLowerCase().includes(visitorText) ||
+        String(item.visitor_mobile)?.includes(visitorText);
+
+      const matchResident =
+        !residentText ||
+        item.resident_name?.toLowerCase().includes(residentText) ||
+        String(item.resident_mobile)?.includes(residentText);
+
+      const matchProperty =
+        !propertyText ||
+        item.property_no?.toLowerCase().includes(propertyText);
+
+      const matchGate =
+        !gateText ||
+        item.gate?.toLowerCase().includes(gateText);
+
+      return matchVisitor && matchResident && matchProperty && matchGate;
+    });
+
+    this.spotVisitorlist1.initialize(this.filteredVisitors, 12);
+  }
+
+  resetFilters() {
+    this.filterForm.reset();
+    this.filteredVisitors = [...this.spotvisitorlist2];
+    this.spotVisitorlist1.initialize(this.filteredVisitors, 12);
   }
 }

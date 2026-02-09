@@ -1,6 +1,6 @@
-<section class="form-section container">
+<section class="popup-form-design">
     <div class="form-header">
-        <h3>Create Request</h3>
+        <h3 class="modal-header">Create Request</h3>
         <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
     </div>
 
@@ -45,7 +45,7 @@
                 <!-- Title -->
                 <div class="inp-cont" style="grid-column: span 2;">
                     <label class="medium-font">Title <span class="required">*</span></label>
-                    <input type="text" formControlName="title" class="inp-cus regular-font" placeholder="Enter Title">
+                    <input type="text" formControlName="title" class="input-custom-style regular-font" placeholder="Enter Title">
                     <div *ngIf="requestForm.get('title')?.touched && requestForm.get('title')?.invalid"
                         class="error-text">
                         Title is required
@@ -55,7 +55,7 @@
                 <!-- Description -->
                 <div class="inp-cont" style="grid-column: span 2;">
                     <label class="medium-font">Description <span class="required">*</span></label>
-                    <textarea formControlName="description" class="inp-cus regular-font" rows="4"
+                    <textarea formControlName="description" class="input-custom-style regular-font" rows="4"
                         placeholder="Enter Description"></textarea>
                     <div *ngIf="requestForm.get('description')?.touched && requestForm.get('description')?.invalid"
                         class="error-text">

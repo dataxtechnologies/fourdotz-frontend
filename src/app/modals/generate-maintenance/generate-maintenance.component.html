@@ -1,4 +1,4 @@
-<section class="form-section container">
+<section class="form-section ">
     <div class="form-header">
         <h3 class="modal-header demibold-font">Generate Maintenance</h3>
         <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
@@ -45,13 +45,13 @@
                 <div class="inp-cont">
                     <label class="medium-font">Due Date <span class="required">*</span></label>
                     <div class="date-input-wrapper">
-                        <input type="text" id="rentedAt" class="inp-cus regular-font" formControlName="due_date"
+                        <input type="text" id="rentedAt" class="input-custom-style regular-font" formControlName="due_date"
                             placeholder="Select date" readonly (click)="openDatePicker()" />
                         <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
                         <input #hiddenDatePicker type="date" [min]="todayDate" class="hidden-date-input"
                             (change)="onDateSelected($event)" />
                     </div>
-                    <!-- <input type="date" formControlName="due_date" class="inp-cus"  /> -->
+                    <!-- <input type="date" formControlName="due_date" class="input-custom-style"  /> -->
                     <div *ngIf="
               maintenanceForm.get('due_date')?.touched &&
               maintenanceForm.get('due_date')?.invalid
@@ -71,8 +71,8 @@
 
             <div class="items-container scroll-box" formArrayName="items">
                 <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="item-row">
-                    <input type="text" formControlName="description" placeholder="Description" class="inp-cus regular-font" />
-                    <input type="number" formControlName="amount" placeholder="Amount" class="inp-cus regular-font" />
+                    <input type="text" formControlName="description" placeholder="Description" class="input-custom-style regular-font" />
+                    <input type="number" formControlName="amount" placeholder="Amount" class="input-custom-style regular-font" />
                     <button type="button" class="btn-cancel" (click)="removeItem(i)">
                         Remove
                     </button>

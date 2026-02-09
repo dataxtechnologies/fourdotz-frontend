@@ -14,6 +14,8 @@ import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { TableService } from '../../../services/tableservice.service';
 import { ChangePaidStatusComponent } from '../../../modals/change-paid-status/change-paid-status.component';
 import { OwnerServiceService } from '../../../services/owner/owner-service.service';
+import { ShepherdService } from 'angular-shepherd';
+import { DashboardLayoutService } from '../../../layouts/dashboard-layout/dashboard-layout.service';
 
 @Component({
   selector: 'app-owner-rental-invoice',
@@ -36,7 +38,10 @@ export class OwnerRentalInvoiceComponent {
     private router: Router,
     private fb: FormBuilder,
     private apiService: ApiserviceService,
-    private OwnerService: OwnerServiceService
+    private OwnerService: OwnerServiceService,
+    private shepherd: ShepherdService,
+    private DashboardService: DashboardLayoutService,
+
   ) {
     this.rentalinvoicelist1 = new TableService();
     this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 12);
@@ -67,7 +72,11 @@ export class OwnerRentalInvoiceComponent {
       }
     });
 
-    // this.filteredProperties = [...this.rentalinvoicelist2];
+    // const menu = JSON.parse(sessionStorage.getItem('user_menu') || '{}');
+
+    // if (!menu.rentalinvoiceOwnerTour) {
+    //   this.startTour();
+    // }
   }
 
 applyFilters(): void {
@@ -230,6 +239,150 @@ applyFilters(): void {
       error: (err: any) => {
         this.isTenantPresent = false;
         this.tableLoading = false;
+      },
+    });
+  }
+
+
+
+
+  startTour() {
+    const SHOULD_RUN_TOUR = true;
+    if (!SHOULD_RUN_TOUR) return;
+
+    if (this.shepherd.tourObject) {
+      this.shepherd.cancel();
+    }
+
+    this.shepherd.modal = true;
+
+    this.shepherd.defaultStepOptions = {
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      cancelIcon: { enabled: false },
+      classes: 'shepherd-dark-theme',
+    };
+
+    this.shepherd.addSteps([
+      // 1️⃣ Header
+      {
+        id: 'rental-invoice-list',
+        title: 'Rental Invoice List',
+        text: 'This list will show all the rental invoices generated for the property.',
+        attachTo: { element: '#tour-rental-invoice-list', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      {
+        id: 'generate-rental-invoice',
+        title: 'Generate Rental Invoice',
+        text: 'Click here to generate rental invoice for the property.',
+        attachTo: { element: '#tour-generate-rental-invoice', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+      {
+        id: 'rental-invoice-filter',
+        title: 'Rental Invoice Filters',
+        text: 'Here you can filter the rental invoices by status, resident name, date, etc.',
+        attachTo: { element: '#tour-rental-invoice-filter', on: 'top' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      {
+        id: 'mark-as-paid',
+        title: 'Mark as Paid',
+        text: 'Click here to mark the rental invoice as paid.',
+        attachTo: { element: '#tour-mark-as-paid', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Finish',
+            classes: 'shepherd-btn-primary',
+            action: () => this.GotoTourNextpage(),
+          },
+        ],
+      },
+
+    ]);
+
+    this.shepherd.start();
+  }
+
+   finishTourthispage() {
+    // this.SkipTourthispage();
+    this.shepherd.complete();
+  }
+
+  GotoTourNextpage() {
+    // this.TourtoNextpage();
+    this.shepherd.complete();
+  }
+
+  SkipTourthispage() {
+    const payload = {
+      menu: {
+        rentalinvoiceOwnerTour: true,
+      },
+    };
+
+    this.apiService.AddTourdatas<any>(payload).subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.DashboardService.triggerTourApiStatusUpdate(res);
+        }
+      },
+    });
+  }
+
+  TourtoNextpage() {
+    const payload = {
+      menu: {
+        rentalinvoiceOwnerTour: true,
+      },
+    };
+
+    this.apiService.AddTourdatas<any>(payload).subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.DashboardService.triggerTourApiStatusUpdate(res);
+          this.router.navigateByUrl('/Owner/announcement/owner');
+        }
       },
     });
   }

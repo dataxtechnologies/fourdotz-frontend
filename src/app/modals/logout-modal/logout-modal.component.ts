@@ -57,6 +57,7 @@ this.apiService.logoutApi<any>().subscribe({
 
   private clearSessionAndRedirect(message: string = 'Session expired') {
     localStorage.clear();
+    sessionStorage.clear();
     // this.Toast.info(message, 'Info');
     this.Router.navigateByUrl('/auth/sign-in');
   }

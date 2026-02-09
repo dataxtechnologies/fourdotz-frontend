@@ -129,10 +129,11 @@ body {
 .submit-btn {
     padding: 8px 12px;
     border-radius: 12px !important;
-    background: #faf9f4;
+    background: #fff;
     border: 2px solid var(--primary-color1);
     color: var(--primary-color1);
     width: 100%;
+    
 }
 
 .link-text {
@@ -214,7 +215,7 @@ main p {
     color: var(--primary-color1);
     font-weight: lighter !important;
     padding: 10px 8px;
-    background: #faf9f4;
+    background: #FFFFFF;
     border-radius: 12px !important;
     font-size: 16px;
     border: 2px solid var(--primary-color1);
@@ -856,4 +857,194 @@ tbody td i {
 .mail-btn{
     color: var(--primary-color1);
     font-weight: bold;
+}
+
+
+
+
+/* ===============================
+   SHEPHERD MODAL OVERLAY (BLUR)
+================================ */
+
+/* Dark + blur background */
+.shepherd-modal-overlay-container {
+  background: rgba(0, 0, 0, 0.55) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 99998;
+}
+
+/* Lock whole page */
+body.shepherd-active {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Allow interaction only with tour & target */
+.shepherd-element,
+.shepherd-target {
+  pointer-events: auto !important;
+}
+
+/* Bring target above overlay */
+.shepherd-target {
+  position: relative;
+  z-index: 100000;
+  border-radius: 12px;
+}
+
+/* Animated focus ring */
+.shepherd-target::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 14px;
+  box-shadow:
+    0 0 0 2px rgba(155, 107, 255, 0.9),
+    0 0 28px rgba(155, 107, 255, 0.6);
+  animation: shepherd-pulse 1.6s infinite;
+  pointer-events: none;
+  padding: 22px !important;
+}
+
+@keyframes shepherd-pulse {
+  0% { opacity: 0.9; }
+  50% { opacity: 0.4; }
+  100% { opacity: 0.9; }
+}
+
+/* ===============================
+   SHEPHERD DARK MODERN TOOLTIP
+================================ */
+
+.shepherd-element.shepherd-dark-theme {
+  background: var(--primary-color1);
+  color: #ffffff;
+  border-radius: 14px;
+  max-width: 380px;
+  padding: 16px 18px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65);
+  z-index: 100001;
+}
+
+/* Arrow */
+.shepherd-element.shepherd-dark-theme .shepherd-arrow:before {
+  background: #1e1e1e;
+}
+
+/* Text */
+.shepherd-element.shepherd-dark-theme .shepherd-text {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #e6e6e6;
+  margin-bottom: 14px;
+}
+
+/* Footer */
+.shepherd-element.shepherd-dark-theme .shepherd-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Buttons */
+.shepherd-element.shepherd-dark-theme .shepherd-button {
+  border-radius: 10px;
+  padding: 7px 16px;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Primary */
+.shepherd-btn-primary {
+  background: var(--primary-color2) !important;
+  color: #ffffff;
+}
+
+/* Secondary */
+.shepherd-btn-secondary {
+  background: #311450 !important;
+  color: #d0d0d0;
+}
+
+/* Skip */
+.shepherd-btn-skip {
+  background: #311450 !important;;
+  color: #9a9a9a;
+}
+
+
+
+.shepherd-header{
+    background-color: var(--primary-color1) !important; 
+}
+
+.shepherd-title{
+    color: #FFFFFF !important;
+}
+
+.shepherd-arrow{
+    display: none !important;
+}
+
+
+
+.tout-btn{
+    width: 150px;
+    border: 1px solid var(--primary-color1);
+    border-radius: 12px;
+    padding: 8px 8px;
+    background-color: #fff;
+}
+
+.main-head-cont{
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.input-custom-style {
+    width: 100%;
+    padding: 8px 5px;
+    font-size: 14px;
+
+    border: 1px solid #908692;
+    border-radius: 7px;
+    background-color: #fff;
+
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover (optional but nice UX) */
+.input-custom-style:hover {
+    border-color: #a46ab0;
+}
+
+/* Focus + Active combined */
+.input-custom-style:focus,
+.input-custom-style:active {
+    border-color: #a46ab0;
+    box-shadow: 0 0 6px rgba(79, 80, 79, 0.3);
+}
+
+
+.popup-form-design{
+    background-color: #fff;
+    width: 800px;
+    margin: 40px auto;
+    padding: 25px;
+    padding-left: 35px;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
 }

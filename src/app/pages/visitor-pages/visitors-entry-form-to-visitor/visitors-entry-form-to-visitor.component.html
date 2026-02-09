@@ -1,6 +1,6 @@
 <section>
     <div class="div-cont">
-        <div class="container">
+        <div class="form-section">
 
             <!-- Logo -->
             <div class="brand-logo">
@@ -19,7 +19,7 @@
                         <!-- Full Name -->
                         <div class="input-box">
                             <label class="details medium-font">Full Name<span class="required">*</span></label>
-                            <input type="text" class="inp-cus regular-font" formControlName="full_name"
+                            <input type="text" class="input-custom-style regular-font" formControlName="full_name"
                                 placeholder="Enter your name" />
 
                             <span class="error-text regular-font"
@@ -30,7 +30,7 @@
 
                         <div class="input-box">
                             <label class="details medium-font">Phone (WhatsApp)<span class="required">*</span></label>
-                            <input type="text" class="inp-cus regular-font" formControlName="whatsapp"
+                            <input type="text" class="input-custom-style regular-font" formControlName="whatsapp"
                                 placeholder="Enter WhatsApp number" />
 
                             <span class="error-text regular-font"
@@ -47,7 +47,7 @@
                         <!-- Gender -->
                         <div class="input-box">
                             <label class="details medium-font">Gender<span class="required">*</span></label>
-                            <select formControlName="gender" class="inp-cus regular-font">
+                            <select formControlName="gender" class="input-custom-style regular-font">
                                 <option value="" disabled>Select gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -99,7 +99,7 @@
                                 Gate No<span class="required">*</span>
                             </label>
 
-                            <select class="inp-cus regular-font" formControlName="gate_no">
+                            <select class="input-custom-style regular-font" formControlName="gate_no">
                                 <option value="" disabled selected>Select Gate No</option>
 
                                 <option *ngFor="let gate of Gatelist2" [value]="gate._id">
@@ -117,7 +117,7 @@
                         <!-- Visitor Count -->
                         <div class="input-box">
                             <label class="details medium-font">Visitor Count<span class="required">*</span></label>
-                            <input type="number" class="inp-cus regular-font" formControlName="count"
+                            <input type="number" class="input-custom-style regular-font" formControlName="count"
                                 placeholder="Enter count" />
 
                             <span class="error-text regular-font"
@@ -129,7 +129,7 @@
                         <!-- Reason -->
                         <div class="input-box">
                             <label class="details medium-font">Reason for Visit<span class="required">*</span></label>
-                            <input type="text" class="inp-cus regular-font" formControlName="reason"
+                            <input type="text" class="input-custom-style regular-font" formControlName="reason"
                                 placeholder="Enter reason" />
 
                             <span class="error-text regular-font"
@@ -140,7 +140,7 @@
                         <!-- Exit Time -->
                         <div class="input-box">
                             <label class="details medium-font">Exit Time<span class="required">*</span></label>
-                            <input type="datetime-local" class="inp-cus regular-font" formControlName="exit_time" />
+                            <input type="datetime-local" class="input-custom-style regular-font" formControlName="exit_time" />
 
                             <span class="error-text regular-font"
                                 *ngIf="visitorForm.get('exit_time')?.touched && visitorForm.get('exit_time')?.invalid">

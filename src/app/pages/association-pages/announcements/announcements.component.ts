@@ -9,6 +9,8 @@ import { ViewAnnouncementsComponent } from '../../../modals/view-announcements/v
 import { ViewAllPinnedAnnouncementsComponent } from '../../../modals/view-all-pinned-announcements/view-all-pinned-announcements.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ShepherdService } from 'angular-shepherd';
+import { DashboardLayoutService } from '../../../layouts/dashboard-layout/dashboard-layout.service';
 
 @Component({
   selector: 'app-announcements',
@@ -36,7 +38,10 @@ export class Announcementcomponent implements OnInit {
     private ModalService: ModalService,
     private apiService: ApiserviceService,
     private AssociationService: AssociationServiceService,
-    private Toast: ToastrService
+    private Toast: ToastrService,
+    private shepherd: ShepherdService,
+    private DashboardService: DashboardLayoutService,
+
   ) {
     this.pinnedAnnouncement1 = new TableService();
     this.pinnedAnnouncement1.initialize(this.pinnedAnnouncement2, 4);
@@ -189,6 +194,30 @@ export class Announcementcomponent implements OnInit {
     });
   }
 
+
+  deleteAnnouncement(data: any) {
+    this.loadingPosts = true;
+
+    const announcement_id = data
+
+    this.apiService.DeleteAnnouncementinHOA<any>(announcement_id).subscribe({
+      next: (res: any) => {
+        this.loadingPosts = false;
+        if (res?.success) {
+          this.Toast.success(res.message, 'success');
+          this.ListAnnouncementinHOA();
+          this.listpinannouncement();
+        } else {
+          this.Toast.warning(res.message, 'warning');
+        }
+      },
+      error: (err: any) => {
+        this.loadingPosts = false;
+        this.Toast.error(err.err.error.message, 'Error');
+      },
+    });
+  }
+
   /** Fetch pinned announcements */
 
   listpinannouncement() {
@@ -248,5 +277,133 @@ export class Announcementcomponent implements OnInit {
       overlay: { leave: 'fade-out 0.5s' },
       actions: { click: false, escape: false },
     });
+  }
+
+
+
+  startTour() {
+    const SHOULD_RUN_TOUR = true;
+    if (!SHOULD_RUN_TOUR) return;
+
+    if (this.shepherd.tourObject) {
+      this.shepherd.cancel();
+    }
+
+    this.shepherd.modal = true;
+
+    this.shepherd.defaultStepOptions = {
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      cancelIcon: { enabled: false },
+      classes: 'shepherd-dark-theme',
+    };
+
+    this.shepherd.addSteps([
+      // 1️⃣ Header
+      {
+        id: 'announcement-list',
+        title: 'List All Announcements',
+        text: 'This will show all the announcements posted by the association.',
+        attachTo: { element: '#tour-list-announcement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+      {
+        id: 'announcement-create',
+        title: 'Create Announcemet',
+        text: 'You can create an announcement for the Events, Updates, and Announcements here.',
+        attachTo: { element: '#tour-create-announcement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      {
+        id: 'view-pinned-announcement',
+        title: 'View Pinned Announcement',
+        text: 'Click here to view the pinned announcements.',
+        attachTo: { element: '#tour-view-pinned-announcement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+      {
+        id: 'view-announcement',
+        title: 'View Announcement',
+        text: 'Click here to view the announcement details.',
+        attachTo: { element: '#tour-view-announcement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      {
+        id: 'pin-announcement',
+        title: 'Pin Announcement',
+        text: 'Click here to pin the announcement.',
+        attachTo: { element: '#tour-pin-announcement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Finish',
+            classes: 'shepherd-btn-primary',
+            action: () => this.GotoTourNextpage(),
+          },
+        ],
+      },
+
+    ]);
+
+    this.shepherd.start();
+  }
+
+  finishTourthispage() {
+    // this.SkipTourthispage();
+    this.shepherd.complete();
+  }
+
+  GotoTourNextpage() {
+    // this.TourtoNextpage();
+    this.shepherd.complete();
   }
 }

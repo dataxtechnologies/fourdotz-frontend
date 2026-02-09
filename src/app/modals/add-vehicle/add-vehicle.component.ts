@@ -19,11 +19,54 @@ export class AddVehicleComponent implements OnInit {
   @Input() associationId: any;
 
   vehicleForm!: FormGroup;
-  submitbtn = true
+  submitbtn = true;
 
-  constructor(private fb: FormBuilder, private modal: ModalService, private apiService: ApiserviceService, private Toast: ToastrService,
-    private OwnerService : OwnerServiceService, private AssociationService: AssociationServiceService
-  ) {}
+  /* 🔹 BRAND LIST HOLDER (for dropdown binding) */
+  brandList: any[] = [];
+
+  /* 🔹 BRAND MASTER DATA */
+  twoWheelerBrands = [
+    { brand: 'Honda' },
+    { brand: 'Hero' },
+    { brand: 'Bajaj' },
+    { brand: 'TVS' },
+    { brand: 'Royal Enfield' },
+    { brand: 'Suzuki' },
+    { brand: 'Yamaha' },
+    { brand: 'KTM' },
+    { brand: 'Other' },
+  ];
+
+  fourWheelerBrands = [
+    { brand: 'Maruti Suzuki' },
+    { brand: 'Hyundai' },
+    { brand: 'Tata' },
+    { brand: 'Mahindra' },
+    { brand: 'Honda' },
+    { brand: 'Toyota' },
+    { brand: 'Kia' },
+    { brand: 'Renault' },
+    { brand: 'Volkswagen' },
+    { brand: 'Skoda' },
+    { brand: 'MG' },
+    { brand: 'Other' },
+  ];
+
+  otherBrands = [
+    { brand: 'Ashok Leyland' },
+    { brand: 'Tata' },
+    { brand: 'Mahindra' },
+    { brand: 'Other' },
+  ];
+
+  constructor(
+    private fb: FormBuilder,
+    private modal: ModalService,
+    private apiService: ApiserviceService,
+    private Toast: ToastrService,
+    private OwnerService: OwnerServiceService,
+    private AssociationService: AssociationServiceService
+  ) { }
 
   ngOnInit(): void {
     this.vehicleForm = this.fb.group({
@@ -41,23 +84,41 @@ export class AddVehicleComponent implements OnInit {
     });
   }
 
+  /* 🔹 VEHICLE TYPE CHANGE HANDLER (NEW) */
+  onVehicleTypeChange() {
+    const type = this.vehicleForm.get('vehicleType')?.value;
+
+    if (type === '2 Wheeler') {
+      this.brandList = this.twoWheelerBrands;
+    }
+    else if (type === '4 Wheeler') {
+      this.brandList = this.fourWheelerBrands;
+    }
+    else {
+      this.brandList = this.otherBrands;
+    }
+
+    // reset brand when type changes
+    this.vehicleForm.patchValue({ brand: '' });
+  }
+
   addVehicle() {
-    this.submitbtn = false
+    this.submitbtn = false;
     if (this.vehicleForm.invalid) {
-      this.submitbtn = true
+      this.submitbtn = true;
       this.vehicleForm.markAllAsTouched();
       return;
     }
 
-   const payload = {
-      id: this.associationId, // assuming this is the unique ID
+    const payload = {
+      id: this.associationId,
       vehicle: [
         {
           type: this.vehicleForm.value.vehicleType.toLowerCase(),
           brand: this.vehicleForm.value.brand,
           modal: this.vehicleForm.value.model,
           number: this.vehicleForm.value.vehicleNumber,
-          vehicle_owned_by: this.vehicleForm.value.ownedBy.toLowerCase(), // tenant/owner in lowercase
+          vehicle_owned_by: this.vehicleForm.value.ownedBy.toLowerCase(),
         },
       ],
     };
@@ -65,22 +126,19 @@ export class AddVehicleComponent implements OnInit {
     this.apiService.AddVehicle<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
-          this.submitbtn = true
-          this.Toast.success(res.message, 'Success')
+          this.submitbtn = true;
+          this.Toast.success(res.message, 'Success');
           this.OwnerService.triggerVehicleAdd(res);
           this.AssociationService.triggervehicleAdd(res);
           this.closeModal();
         } else {
-          this.submitbtn = true
-           this.Toast.warning(res.message, 'Warning')
-          // this.loginbtn = true;
+          this.submitbtn = true;
+          this.Toast.warning(res.message, 'Warning');
         }
       },
       error: (err: any) => {
-        this.submitbtn = true
-         this.Toast.error(err.error.error.message, 'Failed')
-        //console.error('Login failed:', err.error.error.data);
-        // alert(err.message || 'Login failed, please try again.');
+        this.submitbtn = true;
+        this.Toast.error(err.error.error.message, 'Failed');
       },
     });
   }
@@ -95,11 +153,11 @@ export class AddVehicleComponent implements OnInit {
   }
 
   // Optional: restrict input dynamically while typing
-onVehicleNumberInput(event: Event) {
-  const input = event.target as HTMLInputElement;
-  const value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  onVehicleNumberInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
 
-  input.value = value;
-  this.vehicleForm.get('vehicleNumber')?.setValue(value, { emitEvent: false });
-}
+    input.value = value;
+    this.vehicleForm.get('vehicleNumber')?.setValue(value, { emitEvent: false });
+  }
 }

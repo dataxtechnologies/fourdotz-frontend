@@ -8,14 +8,23 @@
             </div>
 
             <div>
-                <button class="btn-add" (click)="OpenCreateAdmin()">
+                <button class="btn-add" (click)="OpenCreateAdmin()" id="tour-create-service-admin">
                     + Create Service Admin
                 </button>
             </div>
         </div>
 
+        <div class="main-head-cont mt-3">
+            <p class="text-muted mb-0 regular-font">
+                This is the Service Admin List page where you can view all the service admins.
+                You can create a new service admin using the Create Service Admin button and view the service admin details here. 
+            </p>
+            <button class="tout-btn" *ngIf="adminList1.paginatedData.length > 0" (click)="startTour()">
+                🎯 Take a Tour
+            </button>
+        </div>
         <!-- TABLE -->
-        <div class="container">
+        <div class="container" id="tour-service-admin-list">
             <div class="item">
 
                 <div class="new-table-wrapper">
@@ -63,7 +72,7 @@
                                         </td>
 
                                         <td>
-                                            <span class="mail-btn" (click)="SendmailAgain(item.email)">
+                                            <span class="mail-btn" (click)="SendmailAgain(item.email)" id="tour-send-mail">
                                                 Send Mail
                                             </span>
                                         </td>

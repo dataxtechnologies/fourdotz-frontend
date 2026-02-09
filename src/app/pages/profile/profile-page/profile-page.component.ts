@@ -18,14 +18,20 @@ export class ProfilePageComponent {
   loadingUserData = false;
   editbtnloading = false;
 
+  imagePreview: string | null = null;
+selectedImageFile!: File | null;
+imageUploading = false;
+
+
   /** USER DATA */
-  user_type = localStorage.getItem('user_type');
+  user_type : any
 
   user = {
     name: 'User name',
     email: 'mi@xpaytech.co',
     mobile: '+20-01274318900',
     upi_id: '',
+    profile_image:''
   };
 
   /** TEMP VARIABLE FOR EDIT MODE */
@@ -50,6 +56,98 @@ export class ProfilePageComponent {
     this.editableUpi = this.user.upi_id || '';
     this.editUpi = true;
   }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.user_type = localStorage.getItem('user_type');
+  }
+
+  onImageSelected(event: any) {
+
+  const file = event.target.files[0];
+  if (!file) return;
+
+  // validate size < 2MB
+  if (file.size > 2 * 1024 * 1024) {
+    this.toastr.warning('Image must be under 2MB');
+    return;
+  }
+
+  this.selectedImageFile = file;
+
+  const reader = new FileReader();
+  reader.onload = (e: any) => {
+    this.imagePreview = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+
+uploadProfileImage() {
+
+  if (!this.selectedImageFile) return;
+
+  this.imageUploading = true;
+
+
+  const formData = new FormData();
+  formData.append('profile_image', this.selectedImageFile);
+  formData.append('user_type', this.user_type);
+
+  this.ApiService.UploadProfileImage<any>(formData).subscribe({
+    next: (res: any) => {
+
+      this.imageUploading = false;
+
+      if (res?.success) {
+
+        this.toastr.success('Profile photo updated');
+
+        
+
+        this.getUserData(this.user_type);
+
+        localStorage.setItem('userdata', JSON.stringify(this.user));
+
+        this.imagePreview = null;
+        this.selectedImageFile = null;
+
+      } else {
+        this.toastr.error(res.message);
+      }
+    },
+    error: () => {
+      this.imageUploading = false;
+      this.toastr.error('Upload failed');
+    }
+  });
+}
+
+cancelImage() {
+  this.imagePreview = null;
+  this.selectedImageFile = null;
+}
+
+
+removeProfileImage() {
+const formData = new FormData();
+  formData.append('profile_image', '');
+  formData.append('user_type', this.user_type);
+  this.ApiService.UploadProfileImage<any>(formData).subscribe({
+    next: (res: any) => {
+
+      if (res?.success) {
+
+        this.user.profile_image = '';
+
+         this.getUserData(this.user_type);
+
+        this.toastr.success('Profile photo removed');
+      }
+    }
+  });
+}
 
   /* =========================
       CANCEL EDIT

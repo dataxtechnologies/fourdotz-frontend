@@ -1,10 +1,9 @@
 .form-section {
-    background-color: #faf9f4 !important;
-    width: 600px;
-    height: auto;
+    background-color: #fff !important;
+    width: 800px;
     margin: 40px auto;
-    padding: 35px 35px;
-    padding-left: 45px;
+    padding: 25px;
+    padding-left: 35px;
     border-radius: 12px !important;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     display: flex;

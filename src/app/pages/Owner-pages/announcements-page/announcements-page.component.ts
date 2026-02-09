@@ -8,6 +8,9 @@ import { ViewAnnouncementsComponent } from '../../../modals/view-announcements/v
 import { CreateAnnouncementComponent } from '../../../modals/create-announcement/create-announcement.component';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ShepherdService } from 'angular-shepherd';
+import { DashboardLayoutService } from '../../../layouts/dashboard-layout/dashboard-layout.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-announcements-page',
@@ -26,13 +29,17 @@ export class AnnouncementsPageComponent {
   loadingPosts = true; // 🔹 skeleton for posts
   loadingPinned = true; // 🔹 skeleton for pinned posts
 
+  showtour = false
   pinnedAnnouncement1;
   pinnedAnnouncement2: any;
 
   constructor(
     private ModalService: ModalService,
     private apiService: ApiserviceService,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private shepherd: ShepherdService,
+    private DashboardService: DashboardLayoutService,
+    private router: Router
   ) {
     this.pinnedAnnouncement1 = new TableService();
     this.pinnedAnnouncement1.initialize(this.pinnedAnnouncement2, 4);
@@ -49,6 +56,10 @@ export class AnnouncementsPageComponent {
     //     }
     //   }
     // );
+
+    console.log(this.showtour);
+    
+    
   }
 
   /** Reaction handling */
@@ -75,7 +86,7 @@ export class AnnouncementsPageComponent {
     this.apiService.ListAnnouncementinOwnerTenant<any>().subscribe({
       next: (res: any) => {
         this.loadingPosts = false;
-
+        
         if (res?.success && Array.isArray(res.data)) {
           this.posts = res.data.map((post: any) => {
             if (Array.isArray(post.images)) {
@@ -88,7 +99,10 @@ export class AnnouncementsPageComponent {
                   type: isVideo ? 'video' : 'image',
                 };
               });
+              this.showtour = true
+             
             } else {
+              this.showtour = false
               post.attachments = [];
             }
             return post;
@@ -97,11 +111,13 @@ export class AnnouncementsPageComponent {
           // 🔥 Just apply filters — NO pin logic needed here
           this.applyFilters();
         } else {
+          this.showtour = false
           this.posts = [];
           this.filteredPosts = [];
         }
       },
       error: () => {
+        this.showtour = false
         this.loadingPosts = false;
         this.posts = [];
         this.filteredPosts = [];
@@ -194,7 +210,7 @@ export class AnnouncementsPageComponent {
 
         if (res?.success && Array.isArray(res.data)) {
           this.pinnedAnnouncement2 = res.data;
-
+         
           // ✅ Initialize TableService only when data exists
           if (this.pinnedAnnouncement2.length > 0) {
             this.pinnedAnnouncement1 = new TableService();
@@ -206,10 +222,12 @@ export class AnnouncementsPageComponent {
             this.pinnedAnnouncement1?.paginatedData
           );
         } else {
+          
           this.pinnedAnnouncement2 = [];
         }
       },
       error: (err) => {
+       
         this.loadingPinned = false;
         this.pinnedAnnouncement2 = [];
         console.error('❌ Failed to load pinned announcements:', err);
@@ -242,6 +260,149 @@ export class AnnouncementsPageComponent {
       },
       overlay: { leave: 'fade-out 0.5s' },
       actions: { click: false, escape: false },
+    });
+  }
+
+
+
+  startTour() {
+    const SHOULD_RUN_TOUR = true;
+    if (!SHOULD_RUN_TOUR) return;
+
+    if (this.shepherd.tourObject) {
+      this.shepherd.cancel();
+    }
+
+    this.shepherd.modal = true;
+
+    this.shepherd.defaultStepOptions = {
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      cancelIcon: { enabled: false },
+      classes: 'shepherd-dark-theme',
+    };
+
+    this.shepherd.addSteps([
+      // 1️⃣ Header
+      {
+        id: 'announcement-list',
+        title: 'List All Announcements',
+        text: 'This will show all the announcements posted by the association.',
+        attachTo: { element: '#tour-list-announcement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      {
+        id: 'view-pinned-announcement',
+        title: 'View Pinned Announcement',
+        text: 'Click here to view the pinned announcements.',
+        attachTo: { element: '#tour-view-pinned-announcement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+      {
+        id: 'view-announcement',
+        title: 'View Announcement',
+        text: 'Click here to view the announcement details.',
+        attachTo: { element: '#tour-view-announcement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      {
+        id: 'pin-announcement',
+        title: 'Pin Announcement',
+        text: 'Click here to pin the announcement.',
+        attachTo: { element: '#tour-pin-announcement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Finish',
+            classes: 'shepherd-btn-primary',
+            action: () => this.GotoTourNextpage(),
+          },
+        ],
+      },
+
+    ]);
+
+    this.shepherd.start();
+  }
+
+   finishTourthispage() {
+    // this.SkipTourthispage();
+    this.shepherd.complete();
+  }
+
+  GotoTourNextpage() {
+    // this.TourtoNextpage();
+    this.shepherd.complete();
+  }
+
+  SkipTourthispage() {
+    const payload = {
+      menu: {
+        annoucementtourowner: true,
+      },
+    };
+
+    this.apiService.AddTourdatas<any>(payload).subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.DashboardService.triggerTourApiStatusUpdate(res);
+        }
+      },
+    });
+  }
+
+  TourtoNextpage() {
+    const payload = {
+      menu: {
+        annoucementtourowner: true,
+      },
+    };
+
+    this.apiService.AddTourdatas<any>(payload).subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.DashboardService.triggerTourApiStatusUpdate(res);
+          this.router.navigateByUrl('/agreement/owner/list-created-agreement');
+        }
+      },
     });
   }
 }

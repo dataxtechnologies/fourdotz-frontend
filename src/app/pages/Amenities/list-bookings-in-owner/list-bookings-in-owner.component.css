@@ -1,0 +1,36 @@
+.amount {
+  font-weight: 600;
+  color: #19a463;
+}
+
+.payment {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.payment.paid {
+  background: #e8f7ee;
+  color: #19a463;
+}
+
+.payment.pending {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.status.booked {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status.cancelled {
+  background: #fdecea;
+  color: #d32f2f;
+}

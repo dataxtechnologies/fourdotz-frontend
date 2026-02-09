@@ -1,10 +1,9 @@
 .form-section {
-    background-color: #faf9f4 !important;
+    background-color: #fff !important;
     width: 800px;
-    max-height: 80vh;
     margin: 40px auto;
-    padding: 35px 35px;
-    padding-left: 45px;
+    padding: 25px;
+    padding-left: 35px;
     border-radius: 12px !important;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     display: flex;
@@ -12,6 +11,7 @@
     gap: 20px;
     box-sizing: border-box;
 }
+
 
 .container {
     /* padding: 10px; */
@@ -141,21 +141,13 @@ select.inp-cus {
 }
 
 .submit-btn {
-    padding: 12px 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    border: 2px solid var(--primary-color1);
+    padding: 8px 12px;
     border-radius: 12px !important;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100% !important;
-    /* max-width: 400px; */
-    text-align: center;
-    transition: all 0.3s ease;
+    background: #fff;
+    border: 2px solid var(--primary-color1);
+    color: var(--primary-color1);
+    width: 100%;
 }
-
 /* Responsive for tablet & mobile */
 @media (max-width: 1024px) {
     .form-section {

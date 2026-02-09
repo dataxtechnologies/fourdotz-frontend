@@ -29,6 +29,16 @@
             </div>
         </div>
 
+        <div class="main-head-cont mb-2">
+            <p class="text-muted mb-0 announcement-desc regular-font">
+                This section shows all the announcements posted by the association.
+                You can view the details and pin the announcements here.
+            </p>
+            <button class="tout-btn" *ngIf="posts.length > 0" (click)="startTour()">
+                🎯 Take a Tour
+            </button>
+        </div>
+
         <div class="row g-4 layout-wrapper">
             <!-- ===== Left Sidebar ===== -->
             <div class="col-lg-3">
@@ -58,7 +68,7 @@
                             Updates
                         </li>
 
-                        <li (click)="viewallpinnedAnnouncement(pinnedAnnouncement2)">
+                        <li (click)="viewallpinnedAnnouncement(pinnedAnnouncement2)" id="tour-view-pinned-announcement">
                             Pinned Announcements
                         </li>
                     </ul>
@@ -68,7 +78,7 @@
             <!-- ===== Center Feed ===== -->
             <!-- ===== Center Feed ===== -->
             <!-- <div class="col-lg-9"> -->
-                <div class="col-lg-9">
+                <div class="col-lg-9" id="tour-list-announcement">
                     <div class="post-feed">
 
                         <!-- Create Announcement Box -->
@@ -101,16 +111,16 @@
                                         </div>
                                         <div class="d-flex gap-2">
                                             <img src="assets/icons/view-post.svg" alt="view-post"
-                                                style=" cursor: pointer;" (click)="viewpost(post)">
+                                                style=" cursor: pointer;" (click)="viewpost(post)" id="tour-view-announcement"> 
                                             <!-- Already pinned -->
                                            <img src="assets/icons/pinfilled.png" *ngIf="!post.pin"
                                             style="width: 25px; cursor: pointer;"
-                                            (click)="Createpinannouncement(post._id)" />
+                                            (click)="Createpinannouncement(post._id)" id="tour-pin-announcement"/>
 
                                         <!-- Not pinned -->
                                         <img src="assets/icons/pinoutline.png" *ngIf="post.pin"
                                             style="width: 25px; cursor: pointer;"
-                                            (click)="Createpinannouncement(post._id)" />
+                                            (click)="Createpinannouncement(post._id)" id="tour-pin-announcement"/>
                                             <span class="badge regular-font">{{ post.category }}</span>
                                         </div>
                                     </div>

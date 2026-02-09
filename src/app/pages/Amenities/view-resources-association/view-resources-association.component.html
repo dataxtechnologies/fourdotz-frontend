@@ -1,0 +1,299 @@
+<section class="resources-main-div">
+    <div class="event-page">
+        <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2" (click)="goback()">
+                <div class="mb-3">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </div>
+                <div class="mb-3">
+
+                    <Button class="backbtn">Back</Button>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="section-title medium-font">Resource Details</h3>
+            </div>
+        </div>
+        <!-- Top Section -->
+        <div class="event-top">
+            <div class="event-banner">
+                <!-- <img src="assets/images/amenities-banner/chess.jpg" alt="Event Banner" /> -->
+            </div>
+
+
+        </div>
+        <!-- Resource Details -->
+        <div class="about-section" *ngIf="resourcesDetails">
+
+
+
+            <div class="resource-card">
+
+                <div class="resource-header">
+                    <h2>{{ resourcesDetails.name }}</h2>
+                    <div class="d-flex gap-3 align-items-center">
+                        <span class="status regular-font" [ngClass]="resourcesDetails.status">
+                            {{ resourcesDetails.status }}
+                        </span>
+                        <button class="open-slot-btn regular-font" (click)="OpenthebookingslotToday()">
+                            Open Slot Today
+                        </button>
+                    </div>
+                </div>
+
+                <p class="resource-type medium-font">{{ resourcesDetails.type }}</p>
+
+                <div class="resource-grid">
+
+                    <div class="info-box">
+                        <label class="medium-font">Association</label>
+                        <p class="regular-font">{{ resourcesDetails.association_name }}</p>
+                    </div>
+
+                    <div class="info-box">
+                        <label class="medium-font">Capacity</label>
+                        <p class="regular-font">{{ resourcesDetails.capacity }} persons</p>
+                    </div>
+
+                    <div class="info-box">
+                        <label class="medium-font">Open Time</label>
+                        <p class="regular-font">{{ resourcesDetails.open_time }}</p>
+                    </div>
+
+                    <div class="info-box">
+                        <label class="medium-font">Close Time</label>
+                        <p class="regular-font">{{ resourcesDetails.close_time }}</p>
+                    </div>
+
+                    <div class="info-box">
+                        <label class="medium-font">Pricing Type</label>
+                        <p class="regular-font">{{ resourcesDetails.pricing_type }}</p>
+                    </div>
+
+                    <div class="info-box">
+                        <label>Price / Hour</label>
+                        <p class="regular-font">₹ {{ resourcesDetails.price_per_hour ||0}}</p>
+                    </div>
+
+                    <div class="info-box">
+                        <label class="medium-font">Slot Duration</label>
+                        <p class="regular-font">{{ resourcesDetails.slot_duration }} mins</p>
+                    </div>
+
+                    <div class="info-box">
+                        <label class="medium-font">Total Slots</label>
+                        <p class="regular-font">{{ resourcesDetails.total_slots }}</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="event-guide" *ngIf="slotulesdetails?.length">
+
+            <div class="guide-header">
+                <h3>Resource Slot Rules</h3>
+            </div>
+
+            <div class="guide-items">
+
+
+
+                <!-- Days -->
+                <div class="guide-card">
+                    <p class="label medium-font">Available Days</p>
+
+                    <!-- If all days -->
+                    <h4 *ngIf="isAllDays(slotulesdetails[0]?.days_of_week)" class="all-days-text regular-font">
+                        all days available
+                    </h4>
+
+                    <!-- Pills -->
+                    <div class="days-pill-container" *ngIf="!isAllDays(slotulesdetails[0]?.days_of_week)">
+                        <span class="day-pill regular-font"
+                            *ngFor="let day of getDayNames(slotulesdetails[0]?.days_of_week)">
+                            {{ day }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Start Time -->
+                <div class="guide-card">
+                    <p class="label medium-font">Start Time</p>
+                    <h4 class="regular-font">
+                        {{ slotulesdetails[0]?.start_time?.$date | date:'shortTime' }}
+                    </h4>
+                </div>
+
+                <!-- End Time -->
+                <div class="guide-card">
+                    <p class="label medium-font">End Time</p>
+                    <h4 class="regular-font">
+                        {{ slotulesdetails[0]?.end_time?.$date | date:'shortTime' }}
+                    </h4>
+                </div>
+
+                <!-- Capacity -->
+                <div class="guide-card">
+                    <p class="label medium-font">Max Capacity</p>
+                    <h4 class="regular-font">
+                        {{ slotulesdetails[0]?.max_capacity }} persons
+                    </h4>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="instructions">
+
+            <div class="instruction-header">
+                <h3>Available Time Slots</h3>
+            </div>
+
+            <!-- NO SLOTS -->
+
+
+
+            <!-- NO SLOTS -->
+            <div class="no-slots" *ngIf="!timeslotsdetails || timeslotsdetails?.length === 0">
+
+                <div class="no-slot-box">
+                    <div class="icon">🕒</div>
+                    <p>No slots available today</p>
+                    <span>Please check another date</span>
+                </div>
+
+            </div>
+
+            <!-- SLOTS LIST -->
+            <div class="slots-wrapper" *ngIf="timeslotsdetails?.length > 0">
+
+                <div class="slot-card" *ngFor="let slot of timeslotsdetails" [ngClass]="{
+        'full': slot.current_capacity >= slot.max_capacity,
+        'open': slot.status === 'open'
+      }">
+
+                    <!-- TIME -->
+                    <div class="slot-time">
+                        <span class="regular-font">{{ slot.start_time | date:'dd-MMM-yyyy HH:mm a' }}</span>
+                        to
+                        <span class="regular-font"> {{ slot.end_time | date:'dd-MMM-yyyy HH:mm a' }}</span>
+                    </div>
+
+                    <!-- META -->
+                    <div class="slot-meta">
+
+                        <span class="capacity">
+                            {{ slot.max_capacity - slot.current_capacity }} left
+                        </span>
+
+                        <span class="status" [ngClass]="slot.status">
+                            {{ slot.status }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+
+    </div>
+
+    <div class="booking-section">
+        <div>
+            <div class="booking-header">
+                <h3 class="section-title medium-font">Booking Details</h3>
+
+                <div class="pagination-bar">
+
+                    <!-- LEFT -->
+                    <button class="nav-btn" (click)="prevPage()" [disabled]="BookingDetails1.currentPage === 1">
+                        ‹
+                    </button>
+
+                    <!-- CENTER -->
+                    <span class="page-indicator">
+                        {{ BookingDetails1.currentPage }} / {{ pages?.length }}
+                    </span>
+
+                    <!-- RIGHT -->
+                    <button class="nav-btn" (click)="nextPage()"
+                        [disabled]="BookingDetails1.currentPage === pages?.length">
+                        ›
+                    </button>
+
+                </div>
+            </div>
+            <div class="booking-list">
+
+                <!-- BOOKINGS -->
+                <ng-container *ngIf="BookingDetails1.paginatedData.length > 0; else noBookings">
+
+                    <div class="flight-card" *ngFor="let booking of BookingDetails1.paginatedData">
+
+                        <!-- ICON -->
+                        <div class="icon-wrap">
+                            <img [src]="booking.icon" />
+                        </div>
+
+                        <!-- CONTENT -->
+                        <div class="content-wrap">
+
+                            <div class="row-top">
+                                <span class="time regular-font">{{ booking.timeDisplay }}</span>
+                            </div>
+
+                            <div class="row-mid">
+                                <span class="medium-font">{{ booking.resource_name }}</span>
+                                <span class="dot">|</span>
+                                <span class="regular-font">{{ booking.property_no }}</span>
+                            </div>
+
+                            <div class="row-bottom">
+                                <span class="regular-font">
+                                    {{ booking.persons?.[0]?.name }}
+                                </span>
+
+                                <span class="regular-font">
+                                    Age {{ booking.persons?.[0]?.age }}
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <!-- RIGHT -->
+                        <div class="right-wrap">
+                            <div class="route">
+                                {{ booking.booking_status | titlecase }}
+                            </div>
+
+                            <div class="price-wrap">
+                                ₹ {{ booking.amount }}
+                            </div>
+                        </div>
+
+                    </div>
+
+                </ng-container>
+
+                <!-- NO BOOKINGS -->
+                <ng-template #noBookings>
+                    <div class="no-booking">
+                        <img src="/assets/icons/nodata.png" />
+                        <p>No bookings available</p>
+                    </div>
+                </ng-template>
+
+            </div>
+        </div>
+    </div>
+</section>

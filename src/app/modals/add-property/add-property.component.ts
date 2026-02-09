@@ -23,7 +23,7 @@ export class AddPropertyComponent implements OnInit {
   propertyForm!: FormGroup;
   submitBtn = true;
   propertyTypes: any;
-  buildingTypes: string[] = ['Tower', 'Block'];
+  building_types: string[] = ['tower_name', 'block_name '];
   days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
 
   constructor(
@@ -54,9 +54,9 @@ export class AddPropertyComponent implements OnInit {
       dueDate: ['', Validators.required],
       propertyType: ['', Validators.required],
       bhk: ['', Validators.required],
-      buildingType: [''],
-      tower: [''],
-      block: [''],
+      building_type : [''],
+      tower_name: [''],
+      block_name : [''],
       floor: [''],
     });
 
@@ -99,7 +99,7 @@ export class AddPropertyComponent implements OnInit {
           this.propertyForm.get('bhk')?.setValidators([Validators.required]);
         } else if (selectedType === 'Apartment') {
           this.propertyForm
-            .get('buildingType')
+            .get('building_type')
             ?.setValidators([Validators.required]);
           this.propertyForm.get('bhk')?.setValidators([Validators.required]);
           this.propertyForm.get('floor')?.setValidators([Validators.required]);
@@ -112,12 +112,12 @@ export class AddPropertyComponent implements OnInit {
     // 🔹 Conditional validators for property type
     this.propertyForm.get('propertyType')?.valueChanges.subscribe((type) => {
       this.propertyForm.get('bhk')?.clearValidators();
-      this.propertyForm.get('buildingType')?.clearValidators();
+      this.propertyForm.get('building_type')?.clearValidators();
       this.propertyForm.get('floor')?.clearValidators();
 
       if (type === 'Apartment') {
         this.propertyForm
-          .get('buildingType')
+          .get('building_type')
           ?.setValidators(Validators.required);
         this.propertyForm.get('bhk')?.setValidators(Validators.required);
         this.propertyForm.get('floor')?.setValidators(Validators.required);
@@ -126,25 +126,25 @@ export class AddPropertyComponent implements OnInit {
       }
 
       this.propertyForm.get('bhk')?.updateValueAndValidity();
-      this.propertyForm.get('buildingType')?.updateValueAndValidity();
+      this.propertyForm.get('building_type')?.updateValueAndValidity();
       this.propertyForm.get('floor')?.updateValueAndValidity();
     });
 
     // 🔹 Conditional validators for building type
-    this.propertyForm.get('buildingType')?.valueChanges.subscribe((bt) => {
-      if (bt === 'Tower') {
-        this.propertyForm.get('tower')?.setValidators(Validators.required);
-        this.propertyForm.get('block')?.clearValidators();
-      } else if (bt === 'Block') {
-        this.propertyForm.get('block')?.setValidators(Validators.required);
-        this.propertyForm.get('tower')?.clearValidators();
+    this.propertyForm.get('building_type')?.valueChanges.subscribe((bt) => {
+      if (bt === 'tower_name') {
+        this.propertyForm.get('tower_name')?.setValidators(Validators.required);
+        this.propertyForm.get('block_name ')?.clearValidators();
+      } else if (bt === 'block_name ') {
+        this.propertyForm.get('block_name ')?.setValidators(Validators.required);
+        this.propertyForm.get('tower_name')?.clearValidators();
       } else {
-        this.propertyForm.get('tower')?.clearValidators();
-        this.propertyForm.get('block')?.clearValidators();
+        this.propertyForm.get('tower_name')?.clearValidators();
+        this.propertyForm.get('block_name ')?.clearValidators();
       }
 
-      this.propertyForm.get('tower')?.updateValueAndValidity();
-      this.propertyForm.get('block')?.updateValueAndValidity();
+      this.propertyForm.get('tower_name')?.updateValueAndValidity();
+      this.propertyForm.get('block_name ')?.updateValueAndValidity();
     });
   }
 
@@ -179,8 +179,8 @@ export class AddPropertyComponent implements OnInit {
         gasline_number: this.propertyForm.get('gaslineNo')?.value,
         parking_slot_number: this.propertyForm.get('parkingSlot')?.value,
         bhk: this.propertyForm.get('bhk')?.value,
-        tower: this.propertyForm.get('tower')?.value,
-        block: this.propertyForm.get('block')?.value,
+        tower_name: this.propertyForm.get('tower_name')?.value,
+        block_name : this.propertyForm.get('block_name ')?.value,
         floor: this.propertyForm.get('floor')?.value,
       };
 

@@ -21,59 +21,95 @@ import { AssociationServiceService } from '../../services/association/associatio
   styleUrls: ['./edit-vehicle-data.component.css'],
 })
 export class EditVehicleDataComponent implements OnInit {
-  @Input() vehicleDetails: any; // Full property object containing vehicles
-  @Input() associationId: any; // Full property object containing vehicles
+  @Input() vehicleDetails: any;
+  @Input() associationId: any;
+
   vehicleForm!: FormGroup;
   submitbtn = true;
 
-  constructor(private fb: FormBuilder, private Modal: ModalService, private apiService: ApiserviceService, private Toast: ToastrService,
-    private OwnerService: OwnerServiceService, private AssociationService: AssociationServiceService
+  /* 🔹 brand dropdown holder */
+  brandList: any[] = [];
+
+  /* 🔹 master brands */
+  twoWheelerBrands = [
+    { brand: 'Honda' }, { brand: 'Hero' }, { brand: 'Bajaj' },
+    { brand: 'TVS' }, { brand: 'Royal Enfield' }, { brand: 'Suzuki' },
+    { brand: 'Yamaha' }, { brand: 'KTM' }, { brand: 'Other' },
+  ];
+
+  fourWheelerBrands = [
+    { brand: 'Maruti Suzuki' }, { brand: 'Hyundai' }, { brand: 'Tata' },
+    { brand: 'Mahindra' }, { brand: 'Honda' }, { brand: 'Toyota' },
+    { brand: 'Kia' }, { brand: 'Renault' }, { brand: 'Volkswagen' },
+    { brand: 'Skoda' }, { brand: 'MG' }, { brand: 'Other' },
+  ];
+
+  constructor(
+    private fb: FormBuilder,
+    private Modal: ModalService,
+    private apiService: ApiserviceService,
+    private Toast: ToastrService,
+    private OwnerService: OwnerServiceService,
+    private AssociationService: AssociationServiceService
   ) {}
 
   ngOnInit(): void {
-    //console.log('vehicleDetails', this.vehicleDetails);
- this.vehicleForm = this.fb.group({
+    this.vehicleForm = this.fb.group({
       vehicleType: ['', Validators.required],
       brand: ['', Validators.required],
       model: ['', Validators.required],
       vehicleNumber: [
         '',
-        [
-          Validators.required,
-          Validators.pattern(/[A-Z]{2}\d{2}[A-Z]{2}\d{4}/),
-        ],
+        [Validators.required, Validators.pattern(/[A-Z]{2}\d{2}[A-Z]{2}\d{4}/)],
       ],
       ownedBy: ['', Validators.required],
     });
+
     this.patchVehicleData(this.vehicleDetails);
   }
 
+  /* 🔹 patch + auto load brand list */
+  patchVehicleData(data: any) {
+    if (!data) return;
 
-patchVehicleData(data: any) {
-  if (!data) return;
+    this.vehicleForm.patchValue({
+      vehicleType: data.type ?? '',
+      brand: data.brand ?? '',
+      model: data.modal ?? '',
+      vehicleNumber: data.number ?? '',
+      ownedBy: data.vehicle_owned_by ?? '',
+    });
 
-  this.vehicleForm.patchValue({
-    vehicleType: data.type ?? '',
-    brand: data.brand ?? '',
-    model: data.modal ?? '',
-    vehicleNumber: data.number ?? '',
-    ownedBy: data.vehicle_owned_by
-      ?? '',
-  });
-}
+    // load correct brand dropdown
+    this.onVehicleTypeChange();
+  }
+
+  /* 🔹 vehicle type change */
+  onVehicleTypeChange() {
+    const type = this.vehicleForm.get('vehicleType')?.value;
+
+    if (type === '2 wheeler') {
+      this.brandList = this.twoWheelerBrands;
+    } 
+    else if (type === '4 wheeler') {
+      this.brandList = this.fourWheelerBrands;
+    } 
+    else {
+      this.brandList = [];
+    }
+  }
 
   isInvalid(controlName: string): boolean {
     const control = this.vehicleForm.get(controlName);
     return control ? control.invalid && control.touched : false;
   }
 
-onVehicleNumberInput(event: Event) {
-  const input = event.target as HTMLInputElement;
-  const value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-
-  input.value = value;
-  this.vehicleForm.get('vehicleNumber')?.setValue(value, { emitEvent: false });
-}
+  onVehicleNumberInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    input.value = value;
+    this.vehicleForm.get('vehicleNumber')?.setValue(value, { emitEvent: false });
+  }
 
   EditVehicle() {
     if (this.vehicleForm.invalid) {
@@ -83,15 +119,15 @@ onVehicleNumberInput(event: Event) {
 
     this.submitbtn = false;
 
-   const payload = {
-      id: this.associationId, // assuming this is the unique ID
+    const payload = {
+      id: this.associationId,
       vehicle: [
         {
           type: this.vehicleForm.value.vehicleType,
           brand: this.vehicleForm.value.brand,
           modal: this.vehicleForm.value.model,
           number: this.vehicleForm.value.vehicleNumber,
-          vehicle_owned_by: this.vehicleForm.value.ownedBy.toLowerCase(), // tenant/owner in lowercase
+          vehicle_owned_by: this.vehicleForm.value.ownedBy.toLowerCase(),
         },
       ],
     };
@@ -100,27 +136,23 @@ onVehicleNumberInput(event: Event) {
       next: (res: any) => {
         if (res?.success) {
           this.submitbtn = true;
-          this.Toast.success(res.message, 'Success')
+          this.Toast.success(res.message, 'Success');
           this.OwnerService.triggerVehicleAdd(res);
           this.AssociationService.triggervehicleAdd(res);
           this.closeModal();
         } else {
           this.submitbtn = true;
-           this.Toast.warning(res.message, 'Warning')
-          // this.loginbtn = true;
+          this.Toast.warning(res.message, 'Warning');
         }
       },
       error: (err: any) => {
         this.submitbtn = true;
-         this.Toast.error(err.error.error.message, 'Failed')
-        //console.error('Login failed:', err.error.error.data);
-        // alert(err.message || 'Login failed, please try again.');
+        this.Toast.error(err.error.error.message, 'Failed');
       },
     });
   }
 
   closeModal() {
-    this.Modal.close()
-    //console.log('Modal closed');
+    this.Modal.close();
   }
 }

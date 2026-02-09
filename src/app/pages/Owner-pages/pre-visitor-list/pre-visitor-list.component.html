@@ -17,10 +17,43 @@
         </div>
 
         <!-- TABLE -->
-        <div class="container">
+        <div class="container" id="tour-list-pre-visitor">
             <div class="item">
 
                 <div class="new-table-wrapper">
+
+                    <!-- 🔽 FILTERS ADDED -->
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Visitor name or phone"
+                                    formControlName="visitor" class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Resident name or phone"
+                                    formControlName="resident" class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Property No."
+                                    formControlName="propertyNo" class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Gate No."
+                                    formControlName="gate" class="regular-font" />
+                            </div>
+
+                            <button type="button" class="filter-reset-btn"
+                                (click)="resetFilters()">
+                                Reset
+                            </button>
+
+                        </div>
+                    </form>
+                    <!-- 🔼 FILTER END -->
 
                     <!-- SCROLL -->
                     <div class="table-scroll-wrapper">
@@ -28,7 +61,6 @@
 
                             <table class="new-table">
 
-                                <!-- HEADER -->
                                 <thead>
                                     <tr class="medium-font">
                                         <th class="sticky-col lead-col">Visitor Details</th>
@@ -40,21 +72,17 @@
                                     </tr>
                                 </thead>
 
-                                <!-- BODY -->
                                 <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
 
-                                    <!-- DATA -->
                                     <tr *ngFor="let item of spotVisitorlist1.paginatedData">
 
-                                        <!-- STICKY COLUMN -->
                                         <td class="sticky-col lead-col">
                                             <div class="visitor-details">
                                                 <span class="property-name">
                                                     {{ item.visitor_no }}
                                                 </span>
                                                 <div class="visitor-data">
-                                                    <span>{{ item.visitor_name }}</span>
-                                                    |
+                                                    <span>{{ item.visitor_name }}</span> |
                                                     <span>{{ item.visitor_mobile }}</span>
                                                 </div>
                                             </div>
@@ -68,8 +96,7 @@
                                                     {{ item.resident_name }}
                                                 </span>
                                                 <div class="visitor-data">
-                                                    <span>{{ item.resident_mobile }}</span>
-                                                    |
+                                                    <span>{{ item.resident_mobile }}</span> |
                                                     <span>{{ item.resident_type }}</span>
                                                 </div>
                                             </div>
@@ -77,19 +104,28 @@
 
                                         <td>{{ item.purpose_of_visit }}</td>
 
-                                        <td>
-                                            {{ item.visitor_status }}
-                                        </td>
+                                        <td>{{ item.visitor_status }}</td>
 
-                                        <td (click)="visitorView(item)">
-                                            <i class="fa-regular fa-eye" style="font-size:18px"></i>
+                                        <td>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <div>
+                                                    <button class="table-btn"
+                                                        (click)="AcceptVisitorInvite(item.visitor_no)">
+                                                        Accept invite
+                                                    </button>
+                                                </div>
+                                                <div (click)="visitorView(item)">
+                                                    <i class="fa-regular fa-eye"
+                                                        style="font-size:18px; cursor: pointer;"></i>
+                                                </div>
+                                            </div>
                                         </td>
 
                                     </tr>
 
-                                    <!-- NO DATA -->
                                     <tr *ngIf="spotVisitorlist1.paginatedData.length === 0">
-                                        <td colspan="6" class="regular-font" style="text-align:center;color:gray;">
+                                        <td colspan="6" class="regular-font"
+                                            style="text-align:center;color:gray;">
                                             No Data Found
                                         </td>
                                     </tr>
@@ -97,7 +133,6 @@
                                 </tbody>
                             </table>
 
-                            <!-- SKELETON -->
                             <ng-template #tableSkeleton>
                                 <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
                                     <td class="sticky-col lead-col">
@@ -127,7 +162,8 @@
                         </div>
 
                         <div class="d-flex gap-3 regular-font">
-                            <button class="nav-btn" (click)="spotVisitorlist1.prevPage()"
+                            <button class="nav-btn"
+                                (click)="spotVisitorlist1.prevPage()"
                                 [disabled]="spotVisitorlist1.currentPage === 1">
                                 ‹ Prev
                             </button>
@@ -136,7 +172,8 @@
                                 {{ spotVisitorlist1.currentPage }}
                             </button>
 
-                            <button class="nav-btn" (click)="spotVisitorlist1.nextPage()"
+                            <button class="nav-btn"
+                                (click)="spotVisitorlist1.nextPage()"
                                 [disabled]="spotVisitorlist1.currentPage === spotVisitorlist1.totalPages">
                                 Next ›
                             </button>

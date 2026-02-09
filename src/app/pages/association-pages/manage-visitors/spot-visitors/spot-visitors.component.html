@@ -13,7 +13,61 @@
             <div class="item">
 
                 <div class="new-table-wrapper">
+<!-- 🔽 FILTERS (NO DESIGN CHANGE) -->
+<form [formGroup]="filterForm">
+  <div class="filters">
 
+    <!-- Visitor -->
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Visitor name or phone"
+        formControlName="visitor"
+        class="regular-font"
+      />
+    </div>
+
+    <!-- Resident -->
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Resident name or phone"
+        formControlName="resident"
+        class="regular-font"
+      />
+    </div>
+
+    <!-- Property -->
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Property No."
+        formControlName="propertyNo"
+        class="regular-font"
+      />
+    </div>
+
+    <!-- Gate -->
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Gate No."
+        formControlName="gate"
+        class="regular-font"
+      />
+    </div>
+
+    <!-- Reset -->
+    <button
+      type="button"
+      class="filter-reset-btn"
+      (click)="resetFilters()"
+    >
+      Reset
+    </button>
+
+  </div>
+</form>
                     <!-- SCROLL WRAPPER -->
                     <div class="table-scroll-wrapper">
                         <div class="table-scroll">

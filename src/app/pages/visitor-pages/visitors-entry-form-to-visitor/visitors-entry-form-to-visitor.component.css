@@ -1,14 +1,15 @@
-/* ==========================
-   SECTION BACKGROUND
-========================== */
-section {
-    height: 100vh;
+.form-section {
+    background-color: #fff !important;
+    width: 800px;
+    margin: 40px auto;
+    padding: 25px;
+    padding-left: 35px;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    background: #8B4095;
-    background: linear-gradient(137deg, rgba(139, 64, 149, 1) 36%, rgba(234, 69, 49, 1) 77%);
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
 }
 
 /* ==========================

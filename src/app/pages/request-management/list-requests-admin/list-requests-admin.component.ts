@@ -4,44 +4,51 @@ import { ModalService } from 'ngx-modal-ease';
 import { ToastrService } from 'ngx-toastr';
 import { TableService } from '../../../services/tableservice.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CreateAdminComponent } from '../../../modals/create-admin/create-admin.component';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { ViewRequestAdminComponent } from '../../../modals/view-request-admin/view-request-admin.component';
+
 @Component({
   selector: 'app-list-requests-admin',
-   imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './list-requests-admin.component.html',
   styleUrl: './list-requests-admin.component.css'
 })
-export class ListRequestsAdminComponent {
- // REQUEST LIST
+export class ListRequestsAdminComponent implements OnInit {
+
   RequestList1 = new TableService();
   RequestList2: any[] = [];
   tableLoading = true;
 
-  // ADMIN LIST
-  adminList1 = new TableService();
-  adminList2: any[] = [];
-  adminLoading = true;
+  filterForm!: FormGroup;
 
   constructor(
     private api: ApiserviceService,
     private modal: ModalService,
     private toast: ToastrService,
+    private fb: FormBuilder,
     private AssociationService: AssociationServiceService
   ) {}
 
-  ngOnInit(): void {  
-    this.ListRequests();
+  ngOnInit(): void {
 
-        this.AssociationService.ChangeRequeststatusStatus$.subscribe((res: any) => {
-      if (res?.success) this.ListRequests();
+    this.filterForm = this.fb.group({
+      search: [''],
+      workStatus: [''],
+      residentType: [''],
+      fromDate: [''],
+      toDate: ['']
     });
 
+    this.filterForm.valueChanges.subscribe(() => this.applyFilters());
+
+    this.ListRequests();
+
+    this.AssociationService.ChangeRequeststatusStatus$.subscribe((res: any) => {
+      if (res?.success) this.ListRequests();
+    });
   }
 
-  /* FETCH ALL REQUESTS */
   ListRequests() {
     this.tableLoading = true;
 
@@ -59,34 +66,62 @@ export class ListRequestsAdminComponent {
     });
   }
 
-  
+  applyFilters() {
 
-  /* OPEN VIEW REQUEST MODAL */
+    const { search, workStatus, residentType, fromDate, toDate } = this.filterForm.value;
+
+    let filtered = this.RequestList2.filter(req => {
+
+      const matchSearch =
+        !search ||
+        req.property_no?.toLowerCase().includes(search.toLowerCase()) ||
+        req.title?.toLowerCase().includes(search.toLowerCase()) ||
+        req.resident_name?.toLowerCase().includes(search.toLowerCase()) ||
+        String(req.resident_mobile)?.includes(search);
+
+      const matchStatus =
+        !workStatus || req.work_status === workStatus;
+
+      const matchResidentType =
+        !residentType || req.user_type === residentType;
+
+      const createdDate = new Date(req.created_time.$date);
+
+      const matchDate =
+        (!fromDate || createdDate >= new Date(fromDate)) &&
+        (!toDate || createdDate <= new Date(toDate));
+
+      return matchSearch && matchStatus && matchResidentType && matchDate;
+    });
+
+    this.RequestList1.initialize(filtered, 10);
+  }
+
+  resetFilters() {
+    this.filterForm.reset();
+    this.RequestList1.initialize(this.RequestList2, 10);
+  }
+
   OpenViewRequest(item: any) {
     this.modal.open(ViewRequestAdminComponent, {
       modal: {
         enter: 'enter-going-down 0.3s ease-out',
         leave: 'fade-out 0.5s',
       },
-      data: {
-        RequestData: item,
-      },
+      data: { RequestData: item },
       overlay: { leave: 'fade-out 0.5s' },
       actions: { click: false, escape: false },
     });
   }
 
-  /* CHECK IMAGE */
   isImage(url: string): boolean {
     return /\.(jpg|jpeg|png|webp)$/i.test(url);
   }
 
-  /* CHECK VIDEO */
   isVideo(url: string): boolean {
     return /\.(mp4|webm|ogg)$/i.test(url);
   }
 
-  /* OPEN IMAGE / VIDEO IN NEW TAB */
   openLink(url: string) {
     window.open(url, '_blank');
   }

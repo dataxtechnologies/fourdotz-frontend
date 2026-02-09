@@ -3,26 +3,39 @@
 
         <!-- HEADER -->
         <div class="container header-cont">
+
             <div class="head-cont">
                 <h2>Rental Invoice List</h2>
             </div>
             <div>
                 <button class="btn-add" (click)="generateRental()" [disabled]="!isTenantPresent"
+                    id="tour-generate-rental-invoice"
                     [title]="!isTenantPresent ? 'You don’t have any tenant to generate rent invoice' : ''">
                     + Generate Rental Invoice
                 </button>
             </div>
+
+            
+        </div>
+        <div class="main-head-cont">
+            <p class="text-muted mb-0 rental-desc regular-font">
+                This section shows all rental invoices generated for your tenants by property and billing period.
+                You can create a new invoice using the Generate Rental Invoice button and track payment status here.
+            </p>
+            <button class="tout-btn" *ngIf="rentalinvoicelist1.paginatedData.length > 0" (click)="startTour()">
+                🎯 Take a Tour
+            </button>
         </div>
 
         <!-- TABLE -->
-        <div class="container">
+        <div class="container" id="tour-rental-invoice-list">
             <div class="item">
 
                 <div class="new-table-wrapper">
 
                     <!-- FILTERS -->
                     <form [formGroup]="filterForm">
-                        <div class="filters">
+                        <div class="filters" id="tour-rental-invoice-filter">
 
                             <div class="search-box">
                                 <label class="medium-font">Payment Status</label>
@@ -117,7 +130,8 @@
                                             </ng-container>
 
                                             <ng-template #markPaid>
-                                                <span class="table-btn" (click)="changetopaidstatus(p.invoice_no)">
+                                                <span class="table-btn" (click)="changetopaidstatus(p.invoice_no)"
+                                                    id="tour-mark-as-paid">
                                                     Mark Paid
                                                 </span>
                                             </ng-template>

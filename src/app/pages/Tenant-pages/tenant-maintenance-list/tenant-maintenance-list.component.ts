@@ -5,7 +5,7 @@ import { GenerateMaintenanceComponent } from '../../../modals/generate-maintenan
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { TableService } from '../../../services/tableservice.service';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { PaymentFailurePopupComponent } from '../../../modals/payment-failure-popup/payment-failure-popup.component';
 import { PaymentSuccessPopupComponent } from '../../../modals/payment-success-popup/payment-success-popup.component';
 
@@ -16,73 +16,106 @@ import { PaymentSuccessPopupComponent } from '../../../modals/payment-success-po
   styleUrl: './tenant-maintenance-list.component.css',
 })
 export class TenantMaintenanceListComponent {
-  maintenancelist2: any;
-  maintenancelist1;
+
+  maintenancelist2: any[] = [];
+  maintenancelist1: any;
+
+  filterForm!: FormGroup;
+
   pages: any;
   tableLoading = true;
-  usertype = localStorage.getItem('user_type')
+  usertype = localStorage.getItem('user_type');
 
   constructor(
     private ModalService: ModalService,
     private route: Router,
     private Apiservice: ApiserviceService,
-    private Acroute: ActivatedRoute
+    private Acroute: ActivatedRoute,
+    private fb: FormBuilder
   ) {
     this.maintenancelist1 = new TableService();
-    this.maintenancelist1.initialize(this.maintenancelist2, 10);
+    this.maintenancelist1.initialize([], 10);
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
+
+    this.filterForm = this.fb.group({
+      propertySearch: [''],
+      residentSearch: [''],
+      status: [''],
+      fromDate: [''],
+      toDate: ['']
+    });
+
+    this.filterForm.valueChanges.subscribe(() => {
+      this.applyFilters();
+    });
+
     this.TenantMaintenanceList();
 
     this.Acroute.queryParams.subscribe(params => {
-    const status = params['success'];
+      const status = params['success'];
+      if (status && status.toLowerCase() === 'true') {
+        this.OpenSuccessPopup();
+      } else if (status && status.toLowerCase() === 'false') {
+        this.openfailurepopup();
+      }
+    });
+  }
 
-    if (status && status.toLowerCase() === 'true') {
-      this.OpenSuccessPopup();
-    }else if (status && status.toLowerCase() === 'false'){
-      this.openfailurepopup();
-    }
-  });
+  applyFilters() {
+
+    const { propertySearch, residentSearch, status, fromDate, toDate } = this.filterForm.value;
+
+    let filtered = this.maintenancelist2.filter(item => {
+
+      const matchProperty =
+        !propertySearch ||
+        item.property_no?.toLowerCase().includes(propertySearch.toLowerCase());
+
+      const matchResident =
+        !residentSearch ||
+        item.resident_name?.toLowerCase().includes(residentSearch.toLowerCase());
+
+      const isPaid = item.payment_status;
+      const overdue = this.isOverdue(item.created_time.$date);
+
+      const matchStatus =
+        !status ||
+        (status === 'paid' && isPaid) ||
+        (status === 'pending' && !isPaid && !overdue) ||
+        (status === 'overdue' && !isPaid && overdue);
+
+      const createdDate = new Date(item.created_time.$date);
+
+      const matchDate =
+        (!fromDate || createdDate >= new Date(fromDate)) &&
+        (!toDate || createdDate <= new Date(toDate));
+
+      return matchProperty && matchResident && matchStatus && matchDate;
+    });
+
+    this.maintenancelist1.initialize(filtered, 10);
+  }
+
+  resetFilters() {
+    this.filterForm.reset();
+    this.maintenancelist1.initialize(this.maintenancelist2, 10);
   }
 
   OpenSuccessPopup() {
-      this.ModalService.open(PaymentSuccessPopupComponent, {
-        modal: {
-          enter: 'enter-going-down 0.3s ease-out',
-          leave: 'fade-out 0.5s',
-        },
-        overlay: { leave: 'fade-out 0.5s' },
-        actions: {
-          click: false,
-          escape: false,
-        },
-      });
-    }
-    openfailurepopup() {
-      this.ModalService.open(PaymentFailurePopupComponent, {
-        modal: {
-          enter: 'enter-going-down 0.3s ease-out',
-          leave: 'fade-out 0.5s',
-        },
-        overlay: { leave: 'fade-out 0.5s' },
-        actions: {
-          click: false,
-          escape: false,
-        },
-      });
-    }
+    this.ModalService.open(PaymentSuccessPopupComponent);
+  }
+
+  openfailurepopup() {
+    this.ModalService.open(PaymentFailurePopupComponent);
+  }
 
   isOverdue(createdDate: any): boolean {
     const created = new Date(createdDate);
     const today = new Date();
-
-    // Compare only the date part (ignore time)
-    created.setHours(0, 0, 0, 0);
-    today.setHours(0, 0, 0, 0);
-
+    created.setHours(0,0,0,0);
+    today.setHours(0,0,0,0);
     return today > created;
   }
 
@@ -92,39 +125,26 @@ export class TenantMaintenanceListComponent {
         if (res?.success) {
           this.maintenancelist2 = res.data;
           this.maintenancelist1.initialize(this.maintenancelist2, 10);
-          this.pages = Array.from(
-            { length: this.maintenancelist2.totalPages },
-            (_, i) => i + 1
-          );
           this.tableLoading = false;
         } else {
           this.maintenancelist2 = [];
-          this.maintenancelist1.initialize(this.maintenancelist2, 10);
+          this.maintenancelist1.initialize([], 10);
           this.tableLoading = false;
-          // alert(res.message || 'Logout failed, please try again.');
         }
       },
-      error: (err: any) => {
+      error: () => {
         this.maintenancelist2 = [];
-        this.maintenancelist1.initialize(this.maintenancelist2, 10);
+        this.maintenancelist1.initialize([], 10);
         this.tableLoading = false;
-        //console.error('Logout failed:', err);
-        // alert(err.message || 'Logout failed, please try again.');
-      },
+      }
     });
   }
 
-
   openpaidmaintenanceinvoice(data: any){
-   this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paid`);
-}
-
-
-
-
-
+    this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paid`);
+  }
 
   CreatePaymentforInvoiceId(data: any) {
-  this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paynow`);
-}
+    this.route.navigateByUrl(`maintenance-invoice/${this.usertype}/${data}?status=paynow`);
+  }
 }

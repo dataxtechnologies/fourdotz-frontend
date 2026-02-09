@@ -1,5 +1,5 @@
 .form-section {
-    background: #faf9f4;
+    background-color: #fff !important;
     width: 800px;
     margin: 40px auto;
     padding: 25px;
@@ -139,18 +139,7 @@ select.inp-cus {
     margin-top: 20px;
 }
 
-.submit-btn {
-    padding: 12px 25px;
-    font-size: 1rem;
-    font-weight: 600;
-    border: 2px solid var(--primary-color1);
-    border-radius: 12px !important;
-    cursor: pointer;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    transition: all 0.3s ease;
-}
+
 
 /* Responsive for tablet & mobile */
 @media (max-width: 1024px) {

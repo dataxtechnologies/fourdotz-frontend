@@ -1,0 +1,76 @@
+<section>
+    <div class="campaigns-page">
+
+        <div class="header">
+            <h2>My Resources</h2>
+            <button class="btn-add" (click)="createresources()">+ Create New Resources</button>
+        </div>
+
+        <div class="board">
+
+            <div class="column" *ngFor="let col of columns">
+
+                <div class="column-header">
+                    {{ col.title }}
+                </div>
+
+                <div class="empty-state regular-font" *ngIf="col.items.length === 0">
+                    No amenities found
+                </div>
+                <div class="card" *ngFor="let item of col.items">
+
+                    <!-- TITLE -->
+                    <div class="card-title medium-font">
+                        {{ item.name }}
+                        <span class="status regular-font" [class.active]="item.status">
+                            {{ item.status | titlecase }}
+                        </span>
+                    </div>
+
+                    <!-- META INFO -->
+                    <div class="card-meta">
+                        
+                    </div>
+
+                    <!-- DETAILS -->
+                    <div class="card-details">
+                        <p class="regular-font">
+                            <strong class="medium-font">Time:</strong>
+                            {{ formatTime(item.open_time) }} –
+                            {{ formatTime(item.close_time) }}
+                        </p>
+
+                        <p class="regular-font">
+                            <strong class="medium-font">Capacity:</strong>
+                            {{ item.capacity }}
+                        </p>
+
+                        <p *ngIf="item.pricing_type === 'paid'" class="regular-font">
+                            <strong class="medium-font">Price:</strong>
+                            {{ formatPricePerSlot(item) }}
+                        </p>
+
+                        <p *ngIf="item.pricing_type === 'free'" class="regular-font">
+                            <strong class="medium-font">Price:</strong>
+                            Free
+                        </p>
+                    </div>
+
+                    <!-- ACTIONS -->
+                    <div class="card-footer">
+                        <button class="btn-view regular-font" (click)="viewResource(item)">
+                            View
+                        </button>
+
+                        <button class="btn-delete regular-font" (click)="deleteResource(item)">
+                            Delete
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>

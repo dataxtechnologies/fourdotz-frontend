@@ -1,0 +1,327 @@
+/* ====== LAYOUT ====== */
+.booking-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  padding: 24px;
+}
+
+.booking-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ====== CARD ====== */
+.card,
+.summary-card {
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid #e6e8eb;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+}
+
+/* ====== HEADINGS ====== */
+.card h3,
+.summary-card h3 {
+  margin-bottom: 14px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ====== RESOURCE GRID ====== */
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.resource-card {
+  background: #f9fafb;
+  border-radius: 14px;
+  padding: 18px 14px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+  transition: all .25s ease;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.resource-card img {
+  height: 42px;
+  margin-bottom: 8px;
+}
+
+.resource-card p {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  margin: 0;
+}
+
+.resource-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.resource-card.active {
+  border: 2px solid var(--primary-color2);
+  background: #ffd3c9;
+}
+
+.resource-card input {
+  display: none;
+}
+
+/* ====== SHOW MORE ====== */
+.show-more-wrapper {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.show-more-btn {
+  background: transparent;
+  border: none;
+  color: var(--primary-color2);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.show-more-btn:hover {
+  text-decoration: underline;
+}
+
+/* ====== SLOT SECTION ====== */
+.today-date {
+  font-size: 15px;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.time-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.time {
+  border: 1px solid #d1d5db;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  background: #ffffff;
+  transition: all .2s ease;
+}
+
+.time:hover {
+  background: #f3f4f6;
+}
+
+.time.active {
+  border: 2px solid var(--primary-color2);
+  background: #ffd3c9;
+}
+
+.time input {
+  display: none;
+}
+
+/* ====== SLOT RULES ====== */
+.guide-items {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.guide-card {
+  background: #f9fafb;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.guide-card .label {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.guide-card h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.days-pill-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.day-pill {
+  background: #eef2ff;
+  color: #3730a3;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* ====== INPUT ====== */
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary-color2);
+}
+
+/* ====== FAMILY ====== */
+.family {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+/* ====== BOOKING SUMMARY ====== */
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+.summary-item span {
+  color: #6b7280;
+}
+
+.summary-item strong {
+  color: #111827;
+}
+
+.summary-item.total {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ====== PAY BUTTON ====== */
+.pay-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  background: var(--primary-color2);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.pay-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.pay-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ====== ANIMATION ====== */
+.slot-animate {
+  animation: slideDown .35s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+.no-slot {
+  padding: 16px;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  text-align: center;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.slide-down {
+  animation: slideDown .35s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.time {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: all .2s ease;
+  background: #fff;
+}
+
+.time:hover {
+  border-color: #ef4444;
+}
+
+.time.active {
+  background: #fee2e2;
+  border-color: #ef4444;
+  font-weight: 600;
+}
+
+.time.disabled {
+  opacity: .4;
+  pointer-events: none;
+}
+
+.form-row{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.backbtn{
+    background-color: transparent;
+    border: none;
+    color: #000;
+}

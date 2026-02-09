@@ -1,0 +1,182 @@
+<section class="res-sec">
+    <div class="location-card">
+
+         <div class="d-flex align-items-center gap-3">
+           <div class="d-flex align-items-center gap-2" (click)="goback()">
+             <div class="mb-3">
+                <i class="fa-solid fa-arrow-left"></i>
+            </div>
+            <div class="mb-3">
+
+                <Button class="backbtn">Back</Button>
+            </div>
+           </div>
+
+            <div>
+                <h3 class="title">Select Amenities</h3>
+            </div>
+        </div>
+       
+
+        <!-- CATEGORY TABS -->
+        <div class="category-tabs">
+            <label *ngFor="let cat of categories" class="tab-card" [class.active]="selectedCategory === cat.key"
+                [class.disabled]="isAmenityLocked">
+
+                <input type="radio" name="category" [value]="cat.key" [(ngModel)]="selectedCategory"
+                    [disabled]="isAmenityLocked" (change)="onCategoryChange(cat.key)" />
+
+                <span class="tab-label">{{ cat.label }}</span>
+                <span class="tab-dot"></span>
+            </label>
+        </div>
+
+        <!-- AMENITIES -->
+        <div class="ame-div">
+            <div *ngIf="selectedCategory !== 'others'" class="amenity-grid">
+
+                <label class="amenity-card" *ngFor="let item of amenities[selectedCategory]"
+                    [class.active]="selectedAmenity === item.name"
+                    [class.disabled]="selectedAmenity && selectedAmenity !== item.name"
+                    (click)="!selectedAmenity && onAmenitySelect(item)">
+
+                    <input type="radio" name="amenity" [value]="item.name" [(ngModel)]="selectedAmenity"
+                        [disabled]="selectedAmenity && selectedAmenity !== item.name" />
+
+                    <div class="amenity-icon">
+                        <img [src]="item.icon" />
+                    </div>
+
+                    <p class="amenity-name">{{ item.name }}</p>
+                    <span class="check-indicator"></span>
+                </label>
+
+            </div>
+        </div>
+
+        <!-- AMENITY FORM -->
+        <div *ngIf="resourceForm" class="amenity-form" [formGroup]="resourceForm">
+
+            <div class="card-header">
+                <h3 class="medium-font">
+                    Configure {{ resourceForm.get('name')?.value }}
+                </h3>
+                <p class="regular-font">
+                    Set availability, capacity, and pricing
+                </p>
+            </div>
+
+            <div class="grid-one">
+                <!-- RESOURCE NAME (ONLY FOR OTHERS) -->
+                <div class="field mt-2" *ngIf="selectedCategory === 'others'">
+                    <label class="medium-font">Resource Name</label>
+                    <input type="text" class="regular-font input-custom-style" placeholder="Enter resource name"
+                        formControlName="name" />
+                </div>
+            </div>
+            <!-- TIME -->
+            <div class="grid two">
+                <div class="field">
+                    <label class="medium-font">Open Time</label>
+                    <select class="regular-font input-custom-style" formControlName="open_time">
+                        <option value="">Select time</option>
+                        <option *ngFor="let time of timeSlots" [value]="time">
+                            {{ time }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label class="medium-font">Close Time</label>
+                    <select class="regular-font input-custom-style" formControlName="close_time">
+                        <option value="">Select time</option>
+                        <option *ngFor="let time of timeSlots" [value]="time">
+                            {{ time }}
+                        </option>
+                    </select>
+
+                    <!-- TIME RANGE ERROR -->
+                    <p class="error-text" *ngIf="resourceForm.errors?.['invalidTimeRange'] &&
+                              resourceForm.get('close_time')?.touched">
+                        Close time must be after open time
+                    </p>
+                </div>
+            </div>
+
+            <!-- SLOT DURATION -->
+            <div class="grid one">
+                <div class="field">
+                    <label class="medium-font">Slot Duration</label>
+                    <select class="regular-font input-custom-style" formControlName="slot_duration">
+                        <option value="">Select duration</option>
+                        <option *ngFor="let slot of slotDurations" [value]="slot.value"
+                            [disabled]="isSlotDisabled(slot.value)">
+                            {{ slot.label }}
+                        </option>
+                    </select>
+
+                    <!-- TOTAL SLOTS INFO -->
+                    <p class="regular-font mt-1" *ngIf="totalSlots > 0">
+                        Total Slots:
+                        <strong>{{ totalSlots }}</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- CAPACITY + PRICING -->
+            <div class="grid two">
+                <div class="field">
+                    <label class="medium-font">Capacity</label>
+                    <input type="number" class="regular-font input-custom-style" placeholder="Max people"
+                        formControlName="capacity" />
+                </div>
+
+                <div class="field">
+                    <label class="medium-font">Pricing Type</label>
+
+                    <div class="segmented">
+                        <button type="button" class="regular-font"
+                            [class.active]="resourceForm.get('pricing_type')?.value === 'free'"
+                            (click)="resourceForm.get('pricing_type')?.setValue('free')">
+                            Free
+                        </button>
+
+                        <button type="button" class="regular-font"
+                            [class.active]="resourceForm.get('pricing_type')?.value === 'paid'"
+                            (click)="resourceForm.get('pricing_type')?.setValue('paid')">
+                            Paid
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRICE -->
+            <div class="field mt-2" *ngIf="resourceForm.get('pricing_type')?.value === 'paid'">
+                <label class="medium-font">Price per hour</label>
+                <input type="number" class="regular-font input-custom-style" placeholder="₹ Amount"
+                    formControlName="price_per_hour" />
+            </div>
+
+            <!-- ACTIONS -->
+            <div class="actions">
+                <button class="btn-outline" type="button" (click)="resetAmenity()">
+                    Change Selection
+                </button>
+
+                <div>
+                    <button class="btn-primary" type="button" (click)="submitAmenity()"
+                        [disabled]="resourceForm.invalid" *ngIf="!savebtnloading">
+                        Save Amenity
+                    </button>
+                    <button class="btn-primary" type="button" disabled style="cursor: not-allowed;" *ngIf="savebtnloading">
+                        Saving...
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</section>

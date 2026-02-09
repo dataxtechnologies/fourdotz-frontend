@@ -1,4 +1,4 @@
-<section class="form-section container">
+<section class="form-section">
   <div class="form-header">
     <h3>Add Gate Keeper</h3>
     <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
@@ -12,7 +12,7 @@
         <label class="medium-font">Name <span class="required">*</span></label>
         <input 
           type="text"
-          class="inp-cus regular-font"
+          class="input-custom-style regular-font"
           placeholder="Enter Gate Keeper Name"
           formControlName="name"
         />
@@ -26,7 +26,7 @@
         <label class="medium-font">Email <span class="required">*</span></label>
         <input 
           type="email"
-          class="inp-cus regular-font"
+          class="input-custom-style regular-font"
           placeholder="Enter Email"
           formControlName="email"
         />
@@ -41,7 +41,7 @@
         <input 
           type="text"
           maxlength="10"
-          class="inp-cus regular-font"
+          class="input-custom-style regular-font"
           placeholder="Enter Phone Number"
           formControlName="phone"
           (keypress)="restrictPhoneInput($event)"

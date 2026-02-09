@@ -61,9 +61,9 @@ export class EditPropertiesDataComponent implements OnInit {
       dueDate: ['', Validators.required],
       propertyType: ['', Validators.required],
       bhk: [''],
-      buildingType: [''],
-      tower: [''],
-      block: [''],
+      building_type: [''],
+      tower_name: [''],
+      block_name : [''],
       floor: [''],
     });
   }
@@ -150,9 +150,9 @@ export class EditPropertiesDataComponent implements OnInit {
       dueDate: selectedDueDate,
       propertyType: selectedType,
       bhk: data.bhk ?? '',
-      buildingType: data.building_type ?? '',
-      tower: data.tower ?? '',
-      block: data.block ?? '',
+      building_type: data.building_type ?? '',
+      tower_name: data.tower_name ?? '',
+      block_name : data.block_name  ?? '',
       floor: data.floor ?? '',
     });
   }
@@ -176,9 +176,9 @@ export class EditPropertiesDataComponent implements OnInit {
       due_date: this.propertyForm.get('dueDate')?.value,
       property_type: this.propertyForm.get('propertyType')?.value,
       bhk: this.propertyForm.get('bhk')?.value,
-      buildingType: this.propertyForm.get('buildingType')?.value,
-      tower: this.propertyForm.get('tower')?.value,
-      block: this.propertyForm.get('block')?.value,
+      building_type: this.propertyForm.get('building_type')?.value,
+      tower_name: this.propertyForm.get('tower_name')?.value,
+      block_name : this.propertyForm.get('block_name ')?.value,
       floor: this.propertyForm.get('floor')?.value,
 
       // ...this.propertyForm.value,

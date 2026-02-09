@@ -1,4 +1,4 @@
-<section class="form-section container">
+<section class="form-section">
     <div class="form-header">
         <h3>Edit Pet</h3>
         <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
@@ -17,10 +17,15 @@
             <div class="inp-cont">
                 <label class="medium-font">Type <span class="required">*</span></label>
                 <select class="inp-cus regular-fonts" formControlName="type">
-                    <option value="" disabled selected>Select Pet Type</option>
+                   <option value="" disabled selected>Select Pet Type</option>
                     <option value="dog">Dog</option>
                     <option value="cat">Cat</option>
-                    <option value="Others">Others</option>
+                    <option value="bird">Bird</option>
+                    <option value="rabbit">Rabbit</option>
+                    <option value="fish">Fish</option>
+                    <option value="hamster">Hamster</option>
+                    <option value="turtle">Turtle</option>
+                    <option value="other">Others</option>
                 </select>
                 <small class="text-danger regular-font" *ngIf="isInvalid('type')">
                     Please select a Pet Type.

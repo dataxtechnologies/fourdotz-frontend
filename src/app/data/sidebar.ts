@@ -3,8 +3,9 @@ export interface SidebarItem {
   icon: string;
   route?: string;
   allowedRole: string;
-  children?: SidebarItem[]; // 👈 add submenu support
-  open?: boolean; // 👈 Add this line
+  children?: SidebarItem[];
+  open?: boolean;
+  keywords?: string[];
 }
 
 export const SIDEBAR_ITEMS: SidebarItem[] = [
@@ -13,6 +14,11 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/Dashboard.png',
     route: '/Superadmin/Dashboard',
     allowedRole: 'superadmin',
+    keywords:['open','go','view','see','check','navigate','enter','access','search','find',
+'create','add','new','edit','update','manage','list','details','info','data',
+'page','screen','module','section','panel',
+'admin','association','owner','tenant','user','service','security',
+'dashboard','home','main','overview', 'dashboard','analytics','stats','report','summary','performance','activity']
     //activeicon: ''
   },
   {
@@ -20,6 +26,18 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/Association-list.png',
     route: '/Superadmin/Association-list',
     allowedRole: 'superadmin',
+    keywords:['association','society','apartment','building','community','hoa',
+'tenant list','resident list','property association']
+    //activeicon: ''
+  },
+
+  {
+    label: 'Ad Space',
+    icon: '/assets/icons/sidebar/ad-space.png',
+    route: '/Superadmin/Ad-space/list',
+    allowedRole: 'superadmin',
+    keywords:['ad','ads','advertisement','banner','promotion','marketing',
+'post ad','create ad','ad campaign']
     //activeicon: ''
   },
 
@@ -29,6 +47,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/Dashboard.png',
     route: '/Association/Dashboard',
     allowedRole: 'association',
+    keywords:['property','properties','flat','unit','apartment','building','house','rooms',
+'assets','real estate','homes','blocks',
+'add property','property list','manage property']
     //activeicon: ''
   },
   {
@@ -36,6 +57,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/property.png',
     route: '/Association/properties-list',
     allowedRole: 'association',
+    keywords:['property','properties','flat','unit','apartment','building','house','rooms',
+'assets','real estate','homes','blocks',
+'add property','property list','manage property']
     //activeicon: ''
   },
   {
@@ -43,6 +67,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/resident.png',
     route: '/Association/residents-list',
     allowedRole: 'association',
+    keywords:['resident','residents','tenant','tenants','members','people','owners',
+'users','profiles','occupants','living',
+'add tenant','tenant list','resident list','member list']
     //activeicon: ''
   },
   {
@@ -50,6 +77,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/maintenance.png',
     route: '/Association/Maintenance-list',
     allowedRole: 'association',
+    keywords:['maintenance','repair','complaint','issue','service','services',
+'cleaning','inspection','support','ticket',
+'raise complaint','service request','maintenance request']
     //activeicon: ''
   },
   {
@@ -57,6 +87,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/announcement.png',
     route: '/Association/announcement',
     allowedRole: 'association',
+    keywords:['announcement','news','updates','notice','circular','message','broadcast']
     //activeicon: ''
   },
   {
@@ -64,6 +95,8 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/Agreement.png',
     route: '/Association/request-management/list',
     allowedRole: 'association',
+    keywords:['agreement','contract','lease','rental agreement','legal','document',
+'create agreement','sign agreement','agreement template'],
     children: [
       {
         label: 'Templates',
@@ -99,6 +132,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/helpers.png',
     route: '/Association/request-management/list',
     allowedRole: 'association',
+    keywords:['helper','helpers','gate','gatekeeper','gate keeper','security','guard',
+'staff','worker','employee','service admin',
+'create gate','add gate','gate create','security create'],
     children: [
       {
         label: 'Gate Keeper',
@@ -123,10 +159,43 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   },
 
   {
+    label: 'Manage Amenities',
+    icon: '/assets/icons/sidebar/amenities.png',
+    route: '/Association/request-management/list',
+    allowedRole: 'association',
+    keywords:['amenity','amenities','facility','facilities','hall','gym','pool',
+'clubhouse','resources',
+'book hall','book amenity','amenity booking','slot booking','reserve'],
+    children: [
+      {
+        label: 'Resources',
+        icon: '',
+        route: '/Association/manage-amenities/resources',
+        allowedRole: 'association',
+      },
+      {
+        label: 'Slot Booking',
+        icon: '',
+        route: '/Association/manage-amenities/slot-booking',
+        allowedRole: 'association',
+      },
+      // {
+      //   label: 'Service Admin List',
+      //   icon: '/assets/icons/ai-users.svg',
+      //   route: '/Association/service-admin/list',
+      //   allowedRole: 'association',
+      // },
+    ],
+    //activeicon: ''
+  },
+
+  {
     label: 'Manage Request',
     icon: '/assets/icons/sidebar/request.png',
     route: '/Association/request-management/list',
     allowedRole: 'association',
+    keywords:['request','requests','complaint','tickets','approval',
+'pending request','service request'],
     children: [
       {
         label: 'Request List',
@@ -144,6 +213,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/visitors.png',
     route: '/visitors-management/visitors-list',
     allowedRole: 'association',
+    keywords:['visitor','visitors','guest','entry','checkin','security entry',
+'visitor entry','qr visitor','pre visitor','spot visitor',
+'visitor create','add visitor'],
     children: [
       {
         label: 'Manage QR',
@@ -176,6 +248,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Dashboard',
     icon: '/assets/icons/sidebar/Dashboard.png',
     route: '/Owner/Dashboard',
+    keywords:['dashboard, overview, stats, analytics, summary, home, admin, panel, metrics, report'],
     allowedRole: 'owner',
     //activeicon: '/assets/icons/Dashboard-outline.svg',
   },
@@ -184,6 +257,8 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/property.png',
     route: '/Owner/properties-list',
     allowedRole: 'owner',
+    keywords:['tenant','tenants','rent people','occupants','members',
+'add tenant','tenant list','manage tenant']
     //activeicon: ''
   },
   {
@@ -191,6 +266,8 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/tenant.png',
     route: '/Owner/tenants-list',
     allowedRole: 'owner',
+    keywords:['tenant','tenants','rent people','occupants','members',
+'add tenant','tenant list','manage tenant']
     //activeicon: ''
   },
   {
@@ -198,6 +275,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/maintenance.png',
     route: '/Owner/Maintenance-list',
     allowedRole: 'owner',
+    keywords:['maintenance','repair','complaint','issue','service','services',
+'cleaning','inspection','support','ticket',
+'raise complaint','service request','maintenance request']
     //activeicon: ''
   },
   {
@@ -205,6 +285,8 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/invoice.png',
     route: '/Owner/Rental-invoice-list',
     allowedRole: 'owner',
+    keywords:['invoice','bill','payment','rent','rent payment',
+'maintenance bill','due','transaction','receipt','pay rent']
     //activeicon: ''
   },
   {
@@ -212,6 +294,18 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/announcement.png',
     route: '/Owner/announcement/owner',
     allowedRole: 'owner',
+    keywords:['agreement','contract','lease','rental agreement','legal','document',
+'create agreement','sign agreement','agreement template']
+    //activeicon: ''
+  },
+  {
+    label: 'Book Amenities',
+    icon: '/assets/icons/sidebar/amenities.png',
+    route: '/Owner/amenities/list-book-amenities',
+    allowedRole: 'owner',
+    keywords:['amenity','amenities','facility','facilities','hall','gym','pool',
+'clubhouse','resources',
+'book hall','book amenity','amenity booking','slot booking','reserve']
     //activeicon: ''
   },
   {
@@ -219,6 +313,8 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/Agreement.png',
     route: '/',
     allowedRole: 'owner',
+    keywords:['agreement','contract','lease','rental agreement','legal','document',
+'create agreement','sign agreement','agreement template'],
     children: [
       {
         label: 'Create Agreement',
@@ -248,13 +344,47 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/request.png',
     route: '/Owner/request-management/list',
     allowedRole: 'owner',
+    keywords:['request','requests','complaint','tickets','approval',
+'pending request','service request'],
     //activeicon: ''
   },
+  // {
+  //   label: 'Pre-Visitor',
+  //   icon: '/assets/icons/sidebar/visitors.png',
+  //   route: '/Owner/pre-visitor/list',
+  //   allowedRole: 'owner',
+  //   keywords:['visitor, visitors, dashboard, overview, stats, analytics, summary, home, admin, panel, metrics, report'],
+  //   //activeicon: ''
+  // },
+
   {
-    label: 'Pre-Visitor',
+    label: 'Manage Visitors',
     icon: '/assets/icons/sidebar/visitors.png',
-    route: '/Owner/pre-visitor/list',
+    route: '/',
     allowedRole: 'owner',
+    keywords:['visitor','visitors','guest','entry','checkin','security entry',
+'visitor entry','qr visitor','pre visitor','spot visitor',
+'visitor create','add visitor'],
+    children: [
+      {
+        label: 'Pre-Visitors List',
+        icon: '',
+        route: '/Owner/pre-visitor/list',
+        allowedRole: 'owner',
+      },
+      {
+        label: 'QR-visitors List',
+        icon: '',
+        route: '/Owner/qr-visitor/list',
+        allowedRole: 'owner',
+      },
+      {
+        label: 'spot-visitors List',
+        icon: '',
+        route: '/Owner/spot-visitor/list',
+        allowedRole: 'owner',
+      },
+    ],
     //activeicon: ''
   },
   {
@@ -262,6 +392,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/Dashboard.png',
     route: '/Tenant/Dashboard',
     allowedRole: 'tenant',
+    keywords:['dashboard, overview, stats, analytics, summary, home, admin, panel, metrics, report'],
     //activeicon: ''
   },
   {
@@ -269,6 +400,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/property.png',
     route: '/Tenant/properties-list',
     allowedRole: 'tenant',
+    keywords:['rented property','my house','my flat','my unit','stay']
     //activeicon: ''
   },
   {
@@ -276,6 +408,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/maintenance.png',
     route: '/Tenant/Maintenance-list',
     allowedRole: 'tenant',
+    keywords:['maintenance','repair','complaint','issue','service','services',
+'cleaning','inspection','support','ticket',
+'raise complaint','service request','maintenance request']
     //activeicon: ''
   },
   {
@@ -283,6 +418,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/invoice.png',
     route: '/Tenant/Rental-invoice-list',
     allowedRole: 'tenant',
+    keywords:['pay rent','rent payment','invoice','bill','payment','dues']
     //activeicon: ''
   },
   {
@@ -290,6 +426,17 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/announcement.png',
     route: '/Tenant/announcement/tenant',
     allowedRole: 'tenant',
+    keywords:['announcement','news','updates','notice','circular','message','broadcast']
+    //activeicon: ''
+  },
+    {
+    label: 'Book Amenities',
+    icon: '/assets/icons/sidebar/amenities.png',
+    route: '/Owner/amenities/list-book-amenities',
+    allowedRole: 'tenant',
+    keywords:['amenity','amenities','facility','facilities','hall','gym','pool',
+'clubhouse','resources',
+'book hall','book amenity','amenity booking','slot booking','reserve']
     //activeicon: ''
   },
    {
@@ -297,6 +444,8 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         icon: '/assets/icons/sidebar/Agreement.png',
         route: '/agreement/owner/list-signing-agreement',
         allowedRole: 'tenant',
+        keywords:['agreement','contract','lease','rental agreement','legal','document',
+'create agreement','sign agreement','agreement template'],
       },
 
   {
@@ -304,6 +453,8 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/request.png',
     route: '/Tenant/request-management/list',
     allowedRole: 'tenant',
+    keywords:['request','requests','complaint','tickets','approval',
+'pending request','service request'],
     //activeicon: ''
   },
    {
@@ -311,6 +462,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/visitors.png',
     route: '/Tenant/pre-visitor/list',
     allowedRole: 'tenant',
+    keywords:['visitor','visitors','guest','entry','checkin','security entry',
+'visitor entry','qr visitor','pre visitor','spot visitor',
+'visitor create','add visitor'],
     //activeicon: ''
   },
 
@@ -319,6 +473,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/request.png',
     route: '/Service-admin/manage-requests',
     allowedRole: 'service_admin',
+    keywords:['service','service request','manage service','tickets','complaints'],
     //activeicon: ''
   },
   
@@ -328,6 +483,9 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: '/assets/icons/sidebar/visitors.png',
     route: '/',
     allowedRole: 'gate_keeper',
+    keywords:['visitor entry','gate entry','security entry',
+'check visitor','guest entry',
+'qr visitor','pre visitor','spot visitor'],
     children: [
       {
         label: 'Visitors List',
@@ -348,6 +506,17 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         allowedRole: 'gate_keeper',
       },
     ],
+    //activeicon: ''
+  },
+
+  {
+    label: 'QR',
+    icon: '/assets/icons/sidebar/qr-code.png',
+    route: '/Gate-keeper/QR/view-qr',
+    allowedRole: 'gate_keeper',
+    keywords:['visitor entry','gate entry','security entry',
+'check visitor','guest entry',
+'qr visitor','pre visitor','spot visitor', 'qr','qr code','scan','scanner','security qr','entry qr'],
     //activeicon: ''
   },
 ];

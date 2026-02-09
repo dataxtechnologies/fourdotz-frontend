@@ -1,0 +1,142 @@
+.booking-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  padding: 24px;
+  background: #FFFFFF;
+  min-height: 100vh;
+  border-radius: 12px;
+}
+
+/* left */
+.booking-left,
+.booking-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* cards */
+.card {
+  background: #fff;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid #e6e8ee;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+/* success */
+.success-banner {
+  display: flex;
+  gap: 16px;
+  background: #f8e7f8;
+  border-radius: 12px;
+  padding: 18px;
+  align-items: center;
+}
+
+.success-banner .icon {
+  background: var(--primary-color1);
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+/* headings */
+.section-title {
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+/* grid */
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+label {
+  font-size: 12px;
+  color: #464646;
+}
+
+p {
+  margin: 4px 0 0;
+  font-weight: 400;
+
+}
+
+
+
+/* status */
+.status {
+  color: var(--primary-color1);
+  text-transform: capitalize;
+}
+
+.paid {
+  color: var(--primary-color2);
+}
+
+/* summary */
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+
+.summary-row label {
+  font-size: 16px;
+  color: #141414;
+}
+
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.price-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: 12px;
+  font-size: 18px;
+  color: var(--primary-color1);
+}
+
+.primary-btn {
+  margin-top: 16px;
+  width: 100%;
+  background: var(--primary-color1);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.muted {
+  color: #777;
+}
+
+.small {
+  font-size: 16px;
+}
+
+
+
+.backbtn{
+    background-color: transparent;
+    border: none;
+    color: #000;
+}

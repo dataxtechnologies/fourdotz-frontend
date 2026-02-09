@@ -14,9 +14,20 @@
         </div>
 
     </div>
+
+    
+    <div class="main-head-cont">
+        <p class="text-muted mb-0 regular-font">
+            This section shows all the details of the property.
+            You can view the details, edit, and delete the property here.
+        </p>
+        <button class="tout-btn"  (click)="startTour()">
+            🎯 Take a Tour
+        </button>
+    </div>
     <div class="bg-white sec-cont">
         <!-- Header -->
-        <div class="header-cont">
+        <div class="header-cont" id="tour-property-details"> 
             <div class="user-info">
                 <h5 class="label medium-font">Propety No</h5>
                 <p class="regular-font">{{ Propertiesdata.property_no }}</p>
@@ -110,7 +121,7 @@
                 <button class="tab-btn" [class.active]="activeTab === 'Resident'" (click)="setTab('Resident')">
                     Resident
                 </button>
-                <button class="tab-btn" [class.active]="activeTab === 'petvehicle'" (click)="setTab('petvehicle')">
+                <button class="tab-btn" id="tour-petvehicle-tab" [class.active]="activeTab === 'petvehicle'" (click)="setTab('petvehicle')">
                     Pet & Vehicle
                 </button>
             </div>
@@ -123,10 +134,10 @@
 
 
                         <!-- Tenant Card -->
-                        <div class="resident-card">
+                        <div class="resident-card" id="tour-card-tenant">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5>Tenant Details</h5>
-                                <div class="d-flex gap-3">
+                                <div class="d-flex gap-3" id="tour-add-tenant">
                                     <button class="btn-add" (click)="addTenant(propertiesId)"
                                         *ngIf="!Propertiesdata.tenant_details?._id">+ Add Tenant</button>
                                     <button class="btn-add" (click)="RemoveTenant(propertiesId)"
@@ -163,14 +174,14 @@
 
                 </div>
                 <div *ngIf="activeTab === 'petvehicle'" class="resident-section">
-                    <h4 class="section-title">Pet & Vehicle</h4>
+                    <h4 class="section-title" >Pet & Vehicle</h4>
 
                     <!-- Pet Card -->
                     <div class="resident-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Pet Details</h5>
                             <div *ngIf="Propertiesdata?.owner_details && (Propertiesdata.owner_details | keyvalue).length > 0">
-                                <button class="btn-add" (click)="addpet(propertiesId)"
+                                <button class="btn-add " id="tour-add-pet" (click)="addpet(propertiesId)"
                                     *ngIf="!Propertiesdata.pet || Propertiesdata.pet.length === 0">+ Add pet</button>
                                 <div class="d-flex gap-2">
                                     <button class="btn-add" (click)="EditPet(Propertiesdata.pet[0], propertiesId)"
@@ -213,7 +224,7 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5>Vehicle Details</h5>
                             <div *ngIf="Propertiesdata?.owner_details && (Propertiesdata.owner_details | keyvalue).length > 0">
-                                <button class="btn-add" (click)="addVehicle(propertiesId)"
+                                <button class="btn-add" id="tour-add-vehicle" (click)="addVehicle(propertiesId)"
                                     *ngIf="!Propertiesdata.vehicle || Propertiesdata.vehicle.length === 0">+ Add
                                     Vehicle</button>
                                 <div class="d-flex gap-2">

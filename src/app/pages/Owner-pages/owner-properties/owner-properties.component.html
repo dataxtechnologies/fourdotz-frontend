@@ -5,11 +5,25 @@
         <div class="container header-cont">
             <div class="head-cont">
                 <h2 class="demibold-font">Properties List</h2>
+
+                <div class="d-flex justify-content-between align-items-center gap-4">
+                    <div>
+                        <p class="text-muted mb-0 regular-font">
+                            View and manage all your registered properties here.
+                            You can edit details, assign owners or tenants, and track property information easily.
+                        </p>
+                    </div>
+                    <div>
+                        <button class="tout-btn" (click)="startTour()">
+                            🎯 Take a Tour
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- TABLE -->
-        <div class="container">
+        <div class="container" id="tour-property-list">
             <div class="item">
 
                 <div class="new-table-wrapper">
@@ -85,7 +99,7 @@
                                         <td>{{ property.resident_type }}</td>
 
                                         <td (click)="viewProperty(property._id)">
-                                            <button class="table-btn">View</button>
+                                            <button class="table-btn" id="tour-view-property">View</button>
                                         </td>
 
                                     </tr>

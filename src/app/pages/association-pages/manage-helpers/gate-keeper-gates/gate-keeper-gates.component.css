@@ -97,10 +97,10 @@
 .btn-add {
     color: var(--primary-color1);
     font-weight: 700 !important;
-    padding: 10px 8px;
+    padding: 5px;
     background: #faf9f4 !important;
     border-radius: 12px !important;
-    border: 0 !important;
+    border: 1px solid var(--primary-color1);
 }
 .btn-add1 {
     color: var(--primary-color1);
@@ -145,6 +145,18 @@ tbody td i {
 }
 
 .mail-btn{
-    color: var(--primary-color1);
+    color: var(--primary-color2);
     font-weight: bold;
+    border: 1px solid var(--primary-color2);
+    padding: 3px;
+    border-radius: 12px;
+}
+
+.btn-danger{
+    color: var(--primary-color2);
+    font-weight: bold;
+    border: 1px solid var(--primary-color2);
+    padding: 3px;
+    border-radius: 12px;
+    background-color: #fff;
 }

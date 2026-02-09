@@ -1,0 +1,91 @@
+<section class="slot-main-div">
+    <form [formGroup]="slotForm">
+        <div class="delivery-card">
+
+           <h4 class="section-title">{{ resourceName }}</h4>
+
+            <!-- RESOURCE SUMMARY -->
+            <div class="resource-summary">
+                <div class="summary-item">
+                    <span class="medium-font">Start Time</span>
+                    <strong class="regular-font">{{ summaryStartTime }}</strong>
+                </div>
+                <div class="summary-item">
+                    <span class="medium-font">End Time</span>
+                   <strong class="regular-font">{{ summaryEndTime }}</strong>
+                </div>
+                <div class="summary-item">
+                    <span class="medium-font">Available Capacity</span>
+                   <strong class="regular-font">{{ availableCapacity }}</strong>
+                </div>
+                <div class="summary-item">
+                    <span class="medium-font">Slot Duration</span>
+                    <strong class="regular-font">{{ slotDurationMinutes }} mins</strong>
+                </div>
+                <div class="summary-item">
+                   <span class="medium-font">Total Slots</span>
+                    <strong class="regular-font">{{ totalSlots }}</strong>
+                </div>
+            </div>
+
+            <div class="today-label medium-font">
+                Today:
+                <strong class="regular-font">{{ today | date:'fullDate' }}</strong>
+            </div>
+
+            <!-- WEEKDAY SELECTION -->
+            <div class="week-pill-row">
+                <label *ngFor="let day of weekDays; let i = index" class="week-pill regular-font"
+                    [class.active]="day.selected">
+                    <input type="checkbox" (change)="toggleDay(i)" />
+                    {{ day.label }}
+                </label>
+            </div>
+
+            <!-- TIME INPUTS -->
+            <div class="grid two mt-2">
+                <div class="field">
+                    <label class="medium-font">Start Time</label>
+                    <select class="regular-font input-custom-style" formControlName="start_time"
+                        (change)="onStartTimeChange()">
+                        <option value="">Select start time</option>
+                        <option *ngFor="let time of startTimeOptions" [value]="time">
+                            {{ time }}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label class="medium-font">End Time</label>
+                    <select class="regular-font input-custom-style" formControlName="end_time">
+                        <option value="">Select end time</option>
+                        <option *ngFor="let time of endTimeOptions" [value]="time">
+                            {{ time }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- MAX CAPACITY -->
+            <div class="field mt-2">
+                <label class="medium-font">Max Capacity</label>
+                <input type="number" class="regular-font input-custom-style" formControlName="max_capacity"
+                    [max]="availableCapacity" min="1" />
+
+                <p class="error-text" *ngIf="slotForm.get('max_capacity')?.value > availableCapacity">
+                    Max capacity cannot exceed {{ availableCapacity }}
+                </p>
+            </div>
+
+            <div class="actions">
+                <button class="btn-add" type="button" (click)="onSave()" [disabled]="slotForm.invalid" *ngIf="!savebtnloading">
+                    Save
+                </button>
+                <button class="btn-add" type="button" *ngIf="savebtnloading" disabled style="cursor: not-allowed;">
+                    Saving...
+                </button>
+            </div>
+
+        </div>
+    </form>
+</section>

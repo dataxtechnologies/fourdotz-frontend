@@ -1,0 +1,168 @@
+<section>
+  <div>
+    <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center gap-2" (click)="goback()">
+        <div class="mb-2">
+          <i class="fa-solid fa-arrow-left"></i>
+        </div>
+        <div class="mb-2">
+
+          <Button class="backbtn">Back</Button>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="" style="font-size: 22px;">Booking Details</h3>
+      </div>
+    </div>
+  </div>
+  <div class="booking-container" *ngIf="bookingData">
+
+    <!-- LEFT -->
+    <div class="booking-left">
+
+      <!-- SUCCESS -->
+      <div class="success-banner">
+        <div class="icon">✓</div>
+        <div>
+          <h3 class="medium-font">Booking Confirmed</h3>
+          <p class="regular-font">Your resource booking has been successfully completed.</p>
+        </div>
+      </div>
+
+      <!-- BOOKING DETAILS -->
+      <div class="card">
+        <h4 class="section-title">Booking details</h4>
+
+        <div class="details-grid">
+          <div>
+            <label>Guest</label>
+            <p class="regular-font">{{ person?.name }}</p>
+          </div>
+
+          <div>
+            <label>Phone</label>
+            <p class="regular-font">{{ person?.mobile }}</p>
+          </div>
+
+          <div>
+            <label>Resource</label>
+            <p class="regular-font">{{ bookingData.resource_name }}</p>
+          </div>
+
+          <div>
+            <label>Property</label>
+            <p class="regular-font">{{ bookingData.property_no }}</p>
+          </div>
+
+          <div>
+            <label>Start Time</label>
+            <p class="regular-font">{{ formatDate(bookingData.start_time) }}</p>
+          </div>
+
+          <div>
+            <label>End Time</label>
+            <p class="regular-font">{{ formatDate(bookingData.end_time) }}</p>
+          </div>
+
+          <div>
+            <label>Booking ID</label>
+            <p class="regular-font">{{ bookingData.booking_id }}</p>
+          </div>
+
+          <div>
+            <label>Status</label>
+            <p class="status regular-font">{{ bookingData.booking_status }}</p>
+          </div>
+
+          <div>
+            <label>Payment</label>
+            <p class="paid regular-font">{{ bookingData.payment_status }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESOURCE DETAILS -->
+      <div class="card">
+        <h4 class="section-title">Resource information</h4>
+
+        <div class="details-grid">
+          <div>
+            <label>Resource Name</label>
+            <p class="regular-font">{{ bookingData.resource_details?.name }}</p>
+          </div>
+
+          <div>
+            <label>Type</label>
+            <p class="regular-font">{{ bookingData.resource_details?.type }}</p>
+          </div>
+
+          <div>
+            <label>Open Time</label>
+            <p class="regular-font">{{ bookingData.resource_details?.open_time }}</p>
+          </div>
+
+          <div>
+            <label>Close Time</label>
+            <p class="regular-font">{{ bookingData.resource_details?.close_time }}</p>
+          </div>
+
+          <div>
+            <label>Price / Hour</label>
+            <p class="regular-font">₹{{ bookingData.resource_details?.price_per_hour || 0}}</p>
+          </div>
+
+          <div>
+            <label>Capacity</label>
+            <p class="regular-font">{{ bookingData.resource_details?.capacity }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="booking-right">
+
+      <!-- SUMMARY -->
+      <div class="card summary">
+        <h4>Reservation summary</h4>
+
+        <div class="summary-row">
+          <div>
+            <label class="medium-font">Start</label>
+            <p class="regular-font">{{ formatDate(bookingData.start_time) }}</p>
+          </div>
+
+          <div>
+            <label class="medium-font">End</label>
+            <p class="regular-font">{{ formatDate(bookingData.end_time) }}</p>
+          </div>
+        </div>
+
+        <p class="muted small regular-font">
+          {{ bookingData.resource_name }} - {{ bookingData.property_no }}
+        </p>
+      </div>
+
+      <!-- PRICE -->
+      <div class="card summary">
+        <h4>Payment summary</h4>
+
+        <div class="price-row">
+          <span class="medium-font">Amount Paid</span>
+          <span class="regular-font">₹{{ bookingData.amount }}</span>
+        </div>
+
+        <div class="price-total">
+          <span class="medium-font">Total</span>
+          <span class="regular-font">₹{{ bookingData.amount }}</span>
+        </div>
+
+        <!-- <button class="primary-btn regular-font">Download invoice</button> -->
+      </div>
+
+    </div>
+
+  </div>
+</section>

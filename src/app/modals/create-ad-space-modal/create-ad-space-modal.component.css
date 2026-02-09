@@ -1,0 +1,186 @@
+.form-section {
+    background-color: #fff !important;
+    width: 800px;
+    margin: 40px auto;
+    padding: 25px;
+    padding-left: 35px;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-header h3 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.form-header i {
+  font-size: 22px;
+  cursor: pointer;
+  color: #444;
+}
+
+.form-body {
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* ======================================================
+   INPUT STYLES
+====================================================== */
+.inp-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+
+
+.inp-cus {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 12px !important;
+  background: #faf9f4;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.inp-cus:focus {
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* ======================================================
+   CATEGORY RADIO GROUP
+====================================================== */
+.category-options {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.category-options label {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: #333;
+}
+
+.category-options input[type="radio"] {
+  accent-color: var(--primary-color1);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ======================================================
+   IMAGE PREVIEW
+====================================================== */
+.preview-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* Preview card */
+.preview-item {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image preview */
+.preview-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Video preview */
+.preview-item video {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Remove button */
+.remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+
+/* ======================================================
+   FOOTER ACTIONS
+====================================================== */
+.popup-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.cancel-btn,
+.delete-btn {
+  padding: 10px 20px;
+  border-radius: 12px !important;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+.cancel-btn {
+  background: #e2e8f0;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background: #cbd5e0;
+}
+
+.delete-btn {
+  background: var(--primary-color1);
+  color: #fff;
+}
+
+.delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

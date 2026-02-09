@@ -1,0 +1,195 @@
+<section>
+    <div class="container">
+        <div class=" d-flex justify-content-between align-items-center">
+            <h2 class="demibold-font">Bookings List</h2>
+
+
+        </div>
+    </div>
+
+    <div class="container" id="tour-property-list">
+        <div class="item">
+
+            <div class="new-table-wrapper">
+
+                <!-- FILTERS -->
+                <form [formGroup]="filterForm">
+                    <div class="filters-wrapper">
+
+                        <div class="filter-item">
+                            <label>Property No</label>
+                            <input type="text" formControlName="propertyNo" placeholder="Search property" />
+                        </div>
+
+                        <div class="filter-item">
+                            <label>Resident Name</label>
+                            <input type="text" formControlName="residentName" placeholder="Search name" />
+                        </div>
+
+                        <div class="filter-item">
+                            <label>Mobile</label>
+                            <input type="text" formControlName="mobile" placeholder="Search mobile" />
+                        </div>
+
+                        <div class="filter-item">
+                            <label>Amenity</label>
+                            <input type="text" formControlName="amenitiesName" placeholder="Search amenity" />
+                        </div>
+
+                        <div class="filter-item">
+                            <label>Date</label>
+                            <input type="date" formControlName="bookingDate" />
+                        </div>
+
+                        <div class="filter-item">
+                            <label>Payment</label>
+                            <select formControlName="paymentStatus">
+                                <option value="">All</option>
+                                <option value="paid">Paid</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-item">
+                            <label>Booking</label>
+                            <select formControlName="bookingStatus">
+                                <option value="">All</option>
+                                <option value="booked">Booked</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-item">
+                            <button type="button" (click)="resetFilters()">Reset</button>
+                        </div>
+
+                    </div>
+                </form>
+
+                <!-- SCROLL WRAPPER -->
+                <div class="table-scroll-wrapper">
+                    <div class="table-scroll">
+
+                        <table class="new-table">
+
+                            <!-- HEADER -->
+                            <thead>
+                                <tr class="medium-font">
+                                    <th class="sticky-col lead-col">Property</th>
+                                    <th>Resident</th>
+                                    <th>Amenity</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Amount</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th>View</th>
+                                </tr>
+                            </thead>
+
+                            <!-- BODY -->
+                            <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                                <tr *ngFor="let booking of filteredProperties">
+
+                                    <td class="sticky-col lead-col">
+                                        {{ booking.property_no }}
+                                    </td>
+
+                                    <td>
+                                        {{ booking.persons?.[0]?.name || '-' }}
+                                    </td>
+
+                                    <td>
+                                        {{ booking.resource_name }}
+                                    </td>
+
+                                    <td>
+                                        {{ formatDate(booking.start_time) }}
+                                    </td>
+
+                                    <td>
+                                        {{ formatTime(booking.start_time) }} -
+                                        {{ formatTime(booking.end_time) }}
+                                    </td>
+
+                                    <td class="amount">
+                                        ₹{{ getAmount(booking.amount) }}
+                                    </td>
+
+                                    <td>
+                                        <span class="payment"
+                                            [ngClass]="booking.payment_status === 'paid' ? 'paid' : 'pending'">
+                                            {{ booking.payment_status }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="status"
+                                            [ngClass]="booking.booking_status === 'booked' ? 'booked' : 'cancelled'">
+                                            {{ booking.booking_status }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <button class="table-btn" (click)="viewbookingdetails(booking.booking_id)">
+                                            View
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <!-- SKELETON -->
+                        <ng-template #tableSkeleton>
+                            <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                                <td class="sticky-col lead-col">
+                                    <span class="placeholder col-10"></span>
+                                </td>
+                                <td><span class="placeholder col-8"></span></td>
+                                <td><span class="placeholder col-6"></span></td>
+                                <td><span class="placeholder col-7"></span></td>
+                                <td><span class="placeholder col-5"></span></td>
+                                <td><span class="placeholder col-3"></span></td>
+                            </tr>
+                        </ng-template>
+
+                    </div>
+                </div>
+
+                <!-- PAGINATION -->
+                <div class="crm-pagination" *ngIf="BookingData1">
+                    <div class="regular-font">
+                        Showing
+                        <span class="medium-font">{{ BookingData1.startIndex + 1 }}</span>
+                        to
+                        <span class="medium-font">{{ BookingData1.endIndex + 1 }}</span>
+                        of
+                        <span class="medium-font">{{ BookingData1.totalData }}</span>
+                        entries
+                    </div>
+
+                    <div class="d-flex gap-3 regular-font">
+                        <button class="nav-btn" (click)="BookingData1.prevPage()"
+                            [disabled]="BookingData1.currentPage === 1">
+                            ‹ Prev
+                        </button>
+
+                        <button class="page-btn active">
+                            {{ BookingData1.currentPage }}
+                        </button>
+
+                        <button class="nav-btn" (click)="BookingData1.nextPage()"
+                            [disabled]="BookingData1.currentPage === BookingData1.totalPages">
+                            Next ›
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>

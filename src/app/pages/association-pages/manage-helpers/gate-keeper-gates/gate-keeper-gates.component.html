@@ -7,24 +7,34 @@
             </div>
 
             <div class="tabs">
-                <div class="tab" [class.active]="activeTab === 'keeper'" (click)="switchTab('keeper')">
+                <div class="tab" [class.active]="activeTab === 'keeper'" (click)="switchTab('keeper')" id="tour-gate-keeper-tab">
                     Gate Keeper
                 </div>
 
-                <div class="tab" [class.active]="activeTab === 'gate'" (click)="switchTab('gate')">
+                <div class="tab" [class.active]="activeTab === 'gate'" (click)="switchTab('gate')" id="tour-gate-tab">
                     Gate
                 </div>
             </div>
         </div>
 
-        <div class="container" *ngIf="activeTab === 'keeper'">
+        <div class="main-head-cont my-2">
+            <p class="text-muted mb-0 regular-font">
+                This is the Gate Keeper page where you can manage all the gate keepers and gates.
+                You can add, edit, and delete gate keepers and gates here.
+            </p>
+            <button class="tout-btn" *ngIf="GateKeeperlist1.paginatedData.length > 0" (click)="startTour()">
+                🎯 Take a Tour
+            </button>
+        </div>
+
+        <div class="container" *ngIf="activeTab === 'keeper'" id="tour-gate-keeper-list">
             <div class="item">
 
                 <div class="new-table-wrapper">
 
                     <div class="table-head">
                         <h4>Gate Keeper List</h4>
-                        <button class="btn-add" (click)="OpenAddGateKeeper()">
+                        <button class="btn-add" (click)="OpenAddGateKeeper()" id="tour-add-gate-keeper">
                             + Add Gate Keeper
                         </button>
                     </div>
@@ -55,9 +65,9 @@
                                         <td>{{ k.assigned_gate || '--' }}</td>
 
                                         <td>
-                                            <div class="d-flex gap-2">
+                                            <div class="d-flex align-items-center gap-2">
                                                 <button class="btn-add" *ngIf="!k.assigned_gate"
-                                                    (click)="AssignGates(k)">
+                                                    (click)="AssignGates(k)" id="tour-assign-gate">
                                                     Assign Gate
                                                 </button>
 
@@ -66,7 +76,7 @@
                                                     Unassign Gate
                                                 </button>
 
-                                                <span class="mail-btn" (click)="SendmailAgain(k.email)">
+                                                <span class="mail-btn" (click)="SendmailAgain(k.email)" id="tour-send-mail">
                                                     Send Mail
                                                 </span>
                                             </div>
@@ -104,14 +114,14 @@
             </div>
         </div>
 
-        <div class="container" *ngIf="activeTab === 'gate'">
-            <div class="item">
+        <div class="container" *ngIf="activeTab === 'gate'"> 
+            <div class="item"  id="tour-gate-list">
 
                 <div class="new-table-wrapper">
 
                     <div class="table-head">
                         <h4>Gate List</h4>
-                        <button class="btn-add" (click)="OpenAddGate()">
+                        <button class="btn-add" (click)="OpenAddGate()" id="tour-add-gate">
                             + Add Gate
                         </button>
                     </div>
@@ -135,7 +145,7 @@
                                         <td class="sticky-col lead-col">{{ g.gate }}</td>
 
                                         <td>
-                                            <button class="btn-danger">
+                                            <button class="btn-danger" id="tour-delete-gate">
                                                 Delete Gate
                                             </button>
                                         </td>

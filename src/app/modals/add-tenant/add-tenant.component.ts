@@ -20,22 +20,26 @@ import { OwnerServiceService } from '../../services/owner/owner-service.service'
   styleUrl: './add-tenant.component.css',
 })
 export class AddTenantComponent {
-  @Input() PropertyIddata: any
- @ViewChild('hiddenDatePicker') hiddenDatePicker!: ElementRef<HTMLInputElement>;
+  @Input() PropertyIddata!: any
+  @ViewChild('hiddenDatePicker') hiddenDatePicker!: ElementRef<HTMLInputElement>;
   submitbtn: boolean = true;
-   formattedDate: string = '';
+  formattedDate: string = '';
   showDatePicker = false;
- days = Array.from({ length: 28 }, (_, i) => this.getOrdinal(i + 1));
+  days = Array.from({ length: 28 }, (_, i) => this.getOrdinal(i + 1));
+  dropdownOpen = false;
+  selectedProperty: string | null = null;
+  searchTerm: string = '';
+  filteredList: any[] = []; // property objects for dropdown
   constructor(private Modal: ModalService, private fb: FormBuilder, private apiService: ApiserviceService, private Toast: ToastrService, private AssociationService: AssociationServiceService,
-    private OwnerService : OwnerServiceService
+    private OwnerService: OwnerServiceService
 
-  ) {}
+  ) { }
 
   closeModal() {
     this.Modal.close();
   }
 
-   getOrdinal(day: number): string {
+  getOrdinal(day: number): string {
     const suffixes = ['th', 'st', 'nd', 'rd'];
     const v = day % 100;
     return day + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0]);
@@ -43,22 +47,77 @@ export class AddTenantComponent {
 
   tenantForm!: FormGroup;
 
-ngOnInit(): void {
-    this.tenantForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(2)]],
-      lastName: ['', [Validators.required, Validators.minLength(1)]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required,  Validators.pattern('^[6-9][0-9]{9}$')]], // 10 digits
-      rentedAt: ['', Validators.required],
-      monthly_rent_due_date: ['', Validators.required],
-      advancePaid: ['', [Validators.required, Validators.min(0)]],
-      estimatedRent: ['', [Validators.required, Validators.min(0)]],
-      maintenancePaidBy: ['', Validators.required]
+  ngOnInit(): void {
+this.tenantForm = this.fb.group({
+  property_id: ['', Validators.required],   // 🔥 mandatory
+  firstName: ['', [Validators.required, Validators.minLength(2)]],
+  lastName: ['', [Validators.required, Validators.minLength(1)]],
+  email: ['', [Validators.required, Validators.email]],
+  phone: ['', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]],
+  rentedAt: ['', Validators.required],
+  monthly_rent_due_date: ['', Validators.required],
+  advancePaid: ['', [Validators.required, Validators.min(0)]],
+  estimatedRent: ['', [Validators.required, Validators.min(0)]],
+  maintenancePaidBy: ['', Validators.required]
+});
+    console.log('PropertyIddata', this.PropertyIddata);
+ // 🔥 if property already passed
+  if (this.PropertyIddata) {
+
+    this.tenantForm.patchValue({
+      property_id: this.PropertyIddata
     });
-    //console.log('PropertyIddata', this.PropertyIddata);
-    
+
+    // fetch property name for display
+    this.loadPropertyDetails(this.PropertyIddata);
+
+  } else {
+
+    // user must choose property
+    this.ListPropertyNotresidentedbyTenantinOwner();
   }
 
+  }
+
+
+
+  selectProperty(property: any) {
+
+  this.selectedProperty = property.property_no;
+
+  this.tenantForm.patchValue({
+    property_id: property._id
+  });
+
+  this.dropdownOpen = false;
+}
+
+
+onSearchChange(event: any) {
+
+  const value = event.target.value.toLowerCase();
+
+  this.filteredList = this.filteredList.filter((property: any) =>
+    property.property_no.toLowerCase().includes(value)
+  );
+}
+
+toggleDropdown() {
+  this.dropdownOpen = !this.dropdownOpen;
+}
+
+
+  loadPropertyDetails(propertyId: string) {
+
+  this.apiService.getpropertydatabyid(propertyId).subscribe({
+    next: (res: any) => {
+      if (res?.success) {
+        this.selectedProperty = res.data.property_no;
+      }
+    }
+  });
+
+}
 
   openDatePicker(): void {
     this.hiddenDatePicker.nativeElement.showPicker();
@@ -84,6 +143,23 @@ ngOnInit(): void {
     return `${day}-${month}-${year}`;
   }
 
+ListPropertyNotresidentedbyTenantinOwner() {
+  this.apiService.ListPropertyNotresidentedbyTenantinOwner<any>().subscribe({
+    next: (res: any) => {
+      if (res?.success && Array.isArray(res.data)) {
+
+        this.filteredList = res.data;   // 🔥 bind dropdown data
+
+      } else {
+        this.filteredList = [];
+      }
+    },
+    error: () => {
+      this.filteredList = [];
+    }
+  });
+}
+
 
   onSubmit(): void {
     this.submitbtn = false;
@@ -92,7 +168,7 @@ ngOnInit(): void {
       this.tenantForm.markAllAsTouched();
       return;
     }
-    
+
 
     const payload = {
       name: this.tenantForm.get('firstName')?.value,
@@ -104,7 +180,7 @@ ngOnInit(): void {
       monthly_rent_amount: this.tenantForm.get('estimatedRent')?.value,
       monthly_rent_due_date: this.tenantForm.get('monthly_rent_due_date')?.value,
       maintenance_paid_by: this.tenantForm.get('maintenancePaidBy')?.value,
-      property_id: this.PropertyIddata,
+      property_id: this.tenantForm.get('property_id')?.value,
     };
 
     //console.log('✅ Payload:', payload);

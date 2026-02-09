@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { DashboardLayoutService } from '../../../layouts/dashboard-layout/dashboard-layout.service';
+import { ShepherdService } from 'angular-shepherd';
 
 @Component({
   selector: 'app-maintenance-list',
@@ -34,7 +36,9 @@ export class MaintenanceListComponent {
     private route: Router,
     private apiService: ApiserviceService,
     private AssociationService: AssociationServiceService,
-    private Toast: ToastrService
+    private Toast: ToastrService,
+    private DashboardService: DashboardLayoutService,
+    private shepherd: ShepherdService,
   ) {
     this.MaintenanceList1 = new TableService();
     this.MaintenanceList1.initialize(this.MaintenanceList2, 10);
@@ -50,8 +54,14 @@ export class MaintenanceListComponent {
           this.ListMaintenanceinAssociation();
           this.AmountforAssociationinASS();
         }
-      }
+      },
     );
+
+    // const menu = JSON.parse(sessionStorage.getItem('user_menu') || '{}');
+
+    // if (!menu.maintenancelisttour) {
+    //   this.startTour();
+    // }
   }
 
   applyFilters() {
@@ -63,7 +73,7 @@ export class MaintenanceListComponent {
       from.setHours(0, 0, 0, 0); // start of day
 
       filtered = filtered.filter(
-        (item) => new Date(item.created_time.$date).getTime() >= from.getTime()
+        (item) => new Date(item.created_time.$date).getTime() >= from.getTime(),
       );
     }
 
@@ -73,14 +83,14 @@ export class MaintenanceListComponent {
       to.setHours(23, 59, 59, 999); // 🔥 end of day
 
       filtered = filtered.filter(
-        (item) => new Date(item.created_time.$date).getTime() <= to.getTime()
+        (item) => new Date(item.created_time.$date).getTime() <= to.getTime(),
       );
     }
 
     // 🔹 Status
     if (this.filters.status) {
       filtered = filtered.filter(
-        (item) => this.getStatus(item) === this.filters.status
+        (item) => this.getStatus(item) === this.filters.status,
       );
     }
 
@@ -91,7 +101,7 @@ export class MaintenanceListComponent {
       filtered = filtered.filter(
         (item) =>
           item.resident_name?.toLowerCase().includes(s) ||
-          item.property_no?.toLowerCase().includes(s)
+          item.property_no?.toLowerCase().includes(s),
       );
     }
 
@@ -101,13 +111,13 @@ export class MaintenanceListComponent {
 
   viewInvoice(data: any) {
     this.route.navigateByUrl(
-      `maintenance-invoice/${this.usertype}/${data}?status=paynow&&user=Association`
+      `maintenance-invoice/${this.usertype}/${data}?status=paynow&&user=Association`,
     );
   }
 
   viewpaidInvoice(data: any) {
     this.route.navigateByUrl(
-      `maintenance-invoice/${this.usertype}/${data}?status=paid&&user=Association`
+      `maintenance-invoice/${this.usertype}/${data}?status=paid&&user=Association`,
     );
   }
 
@@ -122,28 +132,26 @@ export class MaintenanceListComponent {
     return today > created;
   }
 
-getStatus(item: any): 'Paid' | 'Pending' | 'Overdue' | '' {
+  getStatus(item: any): 'Paid' | 'Pending' | 'Overdue' | '' {
+    // ✅ Paid always wins
+    if (item.payment_status === true) {
+      return 'Paid';
+    }
 
-  // ✅ Paid always wins
-  if (item.payment_status === true) {
-    return 'Paid';
+    // ✅ If not paid, decide by DUE DATE
+    if (item.payment_status === false && item.due_date) {
+      // due_date format: "06-Jan-2026"
+      const due = new Date(item.due_date);
+      due.setHours(23, 59, 59, 999);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      return today > due ? 'Overdue' : 'Pending';
+    }
+
+    return '';
   }
-
-  // ✅ If not paid, decide by DUE DATE
-  if (item.payment_status === false && item.due_date) {
-
-    // due_date format: "06-Jan-2026"
-    const due = new Date(item.due_date);
-    due.setHours(23, 59, 59, 999);
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    return today > due ? 'Overdue' : 'Pending';
-  }
-
-  return '';
-}
 
   resetFilters() {
     this.filters = {
@@ -181,7 +189,7 @@ getStatus(item: any): 'Paid' | 'Pending' | 'Overdue' | '' {
           this.MaintenanceList1.initialize(this.MaintenanceList2, 10);
           this.pages = Array.from(
             { length: this.MaintenanceList2.totalPages },
-            (_, i) => i + 1
+            (_, i) => i + 1,
           );
           this.tableLoading = false;
         } else {
@@ -241,6 +249,132 @@ getStatus(item: any): 'Paid' | 'Pending' | 'Overdue' | '' {
         // this.tableLoading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
+      },
+    });
+  }
+
+  startTour() {
+    const SHOULD_RUN_TOUR = true;
+    if (!SHOULD_RUN_TOUR) return;
+
+    if (this.shepherd.tourObject) {
+      this.shepherd.cancel();
+    }
+
+    this.shepherd.modal = true;
+
+    this.shepherd.defaultStepOptions = {
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      cancelIcon: { enabled: false },
+      classes: 'shepherd-dark-theme',
+    };
+
+    this.shepherd.addSteps([
+      // 1️⃣ Header
+      {
+        id: 'maintenance-list',
+        title: 'Maintenance List',
+        text: 'This list shows all the maintenance History of the resident',
+        attachTo: { element: '#tour-maintenance-list', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTour(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      // 2️⃣ Edit Property
+      {
+        id: 'add-maintenance',
+        title: 'Generate Maintenance',
+        text: 'Click here to generate maintenance for the property.',
+        attachTo: { element: '#tour-add-maintenance', on: 'left' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      // 3️⃣ Resident Tab
+      {
+        id: 'view-maintenance',
+        title: 'View Maintenance Invoice',
+        text: 'Click here to view the maintenance invoice details.',
+        attachTo: { element: '#tour-view-maintenance', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      // 4️⃣ Owner Card
+      {
+        id: 'filter-maintenance',
+        title: 'Maintenance Filters',
+        text: 'Here you can resend mail to the resident.',
+        attachTo: { element: '#tour-filter-maintenance', on: 'top' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Finish',
+            classes: 'shepherd-btn-primary',
+            action: () => this.finishTour(),
+          },
+        ],
+      },
+    ]);
+
+    this.shepherd.start();
+  }
+
+  finishTour() {
+    // this.onPropertyTourCompleted();
+    this.shepherd.complete();
+  }
+
+  onPropertyTourCompleted() {
+    const payload = {
+      menu: {
+        maintenancelisttour: true,
+      },
+    };
+
+    this.apiService.AddTourdatas<any>(payload).subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.DashboardService.triggerTourApiStatusUpdate(res);
+          // ✅ Update session storage too
+          // const menu = JSON.parse(sessionStorage.getItem('user_menu') || '{}');
+          // menu.propertyview = true;
+          // sessionStorage.setItem('user_menu', JSON.stringify(menu));
+        }
       },
     });
   }

@@ -17,13 +17,61 @@
 
                 <div class="new-table-wrapper">
 
+                    <!-- 🔽 FILTERS -->
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Visitor name / phone" formControlName="visitorSearch"
+                                    class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Resident name / phone" formControlName="residentSearch"
+                                    class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Property No" formControlName="propertySearch"
+                                    class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Purpose" formControlName="purposeSearch"
+                                    class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <select formControlName="status" class="regular-font">
+                                    <option value="">All Status</option>
+                                    <option value="entered">Entered</option>
+                                    <option value="not_exited">Not Exited</option>
+                                    <option value="exited">Exited</option>
+                                </select>
+                            </div>
+
+                            <div class="search-box">
+                                <input type="date" formControlName="fromDate" class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <input type="date" formControlName="toDate" class="regular-font" />
+                            </div>
+
+                            <button type="button" class="filter-reset-btn" (click)="resetFilters()">
+                                Reset
+                            </button>
+
+                        </div>
+                    </form>
+                    <!-- 🔼 FILTER END -->
+
                     <!-- SCROLL -->
                     <div class="table-scroll-wrapper">
                         <div class="table-scroll">
 
                             <table class="new-table">
 
-                                <!-- HEADER -->
                                 <thead>
                                     <tr class="medium-font">
                                         <th class="sticky-col lead-col">Visitor Details</th>
@@ -36,13 +84,10 @@
                                     </tr>
                                 </thead>
 
-                                <!-- BODY -->
                                 <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
 
-                                    <!-- DATA -->
                                     <tr *ngFor="let item of spotVisitorlist1.paginatedData">
 
-                                        <!-- STICKY COLUMN -->
                                         <td class="sticky-col lead-col">
                                             <div class="visitor-details">
                                                 <span class="property-name">{{ item.visitor_no }}</span>
@@ -69,7 +114,6 @@
 
                                         <td>{{ item.visitor_status }}</td>
 
-                                        <!-- EXIT ACTION -->
                                         <td>
                                             <button class="action-btn" [disabled]="item.visitor_status === 'exited'"
                                                 (click)="item.visitor_status !== 'exited' && VisitorExit(item.visitor_no)">
@@ -77,14 +121,22 @@
                                             </button>
                                         </td>
 
-                                        <!-- VIEW -->
-                                        <td (click)="visitorView(item)">
-                                            <i class="fa-regular fa-eye" style="font-size:18px"></i>
+                                        <td>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <div>
+                                                    <button class="table-btn"
+                                                        (click)="AcceptVisitorInvite(item.visitor_no)">
+                                                        Accept invite
+                                                    </button>
+                                                </div>
+                                                <div (click)="visitorView(item)">
+                                                    <i class="fa-regular fa-eye" style="font-size:18px"></i>
+                                                </div>
+                                            </div>
                                         </td>
 
                                     </tr>
 
-                                    <!-- NO DATA -->
                                     <tr *ngIf="spotVisitorlist1.paginatedData.length === 0">
                                         <td colspan="7" style="text-align:center;color:gray;font-weight:600;">
                                             No Data Found
@@ -94,12 +146,9 @@
                                 </tbody>
                             </table>
 
-                            <!-- SKELETON -->
                             <ng-template #tableSkeleton>
                                 <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
-                                    <td class="sticky-col lead-col">
-                                        <span class="placeholder col-10"></span>
-                                    </td>
+                                    <td class="sticky-col lead-col"><span class="placeholder col-10"></span></td>
                                     <td><span class="placeholder col-8"></span></td>
                                     <td><span class="placeholder col-6"></span></td>
                                     <td><span class="placeholder col-7"></span></td>
@@ -126,18 +175,13 @@
 
                         <div class="d-flex gap-3 regular-font">
                             <button class="nav-btn" (click)="spotVisitorlist1.prevPage()"
-                                [disabled]="spotVisitorlist1.currentPage === 1">
-                                ‹ Prev
-                            </button>
+                                [disabled]="spotVisitorlist1.currentPage === 1">‹ Prev</button>
 
-                            <button class="page-btn active">
-                                {{ spotVisitorlist1.currentPage }}
-                            </button>
+                            <button class="page-btn active">{{ spotVisitorlist1.currentPage }}</button>
 
                             <button class="nav-btn" (click)="spotVisitorlist1.nextPage()"
-                                [disabled]="spotVisitorlist1.currentPage === spotVisitorlist1.totalPages">
-                                Next ›
-                            </button>
+                                [disabled]="spotVisitorlist1.currentPage === spotVisitorlist1.totalPages">Next
+                                ›</button>
                         </div>
                     </div>
 

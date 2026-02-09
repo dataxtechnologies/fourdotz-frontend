@@ -17,6 +17,8 @@ import { ModalService } from 'ngx-modal-ease';
 import { LogoutModalComponent } from '../../modals/logout-modal/logout-modal.component';
 import { AddUPIIdComponent } from '../../modals/add-upi-id/add-upi-id.component';
 import { OwnerServiceService } from '../../services/owner/owner-service.service';
+import { AssociationServiceService } from '../../services/association/association-service.service';
+import { DashboardLayoutService } from './dashboard-layout.service';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -38,6 +40,9 @@ export class DashboardLayoutComponent implements OnInit {
   =============================== */
   sidebarItems: SidebarItem[] = SIDEBAR_ITEMS;
   currentRoute = '';
+
+  searchText = '';
+  suggestions: SidebarItem[] = [];
 
   /* ===============================
      SIDEBAR STATE
@@ -63,6 +68,9 @@ export class DashboardLayoutComponent implements OnInit {
   user_id = localStorage.getItem('user_id');
 
   loadingUserData = false;
+  userdata : any
+
+  username : any
 
   constructor(
     private router: Router,
@@ -70,17 +78,18 @@ export class DashboardLayoutComponent implements OnInit {
     private toastr: ToastrService,
     private modalService: ModalService,
     private ownerService: OwnerServiceService,
+    private DashboardLayoutService: DashboardLayoutService,
   ) {
     /* CLOSE SIDEBAR ON ROUTE CHANGE (MOBILE) */
     this.router.events
-  .pipe(filter((event) => event instanceof NavigationEnd))
-  .subscribe(() => {
-    this.syncSidebarWithRoute();
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.syncSidebarWithRoute();
 
-    if (this.isTabletOrMobile) {
-      this.asidebarClosed = true;
-    }
-  });
+        if (this.isTabletOrMobile) {
+          this.asidebarClosed = true;
+        }
+      });
   }
 
   /* ===============================
@@ -100,8 +109,19 @@ export class DashboardLayoutComponent implements OnInit {
         this.getUserData(this.user_type);
       }
     });
+const storedUser = localStorage.getItem('userdata');
+
+this.userdata = storedUser ? JSON.parse(storedUser) : null;
+this.username = this.userdata?.name || '';
+
+    // this.DashboardLayoutService.DashboardTourApiStatus$.subscribe((TourApi) => {
+    //   if (TourApi) {
+    //     this.getusertourdata();
+    //   }
+    // });
 
     this.syncSidebarWithRoute();
+    // this.getusertourdata();
   }
 
   /* ===============================
@@ -198,21 +218,109 @@ export class DashboardLayoutComponent implements OnInit {
     this.router.navigateByUrl('/auth/sign-in');
   }
 
-
   private syncSidebarWithRoute(): void {
-  const currentUrl = this.router.url;
+    const currentUrl = this.router.url;
 
-  this.sidebarItems.forEach((item) => {
-    if (item.children && item.allowedRole === this.user_type) {
-      // check if any child route matches
-      const hasActiveChild = item.children.some((child) =>
-        currentUrl.startsWith(child.route!)
-      );
+    this.sidebarItems.forEach((item) => {
+      if (item.children && item.allowedRole === this.user_type) {
+        // check if any child route matches
+        const hasActiveChild = item.children.some((child) =>
+          currentUrl.startsWith(child.route!),
+        );
 
-      item.open = hasActiveChild;
-    } else {
-      item.open = false;
+        item.open = hasActiveChild;
+      } else {
+        item.open = false;
+      }
+    });
+  }
+
+  // getusertourdata(): void {
+  //   this.apiService.getTourdatas<any>().subscribe({
+  //     next: (res) => {
+  //       if (res?.success && res?.data?.menu) {
+  //         // 👉 Store menu object in sessionStorage
+  //         sessionStorage.setItem('user_menu', JSON.stringify(res.data.menu));
+
+  //         console.log('Menu stored in sessionStorage:', res.data.menu);
+  //       }
+  //     },
+  //     error: (err) => {
+  //       console.error('Error fetching tour data', err);
+  //     },
+  //   });
+  // }
+
+
+  onSearchChange() {
+
+    const term = this.searchText.toLowerCase().trim();
+
+    if (!term) {
+      this.suggestions = [];
+      return;
     }
-  });
-}
+
+    const roleMenus = SIDEBAR_ITEMS.filter(
+      m => m.allowedRole === this.user_type
+    );
+
+    const flatMenus = this.flattenMenus(roleMenus);
+
+    this.suggestions = flatMenus.filter(item => {
+
+      const labelMatch =
+        item.label.toLowerCase().includes(term);
+
+      const keywordMatch =
+        item.keywords?.some(k =>
+          k.toLowerCase().includes(term)
+        );
+
+      return labelMatch || keywordMatch;
+
+    }).slice(0, 6);
+  }
+
+  flattenMenus(items: SidebarItem[]): SidebarItem[] {
+    let list: SidebarItem[] = [];
+
+    for (const item of items) {
+      list.push(item);
+      if (item.children) {
+        list.push(...item.children);
+      }
+    }
+
+    return list;
+  }
+
+  goToSuggestion(item: SidebarItem) {
+    if (item.route) {
+      this.router.navigate([item.route]);
+      this.searchText = '';
+      this.suggestions = [];
+    }
+  }
+
+  // startVoiceSearch() {
+  //   const SpeechRecognition =
+  //     (window as any).webkitSpeechRecognition;
+
+  //   if (!SpeechRecognition) {
+  //     alert('Voice search not supported');
+  //     return;
+  //   }
+
+  //   const recognition = new SpeechRecognition();
+  //   recognition.lang = 'en-IN';
+
+  //   recognition.onresult = (event: any) => {
+  //     this.searchText =
+  //       event.results[0][0].transcript;
+  //     this.onSearchChange();
+  //   };
+
+  //   recognition.start();
+  // }
 }

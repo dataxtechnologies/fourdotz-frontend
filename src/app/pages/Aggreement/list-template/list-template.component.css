@@ -72,7 +72,7 @@
     padding: 10px 8px;
     background: #faf9f4 !important;
     border-radius: 12px !important;
-    border: 2px solid var(--primary-color1);
+    border: 2px solid var(--primary-color1) !important;
 }
 
 

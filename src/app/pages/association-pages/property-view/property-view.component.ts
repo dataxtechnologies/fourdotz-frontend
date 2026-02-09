@@ -18,6 +18,8 @@ import { RemoveResidentModalComponent } from '../../../modals/remove-resident-mo
 import { RemoveTenantModalComponent } from '../../../modals/remove-tenant-modal/remove-tenant-modal.component';
 import { ToastrService } from 'ngx-toastr';
 import { RemovePetVehicleComponent } from '../../../modals/remove-pet-vehicle/remove-pet-vehicle.component';
+import { ShepherdService } from 'angular-shepherd';
+import { DashboardLayoutService } from '../../../layouts/dashboard-layout/dashboard-layout.service';
 
 @Component({
   selector: 'app-property-view',
@@ -37,7 +39,9 @@ export class PropertyViewComponent {
     private apiService: ApiserviceService,
     private route: ActivatedRoute,
     private AssociationService: AssociationServiceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+     private shepherd: ShepherdService,
+     private DashboardService: DashboardLayoutService
   ) {}
 
   ngOnInit(): void {
@@ -82,10 +86,15 @@ export class PropertyViewComponent {
         if (removeresident) {
           this.ViewpropertybyId(this.PropertyId);
         }
-      }
+      },
     );
 
+    
     this.ViewpropertybyId(this.PropertyId);
+
+     
+
+
   }
 
   setTab(tab: string) {
@@ -283,7 +292,6 @@ export class PropertyViewComponent {
     });
   }
 
-
   RemovePet(associationId: any) {
     // AddOwnerComponent
     this.ModalService.open(RemovePetVehicleComponent, {
@@ -352,6 +360,159 @@ export class PropertyViewComponent {
       actions: {
         click: false,
         escape: false,
+      },
+    });
+  }
+
+  startPropertyViewTour() {
+    const SHOULD_RUN_TOUR = true;
+    if (!SHOULD_RUN_TOUR) return;
+
+    if (this.shepherd.tourObject) {
+      this.shepherd.cancel();
+    }
+
+    this.shepherd.modal = true;
+
+    this.shepherd.defaultStepOptions = {
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      cancelIcon: { enabled: false },
+      classes: 'shepherd-dark-theme',
+    };
+
+    this.shepherd.addSteps([
+      // 1️⃣ Header
+      {
+        id: 'property-header',
+        title: 'Property Details',
+        text: 'This page shows complete details of the selected property.',
+        attachTo: { element: '#tour-property-header', on: 'bottom' },
+        buttons: [
+          { text: 'Skip', classes: 'shepherd-btn-secondary', action: () => this.finishTour() },
+          { text: 'Next', classes: 'shepherd-btn-primary', action: () => this.shepherd.next() },
+        ],
+      },
+
+      // 2️⃣ Edit Property
+      {
+        id: 'edit-property',
+        title: 'Edit Property',
+        text: 'Click here to edit property details like area, facing, maintenance, etc.',
+        attachTo: { element: '#tour-edit-property', on: 'left' },
+        buttons: [
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          { text: 'Next', classes: 'shepherd-btn-primary', action: () => this.shepherd.next() },
+        ],
+      },
+
+      // 3️⃣ Resident Tab
+      {
+        id: 'resident-tab',
+        title: 'Resident Section',
+        text: 'This section contains Owner and Tenant details.',
+        attachTo: { element: '#tour-tab-resident', on: 'bottom' },
+        buttons: [
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          { text: 'Next', classes: 'shepherd-btn-primary', action: () => this.shepherd.next() },
+        ],
+      },
+
+      {
+        id: 'petvehicle-tab',
+        title: 'Pet & Vehicle Section',
+        text: 'This section contains Pet and Vehicle details.',
+        attachTo: { element: '#tour-tab-petvehicle', on: 'bottom' },
+        buttons: [
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          { text: 'Next', classes: 'shepherd-btn-primary', action: () => this.shepherd.next() },
+        ],
+      },
+
+      // 4️⃣ Owner Card
+      {
+        id: 'owner-card',
+        title: 'Owner Details',
+        text: 'Here you can add, edit, or remove the property owner.',
+        attachTo: { element: '#tour-owner-card', on: 'top' },
+        buttons: [
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          { text: 'Next', classes: 'shepherd-btn-primary', action: () => this.shepherd.next() },
+        ],
+      },
+
+      // 5️⃣ Tenant Card
+      {
+        id: 'tenant-card',
+        title: 'Tenant Details',
+        text: 'If the property is rented, tenant details will appear here.',
+        attachTo: { element: '#tour-tenant-card', on: 'top' },
+        buttons: [
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          {
+            text: 'Next', classes: 'shepherd-btn-primary',
+            action: () => {
+              this.setTab('petvehicle'); // 🔥 Auto switch tab
+              setTimeout(() => this.shepherd.next(), 400);
+            },
+          },
+        ],
+      },
+
+      // 6️⃣ Pet Section
+      {
+        id: 'pet-card',
+        title: 'Pet Details',
+        text: 'You can add pet details for the resident here.',
+        attachTo: { element: '#tour-pet-card', on: 'top' },
+        buttons: [
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          { text: 'Next', classes: 'shepherd-btn-primary', action: () => {
+              this.setTab('Resident'); // 🔥 Auto switch tab
+              setTimeout(() => this.shepherd.next(), 400);
+            }, },
+        ],
+      },
+
+      // 7️⃣ Vehicle Section
+      {
+        id: 'vehicle-card',
+        title: 'Vehicle Details',
+        text: 'Add and manage vehicle details linked to this property.',
+        attachTo: { element: '#tour-vehicle-card', on: 'top' },
+        buttons: [
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          {
+            text: 'Finish', classes: 'shepherd-btn-primary',
+            action: () => this.finishTour(),
+          },
+        ],
+      },
+    ]);
+
+    this.shepherd.start();
+  }
+
+  finishTour() {
+    // this.onPropertyTourCompleted();
+    this.shepherd.complete();
+  }
+
+  onPropertyTourCompleted() {
+    const payload = {
+      menu: {
+        propertyview: true,
+      },
+    };
+
+    this.apiService.AddTourdatas<any>(payload).subscribe({
+      next: (res) => {
+        if (res?.success) {
+           this.DashboardService.triggerTourApiStatusUpdate(res);
+          // ✅ Update session storage too
+          // const menu = JSON.parse(sessionStorage.getItem('user_menu') || '{}');
+          // menu.propertyview = true;
+          // sessionStorage.setItem('user_menu', JSON.stringify(menu));
+        }
       },
     });
   }

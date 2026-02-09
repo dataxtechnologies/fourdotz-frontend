@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { SelectAgreementToviewCreateComponent } from '../../../modals/select-agreement-toview-create/select-agreement-toview-create.component';
+import { ShepherdService } from 'angular-shepherd';
+import { DashboardLayoutService } from '../../../layouts/dashboard-layout/dashboard-layout.service';
 
 @Component({
   selector: 'app-owner-siging-agreement-list',
@@ -28,7 +30,9 @@ user_id = localStorage.getItem('user_id');
     private Modal: ModalService,
     private route: Router,
     private apiService: ApiserviceService,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+        private shepherd: ShepherdService,
+    private DashboardService: DashboardLayoutService,
   ) {
     this.spotVisitorlist1 = new TableService();
     this.spotVisitorlist1.initialize(this.spotvisitorlist2, 12);
@@ -50,6 +54,9 @@ user_id = localStorage.getItem('user_id');
         this.ListAgreementforusers();
       }
     });
+
+
+
   }
 
   CreateTemplate() {
@@ -100,6 +107,111 @@ user_id = localStorage.getItem('user_id');
       actions: {
         click: false,
         escape: false,
+      },
+    });
+  }
+
+
+  startTour() {
+    const SHOULD_RUN_TOUR = true;
+    if (!SHOULD_RUN_TOUR) return;
+
+    if (this.shepherd.tourObject) {
+      this.shepherd.cancel();
+    }
+
+    this.shepherd.modal = true;
+
+    this.shepherd.defaultStepOptions = {
+      scrollTo: { behavior: 'smooth', block: 'center' },
+      cancelIcon: { enabled: false },
+      classes: 'shepherd-dark-theme',
+    };
+
+    this.shepherd.addSteps([
+      // 1️⃣ Header
+      {
+        id: 'agreement-list',
+        title: 'Agreement List',
+        text: 'This will show all the agreement templates created by the association.',
+        attachTo: { element: '#tour-list-agreement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Skip',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.finishTourthispage(),
+          },
+          {
+            text: 'Next',
+            classes: 'shepherd-btn-primary',
+            action: () => this.shepherd.next(),
+          },
+        ],
+      },
+
+      {
+        id: 'create-agreement',
+        title: 'Create Agreement',
+        text: 'Click here to create an agreement',
+        attachTo: { element: '#tour-create-agreement', on: 'bottom' },
+        buttons: [
+          {
+            text: 'Back',
+            classes: 'shepherd-btn-secondary',
+            action: () => this.shepherd.back(),
+          },
+          {
+            text: 'Finish',
+            classes: 'shepherd-btn-primary',
+            action: () => this.GotoTourNextpage(),
+          },
+        ],
+      },
+
+    ]);
+
+    this.shepherd.start();
+  }
+
+  finishTourthispage() {
+    this.SkipTourthispage();
+    this.shepherd.complete();
+  }
+
+  GotoTourNextpage() {
+    this.TourtoNextpage();
+    this.shepherd.complete();
+  }
+
+  SkipTourthispage() {
+    const payload = {
+      menu: {
+        ownersignagreementtour: true,
+      },
+    };
+
+    this.apiService.AddTourdatas<any>(payload).subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.DashboardService.triggerTourApiStatusUpdate(res);
+        }
+      },
+    });
+  }
+
+  TourtoNextpage() {
+    const payload = {
+      menu: {
+        ownersignagreementtour: true,
+      },
+    };
+
+    this.apiService.AddTourdatas<any>(payload).subscribe({
+      next: (res) => {
+        if (res?.success) {
+          this.DashboardService.triggerTourApiStatusUpdate(res);
+          this.route.navigateByUrl('/Owner/request-management/list');
+        }
       },
     });
   }

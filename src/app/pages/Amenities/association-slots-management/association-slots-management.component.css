@@ -1,0 +1,91 @@
+.amount {
+  font-weight: 600;
+  color: #19a463;
+}
+
+.payment {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.payment.paid {
+  background: #e8f7ee;
+  color: #19a463;
+}
+
+.payment.pending {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.status.booked {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status.cancelled {
+  background: #fdecea;
+  color: #d32f2f;
+}
+
+.filters-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  background: #f7f8fb;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  align-items: flex-end;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;
+  max-width: 300px;
+  flex: 1;
+}
+
+.filter-item label {
+  font-size: 13px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.filter-item input,
+.filter-item select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.filter-item input:focus,
+.filter-item select:focus {
+  outline: none;
+  border-color: #19a463;
+}
+
+.filter-reset {
+  margin-left: auto;
+}
+
+.filter-item button {
+  background: transparent;
+  border: none;
+  color: #ff3b30;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px;
+  text-align: left;
+}

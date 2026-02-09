@@ -157,7 +157,7 @@
           {label: 'Estimated Rent', value: Associationdata?.monthly_rent_amount},
           {label: 'Maintenance Amount', value: Associationdata?.maintenance_amount},
           {label: 'Maintenance Paid By', value: Associationdata?.maintenance_paid_by},
-          {label: 'Rented at', value: Associationdata.tenant_details?.onboarded_time?.$date | date:'dd-MMM-yyyy'}
+          {label: 'Rented at', value: Associationdata?.tenant_rented_at?.$date | date:'dd-MMM-yyyy'}
         ]">
                                     <div class="user-info">
                                         <h5 class="label medium-font">{{field.label}}</h5>

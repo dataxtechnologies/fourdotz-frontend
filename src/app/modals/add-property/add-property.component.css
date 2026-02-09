@@ -1,5 +1,5 @@
 .form-section {
-    background-color: #faf9f4 !important;
+    background-color: #fff !important;
     width: 800px;
     margin: 40px auto;
     padding: 25px;
@@ -13,7 +13,7 @@
 }
 
 .container {
-    /* padding: 10px; */
+    padding: 10px;
     box-sizing: border-box;
 }
 
@@ -22,6 +22,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
 }
 
 .form-header h3 {
@@ -65,23 +66,7 @@
 
 
 
-.inp-cus,
-select.inp-cus {
-    padding: 12px 14px;
-    border: 1px solid #ddd;
-    border-radius: 12px !important;
-    background: #faf9f4;
-    font-size: 1rem;
-    outline: none;
-    transition: all 0.3s ease;
-    width: 100%;
-    box-sizing: border-box;
-}
 
-.inp-cus:focus {
-    background: #fff;
-    box-shadow: 0 0 6px #4f504f4d;
-}
 
 .form-grid {
     display: grid;
@@ -145,9 +130,9 @@ select.inp-cus {
     font-weight: 600;
     border: 2px solid var(--primary-color1);
     border-radius: 12px !important;
+    background-color: #fff;
     cursor: pointer;
     width: 100%;
-    max-width: 400px;
     text-align: center;
     transition: all 0.3s ease;
 }

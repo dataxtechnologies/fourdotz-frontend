@@ -14,13 +14,55 @@
 
                 <div class="new-table-wrapper">
 
+                    <!-- 🔽 FILTERS (ADDED ONLY) -->
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Search property / title / resident / mobile"
+                                    formControlName="search" class="regular-font">
+                            </div>
+
+                            <div class="search-box">
+                                <select formControlName="workStatus" class="regular-font">
+                                    <option value="">All Work Status</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="started">Started</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+
+                            <div class="search-box">
+                                <select formControlName="residentType" class="regular-font">
+                                    <option value="">All Resident Type</option>
+                                    <option value="owner">Owner</option>
+                                    <option value="tenant">Tenant</option>
+                                </select>
+                            </div>
+
+                            <div class="search-box">
+                                <input type="date" formControlName="fromDate" class="regular-font">
+                            </div>
+
+                            <div class="search-box">
+                                <input type="date" formControlName="toDate" class="regular-font">
+                            </div>
+
+                            <button type="button" class="filter-reset-btn" (click)="resetFilters()">
+                                Reset
+                            </button>
+
+                        </div>
+                    </form>
+                    <!-- 🔼 FILTER END -->
+
+
                     <!-- SCROLL -->
                     <div class="table-scroll-wrapper">
                         <div class="table-scroll">
 
                             <table class="new-table">
 
-                                <!-- HEADER -->
                                 <thead>
                                     <tr class="medium-font">
                                         <th class="sticky-col lead-col">Property No.</th>
@@ -33,45 +75,28 @@
                                     </tr>
                                 </thead>
 
-                                <!-- BODY -->
                                 <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
 
-                                    <!-- DATA -->
                                     <tr *ngFor="let req of RequestList1.paginatedData">
 
-                                        <!-- PROPERTY -->
                                         <td class="sticky-col lead-col">
                                             {{ req.property_no }}
                                         </td>
 
-                                        <!-- TITLE -->
-                                        <td>
-                                            {{ req.title }}
-                                        </td>
+                                        <td>{{ req.title }}</td>
 
-                                        <!-- RESIDENT -->
-                                        <td>
-                                            {{ req.resident_name }}
-                                        </td>
+                                        <td>{{ req.resident_name }}</td>
 
-                                        <!-- TYPE -->
-                                        <td>
-                                            {{ req.user_type | titlecase }}
-                                        </td>
+                                        <td>{{ req.user_type | titlecase }}</td>
 
-                                        <!-- MOBILE -->
-                                        <td>
-                                            {{ req.resident_mobile }}
-                                        </td>
+                                        <td>{{ req.resident_mobile }}</td>
 
-                                        <!-- STATUS -->
                                         <td>
                                             <span class="status-pill" [ngClass]="req.work_status">
                                                 {{ req.work_status | titlecase }}
                                             </span>
                                         </td>
 
-                                        <!-- ACTION -->
                                         <td>
                                             <i class="fa-regular fa-eye view-icon" style="cursor:pointer"
                                                 (click)="OpenViewRequest(req)">
@@ -80,7 +105,6 @@
 
                                     </tr>
 
-                                    <!-- NO DATA -->
                                     <tr *ngIf="RequestList1.paginatedData.length === 0">
                                         <td colspan="7" style="text-align:center;color:gray;">
                                             No Request Found
@@ -90,12 +114,9 @@
                                 </tbody>
                             </table>
 
-                            <!-- SKELETON -->
                             <ng-template #tableSkeleton>
                                 <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
-                                    <td class="sticky-col lead-col">
-                                        <span class="placeholder col-6"></span>
-                                    </td>
+                                    <td class="sticky-col lead-col"><span class="placeholder col-6"></span></td>
                                     <td><span class="placeholder col-8"></span></td>
                                     <td><span class="placeholder col-6"></span></td>
                                     <td><span class="placeholder col-4"></span></td>
@@ -108,7 +129,7 @@
                         </div>
                     </div>
 
-                    <!-- CRM PAGINATION -->
+                    <!-- PAGINATION -->
                     <div *ngIf="RequestList1" class="crm-pagination">
 
                         <div class="regular-font">
@@ -122,22 +143,17 @@
                         </div>
 
                         <div class="d-flex gap-3 regular-font">
-
                             <button class="nav-btn" (click)="RequestList1.prevPage()"
-                                [disabled]="RequestList1.currentPage === 1">
-                                ‹ Prev
-                            </button>
+                                [disabled]="RequestList1.currentPage === 1">‹ Prev</button>
 
                             <button class="page-btn active">
                                 {{ RequestList1.currentPage }}
                             </button>
 
                             <button class="nav-btn" (click)="RequestList1.nextPage()"
-                                [disabled]="RequestList1.currentPage === RequestList1.totalPages">
-                                Next ›
-                            </button>
-
+                                [disabled]="RequestList1.currentPage === RequestList1.totalPages">Next ›</button>
                         </div>
+
                     </div>
 
                 </div>

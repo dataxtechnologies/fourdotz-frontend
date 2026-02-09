@@ -14,13 +14,17 @@ import { TableService } from '../../../services/tableservice.service';
   styleUrl: './tenant-rental-list.component.css'
 })
 export class TenantRentalListComponent {
-filterForm!: FormGroup;
+
+  filterForm!: FormGroup;
+
   properties: any[] = [];
   filteredProperties: any[] = [];
-  rentalinvoicelist1
-  rentalinvoicelist2: any
-  tableLoading = true
-  pages: any
+
+  rentalinvoicelist1: any;
+  rentalinvoicelist2: any;
+
+  tableLoading = true;
+  pages: any;
 
   constructor(
     private modalService: ModalService,
@@ -28,48 +32,94 @@ filterForm!: FormGroup;
     private fb: FormBuilder,
     private apiService: ApiserviceService
   ) {
-    this.rentalinvoicelist1 = new TableService()
-    this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10)
+    this.rentalinvoicelist1 = new TableService();
+    this.rentalinvoicelist1.initialize([], 10);
   }
 
   ngOnInit(): void {
+
     this.filterForm = this.fb.group({
-      status: [''], // Paid, Pending, Overdue
-      residentSearch: [''], // Name or Phone
-      fromDate: [''], // From Date
-      toDate: [''], // To Date
+      status: [''],
+      residentSearch: [''],
+      fromDate: [''],
+      toDate: [''],
     });
 
-    this.RentalInvoicelistinTenant()
+    this.filterForm.valueChanges.subscribe(() => {
+      this.applyFilters();
+    });
+
+    this.RentalInvoicelistinTenant();
+  }
+
+  RentalInvoicelistinTenant() {
+
+    this.apiService.TenantRentalInvoiceList<any>().subscribe({
+      next: (res: any) => {
+
+        if (res?.success) {
+
+          this.rentalinvoicelist2 = res.data || [];
+
+          this.filteredProperties = [...this.rentalinvoicelist2];
+
+          this.rentalinvoicelist1.initialize(this.filteredProperties, 10);
+
+          this.tableLoading = false;
+
+        } else {
+          this.rentalinvoicelist2 = [];
+          this.filteredProperties = [];
+          this.rentalinvoicelist1.initialize([], 10);
+          this.tableLoading = false;
+        }
+      },
+      error: () => {
+        this.rentalinvoicelist2 = [];
+        this.filteredProperties = [];
+        this.rentalinvoicelist1.initialize([], 10);
+        this.tableLoading = false;
+      },
+    });
   }
 
   applyFilters(): void {
+
     const { status, residentSearch, fromDate, toDate } = this.filterForm.value;
 
-    this.filteredProperties = this.properties.filter((p: any) => {
-      const matchStatus = !status || p.status === status;
+    this.filteredProperties = this.rentalinvoicelist2.filter((p: any) => {
+
+      const matchStatus =
+        !status ||
+        (status === 'paid' && p.payment_status) ||
+        (status === 'pending' && !p.payment_status);
 
       const matchResident =
         !residentSearch ||
-        p.name.toLowerCase().includes(residentSearch.toLowerCase()) ||
-        p.phone.includes(residentSearch);
+        p.tenant_name?.toLowerCase().includes(residentSearch.toLowerCase()) ||
+        String(p.tenant_mobile)?.includes(residentSearch);
+
+      const createdDate = new Date(p.created_time?.$date);
 
       const matchDate =
-        (!fromDate || new Date(p.date) >= new Date(fromDate)) &&
-        (!toDate || new Date(p.date) <= new Date(toDate));
+        (!fromDate || createdDate >= new Date(fromDate)) &&
+        (!toDate || createdDate <= new Date(toDate));
 
       return matchStatus && matchResident && matchDate;
     });
+
+    this.rentalinvoicelist1.initialize(this.filteredProperties, 10);
   }
 
-
-viewInvoice(data: any) {
-  const url = `/Global-invoice/${data}`;
-  window.open(url, '_blank');
-}
   resetFilters(): void {
     this.filterForm.reset();
-    this.filteredProperties = [...this.properties];
+    this.filteredProperties = [...this.rentalinvoicelist2];
+    this.rentalinvoicelist1.initialize(this.filteredProperties, 10);
+  }
+
+  viewInvoice(data: any) {
+    const url = `/Global-invoice/${data}`;
+    window.open(url, '_blank');
   }
 
   generateRental(): void {
@@ -79,83 +129,7 @@ viewInvoice(data: any) {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-      actions: {
-        click: false,
-        escape: false,
-      },
-    });
-  }
-
-  viewresident(): void {
-    this.router.navigateByUrl(`Association/view-properties/${1}`);
-  }
-
-  RentalInvoicelistinTenant() {
-        this.apiService.TenantRentalInvoiceList<any>().subscribe({
-          next: (res: any) => {
-            if (res?.success) {
-              this.rentalinvoicelist2 = res.data || [];
-              this.filteredProperties = [...this.rentalinvoicelist2];
-    
-              // Initialize TableService
-              this.rentalinvoicelist1 = new TableService();
-              this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 10);
-    
-              // If backend provides pagination info
-              this.pages = Array.from(
-                { length: res.data?.totalPages || 1 },
-                (_, i) => i + 1
-              );
-    
-              this.tableLoading = false;
-            } else {
-              this.rentalinvoicelist2 = []
-              this.tableLoading = false;
-              //console.warn(res.message || 'Failed to load properties.');
-            }
-          },
-          error: (err: any) => {
-            this.rentalinvoicelist2 = []
-            this.tableLoading = false;
-            //console.error('Property list fetch failed:', err);
-          },
-        });
-      }
-
-  
-
-      CreatePaymentforInvoiceId(data : any) {
-
-    const payload ={
-      invoice_no : data
-    }
-
-    console.log('payload',payload);
-    
-    this.apiService.CreatePaymentforInvoiceId<any>(payload).subscribe({
-      // next: (res: any) => {
-      //   if (res?.success) {
-      //     this.maintenancelist2 = res.data;
-      //     this.maintenancelist1.initialize(this.maintenancelist2, 12);
-      //     this.pages = Array.from(
-      //       { length: this.maintenancelist2.totalPages },
-      //       (_, i) => i + 1
-      //     );
-      //     this.tableLoading = false;
-      //   } else {
-      //     this.maintenancelist2 = []
-      //      this.maintenancelist1.initialize(this.maintenancelist2, 12);
-      //     this.tableLoading = false;
-      //     // alert(res.message || 'Logout failed, please try again.');
-      //   }
-      // },
-      // error: (err: any) => {
-      //   this.maintenancelist2 = []
-      //    this.maintenancelist1.initialize(this.maintenancelist2, 12);
-      //   this.tableLoading = false;
-      //   //console.error('Logout failed:', err);
-      //   // alert(err.message || 'Logout failed, please try again.');
-      // },
+      actions: { click: false, escape: false },
     });
   }
 }

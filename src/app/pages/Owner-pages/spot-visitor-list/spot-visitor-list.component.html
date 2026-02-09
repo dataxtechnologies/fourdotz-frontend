@@ -1,0 +1,189 @@
+<section>
+    <div>
+
+        <!-- HEADER -->
+        <div class="container header-cont">
+            <div class="head-cont">
+                <h2>
+                    Spot Visitors List
+                    <div class="tooltip-wrapper">
+                        <img src="assets/icons/info-circle.svg" class="info-icon" alt="info" />
+                        <div class="tooltip-box">
+                            Spot-visitor entries can be added through the mobile app
+                        </div>
+                    </div>
+                </h2>
+            </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="container" id="tour-list-pre-visitor">
+            <div class="item">
+
+                <div class="new-table-wrapper">
+
+                    <!-- 🔽 FILTERS ADDED -->
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Visitor name or phone"
+                                    formControlName="visitor" class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Resident name or phone"
+                                    formControlName="resident" class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Property No."
+                                    formControlName="propertyNo" class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Gate No."
+                                    formControlName="gate" class="regular-font" />
+                            </div>
+
+                            <button type="button" class="filter-reset-btn"
+                                (click)="resetFilters()">
+                                Reset
+                            </button>
+
+                        </div>
+                    </form>
+                    <!-- 🔼 FILTER END -->
+
+                    <!-- SCROLL -->
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
+
+                            <table class="new-table">
+
+                                <thead>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Visitor Details</th>
+                                        <th>Property No.</th>
+                                        <th>Resident Details</th>
+                                        <th>Purpose</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                                    <tr *ngFor="let item of spotVisitorlist1.paginatedData">
+
+                                        <td class="sticky-col lead-col">
+                                            <div class="visitor-details">
+                                                <span class="property-name">
+                                                    {{ item.visitor_no }}
+                                                </span>
+                                                <div class="visitor-data">
+                                                    <span>{{ item.visitor_name }}</span> |
+                                                    <span>{{ item.visitor_mobile }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>{{ item.property_no }}</td>
+
+                                        <td>
+                                            <div class="visitor-details">
+                                                <span class="property-name">
+                                                    {{ item.resident_name }}
+                                                </span>
+                                                <div class="visitor-data">
+                                                    <span>{{ item.resident_mobile }}</span> |
+                                                    <span>{{ item.resident_type }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>{{ item.purpose_of_visit }}</td>
+
+                                        <td>{{ item.visitor_status }}</td>
+
+                                        <td>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <div>
+                                                    <button class="table-btn"
+                                                        (click)="AcceptVisitorInvite(item.visitor_no)">
+                                                        Accept invite
+                                                    </button>
+                                                </div>
+                                                <div (click)="visitorView(item)">
+                                                    <i class="fa-regular fa-eye"
+                                                        style="font-size:18px; cursor: pointer;"></i>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+
+                                    <tr *ngIf="spotVisitorlist1.paginatedData.length === 0">
+                                        <td colspan="6" class="regular-font"
+                                            style="text-align:center;color:gray;">
+                                            No Data Found
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <ng-template #tableSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                                    <td class="sticky-col lead-col">
+                                        <span class="placeholder col-10"></span>
+                                    </td>
+                                    <td><span class="placeholder col-8"></span></td>
+                                    <td><span class="placeholder col-6"></span></td>
+                                    <td><span class="placeholder col-7"></span></td>
+                                    <td><span class="placeholder col-5"></span></td>
+                                    <td><span class="placeholder col-3"></span></td>
+                                </tr>
+                            </ng-template>
+
+                        </div>
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="crm-pagination" *ngIf="spotVisitorlist1">
+                        <div class="regular-font">
+                            Showing
+                            <span class="medium-font">{{ spotVisitorlist1.startIndex + 1 }}</span>
+                            to
+                            <span class="medium-font">{{ spotVisitorlist1.endIndex + 1 }}</span>
+                            of
+                            <span class="medium-font">{{ spotVisitorlist1.totalData }}</span>
+                            entries
+                        </div>
+
+                        <div class="d-flex gap-3 regular-font">
+                            <button class="nav-btn"
+                                (click)="spotVisitorlist1.prevPage()"
+                                [disabled]="spotVisitorlist1.currentPage === 1">
+                                ‹ Prev
+                            </button>
+
+                            <button class="page-btn active">
+                                {{ spotVisitorlist1.currentPage }}
+                            </button>
+
+                            <button class="nav-btn"
+                                (click)="spotVisitorlist1.nextPage()"
+                                [disabled]="spotVisitorlist1.currentPage === spotVisitorlist1.totalPages">
+                                Next ›
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>

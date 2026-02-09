@@ -8,12 +8,65 @@
       </div>
     </div>
 
+    <div class="main-head-cont mt-3"> 
+      <p class="text-muted mb-0 regular-font">
+        This is the Requests page where you can view all the requests created by the resident.
+        You can create a new request using the Create Request button and view the request details here. 
+      </p>
+      <button class="tout-btn" *ngIf="RequestList1.paginatedData.length > 0" (click)="startTour()">
+        🎯 Take a Tour
+      </button>
+    </div>
+
     <!-- TABLE -->
-    <div class="container">
+    <div class="container" id="tour-request-list">
       <div class="item">
 
         <div class="new-table-wrapper">
+<!-- 🔽 FILTERS (NO DESIGN CHANGE) -->
+<form [formGroup]="filterForm">
+  <div class="filters">
 
+    <!-- SEARCH -->
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Search Property / Title / Resident / Mobile"
+        formControlName="search"
+        class="regular-font"
+      />
+    </div>
+
+    <!-- WORK STATUS -->
+    <div class="search-box">
+      <select formControlName="workStatus" class="regular-font">
+        <option value="">All Work Status</option>
+        <option value="pending">Pending</option>
+        <option value="started">Started</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+
+    <!-- RESIDENT TYPE -->
+    <div class="search-box">
+      <select formControlName="residentType" class="regular-font">
+        <option value="">All Residents</option>
+        <option value="owner">Owner</option>
+        <option value="tenant">Tenant</option>
+      </select>
+    </div>
+
+    <!-- RESET -->
+    <button
+      type="button"
+      class="filter-reset-btn"
+      (click)="resetFilters()"
+    >
+      Reset
+    </button>
+
+  </div>
+</form>
           <!-- SCROLL WRAPPER -->
           <div class="table-scroll-wrapper">
             <div class="table-scroll">
@@ -69,8 +122,8 @@
 
                     <!-- ACTION -->
                     <td>
-                      <i class="fa-regular fa-eye view-icon"
-                         (click)="OpenViewRequest(req)">
+                      <i class="fa-regular fa-eye view-icon" style="cursor: pointer;"
+                         (click)="OpenViewRequest(req)" id="tour-view-request-details">
                       </i>
                     </td>
 

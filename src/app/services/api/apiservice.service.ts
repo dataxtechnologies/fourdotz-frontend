@@ -16,7 +16,7 @@ export class ApiserviceService {
     private urlHelper: UrlhelpersService,
     private envUrl: EnvurlService,
     private router: Router // ✅ instance injected
-  ) {}
+  ) { }
 
   // Build headers (with token if available)
   private getHeaders(): HttpHeaders {
@@ -98,9 +98,8 @@ export class ApiserviceService {
 
   public createAssociation<T>(payload: any): Observable<T> {
     // ✅ Use the instance envUrl, not the class
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.createAssociation
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.createAssociation
+      }`;
 
     return this.http
       .post<T>(serviceURL, payload, { headers: this.getHeaders() })
@@ -131,9 +130,8 @@ export class ApiserviceService {
   // association list by SA
 
   public getAssociations<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.AssociationList
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.AssociationList
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -161,9 +159,8 @@ export class ApiserviceService {
   }
 
   public UpdateTempPass<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.UpdateTempPass
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.UpdateTempPass
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -194,9 +191,8 @@ export class ApiserviceService {
   }
 
   public getAssociationbyId<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.getAssociationbyId
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getAssociationbyId
+      }?id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -223,9 +219,8 @@ export class ApiserviceService {
   }
 
   public UserInfo<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.UserInfo
-    }?user_type=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.UserInfo
+      }?user_type=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -253,9 +248,8 @@ export class ApiserviceService {
   }
 
   public getpropertybyAssociation<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.getpropertybyAssociation
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getpropertybyAssociation
+      }?id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -282,9 +276,8 @@ export class ApiserviceService {
   }
 
   public getUserData<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.getUserData
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getUserData
+      }?id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -311,9 +304,8 @@ export class ApiserviceService {
   }
 
   public AssociationDataOnboard<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.AssociationDataOnboard
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.AssociationDataOnboard
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -344,9 +336,8 @@ export class ApiserviceService {
   }
 
   public AssociationDocumentOnboard<T>(formData: FormData): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.AssociationDocumentOnboard
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.AssociationDocumentOnboard
+      }`;
 
     return this.http
       .post<T>(serviceURL, formData, {
@@ -379,9 +370,8 @@ export class ApiserviceService {
   }
 
   public propertiesbyAssociation<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.propertiesbyAssociation
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.propertiesbyAssociation
+      }?id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -408,9 +398,8 @@ export class ApiserviceService {
   }
 
   public PropertyListinAssociation<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.PropertyListinAssociation
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.PropertyListinAssociation
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -437,9 +426,8 @@ export class ApiserviceService {
   }
 
   public AddPropertybyAssociation<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.AddPropertybyAssociation
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.AddPropertybyAssociation
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -470,9 +458,8 @@ export class ApiserviceService {
   }
 
   public ViewpropertybyId<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ViewpropertybyId
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ViewpropertybyId
+      }?id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -499,9 +486,8 @@ export class ApiserviceService {
   }
 
   public createownerinproperty<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.createownerinproperty
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.createownerinproperty
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -532,9 +518,8 @@ export class ApiserviceService {
   }
 
   public ownerproperties<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ownerproperties
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ownerproperties
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -623,9 +608,8 @@ export class ApiserviceService {
   }
 
   public createTenantinproperty<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.createTenantinproperty
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.createTenantinproperty
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -656,9 +640,8 @@ export class ApiserviceService {
   }
 
   public ListMaintenanceinAssociation<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListMaintenanceinAssociation
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListMaintenanceinAssociation
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -685,9 +668,8 @@ export class ApiserviceService {
   }
 
   public MaintenanceListinOwner<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.MaintenanceListinOwner
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.MaintenanceListinOwner
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -714,9 +696,8 @@ export class ApiserviceService {
   }
 
   public Dashboarddata<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.Dashboarddata
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.Dashboarddata
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -743,9 +724,8 @@ export class ApiserviceService {
   }
 
   public generateMaintenanceInvoice<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.generateMaintenanceInvoice
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.generateMaintenanceInvoice
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -776,9 +756,8 @@ export class ApiserviceService {
   }
 
   public RentalInvoicelistinowner<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.RentalInvoicelistinowner
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.RentalInvoicelistinowner
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -805,9 +784,8 @@ export class ApiserviceService {
   }
 
   public TenantListinOwner<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.TenantListinOwner
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.TenantListinOwner
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -834,9 +812,8 @@ export class ApiserviceService {
   }
 
   public TenantMaintenanceList<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.TenantMaintenanceList
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.TenantMaintenanceList
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -863,9 +840,8 @@ export class ApiserviceService {
   }
 
   public RentalInvoicegeninOwner<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.RentalInvoicegeninOwner
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.RentalInvoicegeninOwner
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -896,9 +872,8 @@ export class ApiserviceService {
   }
 
   public TenantPropertyDatas<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.TenantPropertyDatas
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.TenantPropertyDatas
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -925,9 +900,8 @@ export class ApiserviceService {
   }
 
   public TenantRentalInvoiceList<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.TenantRentalInvoiceList
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.TenantRentalInvoiceList
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -954,9 +928,8 @@ export class ApiserviceService {
   }
 
   public SuperadminDashboardData<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.SuperadminDashboard
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.SuperadminDashboard
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -983,9 +956,8 @@ export class ApiserviceService {
   }
 
   public UpdatePropertyData<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.UpdatePropertyData
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.UpdatePropertyData
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1016,9 +988,8 @@ export class ApiserviceService {
   }
 
   public ResidentedProperty<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ResidentedProperty
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ResidentedProperty
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1045,9 +1016,8 @@ export class ApiserviceService {
   }
 
   public RemoveOwnerResident<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.RemoveOwnerResident
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.RemoveOwnerResident
+      }?id=${payload}`;
 
     return this.http.delete<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1074,9 +1044,8 @@ export class ApiserviceService {
   }
 
   public RemoveTenantResident<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.RemoveTenantResident
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.RemoveTenantResident
+      }?id=${payload}`;
 
     return this.http.delete<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1103,9 +1072,8 @@ export class ApiserviceService {
   }
 
   public EditTenantDetails<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.EditTenantDetails
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.EditTenantDetails
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1136,9 +1104,8 @@ export class ApiserviceService {
   }
 
   public UpdateAssociation<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.UpdateAssociation
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.UpdateAssociation
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1169,9 +1136,8 @@ export class ApiserviceService {
   }
 
   public AmountforAssociationinSA<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.AmountforAssociation
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.AmountforAssociation
+      }?id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1198,9 +1164,8 @@ export class ApiserviceService {
   }
 
   public AmountforAssociationinASS<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.maintenanceAmountBalance
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.maintenanceAmountBalance
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1227,9 +1192,8 @@ export class ApiserviceService {
   }
 
   public SendRemainderforMaintenance<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.SendRemainderforMaintenance
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.SendRemainderforMaintenance
+      }?id=${payload}`;
 
     // Use POST if sending payload
     return this.http
@@ -1259,9 +1223,8 @@ export class ApiserviceService {
       );
   }
   public CreatePaymentforInvoiceId<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.CreatePaymentforInvoiceId
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CreatePaymentforInvoiceId
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1292,9 +1255,8 @@ export class ApiserviceService {
   }
 
   public RentalInvoice<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.RentalInvoice
-    }?invoice_no=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.RentalInvoice
+      }?invoice_no=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1321,9 +1283,8 @@ export class ApiserviceService {
   }
 
   public RentalinvoiceQR<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.RentalinvoiceQR
-    }?invoice_no=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.RentalinvoiceQR
+      }?invoice_no=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1350,9 +1311,8 @@ export class ApiserviceService {
   }
 
   public ChangeRentalInvoicePaidStatus<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ChangeRentalInvoicePaidStatus
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ChangeRentalInvoicePaidStatus
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1383,9 +1343,8 @@ export class ApiserviceService {
   }
 
   public forgetpassword<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.forgetpassword
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.forgetpassword
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1416,9 +1375,8 @@ export class ApiserviceService {
   }
 
   public updateforgetpassword<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.updateforgetpassword
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.updateforgetpassword
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1449,9 +1407,8 @@ export class ApiserviceService {
   }
 
   public CreateAnnouncement<T>(formData: FormData): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.CreateAnnouncement
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CreateAnnouncement
+      }`;
 
     return this.http
       .post<T>(serviceURL, formData, {
@@ -1483,9 +1440,8 @@ export class ApiserviceService {
   }
 
   public ListAnnouncementinHOA<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListAnnouncementinHOA
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListAnnouncementinHOA
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1512,9 +1468,8 @@ export class ApiserviceService {
   }
 
   public listpinannouncement<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.listpinannouncement
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.listpinannouncement
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1541,9 +1496,8 @@ export class ApiserviceService {
   }
 
   public ListAnnouncementinOwnerTenant<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListAnnouncementinOwnerTenant
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListAnnouncementinOwnerTenant
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1570,9 +1524,8 @@ export class ApiserviceService {
   }
 
   public Createpinannouncement<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.pinannouncement
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.pinannouncement
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1603,9 +1556,8 @@ export class ApiserviceService {
   }
 
   public OwnerUpdateUPI<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.OwnerUpdateUPI
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.OwnerUpdateUPI
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1636,9 +1588,8 @@ export class ApiserviceService {
   }
 
   public MaintenanceInvoicegetbyID<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.MaintenanceInvoicegetbyID
-    }?invoice_no=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.MaintenanceInvoicegetbyID
+      }?invoice_no=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1665,9 +1616,8 @@ export class ApiserviceService {
   }
 
   public CreateRequestUser<T>(formData: FormData): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.CreateRequestUser
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CreateRequestUser
+      }`;
 
     return this.http
       .post<T>(serviceURL, formData, {
@@ -1699,9 +1649,8 @@ export class ApiserviceService {
   }
 
   public ListRequestUser<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListRequestUser
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListRequestUser
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1728,9 +1677,8 @@ export class ApiserviceService {
   }
 
   public CommentsAddforRequest<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.CommentsAddforRequest
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CommentsAddforRequest
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1761,9 +1709,8 @@ export class ApiserviceService {
   }
 
   public listcommentsforrequest<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.listcommentsforrequest
-    }?request_id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.listcommentsforrequest
+      }?request_id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1790,9 +1737,8 @@ export class ApiserviceService {
   }
 
   public CreateServiceAdmin<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.CreateServiceAdmin
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CreateServiceAdmin
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -1823,9 +1769,8 @@ export class ApiserviceService {
   }
 
   public ListServiceAdmin<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListServiceAdmin
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListServiceAdmin
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1852,9 +1797,8 @@ export class ApiserviceService {
   }
 
   public ListAllRequestinAssociation<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListAllRequestinAssociation
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListAllRequestinAssociation
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1881,9 +1825,8 @@ export class ApiserviceService {
   }
 
   public ListAllrequestinServiceAdmin<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListAllrequestinServiceAdmin
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListAllrequestinServiceAdmin
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -1910,9 +1853,8 @@ export class ApiserviceService {
   }
 
   public StartWorkonRequest<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.StartWorkonRequest
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.StartWorkonRequest
+      }?id=${payload}`;
 
     // Use POST if sending payload
     return this.http
@@ -1943,9 +1885,8 @@ export class ApiserviceService {
   }
 
   public CompleteWorkonRequest<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.CompleteWorkonRequest
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CompleteWorkonRequest
+      }?id=${payload}`;
 
     // Use POST if sending payload
     return this.http
@@ -1976,9 +1917,8 @@ export class ApiserviceService {
   }
 
   public UpdateOwnerDetails<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.UpdateOwnerDetails
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.UpdateOwnerDetails
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2009,9 +1949,8 @@ export class ApiserviceService {
   }
 
   public RemovePet<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.RemovePet
-    }?property_id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.RemovePet
+      }?property_id=${payload}`;
 
     return this.http.delete<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2038,9 +1977,8 @@ export class ApiserviceService {
   }
 
   public RemoveVehicle<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.RemoveVehicle
-    }?property_id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.RemoveVehicle
+      }?property_id=${payload}`;
 
     return this.http.delete<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2067,9 +2005,8 @@ export class ApiserviceService {
   }
 
   public GetAssociationQR<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.GetAssociationQR
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.GetAssociationQR
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2096,9 +2033,8 @@ export class ApiserviceService {
   }
 
   public SaveQRcodeAssociation<T>(formData: FormData): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.SaveQRcodeAssociation
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.SaveQRcodeAssociation
+      }`;
 
     return this.http
       .post<T>(serviceURL, formData, {
@@ -2133,9 +2069,8 @@ export class ApiserviceService {
   public ListpropertybasedonAssociationIdtoVisitors<T>(
     payload: any
   ): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListpropertybasedonAssociationIdtoVisitors
-    }?association_id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListpropertybasedonAssociationIdtoVisitors
+      }?association_id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2162,9 +2097,8 @@ export class ApiserviceService {
   }
 
   public CreateVisitorEntry<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.CreateVisitorEntry
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CreateVisitorEntry
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2195,9 +2129,8 @@ export class ApiserviceService {
   }
 
   public ListAllVisitors<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListAllVisitors
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListAllVisitors
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2224,9 +2157,8 @@ export class ApiserviceService {
   }
 
   public ListVisitorinGateKeeper<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListVisitorinGateKeeper
-    }?type_of_visit=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListVisitorinGateKeeper
+      }?type_of_visit=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2251,10 +2183,9 @@ export class ApiserviceService {
       })
     );
   }
-  public OwnerLoginPreVisitor<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.OwnerLoginPreVisitor
-    }`;
+  public OwnerLoginPreVisitor<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.OwnerLoginPreVisitor
+      }?type_of_visit=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2281,9 +2212,8 @@ export class ApiserviceService {
   }
 
   public SendOTPtoMobile<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.SendOTPtoMobile
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.SendOTPtoMobile
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2345,9 +2275,8 @@ export class ApiserviceService {
   }
 
   public GateKeeperCreate<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.GateKeeperCreate
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.GateKeeperCreate
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2436,9 +2365,8 @@ export class ApiserviceService {
   }
 
   public listGateKeeper<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.listGateKeeper
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.listGateKeeper
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2465,9 +2393,8 @@ export class ApiserviceService {
   }
 
   public Listgatekeeper<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.Listgatekeeper
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.Listgatekeeper
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2494,9 +2421,8 @@ export class ApiserviceService {
   }
 
   public AssignGateKeeper<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.AssignGateKeeper
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.AssignGateKeeper
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2527,9 +2453,8 @@ export class ApiserviceService {
   }
 
   public UnassignGateKeeper<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.UnassignGateKeeper
-    }?gatekeeper_id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.UnassignGateKeeper
+      }?gatekeeper_id=${payload}`;
 
     // Use POST if sending payload
     return this.http
@@ -2560,9 +2485,8 @@ export class ApiserviceService {
   }
 
   public GetPropertyData<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.GetPropertyData
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.GetPropertyData
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2589,9 +2513,8 @@ export class ApiserviceService {
   }
 
   public AddSpotVisitorinGateKeeper<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.AddSpotVisitorinGateKeeper
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.AddSpotVisitorinGateKeeper
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2622,9 +2545,8 @@ export class ApiserviceService {
   }
 
   public VisitorExit<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.VisitorExit
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.VisitorExit
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2655,9 +2577,8 @@ export class ApiserviceService {
   }
 
   public ExitQRVisitor<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ExitQRVisitor
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ExitQRVisitor
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2688,9 +2609,8 @@ export class ApiserviceService {
   }
 
   public ListAgreementTemplates<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListAgreementTemplates
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListAgreementTemplates
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2717,9 +2637,8 @@ export class ApiserviceService {
   }
 
   public CreateAgreementTemplates<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.CreateAgreementTemplates
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CreateAgreementTemplates
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2750,9 +2669,8 @@ export class ApiserviceService {
   }
 
   public ListCreatedAgreements<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListCreatedAgreements
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListCreatedAgreements
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2778,9 +2696,8 @@ export class ApiserviceService {
     );
   }
   public listagreementTemplatesbyID<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.listagreementTemplatesbyID
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.listagreementTemplatesbyID
+      }?id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2807,9 +2724,8 @@ export class ApiserviceService {
   }
 
   public listAgreementbyId<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.listAgreementbyId
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.listAgreementbyId
+      }?id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2836,9 +2752,8 @@ export class ApiserviceService {
   }
 
   public ViewCreatedAgreementbyId<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ViewCreatedAgreementbyId
-    }?id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ViewCreatedAgreementbyId
+      }?id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -2865,9 +2780,8 @@ export class ApiserviceService {
   }
 
   public CreateAgreementtosign<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.CreateAgreementtosign
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CreateAgreementtosign
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2897,9 +2811,8 @@ export class ApiserviceService {
       );
   }
   public SendOTPforVerifySign<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.SendOTPforVerifySign
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.SendOTPforVerifySign
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2929,9 +2842,8 @@ export class ApiserviceService {
       );
   }
   public VerifyOTPforSign<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.VerifyOTPforSign
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.VerifyOTPforSign
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2961,9 +2873,8 @@ export class ApiserviceService {
       );
   }
   public signAgreement<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.signAgreement
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.signAgreement
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -2993,9 +2904,8 @@ export class ApiserviceService {
       );
   }
   public SendAgreement<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.SendAgreement
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.SendAgreement
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -3026,9 +2936,8 @@ export class ApiserviceService {
   }
 
   public ListAgreementforusers<T>(): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.ListAgreementforusers
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListAgreementforusers
+      }`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -3055,9 +2964,8 @@ export class ApiserviceService {
   }
 
   public OwnerListTemplatebyAssociation<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.OwnerListTemplatebyAssociation
-    }?hoa_admin_id=${payload}`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.OwnerListTemplatebyAssociation
+      }?hoa_admin_id=${payload}`;
 
     return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
       catchError((error) => {
@@ -3083,10 +2991,9 @@ export class ApiserviceService {
     );
   }
 
-   public UpdateUPI<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.UpdateUPI
-    }`;
+  public UpdateUPI<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.UpdateUPI
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -3118,9 +3025,8 @@ export class ApiserviceService {
 
 
   public SendmailAgain<T>(payload: any): Observable<T> {
-    const serviceURL = `${this.urlHelper.getAPIURL()}${
-      this.envUrl.SendmailAgain
-    }`;
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.SendmailAgain
+      }`;
 
     // Use POST if sending payload
     return this.http
@@ -3144,6 +3050,760 @@ export class ApiserviceService {
           return throwError(() => ({
             statusCode: 500,
             message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+
+  public AddTourdatas<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.AddTourdatas
+      }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+
+
+  public getTourdatas<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getTourdatas
+      }`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public getallResourcesinAssociation<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getallResourcesinAssociation
+      }`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public CreateResourcesinAssociation<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CreateResourcesinAssociation
+      }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+
+  public SetSlotRulesCreate<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.SetSlotRulesCreate
+      }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+  public getResourcebyId<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getResourcebyId
+      }?resource_id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public GetSlotRuleforResourcesId<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.GetSlotRuleforResourcesId
+      }?resource_id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public GetTimeSlotsByResourceId<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.GetTimeSlotsByResourceId
+      }?resource_id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public GetBookingforResourcesbyId<T>(payload: any, hoa_id: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.GetBookingforResourcesbyId
+      }?resource_id=${payload}&hoa_admin_id=${hoa_id}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public GetBookingforAssociation<T>(hoa_id: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.GetBookingforResourcesbyId
+      }?hoa_admin_id=${hoa_id}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public OpenthebookingslotToday<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.BookingSlotTodayinAssociation
+      }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+  public GetBookinginOwner<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.GetBookinginOwner
+      }?user_id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public getallresourcesforOwner<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getallResourcesinAssociation
+      }`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public BookResourceinOwner<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.BookResourceinOwner
+      }`;
+
+    // Use POST if sending payload
+    return this.http
+      .post<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+
+  public BookingdetailsbyBookingId<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.BookingdetailsbyBookingId
+      }?booking_id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public CreateanAdSpace<T>(formData: FormData): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.CreateanAdSpace
+      }`;
+
+    return this.http
+      .post<T>(serviceURL, formData, {
+        // ⚠️ DO NOT manually set Content-Type for FormData
+        headers: this.getHeadersforFormdata(), // <-- modify this method to skip JSON headers when true
+      })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('AssociationDocumentOnboard API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'AssociationDocumentOnboard API error',
+            error,
+          }));
+        })
+      );
+  }
+
+  public getalladspace<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getalladspace
+      }`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public getadspacebyid<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getadspacebyid
+      }?id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public VisitorAcceptoption<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.VisitorAcceptoption
+      }`;
+
+    // Use POST if sending payload
+    return this.http
+      .put<T>(serviceURL, payload, { headers: this.getHeaders() })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('UpdateTempPass API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'UpdateTempPass API error',
+            error,
+          }));
+        })
+      );
+  }
+
+
+  public DeleteAnnouncementinHOA<T>(payload: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.DeleteAnnouncement
+      }?id=${payload}`;
+
+    return this.http.delete<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public ListPropertyNotresidentedbyTenantinOwner<T>(): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.ListPropertyNotresidentedbyTenantinOwner
+      }`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+  public getpropertydatabyid<T>(data: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getpropertydatabyid
+      }?id=${data}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public GetAssociationQRforvisitor<T>(data: any): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.GetAssociationQRforvisitor
+      }?association_id=${data}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+
+  public getGatelistinQrformExternal<T>(
+    payload: any
+  ): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.getGatelistinQrformExternal
+      }?hoa_admin_id=${payload}`;
+
+    return this.http.get<T>(serviceURL, { headers: this.getHeaders() }).pipe(
+      catchError((error) => {
+        // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+        if (error.status === 403) {
+          sessionStorage.clear();
+          localStorage.clear();
+          this.router.navigate(['/auth/sign-in']);
+        }
+        if (
+          error.error.success === false &&
+          error.error.message == 'Session expired'
+        ) {
+          this.router.navigate(['/auth/sign-in']);
+        }
+        //console.error('Get Associations API error', error);
+        return throwError(() => ({
+          statusCode: 500,
+          message: 'Get Associations API error',
+          error,
+        }));
+      })
+    );
+  }
+
+  public UploadProfileImage<T>(formData: FormData): Observable<T> {
+    const serviceURL = `${this.urlHelper.getAPIURL()}${this.envUrl.UploadProfileImage
+      }`;
+
+    return this.http
+      .put<T>(serviceURL, formData, {
+        // ⚠️ DO NOT manually set Content-Type for FormData
+        headers: this.getHeadersforFormdata(), // <-- modify this method to skip JSON headers when true
+      })
+      .pipe(
+        catchError((error) => {
+          // 🔥 1. Handle 403 Unauthorized -> logout & redirect
+          if (error.status === 403) {
+            sessionStorage.clear();
+            localStorage.clear();
+            this.router.navigate(['/auth/sign-in']);
+          }
+          if (
+            error?.error?.success === false &&
+            error?.error?.message === 'Session expired'
+          ) {
+            this.router.navigate(['/auth/sign-in']);
+          }
+
+          //console.error('AssociationDocumentOnboard API error', error);
+          return throwError(() => ({
+            statusCode: 500,
+            message: 'AssociationDocumentOnboard API error',
             error,
           }));
         })

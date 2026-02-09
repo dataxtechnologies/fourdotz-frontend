@@ -17,13 +17,22 @@
 
 
         <div>
-            <button class="submit-btn" (click)="EditProperty(PropertyId)">Edit</button>
+            <button class="submit-btn" (click)="EditProperty(PropertyId)" id="tour-edit-property">Edit</button>
         </div>
 
     </div>
+    <div class="main-head-cont mt-3">
+            <p class="text-muted mb-0 regular-font">
+                This is the Property View page where you can view and manage the property details.
+                You can add, edit, and delete properties here.
+            </p>
+            <button class="tout-btn" (click)="startPropertyViewTour()">
+                🎯 Take a Tour
+            </button>
+        </div>
     <div class="sec-cont">
         <!-- Header -->
-        <div class="header-cont">
+        <div class="header-cont" id="tour-property-header">
             <div class="user-info">
                 <h5 class="label medium-font">Propety No</h5>
                 <p class="regular-font">{{ Associationdata.property_no }}</p>
@@ -96,10 +105,10 @@
         <!-- Section Content -->
         <div class="main-cont">
             <div class="tabs">
-                <button class="tab-btn" [class.active]="activeTab === 'Resident'" (click)="setTab('Resident')">
+                <button class="tab-btn" id="tour-tab-resident" [class.active]="activeTab === 'Resident'" (click)="setTab('Resident')">
                     Resident
                 </button>
-                <button class="tab-btn" [class.active]="activeTab === 'petvehicle'" (click)="setTab('petvehicle')">
+                <button class="tab-btn" id="tour-tab-petvehicle" [class.active]="activeTab === 'petvehicle'" (click)="setTab('petvehicle')">
                     Pet & Vehicle
                 </button>
             </div>
@@ -112,11 +121,11 @@
                     <h4 class="section-title">Resident Details</h4>
 
                     <!-- Owner Card -->
-                    <div class="resident-card">
+                    <div class="resident-card" id="tour-owner-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="medium-font">Owner Details</h5>
                             <div class="d-flex gap-3">
-                                <button class="btn-add" (click)="addowner(PropertyId)"
+                                <button class="btn-add" id="tour-add-owner" (click)="addowner(PropertyId)"
                                     *ngIf="!Associationdata.owner_details?._id">+ Add Owner</button>
                                 <button class="btn-add" (click)="RemoveOwner(PropertyId)"
                                     *ngIf="Associationdata.owner_details?._id">Remove Owner</button>
@@ -147,11 +156,11 @@
                     </div>
 
                     <!-- Tenant Card -->
-                    <div class="resident-card">
+                    <div class="resident-card" id="tour-tenant-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="medium-font">Tenant Details</h5>
                             <div class="d-flex gap-3">
-                                <button class="btn-add" (click)="addTenant(PropertyId)"
+                                <button class="btn-add" id="tour-add-tenant" (click)="addTenant(PropertyId)"
                                     *ngIf="!Associationdata.tenant_details?._id">+ Add Tenant</button>
                                 <button class="btn-add" (click)="RemoveTenant(PropertyId)"
                                     *ngIf="Associationdata.tenant_details?._id">Remove Tenant</button>
@@ -169,7 +178,7 @@
           {label: 'Estimated Rent', value: Associationdata?.monthly_rent_amount},
           {label: 'Maintenance Amount', value: Associationdata?.maintenance_amount},
           {label: 'Maintenance Paid By', value: Associationdata?.maintenance_paid_by},
-          {label: 'Rented at', value: Associationdata.tenant_details?.onboarded_time?.$date | date:'dd-MMM-yyyy'}
+          {label: 'Rented at', value: Associationdata?.tenant_rented_at?.$date | date:'dd-MMM-yyyy'}
         ]">
                                 <div class="user-info">
                                     <h5 class="label medium-font">{{field.label}}</h5>
@@ -190,11 +199,12 @@
                     <h4 class="section-title">Pet & Vehicle</h4>
 
                     <!-- Pet Card -->
-                    <div class="resident-card">
+                    <div class="resident-card" id="tour-pet-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="medium-font">Pet Details</h5>
-                            <div *ngIf="Associationdata?.owner_details && (Associationdata.owner_details | keyvalue).length > 0">
-                                <button class="btn-add" (click)="addpet(Associationdata._id)"
+                            <div
+                                *ngIf="Associationdata?.owner_details && (Associationdata.owner_details | keyvalue).length > 0">
+                                <button class="btn-add" id="tour-add-pet" (click)="addpet(Associationdata._id)"
                                     *ngIf="!Associationdata.pet || Associationdata.pet.length === 0">+ Add Pet</button>
                                 <div class="d-flex gap-2">
                                     <button class="btn-add" (click)="EditPet(Associationdata.pet[0], PropertyId)"
@@ -233,11 +243,12 @@
                     </div>
 
                     <!-- Vehicle Card -->
-                    <div class="resident-card">
+                    <div class="resident-card" id="tour-vehicle-card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="medium-font">Vehicle Details</h5>
-                            <div *ngIf="Associationdata?.owner_details && (Associationdata.owner_details | keyvalue).length > 0">
-                                <button class="btn-add" (click)="addVehicle(Associationdata._id)"
+                            <div
+                                *ngIf="Associationdata?.owner_details && (Associationdata.owner_details | keyvalue).length > 0">
+                                <button class="btn-add" id="tour-add-vehicle" (click)="addVehicle(Associationdata._id)"
                                     *ngIf="!Associationdata.vehicle || Associationdata.vehicle.length === 0">+ Add
                                     Vehicle</button>
                                 <div class="d-flex gap-2">

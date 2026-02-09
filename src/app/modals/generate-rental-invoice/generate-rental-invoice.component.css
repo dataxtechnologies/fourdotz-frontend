@@ -1,16 +1,14 @@
-/* ===========================
-   MODAL MAIN WRAPPER
-=========================== */
 .form-section {
-    background: #faf9f4;
-    width: 680px;
-    margin: 35px auto;
-    padding: 22px 28px;
-    border-radius: 14px;
-    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    background-color: #fff !important;
+    width: 800px;
+    margin: 40px auto;
+    padding: 25px;
+    padding-left: 35px;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
     box-sizing: border-box;
 }
 

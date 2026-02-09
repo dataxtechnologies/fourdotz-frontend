@@ -63,6 +63,7 @@ export class EnvurlService {
   public UpdateOwnerDetails = '/owner/update_owner_details'
   public RemovePet = '/pet/remove_pet'
   public RemoveVehicle = '/vehicle/remove_vehicle'
+  public getpropertydatabyid = '/property/property_byid'
 
 
   // Tenant Endpoints
@@ -128,6 +129,7 @@ export class EnvurlService {
   public GetPropertyData = '/property/list_resident_property_gatekeeper'
   public AddSpotVisitorinGateKeeper = '/visitors/gate_visitors_entry'
   public VisitorExit = '/visitors/visitor_exit'
+  public getGatelistinQrformExternal = '/gate/list_gate_by_association_id'
 
 
 
@@ -151,5 +153,49 @@ export class EnvurlService {
   public SendAgreement = '/agreement/generate_agreement'
   public ListAgreementforusers = '/agreement/list_agreement'
   public OwnerListTemplatebyAssociation = '/agreement_template/list_template_by_associationid'
+
+
+
+  // Tour Endpoints
+  public AddTourdatas = '/webapp_tour/insert_webapp_tour'
+  public getTourdatas = '/webapp_tour/list_webapp_tour'
+
+
+
+  // Amenities Endpoints
+  public getallResourcesinAssociation = '/gated_community/register-resource'
+  public CreateResourcesinAssociation =  '/gated_community/register-resource'
+  public getResourcebyId = '/gated_community/get_resource_byid'
+  public SetSlotRulesCreate = '/gated_community/slot-rule'
+  public GetSlotRuleforResourcesId = '/gated_community/slot-rule'
+  public GetTimeSlotsByResourceId = '/gated_community/time-slot'
+  public GetBookingforResourcesbyId = '/gated_community/book-resource'
+  public BookingSlotTodayinAssociation = '/gated_community/time-slot'
+  public BookResourceinOwner = '/gated_community/book-resource'
+
+
+
+  public GetBookinginOwner = '/gated_community/book-resource'
+  public BookingdetailsbyBookingId = '/gated_community/booking_details_by_booking_id'
+
+
+
+  // ad space in superadmin
+  public CreateanAdSpace = '/advertisement_space/create_advertisement_space'
+  public getalladspace = '/advertisement_space/list_advertisement_space'
+  public getadspacebyid = '/advertisement_space/list_advertisement_space_byid'
+
+
+  public VisitorAcceptoption = '/visitors/update_entry'
+
+  public DeleteAnnouncement = '/announcements/delete_announcement'
+  public ListPropertyNotresidentedbyTenantinOwner = '/property/list_owner_properties_without_tenant'
+
+
+  public GetAssociationQRforvisitor = '/visitors/list_association_gateentry_qrcode'
+
+  public UploadProfileImage = '/auth/user_profile'
+
+
   
 }

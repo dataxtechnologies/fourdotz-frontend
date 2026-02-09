@@ -1,4 +1,4 @@
-<section class="form-section container" [formGroup]="announcementForm">
+<section class="form-section" [formGroup]="announcementForm">
     <div class="form-header">
         <h3>Create Announcement</h3>
         <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
@@ -32,7 +32,7 @@
         <!-- Event Date (Visible only if category === 'Events') -->
         <div class="inp-cont" *ngIf="announcementForm.get('category')?.value === 'events'">
             <label class="medium-font">Event Date <span class="required">*</span></label>
-            <input type="date" class="inp-cus regular-font" formControlName="event_date" />
+            <input type="date" class="input-custom-style regular-font" formControlName="event_date" />
             <small class="error-text regular-font" *ngIf="f['event_date'].touched && f['event_date'].invalid">
                 Event date is required for Events.
             </small>
@@ -41,7 +41,7 @@
         <!-- Title -->
         <div class="inp-cont">
             <label class="medium-font">Title <span class="required">*</span></label>
-            <input type="text" class="inp-cus regular-font" placeholder="Enter title" formControlName="title" />
+            <input type="text" class="input-custom-style regular-font" placeholder="Enter title" formControlName="title" />
             <small class="error-text regular-font" *ngIf="f['title'].touched && f['title'].invalid">
                 Title is required.
             </small>
@@ -50,7 +50,7 @@
         <!-- Summary -->
         <div class="inp-cont">
             <label class="medium-font">Summary <span class="required">*</span></label>
-            <textarea class="inp-cus regular-font" rows="4" placeholder="Enter summary..." formControlName="summary"></textarea>
+            <textarea class="input-custom-style regular-font" rows="4" placeholder="Enter summary..." formControlName="summary"></textarea>
             <small class="error-text regular-font" *ngIf="f['summary'].touched && f['summary'].invalid">
                 Summary is required.
             </small>
@@ -59,7 +59,7 @@
         <!-- Attachments -->
         <div class="inp-cont">
             <label class="medium-font">Attachments (Max 2 files — image or video)</label>
-            <input type="file" class="inp-cus regular-font" (change)="onFileSelected($event)" multiple accept="image/*,video/*" />
+            <input type="file" class="input-custom-style regular-font" (change)="onFileSelected($event)" multiple accept="image/*,video/*" />
 
             <!-- Preview -->
             <div class="preview-container" *ngIf="previewFiles.length > 0">
