@@ -51,7 +51,7 @@ days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
     this.tenantForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2)]],
       lastName: ['', [Validators.required, Validators.minLength(1)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required,  Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
       rentedAt: ['', Validators.required],
       monthly_rent_due_date: ['', Validators.required],

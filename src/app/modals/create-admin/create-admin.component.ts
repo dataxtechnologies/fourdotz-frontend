@@ -28,7 +28,7 @@ export class CreateAdminComponent {
     this.adminForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required,  Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)]],
       mobile: ['', [Validators.required,  Validators.pattern('^[6-9][0-9]{9}$')]]
     });
   }

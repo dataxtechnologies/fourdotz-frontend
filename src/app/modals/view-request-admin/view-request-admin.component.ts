@@ -18,7 +18,7 @@ export class ViewRequestAdminComponent {
   comment: string = '';
   messages: any[] = []; // chat history
   loggedUserType: string = '';
-
+sending: boolean = false;
   constructor(private Modal: ModalService, private API: ApiserviceService, private toast: ToastrService, private AssociationService: AssociationServiceService) {}
 
   ngOnInit(): void {
@@ -50,27 +50,32 @@ export class ViewRequestAdminComponent {
     }
   }
 
-  CommentsAddforRequest() {
-    if (!this.comment.trim()) return;
+CommentsAddforRequest() {
 
-    const payload = {
-      request_id: this.RequestData._id,
-      comments: this.comment,
-    };
+  // stop if empty or already sending
+  if (!this.comment.trim() || this.sending) return;
 
-    this.API.CommentsAddforRequest<any>(payload).subscribe({
-      next: (res: any) => {
-        if (res?.success) {
-          this.listcommentsforrequest(this.RequestData._id);
+  this.sending = true;
 
-          this.comment = ''; // clear input box
-        }
-      },
-      error: (err: any) => {
-        console.error('Comment request failed');
-      },
-    });
-  }
+  const payload = {
+    request_id: this.RequestData._id,
+    comments: this.comment.trim(),
+  };
+
+  this.API.CommentsAddforRequest<any>(payload).subscribe({
+    next: (res: any) => {
+      if (res?.success) {
+        this.listcommentsforrequest(this.RequestData._id);
+        this.comment = '';
+      }
+      this.sending = false;
+    },
+    error: () => {
+      console.error('Comment request failed');
+      this.sending = false;
+    },
+  });
+}
 
   listcommentsforrequest(data: any) {
     this.API.listcommentsforrequest<any>(data).subscribe({

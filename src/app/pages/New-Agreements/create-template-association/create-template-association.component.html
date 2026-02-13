@@ -8,68 +8,85 @@
         </div>
 
         <div class="header-actions">
-            <button class="btn-add mx-1" (click)="openVariableModal()">＋ Variable</button>
-            <button class="btn-add mx-1" (click)="openTemplateNameModal()">Save Template</button>
+            <button class="submit-btn" (click)="openTemplateNameModal()">Save Template</button>
         </div>
     </div>
 
-    <!-- ================= BODY ================= -->
+    <!-- ================= BODY GRID ================= -->
     <div class="builder-body">
 
-        <!-- LEFT : CONTROLS -->
-        <div class="builder-controls">
-            <h4>Add Content</h4>
+        <!-- ================= LEFT : VARIABLES PANEL ================= -->
+        <div class="variable-panel">
+            <h4>Variables</h4>
 
-            <button class="btn" (click)="addHeading()" [disabled]="headingAdded">
-                ➕ Add Heading
-            </button>
+            <button class="submit-btn" (click)="addHeading()">Heading</button>
+            <button class="submit-btn" (click)="addParagraph()">Paragraph</button>
+            <button class="submit-btn" (click)="openSignatureModal()">Signature</button>
+            <button class="submit-btn w-100 mb-2" (click)="openVariableModal()">+ Add Variable</button>
 
-            <button class="btn" (click)="addParagraph()">
-                ➕ Add Paragraph
-            </button>
-
-            <button class="btn" (click)="openSignatureModal()" [disabled]="signatureAdded">
-                ✍️ Add Signature Area
-            </button>
-
-            <p class="hint">
-                * Heading & Signature only once
-            </p>
+            <div class="var-list">
+                <span *ngFor="let v of extractVariablesFromBlocks()" class="variable-pill">
+                    {{v.label}}
+                </span>
+            </div>
         </div>
 
-        <!-- RIGHT : EDITOR -->
+        <!-- ================= RIGHT : EDITOR ================= -->
         <div class="builder-preview">
             <div class="page">
 
                 <ng-container *ngFor="let block of blocks; trackBy: trackById">
 
-                    <!-- ========== HEADING ========== -->
-                    <h1 *ngIf="block.type === 'heading'" class="doc-heading editable" contenteditable="true"
-                        spellcheck="false" data-placeholder="Type agreement heading here" [attr.data-id]="block.id"
-                        (focus)="saveCursor()" (input)="updateBlockValue($event, block)">
-                    </h1>
+                    <!-- BLOCK WRAPPER -->
+                    <div class="block-wrapper">
 
-                    <!-- ========== PARAGRAPH ========== -->
-                    <p *ngIf="block.type === 'paragraph'" class="doc-para editable" contenteditable="true"
-                        spellcheck="false" data-placeholder="Type paragraph content here..." [attr.data-id]="block.id"
-                        (focus)="saveCursor()" (input)="updateBlockValue($event, block)">
-                    </p>
+                        <button class="delete-block" (click)="removeBlock(block)">
+                            <i class="fa fa-trash"></i>
+                        </button>
 
-                    <div *ngIf="block.type === 'paragraph'" class="para-gap"></div>
+                        <!-- ========== HEADING ========== -->
+                        <h1
+  *ngIf="block.type === 'heading'"
+  class="doc-heading editable"
+  contenteditable="true"
+  spellcheck="false"
+  data-placeholder="Type agreement heading here"
+  [attr.data-id]="block.id"
+  (focus)="onEditableFocus($event)"
+  (input)="updateBlockValue($event, block)"
+  (keydown)="handleEditorKeydown($event, block)">
+</h1>
 
-                    <!-- ========== SIGNATURE ========== -->
-                    <div *ngIf="block.type === 'signature'" class="signature-section">
+                        <!-- ========== PARAGRAPH ========== -->
+<p
+  *ngIf="block.type === 'paragraph'"
+  class="doc-para editable"
+  contenteditable="true"
+  spellcheck="false"
+  data-placeholder="Type paragraph content here..."
+  [attr.data-id]="block.id"
+  (focus)="onEditableFocus($event)"
+  (input)="updateBlockValue($event, block)"
+  (keydown)="handleEditorKeydown($event, block)">
+</p>
 
-                        <div class="sign-box" *ngFor="let signer of block.signers">
-                            <p class="sign-name">{{ signer.name }}</p>
+                        <div *ngIf="block.type === 'paragraph'" class="para-gap"></div>
 
-                            <div class="sign-placeholder">
-                                {{ signer.signed ? 'Signed' : 'Pending Signature' }}
+                        <!-- ========== SIGNATURE ========== -->
+                        <div *ngIf="block.type === 'signature'" class="signature-section">
+
+                            <div class="sign-box" *ngFor="let signer of block.signers">
+                                <p class="sign-name">{{ signer.name }}</p>
+
+                                <div class="sign-placeholder">
+                                    {{ signer.signed ? 'Signed' : 'Pending Signature' }}
+                                </div>
+
+                                <div *ngIf="block.includeDate" class="sign-date">
+                                    Date: {{ signer.signed ? signer.signedAt : '{{sign_date}}' }}
+                                </div>
                             </div>
 
-                            <div *ngIf="block.includeDate" class="sign-date">
-                                Date: {{ signer.signed ? signer.signedAt : '{{sign_date}}' }}
-                            </div>
                         </div>
 
                     </div>
@@ -78,7 +95,9 @@
 
             </div>
         </div>
+
     </div>
+
 
     <!-- ================= VARIABLE MODAL ================= -->
     <div class="modal-backdrop" *ngIf="showVariableModal">
@@ -94,8 +113,40 @@
         </div>
     </div>
 
-    <!-- ================= TEMPLATE NAME MODAL ================= -->
-    <div class="modal-backdrop" *ngIf="showTemplateNameModal">
+    <!-- ================= SIGNATURE MODAL ================= -->
+    <div class="modal-backdrop" *ngIf="showSignModal">
+        <div class="modal-card">
+            <h4>Add Signature</h4>
+
+            <label>Number of signers</label>
+            <select [(ngModel)]="signerCount" (ngModelChange)="updateSignerInputs()">
+                <option [value]="1">1</option>
+                <option [value]="2">2</option>
+            </select>
+
+           <div *ngFor="let s of signerInputs; let i = index; trackBy: trackByIndex">
+    <input
+      placeholder="Signer name"
+      [ngModel]="signerInputs[i]"
+      (ngModelChange)="updateSignerName(i, $event)"
+      (focus)="keepModalFocus($event)"
+    />
+</div>
+
+            <label class="mt-2">
+                <input type="checkbox" [(ngModel)]="includeDate" />
+                Include Date
+            </label>
+
+            <div class="modal-actions">
+                <button class="btn-add" (click)="confirmSignature()">Add</button>
+                <button class="btn-cancel" (click)="showSignModal=false">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEMPLATE NAME MODAL remains unchanged -->
+<div class="modal-backdrop" *ngIf="showTemplateNameModal">
         <div class="modal-card">
             <h4>Add Template Name</h4>
 
@@ -114,5 +165,4 @@
             </div>
         </div>
     </div>
-
 </section>

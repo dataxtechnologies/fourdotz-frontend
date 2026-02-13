@@ -52,7 +52,7 @@ this.tenantForm = this.fb.group({
   property_id: ['', Validators.required],   // 🔥 mandatory
   firstName: ['', [Validators.required, Validators.minLength(2)]],
   lastName: ['', [Validators.required, Validators.minLength(1)]],
-  email: ['', [Validators.required, Validators.email]],
+  email: ['', [Validators.required,  Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)]],
   phone: ['', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]],
   rentedAt: ['', Validators.required],
   monthly_rent_due_date: ['', Validators.required],

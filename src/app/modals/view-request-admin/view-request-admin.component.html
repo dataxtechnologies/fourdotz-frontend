@@ -126,8 +126,13 @@
                 <!-- INPUT AREA -->
                 <div class="chat-input">
                     <input type="text" placeholder="Type message" [(ngModel)]="comment" />
-                    <img src="assets/icons/Send-icon.png" class="send-icon" alt="send"
-                        (click)="CommentsAddforRequest()">
+                  <img 
+  src="assets/icons/Send-icon.png"
+  class="send-icon"
+  alt="send"
+  [class.disabled]="!comment.trim() || sending"
+  (click)="CommentsAddforRequest()"
+/>
                 </div>
 
             </div>

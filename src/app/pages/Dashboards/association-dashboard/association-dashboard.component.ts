@@ -77,6 +77,11 @@ export class NewAssociationDashboardComponent {
     this.Router.navigateByUrl('/Association/Maintenance-list');
   }
 
+
+  gotoannouncementlist() {
+    this.Router.navigateByUrl('/Association/announcement');
+  }
+
   gotoRequestlist() {
     this.Router.navigateByUrl('/Association/request-management/list');
   }

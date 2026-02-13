@@ -32,17 +32,23 @@ export class AddAssociationModalComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.associationForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      associationName: ['', Validators.required],
-      propertyType: this.fb.group({
-        villa: [false],
-        apartment: [false],
-        townhouse: [false],
-      }),
-    });
+this.associationForm = this.fb.group({
+  name: ['', Validators.required],
+  email: [
+    '',
+    [
+      Validators.required,
+      Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)
+    ]
+  ],
+  phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+  associationName: ['', Validators.required],
+  propertyType: this.fb.group({
+    villa: [false],
+    apartment: [false],
+    townhouse: [false],
+  }),
+});
   }
 
   // Close modal

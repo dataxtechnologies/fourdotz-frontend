@@ -37,7 +37,7 @@ export class AddOwnerComponent implements OnInit {
     this.ownerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required,  Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)]],
       phone: ['', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]],
       ownedAt: ['', Validators.required],
     });

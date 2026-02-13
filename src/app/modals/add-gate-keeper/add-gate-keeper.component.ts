@@ -32,7 +32,7 @@ export class AddGateKeeperComponent implements OnInit {
   ngOnInit(): void {
     this.gatekeeperForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required,  Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)]],
       phone: [
         '',
         [

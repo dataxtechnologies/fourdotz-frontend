@@ -23,8 +23,11 @@ import { DashboardLayoutService } from '../../../layouts/dashboard-layout/dashbo
 })
 export class PropertyListComponent {
   user_id = localStorage.getItem('user_id');
+
   propertylist1;
-  propertylist2: any;
+  propertylist2: any[] = [];      // ORIGINAL API DATA
+  filteredPropertyList: any[] = []; // FILTERED DATA
+
   tableLoading = true;
   pages: any;
   associationId: any;
@@ -45,7 +48,7 @@ export class PropertyListComponent {
     });
 
     this.propertylist1 = new TableService();
-    this.propertylist1.initialize(this.propertylist2, 12);
+    this.propertylist1.initialize([], 12);
   }
 
   ngOnInit(): void {
@@ -56,21 +59,22 @@ export class PropertyListComponent {
 
     this.getpropertiesdata();
 
+    // 🔥 FILTER CHANGE LISTENER
+    this.filterForm.valueChanges.subscribe(() => {
+      this.applyFilters();
+    });
+
     this.AssociationService.PropertyStatus$.subscribe((AddProperty) => {
       if (AddProperty) {
         this.getpropertiesdata();
       }
     });
-
-    // const menu = JSON.parse(sessionStorage.getItem('user_menu') || '{}');
-
-    // if (!menu.propertylist) {
-    //   this.startPropertyTour(); // ✅ Shepherd tour
-    // }
   }
 
+  /* RESET FILTER */
   resetFilters() {
     this.filterForm.reset();
+    this.applyFilters();
   }
 
   Addproperty() {
@@ -88,38 +92,60 @@ export class PropertyListComponent {
     this.route.navigateByUrl(`Association/view-properties/${id}`);
   }
 
+  /* FETCH PROPERTY DATA */
   getpropertiesdata() {
     this.apiService.PropertyListinAssociation<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.propertylist2 = res.data;
-          this.propertylist1.initialize(this.propertylist2, 12);
+          this.filteredPropertyList = [...this.propertylist2];
+          this.propertylist1.initialize(this.filteredPropertyList, 12);
         } else {
           this.propertylist2 = [];
-          this.propertylist1.initialize(this.propertylist2, 12);
+          this.filteredPropertyList = [];
+          this.propertylist1.initialize([], 12);
         }
         this.tableLoading = false;
       },
       error: () => {
         this.propertylist2 = [];
-        this.propertylist1.initialize(this.propertylist2, 12);
+        this.filteredPropertyList = [];
+        this.propertylist1.initialize([], 12);
         this.tableLoading = false;
       },
     });
   }
 
+  /* 🔥 MAIN FILTER FUNCTION */
+  applyFilters() {
+    const search = this.filterForm.get('search')?.value?.toLowerCase() || '';
+    const propertyType = this.filterForm.get('propertyType')?.value || '';
+
+    this.filteredPropertyList = this.propertylist2.filter((item: any) => {
+      const matchesSearch =
+        !search ||
+        item.property_no?.toLowerCase().includes(search) ||
+        item.property_type?.toLowerCase().includes(search);
+
+      const matchesType =
+        !propertyType ||
+        item.property_type?.toLowerCase() === propertyType.toLowerCase();
+
+      return matchesSearch && matchesType;
+    });
+
+    this.propertylist1.initialize(this.filteredPropertyList, 12);
+  }
+
   // ================= SHEPHERD TOUR =================
-  // ================= SHEPHERD MODAL TOUR =================
   startPropertyTour() {
     const SHOULD_RUN_TOUR = true;
     if (!SHOULD_RUN_TOUR) return;
 
-    // Kill existing tour safely
     if (this.shepherd.tourObject) {
       this.shepherd.cancel();
     }
 
-    // ✅ THIS IS THE KEY LINE
     this.shepherd.modal = true;
 
     this.shepherd.defaultStepOptions = {
@@ -128,7 +154,6 @@ export class PropertyListComponent {
       classes: 'shepherd-dark-theme',
     };
 
-    // Define steps
     this.shepherd.addSteps([
       {
         id: 'header',
@@ -140,7 +165,7 @@ export class PropertyListComponent {
             text: 'Skip',
             classes: 'shepherd-btn-skip',
             action: () => {
-              this.onPropertyTourCompleted(); // ✅ API call
+              this.onPropertyTourCompleted();
               this.shepherd.complete();
             },
           },
@@ -157,16 +182,8 @@ export class PropertyListComponent {
         text: 'Click here to add a new property.',
         attachTo: { element: '#tour-add-property', on: 'bottom' },
         buttons: [
-          {
-            text: 'Back',
-            classes: 'shepherd-btn-secondary',
-            action: () => this.shepherd.back(),
-          },
-          {
-            text: 'Next',
-            classes: 'shepherd-btn-primary',
-            action: () => this.shepherd.next(),
-          },
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          { text: 'Next', classes: 'shepherd-btn-primary', action: () => this.shepherd.next() },
         ],
       },
       {
@@ -175,16 +192,8 @@ export class PropertyListComponent {
         text: 'Use filters to quickly find properties.',
         attachTo: { element: '#tour-filters', on: 'bottom' },
         buttons: [
-          {
-            text: 'Back',
-            classes: 'shepherd-btn-secondary',
-            action: () => this.shepherd.back(),
-          },
-          {
-            text: 'Next',
-            classes: 'shepherd-btn-primary',
-            action: () => this.shepherd.next(),
-          },
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          { text: 'Next', classes: 'shepherd-btn-primary', action: () => this.shepherd.next() },
         ],
       },
       {
@@ -193,16 +202,8 @@ export class PropertyListComponent {
         text: 'Click on the property to view the details.',
         attachTo: { element: '#tour-view-property', on: 'left' },
         buttons: [
-          {
-            text: 'Back',
-            classes: 'shepherd-btn-secondary',
-            action: () => this.shepherd.back(),
-          },
-          {
-            text: 'Next',
-            classes: 'shepherd-btn-primary',
-            action: () => this.shepherd.next(),
-          },
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          { text: 'Next', classes: 'shepherd-btn-primary', action: () => this.shepherd.next() },
         ],
       },
       {
@@ -211,24 +212,12 @@ export class PropertyListComponent {
         text: 'This table lists all properties with details.',
         attachTo: { element: '#tour-table', on: 'top' },
         buttons: [
-          {
-            text: 'Back',
-            classes: 'shepherd-btn-secondary',
-            action: () => this.shepherd.back(),
-          },
-          {
-            text: 'Finish',
-            classes: 'shepherd-btn-primary',
-            action: () => {
-              // this.onPropertyTourCompleted(); // ✅ API call
-              this.shepherd.complete();
-            },
-          },
+          { text: 'Back', classes: 'shepherd-btn-secondary', action: () => this.shepherd.back() },
+          { text: 'Finish', classes: 'shepherd-btn-primary', action: () => this.shepherd.complete() },
         ],
       },
     ]);
 
-    // Start tour
     this.shepherd.start();
   }
 
@@ -243,18 +232,7 @@ export class PropertyListComponent {
       next: (res: any) => {
         if (res?.success) {
           this.DashboardService.triggerTourApiStatusUpdate(res);
-          // this.propertylist2 = res.data;
-          // this.propertylist1.initialize(this.propertylist2, 12);
-        } else {
-          // this.propertylist2 = [];
-          // this.propertylist1.initialize(this.propertylist2, 12);
         }
-        // this.tableLoading = false;
-      },
-      error: () => {
-        // this.propertylist2 = [];
-        // this.propertylist1.initialize(this.propertylist2, 12);
-        // this.tableLoading = false;
       },
     });
   }

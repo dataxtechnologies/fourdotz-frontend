@@ -1,7 +1,6 @@
 <section>
 
-
-    <div class="parent">
+    <div class="parent" >
         <!-- CARD 1 -->
         <div class="div1 stat-card green">
             <div class="card-header">
@@ -41,7 +40,7 @@
         <div class="div5 table-card">
             <div class="d-flex justify-content-between align-content-center mb-1 table-hhh">
                 <h5>Maintenance list</h5>
-                <button class="regular-font"  (click)="gotomaintenancelist()">↗ view all</button>
+                <button class="regular-font" (click)="gotomaintenancelist()">↗ view all</button>
             </div>
             <div class="table-scroll-wrapper">
                 <div class="table-scroll">
@@ -127,7 +126,7 @@
 
             <div class="announcement-header table-hhh">
                 <h3>Announcement</h3>
-                 <button class="regular-font"  (click)="gotomaintenancelist()">↗ view all</button>
+                <button class="regular-font" (click)="gotoannouncementlist()">↗ view all</button>
             </div>
 
             <!-- LIST -->
@@ -147,7 +146,7 @@
                         </p>
                     </div>
 
-                    <div class="item-right">›</div>
+                    <div class="item-right" (click)="gotoannouncementlist()">›</div>
                 </div>
 
             </div>
@@ -164,7 +163,7 @@
         <div class="div7 table-card">
             <div class="d-flex justify-content-between align-content-center mb-1 table-hhh">
                 <h5>Requests list</h5>
-                <button class="regular-font"  (click)="gotoRequestlist()">↗ view all</button>
+                <button class="regular-font" (click)="gotoRequestlist()">↗ view all</button>
             </div>
             <div class="table-scroll-wrapper">
                 <div class="table-scroll">
@@ -250,7 +249,7 @@
         <div class="div8 stat-card">
             <div class="card-header">
                 <span>Paid Maintenance</span>
-                <button class="icon-btn"  (click)="gotomaintenancelist()">↗</button>
+                <button class="icon-btn" (click)="gotomaintenancelist()">↗</button>
             </div>
             <h2>{{unpaidmaintenance }}</h2>
 

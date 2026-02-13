@@ -134,11 +134,11 @@ export class ListRequestsUserComponent {
       error: (err: any) => {
         this.tableLoading = false;
         this.requestlist2 = [];
-        const menu = JSON.parse(sessionStorage.getItem('user_menu') || '{}');
+        // const menu = JSON.parse(sessionStorage.getItem('user_menu') || '{}');
 
-        if (!menu.firstlistrequest) {
-          this.firstrequestcreateTour();
-        }
+        // if (!menu.firstlistrequest) {
+        //   this.firstrequestcreateTour();
+        // }
 
         // Initialize TableService
         this.requestlist1.initialize(this.requestlist2, 10);

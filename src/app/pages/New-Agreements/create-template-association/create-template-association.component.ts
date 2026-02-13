@@ -33,8 +33,15 @@ interface Block {
   styleUrls: ['./create-template-association.component.css'],
 })
 export class CreateTemplateAssociationComponent {
+  activeEditable: HTMLElement | null = null;
   blocks: Block[] = [];
   private idCounter = 1;
+
+  /* SIGNATURE MODAL STATE (NEW ADD — NOT REPLACING OLD LOGIC) */
+  showSignModal = false;
+  signerCount = 1;
+  signerInputs: string[] = [''];
+  includeDate = true;
 
   headingAdded = false;
   signatureAdded = false;
@@ -55,7 +62,7 @@ export class CreateTemplateAssociationComponent {
     private api: ApiserviceService,
     private toast: ToastrService,
     private router: Router
-  ) {}
+  ) { }
 
   /* ================= ADD BLOCKS ================= */
 
@@ -79,45 +86,53 @@ export class CreateTemplateAssociationComponent {
     });
   }
 
- openSignatureModal() {
+  /* EXISTING SIGNATURE LOGIC KEPT */
+  openSignatureModal() {
   if (this.signatureAdded) return;
 
-  const count = Number(prompt('How many signers? (1 or 2 only)'));
+  // reset modal values
+  this.signerCount = 1;
+  this.signerInputs = [''];
+  this.includeDate = true;
 
-  // ✅ Allow only 1 or 2
-  if (!count || count < 1 || count > 2) {
-    alert('Only 1 or 2 signers are allowed');
-    return;
-  }
-
-  const signers: SignatureSigner[] = [];
-
-  for (let i = 0; i < count; i++) {
-    const name =
-      prompt(`Signer ${i + 1} name`)?.trim() || `Signer ${i + 1}`;
-
-    signers.push({
-      name,
-      signed: false,
-    });
-  }
-
-  this.blocks.push({
-    id: this.idCounter++,
-    type: 'signature',
-    value: '',
-    signers,
-    includeDate: true,
-  });
-
-  this.signatureAdded = true;
+  // open modal
+  this.showSignModal = true;
 }
+
+  /* ================= DELETE BLOCK (NEW FEATURE) ================= */
+
+  removeBlock(block: Block) {
+    const hasContent = block.value?.trim();
+
+    if (hasContent) {
+      const confirmDelete = confirm('Remove this content?');
+      if (!confirmDelete) return;
+    }
+
+    this.blocks = this.blocks.filter(b => b.id !== block.id);
+
+    if (block.type === 'heading') this.headingAdded = false;
+    if (block.type === 'signature') this.signatureAdded = false;
+  }
 
   /* ================= EDITING ================= */
 
-  updateBlockValue(event: Event, block: Block) {
+updateBlockValue(event: Event, block: Block) {
+
+  const el = event.target as HTMLElement;
+
+  // Only read value
+  block.value = el.innerHTML;
+
+  // DO NOT modify el.innerHTML here
+  // DO NOT sanitize here
+}
+
+
+  onEditableFocus(event: FocusEvent) {
     const el = event.target as HTMLElement;
-    block.value = el.innerHTML; // ✅ READ ONLY
+    this.activeEditable = el;
+    this.saveCursor();
   }
 
   /* ================= CURSOR ================= */
@@ -139,7 +154,7 @@ export class CreateTemplateAssociationComponent {
   /* ================= VARIABLES ================= */
 
   openVariableModal() {
-    this.saveCursor();
+    this.saveCursor(); // important
     this.variableForm.key = '';
     this.showVariableModal = true;
   }
@@ -149,34 +164,33 @@ export class CreateTemplateAssociationComponent {
   }
 
   addVariable() {
+
     if (!this.variableForm.key) return;
 
-    this.restoreCursor();
+    if (!this.savedRange || !this.activeEditable) {
+      this.toast.warning('Place cursor inside typing area');
+      return;
+    }
+
+    const range = this.savedRange;
 
     const span = document.createElement('span');
     span.className = 'variable';
     span.contentEditable = 'false';
     span.innerText = `{{${this.variableForm.key}}}`;
 
-    const sel = window.getSelection();
-    if (!sel || sel.rangeCount === 0) return;
-
-    const range = sel.getRangeAt(0);
     range.insertNode(span);
     range.setStartAfter(span);
     range.collapse(true);
 
-    sel.removeAllRanges();
-    sel.addRange(range);
+    const sel = window.getSelection();
+    sel?.removeAllRanges();
+    sel?.addRange(range);
 
-    // 🔥 Sync block value after insert
-    const editable = span.closest('.editable') as HTMLElement;
-    if (editable) {
-      const blockId = Number(editable.dataset['id']);
-      const block = this.blocks.find((b) => b.id === blockId);
-      if (block) {
-        block.value = editable.innerHTML;
-      }
+    const blockId = Number(this.activeEditable.dataset['id']);
+    const block = this.blocks.find(b => b.id === blockId);
+    if (block) {
+      block.value = this.activeEditable.innerHTML;
     }
 
     this.closeVariableModal();
@@ -209,20 +223,34 @@ export class CreateTemplateAssociationComponent {
 
   /* ================= SAVE ================= */
 
-  openTemplateNameModal() {
-    this.templateName = '';
-    this.showTemplateNameModal = true;
+openTemplateNameModal() {
+
+  // 🚫 Signature mandatory
+  if (!this.signatureAdded) {
+    this.toast.warning('Add signature area before saving template');
+    return;
   }
+
+  this.templateName = '';
+  this.showTemplateNameModal = true;
+}
 
   closeTemplateNameModal() {
     this.showTemplateNameModal = false;
   }
 
   confirmSaveTemplate() {
-    if (!this.templateName.trim()) {
-      this.toast.warning('Template name required');
-      return;
-    }
+  if (!this.signatureAdded) {
+    this.toast.warning('Signature section required');
+    return;
+  }
+
+  if (!this.templateName.trim()) {
+    this.toast.warning('Template name required');
+    return;
+  }
+
+    
 
     this.submitbtn = false;
 
@@ -244,8 +272,6 @@ export class CreateTemplateAssociationComponent {
         created_at: new Date().toISOString(),
       },
     };
-
-    console.log('PAYLOAD:', payload);
 
     this.api.CreateAgreementTemplates<any>(payload).subscribe({
       next: (res: any) => {
@@ -274,4 +300,125 @@ export class CreateTemplateAssociationComponent {
   goback() {
     this.router.navigateByUrl('/agreement/association/list-template');
   }
+
+
+updateSignerInputs() {
+  const count = Number(this.signerCount);
+
+  if (count === 1) {
+    this.signerInputs = [''];
+  } else if (count === 2) {
+    this.signerInputs = ['', ''];
+  }
+}
+
+  /* CONFIRM SIGNATURE */
+  confirmSignature() {
+
+  const signers: SignatureSigner[] = [];
+
+  for (let i = 0; i < this.signerInputs.length; i++) {
+    signers.push({
+      name: this.signerInputs[i] || `Signer ${i + 1}`,
+      signed: false
+    });
+  }
+
+  this.blocks.push({
+    id: this.idCounter++,
+    type: 'signature',
+    value: '',
+    signers,
+    includeDate: this.includeDate
+  });
+
+  this.signatureAdded = true;
+  this.showSignModal = false;
+}
+trackByIndex(index: number) {
+  return index;
+}
+
+updateSignerName(index: number, value: string) {
+  this.signerInputs[index] = value;
+}
+
+keepModalFocus(event: Event) {
+  const input = event.target as HTMLInputElement;
+  setTimeout(() => input.focus(), 0);
+}
+
+handleEditorEnter(event: KeyboardEvent, block: Block) {
+
+  if (event.key !== 'Enter') return;
+
+  event.preventDefault();
+
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0) return;
+
+  const range = selection.getRangeAt(0);
+
+  // SHIFT + ENTER → line break
+  if (event.shiftKey) {
+    const br = document.createElement('br');
+    range.insertNode(br);
+    range.setStartAfter(br);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
+    return;
+  }
+
+  // ENTER → create NEW paragraph block
+  this.blocks.push({
+    id: this.idCounter++,
+    type: 'paragraph',
+    value: ''
+  });
+
+  setTimeout(() => {
+    const last = document.querySelector('[data-id="' + (this.idCounter - 1) + '"]') as HTMLElement;
+    last?.focus();
+  });
+}
+
+handleEditorKeydown(event: KeyboardEvent, block: Block) {
+
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // SHIFT + ENTER disabled completely
+    if (event.shiftKey) {
+      return;
+    }
+
+    // ENTER → create new paragraph block
+    this.blocks.push({
+      id: this.idCounter++,
+      type: 'paragraph',
+      value: ''
+    });
+
+    setTimeout(() => {
+      const el = document.querySelector('[data-id="' + (this.idCounter - 1) + '"]') as HTMLElement;
+      el?.focus();
+    });
+
+    return;
+  }
+
+  // BACKSPACE on empty block → remove block
+  if (event.key === 'Backspace') {
+
+    const target = event.target as HTMLElement;
+
+    if (target.innerText.trim() === '') {
+      event.preventDefault();
+      this.removeBlock(block);
+    }
+  }
+}
+
 }

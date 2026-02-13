@@ -1,36 +1,33 @@
-
-
 /* ================= ROOT ================= */
 .agreement-builder {
   min-height: 100vh;
-  padding: 16px;
-  background: #f6f3ee;
+  padding: 8px;
+  background: #fff;
 }
 
 /* ================= HEADER ================= */
 .builder-header {
   position: sticky;
-  top: 64px;
-  /* below app navbar */
+  top: 14px;
   z-index: 1000;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  background: #ffffff;
-  padding: 14px 20px;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid #ccc;
+  padding: 9px 12px;
+  border-radius: 0;
+  box-shadow: none;
   margin-bottom: 16px;
 }
 
 /* ================= BODY ================= */
 .builder-body {
-  display: flex;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 28px;
+  padding: 20px;
   height: calc(100vh - 64px - 90px);
-  /* navbar + header */
   overflow: hidden;
 }
 
@@ -40,10 +37,10 @@
   position: sticky;
   top: calc(64px + 90px);
 
-  background: #ffffff;
-  padding: 16px;
-  border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  background: #f7f5f1;
+  padding: 6px;
+  border-radius: 0;
+  box-shadow: none;
   height: fit-content;
 }
 
@@ -62,17 +59,45 @@
   color: #777;
 }
 
+/* ================= VARIABLES PANEL ================= */
+.variable-panel {
+  position: sticky;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  height: fit-content;
+  background: #fff;
+  padding: 22px;
+  box-shadow: none;
+}
+
+.variable-panel button,
+.builder-controls button {
+  width: 100%;
+  background: #fff;
+  font-weight: 600;
+  margin-bottom: 12px;
+  border-radius: 0;
+  transition: .15s;
+}
+
+
+
+.variable-pill {
+  display: inline-block;
+  background: #f1f5f9;
+  padding: 6px 10px;
+  border-radius: 0;
+  margin: 4px;
+  font-size: 13px;
+}
+
 /* ================= PREVIEW SCROLL ================= */
 .builder-preview {
   flex: 1;
   height: 100%;
   overflow-y: auto;
-
-  /* 🔥 IMPORTANT: bottom breathing space */
-  padding-bottom: 120px;
-
-  scrollbar-width: none;
-  /* Firefox */
+  padding: 6px;
+  background: #fff;
 }
 
 .builder-preview::-webkit-scrollbar {
@@ -81,32 +106,29 @@
 
 /* ================= PAGE ================= */
 .page {
-  width: 210mm;
-  min-height: 297mm;
+  width: 100%;
+  min-height: 700px;
   height: auto;
-
   background: #ffffff;
-  padding: 20mm;
-  /* ⬅ EXTRA BOTTOM SPACE */
-
+  padding: 30px;
   margin: 0 auto 80px;
-  /* ⬅ SPACE AFTER PAGE */
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
-  border-radius: 6px;
+  border: 2px solid #ccc;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 /* ================= DOCUMENT ================= */
 .doc-heading {
   text-align: center;
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 26px;
+  font-weight: 700;
   margin-bottom: 32px;
   letter-spacing: 0.5px;
 }
 
 .doc-para {
-  font-size: 14.5px;
-  line-height: 1.85;
+  font-size: 15px;
+  line-height: 2;
   text-align: justify;
 }
 
@@ -118,28 +140,32 @@
 .editable {
   outline: none;
   cursor: text;
+  min-height: 20px;
 }
 
 .editable:focus {
-  background: rgba(31, 122, 79, 0.08);
+  background: rgba(0,0,0,0.04);
   border-radius: 4px;
+}
+
+.editable:empty::before {
+  content: attr(data-placeholder);
+  color: #999;
+  pointer-events: none;
 }
 
 /* ================= VARIABLE ================= */
 .variable {
-  background: #e8f3ff;
-  color: #0d47a1;
-  border: 1px dashed #64b5f6;
+  background: #eef;
   padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 13px;
+  border-radius: 0;
+  margin: 0 2px;
   white-space: nowrap;
 }
 
 /* ================= SIGNATURE ================= */
 .signature-section {
-  margin-top: 90px;
-  /* ⬅ MORE AIR ABOVE SIGN */
+  margin-top: 120px;
   display: flex;
   justify-content: space-between;
   gap: 70px;
@@ -156,8 +182,8 @@
 }
 
 .sign-placeholder {
-  height: 44px;
-  border-bottom: 2px solid #000;
+  height: 50px;
+  border-bottom: 3px solid #111;
   margin-top: 8px;
 }
 
@@ -181,8 +207,8 @@
   background: #ffffff;
   padding: 22px;
   width: 320px;
-  border-radius: 12px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .modal-card h4 {
@@ -193,8 +219,7 @@
 .modal-card input {
   width: 100%;
   padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #dcdcdc;
+  border-radius: 0;
   margin-bottom: 12px;
 }
 
@@ -224,31 +249,118 @@
   }
 }
 
+/* ================= BUTTONS ================= */
 .btn-cancel{
   background-color: #f44336;
   color: white;
   border: 2px solid #f44336;
-  border-radius: 12px;
+  border-radius: 0;
   padding: 10px 20px;
 }
 
+/* ================= FLOATING TOOLBAR ================= */
+.floating-toolbar {
+  position: fixed;
+  bottom: 28px;
+  right: 40px;
+  background: #111;
+  padding: 10px;
+  border-radius: 40px;
+  display: flex;
+  gap: 10px;
+  z-index: 9999;
+}
 
-.editable {
+.floating-toolbar button {
+  background: #fff;
+  border-radius: 0;
+  padding: 8px 14px;
+  font-weight: 600;
+}
+
+/* ================= BLOCK UI ================= */
+.block-wrapper {
+  position: relative;
+}
+
+.delete-block {
+  position: absolute;
+  right: -15px;
+  top: 0;
+  display: none;
+  background-color: transparent;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 0;
+}
+
+.delete-block i{
+  font-size: 15px;
+  color: #777;
+}
+
+.block-wrapper:hover .delete-block {
+  display: block;
+}
+
+
+
+.modal-card {
+  background: #ffffff;
+  padding: 28px;
+  width: 380px;
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.18);
+  border: none;
+  animation: modalFade .2s ease;
+}
+
+@keyframes modalFade {
+  from { transform: translateY(20px); opacity:0 }
+  to { transform: translateY(0); opacity:1 }
+}
+
+.modal-card h4 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.modal-card input,
+.modal-card select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-bottom: 14px;
+  font-size: 14px;
+  transition: .15s;
+}
+
+.modal-card input:focus,
+.modal-card select:focus {
+  border-color: #7c3aed;
   outline: none;
-  min-height: 20px;
-  cursor: text;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
 }
 
-.editable:empty::before {
-  content: attr(data-placeholder);
-  color: #999;
-  pointer-events: none;
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
-.variable {
-  background: #eef;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin: 0 2px;
-  white-space: nowrap;
+.btn-add {
+  background: #7c3aed;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+}
+
+.btn-cancel {
+  background: #f3f4f6;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
 }

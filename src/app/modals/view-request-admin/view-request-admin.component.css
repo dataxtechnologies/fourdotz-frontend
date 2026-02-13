@@ -482,3 +482,9 @@
 .reject:hover {
     background: #ffd2d2;
 }
+
+.send-icon.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}

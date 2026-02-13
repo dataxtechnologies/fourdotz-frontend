@@ -1,112 +1,121 @@
-<section class="dashboard-shell">
 
-    <!-- FLOATING TOGGLE (VISIBLE WHEN SIDEBAR CLOSED) -->
-    <button class="floating-toggle" *ngIf="asidebarClosed" (click)="toggleAsidebar()">
-        <img src="assets/icons/sidebar/sidebar-toggle-open.png" alt="Fourdotz" />
-    </button>
+<section >
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar" [class.closed]="asidebarClosed">
-        <div class="sidebar-inner">
 
-            <!-- TOP BAR (LOGO + SELECT + TOGGLE) -->
-            <div class="sidebar-top">
+    <div >
+        <!-- FLOATING TOGGLE (VISIBLE WHEN SIDEBAR CLOSED) -->
+        <button class="floating-toggle" *ngIf="asidebarClosed" (click)="toggleAsidebar()">
+            <img src="assets/icons/sidebar/sidebar-toggle-open.png" alt="Fourdotz" />
+        </button>
 
-                <div class="brand">
-                    <img src="assets/logo/fourdotz1.png" alt="Fourdotz" />
-                </div>
+        <!-- SIDEBAR -->
+        <aside class="sidebar" [class.closed]="asidebarClosed">
+            <div class="sidebar-inner">
 
-                <div class="module-select mt-2 mx-2">
-                    
-                </div>
+                <!-- TOP BAR (LOGO + SELECT + TOGGLE) -->
+                <div class="sidebar-top">
 
-                <button class="collapse-btn" (click)="toggleAsidebar()">
-                    <img src="assets/icons/sidebar/sidebar-toggle-close.png" alt="Fourdotz" />
-                </button>
-
-            </div>
-
-            <div class="sidebar-search" *ngIf="!asidebarClosed">
-
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" class="form-control" placeholder="What would you like to find today?" [(ngModel)]="searchText"
-                        (input)="onSearchChange()" />
-                </div>
-
-                <!-- Suggestions -->
-                <div class="search-suggestions" *ngIf="suggestions.length">
-                    <div class="suggest-item" *ngFor="let s of suggestions" (click)="goToSuggestion(s)">
-                        {{ s.label }}
-                        <span class="arrow">↗</span>
+                    <div class="brand">
+                        <img src="assets/logo/fourdotz1.png" alt="Fourdotz" />
                     </div>
+
+                    <div class="module-select mt-2 mx-2">
+
+                    </div>
+
+                    <button class="collapse-btn" (click)="toggleAsidebar()">
+                        <img src="assets/icons/sidebar/sidebar-toggle-close.png" alt="Fourdotz" />
+                    </button>
+
+                </div>
+
+                <div class="sidebar-search" *ngIf="!asidebarClosed">
+
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="form-control" placeholder="What would you like to find today?"
+                            [(ngModel)]="searchText" (input)="onSearchChange()" />
+                    </div>
+
+                    <!-- Suggestions -->
+                    <div class="search-suggestions" *ngIf="suggestions.length">
+                        <div class="suggest-item" *ngFor="let s of suggestions" (click)="goToSuggestion(s)">
+                            {{ s.label }}
+                            <span class="arrow">↗</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- MENU -->
+                <ul class="sidebar-menu">
+                    <ng-container *ngFor="let item of sidebarItems">
+
+                        <!-- SUBMENU -->
+                        <li *ngIf="item.children && item.allowedRole === user_type" [class.active]="item.open">
+
+                            <button class="menu-btn" (click)="toggleSubmenuExclusive(item)">
+                                <img [src]="item.icon" />
+                                <span *ngIf="!asidebarClosed">{{ item.label }}</span>
+                                <i class="submenu-toggle" [class.open]="item.open"></i>
+                            </button>
+
+                            <ul class="submenu" [class.open]="item.open && !asidebarClosed">
+                                <li *ngFor="let child of item.children" routerLinkActive="active">
+                                    <a [routerLink]="child.route">
+                                        {{ child.label }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- NORMAL MENU -->
+                        <li *ngIf="!item.children && item.allowedRole === user_type" routerLinkActive="active">
+
+                            <a class="menu-link" [routerLink]="item.route" (click)="closeAllSubmenus()">
+                                <img [src]="item.icon" />
+                                <span *ngIf="!asidebarClosed">{{ item.label }}</span>
+                            </a>
+                        </li>
+
+                    </ng-container>
+                </ul>
+
+                <!-- USER PROFILE -->
+                <div class="sidebar-user" (mouseenter)="profileMenuOpen = true" (mouseleave)="profileMenuOpen = false">
+
+                    <img src="assets/icons/sidebar/profile-user.png" />
+                    <div>
+                        <span *ngIf="!asidebarClosed">{{ user_type }}</span>
+                        <div class="title"> Workspace</div>
+                    </div>
+
+                    <div class="profile-dropdown" *ngIf="profileMenuOpen">
+
+                        <button (click)="profileredirect()">View profile</button>
+                        <button class="danger" (click)="logoutmodal()">Logout</button>
+                    </div>
+
                 </div>
 
             </div>
+        </aside>
 
-            <!-- MENU -->
-            <ul class="sidebar-menu">
-                <ng-container *ngFor="let item of sidebarItems">
 
-                    <!-- SUBMENU -->
-                    <li *ngIf="item.children && item.allowedRole === user_type" [class.active]="item.open">
 
-                        <button class="menu-btn" (click)="toggleSubmenuExclusive(item)">
-                            <img [src]="item.icon" />
-                            <span *ngIf="!asidebarClosed">{{ item.label }}</span>
-                            <i class="submenu-toggle" [class.open]="item.open"></i>
-                        </button>
+        <!-- CONTENT -->
+        <main class="dashboard-content">
 
-                        <ul class="submenu" [class.open]="item.open && !asidebarClosed">
-                            <li *ngFor="let child of item.children" routerLinkActive="active">
-                                <a [routerLink]="child.route">
-                                    {{ child.label }}
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+            <router-outlet></router-outlet>
+        </main>
 
-                    <!-- NORMAL MENU -->
-                    <li *ngIf="!item.children && item.allowedRole === user_type" routerLinkActive="active">
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+            © {{ currentYear }} Datax Technologies
+        </footer>
+    </div>
 
-                        <a class="menu-link" [routerLink]="item.route" (click)="closeAllSubmenus()">
-                            <img [src]="item.icon" />
-                            <span *ngIf="!asidebarClosed">{{ item.label }}</span>
-                        </a>
-                    </li>
 
-                </ng-container>
-            </ul>
-
-            <!-- USER PROFILE -->
-            <div class="sidebar-user" (mouseenter)="profileMenuOpen = true" (mouseleave)="profileMenuOpen = false">
-
-                <img src="assets/icons/sidebar/profile-user.png" />
-                <div>
-                    <span *ngIf="!asidebarClosed">{{ user_type }}</span>
-                    <div class="title"> Workspace</div>
-                </div>
-
-                <div class="profile-dropdown" *ngIf="profileMenuOpen">
-
-                    <button (click)="profileredirect()">View profile</button>
-                    <button class="danger" (click)="logoutmodal()">Logout</button>
-                </div>
-
-            </div>
-
-        </div>
-    </aside>
-
-    <!-- CONTENT -->
-    <main class="dashboard-content">
-        <router-outlet></router-outlet>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="dashboard-footer">
-        © {{ currentYear }} Datax Technologies
-    </footer>
 
 </section>
 

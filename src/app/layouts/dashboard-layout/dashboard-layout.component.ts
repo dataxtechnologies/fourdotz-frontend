@@ -49,6 +49,7 @@ export class DashboardLayoutComponent implements OnInit {
   =============================== */
   asidebarClosed = false;
   isTabletOrMobile = false;
+  
 
   /* ===============================
      USER PROFILE DROPDOWN
@@ -172,12 +173,12 @@ this.username = this.userdata?.name || '';
       next: (res) => {
         if (res?.success) {
           const userdata = res.data;
-          localStorage.setItem('userdata', JSON.stringify(userdata));
-
-          if (role === 'association' && userdata.document_uploaded === false) {
+          
+          if (role === 'association' && res.data.document_uploaded === false) {
             this.router.navigateByUrl('/onboarding/user-data');
           }
-
+          
+          localStorage.setItem('userdata', JSON.stringify(userdata));
           if (
             (role === 'owner' || role === 'tenant') &&
             userdata.upi_submit_status === false
