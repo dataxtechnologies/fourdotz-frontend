@@ -45,7 +45,7 @@
                                         <th>Type</th>
                                         <th>Status</th>
                                         <th>Created</th>
-                                        <th>View</th>
+                                        <!-- <th>View</th> -->
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -83,14 +83,14 @@
                                         </td>
 
                                         <!-- VIEW -->
-                                        <td (click)="viewAd(item._id)">
+                                        <!-- <td (click)="viewAd(item._id)">
                                             <button class="table-btn">view</button>
-                                        </td>
+                                        </td> -->
 
                                         <!-- ACTION -->
-                                        <td (click)="toggleAdStatus(item)">
+                                        <td (click)="DeleteAdSpaceConfirmModal(item._id)">
                                             <span class="table-btn">
-                                                {{ item.active ? 'Deactivate' : 'Activate' }}
+                                              Delete Ad
                                             </span>
                                         </td>
 
@@ -108,8 +108,8 @@
 
                             <!-- SKELETON -->
                             <ng-template #tableSkeleton>
-                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;">
-                                    <td colspan="7">
+                                <tr *ngFor="let i of [1,2,3,4,5,6]" style="height: 50px;">
+                                    <td colspan="8">
                                         <span class="placeholder col-10 placeholder-glow"
                                             style="height: 12px; display:inline-block;border-radius:4px;background:#e0e0e0;"></span>
                                     </td>

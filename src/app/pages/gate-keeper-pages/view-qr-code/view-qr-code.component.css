@@ -1,0 +1,44 @@
+.qr-section {
+  padding: 30px;
+}
+
+.header-cont {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.qr-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.qr-title {
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.qr-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qr-image {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: white;
+  padding: 15px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.no-qr-box {
+  padding: 40px;
+  color: #888;
+  font-size: 16px;
+}

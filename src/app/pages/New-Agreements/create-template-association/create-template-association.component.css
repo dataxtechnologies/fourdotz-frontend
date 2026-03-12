@@ -83,14 +83,25 @@
 
 
 .variable-pill {
-  display: inline-block;
-  background: #f1f5f9;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f3e8ff;
   padding: 6px 10px;
-  border-radius: 0;
+  border-radius: 8px;
   margin: 4px;
   font-size: 13px;
 }
 
+.remove-var {
+  cursor: pointer;
+  font-size: 12px;
+  color: #6b21a8;
+}
+
+.remove-var:hover {
+  color: red;
+}
 /* ================= PREVIEW SCROLL ================= */
 .builder-preview {
   flex: 1;

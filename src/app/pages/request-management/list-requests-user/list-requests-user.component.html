@@ -5,7 +5,7 @@
         <h3>No Requests Found</h3>
         <p class="regular-font">You haven’t created any requests yet.</p>
 
-        <button class="create-btn" (click)="OpenCreateRequest()" id="tour-request-media">+ Create New Request</button>
+        <button class="create-btn" (click)="OpenCreateRequest()" id="tour-request-media"  [disabled]="!canCreateRequest">+ Create New Request</button>
     </div>
 
     <ng-template #requestList>
@@ -13,7 +13,7 @@
             <div class="filters-left">
                 <div class="head-btn">
                     <h2>Request Management</h2>
-                    <button class="create-btn" (click)="OpenCreateRequest()" id="tour-create-request">+
+                    <button class="create-btn" (click)="OpenCreateRequest()" id="tour-create-request" [disabled]="!canCreateRequest">+
                         Create</button>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                             {{ item.created_time.$date | date: 'MMM d, y' }}
                         </span>
 
-                        <span class="view-btn" (click)="OpenViewRequest(item)" id="tour-view-request-details">
+                        <span class="view-btn" (click)="gotoviewpage(item._id)">
                             view
                         </span>
                     </div>

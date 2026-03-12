@@ -21,7 +21,12 @@ import { ToastrService } from 'ngx-toastr';
 export class AddAssociationModalComponent implements OnInit {
   associationForm!: FormGroup;
   createButton : boolean = true
-
+otpSent: boolean = false;
+otpVerified: boolean = false;
+isSendingOtp: boolean = false;
+otpTimer: number = 0;
+OtpToken : any
+countdownInterval: any;
   constructor(
     private fb: FormBuilder,
     private modal: ModalService,
@@ -42,6 +47,7 @@ this.associationForm = this.fb.group({
     ]
   ],
   phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+   otp: [''],
   associationName: ['', Validators.required],
   propertyType: this.fb.group({
     villa: [false],
@@ -70,6 +76,13 @@ this.associationForm = this.fb.group({
 
   // Submit form
   createAssociation(): void {
+
+      if (!this.otpVerified) {
+    this.toastr.error('Please verify OTP first');
+    return;
+  }
+
+
     this.createButton = false
     if (this.associationForm.invalid || !this.anyPropertySelected()) {
       this.associationForm.markAllAsTouched();
@@ -112,4 +125,68 @@ this.associationForm = this.fb.group({
       },
     });
   }
+
+
+sendOtp(): void {
+  const phone = this.associationForm.get('phone')?.value;
+
+  if (!phone || this.associationForm.get('phone')?.invalid) return;
+
+  this.isSendingOtp = true;   // 👈 Start loader
+
+  this.apiService.sendMobileOTPonOnboard({ mobile: phone }).subscribe({
+    next: (res: any) => {
+      this.isSendingOtp = false;   // 👈 Stop loader
+
+      if (res.success) {
+        this.OtpToken = res.data;
+        this.otpSent = true;
+        this.startOtpTimer();
+        this.toastr.success('OTP sent successfully');
+      }
+    },
+    error: () => {
+      this.isSendingOtp = false;   // 👈 Stop loader
+      this.toastr.error('Failed to send OTP');
+    }
+  });
+}
+
+startOtpTimer(): void {
+  this.otpTimer = 20;
+
+  this.countdownInterval = setInterval(() => {
+    this.otpTimer--;
+
+    if (this.otpTimer <= 0) {
+      clearInterval(this.countdownInterval);
+    }
+  }, 1000);
+}
+
+verifyOtp(): void {
+  const phone = this.associationForm.get('phone')?.value;
+  const otp = this.associationForm.get('otp')?.value;
+
+  if (!otp || otp.length !== 5) return;
+
+  const payload = {
+    otp_token: this.OtpToken,
+    otp: otp,
+  }
+
+  this.apiService.verifyOtp(payload).subscribe({
+    next: (res: any) => {
+      if (res.success) {
+        this.otpVerified = true;
+        this.toastr.success('OTP verified successfully');
+      } else {
+        this.toastr.error('Invalid OTP');
+      }
+    },
+    error: (err: any) => {
+      this.toastr.error(err.error.error.message, 'Failed');
+    }
+  });
+}
 }

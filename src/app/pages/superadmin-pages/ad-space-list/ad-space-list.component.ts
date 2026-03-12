@@ -14,6 +14,7 @@ import {
 import { AdmindataService } from '../../../services/adminservice/admindata.service';
 import { ToastrService } from 'ngx-toastr';
 import { CreateAdSpaceModalComponent } from '../../../modals/create-ad-space-modal/create-ad-space-modal.component';
+import { DeleteAdSpaceComponent } from '../../../modals/delete-ad-space/delete-ad-space.component';
 
 @Component({
   selector: 'app-ad-space-list',
@@ -59,6 +60,13 @@ export class AdSpaceListComponent {
 
     this.AdminService.AdminAdServiceStatus$.subscribe((adcreated) => {
       if (adcreated) {
+        this.getAdSpaceList();
+      }
+    });
+
+
+    this.AdminService.AdminAdSapaceDeleteStatus$.subscribe((addelete) => {
+      if (addelete) {
         this.getAdSpaceList();
       }
     });
@@ -155,6 +163,24 @@ export class AdSpaceListComponent {
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+
+  DeleteAdSpaceConfirmModal(id : any) {
+    this.ModalService.open(DeleteAdSpaceComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data:{
+        ad_id: id
+      },
       actions: {
         click: false,
         escape: false,

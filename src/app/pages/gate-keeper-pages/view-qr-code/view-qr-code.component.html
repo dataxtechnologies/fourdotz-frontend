@@ -1,1 +1,25 @@
-<p>view-qr-code works!</p>
+<section class="qr-section">
+
+    <div class="container header-cont">
+        Manage Your QR
+    </div>
+
+    <div class="qr-card">
+
+        <h4 class="qr-title">QR Code Preview</h4>
+
+        <!-- ✅ If QR Exists -->
+        <div *ngIf="!noqr; else noQrTemplate" class="qr-preview">
+            <img [src]="qrimagedata?.qr_code" alt="QR Code" class="qr-image" />
+        </div>
+
+        <!-- ❌ If No QR -->
+        <ng-template #noQrTemplate>
+            <div class="no-qr-box">
+                <p>No QR generated yet</p>
+            </div>
+        </ng-template>
+
+    </div>
+
+</section>

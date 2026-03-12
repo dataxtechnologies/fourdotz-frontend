@@ -7,8 +7,8 @@
     <div class="form-body scrollable">
         <form [formGroup]="associationForm" (ngSubmit)="createAssociation()">
             <div class="inp-cont">
-                <label class="medium-font" for="name">Name <span class="required">*</span></label>
-                <input type="text" id="name" class="input-custom-style regular-font" placeholder="Enter your Name" formControlName="name">
+                <label class="medium-font" for="name">HOA(Head Of Association) Name <span class="required">*</span></label>
+                <input type="text" id="name" class="input-custom-style regular-font" placeholder="Enter your HOA Name" formControlName="name">
                 <small *ngIf="isInvalid('name')" class="error-text">Name is required</small>
             </div>
 
@@ -20,15 +20,64 @@
             </div>
 
             <div class="inp-cont">
-                <label class="medium-font" for="phone">Phone Number <span class="required">*</span></label>
-                <input type="tel" id="phone" class="input-custom-style regular-font" placeholder="Enter your Phone Number"
-                    formControlName="phone" maxlength="10">
-                <!-- <small *ngIf="isInvalid('phone')" class="error-text">Valid 10-digit phone number is required</small> -->
-                <small *ngIf="associationForm.get('phone')?.touched && associationForm.get('phone')?.errors?.['required']"
-                    class="error-text">Phone number is required</small>
-                <small *ngIf="associationForm.get('phone')?.touched && associationForm.get('phone')?.errors?.['pattern']"
-                    class="error-text">Phone must be 10 digits</small>
-            </div>
+  <label class="medium-font">Phone Number <span class="required">*</span></label>
+
+  <div class="input-group-kkk">
+    <input
+      type="tel"
+      class="input-custom-style regular-font"
+      placeholder="Enter your Phone Number"
+      formControlName="phone"
+      maxlength="10"
+      [readonly]="otpSent"
+    />
+
+<button
+  type="button"
+  class="send-otp-btn"
+  (click)="sendOtp()"
+  [disabled]="associationForm.get('phone')?.invalid || otpTimer > 0 || isSendingOtp || otpVerified"
+>
+  <span *ngIf="!isSendingOtp">
+    {{ otpTimer > 0 
+        ? 'Resend OTP in ' + otpTimer + 's' 
+        : (otpSent ? 'Resend OTP' : 'Send OTP') }}
+  </span>
+
+  <span *ngIf="isSendingOtp" class="spinner"></span>
+</button>
+  </div>
+
+  <small *ngIf="associationForm.get('phone')?.touched && associationForm.get('phone')?.errors?.['required']"
+    class="error-text">Phone number is required</small>
+
+  <small *ngIf="associationForm.get('phone')?.touched && associationForm.get('phone')?.errors?.['pattern']"
+    class="error-text">Phone must be 10 digits</small>
+</div>
+            <div class="inp-cont" *ngIf="otpSent">
+  <label class="medium-font">Verify OTP <span class="required">*</span></label>
+
+  <div class="input-group-kkk">
+    <input
+      type="text"
+      class="input-custom-style regular-font"
+      placeholder="Enter OTP"
+      formControlName="otp"
+      maxlength="5"
+    />
+
+    <button
+      type="button"
+      class="send-otp-btn"
+      (click)="verifyOtp()"
+      [disabled]="associationForm.get('otp')?.value?.length !== 5 || otpVerified"
+    >
+      Verify
+    </button>
+  </div>
+
+  <small *ngIf="otpVerified" style="color: green;">OTP Verified ✅</small>
+</div>
 
             <div class="inp-cont">
                 <label class="medium-font" for="associationName">Association Name <span class="required">*</span></label>
@@ -58,7 +107,14 @@
             </div>
 
             <div>
-                <button type="submit" class="submit-btn" *ngIf="createButton">Submit</button>
+                <button
+  type="submit"
+  class="submit-btn"
+  *ngIf="createButton"
+  [disabled]="!otpVerified"
+>
+  Submit
+</button>
                 <button type="button" class="processing-btn-submit" *ngIf="!createButton">Processing...</button>
             </div>
         </form>

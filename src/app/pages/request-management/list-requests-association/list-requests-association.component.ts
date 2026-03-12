@@ -9,6 +9,7 @@ import { CreateAdminComponent } from '../../../modals/create-admin/create-admin.
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { ViewRequestAdminComponent } from '../../../modals/view-request-admin/view-request-admin.component';
 import { ShepherdService } from 'angular-shepherd';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-requests-association',
@@ -39,6 +40,7 @@ export class ListRequestsAssociationComponent implements OnInit {
     private AssociationService: AssociationServiceService,
     private shepherd: ShepherdService,
     private fb: FormBuilder,
+    private router: Router
   ) {
 
     // initialize filter form
@@ -48,6 +50,10 @@ export class ListRequestsAssociationComponent implements OnInit {
       residentType: ['']
     });
 
+  }
+
+  viewrequestpage(reqId: any) {
+    this.router.navigateByUrl(`Association/request-management/view/${reqId}`);
   }
 
   ngOnInit(): void {

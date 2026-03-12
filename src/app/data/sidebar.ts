@@ -91,7 +91,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     //activeicon: ''
   },
   {
-    label: 'Manage Agreement',
+    label: 'Agreement Management',
     icon: '/assets/icons/sidebar/Agreement.png',
     route: '/Association/request-management/list',
     allowedRole: 'association',
@@ -99,7 +99,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 'create agreement','sign agreement','agreement template'],
     children: [
       {
-        label: 'Templates',
+        label: 'Template Library',
         icon: '',
         route: '/agreement/association/list-template',
         allowedRole: 'association',
@@ -128,22 +128,22 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   // },
 
   {
-    label: 'Manage Helpers',
+    label: 'Helper Management',
     icon: '/assets/icons/sidebar/helpers.png',
-    route: '/Association/request-management/list',
+    route: '/Association/manage-helpers/gate-keeper',
     allowedRole: 'association',
     keywords:['helper','helpers','gate','gatekeeper','gate keeper','security','guard',
 'staff','worker','employee','service admin',
 'create gate','add gate','gate create','security create'],
     children: [
       {
-        label: 'Gate Keeper',
+        label: 'Security Staff',
         icon: '',
         route: '/Association/manage-helpers/gate-keeper',
         allowedRole: 'association',
       },
       {
-        label: 'Service Admin',
+        label: 'Maintenance Staff',
         icon: '',
         route: '/Association/service-admin/list',
         allowedRole: 'association',
@@ -159,7 +159,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   },
 
   {
-    label: 'Manage Amenities',
+    label: 'Amenities Management',
     icon: '/assets/icons/sidebar/amenities.png',
     route: '/Association/request-management/list',
     allowedRole: 'association',
@@ -168,13 +168,13 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 'book hall','book amenity','amenity booking','slot booking','reserve'],
     children: [
       {
-        label: 'Resources',
+        label: 'Resource Directory',
         icon: '',
         route: '/Association/manage-amenities/resources',
         allowedRole: 'association',
       },
       {
-        label: 'Slot Booking',
+        label: 'Scheduled Bookings',
         icon: '',
         route: '/Association/manage-amenities/slot-booking',
         allowedRole: 'association',
@@ -190,7 +190,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   },
 
   {
-    label: 'Manage Request',
+    label: 'Resident Complaints',
     icon: '/assets/icons/sidebar/request.png',
     route: '/Association/request-management/list',
     allowedRole: 'association',
@@ -198,7 +198,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 'pending request','service request'],
     children: [
       {
-        label: 'Request List',
+        label: 'Resident Requests',
         icon: '',
         route: '/Association/request-management/list',
         allowedRole: 'association',
@@ -209,7 +209,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   },
 
   {
-    label: 'Manage Visitors',
+    label: 'Visitor Management',
     icon: '/assets/icons/sidebar/visitors.png',
     route: '/visitors-management/visitors-list',
     allowedRole: 'association',
@@ -218,25 +218,25 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 'visitor create','add visitor'],
     children: [
       {
-        label: 'Manage QR',
+        label: 'QR Pass',
         icon: '',
         route: '/visitors-management/qr-manager',
         allowedRole: 'association',
       },
       {
-        label: 'QR Visitors List',
+        label: 'QR Visitor Logs',
         icon: '',
         route: '/visitors-management/qr-visitors-list',
         allowedRole: 'association',
       },
       {
-        label: 'Spot Visitors List',
+        label: 'Walk-in Visitors',
         icon: '',
         route: '/visitors-management/spot-visitors-list',
         allowedRole: 'association',
       },
       {
-        label: 'Pre-Visitors List',
+        label: 'Pre-Approved Visitors ',
         icon: '',
         route: '/visitors-management/pre-visitors-list',
         allowedRole: 'association',

@@ -122,3 +122,12 @@ tbody td i {
 
 
 }
+
+
+
+.table-btn:disabled{
+    cursor: not-allowed;
+    color: #4b4b4b;
+    border: 1px solid #373737;
+    background-color: #ccc;
+}

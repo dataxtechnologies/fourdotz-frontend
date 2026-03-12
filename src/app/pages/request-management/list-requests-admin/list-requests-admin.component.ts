@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { ViewRequestAdminComponent } from '../../../modals/view-request-admin/view-request-admin.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-requests-admin',
@@ -27,7 +28,8 @@ export class ListRequestsAdminComponent implements OnInit {
     private modal: ModalService,
     private toast: ToastrService,
     private fb: FormBuilder,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +50,11 @@ export class ListRequestsAdminComponent implements OnInit {
       if (res?.success) this.ListRequests();
     });
   }
+
+    viewrequestpage(reqId: any) {
+    this.router.navigateByUrl(`Association/request-management/view/${reqId}`);
+  }
+
 
   ListRequests() {
     this.tableLoading = true;

@@ -153,11 +153,11 @@ updateBlockValue(event: Event, block: Block) {
 
   /* ================= VARIABLES ================= */
 
-  openVariableModal() {
-    this.saveCursor(); // important
-    this.variableForm.key = '';
-    this.showVariableModal = true;
-  }
+openVariableModal() {
+  this.saveCursor(); // Save cursor before modal steals focus
+  this.variableForm.key = '';
+  this.showVariableModal = true;
+}
 
   closeVariableModal() {
     this.showVariableModal = false;
@@ -165,36 +165,87 @@ updateBlockValue(event: Event, block: Block) {
 
   addVariable() {
 
-    if (!this.variableForm.key) return;
+  if (!this.variableForm.key) return;
 
-    if (!this.savedRange || !this.activeEditable) {
-      this.toast.warning('Place cursor inside typing area');
-      return;
-    }
-
-    const range = this.savedRange;
-
-    const span = document.createElement('span');
-    span.className = 'variable';
-    span.contentEditable = 'false';
-    span.innerText = `{{${this.variableForm.key}}}`;
-
-    range.insertNode(span);
-    range.setStartAfter(span);
-    range.collapse(true);
-
-    const sel = window.getSelection();
-    sel?.removeAllRanges();
-    sel?.addRange(range);
-
-    const blockId = Number(this.activeEditable.dataset['id']);
-    const block = this.blocks.find(b => b.id === blockId);
-    if (block) {
-      block.value = this.activeEditable.innerHTML;
-    }
-
-    this.closeVariableModal();
+  if (!this.savedRange) {
+    this.toast.warning('Place cursor inside typing area');
+    return;
   }
+
+  const container = this.savedRange.commonAncestorContainer;
+
+  let parentElement: HTMLElement | null = null;
+
+  if (container.nodeType === Node.TEXT_NODE) {
+    parentElement = container.parentElement;
+  } else {
+    parentElement = container as HTMLElement;
+  }
+
+  // ✅ Check if saved cursor was inside editable area
+  if (!parentElement || !parentElement.closest('.editable')) {
+    this.toast.warning('Place cursor inside typing area');
+    return;
+  }
+
+  // 🔥 Restore cursor before inserting
+  const selection = window.getSelection();
+  selection?.removeAllRanges();
+  selection?.addRange(this.savedRange);
+
+  const span = document.createElement('span');
+  span.className = 'variable';
+  span.contentEditable = 'false';
+  span.innerText = `{{${this.variableForm.key}}}`;
+
+  this.savedRange.insertNode(span);
+  this.savedRange.setStartAfter(span);
+  this.savedRange.collapse(true);
+
+  selection?.removeAllRanges();
+  selection?.addRange(this.savedRange);
+
+  // Update block value
+  const editableEl = parentElement.closest('.editable') as HTMLElement;
+  const blockId = Number(editableEl.dataset['id']);
+  const block = this.blocks.find(b => b.id === blockId);
+
+  if (block) {
+    block.value = editableEl.innerHTML;
+  }
+
+  this.closeVariableModal();
+}
+
+removeVariable(key: string) {
+
+  const variableText = `{{${key}}}`;
+
+  for (const block of this.blocks) {
+
+    if (!block.value) continue;
+
+    if (block.value.includes(variableText)) {
+
+      // Remove ONLY first occurrence
+      block.value = block.value.replace(variableText, '');
+
+      // Update DOM
+      const editable = document.querySelector(
+        `[data-id="${block.id}"]`
+      ) as HTMLElement;
+
+      if (editable) {
+        editable.innerHTML = block.value;
+      }
+
+      this.toast.success('Variable removed');
+      return; // STOP after removing one
+    }
+  }
+
+  this.toast.warning('Variable not found');
+}
 
   /* ================= VARIABLES EXTRACT ================= */
 

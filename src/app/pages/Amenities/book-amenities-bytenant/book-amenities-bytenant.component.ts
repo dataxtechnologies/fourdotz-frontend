@@ -29,7 +29,7 @@ export class BookAmenitiesBytenantComponent {
   slotulesdetails: any;
   showslot = false;
   savebtnloading = false;
-
+hoaId: any
   timeslotsdetails: any
 
   propertiesList: any[] = [];
@@ -94,6 +94,8 @@ export class BookAmenitiesBytenantComponent {
     this.apiService.TenantPropertyDatas<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
+this.hoaId = res.data[0].hoa_admin_id;
+console.log('this.hoaId', this.hoaId);
 
           // show only owner properties
           this.propertiesList = res.data.filter(
@@ -127,7 +129,7 @@ export class BookAmenitiesBytenantComponent {
   /* ---------------- RESOURCE LOAD ---------------- */
 
   getallresourcesforOwner() {
-    this.apiService.getallresourcesforOwner<any>().subscribe({
+     this.apiService.getallresourcesforOwner<any>(this.hoaId).subscribe({
       next: (res: any) => {
         if (res?.success) {
 

@@ -23,7 +23,8 @@ export class ListRequestsUserComponent {
   pages: any;
   tableLoading: boolean = true;
   residentType: any;
-
+canCreateRequest: boolean = false;
+userType: any;
   constructor(
     private Modal: ModalService,
     private apiService: ApiserviceService,
@@ -36,7 +37,13 @@ export class ListRequestsUserComponent {
     this.requestlist1.initialize(this.requestlist2, 10);
   }
 
+  gotoviewpage(reqId: any) {
+    this.router.navigateByUrl(`Request-management/view/${reqId}`);
+  }
+
   ngOnInit(): void {
+
+    this.userType = localStorage.getItem('user_type');
     this.ListRequestUser();
     this.getOwnerProperties();
 
@@ -64,12 +71,23 @@ export class ListRequestsUserComponent {
       next: (res: any) => {
         if (res?.success && Array.isArray(res.data)) {
           this.residentType = res.data[0].resident_type;
+          console.log('residentType', this.residentType);
+            this.setPermission();
         } else {
         }
       },
       error: () => {},
     });
   }
+
+  setPermission() {
+  // Disable only when Owner + Tenant
+  if (this.userType === 'owner' && this.residentType === 'tenant') {
+    this.canCreateRequest = false;
+  } else {
+    this.canCreateRequest = true;
+  }
+}
 
   OpenViewRequest(data: any) {
     this.Modal.open(ViewRequestUserComponent, {

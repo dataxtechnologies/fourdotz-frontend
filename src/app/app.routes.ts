@@ -89,6 +89,8 @@ import { AdSpaceListComponent } from './pages/superadmin-pages/ad-space-list/ad-
 import { ViewQrCodeComponent } from './pages/gate-keeper-pages/view-qr-code/view-qr-code.component';
 import { SpotVisitorListComponent } from './pages/Owner-pages/spot-visitor-list/spot-visitor-list.component';
 import { QrVisitorListComponent } from './pages/Owner-pages/qr-visitor-list/qr-visitor-list.component';
+import { ViewRequestAssociationAdminComponent } from './pages/request-management/view-request-association-admin/view-request-association-admin.component';
+import { ViewRequestUsersComponent } from './pages/request-management/view-request-users/view-request-users.component';
 
 export const routes: Routes = [
   {
@@ -183,6 +185,10 @@ export const routes: Routes = [
         component: ListRequestsAssociationComponent,
       },
       {
+        path: 'request-management/view/:reqId',
+        component: ViewRequestAssociationAdminComponent,
+      },
+      {
         path: 'service-admin/list',
         component: ServiceAdminListComponent,
       },
@@ -226,6 +232,17 @@ export const routes: Routes = [
       {
         path: 'view-tenants/:tenantId',
         component: OwnerViewTenantsDetailsComponent,
+      },
+    ],
+  },
+
+  {
+    path: 'Request-management',
+    component: DashboardLayoutComponent,
+    children: [
+      {
+        path: 'view/:reqId',
+        component: ViewRequestUsersComponent,
       },
     ],
   },

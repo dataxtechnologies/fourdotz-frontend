@@ -32,7 +32,7 @@ export class ViewQrCodeComponent {
 
 
     GetAssociationQR(data :any) {
-    this.apiService.GetAssociationQRforvisitor<any>(data).subscribe({
+    this.apiService.gatekeeperQRshow<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success && res?.data?.qr_code) {
           this.qrimagedata = res.data;

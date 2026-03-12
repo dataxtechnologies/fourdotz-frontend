@@ -25,9 +25,15 @@
             <button class="submit-btn w-100 mb-2" (click)="openVariableModal()">+ Add Variable</button>
 
             <div class="var-list">
-                <span *ngFor="let v of extractVariablesFromBlocks()" class="variable-pill">
-                    {{v.label}}
-                </span>
+                <span 
+  *ngFor="let v of extractVariablesFromBlocks()" 
+  class="variable-pill"
+>
+  {{ v.label }}
+  <i class="fa-solid fa-xmark remove-var"
+     (click)="removeVariable(v.key)">
+  </i>
+</span>
             </div>
         </div>
 

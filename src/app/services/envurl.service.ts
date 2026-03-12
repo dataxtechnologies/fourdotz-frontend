@@ -10,7 +10,9 @@ export class EnvurlService {
   public forgetpassword = '/auth/forgot_password_send_otp'
   public updateforgetpassword = '/auth/update_forgot_password'
   public SendOTPtoMobile = '/auth/send_otp'
+  public sendMobileOTPonOnboard = '/auth/send_mobile_otp'
   public verify_otp = '/auth/verify_otp'
+  public MobileVerifyonOnboard = '/auth/verify_mobile_otp'
 
   public UserInfo = '/auth/user_info'
   public UpdateUPI = '/owner/update_user_upi'
@@ -55,6 +57,7 @@ export class EnvurlService {
 
   // owner endpoints
   public ownerproperties = '/property/list_owner_property'
+  public ownerpropertiesbyhoaId = '/property/list_owner_property'
   public MaintenanceListinOwner = '/maintenance_invoice/list_maintenance_invoice_owner'
   public RentalInvoicelistinowner = '/rental_invoice/list_rental_invoice'
   public TenantListinOwner = '/property/list_tenant_details'
@@ -130,6 +133,7 @@ export class EnvurlService {
   public AddSpotVisitorinGateKeeper = '/visitors/gate_visitors_entry'
   public VisitorExit = '/visitors/visitor_exit'
   public getGatelistinQrformExternal = '/gate/list_gate_by_association_id'
+  public DeleteGate = '/gate/delete_gate'
 
 
 
@@ -164,6 +168,7 @@ export class EnvurlService {
 
   // Amenities Endpoints
   public getallResourcesinAssociation = '/gated_community/register-resource'
+  public getallResourcesinAssociationbyID = '/gated_community/register-resource'
   public CreateResourcesinAssociation =  '/gated_community/register-resource'
   public getResourcebyId = '/gated_community/get_resource_byid'
   public SetSlotRulesCreate = '/gated_community/slot-rule'
@@ -184,6 +189,7 @@ export class EnvurlService {
   public CreateanAdSpace = '/advertisement_space/create_advertisement_space'
   public getalladspace = '/advertisement_space/list_advertisement_space'
   public getadspacebyid = '/advertisement_space/list_advertisement_space_byid'
+  public deleteadspace = '/advertisement_space/delete_advertisement_space'
 
 
   public VisitorAcceptoption = '/visitors/update_entry'
@@ -197,5 +203,8 @@ export class EnvurlService {
   public UploadProfileImage = '/auth/user_profile'
 
 
+
+  public gatekeeperQRshow = '/visitors/list_association_gateentry_qrcode'
+  public getrequestedresidentdetails = '/request_management/list_request_byid'
   
 }

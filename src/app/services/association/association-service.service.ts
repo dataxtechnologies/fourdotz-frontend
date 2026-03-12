@@ -77,9 +77,19 @@ export class AssociationServiceService {
   private AgreementSignedNewSubject = new BehaviorSubject<any>(null);
   NewAgreementSignedStatus$ = this.AgreementSignedNewSubject.asObservable();
 
+
+  private GateDeleteSubject = new BehaviorSubject<any>(null);
+  GateDeleteStatus$ = this.GateDeleteSubject.asObservable();
+
   triggerNewAgreementSigned(agreementsigned: any): void {
     //console.log('addassociation', agreementsigned);
     this.AgreementSignedNewSubject.next(agreementsigned);
+  }
+
+
+  triggergatedelete(gatedelete: any): void {
+    //console.log('addassociation', agreementsigned);
+    this.GateDeleteSubject.next(gatedelete);
   }
 
 

@@ -33,15 +33,37 @@ export class AddOwnerComponent implements OnInit {
     private Toast: ToastrService
   ) {}
 
-  ngOnInit(): void {
-    this.ownerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required,  Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)]],
-      phone: ['', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]],
-      ownedAt: ['', Validators.required],
-    });
-  }
+ngOnInit(): void {
+  this.ownerForm = this.fb.group({
+    firstName: ['', [
+      Validators.required,
+      Validators.pattern(/^[A-Za-z ]{2,}$/) // Only letters, min 2 chars
+    ]],
+
+    lastName: ['', [
+      Validators.required,
+      Validators.pattern(/^[A-Za-z ]{1,}$/)
+    ]],
+
+    email: ['', [
+      Validators.required,
+      Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)
+      // ✅ ensures:
+      // must contain @
+      // minimum 2 letters after @
+      // minimum 2 letters after .
+    ]],
+
+    phone: ['', [
+      Validators.required,
+      Validators.pattern(/^[6-9][0-9]{9}$/)
+      // Starts 6-9
+      // Exactly 10 digits
+    ]],
+
+    ownedAt: ['', Validators.required],
+  });
+}
 
   openDatePicker(): void {
     this.hiddenDatePicker.nativeElement.showPicker();
@@ -84,6 +106,7 @@ export class AddOwnerComponent implements OnInit {
     this.submitbtn = false;
     if (this.ownerForm.invalid) {
       this.ownerForm.markAllAsTouched();
+          this.submitbtn = true;
       return;
     }
 

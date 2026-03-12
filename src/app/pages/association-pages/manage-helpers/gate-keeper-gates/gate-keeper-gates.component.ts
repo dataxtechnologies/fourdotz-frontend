@@ -10,6 +10,7 @@ import { TableService } from '../../../../services/tableservice.service';
 import { ToastrService } from 'ngx-toastr';
 import { ShepherdService } from 'angular-shepherd';
 import { DashboardLayoutService } from '../../../../layouts/dashboard-layout/dashboard-layout.service';
+import { DeleteGateModalComponent } from '../../../../modals/delete-gate-modal/delete-gate-modal.component';
 
 @Component({
   selector: 'app-gate-keeper-gates',
@@ -60,6 +61,13 @@ export class GateKeeperGatesComponent {
     });
 
     this.AssociationService.GateKeeperAssignedStatus$.subscribe((res) => {
+      if (res) {
+        this.listGate();
+        this.Listgatekeeper();
+      }
+    });
+
+    this.AssociationService.GateDeleteStatus$.subscribe((res) => {
       if (res) {
         this.listGate();
         this.Listgatekeeper();
@@ -152,6 +160,25 @@ export class GateKeeperGatesComponent {
       },
     });
   }
+
+    DeleteGate(data : any) {
+    this.ModalService.open(DeleteGateModalComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        gate_id: data,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+
+
 
   listGate() {
     this.apiService.listGate<any>().subscribe({

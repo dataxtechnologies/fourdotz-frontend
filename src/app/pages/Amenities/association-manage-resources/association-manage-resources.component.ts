@@ -51,7 +51,9 @@ export class AssociationManageResourcesComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.getallresources()
+
+    const user_id = localStorage.getItem('user_id');
+    this.getallresources(user_id)
   }
 
 
@@ -102,8 +104,8 @@ export class AssociationManageResourcesComponent {
   }
 
 
-  getallresources() {
-    this.ApiService.getallResourcesinAssociation<any>().subscribe({
+  getallresources(data : any) {
+    this.ApiService.getallResourcesinAssociationbyID<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.mapResourcesToColumns(res.data);

@@ -1,0 +1,254 @@
+.Request-header-div{
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center;
+}
+
+.req-sub-div{
+    display: flex;
+    align-items: center;
+}
+
+.request-content-div{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.req-resident-details{
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 7px;
+    margin-bottom: 10px;
+}
+
+.input-cont{
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px !important;
+    border: 1px solid #e2e2e2;
+    background-color: #e3e3e3;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    
+    margin-bottom: 20px;
+}
+
+.form-group-main{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.req-details-div{
+    background-color: #e3e3e3;
+    padding: 20px;
+    border-radius: 7px;
+}
+
+
+.media-item {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    object-fit: contain;
+}
+
+
+
+/* ------------------------------------------------------
+   CHAT SECTION
+------------------------------------------------------ */
+.chat-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.chat-section {
+    width: 100%;
+    height: 550px;
+    background: #f4f4f4;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.chat-header {
+    padding: 12px 15px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-box {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* BUBBLES */
+.chat-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    max-width: 90%;
+}
+
+.chat-row.left {
+    flex-direction: row;
+}
+
+.chat-row.right {
+    flex-direction: row-reverse;
+    margin-left: auto;
+    
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.bubble {
+    padding: 12px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+    max-width: 100%;
+    width: fit-content;
+    word-break: break-word;
+    color: #fff !important;
+}
+
+.left-bubble {
+    background: var(--primary-color2);
+    color: white !important;
+    border-radius: 15px 15px 15px 5px;
+}
+
+.right-bubble {
+    background: var(--primary-color1);
+    color: white;
+    border-radius: 15px 15px 5px 15px;
+  
+}
+
+.chat-row.right .bubble {
+    margin-left: auto; /* Pushes bubble to far right */
+}
+
+/* Time text */
+.time-text {
+    font-size: 11px;
+    color: #777;
+    margin-top: 4px;
+}
+
+.chat-row.left > div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* left align both bubble & time */
+}
+
+.left-time {
+    margin-left: 0; 
+    text-align: left;
+}
+
+.right-time {
+    text-align: right;
+}
+
+/* INPUT BOX */
+.chat-input {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    background: white;
+    border-top: 1px solid #eaeaea;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+}
+
+.send-icon {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+
+
+
+/* BUTTON STYLE */
+.action-buttons .btn {
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
+    /* width: 100%; */
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Accept */
+.accept {
+    background: #d7f8df;
+    color: #0e7832;
+    border: 1px solid #588961 !important;
+}
+
+.accept:hover {
+    background: #c8f5d4;
+}
+
+/* Completed */
+.complete {
+    background: #d9eaff;
+    color: #005b9f;
+    border: 1px solid #9cc8ff;
+}
+
+.complete:hover {
+    background: #c9dfff;
+}
+
+/* Close */
+.reject {
+    background: #ffe3e3;
+    color: #d43131;
+    border: 1px solid #ffbcbc;
+}
+
+.reject:hover {
+    background: #ffd2d2;
+}
+
+.send-icon.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}

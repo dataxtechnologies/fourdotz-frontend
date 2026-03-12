@@ -74,7 +74,9 @@ export class AddGateKeeperComponent implements OnInit {
       },
       error: (err: any) => {
         this.submitbtn = true;
-        this.Toast.error(err?.error?.message || 'Failed to add Gate Keeper', 'Error');
+        console.log('err?.error?.message', err?.error);
+        
+        this.Toast.error(err?.error?.error.message || 'Failed to add Gate Keeper', 'Error');
       }
     });
   }

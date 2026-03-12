@@ -60,7 +60,7 @@ export class EditVehicleDataComponent implements OnInit {
       model: ['', Validators.required],
       vehicleNumber: [
         '',
-        [Validators.required, Validators.pattern(/[A-Z]{2}\d{2}[A-Z]{2}\d{4}/)],
+        [Validators.required],
       ],
       ownedBy: ['', Validators.required],
     });

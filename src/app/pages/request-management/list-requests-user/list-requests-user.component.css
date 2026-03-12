@@ -31,6 +31,15 @@
 }
 
 
+.create-btn:disabled {
+  background-color: #dcdcdc;
+  color: #888;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+  pointer-events: none;
+}
+
 /* ---------- FILTER CONTAINER (Your new design) ---------- */
 .filter-container {
   display: flex;

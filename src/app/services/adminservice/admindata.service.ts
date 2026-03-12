@@ -5,24 +5,31 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AdmindataService {
-  constructor() {}
+  constructor() { }
 
   private AssociationSubject = new BehaviorSubject<any>(null);
   AssociationStatus$ = this.AssociationSubject.asObservable();
 
   triggerAdminAssociation(addassociation: any): void {
     //console.log('addassociation', addassociation);
-    
+
     this.AssociationSubject.next(addassociation);
   }
 
 
-    private AdminAdServiceSubject = new BehaviorSubject<any>(null);
+  private AdminAdServiceSubject = new BehaviorSubject<any>(null);
   AdminAdServiceStatus$ = this.AdminAdServiceSubject.asObservable();
 
-    triggerAdServiceCreated(adcreated: any): void {
+  triggerAdServiceCreated(adcreated: any): void {
     //console.log('addassociation', addassociation);
-    
+
     this.AdminAdServiceSubject.next(adcreated);
+  }
+
+  private AdminadSpaceDeleteSubject = new BehaviorSubject<any>(null);
+  AdminAdSapaceDeleteStatus$ = this.AdminadSpaceDeleteSubject.asObservable();
+
+  triggerAdminAdSpaceDelete(addelete: any): void {
+    this.AdminadSpaceDeleteSubject.next(addelete);
   }
 }

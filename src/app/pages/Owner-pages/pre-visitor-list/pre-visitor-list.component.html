@@ -110,9 +110,14 @@
                                             <div class="d-flex gap-2 align-items-center">
                                                 <div>
                                                     <button class="table-btn"
-                                                        (click)="AcceptVisitorInvite(item.visitor_no)">
+                                                        (click)="AcceptVisitorInvite(item.visitor_no)" *ngIf="item.approval_status == false; else Accepted">
                                                         Accept invite
                                                     </button>
+
+                                                    <ng-template #Accepted>
+                                                         <button class="table-btn" disabled >Accepted</button>
+                                                    </ng-template>
+                                                    
                                                 </div>
                                                 <div (click)="visitorView(item)">
                                                     <i class="fa-regular fa-eye"
