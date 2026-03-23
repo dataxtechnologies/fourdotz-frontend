@@ -90,7 +90,7 @@
                             <!-- BODY -->
                             <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
 
-                                <tr *ngFor="let booking of filteredProperties">
+                                <tr *ngFor="let booking of BookingData1.paginatedData">
 
                                     <td class="sticky-col lead-col">
                                         {{ booking.property_no }}
@@ -105,7 +105,7 @@
                                     </td>
 
                                     <td>
-                                        {{ formatDate(booking.start_time) }}
+                                        {{ formatDate(booking.start_time)  | date:'dd-MMM-yyyy' }}
                                     </td>
 
                                     <td>

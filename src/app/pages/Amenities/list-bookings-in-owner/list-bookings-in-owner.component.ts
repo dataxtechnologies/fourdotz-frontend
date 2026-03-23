@@ -58,27 +58,30 @@ export class ListBookingsInOwnerComponent {
 
 
 
-  applyFilters() {
-    const { amenitiesName } = this.filterForm.value;
+applyFilters() {
+  const { amenitiesName } = this.filterForm.value;
 
-    this.filteredProperties = this.BookingData2.filter((p: any) => {
-      return (
+  this.filteredProperties = this.BookingData2.filter((p: any) => {
+    return (
+      !amenitiesName ||
+      p.resource_name?.toLowerCase().includes(amenitiesName.toLowerCase())
+    );
+  });
 
-        (!amenitiesName ||
-          p.resource_name?.toLowerCase().includes(amenitiesName.toLowerCase()))
-      );
-    });
-  }
+  // ✅ IMPORTANT: reinitialize pagination
+  this.BookingData1.initialize(this.filteredProperties, 10);
+}
 
-  resetFilters() {
-    this.filterForm.reset({
-      association: '',
-      residentType: '',
-      propertyNo: '',
-    });
+resetFilters() {
+  this.filterForm.reset({
+    amenitiesName: ''
+  });
 
-    this.filteredProperties = [...this.BookingData2];
-  }
+  this.filteredProperties = [...this.BookingData2];
+
+  // ✅ IMPORTANT
+  this.BookingData1.initialize(this.filteredProperties, 10);
+}
 
   GetBookinginOwner(data : any) {
 

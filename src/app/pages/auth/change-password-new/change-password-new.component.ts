@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-change-password-new',
@@ -18,6 +19,7 @@ export class ChangePasswordNewComponent implements OnInit {
 
   showNewPassword = false;
   showConfirmPassword = false;
+  updbtnloading = false;
 
   username = '';
 
@@ -26,7 +28,8 @@ export class ChangePasswordNewComponent implements OnInit {
     private location: Location,
     private route: ActivatedRoute,
     private router: Router,
-    private apiService: ApiserviceService
+    private apiService: ApiserviceService,
+    private Toast : ToastrService
   ) {}
 
   ngOnInit() {
@@ -55,7 +58,9 @@ export class ChangePasswordNewComponent implements OnInit {
   // SUBMIT
   // -------------------------
   updatePassword() {
+    this.updbtnloading = true;
     if (this.passwordForm.invalid || this.passwordMismatch) {
+      this.updbtnloading = false;
       this.passwordForm.markAllAsTouched();
       return;
     }
@@ -72,7 +77,7 @@ export class ChangePasswordNewComponent implements OnInit {
 
     this.apiService.UpdateTempPass<any>(payload).subscribe({
       next: (res: any) => {
-        this.btnloading = false;
+        this.updbtnloading = false;
 
         if (res?.success) {
 
@@ -89,12 +94,14 @@ export class ChangePasswordNewComponent implements OnInit {
 
           localStorage.setItem('user_type', userType);
           localStorage.setItem('user_id', user_id);
+           this.Toast.success(res.message, 'Success');
 
           this.redirectUser(userType);
         }
       },
-      error: () => {
-        this.btnloading = false;
+      error: (err : any) => {
+        this.Toast.error(err.error.error.message, 'Failed');
+        this.updbtnloading = false;
       }
     });
   }

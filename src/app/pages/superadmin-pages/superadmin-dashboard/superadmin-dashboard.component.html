@@ -47,12 +47,7 @@
                                         <th>Email</th>
                                         <th>Phone</th>
                                         <th>Property Type</th>
-                                        <th>Property Type</th>
-                                        <th>Property Type</th>
                                         <th>Invitation Status</th>
-                                        <th>View</th>
-                                        <th>View</th>
-                                        <th>View</th>
                                         <th>View</th>
                                         <th>Action</th>
                                     </tr>
@@ -77,22 +72,11 @@
                                         <td>+91 {{ item.mobile }}</td>
 
                                         <td>{{ item.property_type.join(', ') }}</td>
-                                        <td>{{ item.property_type.join(', ') }}</td>
-                                        <td>{{ item.property_type.join(', ') }}</td>
 
                                         <td>
                                             {{ item.invitation_status ? 'Accepted' : 'Pending/Declined' }}
                                         </td>
 
-                                        <td (click)="viewassociation(item.user_id)">
-                                            <button class="table-btn">view</button>
-                                        </td>
-                                        <td (click)="viewassociation(item.user_id)">
-                                            <button class="table-btn">view</button>
-                                        </td>
-                                        <td (click)="viewassociation(item.user_id)">
-                                            <button class="table-btn">view</button>
-                                        </td>
                                         <td (click)="viewassociation(item.user_id)">
                                             <button class="table-btn">view</button>
                                         </td>

@@ -45,7 +45,13 @@ userType: any;
 
     this.userType = localStorage.getItem('user_type');
     this.ListRequestUser();
-    this.getOwnerProperties();
+    
+
+    if(this.userType === 'tenant'){
+      this.TenantPropertyDatas();
+    }else{
+this.getOwnerProperties();
+    }
 
     this.OwnerService.RequestUserStatus$.subscribe((res: any) => {
       if (res?.success) {
@@ -79,6 +85,25 @@ userType: any;
       error: () => {},
     });
   }
+
+
+    TenantPropertyDatas(){
+    this.apiService.TenantPropertyDatas<any>().subscribe({
+      next: (res: any) => {
+        if (res?.success) {
+           this.residentType = res.data[0].resident_type;
+          console.log('residentType', this.residentType);
+            this.setPermission();
+        } else {
+          
+        }
+      },
+      error: (err: any) => {
+        
+      },
+    });
+  }
+
 
   setPermission() {
   // Disable only when Owner + Tenant

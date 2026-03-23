@@ -72,10 +72,14 @@ export class PropertyListComponent {
   }
 
   /* RESET FILTER */
-  resetFilters() {
-    this.filterForm.reset();
-    this.applyFilters();
-  }
+resetFilters() {
+  this.filterForm.reset({
+    search: '',
+    propertyType: ''
+  });
+
+  this.applyFilters();
+}
 
   Addproperty() {
     this.ModalService.open(AddPropertyComponent, {

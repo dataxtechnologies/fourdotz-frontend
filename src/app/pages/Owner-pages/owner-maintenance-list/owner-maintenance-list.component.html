@@ -69,7 +69,7 @@
                                 </div>
                             </label>
                             <input type="text" placeholder="Resident Name" [(ngModel)]="filters.search"
-                                (input)="applyFilters()" class="regular-font">
+                                (input)="applyFilters()" class="regular-font" >
                         </div>
 
                         <button class="filter-reset-btn" type="button" (click)="resetFilters()">
@@ -143,7 +143,7 @@
                                                 </ng-container>
 
                                                 <ng-template #viewInvoice>
-                                                    <img src="assets/icons/paid-invoice1.svg"
+                                                    <img src="assets/icons/paid-invoice1.svg" style="cursor: pointer !important;"
                                                         (click)="openpaidmaintenanceinvoice(item.invoice_no)" />
                                                 </ng-template>
 

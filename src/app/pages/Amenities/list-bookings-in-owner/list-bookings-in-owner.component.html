@@ -40,72 +40,71 @@
                         <table class="new-table">
 
                             <!-- HEADER -->
-                         
+
                             <thead>
-  <tr class="medium-font">
-    <th class="sticky-col lead-col">Amenity</th>
-    <th>Date</th>
-    <th>Time</th>
-    <th>Amount</th>
-    <th>Payment</th>
-    <th>Status</th>
-    <th>View</th>
-  </tr>
-</thead>
+                                <tr class="medium-font">
+                                    <th class="sticky-col lead-col">Amenity</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Amount</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th>View</th>
+                                </tr>
+                            </thead>
 
                             <!-- BODY -->
                             <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
 
-  <tr *ngFor="let booking of filteredProperties">
+                                <tr *ngFor="let booking of BookingData1.paginatedData">
 
-    <!-- Amenity -->
-    <td class="sticky-col lead-col">
-      {{ booking.resource_name }}
-    </td>
+                                    <!-- Amenity -->
+                                    <td class="sticky-col lead-col">
+                                        {{ booking.resource_name }}
+                                    </td>
 
-    <!-- Date -->
-    <td>
-      {{ formatDate(booking.start_time) }}
-    </td>
+                                    <!-- Date -->
+                                    <td>
+                                        {{ formatDate(booking.start_time) }}
+                                    </td>
 
-    <!-- Time -->
-    <td>
-      {{ formatTime(booking.start_time) }} -
-      {{ formatTime(booking.end_time) }}
-    </td>
+                                    <!-- Time -->
+                                    <td>
+                                        {{ formatTime(booking.start_time) }} -
+                                        {{ formatTime(booking.end_time) }}
+                                    </td>
 
-    <!-- Amount -->
-    <td class="amount">
-      ₹{{ getAmount(booking.amount) }}
-    </td>
+                                    <!-- Amount -->
+                                    <td class="amount">
+                                        ₹{{ getAmount(booking.amount) }}
+                                    </td>
 
-    <!-- Payment -->
-    <td>
-      <span class="payment"
-        [ngClass]="booking.payment_status === 'paid' ? 'paid' : 'pending'">
-        {{ booking.payment_status }}
-      </span>
-    </td>
+                                    <!-- Payment -->
+                                    <td>
+                                        <span class="payment"
+                                            [ngClass]="booking.payment_status === 'paid' ? 'paid' : 'pending'">
+                                            {{ booking.payment_status }}
+                                        </span>
+                                    </td>
 
-    <!-- Booking Status -->
-    <td>
-      <span class="status"
-        [ngClass]="booking.booking_status === 'booked' ? 'booked' : 'cancelled'">
-        {{ booking.booking_status }}
-      </span>
-    </td>
+                                    <!-- Booking Status -->
+                                    <td>
+                                        <span class="status"
+                                            [ngClass]="booking.booking_status === 'booked' ? 'booked' : 'cancelled'">
+                                            {{ booking.booking_status }}
+                                        </span>
+                                    </td>
 
-    <!-- View -->
-    <td>
-      <button class="table-btn"
-        (click)="viewbookingdetails(booking.booking_id)">
-        View
-      </button>
-    </td>
+                                    <!-- View -->
+                                    <td>
+                                        <button class="table-btn" (click)="viewbookingdetails(booking.booking_id)">
+                                            View
+                                        </button>
+                                    </td>
 
-  </tr>
+                                </tr>
 
-</tbody>
+                            </tbody>
                         </table>
 
                         <!-- SKELETON -->

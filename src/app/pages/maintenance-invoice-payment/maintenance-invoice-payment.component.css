@@ -506,6 +506,22 @@
     pointer-events: none;
     user-select: none;
 }
+.watermark-new {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 130px;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.05);
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    white-space: nowrap;
+    z-index: 0;
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.08);
+    pointer-events: none;
+    user-select: none;
+}
 
 
 

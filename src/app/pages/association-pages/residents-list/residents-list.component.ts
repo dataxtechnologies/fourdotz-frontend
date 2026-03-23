@@ -227,7 +227,13 @@ export class ResidentsListComponent {
   // ===============================================
 
   resetFilters() {
-    this.filterForm.reset();
+   this.filterForm.reset({
+    search: '',
+    propertyType: '',
+    residentType: ''
+  });
+
+  this.applyFilters();
     this.filteredResidents = [...this.Residentlist2];
     this.Residentlist1.initialize(this.filteredResidents, 11);
   }

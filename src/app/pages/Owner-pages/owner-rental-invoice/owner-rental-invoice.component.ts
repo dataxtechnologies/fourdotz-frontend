@@ -116,10 +116,19 @@ applyFilters(): void {
   this.rentalinvoicelist1.initialize(this.filteredProperties, 10);
 }
 
-  resetFilters(): void {
-    this.filterForm.reset();
-    this.filteredProperties = [...this.rentalinvoicelist2];
-  }
+resetFilters(): void {
+  this.filterForm.reset({
+    status: '',
+    residentSearch: '',
+    fromDate: '',
+    toDate: ''
+  });
+
+  this.filteredProperties = [...this.rentalinvoicelist2];
+
+  this.rentalinvoicelist1 = new TableService();
+  this.rentalinvoicelist1.initialize(this.filteredProperties, 10);
+}
 
   viewInvoice(data: any) {
     const url = `/Global-invoice/${data}`;

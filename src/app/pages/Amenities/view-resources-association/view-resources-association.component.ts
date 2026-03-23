@@ -3,6 +3,7 @@ import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TableService } from '../../../services/tableservice.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-resources-association',
@@ -39,7 +40,9 @@ export class ViewResourcesAssociationComponent {
     'Basketball': 'assets/icons/amenities/basketball.png'
   };
 
-  constructor(private apiService: ApiserviceService, private route: ActivatedRoute, private Router :Router) {
+  openslotloading = false
+
+  constructor(private apiService: ApiserviceService, private route: ActivatedRoute, private Router :Router, private Toast : ToastrService) {
     this.BookingDetails1 = new TableService();
     this.BookingDetails1.initialize(this.BookingDetails2, 10);
   }
@@ -169,17 +172,21 @@ GetBookingforResourcesbyId(data: any, hoa_id: any) {
   }
 
   OpenthebookingslotToday() {
+    this.openslotloading = true;
     const payload = {
       resource_id: this.resourceId,
     };
     this.apiService.OpenthebookingslotToday<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
-
+          this.Toast.success(res.message, 'Success');
+          this.openslotloading = false;
           this.GetTimeSlotsByResourceId(this.resourceId);
         }
       },
       error: (err: any) => {
+            this.Toast.error(err.error.error.message, 'Failed');
+          this.openslotloading = false;
         console.error('Fetch resource failed', err);
       }
     });

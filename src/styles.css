@@ -822,6 +822,7 @@ tbody td i {
     border-radius: 12px;
     color: var(--primary-color1);
     border: 1px solid var(--primary-color1);
+    cursor: pointer;
 }
 
 

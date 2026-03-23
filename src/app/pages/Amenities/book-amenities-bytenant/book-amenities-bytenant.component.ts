@@ -63,15 +63,24 @@ hoaId: any
 
   ngOnInit(): void {
 
-    this.bookingForm = this.fb.group({
-      resource: ['', Validators.required],
-      name: [''],
-      slot: ['', Validators.required],
-      property: ['', Validators.required],
-      personName: [''],
-      personMobile: [''],
-      personAge: [''],
-    });
+this.bookingForm = this.fb.group({
+  resource: ['', Validators.required],
+  name: ['', Validators.required],
+  slot: ['', Validators.required],
+  property: ['', Validators.required],
+
+  personName: ['', Validators.required],
+
+  personMobile: [
+    '',
+    [
+      Validators.required,
+      Validators.pattern(/^[6-9]\d{9}$/) // ✅ starts 6-9 and total 10 digits
+    ]
+  ],
+
+  personAge: ['', Validators.required],
+});
 
     // whenever resource value changes → auto clear slot
     this.bookingForm.get('resource')?.valueChanges.subscribe(() => {
@@ -80,7 +89,7 @@ hoaId: any
 
     });
 
-    this.getallresourcesforOwner();
+    
     this.propertylist();
   }
 
@@ -96,7 +105,7 @@ hoaId: any
         if (res?.success) {
 this.hoaId = res.data[0].hoa_admin_id;
 console.log('this.hoaId', this.hoaId);
-
+          this.getallresourcesforOwner(this.hoaId);
           // show only owner properties
           this.propertiesList = res.data.filter(
             (p: any) => p.resident_type === 'tenant'
@@ -128,8 +137,8 @@ console.log('this.hoaId', this.hoaId);
 
   /* ---------------- RESOURCE LOAD ---------------- */
 
-  getallresourcesforOwner() {
-     this.apiService.getallresourcesforOwner<any>(this.hoaId).subscribe({
+  getallresourcesforOwner(data : any) {
+     this.apiService.getallresourcesforOwner<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {
 

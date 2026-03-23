@@ -37,7 +37,8 @@
                             {{ resourcesDetails.status }}
                         </span>
                         <button class="open-slot-btn regular-font" (click)="OpenthebookingslotToday()">
-                            Open Slot Today
+                           <span *ngIf="!openslotloading">Open Slot</span>
+                           <span *ngIf="openslotloading">Opening Slot...</span>
                         </button>
                     </div>
                 </div>

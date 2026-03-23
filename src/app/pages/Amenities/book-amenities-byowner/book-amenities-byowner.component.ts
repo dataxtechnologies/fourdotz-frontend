@@ -32,7 +32,7 @@ export class BookAmenitiesByownerComponent {
   savebtnloading = false;
 
   timeslotsdetails: any
-hoaId: any
+  hoaId: any
   propertiesList: any[] = [];
   selectedProperty: any;
   selectedSlotFull: any; // to store start/end time of selected slot
@@ -82,10 +82,10 @@ hoaId: any
     });
 
     this.propertylist();
-   
+
   }
 
-  goback(){
+  goback() {
     this.router.navigateByUrl('/Owner/amenities/list-book-amenities');
   }
 
@@ -95,9 +95,9 @@ hoaId: any
     this.apiService.ownerproperties<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
-this.hoaId = res.data[0].hoa_admin_id;
-console.log('this.hoaId', this.hoaId);
- this.getallresourcesforOwner(this.hoaId);
+          this.hoaId = res.data[0].hoa_admin_id;
+          console.log('this.hoaId', this.hoaId);
+          this.getallresourcesforOwner(this.hoaId);
           // show only owner properties
           this.propertiesList = res.data.filter(
             (p: any) => p.resident_type === 'owner'
@@ -110,13 +110,13 @@ console.log('this.hoaId', this.hoaId);
 
   /* ---------------- RESOURCE LOAD ---------------- */
 
-  getallresourcesforOwner(data : any) {
+  getallresourcesforOwner(data: any) {
     this.apiService.getallresourcesforOwner<any>(data).subscribe({
       next: (res: any) => {
         if (res?.success) {
 
           this.resourcesDetails = res.data;
-          
+
           // preload icons
           this.resourcesDetails.forEach((r: any) => {
             r.icon = this.getResourceIcon(r.name);

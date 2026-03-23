@@ -167,28 +167,40 @@
 
                 <!-- Apartment Fields -->
                 <ng-container *ngIf="propertyForm.get('propertyType')?.value === 'Apartment'">
+
                     <div class="inp-cont">
                         <label class="medium-font">Building Type <span class="required">*</span></label>
+
                         <div class="checkbox-group">
-                            <label class="medium-font" class="radio-cus regular-font">
-                                <input type="radio" formControlName="building_type" value="Block" /> Block
+                            <label class="radio-cus regular-font">
+                                <input type="radio" formControlName="building_type" value="tower" />
+                                Tower
                             </label>
-                            <label class="medium-font" class="radio-cus regular-font">
-                                <input type="radio" formControlName="buildingType" value="Tower" /> Tower
+
+                            <label class="radio-cus regular-font">
+                                <input type="radio" formControlName="building_type" value="block" />
+                                Block
                             </label>
                         </div>
-                        <div *ngIf="
-        propertyForm.get('building_type')?.touched &&
-        propertyForm.get('building_type')?.invalid
-      " class="error-text">
+
+                        <div *ngIf="propertyForm.get('building_type')?.touched && propertyForm.get('building_type')?.invalid"
+                            class="error-text">
                             Building Type is required
                         </div>
                     </div>
 
                     <div class="inp-cont">
                         <label class="medium-font">BHK <span class="required">*</span></label>
-                        <input type="number" formControlName="bhk" class="input-custom-style regular-font"
-                            placeholder="Enter BHK" />
+                        <select formControlName="bhk" class="input-custom-style regular-font">
+                            <option value="" disabled selected>Select BHK</option>
+                            <option [value]="1">1 BHK</option>
+                            <option [value]="2">2 BHK</option>
+                            <option [value]="3">3 BHK</option>
+                            <option [value]="4">4 BHK</option>
+                            <option [value]="5">5 BHK</option>
+                            <option [value]="6">6 BHK</option>
+                        </select>
+
                         <div *ngIf="propertyForm.get('bhk')?.touched && propertyForm.get('bhk')?.invalid"
                             class="error-text">
                             BHK is required
@@ -196,9 +208,9 @@
                     </div>
 
                     <!-- Tower -->
-                    <div class="inp-cont" *ngIf="propertyForm.get('buildingType')?.value === 'Tower'">
+                    <div class="inp-cont" *ngIf="propertyForm.get('building_type')?.value === 'tower'">
                         <label class="medium-font">Tower <span class="required">*</span></label>
-                        <input type="text" formControlName="tower_name " class="input-custom-style regular-font"
+                        <input type="text" formControlName="tower_name" class="input-custom-style regular-font"
                             placeholder="Enter Tower" />
                         <div *ngIf="propertyForm.get('tower_name')?.touched && propertyForm.get('tower_name')?.invalid"
                             class="error-text">
@@ -207,11 +219,11 @@
                     </div>
 
                     <!-- Block -->
-                    <div class="inp-cont" *ngIf="propertyForm.get('buildingType')?.value === 'Block'">
+                    <div class="inp-cont" *ngIf="propertyForm.get('building_type')?.value === 'block'">
                         <label class="medium-font">Block <span class="required">*</span></label>
-                        <input type="text" formControlName="block_name " class="input-custom-style regular-font"
+                        <input type="text" formControlName="block_name" class="input-custom-style regular-font"
                             placeholder="Enter Block" />
-                        <div *ngIf="propertyForm.get('block_name ')?.touched && propertyForm.get('block_name ')?.invalid"
+                        <div *ngIf="propertyForm.get('block_name')?.touched && propertyForm.get('block_name')?.invalid"
                             class="error-text">
                             Block is required
                         </div>
@@ -227,6 +239,7 @@
                             Floor is required
                         </div>
                     </div>
+
                 </ng-container>
 
 

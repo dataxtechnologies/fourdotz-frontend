@@ -136,11 +136,16 @@ export class ListRequestsAssociationComponent implements OnInit {
 
   /* ================= RESET FILTER ================= */
 
-  resetFilters() {
-    this.filterForm.reset();
-    this.filteredRequests = [...this.RequestList2];
-    this.RequestList1.initialize(this.filteredRequests, 10);
-  }
+resetFilters() {
+  this.filterForm.reset({
+    search: '',
+    workStatus: '',
+    residentType: ''
+  });
+
+  this.filteredRequests = [...this.RequestList2];
+  this.RequestList1.initialize(this.filteredRequests, 10);
+}
 
   /* ================= FETCH ADMINS ================= */
 

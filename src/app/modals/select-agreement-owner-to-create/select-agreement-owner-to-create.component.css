@@ -1,7 +1,7 @@
 /* Modal Wrapper */
 .agreement-modal {
   z-index: 2000;
-width: 700px;
+width: 600px;
   animation: fadeIn 0.3s ease-in-out;
 }
 

@@ -59,9 +59,9 @@
                                 <thead>
                                     <tr class="medium-font">
                                         <th class="sticky-col lead-col">Property No.</th>
+                                        <th>Visitor Id</th>
                                         <th>Visitor Details</th>
                                         <th>Resident Details</th>
-                                        <th>Gate No.</th>
                                         <th>Count</th>
                                         <th>Entry Time</th>
                                         <th>Exit Time</th>
@@ -80,6 +80,7 @@
                                             {{ item.property_no || '--' }}
                                         </td>
 
+                                        <td>{{ item.visitor_no }}</td>
                                         <td>
                                             <div class="td-main">{{ item.visitor_name }}</div>
                                             <div class="td-sub">{{ item.visitor_mobile }}</div>
@@ -92,7 +93,6 @@
                                             </div>
                                         </td>
 
-                                        <td>{{ item.gate }}</td>
 
                                         <td>{{ item.visitor_count }}</td>
 

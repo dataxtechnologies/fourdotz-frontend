@@ -39,8 +39,8 @@ export class EditPropertiesDataComponent implements OnInit {
     private apiService: ApiserviceService,
     private fb: FormBuilder,
     private Modal: ModalService,
-    private AssociationService : AssociationServiceService
-  ) {}
+    private AssociationService: AssociationServiceService
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -63,7 +63,7 @@ export class EditPropertiesDataComponent implements OnInit {
       bhk: [''],
       building_type: [''],
       tower_name: [''],
-      block_name : [''],
+      block_name: [''],
       floor: [''],
     });
   }
@@ -102,18 +102,12 @@ export class EditPropertiesDataComponent implements OnInit {
   }
 
   patchFormData(data: any) {
-    // Normalize propertyType & facing
-    // const selectedType = data.property_type
-    //   ? data.property_type.charAt(0).toUpperCase() +
-    //     data.property_type.slice(1).toLowerCase()
-    //   : '';
-
     const selectedType = data.property_type ?? data.propertyType ?? '';
-  const selectedDueDate = data.due_date ?? data.dueDate ?? '';
+    const selectedDueDate = data.due_date ?? data.dueDate ?? '';
 
-  if (selectedType && !this.propertyTypes.includes(selectedType)) {
-    this.propertyTypes = [selectedType, ...this.propertyTypes];
-  }
+    if (selectedType && !this.propertyTypes.includes(selectedType)) {
+      this.propertyTypes = [selectedType, ...this.propertyTypes];
+    }
     const facing = data.facing
       ? data.facing.charAt(0).toUpperCase() + data.facing.slice(1).toLowerCase()
       : '';
@@ -122,40 +116,29 @@ export class EditPropertiesDataComponent implements OnInit {
     if (selectedType && !this.propertyTypes.includes(selectedType)) {
       this.propertyTypes = [selectedType, ...this.propertyTypes];
     }
+  // const selectedDueDate = data.due_date ?? '';
 
-    // Format due date for dropdown
+  // const facing = data.facing
+  //   ? data.facing.charAt(0).toUpperCase() + data.facing.slice(1).toLowerCase()
+  //   : '';
 
-
-  // this.propertyForm.patchValue({
-  //   propertyNo: data.property_no ?? '',
-  //   area: data.area ?? '',
-  //   facing: data.facing ?? '',
-  //   electricityNo: data.electricity_number ?? '',
-  //   parkingSlot: data.parking_slot_number ?? '',
-  //   gaslineNo: data.gasline_number ?? '',
-  //   maintenanceAmount: data.maintenance_amount ?? '',
-  //   dueDate: selectedDueDate, // ✅ now will select correctly
-  //   propertyType: selectedType,
-  //   bhk: data.bhk ?? '',
-  //   floor: data.floor ?? '',
-
-    this.propertyForm.patchValue({
-      propertyNo: data.property_no ?? '',
-      area: data.area ?? '',
-      facing: facing,
-      electricityNo: data.electricity_number ?? '',
-      parkingSlot: data.parking_slot_number ?? '',
-      gaslineNo: data.gasline_number ?? '',
-      maintenanceAmount: data.maintenance_amount ?? '',
-      dueDate: selectedDueDate,
-      propertyType: selectedType,
-      bhk: data.bhk ?? '',
-      building_type: data.building_type ?? '',
-      tower_name: data.tower_name ?? '',
-      block_name : data.block_name  ?? '',
-      floor: data.floor ?? '',
-    });
-  }
+  this.propertyForm.patchValue({
+    propertyNo: data.property_no ?? '',
+    area: data.area ?? '',
+    facing: facing,
+    electricityNo: data.electricity_number ?? '',
+    parkingSlot: data.parking_slot_number ?? '',
+    gaslineNo: data.gasline_number ?? '',
+    maintenanceAmount: data.maintenance_amount ?? '',
+    dueDate: selectedDueDate,
+    propertyType: selectedType,
+    bhk: data.bhk ?? '',
+    building_type: data.building_type?.toLowerCase() ?? '', // ✅ FIX
+    tower_name: data.tower_name ?? '',
+    block_name: data.block_name ?? '',
+    floor: data.floor ?? '',
+  });
+}
 
   editPropertybyAssociation() {
     if (this.propertyForm.invalid) {
@@ -178,7 +161,7 @@ export class EditPropertiesDataComponent implements OnInit {
       bhk: this.propertyForm.get('bhk')?.value,
       building_type: this.propertyForm.get('building_type')?.value,
       tower_name: this.propertyForm.get('tower_name')?.value,
-      block_name : this.propertyForm.get('block_name ')?.value,
+      block_name: this.propertyForm.get('block_name')?.value,
       floor: this.propertyForm.get('floor')?.value,
 
       // ...this.propertyForm.value,

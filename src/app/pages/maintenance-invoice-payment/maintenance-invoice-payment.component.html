@@ -9,6 +9,7 @@
     <div class="invoice-container" id="invoice-download" *ngIf="!globalloading">
         <!-- Watermark -->
         <div class="watermark" *ngIf="isPaid">PAID</div>
+        <div class="watermark-new" *ngIf="!isPaid">PENDING</div>
 
         <header class="invoice-header">
             <div class="logo-and-details">

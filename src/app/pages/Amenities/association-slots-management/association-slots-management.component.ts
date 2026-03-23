@@ -58,64 +58,68 @@ export class AssociationSlotsManagementComponent {
 
 
   applyFilters() {
-    const {
-      amenitiesName,
-      propertyNo,
-      residentName,
-      mobile,
-      bookingDate,
-      paymentStatus,
-      bookingStatus
-    } = this.filterForm.value;
+  const {
+    amenitiesName = '',
+    propertyNo = '',
+    residentName = '',
+    mobile = '',
+    bookingDate = '',
+    paymentStatus = '',
+    bookingStatus = ''
+  } = this.filterForm.value;
 
-    this.filteredProperties = this.BookingData2.filter((p: any) => {
+  this.filteredProperties = this.BookingData2.filter((p: any) => {
 
-      const person = p.persons?.[0] || {};
+    const person = p.persons?.[0] || {};
 
-      const formattedDate = p.start_time
-        ? new Date(p.start_time.$date).toISOString().split('T')[0]
-        : '';
+    const formattedDate = p.start_time
+      ? new Date(p.start_time.$date).toISOString().split('T')[0]
+      : '';
 
-      return (
+    return (
+      (!amenitiesName ||
+        p.resource_name?.toLowerCase().includes(amenitiesName.toLowerCase())) &&
 
-        // Amenity / Resource name
-        (!amenitiesName ||
-          p.resource_name?.toLowerCase().includes(amenitiesName.toLowerCase())) &&
+      (!propertyNo ||
+        p.property_no?.toLowerCase().includes(propertyNo.toLowerCase())) &&
 
-        // Property No
-        (!propertyNo ||
-          p.property_no?.toLowerCase().includes(propertyNo.toLowerCase())) &&
+      (!residentName ||
+        person.name?.toLowerCase().includes(residentName.toLowerCase())) &&
 
-        // Resident name
-        (!residentName ||
-          person.name?.toLowerCase().includes(residentName.toLowerCase())) &&
+      (!mobile ||
+        person.mobile?.toString().includes(mobile)) &&
 
-        // Mobile
-        (!mobile ||
-          person.mobile?.toString().includes(mobile)) &&
+      (!bookingDate ||
+        formattedDate === bookingDate) &&
 
-        // Booking date
-        (!bookingDate ||
-          formattedDate === bookingDate) &&
+      (!paymentStatus ||
+        p.payment_status?.toLowerCase() === paymentStatus.toLowerCase()) &&
 
-        // Payment status
-        (!paymentStatus ||
-          p.payment_status?.toLowerCase() === paymentStatus.toLowerCase()) &&
+      (!bookingStatus ||
+        p.booking_status?.toLowerCase() === bookingStatus.toLowerCase())
+    );
+  });
 
-        // Booking status
-        (!bookingStatus ||
-          p.booking_status?.toLowerCase() === bookingStatus.toLowerCase())
-      );
-    });
-  }
+  this.BookingData1.initialize(this.filteredProperties, 10);
+}
 
 
 
 
-  resetFilters() {
-    this.filterForm.reset();
-    this.filteredProperties = [...this.BookingData2];
-  }
+resetFilters() {
+  this.filterForm.reset({
+    propertyNo: '',
+    residentName: '',
+    mobile: '',
+    amenitiesName: '',
+    bookingDate: '',
+    paymentStatus: '',
+    bookingStatus: ''
+  });
+
+  this.filteredProperties = [...this.BookingData2];
+  this.BookingData1.initialize(this.filteredProperties, 10);
+}
 
 
 
@@ -127,9 +131,9 @@ export class AssociationSlotsManagementComponent {
 
           this.BookingData2 = res.data;
           console.log('resource', this.BookingData2);
-          this.filteredProperties = [...this.BookingData2];
           this.BookingData1 = new TableService();
           this.BookingData1.initialize(this.BookingData2, 10);
+          this.filteredProperties = [...this.BookingData2];
 
           this.pages = Array.from(
             { length: res.data?.totalPages || 1 },

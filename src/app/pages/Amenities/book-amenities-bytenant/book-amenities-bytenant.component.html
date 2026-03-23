@@ -1,20 +1,20 @@
 <section>
 
-     <div class="d-flex align-items-center gap-3">
-           <div class="d-flex align-items-center gap-2" (click)="goback()">
-             <div class="mb-2">
+    <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center gap-2" (click)="goback()">
+            <div class="mb-2">
                 <i class="fa-solid fa-arrow-left"></i>
             </div>
             <div class="mb-2">
 
                 <Button class="backbtn">Back</Button>
             </div>
-           </div>
-
-            <div>
-                <h3 class="" style="font-size: 22px;">Book Amenities</h3>
-            </div>
         </div>
+
+        <div>
+            <h3 class="" style="font-size: 22px;">Book Amenities</h3>
+        </div>
+    </div>
     <div>
         <form [formGroup]="bookingForm" (ngSubmit)="submitBooking()">
 
@@ -153,13 +153,31 @@
                                         style="color: red;">*</span></label>
                                 <input type="text" class="input-custom-style regular-font" placeholder="Name"
                                     formControlName="personName" />
+                                <div *ngIf="bookingForm.get('personName')?.touched && bookingForm.get('personName')?.invalid"
+                                    class="error-text">
+                                    Name is required
+                                </div>
                             </div>
 
                             <div>
-                                <label for="Mobile" class="medium-font">Person Mobile Number <span
-                                        style="color: red;">*</span></label>
+                                <label class="medium-font">
+                                    Person Mobile Number <span style="color: red;">*</span>
+                                </label>
+
                                 <input type="text" class="input-custom-style regular-font" placeholder="Mobile"
-                                    formControlName="personMobile" />
+                                    maxlength="10" formControlName="personMobile" />
+
+                                <div *ngIf="bookingForm.get('personMobile')?.touched && bookingForm.get('personMobile')?.invalid"
+                                    class="error-text">
+
+                                    <span *ngIf="bookingForm.get('personMobile')?.errors?.['required']">
+                                        Mobile number is required
+                                    </span>
+
+                                    <span *ngIf="bookingForm.get('personMobile')?.errors?.['pattern']">
+                                        Enter valid 10-digit mobile number starting from 6-9
+                                    </span>
+                                </div>
                             </div>
 
                             <div>
@@ -167,6 +185,10 @@
                                         style="color: red;">*</span></label>
                                 <input type="text" class="input-custom-style regular-font" placeholder="Age"
                                     formControlName="personAge" />
+                                <div *ngIf="bookingForm.get('personAge')?.touched && bookingForm.get('personAge')?.invalid"
+                                    class="error-text">
+                                    Age is required
+                                </div>
                             </div>
 
                         </div>

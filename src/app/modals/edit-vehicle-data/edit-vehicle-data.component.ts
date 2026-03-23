@@ -34,14 +34,14 @@ export class EditVehicleDataComponent implements OnInit {
   twoWheelerBrands = [
     { brand: 'Honda' }, { brand: 'Hero' }, { brand: 'Bajaj' },
     { brand: 'TVS' }, { brand: 'Royal Enfield' }, { brand: 'Suzuki' },
-    { brand: 'Yamaha' }, { brand: 'KTM' }, { brand: 'Other' },
+    { brand: 'Yamaha' }, { brand: 'KTM' }, { brand: 'other' },
   ];
 
   fourWheelerBrands = [
     { brand: 'Maruti Suzuki' }, { brand: 'Hyundai' }, { brand: 'Tata' },
     { brand: 'Mahindra' }, { brand: 'Honda' }, { brand: 'Toyota' },
     { brand: 'Kia' }, { brand: 'Renault' }, { brand: 'Volkswagen' },
-    { brand: 'Skoda' }, { brand: 'MG' }, { brand: 'Other' },
+    { brand: 'Skoda' }, { brand: 'MG' }, { brand: 'other' },
   ];
 
   constructor(

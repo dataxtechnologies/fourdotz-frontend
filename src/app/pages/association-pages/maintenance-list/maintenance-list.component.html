@@ -145,15 +145,15 @@
                                         <!-- ACTIONS -->
                                         <td id="tour-view-maintenance">
                                             <img src="assets/icons/paid-invoice1.svg" *ngIf="item.payment_status"
-                                                (click)="viewpaidInvoice(item.invoice_no)" />
+                                                (click)="viewpaidInvoice(item.invoice_no)" style="cursor: pointer;"/>
 
                                             <div class="d-flex gap-2" *ngIf="!item.payment_status">
                                                 <img src="assets/icons/paid-invoice1.svg"
-                                                    (click)="viewInvoice(item.invoice_no)" />
+                                                    (click)="viewInvoice(item.invoice_no)" style="cursor: pointer;"/>
 
                                                 <img src="assets/icons/whatsapp.svg"
                                                     *ngIf="getStatus(item) === 'Overdue'"
-                                                    (click)="SendRemainderforMaintenance(item._id)" />
+                                                    (click)="SendRemainderforMaintenance(item._id)" style="cursor: pointer;"/>
                                             </div>
                                         </td>
 

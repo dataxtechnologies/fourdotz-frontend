@@ -169,7 +169,7 @@ export class OwnerDashboardComponent {
   
             // Initialize TableService
             this.rentalinvoicelist1 = new TableService();
-            this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 12);
+            this.rentalinvoicelist1.initialize(this.rentalinvoicelist2, 4);
   
             // If backend provides pagination info
             this.pages = Array.from(

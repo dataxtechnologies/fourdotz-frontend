@@ -20,41 +20,59 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AddAssociationModalComponent implements OnInit {
   associationForm!: FormGroup;
-  createButton : boolean = true
-otpSent: boolean = false;
-otpVerified: boolean = false;
-isSendingOtp: boolean = false;
-otpTimer: number = 0;
-OtpToken : any
-countdownInterval: any;
+  createButton: boolean = true
+  otpSent: boolean = false;
+  otpVerified: boolean = false;
+  isSendingOtp: boolean = false;
+  otpTimer: number = 0;
+  OtpToken: any
+  countdownInterval: any;
   constructor(
     private fb: FormBuilder,
     private modal: ModalService,
     private apiService: ApiserviceService,
-    private AdminServices : AdmindataService,
-    private toastr : ToastrService
-  ) {}
+    private AdminServices: AdmindataService,
+    private toastr: ToastrService
+  ) { }
 
   ngOnInit(): void {
-    
-this.associationForm = this.fb.group({
-  name: ['', Validators.required],
-  email: [
-    '',
-    [
-      Validators.required,
-      Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)
-    ]
-  ],
-  phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-   otp: [''],
-  associationName: ['', Validators.required],
-  propertyType: this.fb.group({
-    villa: [false],
-    apartment: [false],
-    townhouse: [false],
-  }),
-});
+
+    this.associationForm = this.fb.group({
+      name: ['', Validators.required],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)
+        ]
+      ],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      otp: [''],
+      associationName: ['', Validators.required],
+      propertyType: this.fb.group({
+        villa: [false],
+        apartment: [false],
+        townhouse: [false],
+      }),
+    });
+
+    this.associationForm.get('phone')?.valueChanges.subscribe((value) => {
+      this.resetOtpFlow();
+    });
+  }
+
+  resetOtpFlow(): void {
+    this.otpSent = false;
+    this.otpVerified = false;
+    this.OtpToken = null;
+
+    this.associationForm.get('otp')?.reset();
+
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+    }
+
+    this.otpTimer = 0;
   }
 
   // Close modal
@@ -77,10 +95,10 @@ this.associationForm = this.fb.group({
   // Submit form
   createAssociation(): void {
 
-      if (!this.otpVerified) {
-    this.toastr.error('Please verify OTP first');
-    return;
-  }
+    if (!this.otpVerified) {
+      this.toastr.error('Please verify OTP first');
+      return;
+    }
 
 
     this.createButton = false
@@ -106,20 +124,20 @@ this.associationForm = this.fb.group({
     this.apiService.createAssociation<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
-           this.createButton = true
+          this.createButton = true
           this.AdminServices.triggerAdminAssociation(res)
           this.toastr.success(res.message, 'success')
           this.closeModal();
         } else {
-           this.createButton = true
+          this.createButton = true
           this.closeModal();
           this.toastr.success(res.message, 'success')
           // alert(res.message || 'please try again.');
         }
       },
       error: (err: any) => {
-         this.createButton = true
-         this.toastr.error(err.error.error.message, 'success')
+        this.createButton = true
+        this.toastr.error(err.error.error.message, 'success')
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');
       },
@@ -128,65 +146,83 @@ this.associationForm = this.fb.group({
 
 
 sendOtp(): void {
-  const phone = this.associationForm.get('phone')?.value;
+  const phoneControl = this.associationForm.get('phone');
+  const phone = phoneControl?.value;
 
-  if (!phone || this.associationForm.get('phone')?.invalid) return;
+  // ✅ Validate phone properly
+  if (!phone || phoneControl?.invalid) {
+    phoneControl?.markAsTouched();
+    this.toastr.error('Enter a valid 10-digit phone number');
+    return;
+  }
 
-  this.isSendingOtp = true;   // 👈 Start loader
+  // ✅ Prevent multiple clicks
+  if (this.isSendingOtp) return;
+
+  this.isSendingOtp = true;
 
   this.apiService.sendMobileOTPonOnboard({ mobile: phone }).subscribe({
     next: (res: any) => {
-      this.isSendingOtp = false;   // 👈 Stop loader
+      this.isSendingOtp = false;
 
-      if (res.success) {
+      if (res?.success) {
         this.OtpToken = res.data;
         this.otpSent = true;
         this.startOtpTimer();
-        this.toastr.success('OTP sent successfully');
+
+        this.toastr.success(res?.message || 'OTP sent successfully');
+      } else {
+        this.toastr.error(res?.message || 'Failed to send OTP');
       }
     },
-    error: () => {
-      this.isSendingOtp = false;   // 👈 Stop loader
-      this.toastr.error('Failed to send OTP');
+
+    error: (err: any) => {
+      this.isSendingOtp = false;
+
+      // ✅ Safe error extraction
+      const errorMessage =
+        err?.error?.error?.message 
+
+      this.toastr.error(errorMessage);
     }
   });
 }
 
-startOtpTimer(): void {
-  this.otpTimer = 20;
+  startOtpTimer(): void {
+    this.otpTimer = 20;
 
-  this.countdownInterval = setInterval(() => {
-    this.otpTimer--;
+    this.countdownInterval = setInterval(() => {
+      this.otpTimer--;
 
-    if (this.otpTimer <= 0) {
-      clearInterval(this.countdownInterval);
-    }
-  }, 1000);
-}
-
-verifyOtp(): void {
-  const phone = this.associationForm.get('phone')?.value;
-  const otp = this.associationForm.get('otp')?.value;
-
-  if (!otp || otp.length !== 5) return;
-
-  const payload = {
-    otp_token: this.OtpToken,
-    otp: otp,
+      if (this.otpTimer <= 0) {
+        clearInterval(this.countdownInterval);
+      }
+    }, 1000);
   }
 
-  this.apiService.verifyOtp(payload).subscribe({
-    next: (res: any) => {
-      if (res.success) {
-        this.otpVerified = true;
-        this.toastr.success('OTP verified successfully');
-      } else {
-        this.toastr.error('Invalid OTP');
-      }
-    },
-    error: (err: any) => {
-      this.toastr.error(err.error.error.message, 'Failed');
+  verifyOtp(): void {
+    const phone = this.associationForm.get('phone')?.value;
+    const otp = this.associationForm.get('otp')?.value;
+
+    if (!otp || otp.length !== 5) return;
+
+    const payload = {
+      otp_token: this.OtpToken,
+      otp: otp,
     }
-  });
-}
+
+    this.apiService.verifyOtp(payload).subscribe({
+      next: (res: any) => {
+        if (res.success) {
+          this.otpVerified = true;
+          this.toastr.success('OTP verified successfully');
+        } else {
+          this.toastr.error('Invalid OTP');
+        }
+      },
+      error: (err: any) => {
+        this.toastr.error(err.error.error.message, 'Failed');
+      }
+    });
+  }
 }

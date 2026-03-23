@@ -34,7 +34,7 @@ export class AddVehicleComponent implements OnInit {
     { brand: 'Suzuki' },
     { brand: 'Yamaha' },
     { brand: 'KTM' },
-    { brand: 'Other' },
+    { brand: 'other' },
   ];
 
   fourWheelerBrands = [
@@ -49,14 +49,14 @@ export class AddVehicleComponent implements OnInit {
     { brand: 'Volkswagen' },
     { brand: 'Skoda' },
     { brand: 'MG' },
-    { brand: 'Other' },
+    { brand: 'other' },
   ];
 
   otherBrands = [
     { brand: 'Ashok Leyland' },
     { brand: 'Tata' },
     { brand: 'Mahindra' },
-    { brand: 'Other' },
+    { brand: 'other' },
   ];
 
   constructor(
