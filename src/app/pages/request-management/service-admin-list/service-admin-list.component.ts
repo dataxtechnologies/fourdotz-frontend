@@ -67,8 +67,8 @@ export class ServiceAdminListComponent {
     });
   }
 
-    SendmailAgain(data: any){
-
+    SendmailAgain(data: any, item: any){
+        item.spinloading = true;
     const payload ={
       username : data
     }
@@ -76,12 +76,16 @@ export class ServiceAdminListComponent {
     this.Apiservice.SendmailAgain<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
+          this.Toast.success(res.message, 'Success');
+          item.spinloading = false;
           this.ListServiceAdmin();
         } else {
+          item.spinloading = false;
           this.Toast.error(res.message, 'Failed');
         }
       },
       error: (err: any) => {
+        item.spinloading = false;
         this.Toast.error(err.error.error.message, 'Failed');
       },
     });

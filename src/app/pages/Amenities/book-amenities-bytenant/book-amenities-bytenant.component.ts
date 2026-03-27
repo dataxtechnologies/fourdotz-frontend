@@ -396,12 +396,47 @@ console.log('this.hoaId', this.hoaId);
           this.router.navigateByUrl('/Owner/amenities/list-book-amenities');
         } else {
           this.toast.warning(res.message);
+          this.resetBookingForm(); // ← reset on API-level failure
         }
       },
       error: (err: any) => {
         this.savebtnloading = false;
-        this.toast.error(err.error?.message || 'Booking failed');
+        this.toast.error(err.error.error?.message || 'Booking failed');
+        this.resetBookingForm(); // ← reset on API-level failure
       }
     });
   }
+
+
+  resetBookingForm() {
+  // Reset form controls
+  this.bookingForm.reset({
+    resource: '',
+    name: '',
+    slot: '',
+    property: '',
+    personName: '',
+    personMobile: '',
+    personAge: '',
+  });
+
+  // Reset component state
+  this.selectedResource = null;
+  this.selectedSlotFull = null;
+  this.selectedProperty = null;
+  this.generatedSlotsFromApi = [];
+  this.generatedSlots = [];
+  this.slotAmount = 0;
+  this.showslot = false;
+  this.slotulesdetails = null;
+  this.timeslotsdetails = null;
+
+  // Reset visible resources back to initial count
+  this.visibleCount = 8;
+  this.visibleResources = this.resourcesDetails?.slice(0, this.visibleCount) || [];
+
+  // Mark all controls as untouched so validation errors disappear
+  this.bookingForm.markAsUntouched();
+  this.bookingForm.markAsPristine();
+}
 }

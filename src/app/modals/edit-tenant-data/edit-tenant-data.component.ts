@@ -63,8 +63,8 @@ days = Array.from({ length: 31 }, (_, i) => this.getOrdinal(i + 1));
 
   patchTenantData(data: any) {
     const tenant = data?.tenant_details ?? {};
-    const rentedAtDate = data?.tenant_details.onboarded_time?.$date
-      ? new Date(data.tenant_details.onboarded_time.$date).toISOString().split('T')[0]
+    const rentedAtDate = data?.tenant_rented_at?.$date
+      ? new Date(data.tenant_rented_at.$date).toISOString().split('T')[0]
       : '';
 
     this.tenantForm.patchValue({

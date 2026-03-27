@@ -207,7 +207,7 @@ background: linear-gradient(137deg,rgba(139, 64, 149, 1) 36%, rgba(234, 69, 49, 
 ========================== */
 @media (max-width: 584px) {
     .container {
-        max-width: 100%;
+        max-width: 80%;
         height: 80vh;
         /* KEEP SAME */
     }
@@ -305,5 +305,8 @@ background: linear-gradient(137deg,rgba(139, 64, 149, 1) 36%, rgba(234, 69, 49, 
   color: #888;
   font-style: italic;
 }
+
+
+
 
 

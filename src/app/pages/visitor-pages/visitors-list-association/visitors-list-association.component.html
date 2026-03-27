@@ -19,8 +19,8 @@
                         <div class="filters">
 
                             <div class="search-box">
-                                <label class="medium-font">Visitor (Name / Phone)</label>
-                                <input type="text" formControlName="visitorSearch" placeholder="Visitor name or phone"
+                                <label class="medium-font">Visitor code</label>
+                                <input type="text" formControlName="visitorSearch" placeholder="Visitor code"
                                     class="regular-font" />
                             </div>
 
@@ -114,10 +114,11 @@
                                             </div>
                                         </td>
 
-                                        <td>
-                                            <i class="fa-regular fa-eye" style="cursor:pointer;font-size:18px"
-                                                (click)="visitorView(item)">
-                                            </i>
+                                        <td (click)="visitorView(item)">
+                                            <div class="view-btn-div" style="width: 60% !important;">
+                                                <i class="bx bx-eye"></i>
+                                                <span class="view-btn" style="cursor: pointer;"> View</span>
+                                            </div>
                                         </td>
 
                                     </tr>

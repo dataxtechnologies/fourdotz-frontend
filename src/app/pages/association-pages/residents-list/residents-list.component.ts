@@ -81,8 +81,8 @@ export class ResidentsListComponent {
   // SEND MAIL
   // ===============================================
 
-  SendmailAgain(data: any, index: number) {
-    this.loadingIndexMap[index] = true;
+  SendmailAgain(data: any, index: any) {
+    index.spinloading = true;
 
     const payload = {
       username: data,
@@ -91,15 +91,18 @@ export class ResidentsListComponent {
     this.apiService.SendmailAgain<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
+          index.spinloading = false;
           this.Toast.success(res.message, 'Success');
           this.getpropertiesdata();
           this.loadingIndexMap[index] = false;
         } else {
+          index.spinloading = false;
           this.Toast.error(res.message, 'Failed');
           this.loadingIndexMap[index] = false;
         }
       },
       error: (err: any) => {
+        index.spinloading = false;
         this.Toast.error(err.error.error.message, 'Failed');
         this.loadingIndexMap[index] = false;
       },

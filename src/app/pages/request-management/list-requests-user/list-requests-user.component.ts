@@ -149,46 +149,31 @@ this.getOwnerProperties();
   // ListRequestUser
 
   ListRequestUser() {
-    this.apiService.ListRequestUser<any>().subscribe({
-      next: (res: any) => {
-        if (res?.success) {
-          this.requestlist2 = res.data || [];
+  this.tableLoading = true; // ✅ start loading
 
-          // Initialize TableService
-          this.requestlist1.initialize(this.requestlist2, 10);
+  this.apiService.ListRequestUser<any>().subscribe({
+    next: (res: any) => {
 
-          // If backend provides pagination info
-          this.pages = Array.from(
-            { length: res.data?.totalPages || 1 },
-            (_, i) => i + 1,
-          );
+      if (res?.success && Array.isArray(res.data) && res.data.length > 0) {
 
-          this.tableLoading = false;
-        
-        } else {
-          this.tableLoading = false;
-          this.requestlist2 = [];
+        this.requestlist2 = res.data;
 
-          // Initialize TableService
-          this.requestlist1.initialize(this.requestlist2, 10);
-          //console.warn(res.message || 'Failed to load properties.');
-        }
-      },
-      error: (err: any) => {
-        this.tableLoading = false;
+      } else {
+        // ❌ Handles "Data not found"
         this.requestlist2 = [];
-        // const menu = JSON.parse(sessionStorage.getItem('user_menu') || '{}');
+      }
 
-        // if (!menu.firstlistrequest) {
-        //   this.firstrequestcreateTour();
-        // }
+      this.requestlist1.initialize(this.requestlist2, 10);
+      this.tableLoading = false; // ✅ stop loading
+    },
 
-        // Initialize TableService
-        this.requestlist1.initialize(this.requestlist2, 10);
-        //console.error('Property list fetch failed:', err);
-      },
-    });
-  }
+    error: (err: any) => {
+      this.requestlist2 = [];
+      this.requestlist1.initialize(this.requestlist2, 10);
+      this.tableLoading = false; // ✅ stop loading
+    },
+  });
+}
 
   startTour() {
     const SHOULD_RUN_TOUR = true;

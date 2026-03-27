@@ -143,10 +143,11 @@ export class SpotVisitorsComponent {
       const propertyText = propertyNo?.toLowerCase() || '';
       const gateText = gate?.toLowerCase() || '';
 
-      const matchVisitor =
-        !visitorText ||
-        item.visitor_name?.toLowerCase().includes(visitorText) ||
-        String(item.visitor_mobile)?.includes(visitorText);
+        const matchVisitor =
+  !visitorText ||
+  item.visitor_no?.toLowerCase().includes(visitorText.toLowerCase()) || // full match
+  item.visitor_no?.slice(-4).includes(visitorText) || // 🔥 last 4 digit match
+  String(item.visitor_mobile)?.includes(visitorText);
 
       const matchResident =
         !residentText ||

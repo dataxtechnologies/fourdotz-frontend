@@ -1,0 +1,50 @@
+<section class="form-section ">
+    <div class="form-header">
+        <h3>Visitor Entry</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="exitForm" (ngSubmit)="submitExit()">
+
+            <!-- VISITOR UNIQUE ID -->
+            <div class="inp-cont">
+                <label class="medium-font">
+                    Visitor ID <span class="required">*</span>
+                </label>
+
+                <input type="text" class="input-custom-style regular-font" formControlName="visitor_no" readonly />
+            </div>
+
+            <!-- EXIT GATE -->
+            <div class="inp-cont">
+                <label class="medium-font">
+                    Entry Gate <span class="required">*</span>
+                </label>
+
+                <select class="input-custom-style regular-font" formControlName="exit_gate_id">
+                    <option value="" disabled>Select Entry Gate</option>
+
+                    <option *ngFor="let gate of gateList" [value]="gate._id">
+                        {{ gate.gate }}
+                    </option>
+                </select>
+
+                <small class="text-danger" *ngIf="isInvalid('exit_gate_id')">
+                    Exit gate is required.
+                </small>
+            </div>
+
+            <!-- SUBMIT BUTTONS -->
+            <div class="mb-3">
+                <button class="submit-btn" type="submit" *ngIf="submitbtn">
+                    Submit
+                </button>
+                <button class="processing-btn" type="button" disabled *ngIf="!submitbtn">
+                    Processing...
+                </button>
+            </div>
+
+        </form>
+    </div>
+</section>

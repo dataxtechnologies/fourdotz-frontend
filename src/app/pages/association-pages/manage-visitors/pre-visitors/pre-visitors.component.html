@@ -19,7 +19,7 @@
                         <div class="filters">
 
                             <div class="search-box">
-                                <input type="text" placeholder="Visitor name or phone"
+                                <input type="text" placeholder="Visitor Code"
                                     formControlName="visitor" class="regular-font" />
                             </div>
 
@@ -91,11 +91,12 @@
 
                                         <td>{{ item.visitor_status }}</td>
 
-                                        <td>
-                                            <i class="fa-regular fa-eye"
-                                                style="font-size:18px;cursor:pointer"
-                                                (click)="visitorView(item)">
-                                            </i>
+                                        <td   (click)="visitorView(item)">
+                                            <div class="view-btn-div"  style="width: 50% !important;">
+                                                <i class="bx bx-eye"></i>
+                                                <span class="view-btn" style="cursor: pointer;"> View</span>
+
+                                            </div>
                                         </td>
 
                                     </tr>

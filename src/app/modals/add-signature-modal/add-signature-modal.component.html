@@ -71,7 +71,7 @@
                 Cancel
             </button>
 
-            <button class="apply" (click)="sendotp()" [disabled]="isOtpPhase" *ngIf="!sendotpbtn">
+            <button class="apply" (click)="sendotp()" *ngIf="!sendotpbtn">
                 Send OTP
             </button>
             <button class="apply" style="cursor: not-allowed;" disabled *ngIf="sendotpbtn">
@@ -84,7 +84,15 @@
 
             <label class="form-label">Verify OTP</label>
 
-            <input type="text" class="inp-cus" placeholder="Enter OTP" [(ngModel)]="otp" />
+         <input 
+  type="text"
+  class="input-custom-style"
+  placeholder="Enter OTP"
+  [(ngModel)]="otp"
+  maxlength="5"
+  pattern="[0-9]*"
+  inputmode="numeric"
+/>
 
             <button class="btn-add" (click)="verifyOtp()" *ngIf="!showprocessingbtn">
                 Verify OTP

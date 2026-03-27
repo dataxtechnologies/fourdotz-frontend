@@ -36,3 +36,13 @@
   opacity: 0.6;
   background-color: #ccc;
 }
+
+.color-change{
+    color: var(--primary-color2) !important;
+}
+
+.disabled-div {
+  opacity: 0.5;
+  pointer-events: none; /* disables click */
+  cursor: not-allowed;
+}

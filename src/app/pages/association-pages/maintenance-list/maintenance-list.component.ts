@@ -244,7 +244,7 @@ export class MaintenanceListComponent {
         }
       },
       error: (err: any) => {
-        this.Toast.error(err.err.error.message);
+        this.Toast.error(err.error.error.message);
 
         // this.tableLoading = false;
         //console.error('Logout failed:', err);

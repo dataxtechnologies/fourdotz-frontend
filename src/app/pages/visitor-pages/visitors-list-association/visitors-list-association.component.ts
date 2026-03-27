@@ -97,15 +97,20 @@ export class VisitorsListAssociationComponent {
       toDate,
     } = this.filterForm.value;
 
-    // Visitor name / phone filter
-    if (visitorSearch) {
-      const v = visitorSearch.toLowerCase();
-      data = data.filter(
-        (item) =>
-          item.visitor_name?.toLowerCase().includes(v) ||
-          item.visitor_mobile?.toString().includes(v)
-      );
-    }
+// Visitor name / phone / visitor code filter
+if (visitorSearch) {
+  const v = visitorSearch.toLowerCase();
+  const numericSearch = visitorSearch.replace(/\D/g, ''); // only numbers
+
+  data = data.filter((item) => {
+    return (
+      item.visitor_name?.toLowerCase().includes(v) || // name
+      item.visitor_mobile?.toString().includes(v) || // mobile
+      item.visitor_no?.toLowerCase().includes(v) || // full visitor code
+      item.visitor_no?.slice(-4).includes(numericSearch) // 🔥 last 4 digit match
+    );
+  });
+}
 
     // Resident name / phone filter
     if (residentSearch) {

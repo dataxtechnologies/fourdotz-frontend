@@ -78,8 +78,18 @@
                                             <td>{{ item.area }} Sq.ft</td>
                                             <td>{{ item.facing }}</td>
                                             <td>{{ item.maintenance_paid_by || 'No Resident Found' }}</td>
-                                            <td >
-                                                <button class="table-btn"  id="tour-view-property" (click)="viewproperty(item._id)">View</button>
+                                            <td (click)="viewproperty(item._id)">
+                                               <div class="view-btn-div">
+                                                   <i class="bx bx-eye"></i>
+                                                   <span class="view-btn" style="cursor: pointer;"> View</span>
+                                               </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- NO DATA -->
+                                        <tr *ngIf="propertylist1.paginatedData.length === 0">
+                                            <td colspan="6" style="text-align:center;color:gray;">
+                                                No Data Found
                                             </td>
                                         </tr>
                                     </tbody>

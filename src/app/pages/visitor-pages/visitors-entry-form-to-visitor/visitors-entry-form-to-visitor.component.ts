@@ -26,6 +26,7 @@ export class VisitorsEntryFormToVisitorComponent implements OnInit {
   dropdownOpen = false;
   selectedProperty: string | null = null;
   searchTerm: string = '';
+  btnloading = false;
 
   propertyList: any[] = [];
   filteredList: any[] = [];
@@ -117,46 +118,61 @@ export class VisitorsEntryFormToVisitorComponent implements OnInit {
 
   // ------------------ SUBMIT ------------------------------
   submitVisitorForm() {
-    if (this.visitorForm.invalid) {
-      this.visitorForm.markAllAsTouched();
-      return;
-    }
+  this.btnloading = true;
 
-    const form = this.visitorForm.value;
-
-    const payload = {
-      visitor_name: form.full_name,
-      gate: form.gate_no,
-      visitor_mobile: form.whatsapp,
-      visitor_email: '', // optional, send empty if not needed
-      purpose_of_visit: form.reason,
-      property_id: form.property_id,
-      visitor_count: form.count,
-      exit_time: form.exit_time,
-      gender: form.gender,
-    };
-
-    console.log('Payload Sent:', payload);
-
-    this.apiService.CreateVisitorEntry<any>(payload).subscribe({
-      next: (res: any) => {
-        console.log('API Response:', res);
-
-        if (res?.success) {
-          this.Toast.success(res.message, 'Success');
-          this.visitorForm.reset();
-          this.Router.navigateByUrl('visitor-entry-form-submitted');
-          this.selectedProperty = null;
-        } else {
-         this.Toast.warning(res.message, 'Warning');
-        }
-      },
-      error: (err: any) => {
-        console.error('API Error:', err);
-        this.Toast.error(err.error.error.message, 'Failed');
-      },
-    });
+  if (this.visitorForm.invalid) {
+    this.visitorForm.markAllAsTouched();
+    this.btnloading = false;
+    return;
   }
+
+  const form = this.visitorForm.value;
+
+  // gate_id from form
+  const gateId = form.gate_no;
+
+  // find full gate object
+  const gateData = this.Gatelist2.find((g: any) => g._id === gateId);
+
+  const payload = {
+    visitor_name: form.full_name,
+    visitor_mobile: form.whatsapp,
+    visitor_email: '',
+
+    property_id: form.property_id,
+
+    gate: gateData?.gate,
+    gate_id: gateData?._id,
+
+    purpose_of_visit: form.reason,
+    visitor_count: form.count,
+    gender: form.gender,
+
+    exit_time: form.exit_time,
+  };
+
+  console.log('Payload Sent:', payload);
+
+  this.apiService.CreateVisitorEntry<any>(payload).subscribe({
+    next: (res: any) => {
+      this.btnloading = false;
+
+      if (res?.success) {
+        this.Toast.success(res.message, 'Success');
+        this.visitorForm.reset();
+        this.selectedProperty = null;
+        this.Router.navigateByUrl('visitor-entry-form-submitted');
+      } else {
+        this.Toast.warning(res.message, 'Warning');
+      }
+    },
+    error: (err: any) => {
+      this.btnloading = false;
+      console.error('API Error:', err);
+      this.Toast.error(err?.error?.error?.message || 'Failed', 'Failed');
+    },
+  });
+}
 
      getGatelistinQrformExternal(data : any) {
     this.apiService.getGatelistinQrformExternal<any>(data).subscribe({

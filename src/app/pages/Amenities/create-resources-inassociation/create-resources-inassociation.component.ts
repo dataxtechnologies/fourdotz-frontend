@@ -282,7 +282,7 @@ export class CreateResourcesInassociationComponent implements OnInit {
       },
       error: (err: any) => {
         this.savebtnloading = false
-          this.toast.success(err.err.error.message);
+          this.toast.success(err.error.error.message);
         //  this.Toast.error(err.err.error.message);
         // this.tableLoading = false;
         //console.error('Logout failed:', err);

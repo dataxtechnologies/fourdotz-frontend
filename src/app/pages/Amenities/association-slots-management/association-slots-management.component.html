@@ -132,11 +132,24 @@
                                     </td>
 
                                     <td>
-                                        <button class="table-btn" (click)="viewbookingdetails(booking.booking_id)">
+                                        <div class="view-btn-div" style="width: 100% !important;"
+                                            (click)="viewbookingdetails(booking.booking_id)">
+                                            <i class="bx bx-eye"></i>
+                                            <span class="view-btn" style="cursor: pointer;"> View</span>
+
+                                        </div>
+                                        <!-- <button class="table-btn" (click)="viewbookingdetails(booking.booking_id)">
                                             View
-                                        </button>
+                                        </button> -->
                                     </td>
 
+                                </tr>
+
+                                <!-- NO DATA -->
+                                <tr *ngIf="BookingData1.paginatedData.length === 0">
+                                    <td colspan="9" style="text-align:center;color:gray;">
+                                        No Data Found
+                                    </td>    
                                 </tr>
 
                             </tbody>
@@ -144,7 +157,7 @@
 
                         <!-- SKELETON -->
                         <ng-template #tableSkeleton>
-                            <tr *ngFor="let i of [1,2,3,4,5]" style="height:50px">
+                            <tr *ngFor="let i of [1,2,3,4,5, 6, 7]" style="height:50px">
                                 <td class="sticky-col lead-col">
                                     <span class="placeholder col-10"></span>
                                 </td>

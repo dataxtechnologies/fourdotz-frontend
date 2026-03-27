@@ -10,10 +10,10 @@
             <!-- PROPERTY DROPDOWN -->
             <div class="body-div">
                 <div class="inp-cont">
-                <label class="medium-font">Select Resident <span class="required">*</span></label>
+                <label class="medium-font">Select Tenant <span class="required">*</span></label>
                 <div class="custom-select">
                     <div class="select-selected regular-font" (click)="toggleDropdown()">
-                        {{ selectedowner || 'Select Property No.' }}
+                      {{ selectedTenant || 'Select Tenant' }}
                         <i class="fa-solid" [ngClass]="{
           'fa-chevron-down': !dropdownOpen,
           'fa-chevron-up': dropdownOpen

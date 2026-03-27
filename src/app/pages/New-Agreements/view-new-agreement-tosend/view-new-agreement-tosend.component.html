@@ -26,13 +26,15 @@
             <ng-container *ngFor="let block of template.blocks">
 
                 <!-- HEADING -->
-                <h1 *ngIf="block.type === 'heading'" class="doc-heading">
-                    {{ block.value }}
+              <h1 *ngIf="block.type === 'heading'" class="doc-heading" 
+    [innerHTML]="renderHeading(block.value)">
+                    <!-- {{ block.value }} -->
                 </h1>
 
                 <!-- PARAGRAPH -->
-                <p *ngIf="block.type === 'paragraph'" class="doc-para">
-                    {{ renderText(block.value) }}
+                <p *ngIf="block.type === 'paragraph'" class="doc-para" 
+   [innerHTML]="renderText(block.value)">
+                    <!-- {{ renderText(block.value) }} -->
                 </p>
 
                 <!-- SIGNATURE -->

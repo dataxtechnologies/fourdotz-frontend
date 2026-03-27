@@ -119,13 +119,13 @@ export class AssociationOnboardComponent implements OnInit {
     });
 
     this.accountForm = this.fb.group({
-      account_holder_name: ['', Validators.required],
+      account_holder_name: ['', Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)],
       account_number: [
         '',
         [Validators.required, Validators.pattern('^[0-9]{9,18}$')],
       ],
       account_type: ['', Validators.required],
-      bank_name: ['', Validators.required],
+      bank_name: ['', Validators.required,Validators.pattern(/^[a-zA-Z\s]+$/)],
       ifsc_code: [
         '',
         [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')],

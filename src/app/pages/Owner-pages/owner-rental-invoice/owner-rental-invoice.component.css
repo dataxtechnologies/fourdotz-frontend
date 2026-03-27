@@ -148,3 +148,8 @@ tbody td i {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+
+.color-change{
+    color: var(--primary-color2) !important;
+}

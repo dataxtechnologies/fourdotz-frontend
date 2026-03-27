@@ -817,13 +817,55 @@ tbody td i {
 }
 
 .table-btn{
-    background-color: #fad1ff;
-    padding: 3px 8px;
+    font-size: 16px;
     border-radius: 12px;
     color: var(--primary-color1);
+    font-weight: 500;
+}
+
+
+.mail-btn-div{
+    display: flex;
+    align-items: center;
+    gap: 5px;
     border: 1px solid var(--primary-color1);
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 7px;
     cursor: pointer;
 }
+
+.view-btn-div{
+ display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid var(--primary-color1);
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.mail-btn-div i{
+    font-size: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.view-btn{
+      font-size: 16px;
+    border-radius: 12px;
+    color: var(--primary-color1);
+    font-weight: 500;
+}
+
+.view-btn-div i{
+    font-size: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+
 
 
 
@@ -1049,4 +1091,40 @@ body.shepherd-active {
     flex-direction: column;
     gap: 20px;
     box-sizing: border-box;
+}
+
+
+.disabled-btn-div{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid #e2e2e2;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 7px;
+    cursor: not-allowed;
+    font-weight: 500;
+    color: #777; 
+    background-color: #e2e2e2;  
+    cursor: not-allowed; 
+}
+
+.disabled-btn{
+    font-size: 16px;
+    color: #777;
+}
+
+.disabled-btn-div i{
+    font-size: 18px;
+    color: #777;
+}
+
+.color-change{
+    color: var(--primary-color2) !important;
+}
+
+
+.dis-spin{
+    opacity: 0.5;
+    cursor: not-allowed !important;
 }

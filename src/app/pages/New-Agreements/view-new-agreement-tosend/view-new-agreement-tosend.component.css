@@ -161,3 +161,44 @@
         padding: 30mm;
     }
 }
+
+
+.doc-heading {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 32px;
+  letter-spacing: 0.5px;
+  /* FIX: prevent overflow */
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+
+/* Variable spans inside rendered content */
+.doc-heading span.variable,
+.doc-para span.variable {
+  background: #eef;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin: 0 2px;
+  white-space: nowrap;
+}
+
+
+/* Filled variable value */
+.resolved-variable {
+  font-weight: 600;
+  color: #1a1a1a;
+  border-bottom: 1px solid #7c3aed;
+  padding: 0 2px;
+}
+
+/* Empty variable placeholder dashes */
+.empty-variable {
+  color: #aaa;
+  letter-spacing: 2px;
+  border-bottom: 1px dashed #aaa;
+  padding: 0 2px;
+}

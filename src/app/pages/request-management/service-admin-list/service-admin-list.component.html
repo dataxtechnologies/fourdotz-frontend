@@ -71,10 +71,14 @@
                                             {{ item.onboarded_time.$date | date:'dd-MMM-yyyy' }}
                                         </td>
 
-                                        <td>
-                                            <span class="mail-btn" (click)="SendmailAgain(item.email)" id="tour-send-mail">
-                                                Send Mail
-                                            </span>
+                                        <td (click)="SendmailAgain(item.email, item)">
+                                           <div class="mail-btn-div" style="width: 50% !important;">
+                                              <i class="bx bx-envelope" *ngIf="!item.spinloading"></i>
+                                                <span class="table-btn" style="cursor: pointer;" *ngIf="!item.spinloading"> Send Mail</span>
+                                                <span class="dis-spin" style="cursor: not-allowed;" *ngIf="item.spinloading"><i class="fa-solid fa-spinner fa-spin"></i>  Sending...</span>
+
+                                           </div>
+                                      
                                         </td>
 
                                     </tr>

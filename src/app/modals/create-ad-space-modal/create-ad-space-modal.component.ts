@@ -41,11 +41,12 @@ export class CreateAdSpaceModalComponent {
 
   initializeForm() {
     this.adForm = this.fb.group({
-      title: ['', Validators.required],
-      advertisement_space_type: ['', Validators.required],
-      advertisement_display_area: ['', Validators.required],
-      description: ['', Validators.required],
-    });
+  title: ['', Validators.required],
+  advertisement_space_type: ['', Validators.required],
+  advertisement_display_area: ['', Validators.required],
+  description: ['', Validators.required],
+  additional_images: [null, Validators.required]
+});
   }
 
   get f() {
@@ -76,34 +77,42 @@ export class CreateAdSpaceModalComponent {
   // -------------------------
   // ADDITIONAL IMAGES
   // -------------------------
-  onImagesSelected(event: any) {
-    const files: FileList = event.target.files;
+onImagesSelected(event: any) {
+  const files: FileList = event.target.files;
 
-    Array.from(files).forEach(file => {
-      this.imageFiles.push(file);
+  Array.from(files).forEach(file => {
+    this.imageFiles.push(file);
 
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.previewImages.push(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    });
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.previewImages.push(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  if (this.imageFiles.length > 0) {
+    this.adForm.get('additional_images')?.setValue(true);
   }
+}
 
-  removeImage(index: number) {
-    this.imageFiles.splice(index, 1);
-    this.previewImages.splice(index, 1);
+removeImage(index: number) {
+  this.imageFiles.splice(index, 1);
+  this.previewImages.splice(index, 1);
+
+  if (this.imageFiles.length === 0) {
+    this.adForm.get('additional_images')?.setValue(null);
   }
+}
 
   // -------------------------
   // SUBMIT
   // -------------------------
   submitAdSpace() {
 
-    if (this.adForm.invalid || !this.mainImageFile) {
-      this.toast.warning('Please fill all required fields and upload main image.');
-      return;
-    }
+    if (this.adForm.invalid || !this.mainImageFile || this.imageFiles.length === 0) {
+  this.toast.warning('Please fill all required fields and upload all images.');
+  return;
+}
 
     this.showprocessingbtn = true;
 

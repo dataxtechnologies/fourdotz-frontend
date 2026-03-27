@@ -107,23 +107,16 @@
                                         <td>{{ item.visitor_status }}</td>
 
                                         <td>
-                                            <div class="d-flex gap-2 align-items-center">
-                                                <div>
-                                                    <button class="table-btn"
-                                                        (click)="AcceptVisitorInvite(item.visitor_no)" *ngIf="item.approval_status == false; else Accepted">
-                                                        Accept invite
-                                                    </button>
-
-                                                    <ng-template #Accepted>
-                                                         <button class="table-btn" disabled >Accepted</button>
-                                                    </ng-template>
-                                                    
+                                         
+                                                
+                                                <div class="view-btn-div" style="width: 100% !important;"
+                                                    (click)="visitorView(item)">
+                                                    <i class="bx bx-eye"></i>
+                                                    <span class="view-btn" style="cursor: pointer;"> View</span>
+                                                    <!-- <i class="fa-regular fa-eye"
+                                                        style="font-size:18px; cursor: pointer;"></i> -->
                                                 </div>
-                                                <div (click)="visitorView(item)">
-                                                    <i class="fa-regular fa-eye"
-                                                        style="font-size:18px; cursor: pointer;"></i>
-                                                </div>
-                                            </div>
+                                           
                                         </td>
 
                                     </tr>

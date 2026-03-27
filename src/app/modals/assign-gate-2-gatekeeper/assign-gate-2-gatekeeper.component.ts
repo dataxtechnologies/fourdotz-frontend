@@ -38,6 +38,9 @@ export class AssignGate2GatekeeperComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('gateKeeperdata', this.gateKeeperdata);
+    
+
     this.assignForm = this.fb.group({
       gateId: ['', Validators.required],
       confirmText: ['', [Validators.required, Validators.pattern(/^CONFIRM$/)]],
@@ -90,7 +93,7 @@ export class AssignGate2GatekeeperComponent implements OnInit {
 
       error: (err: any) => {
         this.showprocessingbtn = false;
-        this.Toast.error(err?.error?.message || 'Assignment failed', 'Error');
+        this.Toast.error(err?.error.error?.message || 'Assignment failed', 'Error');
       }
     });
   }

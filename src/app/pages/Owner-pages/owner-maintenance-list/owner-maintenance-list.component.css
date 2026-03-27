@@ -9,3 +9,7 @@
 .maintenance-desc{
     max-width: 900px;
 }
+
+.color-change{
+    color: var(--primary-color2) !important;
+}

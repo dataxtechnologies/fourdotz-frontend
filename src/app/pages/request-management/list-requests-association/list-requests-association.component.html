@@ -122,9 +122,15 @@
 
                     <!-- ACTION -->
                     <td>
-                      <i class="fa-regular fa-eye view-icon" style="cursor: pointer;"
+                      <div class="view-btn-div" style="width: 100% !important;"
+                        (click)="viewrequestpage(req._id)">
+                        <i class="bx bx-eye"></i>
+                        <span class="view-btn" style="cursor: pointer;"> View</span>
+
+                      </div>
+                      <!-- <i class="fa-regular fa-eye view-icon" style="cursor: pointer;"
                          (click)="viewrequestpage(req._id)" id="tour-view-request-details">
-                      </i>
+                      </i> -->
                     </td>
 
                   </tr>

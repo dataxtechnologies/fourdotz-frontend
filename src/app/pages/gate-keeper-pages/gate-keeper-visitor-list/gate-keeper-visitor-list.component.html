@@ -22,7 +22,7 @@
                         <div class="filters">
 
                             <div class="search-box">
-                                <input type="text" placeholder="Visitor name / phone" formControlName="visitorSearch"
+                                <input type="text" placeholder="Visitor Code" formControlName="visitorSearch"
                                     class="regular-font" />
                             </div>
 
@@ -81,6 +81,7 @@
                                         <th>Status</th>
                                         <th>Action</th>
                                         <th>View</th>
+                                        <th>Resend</th>
                                     </tr>
                                 </thead>
 
@@ -112,21 +113,60 @@
 
                                         <td>{{ item.purpose_of_visit }}</td>
 
-                                        <td>{{ item.visitor_status }}</td>
+                                        <td> {{ formatStatus(item.visitor_status) }}</td>
 
                                         <td>
-                                            <button class="action-btn" [disabled]="item.visitor_status === 'exited'"
-                                                (click)="item.visitor_status !== 'exited' && VisitorExit(item.visitor_no)">
-                                                {{ item.visitor_status === 'exited' ? 'Exited' : 'Exit' }}
-                                            </button>
+
+                                            <!-- ✅ Mark Entry -->
+                                            <div class="view-btn-div" style="width: 100% !important;"
+                                                *ngIf="isMarkEntryAllowed(item)"
+                                                (click)="visitorEntryModal(item.visitor_no)">
+                                                <i class="bx bx-arrow-in-right-circle-half"></i>
+                                                <span class="table-btn">Mark Entry</span>
+                                            </div>
+
+                                            <!-- ⛔ Disabled Entry -->
+                                            <div class="disabled-btn-div"
+                                                *ngIf="!isMarkEntryAllowed(item) && item.visitor_status !== 'entered' && item.visitor_status !== 'exited'">
+                                                <i class="bx bx-block"></i>
+                                                <span class="disabled-btn">Mark Entry</span>
+                                            </div>
+
+                                            <!-- ✅ Mark Exit -->
+                                            <div class="view-btn-div" style="width: 100% !important;"
+                                                *ngIf="isMarkExitAllowed(item)" (click)="VisitorExit(item.visitor_no)">
+                                                <i class="bx bx-arrow-out-left-stroke-circle-half color-change"></i>
+                                                <span class="table-btn color-change">Mark Exit</span>
+                                            </div>
+
+                                            <!-- ✅ Exited -->
+                                            <div class="disabled-btn-div" *ngIf="item.visitor_status === 'exited'">
+                                                <i class="bx bx-check-circle"></i>
+                                                <span class="disabled-btn">Exited</span>
+                                            </div>
+
                                         </td>
 
                                         <td>
-                                            <div class="d-flex gap-2 align-items-center">
-                                               
-                                                <div (click)="visitorView(item)">
-                                                    <i class="fa-regular fa-eye" style="font-size:18px"></i>
-                                                </div>
+
+                                            <div (click)="visitorView(item)" class="view-btn-div"
+                                                style="width: 80% !important;">
+                                                <i class="bx bx-eye"></i>
+                                                <span class="table-btn" style="cursor: pointer;"> View</span>
+                                            </div>
+                                            <!-- </div> -->
+                                        </td>
+
+                                        <td>
+                                            <div (click)="item.visitor_status !== 'exited' && ResendVisitorRequest(item.visitor_no, item)"
+                                                class="view-btn-div" style="width: 100% !important;"
+                                                  [ngClass]="{ 'disabled-div': !isResendAllowed(item) || item.isLoading }">
+                                                <i class="bx bx-send" *ngIf="!item.isLoading "></i>
+                                                <span class="table-btn" style="cursor: pointer;"
+                                                    *ngIf="!item.isLoading ">Resend Req</span>
+                                                <span class="dis-spin" style="cursor: pointer;"
+                                                    *ngIf="item.isLoading "><i
+                                                        class="fa-solid fa-spinner fa-spin"></i>Processing</span>
                                             </div>
                                         </td>
 
@@ -148,6 +188,7 @@
                                     <td><span class="placeholder col-6"></span></td>
                                     <td><span class="placeholder col-7"></span></td>
                                     <td><span class="placeholder col-5"></span></td>
+                                    <td><span class="placeholder col-3"></span></td>
                                     <td><span class="placeholder col-3"></span></td>
                                     <td><span class="placeholder col-3"></span></td>
                                 </tr>

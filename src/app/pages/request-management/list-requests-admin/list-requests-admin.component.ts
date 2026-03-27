@@ -104,10 +104,17 @@ export class ListRequestsAdminComponent implements OnInit {
     this.RequestList1.initialize(filtered, 10);
   }
 
-  resetFilters() {
-    this.filterForm.reset();
-    this.RequestList1.initialize(this.RequestList2, 10);
-  }
+resetFilters() {
+  this.filterForm.setValue({
+    search: '',
+    workStatus: '',
+    residentType: '',
+    fromDate: '',
+    toDate: ''
+  });
+
+  this.RequestList1.initialize(this.RequestList2, 10);
+}
 
   OpenViewRequest(item: any) {
     this.modal.open(ViewRequestAdminComponent, {

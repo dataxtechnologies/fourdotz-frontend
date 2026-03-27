@@ -98,9 +98,15 @@
                                         </td>
 
                                         <td>
-                                            <i class="fa-regular fa-eye view-icon" style="cursor:pointer"
-                                                (click)="viewrequestpage(req._id)">
-                                            </i>
+
+                                            <div class="view-btn-div" style="width: 50% !important;"  (click)="viewrequestpage(req._id)">
+                                                <i class="bx bx-eye"></i>
+                                                <span class="view-btn" style="cursor: pointer;"> View</span>
+
+                                            </div>
+                                                <!-- <i class="fa-regular fa-eye view-icon" style="cursor:pointer"
+                                                    (click)="viewrequestpage(req._id)">
+                                                </i> -->
                                         </td>
 
                                     </tr>

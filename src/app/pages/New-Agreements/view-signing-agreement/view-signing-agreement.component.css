@@ -213,3 +213,31 @@
 .sig-satisfy {
   font-family: 'Satisfy', cursive;
 }
+
+
+/* Resolved variable value inline */
+.resolved-variable {
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+/* Pending signature label */
+.pending-label {
+  color: #999;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* Signature image */
+.signature-img {
+  max-height: 44px;
+  max-width: 180px;
+  object-fit: contain;
+}
+
+/* Heading overflow fix */
+.doc-heading {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}

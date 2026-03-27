@@ -91,6 +91,8 @@ import { SpotVisitorListComponent } from './pages/Owner-pages/spot-visitor-list/
 import { QrVisitorListComponent } from './pages/Owner-pages/qr-visitor-list/qr-visitor-list.component';
 import { ViewRequestAssociationAdminComponent } from './pages/request-management/view-request-association-admin/view-request-association-admin.component';
 import { ViewRequestUsersComponent } from './pages/request-management/view-request-users/view-request-users.component';
+import { SmartEntryComponent } from './pages/gate-keeper-pages/smart-entry/smart-entry.component';
+import { NoInternetPageComponent } from './pages/no-internet-page/no-internet-page.component';
 
 export const routes: Routes = [
   {
@@ -374,6 +376,10 @@ export const routes: Routes = [
         path: 'QR/view-qr',
         component: ViewQrCodeComponent,
       },
+      {
+        path: 'smart-entry/list',
+        component: SmartEntryComponent,
+      },
     ],
   },
 
@@ -437,5 +443,11 @@ export const routes: Routes = [
         component: TableComponent,
       },
     ],
+  },
+
+
+  {
+    path: 'no-network',
+    component: NoInternetPageComponent,
   },
 ];

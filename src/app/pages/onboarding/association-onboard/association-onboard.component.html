@@ -287,11 +287,18 @@
                     <input type="text" formControlName="account_holder_name" class="inp-cus regular-font"
                         placeholder="Enter Account Holder Name" />
                     <div *ngIf="
-          accountForm.get('account_holder_name')?.touched &&
-          accountForm.get('account_holder_name')?.invalid
-        " class="error">
-                        Account Holder Name is required.
-                    </div>
+  accountForm.get('account_holder_name')?.touched &&
+  accountForm.get('account_holder_name')?.errors?.['required']
+" class="error">
+  Account Holder Name is required.
+</div>
+
+<div *ngIf="
+  accountForm.get('account_holder_name')?.touched &&
+  accountForm.get('account_holder_name')?.errors?.['pattern']
+" class="error">
+  Only letters are allowed.
+</div>
                 </div>
 
                 <!-- Account Number -->
@@ -313,13 +320,27 @@
                     <label class="medium-font">Bank Name <span class="required">*</span></label>
                     <input type="text" formControlName="bank_name" class="inp-cus regular-font"
                         placeholder="Enter Bank Name" />
-                    <div *ngIf="accountForm.get('bank_name')?.touched" class="error">
+                    <!-- <div *ngIf="accountForm.get('bank_name')?.touched" class="error">
                         <div *ngIf="accountForm.get('bank_name')?.errors?.['required']">
                             Bank Name is required.
-                        </div>
+                        </div> -->
+
+                        <div *ngIf="
+  accountForm.get('bank_name')?.touched &&
+  accountForm.get('bank_name')?.errors?.['required']
+" class="error">
+   Bank Name is required.
+</div>
+
+<div *ngIf="
+  accountForm.get('bank_name')?.touched &&
+  accountForm.get('bank_name')?.errors?.['pattern']
+" class="error">
+  Only letters are allowed.
+</div>
                         
                     </div>
-                </div>
+                <!-- </div> -->
 
                 <!-- Account Type -->
                 <div class="form-group">

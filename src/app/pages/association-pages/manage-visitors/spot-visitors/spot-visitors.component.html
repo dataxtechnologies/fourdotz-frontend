@@ -13,61 +13,40 @@
             <div class="item">
 
                 <div class="new-table-wrapper">
-<!-- 🔽 FILTERS (NO DESIGN CHANGE) -->
-<form [formGroup]="filterForm">
-  <div class="filters">
+                    <!-- 🔽 FILTERS (NO DESIGN CHANGE) -->
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
 
-    <!-- Visitor -->
-    <div class="search-box">
-      <input
-        type="text"
-        placeholder="Visitor name or phone"
-        formControlName="visitor"
-        class="regular-font"
-      />
-    </div>
+                            <!-- Visitor -->
+                            <div class="search-box">
+                                <input type="text" placeholder="Visitor code" formControlName="visitor"
+                                    class="regular-font" />
+                            </div>
 
-    <!-- Resident -->
-    <div class="search-box">
-      <input
-        type="text"
-        placeholder="Resident name or phone"
-        formControlName="resident"
-        class="regular-font"
-      />
-    </div>
+                            <!-- Resident -->
+                            <div class="search-box">
+                                <input type="text" placeholder="Resident name or phone" formControlName="resident"
+                                    class="regular-font" />
+                            </div>
 
-    <!-- Property -->
-    <div class="search-box">
-      <input
-        type="text"
-        placeholder="Property No."
-        formControlName="propertyNo"
-        class="regular-font"
-      />
-    </div>
+                            <!-- Property -->
+                            <div class="search-box">
+                                <input type="text" placeholder="Property No." formControlName="propertyNo"
+                                    class="regular-font" />
+                            </div>
 
-    <!-- Gate -->
-    <div class="search-box">
-      <input
-        type="text"
-        placeholder="Gate No."
-        formControlName="gate"
-        class="regular-font"
-      />
-    </div>
+                            <!-- Gate -->
+                            <div class="search-box">
+                                <input type="text" placeholder="Gate No." formControlName="gate" class="regular-font" />
+                            </div>
 
-    <!-- Reset -->
-    <button
-      type="button"
-      class="filter-reset-btn"
-      (click)="resetFilters()"
-    >
-      Reset
-    </button>
+                            <!-- Reset -->
+                            <button type="button" class="filter-reset-btn" (click)="resetFilters()">
+                                Reset
+                            </button>
 
-  </div>
-</form>
+                        </div>
+                    </form>
                     <!-- SCROLL WRAPPER -->
                     <div class="table-scroll-wrapper">
                         <div class="table-scroll">
@@ -119,10 +98,12 @@
                                             {{ item.visitor_status }}
                                         </td>
 
-                                        <td>
-                                            <i class="fa-regular fa-eye" style="cursor:pointer;font-size:18px"
-                                                (click)="visitorView(item)">
-                                            </i>
+                                        <td (click)="visitorView(item)">
+                                            <div class="view-btn-div" style="width: 50% !important;">
+                                                <i class="bx bx-eye"></i>
+                                                <span class="view-btn" style="cursor: pointer;"> View</span>
+
+                                            </div>
                                         </td>
 
                                     </tr>

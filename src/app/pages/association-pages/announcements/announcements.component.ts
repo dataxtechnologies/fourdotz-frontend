@@ -189,7 +189,7 @@ export class Announcementcomponent implements OnInit {
       },
       error: (err: any) => {
         this.loadingPosts = false;
-        this.Toast.error(err.err.error.message, 'Error');
+        this.Toast.error(err.error.error.message, 'Error');
       },
     });
   }
@@ -213,7 +213,7 @@ export class Announcementcomponent implements OnInit {
       },
       error: (err: any) => {
         this.loadingPosts = false;
-        this.Toast.error(err.err.error.message, 'Error');
+        this.Toast.error(err.error.error.message, 'Error');
       },
     });
   }

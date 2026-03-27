@@ -79,10 +79,12 @@
                                         <td>{{ property.tenant_rented_at.$date | date:'dd-MMM-yyyy' }}</td>
                                         <td>{{ property.maintenance_paid_by }}</td>
 
-                                        <td>
-                                            <span class="table-btn" (click)="SendmailAgain(property.tenant_email)">
-                                                Send Mail
-                                            </span>
+                                        <td >
+                                            <div class="mail-btn-div" (click)="SendmailAgain(property.tenant_email, property)">
+                                                <i class="bx bx-envelope" *ngIf="!property.spinloading"></i>
+                                                <span class="table-btn" style="cursor: pointer;" *ngIf="!property.spinloading"> Send Mail</span>
+                                                <span class="dis-spin" style="cursor: not-allowed;" *ngIf="property.spinloading"><i class="fa-solid fa-spinner fa-spin"></i>  Sending...</span>
+                                            </div>
                                         </td>
 
                                     </tr>

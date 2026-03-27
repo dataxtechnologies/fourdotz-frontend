@@ -27,6 +27,7 @@ export class SendAgreementToTenantComponent {
   filteredList: any[] = [];
   selectedProperty: any;
   selectedowner: any;
+  selectedTenant: any;
 
   dropdownOpen = false;
   searchTerm = '';
@@ -78,7 +79,7 @@ loadProperties() {
 
   selectProperty(property: any) {
     this.selectedProperty = property;
-    this.selectedowner = property.owner_name;
+    this.selectedTenant = property.tenant_name;
     this.form.get('property_id')?.setValue(property._id);
     this.dropdownOpen = false;
   }
@@ -97,9 +98,9 @@ onSearchChange(event: Event) {
 
   this.filteredList = this.properties.filter((p: any) =>
     (p.property_no && p.property_no.toLowerCase().includes(value)) ||
-    (p.owner_name && p.owner_name.toLowerCase().includes(value)) ||
-    (p.owner_email && p.owner_email.toLowerCase().includes(value)) ||
-    (p.owner_mobile && p.owner_mobile.includes(value))
+    (p.tenant_name && p.tenant_name.toLowerCase().includes(value)) ||
+    (p.tenant_email && p.tenant_email.toLowerCase().includes(value)) ||
+    (p.tenant_mobile && p.tenant_mobile.includes(value))
   );
 }
 

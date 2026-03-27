@@ -211,7 +211,7 @@ export class SetSlotRulesForResourcesInassociationComponent implements OnInit {
       },
       error: (err: any) => {
         this.savebtnloading = false
-         this.toast.error(err.err.error.message);
+         this.toast.error(err.error.error.message);
         // this.tableLoading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');

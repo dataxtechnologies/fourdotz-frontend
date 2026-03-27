@@ -50,7 +50,7 @@
                     <label class="medium-font">
                         Visitor Name <span class="required">*</span>
                     </label>
-                    <input type="text" formControlName="visitor_name" class="inp-cus regular-font"
+                    <input type="text" formControlName="visitor_name" class="input-custom-style regular-font"
                         placeholder="Enter Visitor Name" />
                     <div *ngIf="visitorForm.get('visitor_name')?.touched &&
                       visitorForm.get('visitor_name')?.invalid" class="error-text">
@@ -61,7 +61,7 @@
                 <!-- Visitor Email -->
                 <div class="inp-cont">
                     <label class="medium-font">Email ID</label>
-                    <input type="email" formControlName="visitor_email" class="inp-cus regular-font"
+                    <input type="email" formControlName="visitor_email" class="input-custom-style regular-font"
                         placeholder="Enter Email" />
                 </div>
 
@@ -70,7 +70,7 @@
                     <label class="medium-font">
                         Phone Number <span class="required">*</span>
                     </label>
-                    <input type="tel" formControlName="visitor_mobile" class="inp-cus regular-font"
+                    <input type="tel" formControlName="visitor_mobile" class="input-custom-style regular-font"
                         placeholder="Enter Phone Number" maxlength="10" />
                     <div *ngIf="visitorForm.get('visitor_mobile')?.touched &&
                       visitorForm.get('visitor_mobile')?.errors?.['required']" class="error-text">
@@ -87,7 +87,7 @@
                     <label class="medium-font">
                         Gate <span class="required">*</span>
                     </label>
-                    <select class="inp-cus regular-font" formControlName="gate">
+                    <select class="input-custom-style regular-font" formControlName="gate">
                         <option value="" disabled selected>Select Gate</option>
                         <option *ngFor="let g of Gatelist2" [value]="g._id">
                             {{ g.gate }}
@@ -104,7 +104,7 @@
                     <label class="medium-font">
                         Purpose of Visit <span class="required">*</span>
                     </label>
-                    <input type="text" formControlName="purpose_of_visit" class="inp-cus regular-font"
+                    <input type="text" formControlName="purpose_of_visit" class="input-custom-style regular-font"
                         placeholder="Purpose of Visit" />
                     <div *ngIf="visitorForm.get('purpose_of_visit')?.touched &&
                       visitorForm.get('purpose_of_visit')?.invalid" class="error-text">
@@ -117,7 +117,7 @@
                     <label class="medium-font">
                         Visitor Count <span class="required">*</span>
                     </label>
-                    <input type="number" min="1" formControlName="visitor_count" class="inp-cus regular-font"
+                    <input type="number" min="1" formControlName="visitor_count" class="input-custom-style regular-font"
                         placeholder="Enter Count" />
                     <div *ngIf="visitorForm.get('visitor_count')?.touched &&
                       visitorForm.get('visitor_count')?.invalid" class="error-text">
@@ -130,7 +130,7 @@
                     <label class="medium-font">
                         Gender <span class="required">*</span>
                     </label>
-                    <select class="inp-cus regular-font" formControlName="gender">
+                    <select class="input-custom-style regular-font" formControlName="gender">
                         <option value="" disabled>Select Gender</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -149,7 +149,7 @@
                     </label>
 
                     <div class="date-input-wrapper">
-                        <input type="text" class="inp-cus placeholder-font" formControlName="ownedAt"
+                        <input type="text" class="input-custom-style placeholder-font" formControlName="ownedAt"
                             placeholder="Select date" readonly (click)="openDatePicker()" />
                         <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
 

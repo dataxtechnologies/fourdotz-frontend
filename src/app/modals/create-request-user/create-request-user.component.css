@@ -48,6 +48,8 @@
     overflow-y: auto;
     padding-right: 5px;
     box-sizing: border-box;
+    overflow-y: auto;
+    height: 80vh;
 }
 
 .form-grid {

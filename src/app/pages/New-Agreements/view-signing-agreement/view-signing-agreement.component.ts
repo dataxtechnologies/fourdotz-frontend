@@ -67,28 +67,52 @@ export class ViewSigningAgreementComponent implements OnInit {
     });
   }
 
-  getSignatureSigners(): any[] {
-    if (!this.template?.blocks) return [];
+getSignatureSigners(): any[] {
+  if (!this.template?.blocks) return [];
+  const block = this.template.blocks.find((b: any) => b.type === 'signature');
+  return block?.signers || [];
+}
 
-    const block = this.template.blocks.find((b: any) => b.type === 'signature');
 
-    return block?.signers || [];
-  }
+getSignerCount(): number {
+  return this.getSignatureSigners().length;
+}
 
-  isFirstSignerSigned(): boolean {
-    const signers = this.getSignatureSigners();
-    return signers.length > 0 && signers[0].signed === true;
-  }
 
-  isSecondSignerSigned(): boolean {
-    const signers = this.getSignatureSigners();
-    return signers.length > 1 && signers[1].signed === true;
-  }
+isFirstSignerSigned(): boolean {
+  const signers = this.getSignatureSigners();
+  return signers.length > 0 && signers[0].signed === true;
+}
 
-  areBothSignersSigned(): boolean {
-    const signers = this.getSignatureSigners();
-    return signers.length > 1 && signers.every((s) => s.signed === true);
-  }
+isSecondSignerSigned(): boolean {
+  const signers = this.getSignatureSigners();
+  return signers.length > 1 && signers[1].signed === true;
+}
+
+areBothSignersSigned(): boolean {
+  const signers = this.getSignatureSigners();
+  if (signers.length === 0) return false;
+  return signers.every((s) => s.signed === true);
+}
+
+
+shouldShowSendButton(): boolean {
+  const signers = this.getSignatureSigners();
+  // Only show Send if there are 2 signers AND first signed but second not yet
+  return (
+    signers.length === 2 &&
+    signers[0].signed === true &&
+    signers[1].signed === false
+  );
+}
+
+
+
+shouldShowSignButton(): boolean {
+  return !this.isFirstSignerSigned();
+}
+
+
   hasCurrentUserSigned(): boolean {
     if (!this.currentUserId) return false;
 
@@ -130,19 +154,14 @@ export class ViewSigningAgreementComponent implements OnInit {
   /* ===== RENDER TEXT WITH VALUES ===== */
 renderText(html: string): string {
   if (!html) return '';
-
-  // 1️⃣ Replace variable spans
   let output = html.replace(
     /<span class="variable"[^>]*>{{(.*?)}}<\/span>/g,
     (_match, key) => {
       const k = key.trim();
-      return this.variables[k] || '__________';
+      return `<span class="resolved-variable">${this.variables[k] || '__________'}</span>`;
     }
   );
-
-  // 2️⃣ Convert &nbsp; to normal spaces
-  output = output.replace(/&nbsp;/g, ' ');
-
+  output = output.replace(/&nbsp;/g, '\u00A0');
   return output;
 }
 
@@ -189,7 +208,8 @@ renderText(html: string): string {
 
   sendAgreement() {
     const usertype = localStorage.getItem('user_type');
-
+    console.log('usertype'  , usertype)
+    // SendAgreementToTenantComponent
     if (usertype == 'association') {
       this.sendAgreementUser();
     } else if (usertype == 'owner') {

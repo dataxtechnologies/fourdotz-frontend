@@ -119,22 +119,26 @@
                                         <td>{{ item.resident_type || '--' }}</td>
 
                                         <td (click)="viewresident(item._id)">
-                                            <button class="table-btn" id="tour-view-resident">View</button>
+                                            <div class="view-btn-div">
+                                                <i class="bx bx-eye"></i>
+                                                <span class="view-btn" style="cursor: pointer;"> View</span>
+
+                                            </div>
                                         </td>
 
                                         <td (click)="SendmailAgain(
                         item.resident_type === 'tenant'
                           ? item.tenant_email
                           : item.owner_email,
-                        i
+                        item
                       )">
 
-                                            <span class="table-btn" style="cursor: pointer;"
-                                                *ngIf="!loadingIndexMap[i]">
-                                                Send Mail
-                                            </span>
+                                            <div class="mail-btn-div">
+                                                <i class="bx bx-envelope" *ngIf="!item.spinloading"></i>
+                                                <span class="table-btn" style="cursor: pointer;" *ngIf="!item.spinloading"> Send Mail</span>
+                                                <span class="dis-spin" style="cursor: not-allowed;" *ngIf="item.spinloading"><i class="fa-solid fa-spinner fa-spin"></i>  Sending...</span>
 
-                                            <span *ngIf="loadingIndexMap[i]" class="loader"></span>
+                                            </div>
 
                                         </td>
 

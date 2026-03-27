@@ -167,6 +167,7 @@ export class AddSignatureModalComponent {
     this.showprocessingbtn = true
     if (!this.otp || !this.otpToken) {
       this.Toast.warning('OTP is required');
+       this.showprocessingbtn = false
       return;
     }
 

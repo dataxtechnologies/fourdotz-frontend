@@ -51,3 +51,9 @@
   transform: translateY(-2px);
   color: #e63939;
 }
+
+.disabled-div {
+  opacity: 0.5;
+  pointer-events: none; /* disables click */
+  cursor: not-allowed;
+}

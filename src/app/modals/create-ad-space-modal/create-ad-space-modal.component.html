@@ -9,7 +9,8 @@
         <!-- Title -->
         <div class="inp-cont">
             <label class="medium-font">Title <span class="required">*</span></label>
-            <input type="text" class="input-custom-style regular-font" placeholder="Enter ad title" formControlName="title" />
+            <input type="text" class="input-custom-style regular-font" placeholder="Enter ad title"
+                formControlName="title" />
             <small class="error-text regular-font" *ngIf="f['title'].touched && f['title'].invalid">
                 Title is required.
             </small>
@@ -59,7 +60,8 @@
         <!-- Main Image -->
         <div class="inp-cont">
             <label class="medium-font">Main Image <span class="required">*</span></label>
-            <input type="file" class="input-custom-style regular-font" (change)="onMainImageSelected($event)" accept="image/*" />
+            <input type="file" class="input-custom-style regular-font" (change)="onMainImageSelected($event)"
+                accept="image/*" />
 
             <div class="preview-container" *ngIf="mainImagePreview">
                 <div class="preview-item">
@@ -71,16 +73,24 @@
 
         <!-- Additional Images -->
         <div class="inp-cont">
-            <label class="medium-font">Additional Images</label>
+            <label class="medium-font">Additional Images <span class="required">*</span></label>
             <input type="file" class="input-custom-style regular-font" (change)="onImagesSelected($event)" multiple
                 accept="image/*" />
+            <small class="error-text regular-font" *ngIf="imageFiles.length === 0 && showprocessingbtn === false">
+                Additional images are required.
+            </small>
 
+            <small class="error-text regular-font"
+                *ngIf="f['additional_images'].touched && f['additional_images'].invalid">
+                Additional images are required.
+            </small>
             <div class="preview-container" *ngIf="previewImages.length > 0">
                 <div class="preview-item" *ngFor="let img of previewImages; let i = index">
                     <img [src]="img" />
                     <span class="remove-btn" (click)="removeImage(i)">×</span>
                 </div>
             </div>
+
         </div>
 
         <!-- Footer -->

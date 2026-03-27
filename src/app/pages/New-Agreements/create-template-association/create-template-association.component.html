@@ -19,21 +19,20 @@
         <div class="variable-panel">
             <h4>Variables</h4>
 
-            <button class="submit-btn" (click)="addHeading()">Heading</button>
-            <button class="submit-btn" (click)="addParagraph()">Paragraph</button>
-            <button class="submit-btn" (click)="openSignatureModal()">Signature</button>
-            <button class="submit-btn w-100 mb-2" (click)="openVariableModal()">+ Add Variable</button>
+            <button class="submit-btn d-flex-cont" (click)="addHeading()"><i class="bx bx-heading-1 icon-com"></i>
+                <span>Heading</span></button>
+            <button class="submit-btn  d-flex-cont" (click)="addParagraph()"><i class="bx bx-paragraph-spacing"></i>
+                <span>Paragraph</span></button>
+            <button class="submit-btn w-100 mb-2 " (click)="openVariableModal()">+ Add Variable</button>
+            <button class="submit-btn d-flex-cont" (click)="openSignatureModal()"> <i class="bx bx-signature"></i>
+                <span>Signature</span></button>
 
             <div class="var-list">
-                <span 
-  *ngFor="let v of extractVariablesFromBlocks()" 
-  class="variable-pill"
->
-  {{ v.label }}
-  <i class="fa-solid fa-xmark remove-var"
-     (click)="removeVariable(v.key)">
-  </i>
-</span>
+                <span *ngFor="let v of extractVariablesFromBlocks()" class="variable-pill">
+                    {{ v.label }}
+                    <i class="fa-solid fa-xmark remove-var" (click)="removeVariable(v.key)">
+                    </i>
+                </span>
             </div>
         </div>
 
@@ -51,30 +50,18 @@
                         </button>
 
                         <!-- ========== HEADING ========== -->
-                        <h1
-  *ngIf="block.type === 'heading'"
-  class="doc-heading editable"
-  contenteditable="true"
-  spellcheck="false"
-  data-placeholder="Type agreement heading here"
-  [attr.data-id]="block.id"
-  (focus)="onEditableFocus($event)"
-  (input)="updateBlockValue($event, block)"
-  (keydown)="handleEditorKeydown($event, block)">
-</h1>
+                        <h1 *ngIf="block.type === 'heading'" class="doc-heading editable" contenteditable="true"
+                            spellcheck="false" data-placeholder="Type agreement heading here" [attr.data-id]="block.id"
+                            (focus)="onEditableFocus($event)" (input)="updateBlockValue($event, block)"
+                            (keydown)="handleEditorKeydown($event, block)">
+                        </h1>
 
                         <!-- ========== PARAGRAPH ========== -->
-<p
-  *ngIf="block.type === 'paragraph'"
-  class="doc-para editable"
-  contenteditable="true"
-  spellcheck="false"
-  data-placeholder="Type paragraph content here..."
-  [attr.data-id]="block.id"
-  (focus)="onEditableFocus($event)"
-  (input)="updateBlockValue($event, block)"
-  (keydown)="handleEditorKeydown($event, block)">
-</p>
+                        <p *ngIf="block.type === 'paragraph'" class="doc-para editable" contenteditable="true"
+                            spellcheck="false" data-placeholder="Type paragraph content here..."
+                            [attr.data-id]="block.id" (focus)="onEditableFocus($event)"
+                            (input)="updateBlockValue($event, block)" (keydown)="handleEditorKeydown($event, block)">
+                        </p>
 
                         <div *ngIf="block.type === 'paragraph'" class="para-gap"></div>
 
@@ -130,14 +117,10 @@
                 <option [value]="2">2</option>
             </select>
 
-           <div *ngFor="let s of signerInputs; let i = index; trackBy: trackByIndex">
-    <input
-      placeholder="Signer name"
-      [ngModel]="signerInputs[i]"
-      (ngModelChange)="updateSignerName(i, $event)"
-      (focus)="keepModalFocus($event)"
-    />
-</div>
+            <div *ngFor="let s of signerInputs; let i = index; trackBy: trackByIndex">
+                <input placeholder="Signer name" [ngModel]="signerInputs[i]"
+                    (ngModelChange)="updateSignerName(i, $event)" (focus)="keepModalFocus($event)" />
+            </div>
 
             <label class="mt-2">
                 <input type="checkbox" [(ngModel)]="includeDate" />
@@ -152,7 +135,7 @@
     </div>
 
     <!-- TEMPLATE NAME MODAL remains unchanged -->
-<div class="modal-backdrop" *ngIf="showTemplateNameModal">
+    <div class="modal-backdrop" *ngIf="showTemplateNameModal">
         <div class="modal-card">
             <h4>Add Template Name</h4>
 
@@ -168,6 +151,21 @@
                 </button>
 
                 <button class="btn-cancel" (click)="closeTemplateNameModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal-backdrop" *ngIf="showConfirmDeleteModal">
+        <div class="modal-card">
+            <div class="delete-modal-icon">
+                <i class="fa fa-trash"></i>
+            </div>
+            <h4>Remove Block?</h4>
+            <p class="delete-modal-msg">This block has content. Are you sure you want to remove it?</p>
+            <div class="modal-actions">
+                <button class="btn-cancel-del" (click)="cancelDelete()">Cancel</button>
+                <button class="btn-delete-confirm" (click)="confirmDelete()">Remove</button>
             </div>
         </div>
     </div>

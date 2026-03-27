@@ -54,32 +54,47 @@ export class ViewNewAgreementTosendComponent implements OnInit {
   }
 
   /* ===== INIT VARIABLES FROM API ===== */
-  initVariablesFromApi() {
-    if (!this.template?.variables) return;
-
-    this.template.variables.forEach((v: any) => {
-      this.variables[v.key] = '';
-      this.variableKeys.push(v.key);
-    });
-  }
+initVariablesFromApi() {
+  if (!this.template?.variables) return;
+  this.variables = {};
+  this.variableKeys = [];
+  this.template.variables.forEach((v: any) => {
+    this.variables[v.key] = '';       // initialize so ngModel binding works
+    this.variableKeys.push(v.key);
+  });
+}
 
   /* ===== REPLACE VARIABLES ===== */
 renderText(html: string): string {
   if (!html) return '';
 
-  // 1️⃣ Replace variable spans
+  // Replace <span class="variable" ...>{{key}}</span> with value or dashes
   let output = html.replace(
-    /<span class="variable"[^>]*>{{(.*?)}}<\/span>/g,
+    /<span[^>]*class="variable"[^>]*>{{(.*?)}}<\/span>/g,
     (_match, key) => {
       const k = key.trim();
-      return this.variables[k] || '__________';
+      const val = this.variables[k];
+      return val
+        ? `<span class="resolved-variable">${val}</span>`
+        : '<span class="empty-variable">__________</span>';
     }
   );
 
-  // 2️⃣ Convert &nbsp; to normal spaces
-  output = output.replace(/&nbsp;/g, ' ');
+  // Also handle plain {{key}} not wrapped in span (fallback)
+  output = output.replace(/{{(.*?)}}/g, (_match, key) => {
+    const k = key.trim();
+    const val = this.variables[k];
+    return val
+      ? `<span class="resolved-variable">${val}</span>`
+      : '<span class="empty-variable">__________</span>';
+  });
 
   return output;
+}
+
+/* ===== REPLACE VARIABLES IN HEADING ===== */
+renderHeading(html: string): string {
+  return this.renderText(html);
 }
 
   trackByKey(index: number, key: string) {

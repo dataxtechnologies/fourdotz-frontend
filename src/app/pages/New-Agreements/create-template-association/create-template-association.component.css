@@ -8,29 +8,26 @@
 /* ================= HEADER ================= */
 .builder-header {
   position: sticky;
-  top: 14px;
+  top: 0;              /* stick to very top */
   z-index: 1000;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #ccc;
   padding: 9px 12px;
-  border-radius: 0;
-  box-shadow: none;
   margin-bottom: 16px;
+  background: #fff;    /* ADD: prevent content showing through header */
 }
 
-/* ================= BODY ================= */
 .builder-body {
   display: grid;
   grid-template-columns: 260px 1fr;
   gap: 28px;
   padding: 20px;
-  height: calc(100vh - 64px - 90px);
-  overflow: hidden;
+  /* REMOVE fixed height and overflow:hidden — let content grow naturally */
+  height: auto;
+  overflow: visible;
 }
-
 /* ================= LEFT PANEL ================= */
 .builder-controls {
   width: 260px;
@@ -60,14 +57,17 @@
 }
 
 /* ================= VARIABLES PANEL ================= */
+/* ================= VARIABLES PANEL ================= */
 .variable-panel {
   position: sticky;
+  top: 70px; /* stick just below the header */
   border: 1px solid #ccc;
   border-radius: 12px;
-  height: fit-content;
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
   background: #fff;
   padding: 22px;
-  box-shadow: none;
+  align-self: start; /* prevent stretching to page height */
 }
 
 .variable-panel button,
@@ -105,8 +105,8 @@
 /* ================= PREVIEW SCROLL ================= */
 .builder-preview {
   flex: 1;
-  height: 100%;
-  overflow-y: auto;
+  height: auto;        /* REMOVE fixed height */
+  overflow-y: visible; /* let page scroll naturally */
   padding: 6px;
   background: #fff;
 }
@@ -308,7 +308,7 @@
 
 .delete-block i{
   font-size: 15px;
-  color: #777;
+  color: #ff5c5c;
 }
 
 .block-wrapper:hover .delete-block {
@@ -375,3 +375,75 @@
   padding: 10px 16px;
   border-radius: 8px;
 }
+
+
+.icon-com{
+    font-size: 20px;
+}
+
+.d-flex-cont{
+    display: flex;
+    align-items: center;
+    gap: 10px !important;
+    justify-content: center;
+}
+
+
+/* Fix cancel button — make it visible purple outline */
+.btn-cancel {
+  background: #fff !important;
+  color: #7c3aed !important;
+  border: 2px solid #7c3aed !important;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-cancel:hover {
+  background: #f3e8ff !important;
+}
+
+/* Delete confirm modal */
+.delete-modal-icon {
+  width: 52px;
+  height: 52px;
+  background: #fef2f2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+}
+.delete-modal-icon i {
+  font-size: 20px;
+  color: #ef4444;
+}
+.modal-card h4 {
+  text-align: center;
+}
+.delete-modal-msg {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+.btn-cancel-del {
+  background: #fff;
+  color: #7c3aed;
+  border: 2px solid #7c3aed;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-cancel-del:hover { background: #f3e8ff; }
+.btn-delete-confirm {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-delete-confirm:hover { background: #dc2626; }

@@ -138,6 +138,11 @@
   color: #fff;
 }
 
+.apply:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 /* COMMON SIGNATURE BASE */
 .typed-signature {
   display: inline-block;

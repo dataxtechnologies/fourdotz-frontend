@@ -13,7 +13,7 @@
             <!-- Form -->
             <div class="content">
 
-                <form [formGroup]="visitorForm" (ngSubmit)="submitVisitorForm()">
+                <form [formGroup]="visitorForm">
                     <div class="user-details">
 
                         <!-- Full Name -->
@@ -102,9 +102,9 @@
                             <select class="input-custom-style regular-font" formControlName="gate_no">
                                 <option value="" disabled selected>Select Gate No</option>
 
-                                <option *ngFor="let gate of Gatelist2" [value]="gate._id">
-                                    {{ gate.gate }}
-                                </option>
+                               <option *ngFor="let gate of Gatelist2" [value]="gate._id">
+  {{ gate.gate }}
+</option>
                             </select>
 
                             <span class="error-text regular-font"
@@ -151,7 +151,8 @@
                     </div>
 
                     <div class="button">
-                        <input type="submit" value="Register" />
+                       <button type="submit" class="btn btn-primary" *ngIf="!btnloading" (click)="submitVisitorForm()">Submit</button>
+                       <button type="button" class="btn btn-primary" *ngIf="btnloading">Processing...</button>
                     </div>
                 </form>
 

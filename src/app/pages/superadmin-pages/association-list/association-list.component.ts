@@ -27,6 +27,7 @@ export class AssociationListComponent {
   pages: any;
   tableLoading: boolean = true;
   filteredProperties: any[] = [];
+  spinloading = false;
 
   constructor(
     private ModalService: ModalService,
@@ -147,7 +148,8 @@ export class AssociationListComponent {
     this.Associationlist1.initialize(this.filteredProperties, 8);
   }
 
-  SendmailAgain(data: any) {
+  SendmailAgain(data: any, item : any) {
+    item.spinloading = true;
     const payload = {
       username: data,
     };
@@ -155,12 +157,15 @@ export class AssociationListComponent {
     this.apiService.SendmailAgain<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
+          item.spinloading = false;
           this.getAssociationList();
         } else {
+          item.spinloading = false;
           this.Toast.error(res.message, 'Failed');
         }
       },
       error: (err: any) => {
+        item.spinloading = false;
         this.Toast.error(err.error.error.message, 'Failed');
       },
     });

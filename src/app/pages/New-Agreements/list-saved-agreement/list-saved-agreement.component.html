@@ -49,10 +49,13 @@
                                             {{ item.created_time.$date | date:'dd-MMM-yyyy' }}
                                         </td>
 
-                                        <td>
-                                            <span class="table-btn" (click)="openagreement(item._id)">
-                                                View
-                                            </span>
+                                        <td (click)="openagreement(item._id)">
+                                         
+                                               <div class="view-btn-div" style="width: 50% !important;">
+                                                   <i class="bx bx-eye"></i>    
+                                                   <span class="view-btn" style="cursor: pointer;"> View</span>
+                                               </div>
+                                            
                                         </td>
 
                                     </tr>

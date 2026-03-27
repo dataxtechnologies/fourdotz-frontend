@@ -78,11 +78,18 @@
                                         </td>
 
                                         <td (click)="viewassociation(item.user_id)">
-                                            <button class="table-btn">view</button>
+                                            <div class="view-btn-div">
+                                                <i class="bx bx-eye"></i>
+                                                <span class="view-btn" style="cursor: pointer;"> View</span>
+                                            </div>
                                         </td>
 
-                                        <td (click)="SendmailAgain(item.email)">
-                                            <span class="table-btn">Send Mail</span>
+                                        <td (click)="SendmailAgain(item.email, item)">
+                                            <div class="mail-btn-div">
+                                                 <i class="bx bx-envelope" *ngIf="!item.spinloading"></i>
+                                                <span class="table-btn" style="cursor: pointer;" *ngIf="!item.spinloading"> Send Mail</span>
+                                                <span class="dis-spin" style="cursor: not-allowed;" *ngIf="item.spinloading"><i class="fa-solid fa-spinner fa-spin"></i>  Sending...</span>
+                                            </div>
                                         </td>
 
                                     </tr>

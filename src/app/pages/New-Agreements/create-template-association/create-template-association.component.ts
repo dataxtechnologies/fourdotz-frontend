@@ -55,6 +55,10 @@ export class CreateTemplateAssociationComponent {
   showTemplateNameModal = false;
   templateName = '';
 
+  showConfirmDeleteModal = false;
+blockToDelete: Block | null = null;
+
+
   /* CURSOR */
   private savedRange: Range | null = null;
 
@@ -101,19 +105,35 @@ export class CreateTemplateAssociationComponent {
 
   /* ================= DELETE BLOCK (NEW FEATURE) ================= */
 
-  removeBlock(block: Block) {
-    const hasContent = block.value?.trim();
-
-    if (hasContent) {
-      const confirmDelete = confirm('Remove this content?');
-      if (!confirmDelete) return;
-    }
-
-    this.blocks = this.blocks.filter(b => b.id !== block.id);
-
-    if (block.type === 'heading') this.headingAdded = false;
-    if (block.type === 'signature') this.signatureAdded = false;
+removeBlock(block: Block) {
+  const hasContent = block.value?.trim();
+  if (hasContent) {
+    this.blockToDelete = block;
+    this.showConfirmDeleteModal = true;
+  } else {
+    this.doDeleteBlock(block);
   }
+}
+
+
+confirmDelete() {
+  if (this.blockToDelete) {
+    this.doDeleteBlock(this.blockToDelete);
+    this.blockToDelete = null;
+  }
+  this.showConfirmDeleteModal = false;
+}
+
+cancelDelete() {
+  this.blockToDelete = null;
+  this.showConfirmDeleteModal = false;
+}
+
+private doDeleteBlock(block: Block) {
+  this.blocks = this.blocks.filter(b => b.id !== block.id);
+  if (block.type === 'heading') this.headingAdded = false;
+  if (block.type === 'signature') this.signatureAdded = false;
+}
 
   /* ================= EDITING ================= */
 

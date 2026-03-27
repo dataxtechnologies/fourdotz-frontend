@@ -75,7 +75,8 @@ export class GateKeeperGatesComponent {
     });
   }
 
-  SendmailAgain(data: any) {
+  SendmailAgain(data: any, item: any) {
+    item.spinloading = true;
     const payload = {
       username: data,
     };
@@ -83,13 +84,17 @@ export class GateKeeperGatesComponent {
     this.apiService.SendmailAgain<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
+          this.Toast.success(res.message, 'Success');
+          item.spinloading = false;
           this.listGate();
           this.Listgatekeeper();
         } else {
+          item.spinloading = false;
           this.Toast.error(res.message, 'Failed');
         }
       },
       error: (err: any) => {
+        item.spinloading = false;
         this.Toast.error(err.error.error.message, 'Failed');
       },
     });

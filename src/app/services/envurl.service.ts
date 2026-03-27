@@ -134,6 +134,8 @@ export class EnvurlService {
   public VisitorExit = '/visitors/visitor_exit'
   public getGatelistinQrformExternal = '/gate/list_gate_by_association_id'
   public DeleteGate = '/gate/delete_gate'
+  public AllowVisitor = '/visitors/allow_visitor'
+  public ResendVisitorRequest = '/visitors/resend_approve_request'
 
 
 
