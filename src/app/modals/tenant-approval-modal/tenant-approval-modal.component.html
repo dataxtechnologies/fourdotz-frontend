@@ -1,1 +1,119 @@
-<p>tenant-approval-modal works!</p>
+<section class="form-section">
+    <div class="form-header">
+        <div class="header-left">
+            <h3 class="heading-font">Tenant Approval Request</h3>
+        </div>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <form [formGroup]="tenantForm">
+
+            <!-- Rented At -->
+            <div class="inp-cont date-picker-container">
+                <label class="medium-font">
+                    Rented at <span class="required">*</span>
+                </label>
+
+                <div class="date-input-wrapper">
+                    <input type="date" class="input-custom-style regular-font" formControlName="rentedAt"
+                        placeholder="DD-MMM-YYYY" readonly (click)="openDatePicker()" />
+
+                    <i class="fa fa-calendar calendar-icon" (click)="openDatePicker()"></i>
+
+                    <input #hiddenDatePicker type="date" class="hidden-date-input" (change)="onDateSelected($event)" />
+                </div>
+
+                <div class="error-text"
+                    *ngIf="tenantForm.get('rentedAt')?.touched && tenantForm.get('rentedAt')?.invalid">
+                    Rented date is required
+                </div>
+            </div>
+
+            <!-- Advance Paid -->
+            <div class="inp-cont">
+                <label class="medium-font">
+                    Advance Paid <span class="required">*</span>
+                </label>
+
+                <input type="number" class="input-custom-style regular-font" formControlName="advancePaid"
+                    placeholder="Enter Advance Amount">
+
+                <div class="error-text"
+                    *ngIf="tenantForm.get('advancePaid')?.touched && tenantForm.get('advancePaid')?.invalid">
+                    Enter valid advance amount
+                </div>
+            </div>
+
+            <!-- Estimated Rent -->
+            <div class="inp-cont">
+                <label class="medium-font">
+                    Estimated Rent <span class="required">*</span>
+                </label>
+
+                <input type="number" class="input-custom-style regular-font" formControlName="estimatedRent"
+                    placeholder="Enter Estimated Rent">
+
+                <div class="error-text"
+                    *ngIf="tenantForm.get('estimatedRent')?.touched && tenantForm.get('estimatedRent')?.invalid">
+                    Enter valid estimated rent
+                </div>
+            </div>
+
+            <!-- Rent Due Date -->
+            <div class="inp-cont">
+                <label class="medium-font">
+                    Rent Due Date <span class="required">*</span>
+                </label>
+
+                <select formControlName="monthly_rent_due_date" class="input-custom-style regular-font">
+
+                    <option value="" disabled>Select Day</option>
+                    <option *ngFor="let day of days" [value]="day">
+                        {{ day }} of Month
+                    </option>
+                </select>
+
+                <div *ngIf="tenantForm.get('monthly_rent_due_date')?.touched && tenantForm.get('monthly_rent_due_date')?.invalid"
+                    class="error-text">
+                    Rent Due Date is required
+                </div>
+            </div>
+
+            <!-- Maintenance Paid By -->
+            <div class="inp-cont">
+                <label class="medium-font">
+                    Maintenance Paid by <span class="required">*</span>
+                </label>
+
+                <select class="input-custom-style regular-font" formControlName="maintenancePaidBy">
+
+                    <option value="" disabled>Select Options</option>
+                    <option value="owner">Owner</option>
+                    <option value="tenant">Tenant</option>
+                </select>
+
+                <div class="error-text"
+                    *ngIf="tenantForm.get('maintenancePaidBy')?.touched && tenantForm.get('maintenancePaidBy')?.invalid">
+                    Please select who pays maintenance
+                </div>
+            </div>
+
+           
+
+            <!-- Submit -->
+            <div class="btn-row">
+                <button type="submit" class="submit-btn" (click)="onSubmit()" *ngIf="submitbtn">
+
+                    <i class="fa-solid fa-paper-plane"></i> Submit Request
+                </button>
+
+                <button type="button" class="processing-btn" *ngIf="!submitbtn" disabled>
+
+                    <span class="btn-spinner"></span> Processing...
+                </button>
+            </div>
+
+        </form>
+    </div>
+</section>

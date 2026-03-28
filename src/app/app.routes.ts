@@ -99,6 +99,9 @@ import { OwnerWaitingComponent } from './pages/waiting-area/owner-waiting/owner-
 import { TenantWaitingComponent } from './pages/waiting-area/tenant-waiting/tenant-waiting.component';
 import { ResidentRequestListComponent } from './pages/association-pages/resident-request-list/resident-request-list.component';
 import { TenantRequestListComponent } from './pages/Owner-pages/tenant-request-list/tenant-request-list.component';
+import { ResidentDashboardComponent } from './pages/pre-approved-pages/resident-dashboard/resident-dashboard.component';
+import { ResidentMarketplaceComponent } from './pages/pre-approved-pages/resident-marketplace/resident-marketplace.component';
+import { ResidentViewprofileComponent } from './pages/pre-approved-pages/resident-viewprofile/resident-viewprofile.component';
 
 export const routes: Routes = [
   {
@@ -148,7 +151,7 @@ export const routes: Routes = [
   },
 
   {
-    path: 'onboarding/residents/get-started',
+    path: 'onboarding/residents/get-started/:username',
     component: ResidentOnboardingStartComponent,
   },
 
@@ -484,6 +487,18 @@ export const routes: Routes = [
   {
     path : 'tenant/waiting-for-approval',
     component: TenantWaitingComponent,
+  },
+
+
+  {
+    path: 'pre-approval',
+    component: DashboardLayoutNewComponent,
+    children: [
+      { path: 'resident/dashboard', component: ResidentDashboardComponent },
+      { path: 'resident/market-place', component: ResidentMarketplaceComponent },
+      { path: 'resident/view-profile', component: ResidentViewprofileComponent },
+      
+    ],
   },
 
 

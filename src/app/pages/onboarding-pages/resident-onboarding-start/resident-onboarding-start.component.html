@@ -114,7 +114,7 @@
                         <label class="medium-font">Enter OTP <span class="required">*</span></label>
                         <div class="otp-verify-row">
                             <input type="text" [(ngModel)]="otpInput" [ngModelOptions]="{standalone: true}"
-                                class="inp-cus regular-font otp-input" placeholder="Enter OTP" maxlength="6" />
+                                class="inp-cus regular-font otp-input" placeholder="Enter OTP" maxlength="5" />
                             <button type="button" class="btn-otp btn-verify" (click)="verifyOtp()"
                                 [disabled]="otpVerifying">
                                 <span *ngIf="otpVerifying">Verifying...</span>

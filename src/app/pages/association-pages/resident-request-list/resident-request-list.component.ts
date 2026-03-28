@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angul
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { OwnerApprovalModalComponent } from '../../../modals/owner-approval-modal/owner-approval-modal.component';
+import { ViewResidentRequestDetailsComponent } from '../../../modals/view-resident-request-details/view-resident-request-details.component';
 
 @Component({
   selector: 'app-resident-request-list',
@@ -48,7 +49,7 @@ export class ResidentRequestListComponent implements OnInit {
     this.getpropertiesdata(this.user_id);
     // this.openApprovalModal();
 
-    this.AssociationService.PropertyStatus$.subscribe((res) => {
+    this.AssociationService.ResidentRequestApprovalStatus$.subscribe((res) => {
       if (res) this.getpropertiesdata(this.user_id);
     });
 
@@ -57,14 +58,28 @@ export class ResidentRequestListComponent implements OnInit {
     });
   }
 
-  openApprovalModal() {
+  openApprovalModal(data : any) {
     this.Modal.open(OwnerApprovalModalComponent, {
       modal: {
         enter: 'enter-coming-down 0.3s ease-out',
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-      data: { user_id: this.user_id },
+      data: { request_id: data },
+      actions: { click: false, escape: false },
+    });
+  }
+
+
+  openviewModal(data : any){
+    this.Modal.open(ViewResidentRequestDetailsComponent, {
+      modal: {
+        enter: 'enter-coming-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: { request: data },
+      
       actions: { click: false, escape: false },
     });
   }

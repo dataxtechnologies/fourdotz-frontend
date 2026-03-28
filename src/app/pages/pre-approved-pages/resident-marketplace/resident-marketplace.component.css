@@ -1,0 +1,62 @@
+/* Remove scroll */
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Full screen center */
+.page-shell {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-color2);
+  text-align: center;
+}
+
+/* Content box */
+.content {
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Icon animation */
+.icon {
+  font-size: 60px;
+  margin-bottom: 20px;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Heading */
+h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+/* Subtext */
+p {
+  font-size: 16px;
+  color: var(--primary-color1);
+  margin-bottom: 30px;
+}
+
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

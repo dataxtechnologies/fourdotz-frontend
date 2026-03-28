@@ -1,5 +1,4 @@
-import { Component, HostListener } from '@angular/core';
-import { SidebarItem, SIDEBAR_ITEMS } from '../../data/sidebar';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -10,12 +9,16 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { filter } from 'rxjs/operators';
+
+import { PreSidebarItem, PRE_SIDEBAR_ITEMS } from '../../data/pre-sidebar';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from 'ngx-modal-ease';
 import { LogoutModalComponent } from '../../modals/logout-modal/logout-modal.component';
 import { AddUPIIdComponent } from '../../modals/add-upi-id/add-upi-id.component';
 import { OwnerServiceService } from '../../services/owner/owner-service.service';
+import { AssociationServiceService } from '../../services/association/association-service.service';
+
 
 @Component({
   selector: 'app-dashboard-layout-new',
@@ -31,222 +34,310 @@ import { OwnerServiceService } from '../../services/owner/owner-service.service'
   styleUrl: './dashboard-layout-new.component.css',
 })
 export class DashboardLayoutNewComponent {
-  sidebarItems: SidebarItem[] = SIDEBAR_ITEMS;
-
-  /* ==============================
-     NEW SIDEBAR VARIABLES
-     ============================== */
-  asidebarClosed = false; // TRUE = hidden (mobile)
-  isTabletOrMobile = false; // Responsive check
-
-  /* ==============================
-     OLD VARIABLES (DO NOT REMOVE)
-     ============================== */
-  sidebarClosed = false; // Desktop collapse (not used but required)
-  currentRoute = '';
-  loadingUserData = false;
-  showFooter = false;
-  footerTimeout: any;
-currentYear: number = new Date().getFullYear();
-  /* ==============================
-     USER STORAGE
-     ============================== */
-  user_type = localStorage.getItem('user_type');
-  // user_type = 'gate_keeper';
-  access_token = localStorage.getItem('access_token');
-  user_id = localStorage.getItem('user_id');
-
-  constructor(
-    private router: Router,
-    private apiService: ApiserviceService,
-    private toastr: ToastrService,
-    private ModalService: ModalService,
-    private OwnerService: OwnerServiceService
-  ) {
-    /* Detect route changes */
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        this.currentRoute = event.urlAfterRedirects;
-
-        // AUTO CLOSE SIDEBAR on mobile/tablet after clicking a menu
-        if (this.isTabletOrMobile) {
-          this.asidebarClosed = true;
-        }
-      });
-  }
-
-  /* ==============================
-     INIT APP
-     ============================== */
-  ngOnInit(): void {
-    if (!this.access_token || !this.user_type) {
-      this.clearSessionAndRedirect('Session invalid. Please log in.');
-    } else {
-      this.getUserData(this.user_type);
-    }
-
-   this.OwnerService.OwnerUpiIdUpdatedStatus$.subscribe((updated) => {
-      if (updated) {
-        this.getUserData(this.user_type);
-      }
-    });
-
-    this.adjustSidebarForScreen(); // responsive start
-  }
-
-  /* ==============================
-     RESPONSIVE SIDEBAR HANDLING
-     ============================== */
-  adjustSidebarForScreen() {
-    if (window.innerWidth < 1280) {
-      this.isTabletOrMobile = true;
-      this.asidebarClosed = true; // slide sidebar hidden
-    } else {
-      this.isTabletOrMobile = false;
-      this.asidebarClosed = false; // always open on desktop
-    }
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.adjustSidebarForScreen();
-  }
-
-  /* ==============================
-     MOBILE SLIDE ASIDEBAR
-     ============================== */
-  toggleAsidebar() {
-    this.asidebarClosed = !this.asidebarClosed;
-  }
-
-  closeAsidebar() {
-    this.asidebarClosed = true;
-  }
-
-  /* ==============================
-     DESKTOP COLLAPSE (KEEP OLD)
-     ============================== */
-  toggleSidebar() {
-    this.sidebarClosed = !this.sidebarClosed;
-
-    if (!this.isTabletOrMobile) {
-      const layout = document.querySelector('.content');
-      if (layout) layout.classList.toggle('full-width', this.sidebarClosed);
-    }
-  }
-
-  /* ==============================
-     SUBMENU TOGGLE
-     ============================== */
-  toggleSubmenu(item: SidebarItem) {
-    item.open = !item.open;
-  }
-
-  /* ==============================
-     FOOTER SHOW ON SCROLL
-     ============================== */
-  @HostListener('window:scroll', [])
-  onWindowScroll(): void {
-    const scrollTop = window.scrollY;
-    const windowHeight = window.innerHeight;
-    const docHeight = document.documentElement.scrollHeight;
-
-    const NEAR_BOTTOM = windowHeight + scrollTop + 100 >= docHeight;
-
-    if (NEAR_BOTTOM) {
-      clearTimeout(this.footerTimeout);
-      this.showFooter = true;
-    } else {
-      clearTimeout(this.footerTimeout);
-      this.footerTimeout = setTimeout(() => {
-        this.showFooter = false;
-      }, 1000);
-    }
-  }
-
-  profileredirect() {
-    this.router.navigateByUrl('Account/profile');
-  }
-
-  logout(): void {
-    this.apiService.logoutApi<any>().subscribe({
-      next: (res: any) => {
-        if (res?.success) {
-          this.clearSessionAndRedirect(
-            res.message || 'Logged out successfully'
-          );
-        } else {
-          this.toastr.error(res.message || 'Logout failed', 'Failed');
-        }
-      },
-      error: (err: any) => {
-        this.toastr.error(
-          err?.error?.error?.message || 'Logout failed',
-          'Failed'
-        );
-        this.clearSessionAndRedirect();
-      },
-    });
-  }
-
-  getUserData(data: any) {
-    if (this.user_type === 'association') {
-      this.loadingUserData = true;
-    }
-
-    this.apiService.UserInfo<any>(data).subscribe({
-      next: (res: any) => {
-        if (res?.success) {
-          const userdata = res.data;
-          localStorage.setItem('userdata', JSON.stringify(userdata));
-
-          if (this.user_type === 'association') {
-            if (userdata.document_uploaded === false) {
-              this.router.navigateByUrl('/onboarding/user-data');
-            }
-          } else if (this.user_type === 'owner' || this.user_type === 'tenant') {
-            if (userdata.upi_submit_status === false) {
-              this.UPIidAddModal();
-            }
-          }
-        }
-        this.loadingUserData = false;
-      },
-      error: () => {
-        this.loadingUserData = false;
-      },
-    });
-  }
-
-  clearSessionAndRedirect(message: string = 'Session expired') {
-    localStorage.clear();
-    this.toastr.info(message, 'Info');
-    this.router.navigateByUrl('/auth/sign-in');
-  }
-
-  logoutmodal() {
-    this.ModalService.open(LogoutModalComponent, {
-      modal: {
-        enter: 'enter-going-down 0.3s ease-out',
-        leave: 'fade-out 0.5s',
-      },
-      overlay: { leave: 'fade-out 0.5s' },
-      actions: { click: false, escape: false },
-    });
-  }
-
-  UPIidAddModal() {
-    this.ModalService.open(AddUPIIdComponent, {
-      modal: {
-        enter: 'enter-going-down 0.3s ease-out',
-        leave: 'fade-out 0.5s',
-      },
-      overlay: { leave: 'fade-out 0.5s' },
-      actions: {
-        click: false,
-        escape: false,
-      },
-    });
-  }
-}
+ /* ===============================
+      SIDEBAR DATA
+   =============================== */
+   sidebarItems: PreSidebarItem[] = PRE_SIDEBAR_ITEMS;
+   currentRoute = '';
+ 
+   searchText = '';
+   suggestions: PreSidebarItem[] = [];
+ 
+   /* ===============================
+      SIDEBAR STATE
+   =============================== */
+   asidebarClosed = false;
+   isTabletOrMobile = false;
+ 
+ 
+   /* ===============================
+      USER PROFILE DROPDOWN
+   =============================== */
+   profileMenuOpen = false;
+ 
+   /* ===============================
+      FOOTER
+   =============================== */
+   currentYear: number = new Date().getFullYear();
+ 
+   /* ===============================
+      USER DATA
+   =============================== */
+   user_type = localStorage.getItem('user_type');
+   access_token = localStorage.getItem('access_token');
+   user_id = localStorage.getItem('user_id');
+ 
+   loadingUserData = false;
+   userdata: any
+ 
+   username: any
+ 
+   globalLoading = false;
+ 
+   constructor(
+     private router: Router,
+     private apiService: ApiserviceService,
+     private toastr: ToastrService,
+     private modalService: ModalService,
+     private ownerService: OwnerServiceService,
+   ) {
+     /* CLOSE SIDEBAR ON ROUTE CHANGE (MOBILE) */
+     this.router.events
+       .pipe(filter((event) => event instanceof NavigationEnd))
+       .subscribe(() => {
+         this.syncSidebarWithRoute();
+ 
+         if (this.isTabletOrMobile) {
+           this.asidebarClosed = true;
+         }
+       });
+   }
+ 
+   /* ===============================
+      INIT
+   =============================== */
+   ngOnInit(): void {
+     if (!this.access_token || !this.user_type) {
+       this.clearSessionAndRedirect();
+       return;
+     }
+ 
+     this.getUserData(this.user_type);
+     this.adjustSidebarForScreen();
+ 
+     this.ownerService.OwnerUpiIdUpdatedStatus$.subscribe((updated) => {
+       if (updated) {
+         this.getUserData(this.user_type);
+       }
+     });
+     const storedUser = localStorage.getItem('userdata');
+ 
+     this.userdata = storedUser ? JSON.parse(storedUser) : null;
+     this.username = this.userdata?.name || '';
+ 
+     // this.DashboardLayoutService.DashboardTourApiStatus$.subscribe((TourApi) => {
+     //   if (TourApi) {
+     //     this.getusertourdata();
+     //   }
+     // });
+ 
+     this.syncSidebarWithRoute();
+     // this.getusertourdata();
+   }
+ 
+   /* ===============================
+      RESPONSIVE
+   =============================== */
+   @HostListener('window:resize')
+   onResize(): void {
+     this.adjustSidebarForScreen();
+   }
+ 
+   adjustSidebarForScreen(): void {
+     if (window.innerWidth < 1280) {
+       this.isTabletOrMobile = true;
+       this.asidebarClosed = true;
+     } else {
+       this.isTabletOrMobile = false;
+       this.asidebarClosed = false;
+     }
+   }
+ 
+   toggleAsidebar(): void {
+     this.asidebarClosed = !this.asidebarClosed;
+   }
+ 
+   closeAsidebar(): void {
+     this.asidebarClosed = true;
+   }
+ 
+   /* ===============================
+      SIDEBAR LOGIC (IMPORTANT)
+   =============================== */
+   toggleSubmenuExclusive(item: PreSidebarItem): void {
+     this.sidebarItems.forEach((i) => {
+       if (i !== item) i.open = false;
+     });
+     item.open = !item.open;
+   }
+ 
+   closeAllSubmenus(): void {
+     this.sidebarItems.forEach((i) => (i.open = false));
+   }
+ 
+   /* ===============================
+      API / USER
+   =============================== */
+ getUserData(role: any): void {
+   this.globalLoading = true; // ✅ START LOADER
+ 
+   this.apiService.UserInfo<any>(role).subscribe({
+     next: (res) => {
+       this.globalLoading = false; // ✅ STOP LOADER
+ 
+       if (res?.success) {
+         const userdata = res.data;
+ 
+         if (role === 'association' && res.data.document_uploaded === false) {
+           this.router.navigateByUrl('/onboarding/associations/get-started');
+         }
+ 
+         localStorage.setItem('userdata', JSON.stringify(userdata));
+ 
+         // ✅ NEW PRIORITY CHECK (FIRST)
+         if (userdata.property_merge_status === 'request_sent') {
+           this.router.navigateByUrl('/pre-approval/resident/dashboard');
+           return; // 🚨 IMPORTANT: STOP HERE (no popup)
+         }
+ 
+         // ✅ EXISTING FLOW (UNCHANGED)
+         if (
+           (role === 'owner' || role === 'tenant') &&
+           userdata.upi_submit_status === false
+         ) {
+           this.openUPIModal();
+         }
+       }
+     },
+     error: () => {
+       this.globalLoading = false; // safety
+     },
+   });
+ }
+ 
+   /* ===============================
+      PROFILE / LOGOUT
+   =============================== */
+   profileredirect(): void {
+     this.router.navigateByUrl('/pre-approval/resident/view-profile');
+   }
+ 
+   logoutmodal(): void {
+     this.modalService.open(LogoutModalComponent, {
+       modal: { enter: 'enter-going-down 0.3s', leave: 'fade-out 0.4s' },
+       overlay: { leave: 'fade-out 0.4s' },
+       actions: { click: false, escape: false },
+     });
+   }
+ 
+   openUPIModal(): void {
+     this.modalService.open(AddUPIIdComponent, {
+       modal: { enter: 'enter-going-down 0.3s', leave: 'fade-out 0.4s' },
+       overlay: { leave: 'fade-out 0.4s' },
+       actions: { click: false, escape: false },
+     });
+   }
+ 
+   clearSessionAndRedirect(message: string = 'Session expired'): void {
+     localStorage.clear();
+     this.toastr.info(message, 'Info');
+     this.router.navigateByUrl('/auth/sign-in');
+   }
+ 
+   private syncSidebarWithRoute(): void {
+     const currentUrl = this.router.url;
+ 
+     this.sidebarItems.forEach((item) => {
+       if (item.children && item.allowedRole === this.user_type) {
+         // check if any child route matches
+         const hasActiveChild = item.children.some((child) =>
+           currentUrl.startsWith(child.route!),
+         );
+ 
+         item.open = hasActiveChild;
+       } else {
+         item.open = false;
+       }
+     });
+   }
+ 
+   // getusertourdata(): void {
+   //   this.apiService.getTourdatas<any>().subscribe({
+   //     next: (res) => {
+   //       if (res?.success && res?.data?.menu) {
+   //         // 👉 Store menu object in sessionStorage
+   //         sessionStorage.setItem('user_menu', JSON.stringify(res.data.menu));
+ 
+   //         console.log('Menu stored in sessionStorage:', res.data.menu);
+   //       }
+   //     },
+   //     error: (err) => {
+   //       console.error('Error fetching tour data', err);
+   //     },
+   //   });
+   // }
+ 
+ 
+   onSearchChange() {
+ 
+     const term = this.searchText.toLowerCase().trim();
+ 
+     if (!term) {
+       this.suggestions = [];
+       return;
+     }
+ 
+     const roleMenus = PRE_SIDEBAR_ITEMS.filter(
+       m => m.allowedRole === this.user_type
+     );
+ 
+     const flatMenus = this.flattenMenus(roleMenus);
+ 
+     this.suggestions = flatMenus.filter(item => {
+ 
+       const labelMatch =
+         item.label.toLowerCase().includes(term);
+ 
+       const keywordMatch =
+         item.keywords?.some(k =>
+           k.toLowerCase().includes(term)
+         );
+ 
+       return labelMatch || keywordMatch;
+ 
+     }).slice(0, 6);
+   }
+ 
+   flattenMenus(items: PreSidebarItem[]): PreSidebarItem[] {
+     let list: PreSidebarItem[] = [];
+ 
+     for (const item of items) {
+       list.push(item);
+       if (item.children) {
+         list.push(...item.children);
+       }
+     }
+ 
+     return list;
+   }
+ 
+   goToSuggestion(item: PreSidebarItem) {
+     if (item.route) {
+       this.router.navigate([item.route]);
+       this.searchText = '';
+       this.suggestions = [];
+     }
+   }
+ 
+   // startVoiceSearch() {
+   //   const SpeechRecognition =
+   //     (window as any).webkitSpeechRecognition;
+ 
+   //   if (!SpeechRecognition) {
+   //     alert('Voice search not supported');
+   //     return;
+   //   }
+ 
+   //   const recognition = new SpeechRecognition();
+   //   recognition.lang = 'en-IN';
+ 
+   //   recognition.onresult = (event: any) => {
+   //     this.searchText =
+   //       event.results[0][0].transcript;
+   //     this.onSearchChange();
+   //   };
+ 
+   //   recognition.start();
+   // }
+ }
+ 

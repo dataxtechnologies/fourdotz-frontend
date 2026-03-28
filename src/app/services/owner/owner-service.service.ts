@@ -32,6 +32,15 @@ export class OwnerServiceService {
   private RequestUserSubject = new BehaviorSubject<any>(null);
   RequestUserStatus$ = this.RequestUserSubject.asObservable();
 
+
+  private TenantRequestapprovalSubject = new BehaviorSubject<any>(null);
+  TenantRequestapprovalStatus$ = this.TenantRequestapprovalSubject.asObservable();
+
+
+  triggerTenantRequestapproval(TenantRequestapproval: any): void {
+    //console.log('addassociation', TenantRequestapproval);
+    this.TenantRequestapprovalSubject.next(TenantRequestapproval);
+  }
   triggerRequestUser(RequestUser: any): void {
     //console.log('addassociation', RequestUser);
     this.RequestUserSubject.next(RequestUser);

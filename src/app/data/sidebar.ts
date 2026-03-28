@@ -364,7 +364,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     {
     label: 'Resident Requests',
     icon: '/assets/icons/sidebar/resident-req.png',
-    route: '/Association/tenant-request-list',
+    route: '/Owner/tenant-request-list',
     allowedRole: 'owner',
     keywords: ['announcement', 'resident request', 'resident requests', 'request', 'requests', 'complaint', 'tickets', 'approval',
       'pending request', 'service request'],

@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-owner-waiting',
+  selector: 'app-resident-dashboard',
   imports: [CommonModule],
-  templateUrl: './owner-waiting.component.html',
-  styleUrl: './owner-waiting.component.css'
+  templateUrl: './resident-dashboard.component.html',
+  styleUrl: './resident-dashboard.component.css'
 })
-export class OwnerWaitingComponent {
+export class ResidentDashboardComponent {
   isRefreshing = false;
   lastChecked: Date = new Date();
   dots = [0, 1, 2];

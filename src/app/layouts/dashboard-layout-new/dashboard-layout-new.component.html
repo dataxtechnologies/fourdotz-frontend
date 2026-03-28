@@ -1,132 +1,138 @@
-<!-- HEADER -->
-<section *ngIf="user_type === 'association' && loadingUserData" class="loader-section">
-    <img src="assets/logo/fourdotz-logo.png" alt="Loading..." class="loader-img" />
-</section>
-<section>
-    <header class="navbar-header-main" *ngIf="!loadingUserData">
-        <div class="navbar-header">
+<div *ngIf="globalLoading" class="full-loader">
+    <div class="loader">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 66" height="100px" width="100px" class="spinner">
+            <circle stroke="url(#gradient)" r="20" cy="33" cx="33" stroke-width="1" fill="transparent" class="path">
+            </circle>
+            <linearGradient id="gradient">
+                <stop stop-opacity="1" stop-color="#fe0000" offset="0%"></stop>
+                <stop stop-opacity="0" stop-color="#af3dff" offset="100%"></stop>
+            </linearGradient>
 
-            <div class="user-greeting">
-
-                <!-- Mobile / Tablet Sidebar Toggle -->
-                <label class="hamburger" style="cursor: pointer;" *ngIf="isTabletOrMobile" (click)="toggleAsidebar()">
-
-                    <img src="assets/icons/firstline-1.svg" alt="lines">
+        </svg>
+    </div>
+    <p class="medium-font mt-2">Loading your workspace</p>
+</div>
 
 
-                </label>
+<section *ngIf="!globalLoading">
 
-                <!-- USER IMAGE -->
-                <div class="user-image">
-                    <img src="assets/logo/fourdotz1.png" alt="User Icon" />
+    <div>
+        <!-- FLOATING TOGGLE (VISIBLE WHEN SIDEBAR CLOSED) -->
+        <button class="floating-toggle" *ngIf="asidebarClosed" (click)="toggleAsidebar()">
+            <img src="assets/icons/sidebar/sidebar-toggle-open.png" alt="Fourdotz" />
+        </button>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" [class.closed]="asidebarClosed">
+            <div class="sidebar-inner">
+
+                <!-- TOP BAR (LOGO + SELECT + TOGGLE) -->
+                <div class="sidebar-top">
+
+                    <div class="brand">
+                        <img src="assets/logo/fourdotz1.png" alt="Fourdotz" />
+                    </div>
+
+                    <div class="module-select mt-2 mx-2">
+
+                    </div>
+
+                    <button class="collapse-btn" (click)="toggleAsidebar()">
+                        <img src="assets/icons/sidebar/sidebar-toggle-close.png" alt="Fourdotz" />
+                    </button>
+
                 </div>
 
-                <!-- GREETING -->
-                <div class="greeting-text">
-                    <h3 class="user-name">Hello, {{ user_type }}!</h3>
+                <div class="sidebar-search" *ngIf="!asidebarClosed">
+
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="form-control" placeholder="What would you like to find today?"
+                            [(ngModel)]="searchText" (input)="onSearchChange()" />
+                    </div>
+
+                    <!-- Suggestions -->
+                    <div class="search-suggestions" *ngIf="suggestions.length">
+                        <div class="suggest-item" *ngFor="let s of suggestions" (click)="goToSuggestion(s)">
+                            {{ s.label }}
+                            <span class="arrow">↗</span>
+                        </div>
+                    </div>
+
                 </div>
 
-            </div>
-
-            <!-- RIGHT PROFILE BUTTON -->
-            <div class="navbar-actions">
-                <button class="icon-btn" (click)="profileredirect()">
-                    <img src="/assets/icons/profile.svg">
-                </button>
-            </div>
-
-        </div>
-    </header>
-</section>
-
-<section>
-
-    <!-- SIDEBAR -->
-    <aside id="asidebar" [class.asidebar-open]="!asidebarClosed" [class.asidebar-close]="asidebarClosed">
-
-        <div class="asidebar-container">
-
-            <div class="asidebar-content">
-                <ul class="menu-list">
-
-                    <!-- LOOP -->
+                <!-- MENU -->
+                <ul class="sidebar-menu">
                     <ng-container *ngFor="let item of sidebarItems">
 
                         <!-- SUBMENU -->
-                        <li *ngIf="item.children && item.allowedRole === user_type" class="submenu">
+                        <li *ngIf="item.children && item.allowedRole === user_type" [class.active]="item.open">
 
-                            <div class="submenu-title d-flex justify-content-between align-items-center"
-                                (click)="toggleSubmenu(item)">
+                            <button class="menu-btn" (click)="toggleSubmenuExclusive(item)">
+                                <img [src]="item.icon" />
+                                <span *ngIf="!asidebarClosed">{{ item.label }}</span>
+                                <i class="submenu-toggle" [class.open]="item.open"></i>
+                            </button>
 
-                                <div>
-                                    <img [src]="item.icon" class="icon-img me-2">
-
-                                <span class="mx-1 ln" *ngIf="!asidebarClosed">{{ item.label }}</span>
-                                </div>
-
-                                <i class="fa-solid" [ngClass]="item.open ? 'fa-chevron-up' : 'fa-chevron-down'"
-                                    style="font-size: 12px;"></i>
-                            </div>
-
-                            <ul id="sidebar-menu" class="submenu-list" *ngIf="item.open" [class.collapsed]="sidebarClosed">
-
+                            <ul class="submenu" [class.open]="item.open && !asidebarClosed">
                                 <li *ngFor="let child of item.children" routerLinkActive="active">
-                                    <a [routerLink]="child.route" class="submenu-link">
-                                    <span class="dot"></span>
-                                    <span *ngIf="!sidebarClosed" class="ln">{{ child.label }}</span>
+                                    <a [routerLink]="child.route">
+                                        {{ child.label }}
                                     </a>
                                 </li>
-
-                                </ul>
-
+                            </ul>
                         </li>
 
                         <!-- NORMAL MENU -->
-                        <li *ngIf="!item.children && item.allowedRole === user_type" routerLinkActive="active"
-                            [class.active]="item.route === currentRoute">
+                        <li *ngIf="!item.children && item.allowedRole === user_type" routerLinkActive="active">
 
-                            <a [routerLink]="item.route">
-                                <img [src]="item.icon" class="icon-img me-2">
-                                <span *ngIf="!asidebarClosed" class="ln">{{ item.label }}</span>
+                            <a class="menu-link" [routerLink]="item.route" (click)="closeAllSubmenus()">
+                                <img [src]="item.icon" />
+                                <span *ngIf="!asidebarClosed">{{ item.label }}</span>
                             </a>
                         </li>
 
                     </ng-container>
                 </ul>
 
-                <!-- FOOTER -->
-                <ul class="footer-list">
-                    <li style="cursor: pointer;">
-                        <a (click)="logoutmodal()">
-                            <img class="log-img" src="/assets/icons/logout.svg">
-                            <span *ngIf="!asidebarClosed" class="mx-2">Logout</span>
-                        </a>
-                    </li>
-                </ul>
+                <!-- USER PROFILE -->
+                <div class="sidebar-user" (mouseenter)="profileMenuOpen = true" (mouseleave)="profileMenuOpen = false">
+
+                    <img src="assets/icons/sidebar/profile-user.png" />
+                    <div>
+                        <span *ngIf="!asidebarClosed">{{ user_type }}</span>
+                        <div class="title"> Workspace</div>
+                    </div>
+
+                    <div class="profile-dropdown" *ngIf="profileMenuOpen">
+
+                        <button (click)="profileredirect()">View profile</button>
+                        <button class="danger" (click)="logoutmodal()">Logout</button>
+                    </div>
+
+                </div>
 
             </div>
-        </div>
-    </aside>
+        </aside>
 
-    <div class="layout">
-        <main class="content">
+
+
+        <!-- CONTENT -->
+        <main class="dashboard-content">
+
             <router-outlet></router-outlet>
         </main>
 
-        <footer class="app-footer" [class.visible]="showFooter">
-            <div class="footer-left">
-  © {{ currentYear }} All Rights Reserved
-  <span style="color: var(--primary-color1);">Datax Technologies</span>
-</div>
-            <div class="footer-right">
-                <a href="https://fourdotz.com/privacy-policy/" target="_blank">Privacy Policy</a> |
-                <a href="https://fourdotz.com/terms-of-service/" target="_blank">Terms & Conditions</a> |
-                <a href="https://fourdotz.com/refund-policy/" target="_blank">Refund Policy</a>
-            </div>
+        <!-- FOOTER -->
+        <footer class="dashboard-footer">
+            © {{ currentYear }} Datax Technologies
         </footer>
     </div>
 
-    <!-- MOBILE OVERLAY -->
-    <div class="asidebar-overlay" *ngIf="!asidebarClosed && isTabletOrMobile" (click)="closeAsidebar()"></div>
+
 
 </section>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" *ngIf="!asidebarClosed && isTabletOrMobile" (click)="closeAsidebar()">
+</div>

@@ -1,7 +1,6 @@
 <section class="form-section">
   <div class="form-header">
     <div class="header-left">
-      <span class="header-icon">🏠</span>
       <h3 class="heading-font">Owner Approval Request</h3>
     </div>
     <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
@@ -16,7 +15,7 @@
         <label class="medium-font">Owned Date <span class="required">*</span></label>
         <div class="date-input-wrapper">
           <input
-            type="text"
+            type="date"
             formControlName="ownedDate"
             class="input-custom-style regular-font date-display"
             placeholder="DD / MM / YYYY"
@@ -30,16 +29,14 @@
             #datePickerRef
             type="date"
             class="hidden-date-input"
-            [max]="todayStr"
+            
             (change)="onDateSelected($event)"
           />
         </div>
         <div *ngIf="ownerForm.get('ownedDate')?.touched && ownerForm.get('ownedDate')?.errors?.['required']" class="error-text">
           <i class="fa-solid fa-circle-exclamation"></i> Owned date is required
         </div>
-        <div *ngIf="ownerForm.get('ownedDate')?.touched && ownerForm.get('ownedDate')?.errors?.['futureDate']" class="error-text">
-          <i class="fa-solid fa-circle-exclamation"></i> Owned date cannot be in the future
-        </div>
+       
       </div>
 
 

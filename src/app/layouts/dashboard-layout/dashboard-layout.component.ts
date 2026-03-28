@@ -188,7 +188,7 @@ getUserData(role: any): void {
 
         // ✅ NEW PRIORITY CHECK (FIRST)
         if (userdata.property_merge_status === 'request_sent') {
-          this.router.navigateByUrl('/owner/waiting-for-approval');
+          this.router.navigateByUrl('/pre-approval/resident/dashboard');
           return; // 🚨 IMPORTANT: STOP HERE (no popup)
         }
 

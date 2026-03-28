@@ -49,7 +49,7 @@ export class OwnerApprovalModalComponent {
   ngOnInit(): void {
     this.ownerForm = this.fb.group({
    
-      ownedDate: ['', [Validators.required, noFutureDate]],
+      ownedDate: ['', [Validators.required]],
     });
   }
 
@@ -60,21 +60,28 @@ export class OwnerApprovalModalComponent {
   }
 
   /** When the user picks a date, format it as DD / MM / YYYY for display */
-  onDateSelected(event: Event): void {
-    const raw = (event.target as HTMLInputElement).value; // YYYY-MM-DD
-    if (!raw) return;
+onDateSelected(event: Event): void {
+  const raw = (event.target as HTMLInputElement).value; // YYYY-MM-DD
+  if (!raw) return;
 
-    const [year, month, day] = raw.split('-');
-    const displayValue = `${day} / ${month} / ${year}`;
+  const date = new Date(raw);
 
-    this.ownerForm.get('ownedDate')?.setValue(raw);        // store raw for validation
-    this.ownerForm.get('ownedDate')?.markAsTouched();
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = date.toLocaleString('en-GB', { month: 'short' }); // Jan, Feb, Mar
+  const year = date.getFullYear();
 
-    // update the visible input's displayed text
-    const displayInput = this.datePickerRef.nativeElement
-      .previousElementSibling as HTMLInputElement;
-    if (displayInput) displayInput.value = displayValue;
-  }
+  const displayValue = `${day}-${month}-${year}`;
+
+  // store raw value for backend
+  this.ownerForm.get('ownedDate')?.setValue(raw);
+  this.ownerForm.get('ownedDate')?.markAsTouched();
+
+  // update UI display input
+  const displayInput = this.datePickerRef.nativeElement
+    .previousElementSibling as HTMLInputElement;
+
+  if (displayInput) displayInput.value = displayValue;
+}
 
   onSubmit(): void {
     if (this.ownerForm.invalid) {
@@ -90,11 +97,11 @@ export class OwnerApprovalModalComponent {
       owned_date: this.ownerForm.get('ownedDate')?.value
     };
 
-    this.apiService.CreateServiceAdmin<any>(payload).subscribe({
+    this.apiService.ApproveRequest<any>(payload).subscribe({
       next: (res) => {
         if (res?.success) {
           this.toast.success(res.message, 'Success');
-          this.associationService.triggerCreateAdmin(res);
+          this.associationService.triggerresidentrequestapproval(res);
           this.submitbtn = true;
           this.closeModal();
         } else {

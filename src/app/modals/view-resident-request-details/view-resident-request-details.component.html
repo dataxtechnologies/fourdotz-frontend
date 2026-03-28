@@ -1,0 +1,154 @@
+<div class="request-container">
+    <div class="req-main-div">
+        <h4>Request Information</h4>
+        <i class="bx bx-x " (click)="closeModal()"></i>
+    </div>
+  <!-- Header -->
+  <div class="request-header">
+    <div class="header-content">
+      <div class="header-icon">
+       <i class="bx bx-file-detail"></i>
+      </div>
+      <div class="header-text">
+        <h1>Request Information</h1>
+        <p class="request-id">ID: {{ request._id }}</p>
+        <div  [class.approved]="request.approval_status" [class.pending]="!request.approval_status">
+      <span class="status-dot"></span>
+      {{ request.approval_status ? 'Approved' : 'Pending Approval' }}
+    </div>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  <!-- Main Content -->
+  <div class="request-body">
+    <!-- User Information Section -->
+    <div class="info-section">
+      <div class="section-header">
+       <i class="bx bx-user"></i>
+        <h2>User Information</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label regular-font ">Name</span>
+          <span class="info-value medium-font">{{ request.name }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label regular-font">Email</span>
+          <span class="info-value medium-font email">{{ request.email }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label regular-font">Mobile</span>
+          <span class="info-value medium-font">+91 {{ request.mobile }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label regular-font">User Type</span>
+          <span class="info-value medium-font capitalize">{{ formatLabel(request.user_type) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Property Information Section -->
+    <div class="info-section">
+      <div class="section-header">
+        <i class="bx bx-home"></i>
+        <h2>Property Details</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label regular-font">Property No</span>
+          <span class="info-value medium-font highlight">{{ request.property_no }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label regular-font">Occupancy Type</span>
+          <span class="info-value medium-font capitalize">{{ formatLabel(request.occupancy_type) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label regular-font">Agreement Type</span>
+          <span class="info-value medium-font capitalize">{{ formatLabel(request.agreement_type) }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label regular-font">Request Date</span>
+          <span class="info-value medium-font">{{ formatDate(request.created_time.$date) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Request Routing Section -->
+    <div class="info-section">
+      <div class="section-header">
+        <i class="bx bx-message-circle-detail"></i>
+        <h2>Request Routing</h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-item full-width">
+          <span class="info-label regular-font">Sent To</span>
+          <span class="info-value medium-font capitalize">{{ formatLabel(request.send_request_usertype) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Documents Section -->
+    <div class="info-section documents-section">
+      <div class="section-header">
+        <i class="bx bx-file"></i>
+        <h2>Documents</h2>
+      </div>
+      <div class="documents-grid">
+        <!-- Aadhar Card -->
+        <div class="document-card">
+          <div class="document-preview">
+            <img [src]="request.aadhar_card" alt="Aadhar Card" loading="lazy" />
+            <!-- <div class="document-overlay">
+              <button class="preview-btn" (click)="openDocument(request.aadhar_card)" title="View Document">
+               <i class="bx bx-eye"></i>
+              </button>
+            </div> -->
+          </div>
+          <div class="document-info">
+            <h3 class="regular-font">Aadhar Card</h3>
+            <p class="regular-font">Identity Document</p>
+          </div>
+          <div class="document-actions">
+            <!-- <button class="btn btn-view" (click)="openDocument(request.aadhar_card)">
+              <i class="bx bx-eye"></i>
+              View
+            </button> -->
+            <button class="btn btn-download" (click)="downloadDocument(request.aadhar_card, 'aadhar_card.jpeg')">
+              <i class="bx bx-arrow-to-bottom"></i>
+              Download
+            </button>
+          </div>
+        </div>
+
+        <!-- Agreement Document -->
+        <div class="document-card">
+          <div class="document-preview">
+            <img [src]="request.agreement" alt="Agreement" loading="lazy" />
+            <!-- <div class="document-overlay">
+              <button class="preview-btn" (click)="openDocument(request.agreement)" title="View Document">
+              <i class="bx bx-eye"></i>
+              </button>
+            </div> -->
+          </div>
+          <div class="document-info">
+            <h3 class="regular-font">{{ formatLabel(request.agreement_type) }}</h3>
+            <p class="regular-font">Legal Agreement</p>
+          </div>
+          <div class="document-actions">
+            <!-- <button class="btn btn-view" (click)="openDocument(request.agreement)">
+             <i class="bx bx-eye"></i>
+              View
+            </button> -->
+            <button class="btn btn-download" (click)="downloadDocument(request.agreement, 'agreement.jpeg')">
+             <i class="bx bx-arrow-to-bottom"></i>
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

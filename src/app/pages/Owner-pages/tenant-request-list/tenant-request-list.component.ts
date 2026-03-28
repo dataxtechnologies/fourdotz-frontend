@@ -8,6 +8,9 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angul
 import { AssociationServiceService } from '../../../services/association/association-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { OwnerApprovalModalComponent } from '../../../modals/owner-approval-modal/owner-approval-modal.component';
+import { TenantApprovalModalComponent } from '../../../modals/tenant-approval-modal/tenant-approval-modal.component';
+import { OwnerServiceService } from '../../../services/owner/owner-service.service';
+import { ViewResidentRequestDetailsComponent } from '../../../modals/view-resident-request-details/view-resident-request-details.component';
 
 @Component({
   selector: 'app-tenant-request-list',
@@ -27,7 +30,7 @@ export class TenantRequestListComponent {
   constructor(
     private route: Router,
     private apiService: ApiserviceService,
-    private AssociationService: AssociationServiceService,
+    private OwnerServiceService: OwnerServiceService,
     private Toast: ToastrService,
     private fb: FormBuilder,
     private Modal: ModalService
@@ -47,7 +50,7 @@ export class TenantRequestListComponent {
     this.getpropertiesdata(this.user_id);
     // this.openApprovalModal();
 
-    this.AssociationService.PropertyStatus$.subscribe((res) => {
+    this.OwnerServiceService.TenantRequestapprovalStatus$.subscribe((res) => {
       if (res) this.getpropertiesdata(this.user_id);
     });
 
@@ -56,17 +59,30 @@ export class TenantRequestListComponent {
     });
   }
 
-  openApprovalModal() {
-    this.Modal.open(OwnerApprovalModalComponent, {
+  openApprovalModal(data : any) {
+    this.Modal.open(TenantApprovalModalComponent, {
       modal: {
         enter: 'enter-coming-down 0.3s ease-out',
         leave: 'fade-out 0.5s',
       },
       overlay: { leave: 'fade-out 0.5s' },
-      data: { user_id: this.user_id },
+      data: { request_id: data },
       actions: { click: false, escape: false },
     });
   }
+
+    openviewModal(data : any){
+      this.Modal.open(ViewResidentRequestDetailsComponent, {
+        modal: {
+          enter: 'enter-coming-down 0.3s ease-out',
+          leave: 'fade-out 0.5s',
+        },
+        overlay: { leave: 'fade-out 0.5s' },
+        data: { request: data },
+        
+        actions: { click: false, escape: false },
+      });
+    }
 
   // ─── API ──────────────────────────────────────────────────────────────────
   getpropertiesdata(data: any) {

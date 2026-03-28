@@ -109,9 +109,18 @@
 
                                         <!-- Action -->
                                         <td>
-                                            <div class="view-btn-div" style="width: 50% !important;" >
+                                            <div class="view-btn-div" style="width: 100% !important;" (click)="openviewModal(item)">
                                                 <i class="bx bx-eye"></i>
                                                 <span class="view-btn" style="cursor: pointer;"> View</span>
+
+                                            </div>
+
+
+                                        </td>
+                                        <td>
+                                            <div class="view-btn-div" style="width: 100% !important;" (click)="openApprovalModal(item._id)">
+                                                <i class="bx bx-check-circle"></i>
+                                                <span class="view-btn" style="cursor: pointer;"> Approve</span>
 
                                             </div>
 

@@ -1,0 +1,139 @@
+<section class="page-wrapper">
+    <!-- Back Button --> <button (click)="goback()" class="back-button"> <svg height="16" width="16"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+            <path
+                d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z">
+            </path>
+        </svg> <span>Back</span> </button>
+    <!-- HEADER -->
+    <div class="profile-header">
+        <div class="left">
+            <div class="profile-image-section">
+
+                <div class="avatar-wrapper">
+
+                    <!-- PROFILE IMAGE -->
+                    <img *ngIf="user.profile_image && !imagePreview" [src]="user.profile_image" class="profile-img" />
+
+                    <!-- PREVIEW -->
+                    <img *ngIf="imagePreview" [src]="imagePreview" class="profile-img" />
+
+                    <!-- PLACEHOLDER -->
+                    <div *ngIf="!user.profile_image && !imagePreview" class="avatar-placeholder">
+                        {{ user.name.charAt(0) }}
+                    </div>
+
+                    <!-- HOVER OVERLAY -->
+                    <div class="avatar-overlay">
+
+                        <input type="file" accept="image/*" (change)="onImageSelected($event)" hidden #fileInput />
+
+                        <div class="overlay-actions">
+
+                            <button class="icon-btn" (click)="fileInput.click()">
+                                <i class="fa fa-pen"></i>
+                            </button>
+
+                            <!-- <button class="icon-btn delete" *ngIf="user.profile_image" (click)="removeProfileImage()">
+                                <i class="fa fa-trash"></i>
+                            </button> -->
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- SAVE / CANCEL -->
+                <div class="image-action-row" *ngIf="imagePreview">
+                    <button class="btn-light" (click)="cancelImage()">Cancel</button>
+                    <button class="btn-dark" (click)="uploadProfileImage()" [disabled]="imageUploading">
+                        {{ imageUploading ? 'Uploading...' : 'Save Photo' }}
+                    </button>
+                </div>
+
+            </div>
+
+            <div class="company-info">
+                <h2 class="medium-font">{{ user.name }}</h2>
+                <p class="regular-font">{{ user.email }} / {{ user_type }}</p>
+            </div>
+        </div>
+
+        <div class="right" *ngIf="user_type == 'owner' || user_type == 'tenant'">
+            <button class="btn-outline" (click)="enableEdit()" *ngIf="!editUpi">
+                Edit Profile
+            </button>
+        </div>
+    </div>
+
+    <!-- CARD -->
+    <div class="card">
+
+        <h3 class="medium-font">Profile Details</h3>
+
+        <!-- NAME -->
+        <div class="form-row">
+            <div class="label">
+                <h4 class="medium-font">Name</h4>
+            </div>
+            <div class="inputs">
+                <span class="regular-font">{{ user.name }}</span>
+            </div>
+        </div>
+
+        <!-- <hr /> -->
+
+        <!-- EMAIL -->
+        <div class="form-row">
+            <div class="label">
+                <h4 class="medium-font">Email</h4>
+            </div>
+            <div class="inputs">
+                <span class="regular-font">{{ user.email }}</span>
+            </div>
+        </div>
+
+        <!-- <hr /> -->
+
+        <!-- PHONE -->
+        <div class="form-row">
+            <div class="label">
+                <h4 class="medium-font">Phone Number</h4>
+            </div>
+            <div class="inputs">
+                <span class="regular-font">{{ user.mobile }}</span>
+            </div>
+        </div>
+
+        <!-- <hr /> -->
+
+        <!-- UPI -->
+        <div class="form-row" *ngIf="user_type == 'owner' || user_type == 'tenant'">
+            <div class="label">
+                <h4 class="medium-font">UPI ID</h4>
+
+            </div>
+
+            <div class="inputs">
+                <span *ngIf="!editUpi" class="regular-font">
+                    {{ user.upi_id || 'Not Added' }}
+                </span>
+
+                <input *ngIf="editUpi" type="text" [(ngModel)]="editableUpi" class="upi-input"
+                    placeholder="example@upi" />
+            </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions" *ngIf="editUpi">
+            <button class="btn-light" (click)="cancelEdit()" [disabled]="editbtnloading">
+                Cancel
+            </button>
+
+            <button class="btn-dark" (click)="saveUpi()" [disabled]="editbtnloading">
+                {{ editbtnloading ? 'Processing...' : 'Save changes' }}
+            </button>
+        </div>
+
+    </div>
+</section>

@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 // ─── Indian States ─────────────────────────────────────────────────────────────
 const INDIAN_STATES: string[] = [
@@ -192,6 +193,7 @@ export class ResidentOnboardingStartComponent {
     private http: HttpClient,
     private apiService: ApiserviceService,
     private router: Router,
+    private Acroute: ActivatedRoute,
     private Toast: ToastrService
   ) { }
 
@@ -200,7 +202,26 @@ export class ResidentOnboardingStartComponent {
     const userJson = localStorage.getItem('userdata');
     this.userData = userJson ? JSON.parse(userJson) : {};
     this.filteredStates = [...INDIAN_STATES];
+
+    this.Acroute.paramMap.subscribe(params => {
+    const value = params.get('username'); // or 'user_name' based on your route
+
+    if (value) {
+      // Detect if it's phone or email
+      if (/^[6-9]\d{9}$/.test(value)) {
+        // 📱 Phone number
+        this.basicForm.patchValue({ phone: value });
+      } else if (this.isValidEmail(value)) {
+        // 📧 Email
+        this.basicForm.patchValue({ email: value });
+      }
+    }
+  });
   }
+
+  isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
   // ════════════════════════════════════════════════════════════
   //  FORMS

@@ -112,11 +112,11 @@ export class SigninPageNewComponent implements OnInit {
       },
       error: (err: any) => {
         this.loginbtbloading = false;
-        this.toastr.info(
-          err?.error?.error?.message || 'Login failed',
-          'Info'
-        );
-        this.router.navigateByUrl('/onboarding/residents/get-started')
+        // this.toastr.info(
+        //   err?.error?.error?.message || 'Login failed',
+        //   'Info'
+        // );
+        this.router.navigateByUrl('/onboarding/residents/get-started/'+payload.user_name)
       },
     });
   }
