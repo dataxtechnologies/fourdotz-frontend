@@ -1,0 +1,528 @@
+<section class="main-sec-container">
+    <div class="logo-container">
+        <img src="assets/logo/fourdotz1.png" class="logo-png">
+        <h3 class="medium-font welcome-font">Welcome to Fourdotz</h3>
+    </div>
+
+    <div class="main-container">
+        <!-- LEFT SIDEBAR -->
+        <aside class="stepper">
+            <div *ngFor="let step of steps; let i = index" class="step">
+                <div class="step-icon">
+                    <div class="circle" [ngClass]="{'completed': i < currentStep - 1, 'active': i === currentStep - 1}">
+                        <span *ngIf="i < currentStep - 1">✔</span>
+                        <span *ngIf="i >= currentStep - 1">{{ i + 1 }}</span>
+                    </div>
+                    <div class="line" *ngIf="i !== steps.length - 1"></div>
+                </div>
+                <div class="step-content">
+                    <h4>{{ step.title }}</h4>
+                    <p>{{ step.subtitle }}</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- RIGHT CONTENT -->
+        <div class="content-container">
+            <div class="step-header">
+                <div class="step-label">STEP {{ currentStep }} OF {{ steps.length }}</div>
+                <h2 *ngIf="currentStep === 1">Basic Details</h2>
+                <h2 *ngIf="currentStep === 2">Resident Details</h2>
+                <h2 *ngIf="currentStep === 3">Upload Documents</h2>
+                <h2 *ngIf="currentStep === 4">Preview & Submit</h2>
+                <p class="step-description">
+                    <ng-container *ngIf="currentStep === 1">Enter your personal information and verify your
+                        identity.</ng-container>
+                    <ng-container *ngIf="currentStep === 2">Select your association and property details.</ng-container>
+                    <ng-container *ngIf="currentStep === 3">Upload the required verification documents.</ng-container>
+                    <ng-container *ngIf="currentStep === 4">Review all your details before final
+                        submission.</ng-container>
+                </p>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 STEP 1 — Basic Details
+            ════════════════════════════════════════════ -->
+            <div *ngIf="currentStep === 1" class="form-section">
+                <form [formGroup]="basicForm" (ngSubmit)="onSubmit()">
+
+                    <!-- First Name -->
+                    <div class="form-group">
+                        <label class="medium-font">First Name <span class="required">*</span></label>
+                        <input type="text" formControlName="first_name" class="inp-cus regular-font"
+                            placeholder="Enter First Name" />
+                        <div *ngIf="basicForm.get('first_name')?.touched">
+                            <span *ngIf="basicForm.get('first_name')?.errors?.['required']" class="error">
+                                First Name is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="form-group">
+                        <label class="medium-font">Last Name <span class="required">*</span></label>
+                        <input type="text" formControlName="last_name" class="inp-cus regular-font"
+                            placeholder="Enter Last Name" />
+                        <div *ngIf="basicForm.get('last_name')?.touched">
+                            <span *ngIf="basicForm.get('last_name')?.errors?.['required']" class="error">
+                                Last Name is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label class="medium-font">Email Address <span class="required">*</span></label>
+                        <input type="email" formControlName="email" class="inp-cus regular-font"
+                            placeholder="Enter Email Address" [readOnly]="otpVerified" />
+                        <div *ngIf="basicForm.get('email')?.touched">
+                            <span *ngIf="basicForm.get('email')?.errors?.['required']" class="error">
+                                Email is required.
+                            </span>
+                            <span *ngIf="basicForm.get('email')?.errors?.['email']" class="error">
+                                Enter a valid email address.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Phone + Send OTP -->
+                    <div class="form-group">
+                        <label class="medium-font">Phone Number <span class="required">*</span></label>
+                        <div class="otp-send-row">
+                            <input type="tel" formControlName="phone" class="inp-cus regular-font"
+                                placeholder="e.g., 9876543210" maxlength="10" [readOnly]="otpVerified" />
+                            <button type="button" class="btn-otp" (click)="sendOtp()"
+                                [disabled]="otpSending || otpVerified || !canSendOtp">
+                                <span *ngIf="otpSending">Sending...</span>
+                                <span *ngIf="!otpSending && !otpVerified && !otpSent">Send OTP</span>
+                                <span *ngIf="!otpSending && !otpVerified && otpSent">Resend OTP</span>
+                                <span *ngIf="otpVerified">✔ Verified</span>
+                            </button>
+                        </div>
+                        <div *ngIf="basicForm.get('phone')?.touched">
+                            <span *ngIf="basicForm.get('phone')?.errors?.['required']" class="error">
+                                Phone number is required.
+                            </span>
+                            <span *ngIf="basicForm.get('phone')?.errors?.['pattern']" class="error">
+                                Enter a valid 10-digit number starting with 6, 7, 8, or 9.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- OTP Input (shown after OTP sent, hidden after verified) -->
+                    <div class="form-group" *ngIf="otpSent && !otpVerified">
+                        <label class="medium-font">Enter OTP <span class="required">*</span></label>
+                        <div class="otp-verify-row">
+                            <input type="text" [(ngModel)]="otpInput" [ngModelOptions]="{standalone: true}"
+                                class="inp-cus regular-font otp-input" placeholder="Enter OTP" maxlength="6" />
+                            <button type="button" class="btn-otp btn-verify" (click)="verifyOtp()"
+                                [disabled]="otpVerifying">
+                                <span *ngIf="otpVerifying">Verifying...</span>
+                                <span *ngIf="!otpVerifying">Verify OTP</span>
+                            </button>
+                        </div>
+                        <div class="otp-resend-row">
+                            <small *ngIf="otpResendTimer > 0" class="text-gray">
+                                Resend OTP in {{ otpResendTimer }}s
+                            </small>
+                            <button type="button" *ngIf="otpResendTimer === 0" class="btn-link" (click)="resendOtp()">
+                                Resend OTP
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- OTP verified banner -->
+                    <div class="otp-success-banner" *ngIf="otpVerified">
+                        <span class="otp-success-icon">✔</span>
+                        Phone &amp; Email verified successfully!
+                    </div>
+
+                    <!-- User Type — shown only after OTP verified -->
+                    <div class="form-group" *ngIf="otpVerified">
+                        <label class="medium-font">You are <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-card" [class.selected]="basicForm.get('user_type')?.value === 'owner'">
+                                <input type="radio" formControlName="user_type" value="owner" />
+                                <div class="radio-card-inner">
+                                    <span class="radio-icon"><i class="bx bx-home-alt"></i></span>
+                                    <span class="radio-label">Owner</span>
+                                </div>
+                            </label>
+                            <label class="radio-card" [class.selected]="basicForm.get('user_type')?.value === 'tenant'">
+                                <input type="radio" formControlName="user_type" value="tenant" />
+                                <div class="radio-card-inner">
+                                    <span class="radio-icon"><i class="bx bx-key"></i></span>
+                                    <span class="radio-label">Tenant</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div *ngIf="basicForm.get('user_type')?.touched">
+                            <span *ngIf="basicForm.get('user_type')?.errors?.['required']" class="error">
+                                Please select your user type.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Password — shown only after OTP verified -->
+                    <ng-container *ngIf="otpVerified">
+                        <div class="form-group">
+                            <label class="medium-font">New Password <span class="required">*</span></label>
+                            <div class="password-wrapper">
+                                <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                                    class="inp-cus regular-font" placeholder="Create a password" />
+                                <button type="button" class="eye-toggle" (click)="showPassword = !showPassword">
+                                    <span *ngIf="showPassword"><i class="bx bx-eye-alt"></i></span>
+                                    <span *ngIf="!showPassword"><i class="bx bx-eye-closed"></i></span>
+                                </button>
+                            </div>
+                            <div *ngIf="basicForm.get('password')?.touched">
+                                <span *ngIf="basicForm.get('password')?.errors?.['required']" class="error">
+                                    Password is required.
+                                </span>
+                                <span *ngIf="basicForm.get('password')?.errors?.['minlength']" class="error">
+                                    Password must be at least 6 characters.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="medium-font">Confirm Password <span class="required">*</span></label>
+                            <div class="password-wrapper">
+                                <input [type]="showConfirmPassword ? 'text' : 'password'"
+                                    formControlName="confirm_password" class="inp-cus regular-font"
+                                    placeholder="Confirm your password" />
+                                <button type="button" class="eye-toggle"
+                                    (click)="showConfirmPassword = !showConfirmPassword">
+                                    <span *ngIf="showConfirmPassword"><i class="bx bx-eye-alt"></i></span>
+                                    <span *ngIf="!showConfirmPassword"><i class="bx bx-eye-closed"></i></span>
+                                </button>
+                            </div>
+                            <div *ngIf="basicForm.get('confirm_password')?.touched">
+                                <span *ngIf="basicForm.get('confirm_password')?.errors?.['required']" class="error">
+                                    Confirm Password is required.
+                                </span>
+                                <span *ngIf="basicForm.get('confirm_password')?.errors?.['passwordMismatch']"
+                                    class="error">
+                                    Passwords do not match.
+                                </span>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <div class="form-navigation">
+                        <button type="submit" class="button-next" [disabled]="!otpVerified" *ngIf="!selfsigninbtnloading">
+                            Save and continue
+                        </button>
+                        <button type="button" class="button-next" disabled style="opacity: 0.7; cursor: not-allowed;" *ngIf="selfsigninbtnloading">
+                            Processing...
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 STEP 2 — Resident Details
+            ════════════════════════════════════════════ -->
+            <div *ngIf="currentStep === 2" class="form-section">
+                <form [formGroup]="residentForm" (ngSubmit)="goToNextStep()">
+
+                    <!-- State Dropdown -->
+                    <div class="form-group">
+                        <label class="medium-font">State <span class="required">*</span></label>
+                        <div class="searchable-select-wrapper">
+                            <input type="text" class="inp-cus regular-font" placeholder="Search or select a state..."
+                                [(ngModel)]="stateSearch" [ngModelOptions]="{standalone: true}"
+                                (focus)="stateDropdownOpen = true" (input)="onStateSearch()" autocomplete="off" />
+                            <div class="dropdown-list" *ngIf="stateDropdownOpen && filteredStates.length > 0">
+                                <div class="dropdown-item" *ngFor="let state of filteredStates"
+                                    (mousedown)="selectState(state)">{{ state }}</div>
+                            </div>
+                            <div class="dropdown-list"
+                                *ngIf="stateDropdownOpen && filteredStates.length === 0 && stateSearch">
+                                <div class="dropdown-item no-result">No states found</div>
+                            </div>
+                        </div>
+                        <div *ngIf="residentForm.get('state')?.touched">
+                            <span *ngIf="residentForm.get('state')?.errors?.['required']" class="error">
+                                State is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- District Dropdown -->
+                    <div class="form-group">
+                        <label class="medium-font">District <span class="required">*</span></label>
+                        <div class="searchable-select-wrapper">
+                            <input type="text" class="inp-cus regular-font"
+                                [placeholder]="residentForm.get('state')?.value ? 'Search or select a district...' : 'Select a state first'"
+                                [(ngModel)]="districtSearch" [ngModelOptions]="{standalone: true}"
+                                (focus)="onDistrictFocus()" (input)="onDistrictSearch()"
+                                [disabled]="!residentForm.get('state')?.value" autocomplete="off" />
+                            <div class="dropdown-list" *ngIf="districtDropdownOpen && filteredDistricts.length > 0">
+                                <div class="dropdown-item" *ngFor="let district of filteredDistricts"
+                                    (mousedown)="selectDistrict(district)">{{ district }}</div>
+                            </div>
+                            <div class="dropdown-list"
+                                *ngIf="districtDropdownOpen && filteredDistricts.length === 0 && districtSearch">
+                                <div class="dropdown-item no-result">No districts found</div>
+                            </div>
+                        </div>
+                        <div *ngIf="residentForm.get('district')?.touched">
+                            <span *ngIf="residentForm.get('district')?.errors?.['required']" class="error">
+                                District is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Association Dropdown -->
+                    <div class="form-group">
+                        <label class="medium-font">Association <span class="required">*</span></label>
+                        <div class="searchable-select-wrapper">
+                            <div class="input-with-loader">
+                                <input type="text" class="inp-cus regular-font"
+                                    [placeholder]="residentForm.get('district')?.value ? 'Search or select an association...' : 'Select a district first'"
+                                    [(ngModel)]="associationSearch" [ngModelOptions]="{standalone: true}"
+                                    (focus)="onAssociationFocus()" (input)="onAssociationSearch()"
+                                    [disabled]="!residentForm.get('district')?.value" autocomplete="off" />
+                                <span class="field-spinner" *ngIf="associationLoading">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                </span>
+                            </div>
+                            <div class="dropdown-list"
+                                *ngIf="associationDropdownOpen && filteredAssociations.length > 0">
+                                <div class="dropdown-item" *ngFor="let assoc of filteredAssociations"
+                                    (mousedown)="selectAssociation(assoc)">
+                                    <div class="dropdown-item-main">{{ assoc.property_name || assoc.name }}</div>
+                                    <div class="dropdown-item-sub" *ngIf="assoc.city || assoc.district">
+                                        {{ assoc.city }}{{ assoc.city && assoc.district ? ', ' : '' }}{{ assoc.district
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-list"
+                                *ngIf="associationDropdownOpen && filteredAssociations.length === 0 && !associationLoading && residentForm.get('district')?.value">
+                                <div class="dropdown-item no-result">No associations found</div>
+                            </div>
+                        </div>
+                        <div *ngIf="residentForm.get('association_id')?.touched">
+                            <span *ngIf="residentForm.get('association_id')?.errors?.['required']" class="error">
+                                Association is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Property Dropdown -->
+                    <div class="form-group">
+                        <label class="medium-font">Property <span class="required">*</span></label>
+                        <div class="searchable-select-wrapper">
+                            <div class="input-with-loader">
+                                <input type="text" class="inp-cus regular-font"
+                                    [placeholder]="residentForm.get('association_id')?.value ? 'Search or select a property...' : 'Select an association first'"
+                                    [(ngModel)]="propertySearch" [ngModelOptions]="{standalone: true}"
+                                    (focus)="onPropertyFocus()" (input)="onPropertySearch()"
+                                    [disabled]="!residentForm.get('association_id')?.value" autocomplete="off" />
+                                <span class="field-spinner" *ngIf="propertyLoading">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                </span>
+                            </div>
+                            <div class="dropdown-list" *ngIf="propertyDropdownOpen && filteredProperties.length > 0">
+                                <div class="dropdown-item" *ngFor="let prop of filteredProperties"
+                                    (mousedown)="selectProperty(prop)">
+                                    <div class="dropdown-item-main">{{ prop.property_no || prop.property_name || prop.unit_number || prop.name }}</div>
+                                    <div class="dropdown-item-sub" *ngIf="prop.block || prop.floor">
+                                        {{ prop.block ? 'Block ' + prop.block : '' }}{{ prop.block && prop.floor ? ' · '
+                                        : '' }}{{ prop.floor ? 'Floor ' + prop.floor : '' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-list"
+                                *ngIf="propertyDropdownOpen && filteredProperties.length === 0 && !propertyLoading && residentForm.get('association_id')?.value">
+                                <div class="dropdown-item no-result">No properties found</div>
+                            </div>
+                        </div>
+                        <div *ngIf="residentForm.get('property_id')?.touched">
+                            <span *ngIf="residentForm.get('property_id')?.errors?.['required']" class="error">
+                                Property is required.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Occupancy Status — shown after property selected -->
+                    <div class="form-group" *ngIf="residentForm.get('property_id')?.value">
+                        <label class="medium-font">Occupancy Status <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-card"
+                                [class.selected]="residentForm.get('occupancy_status')?.value === 'current_occupant'">
+                                <input type="radio" formControlName="occupancy_status" value="current_occupant" />
+                                <div class="radio-card-inner">
+                                    <span class="radio-icon"><i class="bx bx-home-circle"></i></span>
+                                    <span class="radio-label">Current Occupant</span>
+                                </div>
+                            </label>
+                            <label class="radio-card"
+                                [class.selected]="residentForm.get('occupancy_status')?.value === 'move_in'">
+                                <input type="radio" formControlName="occupancy_status" value="move_in" />
+                                <div class="radio-card-inner">
+                                    <span class="radio-icon"><i class="bx bx-package"></i></span>
+                                    <span class="radio-label">Move In</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div *ngIf="residentForm.get('occupancy_status')?.touched">
+                            <span *ngIf="residentForm.get('occupancy_status')?.errors?.['required']" class="error">
+                                Please select occupancy status.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-navigation">
+                        <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
+                        <button type="submit" class="button-next">Save and continue</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 STEP 3 — Documents
+            ════════════════════════════════════════════ -->
+            <div *ngIf="currentStep === 3" class="form-section">
+                <div class="info-box">
+                    <div class="info-icon">⚠️</div>
+                    <div class="info-content">
+                        <div class="info-title">Document Requirements</div>
+                        <div class="info-text">
+                            Upload clear copies of all documents. File size must be below 2 MB each.
+                            Accepted formats: JPG, PNG, PDF.
+                        </div>
+                    </div>
+                </div>
+
+                <form [formGroup]="documentForm" (ngSubmit)="goToNextStep()">
+                    <div class="document-uploads">
+
+                        <!-- Primary Doc: Sale Deed (owner) or Rental Agreement (tenant) -->
+                        <div class="form-group">
+                            <label class="medium-font">
+                                {{ isPrimaryDocLabel }} <span class="required">*</span>
+                            </label>
+                            <input type="file" class="inp-cus regular-font" (change)="onPrimaryDocChange($event)"
+                                accept="image/*,.pdf" />
+                            <div *ngIf="documentForm.get('doc_primary')?.value">
+                                ✔ Selected: {{ documentForm.get('doc_primary')?.value.name }}
+                            </div>
+                            <div *ngIf="documentForm.get('doc_primary')?.touched">
+                                <span *ngIf="documentForm.get('doc_primary')?.errors?.['required']" class="error">
+                                    {{ isPrimaryDocLabel }} is required.
+                                </span>
+                                <span *ngIf="documentForm.get('doc_primary')?.errors?.['fileSize']" class="error">
+                                    File size must be 2 MB or less.
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Aadhar Card -->
+                        <div class="form-group">
+                            <label class="medium-font">Aadhar Card <span class="required">*</span></label>
+                            <input type="file" class="inp-cus regular-font" (change)="onAadharChange($event)"
+                                accept="image/*,.pdf" />
+                            <div *ngIf="documentForm.get('aadhar_card')?.value">
+                                ✔ Selected: {{ documentForm.get('aadhar_card')?.value.name }}
+                            </div>
+                            <div *ngIf="documentForm.get('aadhar_card')?.touched">
+                                <span *ngIf="documentForm.get('aadhar_card')?.errors?.['required']" class="error">
+                                    Aadhar Card is required.
+                                </span>
+                                <span *ngIf="documentForm.get('aadhar_card')?.errors?.['fileSize']" class="error">
+                                    File size must be 2 MB or less.
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-navigation">
+                        <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
+                        <button type="submit" class="button-next">Save and continue</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ═══════════════════════════════════════════
+                 STEP 4 — Preview & Submit
+            ════════════════════════════════════════════ -->
+            <div *ngIf="currentStep === 4" class="form-section">
+                <p class="guidance-text">
+                    Please review all your details carefully. Once submitted, your information will be sent for
+                    verification.
+                </p>
+
+                <!-- Basic Details Preview -->
+                <div class="review-block">
+                    <h3>Basic Details</h3>
+                    <p class="regular-font address-wrap">
+                        <strong>Name:</strong> {{ basicForm.value.first_name }} {{ basicForm.value.last_name }}
+                    </p>
+                    <p class="regular-font address-wrap">
+                        <strong>Email:</strong> {{ basicForm.value.email }}
+                    </p>
+                    <p class="regular-font address-wrap">
+                        <strong>Phone:</strong> {{ basicForm.value.phone }}
+                    </p>
+                    <p class="regular-font address-wrap">
+                        <strong>You are:</strong>
+                        <span class="badge-user-type" [ngClass]="basicForm.value.user_type">
+                            {{ basicForm.value.user_type | titlecase }}
+                        </span>
+                    </p>
+                </div>
+
+                <!-- Resident Details Preview -->
+                <div class="review-block">
+                    <h3>Resident Details</h3>
+                    <p class="regular-font address-wrap"><strong>State:</strong> {{ residentForm.value.state }}</p>
+                    <p class="regular-font address-wrap"><strong>District:</strong> {{ residentForm.value.district }}
+                    </p>
+                    <p class="regular-font address-wrap">
+                        <strong>Association:</strong> {{ selectedAssociation?.property_name || selectedAssociation?.name
+                        || '—' }}
+                    </p>
+                    <p class="regular-font address-wrap">
+                        <strong>Property:</strong> {{ selectedProperty?.property_no || selectedProperty?.property_name
+                        || '—' }}
+
+                        
+                    </p>
+                    <p class="regular-font address-wrap">
+                        <strong>Occupancy Status:</strong>
+                        {{ residentForm.value.occupancy_status === 'current_occupant' ? 'Current Occupant' : 'Move In'
+                        }}
+                    </p>
+                </div>
+
+                <!-- Documents Preview -->
+                <div class="review-block">
+                    <h3>Uploaded Documents</h3>
+                    <p class="regular-font">
+                        {{ isPrimaryDocLabel }}:
+                        <strong>{{ saleDeedFile ? saleDeedFile.name : 'Missing' }}</strong>
+                    </p>
+                    <p class="regular-font">
+                        Aadhar Card:
+                        <strong>{{ aadharFile ? aadharFile.name : 'Missing' }}</strong>
+                    </p>
+                </div>
+
+                <div class="form-navigation">
+                    <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
+                    <button type="button" (click)="submitDocuments()" class="button-next" *ngIf="!submitLoading">
+                        Submit Onboarding
+                    </button>
+                    <button type="button" class="button-next btn-loading" *ngIf="submitLoading">
+                        Submitting...
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

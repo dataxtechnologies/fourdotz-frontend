@@ -1,0 +1,102 @@
+<div class="page-shell">
+  <!-- Animated background grid -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <!-- Floating particles -->
+  <ul class="particles" aria-hidden="true">
+    <li *ngFor="let i of [0,1,2,3,4,5,6]" class="particle" [attr.data-i]="i"></li>
+  </ul>
+
+  <!-- Main card -->
+  <main class="approval-card" role="main">
+
+    <!-- Top stripe shimmer -->
+    <div class="card-stripe" aria-hidden="true"></div>
+
+    <!-- GIF / Illustration area -->
+    <div class="media-zone">
+      <div class="ring ring--outer" aria-hidden="true"></div>
+      <div class="ring ring--inner" aria-hidden="true"></div>
+      <div class="orbit-dot" aria-hidden="true"></div>
+      <div class="media-glow" aria-hidden="true"></div>
+
+      <div class="media-frame">
+        <!--
+          Replace the src below with your actual GIF path, e.g.:
+          src="assets/waiting.gif"
+          The emoji fallback is shown when no image is supplied.
+        -->
+        <img
+          src="assets/waiting.gif"
+          alt="Waiting animation"
+          class="media-gif"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        />
+        <span class="media-fallback" style="display:none;">⏳</span>
+      </div>
+    </div>
+
+    <!-- Badge -->
+    <span class="status-badge">
+      <span class="badge-pulse" aria-hidden="true"></span>
+      Pending Review
+    </span>
+
+    <!-- Heading -->
+    <h1 class="heading medium-font">
+      Waiting for<br />
+      <span class="heading-accent ">Approval</span>
+    </h1>
+
+    <!-- Sub-copy -->
+    <p class="sub-copy regular-font">
+      Your request is in the queue. Our team is reviewing your details — you'll
+      receive a notification as soon as a decision is made.
+    </p>
+
+    <!-- Progress stepper -->
+    <ol class="stepper" aria-label="Approval progress">
+      <li
+        *ngFor="let step of statusSteps; let last = last"
+        class="step"
+        [class.step--done]="step.done"
+        [class.step--active]="step['active']"
+      >
+        <div class="step-icon">
+          <svg *ngIf="step.done" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span *ngIf="!step.done && !step['active']" class="step-circle"></span>
+          <span *ngIf="step['active']" class="step-spinner" aria-hidden="true"></span>
+        </div>
+        <span class="step-label regular-font">{{ step.label }}</span>
+        <div *ngIf="!last" class="step-line"></div>
+      </li>
+    </ol>
+
+    <!-- Divider -->
+    <div class="divider" aria-hidden="true"></div>
+
+   
+
+    <!-- Refresh button -->
+    <button
+      class="refresh-btn"
+      [class.refresh-btn--spinning]="isRefreshing"
+      (click)="getUserData(user_type)"
+      [disabled]="isRefreshing"
+      aria-live="polite"
+      [attr.aria-label]="isRefreshing ? 'Checking status…' : 'Refresh status'"
+    >
+      <span class="btn-inner">
+        
+        <span class="btn-text regular-font">{{ isRefreshing ? 'Checking…' : 'Refresh Status' }}</span>
+      </span>
+      <span class="btn-shine" aria-hidden="true"></span>
+    </button>
+
+    
+
+  </main>
+</div>

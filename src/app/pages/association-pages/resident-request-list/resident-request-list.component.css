@@ -1,0 +1,59 @@
+/* ================= FIX CONTAINER ================= */
+.container {
+    display: block;
+    /* IMPORTANT */
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ================= HEADER ================= */
+.header-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head-cont h2 {
+    font-size: 30px;
+}
+
+
+/* ================= ACTION ================= */
+.mail-btn {
+    color: var(--primary-color1);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+
+.btn-add {
+    color: var(--primary-color1);
+    font-weight: 700;
+    padding: 10px 8px;
+    background: #faf9f4;
+    border-radius: 12px !important;
+    border: 2px solid var(--primary-color1);
+}
+
+
+.mail-btn{
+    color: var(--primary-color1);
+    font-weight: bold;
+}
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #2f8f2f;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

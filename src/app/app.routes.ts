@@ -93,6 +93,12 @@ import { ViewRequestAssociationAdminComponent } from './pages/request-management
 import { ViewRequestUsersComponent } from './pages/request-management/view-request-users/view-request-users.component';
 import { SmartEntryComponent } from './pages/gate-keeper-pages/smart-entry/smart-entry.component';
 import { NoInternetPageComponent } from './pages/no-internet-page/no-internet-page.component';
+import { AssociationOnboardingStartComponent } from './pages/onboarding-pages/association-onboarding-start/association-onboarding-start.component';
+import { ResidentOnboardingStartComponent } from './pages/onboarding-pages/resident-onboarding-start/resident-onboarding-start.component';
+import { OwnerWaitingComponent } from './pages/waiting-area/owner-waiting/owner-waiting.component';
+import { TenantWaitingComponent } from './pages/waiting-area/tenant-waiting/tenant-waiting.component';
+import { ResidentRequestListComponent } from './pages/association-pages/resident-request-list/resident-request-list.component';
+import { TenantRequestListComponent } from './pages/Owner-pages/tenant-request-list/tenant-request-list.component';
 
 export const routes: Routes = [
   {
@@ -124,7 +130,7 @@ export const routes: Routes = [
     ],
   },
 
-  {
+   {
     path: 'onboarding',
     component: OnboardingLayoutComponent,
     children: [
@@ -134,6 +140,16 @@ export const routes: Routes = [
         component: AssociationOnboardDocumentsComponent,
       },
     ],
+  },
+
+  {
+    path: 'onboarding/associations/get-started',
+    component: AssociationOnboardingStartComponent,
+  },
+
+  {
+    path: 'onboarding/residents/get-started',
+    component: ResidentOnboardingStartComponent,
   },
 
   {
@@ -206,8 +222,17 @@ export const routes: Routes = [
         path: 'announcement',
         component: Announcementcomponent,
       },
+
+      {
+        path: 'residents-request-list',
+        component: ResidentRequestListComponent,
+      },
     ],
   },
+
+
+
+
 
   {
     path: 'Owner',
@@ -234,6 +259,11 @@ export const routes: Routes = [
       {
         path: 'view-tenants/:tenantId',
         component: OwnerViewTenantsDetailsComponent,
+      },
+
+      {
+        path: 'tenant-request-list',
+        component: TenantRequestListComponent,
       },
     ],
   },
@@ -443,6 +473,17 @@ export const routes: Routes = [
         component: TableComponent,
       },
     ],
+  },
+
+
+  {
+    path : 'owner/waiting-for-approval',
+    component: OwnerWaitingComponent,
+  },
+
+  {
+    path : 'tenant/waiting-for-approval',
+    component: TenantWaitingComponent,
   },
 
 

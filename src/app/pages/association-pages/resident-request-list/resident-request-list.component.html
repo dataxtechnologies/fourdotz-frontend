@@ -1,0 +1,181 @@
+<section>
+    <div>
+        <!-- HEADER -->
+        <div class="container header-cont">
+            <div class="head-cont">
+                <h2>Residents Request List</h2>
+            </div>
+        </div>
+        <div class="main-head-cont mt-3">
+            <p class="text-muted mb-0 regular-font">
+                This is the Residents Request List page where you manage all residents requests.
+            </p>
+        </div>
+
+        <!-- TABLE CARD -->
+        <div class="container" id="tour-resident-list">
+            <div class="item">
+                <div class="new-table-wrapper">
+
+                    <!-- FILTERS -->
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
+                            <!-- Search by name / email / phone / property -->
+                            <div class="search-box">
+                                <input
+                                    type="text"
+                                    placeholder="Search Name / Email / Phone / Property"
+                                    formControlName="search"
+                                    class="regular-font"
+                                />
+                            </div>
+
+                            <!-- Filter by Approval Status -->
+                            <div class="search-box">
+                                <select formControlName="approvalStatus" class="regular-font">
+                                    <option value="">All Status</option>
+                                    <option value="true">Approved</option>
+                                    <option value="false">Pending</option>
+                                </select>
+                            </div>
+
+                            <button type="button" class="filter-reset-btn" (click)="resetFilters()">
+                                Reset
+                            </button>
+                        </div>
+                    </form>
+                    <!-- END FILTER -->
+
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
+                            <table class="new-table">
+                                <!-- HEADER -->
+                                <thead>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Property No.</th>
+                                        <th>Request details</th>
+                                        <th>Agreement Type</th>
+                                        <th>Occupancy Type</th>
+                                        <th>Status</th>
+                                        <th>Requested On</th>
+                                        <th>View</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <!-- BODY -->
+                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+                                    <tr *ngFor="let item of Residentlist1.paginatedData; let i = index">
+
+                                        <!-- Property No -->
+                                        <td class="sticky-col lead-col">
+                                            <span class="prop-badge">{{ item.property_no || '—' }}</span>
+                                        </td>
+
+                                         <td>
+                                            <div class="td-main">{{ item.name || '—' }}</div>
+                                            <div class="td-sub">
+                                                {{ item.mobile || '—' }} |
+                                                {{ item.email || '—' }}
+                                            </div>
+                                        </td>
+
+                                      
+
+                                        <!-- Agreement Type -->
+                                        <td>
+                                            <span class="tag tag-agreement">
+                                                {{ formatLabel(item.agreement_type) }}
+                                            </span>
+                                        </td>
+
+                                        <!-- Occupancy Type -->
+                                        <td>
+                                            <span class="tag tag-occupancy">
+                                                {{ formatLabel(item.occupancy_type) }}
+                                            </span>
+                                        </td>
+
+                                        <!-- Approval Status -->
+                                        <td>
+                                            <span class="status-chip" [class.approved]="item.approval_status" [class.pending]="!item.approval_status">
+                                                <span class="status-dot"></span>
+                                                {{ item.approval_status ? 'Approved' : 'Pending' }}
+                                            </span>
+                                        </td>
+
+                                        <!-- Created Time -->
+                                        <td>{{ item.created_time?.$date | date: 'dd MMM yyyy, h:mm a' }}</td>
+
+                                        <!-- Action -->
+                                        <td>
+                                            <div class="view-btn-div" style="width: 50% !important;" >
+                                                <i class="bx bx-eye"></i>
+                                                <span class="view-btn" style="cursor: pointer;"> View</span>
+
+                                            </div>
+
+
+                                        </td>
+
+                                    </tr>
+
+                                    <tr *ngIf="Residentlist1.paginatedData.length === 0">
+                                        <td colspan="9" class="no-data regular-font">
+                                            <i class="fa-solid fa-inbox"></i>
+                                            No Data Found
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- SKELETON -->
+                            <ng-template #tableSkeleton>
+                                <tbody>
+                                    <tr *ngFor="let i of [1,2,3,4,5]" style="height:52px;">
+                                        <td class="sticky-col lead-col"><span class="placeholder col-8"></span></td>
+                                        <td><span class="placeholder col-7"></span></td>
+                                        <td><span class="placeholder col-9"></span></td>
+                                        <td><span class="placeholder col-6"></span></td>
+                                        <td><span class="placeholder col-7"></span></td>
+                                        <td><span class="placeholder col-6"></span></td>
+                                        <td><span class="placeholder col-5"></span></td>
+                                        <td><span class="placeholder col-6"></span></td>
+                                        <td><span class="placeholder col-4"></span></td>
+                                    </tr>
+                                </tbody>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="crm-pagination">
+                        <div class="regular-font">
+                            Showing
+                            <span class="medium-font">{{ Residentlist1.startIndex + 1 }}</span>
+                            to
+                            <span class="medium-font">{{ Residentlist1.endIndex + 1 }}</span>
+                            of
+                            <span class="medium-font">{{ Residentlist1.totalData }}</span>
+                            entries
+                        </div>
+                        <div class="d-flex gap-3 regular-font">
+                            <button class="nav-btn" (click)="Residentlist1.prevPage()"
+                                [disabled]="Residentlist1.currentPage === 1">
+                                ‹ Prev
+                            </button>
+                            <button class="page-btn active">
+                                {{ Residentlist1.currentPage }}
+                            </button>
+                            <button class="nav-btn" (click)="Residentlist1.nextPage()"
+                                [disabled]="Residentlist1.currentPage === Residentlist1.totalPages">
+                                Next ›
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

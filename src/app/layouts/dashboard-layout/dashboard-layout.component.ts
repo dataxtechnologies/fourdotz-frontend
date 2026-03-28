@@ -49,7 +49,7 @@ export class DashboardLayoutComponent implements OnInit {
   =============================== */
   asidebarClosed = false;
   isTabletOrMobile = false;
-  
+
 
   /* ===============================
      USER PROFILE DROPDOWN
@@ -69,9 +69,11 @@ export class DashboardLayoutComponent implements OnInit {
   user_id = localStorage.getItem('user_id');
 
   loadingUserData = false;
-  userdata : any
+  userdata: any
 
-  username : any
+  username: any
+
+  globalLoading = false;
 
   constructor(
     private router: Router,
@@ -110,10 +112,10 @@ export class DashboardLayoutComponent implements OnInit {
         this.getUserData(this.user_type);
       }
     });
-const storedUser = localStorage.getItem('userdata');
+    const storedUser = localStorage.getItem('userdata');
 
-this.userdata = storedUser ? JSON.parse(storedUser) : null;
-this.username = this.userdata?.name || '';
+    this.userdata = storedUser ? JSON.parse(storedUser) : null;
+    this.username = this.userdata?.name || '';
 
     // this.DashboardLayoutService.DashboardTourApiStatus$.subscribe((TourApi) => {
     //   if (TourApi) {
@@ -168,27 +170,42 @@ this.username = this.userdata?.name || '';
   /* ===============================
      API / USER
   =============================== */
-  getUserData(role: any): void {
-    this.apiService.UserInfo<any>(role).subscribe({
-      next: (res) => {
-        if (res?.success) {
-          const userdata = res.data;
-          
-          if (role === 'association' && res.data.document_uploaded === false) {
-            this.router.navigateByUrl('/onboarding/user-data');
-          }
-          
-          localStorage.setItem('userdata', JSON.stringify(userdata));
-          if (
-            (role === 'owner' || role === 'tenant') &&
-            userdata.upi_submit_status === false
-          ) {
-            this.openUPIModal();
-          }
+getUserData(role: any): void {
+  this.globalLoading = true; // ✅ START LOADER
+
+  this.apiService.UserInfo<any>(role).subscribe({
+    next: (res) => {
+      this.globalLoading = false; // ✅ STOP LOADER
+
+      if (res?.success) {
+        const userdata = res.data;
+
+        if (role === 'association' && res.data.document_uploaded === false) {
+          this.router.navigateByUrl('/onboarding/associations/get-started');
         }
-      },
-    });
-  }
+
+        localStorage.setItem('userdata', JSON.stringify(userdata));
+
+        // ✅ NEW PRIORITY CHECK (FIRST)
+        if (userdata.property_merge_status === 'request_sent') {
+          this.router.navigateByUrl('/owner/waiting-for-approval');
+          return; // 🚨 IMPORTANT: STOP HERE (no popup)
+        }
+
+        // ✅ EXISTING FLOW (UNCHANGED)
+        if (
+          (role === 'owner' || role === 'tenant') &&
+          userdata.upi_submit_status === false
+        ) {
+          this.openUPIModal();
+        }
+      }
+    },
+    error: () => {
+      this.globalLoading = false; // safety
+    },
+  });
+}
 
   /* ===============================
      PROFILE / LOGOUT

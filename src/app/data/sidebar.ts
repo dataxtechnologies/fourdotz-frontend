@@ -208,6 +208,16 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     //activeicon: ''
   },
 
+    {
+    label: 'Resident Requests',
+    icon: '/assets/icons/sidebar/resident-req.png',
+    route: '/Association/residents-request-list',
+    allowedRole: 'association',
+    keywords: ['announcement', 'resident request', 'resident requests', 'request', 'requests', 'complaint', 'tickets', 'approval',
+      'pending request', 'service request'],
+    //activeicon: ''
+  },
+
   {
     label: 'Visitor Management',
     icon: '/assets/icons/sidebar/visitors.png',
@@ -345,6 +355,18 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     route: '/Owner/request-management/list',
     allowedRole: 'owner',
     keywords: ['request', 'requests', 'complaint', 'tickets', 'approval',
+      'pending request', 'service request'],
+    //activeicon: ''
+  },
+
+   
+
+    {
+    label: 'Resident Requests',
+    icon: '/assets/icons/sidebar/resident-req.png',
+    route: '/Association/tenant-request-list',
+    allowedRole: 'owner',
+    keywords: ['announcement', 'resident request', 'resident requests', 'request', 'requests', 'complaint', 'tickets', 'approval',
       'pending request', 'service request'],
     //activeicon: ''
   },

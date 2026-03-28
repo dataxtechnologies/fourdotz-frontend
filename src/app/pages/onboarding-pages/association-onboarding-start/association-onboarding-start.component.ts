@@ -35,8 +35,6 @@ const INDIAN_STATES: string[] = [
 
 // ─── Districts per State ───────────────────────────────────────────────────────
 const STATE_DISTRICTS: Record<string, string[]> = {
-
-  // ── TAMIL NADU — all 38 districts ────────────────────────
   'Tamil Nadu': [
     'Ariyalur', 'Chengalpattu', 'Chennai', 'Coimbatore', 'Cuddalore',
     'Dharmapuri', 'Dindigul', 'Erode', 'Kallakurichi', 'Kancheepuram',
@@ -47,15 +45,11 @@ const STATE_DISTRICTS: Record<string, string[]> = {
     'Tirupathur', 'Tiruppur', 'Tiruvallur', 'Tiruvannamalai', 'Tiruvarur',
     'Vellore', 'Villupuram', 'Virudhunagar'
   ],
-
-  // ── KERALA — all 14 districts ─────────────────────────────
   'Kerala': [
     'Alappuzha', 'Ernakulam', 'Idukki', 'Kannur', 'Kasaragod',
     'Kollam', 'Kottayam', 'Kozhikode', 'Malappuram', 'Palakkad',
     'Pathanamthitta', 'Thiruvananthapuram', 'Thrissur', 'Wayanad'
   ],
-
-  // ── Other states (minimal, for pincode fallback) ──────────
   'Karnataka': [
     'Bagalkot', 'Ballari', 'Belagavi', 'Bengaluru Rural', 'Bengaluru Urban',
     'Bidar', 'Chamarajanagar', 'Chikkaballapur', 'Chikkamagaluru', 'Chitradurga',
@@ -105,16 +99,10 @@ const STATE_DISTRICTS: Record<string, string[]> = {
 
 // ─── Areas per District ────────────────────────────────────────────────────────
 const DISTRICT_AREAS: Record<string, string[]> = {
-
-  // ════════════════════════════════════════════════════════════
-  //  TAMIL NADU — all 38 districts
-  // ════════════════════════════════════════════════════════════
-
   'Ariyalur': [
     'Ariyalur Town', 'Andimadam', 'Jayankondam', 'Sendurai',
     'T. Palur', 'Thirumanur', 'Udayarpalayam', 'Veppur'
   ],
-
   'Chengalpattu': [
     'Chengalpattu Town', 'Cheyyur', 'Chithamur', 'Guduvanchery', 'Karunguzhi',
     'Kelambakkam', 'Kundrathur', 'Lathur', 'Madambakkam', 'Madurantakam',
@@ -122,7 +110,6 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Singaperumal Koil', 'Tambaram', 'Tirukalukundram', 'Urapakkam',
     'Vandalur', 'Wallajabad'
   ],
-
   'Chennai': [
     'Adyar', 'Ambattur', 'Aminjikarai', 'Anna Nagar', 'Anna Salai',
     'Arumbakkam', 'Ashok Nagar', 'Avadi', 'Basin Bridge', 'Besant Nagar',
@@ -137,7 +124,6 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Thoraipakkam', 'Tiruvottiyur', 'Tondiarpet', 'Vadapalani', 'Velachery',
     'Villivakkam', 'Washermanpet', 'West Mambalam'
   ],
-
   'Coimbatore': [
     'Coimbatore City', 'Annur', 'Arasur', 'Avinashi', 'Bodippalayam',
     'Chettipalayam', 'Ganapathy', 'Irugur', 'Karamadai', 'Kavundampalayam',
@@ -147,111 +133,92 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Saravanampatti', 'Selvapuram', 'Singanallur', 'Sulur', 'Thondamuthur',
     'Tirupur Road', 'Vadavalli', 'Valparai', 'Vellalore'
   ],
-
   'Cuddalore': [
     'Cuddalore Town', 'Bhuvanagiri', 'Chidambaram', 'Kattumannarkoil',
     'Kurinjipadi', 'Mangalur', 'Panruti', 'Parangipettai', 'Srimushnam',
     'Tittagudi', 'Veppur', 'Virudhachalam'
   ],
-
   'Dharmapuri': [
     'Dharmapuri Town', 'Harur', 'Karimangalam', 'Morappur', 'Nallampalli',
     'Palacode', 'Pappireddipatti', 'Pennagaram', 'Thoppur'
   ],
-
   'Dindigul': [
     'Dindigul City', 'Athoor', 'Batlagundu', 'Gujiliamparai', 'Kodaikanal',
     'Natham', 'Nilakottai', 'Oddanchatram', 'Palani', 'Reddiyarchatram',
     'Shanarpatti', 'Sirumalai', 'Vadamadurai', 'Vedasandur'
   ],
-
   'Erode': [
     'Erode City', 'Anthiyur', 'Bhavani', 'Bhavanisagar', 'Chennimalai',
     'Chithode', 'Gobichettipalayam', 'Kadambur', 'Kodumudi', 'Modakkurichi',
     'Nambiyur', 'Perundurai', 'Sathyamangalam', 'Thalavadi'
   ],
-
   'Kallakurichi': [
     'Kallakurichi Town', 'Chinnaselam', 'Chinnasalem', 'Kalvarayan Hills',
     'Kariapatti', 'Minnur', 'Sankarapuram', 'Tirukoilur', 'Ulundurpet',
     'Valapady', 'Vikravandi'
   ],
-
   'Kancheepuram': [
     'Kancheepuram Town', 'Cheyyar', 'Egapuram', 'Karunguzhi', 'Maduranthakam',
     'Manampathi', 'Sriperumbudur', 'Uttiramerur', 'Walajabad'
   ],
-
   'Kanyakumari': [
     'Nagercoil', 'Agasteeswaram', 'Colachel', 'Eraniel', 'Killiyoor',
     'Kottaram', 'Kulasekharam', 'Kuzhithurai', 'Marthandam', 'Melpuram',
     'Padmanabhapuram', 'Rajakkamangalam', 'Thuckalay', 'Thiruvattar',
     'Vilavancode'
   ],
-
   'Karur': [
     'Karur Town', 'Aravakurichi', 'K. Paramathi', 'Kadavur', 'Krishnarayapuram',
     'Kulithalai', 'Manapparai', 'Manmangalam', 'Nerur', 'Pugalur',
     'Thanthoni', 'Thogamalai'
   ],
-
   'Krishnagiri': [
     'Krishnagiri Town', 'Anchetti', 'Bargur', 'Denkanikottai', 'Hosur',
     'Kaveripattinam', 'Kelamangalam', 'Mathur', 'Shoolagiri', 'Thally',
     'Uthangarai', 'Veppanapalli'
   ],
-
   'Madurai': [
     'Madurai City', 'Alanganallur', 'Aravakurichi', 'Chellampatti', 'Kallikudi',
     'Kottampatti', 'Madurai East', 'Madurai North', 'Madurai South', 'Madurai West',
     'Melur', 'Othakadai', 'Paravai', 'Peraiyur', 'Sholavandan',
     'Thiruparankundram', 'Thirumangalam', 'Thiruppuvanam', 'Usilampatti', 'Vadipatti'
   ],
-
   'Mayiladuthurai': [
     'Mayiladuthurai Town', 'Kuthalam', 'Manalmelkudi', 'Poompuhar',
     'Sembanarkoil', 'Sirkali', 'Tharangambadi', 'Tranquebar', 'Vedaranyam'
   ],
-
   'Nagapattinam': [
     'Nagapattinam Town', 'Keelakarai', 'Kilvelur', 'Kollidam', 'Kuttralam',
     'Pumpuhar', 'Sirkazhi', 'Tharangambadi', 'Thirumarugal', 'Velankanni',
     'Vedaranyam'
   ],
-
   'Namakkal': [
     'Namakkal City', 'Erumapatty', 'Kabilarmalai', 'Kollihills', 'Komarapalayam',
     'Mohanur', 'Pallipalayam', 'Paramathi-Velur', 'Puduchatram', 'Rasipuram',
     'Sendamangalam', 'Thiruchengode', 'Vennandur'
   ],
-
   'Nilgiris': [
     'Ooty (Udhagamandalam)', 'Coonoor', 'Gudalur', 'Kothagiri', 'Kotagiri',
     'Lovedale', 'Mettupalayam', 'Panthalur', 'Thalaikundah', 'Wellington'
   ],
-
   'Perambalur': [
     'Perambalur Town', 'Alathur', 'Kunnam', 'Labbaikudikadu',
     'Siruvachur', 'Thirumalapadi', 'Veppur'
   ],
-
   'Pudukkottai': [
     'Pudukkottai Town', 'Alangudi', 'Aranthangi', 'Avudaiyarkoil',
-    'Gandarvakottai', 'Illuppur', 'Karambakudi', 'Kulathur', 'Manamelkudi',
+    'Gandarvakottai', 'Illuppur', 'Karambakudi', 'Kulathur', 'Manalmelkudi',
     'Ponnamaravathi', 'Thiruvarankulam', 'Tirumayam', 'Viralimalai'
   ],
-
   'Ramanathapuram': [
     'Ramanathapuram Town', 'Emaneswaram', 'Kadaladi', 'Kamudi', 'Kilakarai',
     'Mandapam', 'Mudukulathur', 'Paramakudi', 'Rajasingamangalam',
     'Rameswaram', 'Thiruvadanai', 'Tiruppullani'
   ],
-
   'Ranipet': [
     'Ranipet Town', 'Arakkonam', 'Arcot', 'Gudiyatham', 'Jolarpet',
     'Kaveripakkam', 'Nemili', 'Sholingur', 'Walajah'
   ],
-
   'Salem': [
     'Salem City', 'Attur', 'Ayothiyapattinam', 'Chinnasalem', 'Edappadi',
     'Gangavalli', 'Kadayampatti', 'Magudanchavadi', 'Mecherikuppam', 'Mettur',
@@ -259,96 +226,76 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Salem Junction', 'Salem West', 'Sankagiri', 'Thalaivasal', 'Thiruchengode',
     'Valapady', 'Vanavasi', 'Veerapandi', 'Veeranam', 'Yercaud'
   ],
-
   'Sivaganga': [
     'Sivaganga Town', 'Devakottai', 'Ilayangudi', 'Kallal', 'Kalaiyarkoil',
     'Karaikudi', 'Manamadurai', 'Nattarasankottai', 'Pillayarpatti',
     'Singampunari', 'Tiruppathur', 'Tiruvadhurai'
   ],
-
   'Tenkasi': [
     'Tenkasi Town', 'Alangulam', 'Kadayam', 'Keezhapavoor', 'Kuruvikulam',
     'Pavoorchatram', 'Sankarankoil', 'Shencottah', 'Surandai', 'Veerakeralamputhur'
   ],
-
   'Thanjavur': [
     'Thanjavur City', 'Budalur', 'Kumbakonam', 'Needamangalam', 'Orathanadu',
     'Papanasam', 'Pattukkottai', 'Peravurani', 'Sethubavachatram',
     'Thiruvaiyaru', 'Thiruvidaimarudur'
   ],
-
   'Theni': [
     'Theni Town', 'Andipatti', 'Bodinayakanur', 'Chinnamanur', 'Cumbum',
     'Gudalur', 'Kambam', 'Periyakulam', 'Rajapalayam', 'Uthamapalayam'
   ],
-
   'Thoothukudi': [
     'Thoothukudi City', 'Eral', 'Ettayapuram', 'Kadayampattu', 'Kayalpattinam',
     'Kovilpatti', 'Ottapidaram', 'Sathankulam', 'Srivaikundam', 'Tiruchendur',
     'Tirunelveli Road', 'Vallioor', 'Vilathikulam'
   ],
-
   'Tiruchirappalli': [
     'Trichy City', 'Ariyamangalam', 'Golden Rock', 'Kathirvedu', 'Lalgudi',
     'Manapparai', 'Manachanallur', 'Marungapuri', 'Musiri', 'Pullambadi',
     'Srirangam', 'Thiruverumbur', 'Thottiyam', 'Thuraiyur', 'Uppiliyapuram',
     'Vaiyampatti'
   ],
-
   'Tirunelveli': [
     'Tirunelveli City', 'Ambasamudram', 'Cheranmahadevi', 'Kallidaikurichi',
     'Maniyachi', 'Mundakalpatti', 'Nanguneri', 'Palayamkottai', 'Pettai',
     'Puliyangudi', 'Radhapuram', 'Sankarankovil', 'Shengottai', 'Tenkasi',
     'Thachanallur'
   ],
-
   'Tirupathur': [
     'Tirupathur Town', 'Ambur', 'Jolarpet', 'Natrampalli', 'Vaniyambadi'
   ],
-
   'Tiruppur': [
     'Tiruppur City', 'Avinashi', 'Dharapuram', 'Kangeyam', 'Kolumam',
     'Madathukulam', 'Muthur', 'Palladam', 'Pongalur', 'Udumalaipettai',
     'Uthukuli', 'Veerapandi'
   ],
-
   'Tiruvallur': [
     'Tiruvallur Town', 'Ambattur', 'Avadi', 'Gummidipoondi', 'Ponneri',
     'Poonamallee', 'Redhills', 'Thiruvotriyur', 'Tiruttani', 'Uthukkottai'
   ],
-
   'Tiruvannamalai': [
     'Tiruvannamalai Town', 'Arani', 'Arni', 'Chengam', 'Cheyyar', 'Chetpet',
     'Jawadhu Hills', 'Kalasapakkam', 'Kilpennathur', 'Polur', 'Thandrampet',
     'Thellar', 'Vandavasi', 'Vembakkam'
   ],
-
   'Tiruvarur': [
     'Tiruvarur Town', 'Kodavasal', 'Koothanallur', 'Mannargudi', 'Muthupettai',
     'Nannilam', 'Needamangalam', 'Papanasam', 'Thiruthuraipoondi', 'Valangaiman'
   ],
-
   'Vellore': [
     'Vellore City', 'Ambur', 'Anaicut', 'Arcot', 'Gudiyatham', 'Jolarpet',
     'Katpadi', 'Melvisharam', 'Pernambut', 'Sholingur', 'Thirupathur',
     'Vaniyambadi', 'Walajah'
   ],
-
   'Villupuram': [
     'Villupuram City', 'Gingee', 'Kallakurichi', 'Mailam', 'Marakanam',
     'Melmalayanur', 'Mugaiyur', 'Sankarapuram', 'Thirukkoyilur', 'Tindivanam',
     'Ulundurpet', 'Vaitheeswaran Koil', 'Vikravandi'
   ],
-
   'Virudhunagar': [
     'Virudhunagar Town', 'Aruppukkottai', 'Kariapatti', 'Rajapalayam',
     'Sattur', 'Sivakasi', 'Srivilliputhur', 'Tiruchuli', 'Vembakottai', 'Watrap'
   ],
-
-  // ════════════════════════════════════════════════════════════
-  //  KERALA — all 14 districts
-  // ════════════════════════════════════════════════════════════
-
   'Alappuzha': [
     'Alappuzha Town', 'Ala', 'Ambalapuzha', 'Aroor', 'Arattupuzha',
     'Budhanoor', 'Champakulam', 'Chengannur', 'Cherthala', 'Edathua',
@@ -357,7 +304,6 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Pathirappally', 'Pulinkunnu', 'Punnapra', 'Ranny', 'Thankassery',
     'Thiruvalla', 'Thuravoor', 'Veeyapuram'
   ],
-
   'Ernakulam': [
     'Ernakulam City', 'Aluva', 'Angamaly', 'Cheranalloor', 'Chottanikkara',
     'Edappally', 'Fort Kochi', 'Kalady', 'Kalamassery', 'Karukutty',
@@ -366,13 +312,11 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Piravom', 'Puthencruz', 'Thrikkakara', 'Thrippunithura', 'Thiruvankulam',
     'Vadakkekkara'
   ],
-
   'Idukki': [
     'Idukki Town', 'Adimali', 'Azhutha', 'Devikulam', 'Elappara', 'Kattappana',
     'Kumily', 'Marayoor', 'Munnar', 'Nedumkandam', 'Painavu', 'Peermade',
     'Rajakkad', 'Thodupuzha', 'Udumbanchola', 'Vandiperiyar'
   ],
-
   'Kannur': [
     'Kannur City', 'Alakode', 'Anthoor', 'Cherupuzha', 'Dharmadam', 'Edakkad',
     'Iritty', 'Kakkad', 'Kalliasseri', 'Kannapuram', 'Kelakam', 'Kuthuparamba',
@@ -380,20 +324,17 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Panoor', 'Payyannur', 'Peravoor', 'Sreekandapuram', 'Taliparamba',
     'Thana', 'Thrikaripur'
   ],
-
   'Kasaragod': [
     'Kasaragod Town', 'Adzholly', 'Bekal', 'Chengala', 'Cheruvathur',
     'Hosdurg', 'Kanhangad', 'Karadka', 'Manjeswaram', 'Muliyar',
     'Nileshwaram', 'Puthige', 'Rajapuram', 'Trikaripur', 'Uppala', 'Vorkady'
   ],
-
   'Kollam': [
     'Kollam City', 'Adichanalloor', 'Chavara', 'Chathannur', 'Chadayamangalam',
     'Eravipuram', 'Ithikkara', 'Kadakkal', 'Kottarakkara', 'Kulakkada',
     'Kundara', 'Kureepuzha', 'Mukhathala', 'Mynagappally', 'Oachira',
     'Paravur', 'Pathanapuram', 'Perinad', 'Punalur', 'Sasthamkotta', 'Thenmala'
   ],
-
   'Kottayam': [
     'Kottayam City', 'Ayarkunnam', 'Changanassery', 'Chirakkadavu', 'Ettumanoor',
     'Kadanad', 'Kadaplamattam', 'Kaduthuruthy', 'Kanjirapally', 'Kanjirappally',
@@ -401,7 +342,6 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Mundakayam', 'Pampady', 'Poonjar', 'Thalayolaparambu', 'Tiruvalla',
     'Vaikom', 'Vakathanam'
   ],
-
   'Kozhikode': [
     'Kozhikode City', 'Azhiyur', 'Balussery', 'Beyypore', 'Chelannur',
     'Cheruvannur', 'Elathur', 'Feroke', 'Kadalundi', 'Kakkodi', 'Koyilandy',
@@ -409,7 +349,6 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Ramanattukara', 'Thiruvambady', 'Thodannur', 'Tikkodi', 'Vatakara',
     'Vellarikundu'
   ],
-
   'Malappuram': [
     'Malappuram Town', 'Angadipuram', 'Areekode', 'Chelembra', 'Edappal',
     'Eramangalam', 'Kalpakanchery', 'Kottakkal', 'Kondotty', 'Manjeri',
@@ -417,21 +356,18 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Perinthalmanna', 'Ponnani', 'Thirur', 'Tirur', 'Tirurangadi', 'Tanur',
     'Vallikkunnu', 'Wandoor'
   ],
-
   'Palakkad': [
     'Palakkad City', 'Alathur', 'Cherpulassery', 'Chittur', 'Elappully',
     'Kalpathy', 'Kuzhalmannam', 'Mannarkkad', 'Nemmara', 'Ottapalam',
     'Pattambi', 'Puthunagaram', 'Shornur', 'Sreekrishnapuram', 'Thrithala',
     'Vadakkancherry'
   ],
-
   'Pathanamthitta': [
     'Pathanamthitta Town', 'Adoor', 'Anicadu', 'Aranmula', 'Chengannur',
     'Elanthoor', 'Ezhamkulam', 'Kadapra', 'Konni', 'Kozhencherry',
     'Kumbanadu', 'Mallappally', 'Pandalam', 'Pramadom', 'Ranni',
     'Seethathodu', 'Thiruvalla', 'Thottabhagom', 'Vadasserikara'
   ],
-
   'Thiruvananthapuram': [
     'Thiruvananthapuram City', 'Attingal', 'Balaramapuram', 'Chenkal',
     'Chirayinkeezhu', 'Kallambalam', 'Karakulam', 'Kattakada', 'Kazhakoottam',
@@ -440,24 +376,20 @@ const DISTRICT_AREAS: Record<string, string[]> = {
     'Perumkadavila', 'Pothencode', 'Sreekaryam', 'Thumba', 'Thirumala',
     'Thiruvallam', 'Varkala', 'Venjaramoodu', 'Vithura'
   ],
-
   'Thrissur': [
     'Thrissur City', 'Chalakudy', 'Chavakkad', 'Cherpu', 'Edathiruthy',
     'Guruvayur', 'Irinjalakuda', 'Kadavallur', 'Kodakara', 'Kodungallur',
     'Kunnamkulam', 'Mala', 'Mathilakam', 'Mullassery', 'Mukundapuram',
     'Natika', 'Ollur', 'Pavaratty', 'Peringottukurussi', 'Punkunnam',
     'Puthukkad', 'Shornur', 'Thalappilly', 'Thrissur East', 'Thrissur West',
-    'Triprayar', 'Vadakkanchery', 'Vellangallur', 'Wadakkanchery'
+    'Triprayar', 'Vadakkancherry', 'Vellangallur', 'Wadakkancherry'
   ],
-
   'Wayanad': [
     'Kalpetta', 'Ambalavayal', 'Bathery', 'Frienda', 'Kambalakad',
     'Mananthavady', 'Meenangadi', 'Meppadi', 'Noolpuzha', 'Padinjarathara',
     'Perambra', 'Pozhuthana', 'Pulpally', 'Sulthan Bathery', 'Thariode',
     'Thirunelly', 'Thomattuchal', 'Vythiri'
   ],
-
-  // ── Other states (minimal) ────────────────────────────────
   'Bengaluru Urban': [
     'Bangalore City', 'Anekal', 'Doddaballapur', 'Electronic City', 'Hoskote',
     'Indiranagar', 'Jayanagar', 'Koramangala', 'Malleshwaram', 'Nelamangala',
@@ -492,16 +424,15 @@ const DISTRICT_AREAS: Record<string, string[]> = {
 };
 
 @Component({
-  selector: 'app-association-onboard',
-  standalone: true,
+  selector: 'app-association-onboarding-start',
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
-  templateUrl: './association-onboard.component.html',
-  styleUrls: ['./association-onboard.component.css'],
+  templateUrl: './association-onboarding-start.component.html',
+  styleUrl: './association-onboarding-start.component.css'
 })
-export class AssociationOnboardComponent implements OnInit {
+export class AssociationOnboardingStartComponent implements OnInit {
+
   user_id = localStorage.getItem('user_id');
   userData: any;
-  selectedFile: File | null = null;
   passport_sizephoto: File | null = null;
   RentalAggrement: File | null = null;
   ChequeLeaf: File | null = null;
@@ -525,19 +456,18 @@ export class AssociationOnboardComponent implements OnInit {
   pincodeError = '';
 
   steps: Step[] = [
-    { id: 1, title: 'User Inputs',      subtitle: 'Provide your basic and Association details.',   isComplete: false, isActive: true  },
-    { id: 2, title: 'Address Details',  subtitle: 'Enter your registered address information.',    isComplete: false, isActive: false },
-    { id: 3, title: 'Document Uploads', subtitle: 'Upload required KYC and legal documents.',      isComplete: false, isActive: false },
-    { id: 4, title: 'Account Details',  subtitle: 'Provide your bank account details.',            isComplete: false, isActive: false },
-    { id: 5, title: 'Review & Submit',  subtitle: 'Final check before submission.',                isComplete: false, isActive: false },
+    { id: 1, title: 'User Inputs', subtitle: 'Provide your basic and Association details.', isComplete: false, isActive: true },
+    { id: 2, title: 'Address Details', subtitle: 'Enter your registered address information.', isComplete: false, isActive: false },
+    { id: 3, title: 'Document Uploads', subtitle: 'Upload required KYC and legal documents.', isComplete: false, isActive: false },
+    { id: 4, title: 'Account Details', subtitle: 'Provide your bank account details.', isComplete: false, isActive: false },
+    { id: 5, title: 'Review & Submit', subtitle: 'Final check before submission.', isComplete: false, isActive: false },
   ];
-
   currentStep = 1;
+
   inputForm!: FormGroup;
   addressForm!: FormGroup;
   documentForm!: FormGroup;
   accountForm!: FormGroup;
-  loginbtn = false;
 
   constructor(
     private fb: FormBuilder,
@@ -545,7 +475,7 @@ export class AssociationOnboardComponent implements OnInit {
     private apiService: ApiserviceService,
     private router: Router,
     private Toast: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initializeForms();
@@ -571,44 +501,43 @@ export class AssociationOnboardComponent implements OnInit {
 
   initializeForms(): void {
     this.inputForm = this.fb.group({
-      association_name:    ['', Validators.required],
-      alternate_number:    ['', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]],
-      gst_number:          ['', [Validators.required, Validators.maxLength(15)]],
+      alternate_number: ['', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]],
+      gst_number: ['', [Validators.required, Validators.maxLength(15)]],
       registration_number: ['', Validators.required],
     });
 
     this.addressForm = this.fb.group({
-      street:   ['', Validators.required],
-      pincode:  ['', [Validators.required, Validators.pattern('^[1-9][0-9]{5}$')]],
-      state:    ['', Validators.required],
+      street: ['', Validators.required],
+      pincode: ['', [Validators.required, Validators.pattern('^[1-9][0-9]{5}$')]],
+      country: ['India', Validators.required],
+      state: ['', Validators.required],
       district: ['', Validators.required],
-      area:     ['', Validators.required],
+      city: ['', Validators.required],
       landmark: [''],
     });
 
     this.documentForm = this.fb.group({
-      company_proof_type:   ['', Validators.required],
-      passport_size_photo:  [null, Validators.required],
-      rental_agreement:     [null, Validators.required],
-      cancelled_cheque_leaf:[null, Validators.required],
-      pan_card:             [null, Validators.required],
-      company_proof:        [null, Validators.required],
-      signature:            [null, Validators.required],
+      company_proof_type: ['', Validators.required],
+      passport_size_photo: [null, Validators.required],
+      rental_agreement: [null, Validators.required],
+      cancelled_cheque_leaf: [null, Validators.required],
+      pan_card: [null, Validators.required],
+      company_proof: [null, Validators.required],
+      signature: [null, Validators.required],
     });
 
     this.accountForm = this.fb.group({
       account_holder_name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
-      account_number:      ['', [Validators.required, Validators.pattern('^[0-9]{9,18}$')]],
-      account_type:        ['', Validators.required],
-      bank_name:           ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
-      ifsc_code:           ['', [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]],
+      account_number: ['', [Validators.required, Validators.pattern('^[0-9]{9,18}$')]],
+      account_type: ['', Validators.required],
+      bank_name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s]+$/)]],
+      ifsc_code: ['', [Validators.required, Validators.pattern('^[A-Z]{4}0[A-Z0-9]{6}$')]],
     });
   }
 
   // ════════════════════════════════════════════════════════════
   //  STATE / DISTRICT / AREA DROPDOWN
   // ════════════════════════════════════════════════════════════
-
   onStateSearch(): void {
     const q = this.stateSearch.toLowerCase();
     this.filteredStates = INDIAN_STATES.filter(s => s.toLowerCase().includes(q));
@@ -617,7 +546,7 @@ export class AssociationOnboardComponent implements OnInit {
 
   selectState(state: string): void {
     this.stateSearch = state;
-    this.addressForm.patchValue({ state, district: '', area: '' });
+    this.addressForm.patchValue({ state, district: '', city: '' });
     this.districtSearch = '';
     this.areaSearch = '';
     this.stateDropdownOpen = false;
@@ -643,7 +572,7 @@ export class AssociationOnboardComponent implements OnInit {
 
   selectDistrict(district: string): void {
     this.districtSearch = district;
-    this.addressForm.patchValue({ district, area: '' });
+    this.addressForm.patchValue({ district, city: '' });
     this.areaSearch = '';
     this.districtDropdownOpen = false;
     this.filteredAreas = DISTRICT_AREAS[district] || this.generateGenericAreas(district);
@@ -667,7 +596,7 @@ export class AssociationOnboardComponent implements OnInit {
 
   selectArea(area: string): void {
     this.areaSearch = area;
-    this.addressForm.patchValue({ area });
+    this.addressForm.patchValue({ city: area });
     this.areaDropdownOpen = false;
   }
 
@@ -685,7 +614,6 @@ export class AssociationOnboardComponent implements OnInit {
   // ════════════════════════════════════════════════════════════
   //  PINCODE LOOKUP
   // ════════════════════════════════════════════════════════════
-
   onPincodeInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     const value = input.value.replace(/\D/g, '').slice(0, 6);
@@ -700,26 +628,22 @@ export class AssociationOnboardComponent implements OnInit {
     this.pincodeLoading = true;
     this.pincodeSuccess = false;
     this.pincodeError = '';
-
     this.http.get<any[]>(`https://api.postalpincode.in/pincode/${pincode}`).subscribe({
       next: (data) => {
         this.pincodeLoading = false;
         if (data && data[0]?.Status === 'Success' && data[0]?.PostOffice?.length) {
-          const po           = data[0].PostOffice[0];
-          const stateName    = po.State;
+          const po = data[0].PostOffice[0];
+          const stateName = po.State;
           const districtName = po.District;
-          const areaName     = po.Name;
-
+          const areaName = po.Name;
           this.stateSearch = stateName;
           this.addressForm.patchValue({ state: stateName });
           this.filteredDistricts = STATE_DISTRICTS[stateName] || this.generateGenericDistricts(stateName);
-
           this.districtSearch = districtName;
           this.addressForm.patchValue({ district: districtName });
           this.filteredAreas = DISTRICT_AREAS[districtName] || this.generateGenericAreas(districtName);
-
           this.areaSearch = areaName;
-          this.addressForm.patchValue({ area: areaName });
+          this.addressForm.patchValue({ city: areaName });
           this.pincodeSuccess = true;
         } else {
           this.pincodeError = 'Pincode not found. Please enter details manually.';
@@ -735,34 +659,40 @@ export class AssociationOnboardComponent implements OnInit {
   // ════════════════════════════════════════════════════════════
   //  NAVIGATION
   // ════════════════════════════════════════════════════════════
-
   goToNextStep(): void {
     if (this.currentStep === 1) {
       if (this.inputForm.invalid) { this.inputForm.markAllAsTouched(); return; }
-      this.steps[0].isComplete = true; this.currentStep = 2;
+      this.steps[0].isComplete = true;
+      this.currentStep = 2;
     } else if (this.currentStep === 2) {
       if (this.addressForm.invalid) {
         this.addressForm.markAllAsTouched();
         this.Toast.error('Please fill all required address fields.', 'Validation Error');
         return;
       }
-      this.steps[1].isComplete = true; this.currentStep = 3;
+      this.steps[1].isComplete = true;
+      this.currentStep = 3;
     } else if (this.currentStep === 3) {
       if (this.documentForm.invalid) {
         this.documentForm.markAllAsTouched();
         this.Toast.error('All fields are required', 'Validation Error');
         return;
       }
-      this.steps[2].isComplete = true; this.currentStep = 4;
+      this.steps[2].isComplete = true;
+      this.currentStep = 4;
     } else if (this.currentStep === 4) {
       if (this.accountForm.invalid) { this.accountForm.markAllAsTouched(); return; }
-      this.steps[3].isComplete = true; this.currentStep = 5;
+      this.steps[3].isComplete = true;
+      this.currentStep = 5;
     }
     this.updateStepStatus();
   }
 
   goToPreviousStep(): void {
-    if (this.currentStep > 1) { this.currentStep--; this.updateStepStatus(); }
+    if (this.currentStep > 1) {
+      this.currentStep--;
+      this.updateStepStatus();
+    }
   }
 
   updateStepStatus(): void {
@@ -772,7 +702,6 @@ export class AssociationOnboardComponent implements OnInit {
   // ════════════════════════════════════════════════════════════
   //  FILE UPLOADS
   // ════════════════════════════════════════════════════════════
-
   onFilePassportChange(event: Event) {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -840,37 +769,42 @@ export class AssociationOnboardComponent implements OnInit {
     return true;
   }
 
-  isDocumentsValid(): boolean { return this.documentForm.valid; }
+  isDocumentsValid(): boolean {
+    return this.documentForm.valid;
+  }
 
   // ════════════════════════════════════════════════════════════
   //  SUBMISSION
   // ════════════════════════════════════════════════════════════
-
   submitInputForm(): void {
     this.submitbtnloading = true;
     const payload = {
-      association_name:    this.inputForm.value.association_name,
-      alternate_number:    this.inputForm.value.alternate_number,
-      gst_number:          this.inputForm.value.gst_number,
+      alternate_number: this.inputForm.value.alternate_number,
+      gst_number: this.inputForm.value.gst_number,
       registration_number: this.inputForm.value.registration_number,
-      street:              this.addressForm.value.street,
-      area:                this.addressForm.value.area,
-      district:            this.addressForm.value.district,
-      state:               this.addressForm.value.state,
-      pincode:             this.addressForm.value.pincode,
-      landmark:            this.addressForm.value.landmark,
-      account_name:        this.accountForm.value.account_holder_name,
-      account_number:      this.accountForm.value.account_number,
-      bank_name:           this.accountForm.value.bank_name,
-      account_type:        this.accountForm.value.account_type,
-      ifsc_code:           this.accountForm.value.ifsc_code,
-      id:                  this.userData._id,
+      country: this.addressForm.value.country,
+      street: this.addressForm.value.street,
+      pincode: this.addressForm.value.pincode,
+      district: this.addressForm.value.district,
+      city: this.addressForm.value.city,
+      state: this.addressForm.value.state,
+      landmark: this.addressForm.value.landmark,
+      account_name: this.accountForm.value.account_holder_name,
+      account_number: this.accountForm.value.account_number,
+      bank_name: this.accountForm.value.bank_name,
+      account_type: this.accountForm.value.account_type,
+      ifsc_code: this.accountForm.value.ifsc_code,
+      id: this.userData._id,
     };
-
     this.apiService.AssociationDataOnboard<any>(payload).subscribe({
       next: (res: any) => {
-        if (res?.success) { this.submitbtnloading = false; this.submitDocumentForm(); }
-        else { this.submitbtnloading = false; this.Toast.warning(res.message, 'Warning'); }
+        if (res?.success) {
+          this.submitbtnloading = false;
+          this.submitDocumentForm();
+        } else {
+          this.submitbtnloading = false;
+          this.Toast.warning(res.message, 'Warning');
+        }
       },
       error: (err: any) => {
         this.submitbtnloading = false;
@@ -885,7 +819,6 @@ export class AssociationOnboardComponent implements OnInit {
     Object.keys(this.documentForm.value).forEach(key => {
       formData.append(key, this.documentForm.value[key]);
     });
-
     this.apiService.AssociationDocumentOnboard<FormData>(formData).subscribe({
       next: (res: any) => {
         this.submitbtnloading = false;
@@ -906,7 +839,6 @@ export class AssociationOnboardComponent implements OnInit {
   onSubmit(): void {
     if (this.inputForm.invalid || this.addressForm.invalid || this.accountForm.invalid || !this.isDocumentsValid()) return;
     this.submitInputForm();
-    this.loginbtn = true;
   }
 
   logout(): void {

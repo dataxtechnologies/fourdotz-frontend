@@ -91,6 +91,36 @@ export class SigninPageNewComponent implements OnInit {
     this.errorMessage = 'Enter a valid email or 10-digit mobile number.';
   }
 
+
+  // Self Signup
+  CheckExistingUser() {
+
+    const payload = {
+      user_name: this.loginForm.get('username')?.value
+    };
+
+
+    this.authService.CheckExistingUser<any>(payload).subscribe({
+      next: (res: any) => {
+        this.loginbtbloading = false;
+
+        if (res?.success) {
+          this.submitLogin();
+        } else {
+          this.toastr.warning(res.message, 'Error');
+        }
+      },
+      error: (err: any) => {
+        this.loginbtbloading = false;
+        this.toastr.info(
+          err?.error?.error?.message || 'Login failed',
+          'Info'
+        );
+        this.router.navigateByUrl('/onboarding/residents/get-started')
+      },
+    });
+  }
+
   // -----------------------------------------------------
   // SUBMIT LOGIN
   // -----------------------------------------------------

@@ -35,7 +35,7 @@ export class OnboardingLayoutComponent {
           const userdata = res.data;
          if(this.user_type === 'association'){
            if(userdata.document_uploaded === false){
-            this.router.navigateByUrl('/onboarding/user-data')
+            this.router.navigateByUrl('/onboarding/associations/get-started')
           }else{
             this.router.navigateByUrl('/Association/Dashboard')
           }

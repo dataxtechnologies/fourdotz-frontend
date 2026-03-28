@@ -208,5 +208,22 @@ export class EnvurlService {
 
   public gatekeeperQRshow = '/visitors/list_association_gateentry_qrcode'
   public getrequestedresidentdetails = '/request_management/list_request_byid'
+
+
+  // Self Signup
+
+  public CheckExistingUser = '/signup/check_user_exists'
+  public SendOTPtoVerify = '/signup/send_otp'
+  public VerifyOTPtoonboardresident = '/signup/verify_otp'
+  public ResidentBasicDetails = '/signup/self_signup'
+  public fetchAssociationlist = '/hoa_admin/list_all_association'
+  public fetchpropertylistforassociation = '/property/list_property_byassociation'
+  public fetchnonownerpropertylist = '/property/list_nonowner_property'
+  public fetchnontenantpropertylist = '/property/list_nontenant_property'
+  public submitpropertyrequest = '/property_merge_request/create_property_merge_request'
+
+  public ApproveRequest = '/property_merge_request/update_property_merge_request'
+
+  public listallresidentrequestlist = '/property_merge_request/get_property_merge_request'
   
 }

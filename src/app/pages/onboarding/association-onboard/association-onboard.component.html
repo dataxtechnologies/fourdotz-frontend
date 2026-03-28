@@ -1,453 +1,583 @@
 <div class="onboarding-container">
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="get-started">
-            <span class="icon">i</span>
-            Get started by setting up your workspace and Association details.
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="get-started">
+      <span class="icon">i</span>
+      Get started by setting up your workspace and Association details.
+    </div>
+    <div class="steps-container">
+      <div
+        *ngFor="let step of steps; let i = index"
+        class="step-item"
+        [class.complete]="step.isComplete"
+        [class.active]="step.isActive"
+      >
+        <div class="icon-circle">
+          <ng-container *ngIf="step.isComplete">
+            <i class="fa fa-check"></i>
+          </ng-container>
+          <ng-container *ngIf="!step.isComplete && !step.isActive">
+            <i class="fa fa-circle"></i>
+          </ng-container>
+          <ng-container *ngIf="step.isActive">
+            <i class="fa fa-play"></i>
+          </ng-container>
         </div>
-
-        <div class="steps-container">
-            <div *ngFor="let step of steps; let i = index" class="step-item" [class.complete]="step.isComplete"
-                [class.active]="step.isActive">
-                <div class="icon-circle">
-                    <ng-container *ngIf="step.isComplete">
-                        <i class="fa fa-check"></i>
-                    </ng-container>
-                    <ng-container *ngIf="!step.isComplete && !step.isActive">
-                        <i class="fa fa-circle"></i>
-                    </ng-container>
-                    <ng-container *ngIf="step.isActive">
-                        <i class="fa fa-play"></i>
-                    </ng-container>
-                </div>
-
-                <div class="step-content">
-                    <div class="step-title">{{ step.title }}</div>
-                    <div class="step-subtitle">{{ step.subtitle }}</div>
-                </div>
-            </div>
+        <div class="step-content">
+          <div class="step-title">{{ step.title }}</div>
+          <div class="step-subtitle">{{ step.subtitle }}</div>
         </div>
+      </div>
+    </div>
+    <div class="logout-container">
+      <button class="btn-remove12" (click)="logout()">
+        <i class="fa fa-sign-out"></i> Logout
+      </button>
+      <button class="btn-remove22" *ngIf="false">
+        <i class="fa fa-sign-out"></i> Logging Out...
+      </button>
+    </div>
+  </div>
 
-        <div class="logout-container">
-            <button class="btn-remove12" (click)="logout()">
-                <i class="fa fa-sign-out"></i> Logout
-            </button>
-            <button class="btn-remove22 " *ngIf="">
-                <i class="fa fa-sign-out"></i> Logging Out...
-            </button>
-        </div>
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="step-header">
+      <div class="step-label">STEP {{ currentStep }} OF {{ steps.length }}</div>
+      <h2 *ngIf="currentStep === 1">Enter Your Association Details</h2>
+      <h2 *ngIf="currentStep === 2">Enter Your Address Details</h2>
+      <h2 *ngIf="currentStep === 3">Upload Required Documents</h2>
+      <h2 *ngIf="currentStep === 4">Enter Bank Account Details</h2>
+      <h2 *ngIf="currentStep === 5">Review and Submit</h2>
+      <p class="step-description">
+        <ng-container *ngIf="currentStep === 1">
+          Fill out the basic and registration information for your Association.
+        </ng-container>
+        <ng-container *ngIf="currentStep === 2">
+          Provide your association's registered address with location details.
+        </ng-container>
+        <ng-container *ngIf="currentStep === 3">
+          Please upload clear copies of all required documents to verify your profile.
+        </ng-container>
+        <ng-container *ngIf="currentStep === 4">
+          Provide your bank account details for payment settlements.
+        </ng-container>
+        <ng-container *ngIf="currentStep === 5">
+          Confirm all details are correct before finalizing your onboarding.
+        </ng-container>
+      </p>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="step-header">
-            <div class="step-label">STEP {{ currentStep }} OF {{ steps.length }}</div>
+    <!-- ═══════════════════════════════════════════
+         STEP 1 — Association Details
+    ════════════════════════════════════════════ -->
+    <div *ngIf="currentStep === 1" class="form-section">
+      <form [formGroup]="inputForm" (ngSubmit)="goToNextStep()">
 
-            <h2 *ngIf="currentStep === 1">Enter Your Association Details</h2>
-            <h2 *ngIf="currentStep === 2">Upload Required Documents</h2>
-            <h2 *ngIf="currentStep === 3">Enter Bank Account Details</h2>
-            <h2 *ngIf="currentStep === 4">Review and Submit</h2>
-
-            <p class="step-description">
-                <ng-container *ngIf="currentStep === 1">
-                    Fill out the basic and registration information for your Association.
-                </ng-container>
-                <ng-container *ngIf="currentStep === 2">
-                    Please upload clear copies of all required documents to verify your profile.
-                </ng-container>
-                <ng-container *ngIf="currentStep === 3">
-                    Provide your bank account details for payment settlements.
-                </ng-container>
-                <ng-container *ngIf="currentStep === 4">
-                    Confirm all details are correct before finalizing your onboarding.
-                </ng-container>
-            </p>
+        <!-- Association Name -->
+        <div class="form-group">
+          <label class="medium-font">Association Name <span class="required">*</span></label>
+          <input
+            type="text"
+            formControlName="association_name"
+            class="inp-cus regular-font"
+            placeholder="Enter Association Name"
+          />
+          <div *ngIf="inputForm.get('association_name')?.touched && inputForm.get('association_name')?.invalid" class="error">
+            Association Name is required.
+          </div>
         </div>
 
-        <!-- Step 1 -->
-        <div *ngIf="currentStep === 1" class="form-section">
-            <form [formGroup]="inputForm" (ngSubmit)="goToNextStep()">
-
-                <!-- Alternate Number -->
-                <div class="form-group">
-                    <label class="medium-font">Alternate Contact Number <span class="required">*</span></label>
-                    <input type="tel" formControlName="alternate_number" class="inp-cus regular-font"
-                        placeholder="e.g., 9876543210" maxlength="10" />
-                    <div *ngIf="inputForm.get('alternate_number')?.touched">
-                        <div *ngIf="inputForm.get('alternate_number')?.errors?.['required']" class="error">
-                            Alternate number is required.
-                        </div>
-                        <div *ngIf="inputForm.get('alternate_number')?.errors?.['pattern']" class="error">
-                            Enter a valid 10-digit number starting with 6, 7, 8, or 9.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- GST Number -->
-                <div class="form-group">
-                    <label class="medium-font">GST Number <span class="required">*</span></label>
-                    <input type="text" formControlName="gst_number" class="inp-cus regular-font"
-                        placeholder="15-digit GSTIN" maxlength="15" />
-                    <div *ngIf="inputForm.get('gst_number')?.touched">
-                        <div *ngIf="inputForm.get('gst_number')?.errors?.['required']" class="error">
-                            GST Number is required.
-                        </div>
-                        <div *ngIf="inputForm.get('gst_number')?.errors?.['maxlength']" class="error">
-                            GST Number must be 15 characters.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Registration Number -->
-                <div class="form-group">
-                    <label class="medium-font">Association Registration Number <span class="required">*</span></label>
-                    <input type="text" formControlName="registration_number" class="inp-cus regular-font"
-                        placeholder="Enter Association Registration Number" />
-                    <div *ngIf="inputForm.get('registration_number')?.touched && inputForm.get('registration_number')?.invalid"
-                        class="error">
-                        Registration Number is required.
-                    </div>
-                </div>
-
-                <!-- Full Address -->
-                <div class="form-group">
-                    <label class="medium-font">Full Registered Address <span class="required">*</span></label>
-                    <textarea formControlName="address" class="inp-cus regular-font"
-                        placeholder="Enter Full Address"></textarea>
-                    <div *ngIf="inputForm.get('address')?.touched && inputForm.get('address')?.invalid" class="error">
-                        Address is required.
-                    </div>
-                </div>
-
-                <!-- Save Button -->
-                <div class="form-navigation">
-                    <button type="submit" class="btn-add">
-                        Save and continue
-                    </button>
-                </div>
-            </form>
+        <!-- Alternate Number -->
+        <div class="form-group">
+          <label class="medium-font">Alternate Contact Number <span class="required">*</span></label>
+          <input
+            type="tel"
+            formControlName="alternate_number"
+            class="inp-cus regular-font"
+            placeholder="e.g., 9876543210"
+            maxlength="10"
+          />
+          <div *ngIf="inputForm.get('alternate_number')?.touched">
+            <div *ngIf="inputForm.get('alternate_number')?.errors?.['required']" class="error">
+              Alternate number is required.
+            </div>
+            <div *ngIf="inputForm.get('alternate_number')?.errors?.['pattern']" class="error">
+              Enter a valid 10-digit number starting with 6, 7, 8, or 9.
+            </div>
+          </div>
         </div>
 
-
-        <!-- Step 2 -->
-        <div *ngIf="currentStep === 2" class="form-section">
-            <div class="info-box">
-                <div class="info-icon">⚠️</div>
-                <div class="info-content">
-                    <div class="info-title">Complete All Fields</div>
-                    <div class="info-text">
-                        Please fill in all the required fields and upload all the necessary documents which size is below 2MB before proceeding
-                        to the next step.
-                    </div>
-                </div>
+        <!-- GST Number -->
+        <div class="form-group">
+          <label class="medium-font">GST Number <span class="required">*</span></label>
+          <input
+            type="text"
+            formControlName="gst_number"
+            class="inp-cus regular-font"
+            placeholder="15-digit GSTIN"
+            maxlength="15"
+          />
+          <div *ngIf="inputForm.get('gst_number')?.touched">
+            <div *ngIf="inputForm.get('gst_number')?.errors?.['required']" class="error">
+              GST Number is required.
             </div>
-            <form [formGroup]="documentForm" (ngSubmit)="goToNextStep()">
-                <div class="form-group">
-                    <label class="medium-font" for="company_proof_type">Select Company Proof Type <span
-                            class="required">*</span></label>
-                    <select id="company_proof_type" formControlName="company_proof_type" class="inp-cus regular-font">
-                        <option value="">Choose Type</option>
-                        <option value="incorporation_certificate">Certificate of Incorporation</option>
-                        <option value="moa_aoa">Memorandum of Association (MOA)</option>
-                        <option value="partnership_deed">Partnership Deed</option>
-                    </select>
-                </div>
-                <small class="text-danger"
-                    *ngIf="documentForm.get('company_proof_type')?.touched && documentForm.get('company_proof_type')?.invalid">
-                    Company Proof Type is required
-                </small>
-
-                <h4>Documents <span class="required">*</span></h4>
-                <div class="document-uploads">
-
-
-                    <div class="form-group">
-                        <label class="medium-font" for="Passport">Passport Size Photo</label>
-                        <input type="file" class="inp-cus regular-font" (change)="onFilePassportChange($event)"
-                            accept="image/*,.pdf" />
-                        <div *ngIf="documentForm.get('passport_size_photo')?.value">
-                            ✔ Selected: {{ documentForm.get('passport_size_photo')?.value.name }}
-                        </div>
-                        <small class="text-danger"
-                            *ngIf="documentForm.get('passport_size_photo')?.touched && documentForm.get('passport_size_photo')?.invalid">
-                            Passport Size Photo is required
-                        </small>
-                        <small class="text-danger"
-                            *ngIf="documentForm.get('passport_size_photo')?.errors?.['fileSize']">
-                            File size must be 2 MB or less
-                        </small>
-
-                    </div>
-                    <div class="form-group">
-                        <label class="medium-font" for="Passport">Rental Agreement</label>
-                        <input type="file" class="inp-cus regular-font" (change)="onFileRentalChange($event)"
-                            accept="image/*,.pdf" />
-                        <div *ngIf="documentForm.get('rental_agreement')?.value">
-                            ✔ Selected: {{ documentForm.get('rental_agreement')?.value.name }}
-                        </div>
-                        <small class="text-danger"
-                            *ngIf="documentForm.get('rental_agreement')?.touched && documentForm.get('rental_agreement')?.invalid">
-                            Rental Agreement is required
-                        </small>
-
-                        <small class="text-danger" *ngIf="documentForm.get('rental_agreement')?.errors?.['fileSize']">
-                            File size must be 2 MB or less
-                        </small>
-                    </div>
-                    <div class="form-group">
-                        <label class="medium-font" for="Passport">Cancelled Cheque Leaf</label>
-                        <input type="file" class="inp-cus regular-font" (change)="onFileChequeChange($event)"
-                            accept="image/*,.pdf" />
-                        <div *ngIf="documentForm.get('cancelled_cheque_leaf')?.value">
-                            ✔ Selected: {{ documentForm.get('cancelled_cheque_leaf')?.value.name }}
-                        </div>
-                        <small class="text-danger"
-                            *ngIf="documentForm.get('cancelled_cheque_leaf')?.touched && documentForm.get('cancelled_cheque_leaf')?.invalid">
-                            Cancelled Cheque Leaf is required
-                        </small>
-                        <small class="text-danger"
-                            *ngIf="documentForm.get('cancelled_cheque_leaf')?.errors?.['fileSize']">
-                            File size must be 2 MB or less
-                        </small>
-                    </div>
-                    <div class="form-group">
-                        <label class="medium-font" for="Passport">Pan Card</label>
-                        <input type="file" class="inp-cus regular-font" (change)="onFilePanChange($event)"
-                            accept="image/*,.pdf" />
-                        <div *ngIf="documentForm.get('pan_card')?.value">
-                            ✔ Selected: {{ documentForm.get('pan_card')?.value.name }}
-                        </div>
-                        <small class="text-danger"
-                            *ngIf="documentForm.get('pan_card')?.touched && documentForm.get('pan_card')?.invalid">
-                            Pan Card is required
-                        </small>
-                        <small class="text-danger" *ngIf="documentForm.get('pan_card')?.errors?.['fileSize']">
-                            File size must be 2 MB or less
-                        </small>
-                    </div>
-                    <div class="form-group">
-                        <label class="medium-font" for="Passport">Company Proof</label>
-                        <input type="file" class="inp-cus regular-font" (change)="onFileCompanyChange($event)"
-                            accept="image/*,.pdf" />
-                        <div *ngIf="documentForm.get('company_proof')?.value">
-                            ✔ Selected: {{ documentForm.get('company_proof')?.value.name }}
-                        </div>
-                        <small class="text-danger"
-                            *ngIf="documentForm.get('company_proof')?.touched && documentForm.get('company_proof')?.invalid">
-                            Company Proof is required
-                        </small>
-                        <small class="text-danger" *ngIf="documentForm.get('company_proof')?.errors?.['fileSize']">
-                            File size must be 2 MB or less
-                        </small>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="medium-font">
-                            Signature <span class="required">*</span>
-                        </label>
-
-                        <input type="file" class="inp-cus regular-font" accept="image/png,image/jpeg"
-                            (change)="onFileSignatureChange($event)" />
-                        <small class="text-gray">
-                            Allowed formats: JPG, PNG | Maximum file size: 100 KB
-                        </small>
-
-                        <div *ngIf="documentForm.get('signature')?.value">
-                            ✔ Selected: {{ documentForm.get('signature')?.value.name }}
-                        </div>
-
-                        <small class="text-danger"
-                            *ngIf="documentForm.get('signature')?.touched && documentForm.get('signature')?.invalid">
-                            Signature is required
-                        </small>
-                    </div>
-
-                </div>
-                <!-- </div> -->
-
-                <div class="form-navigation">
-                    <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
-                    <button type="submit" class="btn-add">
-                        Save and continue
-                    </button>
-                    <!-- <button type="button" (click)="submitDocumentForm()" class="btn-add">
-                        submitDocumentForm
-                    </button> -->
-                </div>
-            </form>
-
+            <div *ngIf="inputForm.get('gst_number')?.errors?.['maxlength']" class="error">
+              GST Number must be 15 characters.
+            </div>
+          </div>
         </div>
 
-        <!-- Step 3: Account Details -->
-        <div *ngIf="currentStep === 3" class="form-section">
-            <form [formGroup]="accountForm" (ngSubmit)="goToNextStep()">
-                <!-- Account Holder Name -->
-                <div class="form-group">
-                    <label class="medium-font">Account Holder Name <span class="required">*</span></label>
-                    <input type="text" formControlName="account_holder_name" class="inp-cus regular-font"
-                        placeholder="Enter Account Holder Name" />
-                    <div *ngIf="
-  accountForm.get('account_holder_name')?.touched &&
-  accountForm.get('account_holder_name')?.errors?.['required']
-" class="error">
-  Account Holder Name is required.
-</div>
-
-<div *ngIf="
-  accountForm.get('account_holder_name')?.touched &&
-  accountForm.get('account_holder_name')?.errors?.['pattern']
-" class="error">
-  Only letters are allowed.
-</div>
-                </div>
-
-                <!-- Account Number -->
-                <div class="form-group">
-                    <label class="medium-font">Account Number <span class="required">*</span></label>
-                    <input type="text" formControlName="account_number" class="inp-cus regular-font"
-                        placeholder="Enter Account Number" />
-                    <div *ngIf="accountForm.get('account_number')?.touched" class="error">
-                        <div *ngIf="accountForm.get('account_number')?.errors?.['required']">
-                            Account Number is required.
-                        </div>
-                        <div *ngIf="accountForm.get('account_number')?.errors?.['pattern']">
-                            Enter a valid account number (9–18 digits only).
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="medium-font">Bank Name <span class="required">*</span></label>
-                    <input type="text" formControlName="bank_name" class="inp-cus regular-font"
-                        placeholder="Enter Bank Name" />
-                    <!-- <div *ngIf="accountForm.get('bank_name')?.touched" class="error">
-                        <div *ngIf="accountForm.get('bank_name')?.errors?.['required']">
-                            Bank Name is required.
-                        </div> -->
-
-                        <div *ngIf="
-  accountForm.get('bank_name')?.touched &&
-  accountForm.get('bank_name')?.errors?.['required']
-" class="error">
-   Bank Name is required.
-</div>
-
-<div *ngIf="
-  accountForm.get('bank_name')?.touched &&
-  accountForm.get('bank_name')?.errors?.['pattern']
-" class="error">
-  Only letters are allowed.
-</div>
-                        
-                    </div>
-                <!-- </div> -->
-
-                <!-- Account Type -->
-                <div class="form-group">
-                    <label class="medium-font">Account Type <span class="required">*</span></label>
-                    <select formControlName="account_type" class="inp-cus regular-font">
-                        <option value="">Select Account Type</option>
-                        <option value="savings">Savings</option>
-                        <option value="current">Current</option>
-                    </select>
-                    <div *ngIf="
-          accountForm.get('account_type')?.touched &&
-          accountForm.get('account_type')?.invalid
-        " class="error">
-                        Account Type is required.
-                    </div>
-                </div>
-
-                <!-- IFSC Code -->
-                <div class="form-group">
-                    <label class="medium-font">IFSC Code <span class="required">*</span></label>
-                    <input type="text" formControlName="ifsc_code" class="inp-cus regular-font"
-                        placeholder="e.g., SBIN0001234" maxlength="11" (input)="toUpperCaseInput($event)" />
-                    <div *ngIf="accountForm.get('ifsc_code')?.touched" class="error">
-                        <div *ngIf="accountForm.get('ifsc_code')?.errors?.['required']">
-                            IFSC Code is required.
-                        </div>
-                        <div *ngIf="accountForm.get('ifsc_code')?.errors?.['pattern']">
-                            Enter a valid IFSC Code in all Capital format (e.g., SBIN0XXXXXX — 4 letters, 0, 6
-                            alphanumeric).
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-navigation">
-                    <button type="button" (click)="goToPreviousStep()" class="btn secondary">
-                        ← Back
-                    </button>
-                    <button type="submit" class="btn-add">
-                        Save and continue
-                    </button>
-                </div>
-            </form>
+        <!-- Registration Number -->
+        <div class="form-group">
+          <label class="medium-font">Association Registration Number <span class="required">*</span></label>
+          <input
+            type="text"
+            formControlName="registration_number"
+            class="inp-cus regular-font"
+            placeholder="Enter Association Registration Number"
+          />
+          <div
+            *ngIf="inputForm.get('registration_number')?.touched && inputForm.get('registration_number')?.invalid"
+            class="error"
+          >
+            Registration Number is required.
+          </div>
         </div>
 
-        <!-- Step 4: Review & Submit -->
-        <div *ngIf="currentStep === 4" class="form-section">
-            <p class="guidance-text">
-                Please review the information below for accuracy. Once you submit, these details will be sent for
-                verification.
-            </p>
-
-            <div class="review-block">
-                <h3>Association Details</h3>
-                <p class="regular-font address-wrap"><strong>Alternate Contact:</strong> {{
-                    inputForm.value.alternate_number }}</p>
-                <p class="regular-font address-wrap"><strong>GST:</strong> {{ inputForm.value.gst_number }}</p>
-                <p class="regular-font address-wrap"><strong>Reg. No:</strong> {{ inputForm.value.registration_number }}
-                </p>
-                <p class="regular-font address-wrap">
-                    <strong>Address:</strong> {{ inputForm.value.address }}
-                </p>
-            </div>
-
-            <div class="review-block">
-                <h3>Account Details</h3>
-                <p class="regular-font address-wrap"><strong>Holder Name:</strong> {{
-                    accountForm.value.account_holder_name }}</p>
-                <p class="regular-font address-wrap"><strong>Bank Name:</strong> {{
-                    accountForm.value.bank_name }}</p>
-                <p class="regular-font address-wrap"><strong>Account No:</strong> {{ accountForm.value.account_number }}
-                </p>
-                <p class="regular-font address-wrap"><strong>Type:</strong> {{ accountForm.value.account_type }}</p>
-                <p class="regular-font address-wrap"><strong>IFSC:</strong> {{ accountForm.value.ifsc_code }}</p>
-            </div>
-
-
-            <div class="review-block">
-                <h3>Uploaded Documents</h3>
-                <p class="regular-font">
-                    Passport Size Photo:
-                    <strong>{{ passport_sizephoto ? passport_sizephoto.name : 'Missing' }}</strong>
-                </p>
-                <p class="regular-font">
-                    Rental Agreement:
-                    <strong>{{ RentalAggrement ? RentalAggrement.name : 'Missing' }}</strong>
-                </p>
-                <p class="regular-font">
-                    Cancelled Cheque Leaf:
-                    <strong>{{ ChequeLeaf ? ChequeLeaf.name : 'Missing' }}</strong>
-                </p>
-                <p class="regular-font">
-                    PAN Card:
-                    <strong>{{ Pancard ? Pancard.name : 'Missing' }}</strong>
-                </p>
-                <p class="regular-font">
-                    Company Proof:
-                    <strong>{{ Company_proof ? Company_proof.name : 'Missing' }}</strong>
-                </p>
-            </div>
-
-            <div class="form-navigation">
-                <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
-                <button type="button" (click)="submitInputForm()" class="btn-add" *ngIf="!submitbtnloading">Submit
-                    Onboarding</button>
-                <button type="button" class="btn-add" style="cursor: not-allowed;"
-                    *ngIf="submitbtnloading">Submitting...</button>
-            </div>
+        <!-- Save Button -->
+        <div class="form-navigation">
+          <button type="submit" class="btn-add">Save and continue</button>
         </div>
+      </form>
     </div>
+
+    <!-- ═══════════════════════════════════════════
+         STEP 2 — Address Details
+    ════════════════════════════════════════════ -->
+    <div *ngIf="currentStep === 2" class="form-section">
+      <form [formGroup]="addressForm" (ngSubmit)="goToNextStep()">
+
+        <!-- Street -->
+        <div class="form-group">
+          <label class="medium-font">Street <span class="required">*</span></label>
+          <input
+            type="text"
+            formControlName="street"
+            class="inp-cus regular-font"
+            placeholder="Enter Street / House No."
+          />
+          <div *ngIf="addressForm.get('street')?.touched && addressForm.get('street')?.invalid" class="error">
+            Street is required.
+          </div>
+        </div>
+
+        <!-- Pincode -->
+        <div class="form-group">
+          <label class="medium-font">Pincode <span class="required">*</span></label>
+          <div class="pincode-wrapper">
+            <input
+              type="text"
+              formControlName="pincode"
+              class="inp-cus regular-font"
+              placeholder="Enter 6-digit Pincode"
+              maxlength="6"
+              (input)="onPincodeInput($event)"
+            />
+            <span class="pincode-spinner" *ngIf="pincodeLoading">
+              <i class="fa fa-spinner fa-spin"></i>
+            </span>
+            <span class="pincode-ok" *ngIf="pincodeSuccess">
+              <i class="fa fa-check-circle"></i>
+            </span>
+          </div>
+          <div *ngIf="addressForm.get('pincode')?.touched">
+            <div *ngIf="addressForm.get('pincode')?.errors?.['required']" class="error">Pincode is required.</div>
+            <div *ngIf="addressForm.get('pincode')?.errors?.['pattern']" class="error">Enter a valid 6-digit pincode.</div>
+          </div>
+          <small *ngIf="pincodeError" class="text-danger">{{ pincodeError }}</small>
+          <small *ngIf="pincodeSuccess" class="text-success">Location fetched successfully!</small>
+        </div>
+
+        <!-- State Dropdown -->
+        <div class="form-group">
+          <label class="medium-font">State <span class="required">*</span></label>
+          <div class="searchable-select-wrapper">
+            <input
+              type="text"
+              class="inp-cus regular-font"
+              placeholder="Search or select a state..."
+              [(ngModel)]="stateSearch"
+              [ngModelOptions]="{standalone: true}"
+              (focus)="stateDropdownOpen = true"
+              (input)="onStateSearch()"
+              autocomplete="off"
+            />
+            <div class="dropdown-list" *ngIf="stateDropdownOpen && filteredStates.length > 0">
+              <div
+                class="dropdown-item"
+                *ngFor="let state of filteredStates"
+                (mousedown)="selectState(state)"
+              >
+                {{ state }}
+              </div>
+            </div>
+            <div class="dropdown-list" *ngIf="stateDropdownOpen && filteredStates.length === 0 && stateSearch">
+              <div class="dropdown-item no-result">No states found</div>
+            </div>
+          </div>
+          <div *ngIf="addressForm.get('state')?.touched && addressForm.get('state')?.invalid" class="error">
+            State is required.
+          </div>
+        </div>
+
+        <!-- District Dropdown -->
+        <div class="form-group">
+          <label class="medium-font">District <span class="required">*</span></label>
+          <div class="searchable-select-wrapper">
+            <input
+              type="text"
+              class="inp-cus regular-font"
+              [placeholder]="addressForm.get('state')?.value ? 'Search or select a district...' : 'Select a state first'"
+              [(ngModel)]="districtSearch"
+              [ngModelOptions]="{standalone: true}"
+              (focus)="onDistrictFocus()"
+              (input)="onDistrictSearch()"
+              [disabled]="!addressForm.get('state')?.value"
+              autocomplete="off"
+            />
+            <div class="dropdown-list" *ngIf="districtDropdownOpen && filteredDistricts.length > 0">
+              <div
+                class="dropdown-item"
+                *ngFor="let district of filteredDistricts"
+                (mousedown)="selectDistrict(district)"
+              >
+                {{ district }}
+              </div>
+            </div>
+            <div class="dropdown-list" *ngIf="districtDropdownOpen && filteredDistricts.length === 0 && districtSearch">
+              <div class="dropdown-item no-result">No districts found</div>
+            </div>
+          </div>
+          <div *ngIf="addressForm.get('district')?.touched && addressForm.get('district')?.invalid" class="error">
+            District is required.
+          </div>
+        </div>
+
+        <!-- Area / City Dropdown -->
+        <div class="form-group">
+          <label class="medium-font">Area / City <span class="required">*</span></label>
+          <div class="searchable-select-wrapper">
+            <input
+              type="text"
+              class="inp-cus regular-font"
+              [placeholder]="addressForm.get('district')?.value ? 'Search or select an area...' : 'Select a district first'"
+              [(ngModel)]="areaSearch"
+              [ngModelOptions]="{standalone: true}"
+              (focus)="onAreaFocus()"
+              (input)="onAreaSearch()"
+              [disabled]="!addressForm.get('district')?.value"
+              autocomplete="off"
+            />
+            <div class="dropdown-list" *ngIf="areaDropdownOpen && filteredAreas.length > 0">
+              <div
+                class="dropdown-item"
+                *ngFor="let area of filteredAreas"
+                (mousedown)="selectArea(area)"
+              >
+                {{ area }}
+              </div>
+            </div>
+            <div class="dropdown-list" *ngIf="areaDropdownOpen && filteredAreas.length === 0 && areaSearch">
+              <div class="dropdown-item no-result">No areas found</div>
+            </div>
+          </div>
+          <div *ngIf="addressForm.get('area')?.touched && addressForm.get('area')?.invalid" class="error">
+            Area / City is required.
+          </div>
+        </div>
+
+        <!-- Landmark -->
+        <div class="form-group">
+          <label class="medium-font">Landmark <span class="optional">(Optional)</span></label>
+          <input
+            type="text"
+            formControlName="landmark"
+            class="inp-cus regular-font"
+            placeholder="e.g., Near City Bus Stand"
+          />
+        </div>
+
+        <div class="form-navigation">
+          <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
+          <button type="submit" class="btn-add">Save and continue</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         STEP 3 — Document Uploads
+    ════════════════════════════════════════════ -->
+    <div *ngIf="currentStep === 3" class="form-section">
+      <div class="info-box">
+        <div class="info-icon">⚠️</div>
+        <div class="info-content">
+          <div class="info-title">Complete All Fields</div>
+          <div class="info-text">
+            Please fill in all the required fields and upload all the necessary documents which size is
+            below 2MB before proceeding to the next step.
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="documentForm" (ngSubmit)="goToNextStep()">
+        <div class="form-group">
+          <label class="medium-font" for="company_proof_type">
+            Select Company Proof Type <span class="required">*</span>
+          </label>
+          <select id="company_proof_type" formControlName="company_proof_type" class="inp-cus regular-font">
+            <option value="">Choose Type</option>
+            <option value="incorporation_certificate">Certificate of Incorporation</option>
+            <option value="moa_aoa">Memorandum of Association (MOA)</option>
+            <option value="partnership_deed">Partnership Deed</option>
+          </select>
+          <small class="text-danger"
+            *ngIf="documentForm.get('company_proof_type')?.touched && documentForm.get('company_proof_type')?.invalid">
+            Company Proof Type is required
+          </small>
+        </div>
+
+        <h4>Documents <span class="required">*</span></h4>
+        <div class="document-uploads">
+
+          <!-- Passport Size Photo -->
+          <div class="form-group">
+            <label class="medium-font">Passport Size Photo</label>
+            <input type="file" class="inp-cus regular-font" (change)="onFilePassportChange($event)" accept="image/*,.pdf" />
+            <div *ngIf="documentForm.get('passport_size_photo')?.value">
+              ✔ Selected: {{ documentForm.get('passport_size_photo')?.value.name }}
+            </div>
+            <small class="text-danger"
+              *ngIf="documentForm.get('passport_size_photo')?.touched && documentForm.get('passport_size_photo')?.invalid">
+              Passport Size Photo is required
+            </small>
+            <small class="text-danger" *ngIf="documentForm.get('passport_size_photo')?.errors?.['fileSize']">
+              File size must be 2 MB or less
+            </small>
+          </div>
+
+          <!-- Rental Agreement -->
+          <div class="form-group">
+            <label class="medium-font">Rental Agreement</label>
+            <input type="file" class="inp-cus regular-font" (change)="onFileRentalChange($event)" accept="image/*,.pdf" />
+            <div *ngIf="documentForm.get('rental_agreement')?.value">
+              ✔ Selected: {{ documentForm.get('rental_agreement')?.value.name }}
+            </div>
+            <small class="text-danger"
+              *ngIf="documentForm.get('rental_agreement')?.touched && documentForm.get('rental_agreement')?.invalid">
+              Rental Agreement is required
+            </small>
+            <small class="text-danger" *ngIf="documentForm.get('rental_agreement')?.errors?.['fileSize']">
+              File size must be 2 MB or less
+            </small>
+          </div>
+
+          <!-- Cancelled Cheque Leaf -->
+          <div class="form-group">
+            <label class="medium-font">Cancelled Cheque Leaf</label>
+            <input type="file" class="inp-cus regular-font" (change)="onFileChequeChange($event)" accept="image/*,.pdf" />
+            <div *ngIf="documentForm.get('cancelled_cheque_leaf')?.value">
+              ✔ Selected: {{ documentForm.get('cancelled_cheque_leaf')?.value.name }}
+            </div>
+            <small class="text-danger"
+              *ngIf="documentForm.get('cancelled_cheque_leaf')?.touched && documentForm.get('cancelled_cheque_leaf')?.invalid">
+              Cancelled Cheque Leaf is required
+            </small>
+            <small class="text-danger" *ngIf="documentForm.get('cancelled_cheque_leaf')?.errors?.['fileSize']">
+              File size must be 2 MB or less
+            </small>
+          </div>
+
+          <!-- Pan Card -->
+          <div class="form-group">
+            <label class="medium-font">Pan Card</label>
+            <input type="file" class="inp-cus regular-font" (change)="onFilePanChange($event)" accept="image/*,.pdf" />
+            <div *ngIf="documentForm.get('pan_card')?.value">
+              ✔ Selected: {{ documentForm.get('pan_card')?.value.name }}
+            </div>
+            <small class="text-danger"
+              *ngIf="documentForm.get('pan_card')?.touched && documentForm.get('pan_card')?.invalid">
+              Pan Card is required
+            </small>
+            <small class="text-danger" *ngIf="documentForm.get('pan_card')?.errors?.['fileSize']">
+              File size must be 2 MB or less
+            </small>
+          </div>
+
+          <!-- Company Proof -->
+          <div class="form-group">
+            <label class="medium-font">Company Proof</label>
+            <input type="file" class="inp-cus regular-font" (change)="onFileCompanyChange($event)" accept="image/*,.pdf" />
+            <div *ngIf="documentForm.get('company_proof')?.value">
+              ✔ Selected: {{ documentForm.get('company_proof')?.value.name }}
+            </div>
+            <small class="text-danger"
+              *ngIf="documentForm.get('company_proof')?.touched && documentForm.get('company_proof')?.invalid">
+              Company Proof is required
+            </small>
+            <small class="text-danger" *ngIf="documentForm.get('company_proof')?.errors?.['fileSize']">
+              File size must be 2 MB or less
+            </small>
+          </div>
+
+          <!-- Signature -->
+          <div class="form-group">
+            <label class="medium-font">Signature <span class="required">*</span></label>
+            <input type="file" class="inp-cus regular-font" accept="image/png,image/jpeg"
+              (change)="onFileSignatureChange($event)" />
+            <small class="text-gray">Allowed formats: JPG, PNG | Maximum file size: 100 KB</small>
+            <div *ngIf="documentForm.get('signature')?.value">
+              ✔ Selected: {{ documentForm.get('signature')?.value.name }}
+            </div>
+            <small class="text-danger"
+              *ngIf="documentForm.get('signature')?.touched && documentForm.get('signature')?.invalid">
+              Signature is required
+            </small>
+          </div>
+
+        </div>
+        <div class="form-navigation">
+          <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
+          <button type="submit" class="btn-add">Save and continue</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         STEP 4 — Bank Account Details
+    ════════════════════════════════════════════ -->
+    <div *ngIf="currentStep === 4" class="form-section">
+      <form [formGroup]="accountForm" (ngSubmit)="goToNextStep()">
+
+        <!-- Account Holder Name -->
+        <div class="form-group">
+          <label class="medium-font">Account Holder Name <span class="required">*</span></label>
+          <input type="text" formControlName="account_holder_name" class="inp-cus regular-font"
+            placeholder="Enter Account Holder Name" />
+          <div *ngIf="accountForm.get('account_holder_name')?.touched && accountForm.get('account_holder_name')?.errors?.['required']" class="error">
+            Account Holder Name is required.
+          </div>
+          <div *ngIf="accountForm.get('account_holder_name')?.touched && accountForm.get('account_holder_name')?.errors?.['pattern']" class="error">
+            Only letters are allowed.
+          </div>
+        </div>
+
+        <!-- Account Number -->
+        <div class="form-group">
+          <label class="medium-font">Account Number <span class="required">*</span></label>
+          <input type="text" formControlName="account_number" class="inp-cus regular-font"
+            placeholder="Enter Account Number" />
+          <div *ngIf="accountForm.get('account_number')?.touched" class="error">
+            <div *ngIf="accountForm.get('account_number')?.errors?.['required']">Account Number is required.</div>
+            <div *ngIf="accountForm.get('account_number')?.errors?.['pattern']">Enter a valid account number (9–18 digits only).</div>
+          </div>
+        </div>
+
+        <!-- Bank Name -->
+        <div class="form-group">
+          <label class="medium-font">Bank Name <span class="required">*</span></label>
+          <input type="text" formControlName="bank_name" class="inp-cus regular-font" placeholder="Enter Bank Name" />
+          <div *ngIf="accountForm.get('bank_name')?.touched && accountForm.get('bank_name')?.errors?.['required']" class="error">
+            Bank Name is required.
+          </div>
+          <div *ngIf="accountForm.get('bank_name')?.touched && accountForm.get('bank_name')?.errors?.['pattern']" class="error">
+            Only letters are allowed.
+          </div>
+        </div>
+
+        <!-- Account Type -->
+        <div class="form-group">
+          <label class="medium-font">Account Type <span class="required">*</span></label>
+          <select formControlName="account_type" class="inp-cus regular-font">
+            <option value="">Select Account Type</option>
+            <option value="savings">Savings</option>
+            <option value="current">Current</option>
+          </select>
+          <div *ngIf="accountForm.get('account_type')?.touched && accountForm.get('account_type')?.invalid" class="error">
+            Account Type is required.
+          </div>
+        </div>
+
+        <!-- IFSC Code -->
+        <div class="form-group">
+          <label class="medium-font">IFSC Code <span class="required">*</span></label>
+          <input type="text" formControlName="ifsc_code" class="inp-cus regular-font"
+            placeholder="e.g., SBIN0001234" maxlength="11" (input)="toUpperCaseInput($event)" />
+          <div *ngIf="accountForm.get('ifsc_code')?.touched" class="error">
+            <div *ngIf="accountForm.get('ifsc_code')?.errors?.['required']">IFSC Code is required.</div>
+            <div *ngIf="accountForm.get('ifsc_code')?.errors?.['pattern']">
+              Enter a valid IFSC Code in all Capital format (e.g., SBIN0XXXXXX — 4 letters, 0, 6 alphanumeric).
+            </div>
+          </div>
+        </div>
+
+        <div class="form-navigation">
+          <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
+          <button type="submit" class="btn-add">Save and continue</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         STEP 5 — Review & Submit
+    ════════════════════════════════════════════ -->
+    <div *ngIf="currentStep === 5" class="form-section">
+      <p class="guidance-text">
+        Please review the information below for accuracy. Once you submit, these details will be sent for verification.
+      </p>
+
+      <div class="review-block">
+        <h3>Association Details</h3>
+        <p class="regular-font address-wrap"><strong>Association Name:</strong> {{ inputForm.value.association_name }}</p>
+        <p class="regular-font address-wrap"><strong>Alternate Contact:</strong> {{ inputForm.value.alternate_number }}</p>
+        <p class="regular-font address-wrap"><strong>GST:</strong> {{ inputForm.value.gst_number }}</p>
+        <p class="regular-font address-wrap"><strong>Reg. No:</strong> {{ inputForm.value.registration_number }}</p>
+      </div>
+
+      <div class="review-block">
+        <h3>Address Details</h3>
+        <p class="regular-font address-wrap"><strong>Street:</strong> {{ addressForm.value.street }}</p>
+        <p class="regular-font address-wrap"><strong>Area / City:</strong> {{ addressForm.value.area }}</p>
+        <p class="regular-font address-wrap"><strong>District:</strong> {{ addressForm.value.district }}</p>
+        <p class="regular-font address-wrap"><strong>State:</strong> {{ addressForm.value.state }}</p>
+        <p class="regular-font address-wrap"><strong>Pincode:</strong> {{ addressForm.value.pincode }}</p>
+        <p class="regular-font address-wrap" *ngIf="addressForm.value.landmark">
+          <strong>Landmark:</strong> {{ addressForm.value.landmark }}
+        </p>
+      </div>
+
+      <div class="review-block">
+        <h3>Account Details</h3>
+        <p class="regular-font address-wrap"><strong>Holder Name:</strong> {{ accountForm.value.account_holder_name }}</p>
+        <p class="regular-font address-wrap"><strong>Bank Name:</strong> {{ accountForm.value.bank_name }}</p>
+        <p class="regular-font address-wrap"><strong>Account No:</strong> {{ accountForm.value.account_number }}</p>
+        <p class="regular-font address-wrap"><strong>Type:</strong> {{ accountForm.value.account_type }}</p>
+        <p class="regular-font address-wrap"><strong>IFSC:</strong> {{ accountForm.value.ifsc_code }}</p>
+      </div>
+
+      <div class="review-block">
+        <h3>Uploaded Documents</h3>
+        <p class="regular-font">Passport Size Photo: <strong>{{ passport_sizephoto ? passport_sizephoto.name : 'Missing' }}</strong></p>
+        <p class="regular-font">Rental Agreement: <strong>{{ RentalAggrement ? RentalAggrement.name : 'Missing' }}</strong></p>
+        <p class="regular-font">Cancelled Cheque Leaf: <strong>{{ ChequeLeaf ? ChequeLeaf.name : 'Missing' }}</strong></p>
+        <p class="regular-font">PAN Card: <strong>{{ Pancard ? Pancard.name : 'Missing' }}</strong></p>
+        <p class="regular-font">Company Proof: <strong>{{ Company_proof ? Company_proof.name : 'Missing' }}</strong></p>
+      </div>
+
+      <div class="form-navigation">
+        <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
+        <button type="button" (click)="submitInputForm()" class="btn-add" *ngIf="!submitbtnloading">Submit Onboarding</button>
+        <button type="button" class="btn-add" style="cursor: not-allowed;" *ngIf="submitbtnloading">Submitting...</button>
+      </div>
+    </div>
+
+  </div>
 </div>
