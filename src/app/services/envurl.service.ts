@@ -225,5 +225,9 @@ export class EnvurlService {
   public ApproveRequest = '/property_merge_request/update_property_merge_request'
 
   public listallresidentrequestlist = '/property_merge_request/get_property_merge_request'
-  
+  public listpayoutrequestinSA = '/payout/list_payout_history'
+  public listpayoutrequestinAssociation = '/payout/list_payout_history'
+  public payoutcardDetailsinAssociation = '/payout/list_payment_payout_details'
+  public createpayoutrequestinAssociation = '/payout/create_payout'
+  public updatepayoutrequeststatus = '/payout/update_payout'
 }

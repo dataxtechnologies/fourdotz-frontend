@@ -1,0 +1,506 @@
+/* ================= FIX CONTAINER ================= */
+.container {
+    display: block;
+    /* IMPORTANT */
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ================= HEADER ================= */
+.header-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head-cont h2 {
+    font-size: 30px;
+}
+
+
+/* ================= ACTION ================= */
+.mail-btn {
+    color: var(--primary-color1);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+
+.btn-add {
+    color: var(--primary-color1);
+    font-weight: 700;
+    padding: 10px 8px;
+    background: #faf9f4;
+    border-radius: 12px !important;
+    border: 2px solid var(--primary-color1);
+}
+
+
+.mail-btn{
+    color: var(--primary-color1);
+    font-weight: bold;
+}
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #2f8f2f;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+
+
+
+
+.pf-section {
+  padding: 12px 20px;
+  /* background: #f7f7f8; */
+}
+
+.pf-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #8C3D96;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.pf-heading {
+  font-size: 22px;
+  font-weight: 600;
+  color: #111111;
+  margin-bottom: 12px;
+}
+
+
+
+
+/* Grid */
+.pf-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+
+/* Card */
+.pf-card {
+  background: #ffffff;
+  border: 0.5px solid #e5e5e5;
+  padding: 24px 20px 20px;
+  position: relative;
+}
+
+.pf-card:first-child {
+  border-radius: 14px 0 0 14px;
+}
+
+.pf-card:last-child {
+  border-radius: 0 14px 14px 0;
+}
+
+.pf-card + .pf-card {
+  border-left: none;
+}
+
+/* Step number badge */
+.pf-step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #f2e8f4;
+  color: #8C3D96;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* Icon ring */
+.pf-icon-ring {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  border: 1.5px solid;
+}
+
+.pf-icon-ring.purple {
+  background: #f9f2fa;
+  border-color: #e0c9e3;
+}
+
+.pf-icon-ring.orange {
+  background: #fdf1ef;
+  border-color: #f7cdc8;
+}
+
+/* Card text */
+.pf-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111111;
+  margin-bottom: 6px;
+}
+
+.pf-card-desc {
+  font-size: 14px;
+  color: #666666;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+/* Badges */
+.pf-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pf-badge.purple {
+  background: #f2e8f4;
+  color: #8C3D96;
+}
+
+.pf-badge.orange {
+  background: #fdecea;
+  color: #EB4431;
+}
+
+.pf-badge.grey {
+  background: #f0f0f0;
+  color: #555555;
+}
+
+/* Detail row */
+.pf-detail {
+  font-size: 13px;
+  color: #888888;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 0.5px solid #f0f0f0;
+  line-height: 1.5;
+}
+
+/* Inline color helpers */
+.c-purple {
+  color: #8C3D96;
+  font-weight: 600;
+}
+
+.c-orange {
+  color: #EB4431;
+  font-weight: 600;
+}
+
+/* Arrow connector between cards */
+.pf-arrow-right {
+  position: absolute;
+  top: 42px;
+  right: -9px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid #d0c0d3;
+  z-index: 3;
+}
+
+/* Footer note */
+.pf-footer-note {
+  margin-top: 5px;
+  background: #ffffff;
+  border: 0.5px solid #e5e5e5;
+  border-left: 3px solid #8C3D96;
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.pf-footer-note p {
+  font-size: 14px;
+  color: #555555;
+  line-height: 1.55;
+}
+
+.pf-footer-note p strong {
+  color: #111111;
+  font-weight: 600;
+}
+
+/* Responsive — tablet */
+@media (max-width: 768px) {
+  .pf-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pf-card:first-child {
+    border-radius: 14px 0 0 0;
+  }
+
+  .pf-card:nth-child(2) {
+    border-radius: 0 14px 0 0;
+    border-left: 0.5px solid #e5e5e5;
+  }
+
+  .pf-card:nth-child(3) {
+    border-radius: 0 0 0 14px;
+    border-top: none;
+  }
+
+  .pf-card:last-child {
+    border-radius: 0 0 14px 0;
+    border-left: none;
+    border-top: none;
+  }
+
+  .pf-arrow-right {
+    display: none;
+  }
+}
+
+/* Responsive — mobile */
+@media (max-width: 480px) {
+  .pf-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pf-card:first-child  { border-radius: 14px 14px 0 0; }
+  .pf-card:nth-child(2) { border-radius: 0; border-left: 0.5px solid #e5e5e5; border-top: none; }
+  .pf-card:nth-child(3) { border-radius: 0; border-top: none; }
+  .pf-card:last-child   { border-radius: 0 0 14px 14px; border-left: 0.5px solid #e5e5e5; border-top: none; }
+}
+
+
+
+
+
+
+
+
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0px 20px 0px;  /* top right bottom left */
+}
+
+/* Card */
+.stat-card {
+  background: #ffffff;
+  border: 0.5px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 18px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Top row — label + icon */
+.stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #888888;
+  font-weight: 400;
+}
+
+.stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 0.5px solid #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-icon i {
+  font-size: 16px;
+}
+
+/* Icon color variants */
+.stat-icon.purple {
+  background: #f2e8f4;
+  border-color: #e0c9e3;
+}
+
+.stat-icon.purple i {
+  color: #8C3D96;
+}
+
+.stat-icon.orange {
+  background: #fdecea;
+  border-color: #f7cdc8;
+}
+
+.stat-icon.orange i {
+  color: #EB4431;
+}
+
+.stat-icon.grey {
+  background: #f5f5f5;
+  border-color: #e8e8e8;
+}
+
+.stat-icon.grey i {
+  color: #888888;
+}
+
+/* Value */
+.stat-value {
+  font-size: 22px;
+  font-weight: 500;
+  color: #111111;
+  letter-spacing: -0.3px;
+}
+
+/* Footer text */
+.stat-footer {
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+.stat-footer.positive {
+  color: #1a9e5c;
+}
+
+.stat-footer.negative {
+  color: #EB4431;
+}
+
+.stat-footer.neutral {
+  color: #888888;
+}
+
+/* Responsive — tablet */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Responsive — mobile */
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Pattern positioning */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-pattern {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Lift content above pattern */
+.stat-top,
+.stat-value,
+.stat-footer {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* =========================
+   SKELETON LOADER (MATCHED)
+   ========================= */
+
+.stat-card.skeleton {
+  pointer-events: none;
+  background: #f7f7f7;
+  border: 0.5px solid #eeeeee;
+}
+
+/* shimmer overlay (soft like your image) */
+.stat-card.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(255,255,255,0) 20%,
+    rgba(255,255,255,0.6) 50%,
+    rgba(255,255,255,0) 80%
+  );
+  animation: shimmer 1.6s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+/* skeleton blocks */
+.skeleton-box {
+  background: #e6e6e6;
+  border-radius: 6px;
+}
+
+/* label placeholder */
+.skeleton-label {
+  width: 45%;
+  height: 14px;
+}
+
+/* icon placeholder */
+.skeleton-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+/* value placeholder */
+.skeleton-value {
+  width: 60%;
+  height: 22px;
+  margin-top: 6px;
+}
+
+/* footer placeholder */
+.skeleton-footer {
+  width: 40%;
+  height: 12px;
+  margin-top: 6px;
+}

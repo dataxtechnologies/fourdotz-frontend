@@ -1,0 +1,111 @@
+<section>
+    <div class="update-status-wrapper" [formGroup]="form">
+        <div class="section-header">
+
+            <div class="header-new-cont">
+                <h2 class="section-title">Update Payout Status</h2>
+                <i class="bi bi-x" (click)="onCancel()"></i>
+            </div>
+        </div>
+
+        <div class="form-body">
+
+            <!-- Status Select -->
+            <div class="field-group">
+                <label class="field-label medium-font">
+                    Status <span class="required-dot">*</span>
+                </label>
+                <div class="select-wrapper">
+                    <select class="field-select regular-font" formControlName="status"
+                        [class.has-value]="f['status'].value">
+
+                        <option value="" disabled>Select a status</option>
+                        <option value="completed">Completed / Transferred</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+
+                    <span class="select-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </span>
+
+                    <span class="status-badge" *ngIf="f['status'].value">
+                        {{ getStatusLabel(f['status'].value) }}
+                    </span>
+                </div>
+
+                <small class="error" *ngIf="f['status'].touched && f['status'].errors">
+                    Status is required
+                </small>
+            </div>
+
+            <!-- Description -->
+            <div class="field-group">
+                <label class="field-label medium-font">
+                    Description <span class="required-dot">*</span>
+                </label>
+
+                <textarea class="field-textarea" formControlName="description"
+                    placeholder="Add a note or reason for this status update..." rows="4"></textarea>
+
+                <span class="char-count">{{ f['description'].value?.length || 0 }} / 500</span>
+
+                <small class="error" *ngIf="f['description'].touched && f['description'].errors">
+                    Description is required
+                </small>
+            </div>
+
+            <!-- Attachment -->
+            <div class="field-group">
+                <label class="field-label medium-font">Attachment <span style="color: red;">*</span></label>
+                <div class="drop-zone" [class.drag-over]="isDragging" [class.has-file]="attachedFiles.length"
+                    (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)"
+                    (click)="fileInput.click()">
+
+                    <input #fileInput type="file" multiple accept=".jpg,.jpeg,.png,.pdf" class="hidden-input"
+                        (change)="onFileSelected($event)" />
+
+                    <ng-container *ngIf="attachedFiles.length === 0">
+                        <div class="drop-icon">...</div>
+                        <p class="drop-text">Select a file or drag and drop here</p>
+                        <p class="drop-hint">JPG, PNG or PDF — max 2 files</p>
+                    </ng-container>
+
+                    <ng-container *ngIf="attachedFiles.length > 0">
+                        <div class="file-preview" *ngFor="let file of attachedFiles; let i = index">
+                            <div class="file-icon">...</div>
+                            <div class="file-info">
+                                <span class="file-name">{{ file.name }}</span>
+                                <span class="file-size">{{ getFileSize(file.size) }}</span>
+                            </div>
+                            <button class="remove-file" (click)="removeFile($event, i)" type="button">
+                                ✕
+                            </button>
+                        </div>
+                    </ng-container>
+                </div>
+
+                <small class="error" *ngIf="f['attachments'].touched && f['attachments'].errors?.['required']">
+                    At least one attachment is required
+                </small>
+
+                <small class="error" *ngIf="f['attachments'].errors?.['max']">
+                    Maximum 2 attachments allowed
+                </small>
+            </div>
+
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+
+            <button class="btn-save" type="button" (click)="onSubmit()" *ngIf="!submitbtnloading">
+                Update Status
+            </button>
+            <button class="btn-save btn-dis" type="button" disabled *ngIf="submitbtnloading">
+               <i class="fa-solid fa-spinner fa-spin"></i> Processing...
+            </button>
+        </div>
+    </div>
+</section>

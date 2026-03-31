@@ -1,0 +1,512 @@
+/* ── Card ─────────────────────────────────────────────── */
+.payout-card {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e8eaed;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.05);
+  width: 440px;
+  height: 80vh;
+  overflow-y: auto;
+  display: block;
+  animation: payout-slideUp 0.28s ease both;
+}
+
+.payout-card::-webkit-scrollbar {
+  width: 3px;
+  height: 80vh;
+}
+
+.payout-card::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 6px;
+}
+
+@keyframes payout-slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Header ───────────────────────────────────────────── */
+.payout-card .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #f0f1f3;
+}
+
+.payout-card .card-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--black);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.payout-card .close-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e8eaed;
+  border-radius: 6px;
+  background: #fff;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 17px;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+.payout-card .close-btn:hover {
+  background: #f5f6f8;
+  color: var(--black);
+}
+
+/* ── Status ───────────────────────────────────────────── */
+.payout-card .status-row {
+  padding: 12px 20px 0;
+}
+
+.payout-card .status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.payout-card .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+/* ✅ COMPLETED */
+.payout-card .status-completed {
+  background: #f0fdf4;
+  color: #15803d;
+}
+.payout-card .status-completed .status-dot {
+  background: #22c55e;
+}
+
+/* ✅ PENDING (Waiting) */
+.payout-card .status-pending {
+  background: #fffbeb;
+  color: #92400e;
+}
+.payout-card .status-pending .status-dot {
+  background: #f59e0b;
+}
+
+/* ✅ PROCESSING (In progress → BLUE) */
+.payout-card .status-processing {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+.payout-card .status-processing .status-dot {
+  background: #3b82f6;
+}
+
+/* ✅ REJECTED (Error) */
+.payout-card .status-rejected {
+  background: #fff5f5;
+  color: #e53e3e;
+}
+.payout-card .status-rejected .status-dot {
+  background: #e53e3e;
+}
+/* ── Meta row (date) ──────────────────────────────────── */
+.payout-card .meta-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px 0;
+}
+
+.payout-card .meta-icon {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.payout-card .meta-text {
+  font-size: 15px;
+  color: #000;
+}
+
+/* ── Sections ─────────────────────────────────────────── */
+.payout-card .section {
+  padding: 18px 20px 0;
+}
+
+.payout-card .section--last {
+  padding-bottom: 4px;
+}
+
+.payout-card .section-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* ── Association block ────────────────────────────────── */
+.payout-card .assoc-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #e8eaed;
+  border-radius: 7px;
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+.payout-card .assoc-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--primary-color1) 12%, transparent);
+  color: var(--primary-color1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.payout-card .assoc-avatar--blue {
+  background: color-mix(in srgb, var(--primary-color2) 12%, transparent);
+  color: var(--primary-color2);
+  font-size: 17px;
+}
+
+.payout-card .assoc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.payout-card .assoc-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+.payout-card .assoc-sub {
+  font-size: 15px;
+  color: #9ca3af;
+}
+
+/* ── Contact row ──────────────────────────────────────── */
+.payout-card .contact-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.payout-card .contact-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #6b7280;
+  background: #f5f6f8;
+  border: 1px solid #f0f1f3;
+  border-radius: 6px;
+  padding: 6px 10px;
+}
+
+.payout-card .contact-icon {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* ── Amount row ───────────────────────────────────────── */
+.payout-card .amount-row {
+  display: flex;
+  gap: 1px;
+  border: 1px solid #e8eaed;
+  border-radius: 7px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.payout-card .amount-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  background: #fff;
+}
+
+.payout-card .amount-item + .amount-item {
+  border-left: 1px solid #e8eaed;
+}
+
+.payout-card .amount-label {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.payout-card .amount-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.payout-card .amount-red   { color: var(--primary-color1); }
+.payout-card .amount-green { color: #15803d; }
+
+/* ── Description ──────────────────────────────────────── */
+.payout-card .desc-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid #e8eaed;
+  border-radius: 7px;
+  background: #fff;
+}
+
+.payout-card .desc-label {
+  font-size: 13px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.payout-card .desc-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--black);
+}
+
+/* ── Empty attachments ────────────────────────────────── */
+.payout-card .empty-attach {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 16px;
+  border: 1.5px dashed #e8eaed;
+  border-radius: 7px;
+  color: #9ca3af;
+  font-size: 12.5px;
+}
+
+.payout-card .empty-icon {
+  font-size: 28px;
+  color: #e8eaed;
+}
+
+/* ── Attachment list ──────────────────────────────────── */
+.payout-card .attach-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.payout-card .attach-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid #e8eaed;
+  border-radius: 7px;
+  background: #fff;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.payout-card .attach-row:hover {
+  border-color: color-mix(in srgb, var(--primary-color2) 35%, transparent);
+  background: color-mix(in srgb, var(--primary-color2) 4%, #fff);
+}
+
+/* Thumbnail */
+.payout-card .attach-thumb {
+  width: 46px;
+  height: 46px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e8eaed;
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  background: #f5f6f8;
+}
+
+.payout-card .attach-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s;
+}
+
+.payout-card .attach-thumb:hover img { transform: scale(1.06); }
+
+.payout-card .thumb-hover {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--primary-color2) 65%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+
+.payout-card .attach-thumb:hover .thumb-hover { opacity: 1; }
+
+/* Attach meta */
+.payout-card .attach-meta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.payout-card .attach-filename {
+  font-size: 11.5px;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.payout-card .attach-file-icon {
+  font-size: 14px;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.payout-card .attach-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.payout-card .btn-view,
+.payout-card .btn-dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.payout-card .btn-view {
+  background: color-mix(in srgb, var(--primary-color2) 10%, #fff);
+  color: var(--primary-color2);
+  border-color: color-mix(in srgb, var(--primary-color2) 28%, transparent);
+}
+.payout-card .btn-view:hover {
+  background: color-mix(in srgb, var(--primary-color2) 18%, #fff);
+  border-color: var(--primary-color2);
+}
+
+.payout-card .btn-dl {
+  background: color-mix(in srgb, var(--primary-color1) 10%, #fff);
+  color: var(--primary-color1);
+  border-color: color-mix(in srgb, var(--primary-color1) 28%, transparent);
+}
+.payout-card .btn-dl:hover {
+  background: color-mix(in srgb, var(--primary-color1) 18%, #fff);
+  border-color: var(--primary-color1);
+}
+
+/* ── Footer ───────────────────────────────────────────── */
+.payout-card .footer-ids {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 20px;
+  border-top: 1px solid #f0f1f3;
+  margin-top: 18px;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.payout-card .footer-ids i { font-size: 13px; }
+.payout-card .fid-sep { color: #e8eaed; }
+
+/* ── Lightbox ─────────────────────────────────────────── */
+.payout-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: payout-fadeIn 0.18s ease;
+}
+
+@keyframes payout-fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.payout-lightbox .lb-box {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+  animation: payout-zoomIn 0.2s ease;
+  background: #fff;
+}
+
+@keyframes payout-zoomIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.payout-lightbox .lb-img {
+  max-width: 85vw;
+  max-height: 85vh;
+  display: block;
+  object-fit: contain;
+}
+
+.payout-lightbox .lb-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: rgba(0,0,0,0.5);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+  z-index: 1;
+  padding: 0;
+}
+
+.payout-lightbox .lb-close:hover { background: rgba(0,0,0,0.75); }

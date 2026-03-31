@@ -1,0 +1,124 @@
+<section>
+    <div class="rp-modal">
+
+        <!-- Header -->
+        <div class="rp-header">
+            <div>
+                <div class="rp-header-title">Request Payout</div>
+                <div class="rp-header-sub regular-font">Submit a payout request to your admin</div>
+            </div>
+            <button type="button" class="rp-close" (click)="close()">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+
+        <!-- Available Balance -->
+        <div class="rp-balance-banner">
+            <div>
+                <div class="rp-balance-label medium-font">Available Balance</div>
+                <div class="rp-balance-value">
+                    ₹{{ remainingAmount | number:'1.2-2' }}
+                </div>
+            </div>
+            <div class="rp-balance-icon">
+                <i class="bi bi-wallet2"></i>
+            </div>
+        </div>
+        <form [formGroup]="payoutForm">
+            <div class="rp-body">
+
+                <!-- Amount -->
+                <div class="rp-field">
+                    <div class="d-flex-div">
+                        <label class="rp-label">Request Amount <span style="color: red;">*</span></label>
+                        <span class="rp-hint">
+                            Max: ₹{{ remainingAmount | number:'1.2-2' }}
+                        </span>
+                    </div>
+
+                    <div class="rp-input-wrap">
+                        <span class="rp-prefix">₹</span>
+                        <input type="number" class="rp-input" formControlName="requestAmount" (input)="onAmountInput()"
+                            min="1" [max]="remainingAmount" placeholder="0.00" />
+                    </div>
+
+                    <!-- ERRORS -->
+                    <div class="rp-error" *ngIf="f.requestAmount.touched && f.requestAmount.errors">
+                        <span *ngIf="f.requestAmount.errors['required']">Amount is required</span>
+                        <span *ngIf="f.requestAmount.errors['min']">Enter valid amount</span>
+                        <span *ngIf="f.requestAmount.errors['maxAmount']">
+                            Max allowed is ₹{{ remainingAmount }}
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="rp-field">
+                    <label class="rp-label">Description <span style="color: red;">*</span></label>
+
+                    <textarea class="rp-textarea" formControlName="description" rows="3" placeholder="Enter reason...">
+                </textarea>
+
+                    <!-- ERRORS -->
+                    <div class="rp-error" *ngIf="f.description.touched && f.description.errors">
+                        <span *ngIf="f.description.errors['required']">Description is required</span>
+                        <span *ngIf="f.description.errors['minlength']">
+                            Minimum 5 characters required
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Bank Details (UNCHANGED) -->
+                <div class="rp-field">
+                    <label class="rp-label">Payout will be credited to</label>
+
+                    <div class="rp-bank-card">
+                        <div class="rp-bank-top">
+                            <div class="rp-bank-icon">
+                                <i class="bi bi-bank"></i>
+                            </div>
+
+                            <div>
+                                <div class="rp-bank-name">{{ bankDetails.bankName }}</div>
+                                <div class="rp-bank-type">{{ bankDetails.accountType }}</div>
+                            </div>
+
+                            <span class="rp-bank-badge">Primary</span>
+                        </div>
+
+                        <div class="rp-bank-divider"></div>
+
+                        <div class="rp-bank-details ">
+                            <div class="rp-bank-row">
+                                <span class="medium-font">Account Holder</span>
+                                <span class="regular-font">{{ bankDetails.accountHolder }}</span>
+                            </div>
+
+                            <div class="rp-bank-row">
+                                <span class="medium-font">Account Number</span>
+                                <span class="regular-font">{{ bankDetails.accountNumber }}</span>
+                            </div>
+
+                            <div class="rp-bank-row">
+                                <span class="medium-font">IFSC</span>
+                                <span class="regular-font">{{ bankDetails.ifsc }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <button type="button" class="rp-submit" (click)="onSubmit()" [disabled]="loading">
+                    <span *ngIf="!loading">
+                        <i class="bi bi-send"></i> Submit Payout Request
+                    </span>
+
+                    <span *ngIf="loading">
+                        <i class="bi bi-arrow-repeat spin"></i> Processing...
+                    </span>
+                </button>
+
+            </div>
+        </form>
+    </div>
+</section>

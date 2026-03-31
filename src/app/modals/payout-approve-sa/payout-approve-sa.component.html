@@ -1,0 +1,200 @@
+<section>
+  <div class="pa-modal">
+
+    <!-- Header -->
+    <div class="pa-header">
+      <div class="pa-header-left">
+        <div class="pa-header-title">Request Details</div>
+
+        <span class="pa-status-pill" [ngClass]="statusClass">
+          <span class="pa-status-dot"></span>
+          {{ requestdata.status | titlecase }}
+        </span>
+      </div>
+
+      <button class="pa-close" (click)="close()">
+        <i class="bi bi-x"></i>
+      </button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="pa-toolbar">
+      <div class="pa-toolbar-left medium-font">
+        <i class="bi bi-calendar3"></i>
+        <span class="regular-font">
+          Requested on {{ requestedDate | date:'dd MMM yyyy, h:mm a' }}
+        </span>
+      </div>
+    </div>
+
+    <div class="pa-body">
+
+      <!-- Association -->
+      <div class="pa-section">
+        <div class="pa-section-label medium-font">Association Details</div>
+
+        <div class="pa-assoc-card">
+          <div class="pa-assoc-top">
+
+            <div class="pa-avatar">{{ avatarInitial }}</div>
+
+            <div>
+              <div class="pa-assoc-name">
+                {{ requestdata.association_name }}
+              </div>
+
+              <div class="pa-assoc-type">
+                {{ requestdata?.name }}
+              </div>
+            </div>
+          </div>
+
+          <div class="pa-card-divider"></div>
+
+          <div class="pa-info-grid">
+            <div class="pa-info-item">
+              <i class="bi bi-envelope"></i>
+              <span>{{ requestdata?.email }}</span>
+            </div>
+
+            <div class="pa-info-item">
+              <i class="bi bi-telephone"></i>
+              <span>{{ requestdata?.mobile }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payout -->
+      <div class="pa-section">
+        <div class="pa-section-label medium-font">Payout Details</div>
+
+        <div class="pa-detail-card">
+
+          <div class="pa-amount-row">
+
+            <div class="pa-amount-block highlight">
+              <div class="pa-amount-label">Requested Amount</div>
+              <div class="pa-amount-value purple">
+                ₹{{ requestdata.total_amount | number:'1.2-2' }}
+              </div>
+            </div>
+
+            <div class="pa-amount-block">
+              <div class="pa-amount-label">Available Balance</div>
+              <div class="small-loader" *ngIf="!balanceloading">
+
+              </div>
+              <div class="pa-amount-value" *ngIf="balanceloading">
+                ₹{{ payoutdatas?.remaining_payout | number:'1.2-2' }}
+              </div>
+            </div>
+
+            <div class="pa-amount-block">
+              <div class="pa-amount-label">Remaining Payout</div>
+              <div class="small-loader" *ngIf="!balanceloading">
+
+              </div>
+              <div class="pa-amount-value" [ngClass]="remainingBalance < 0 ? 'red' : 'green'" *ngIf="balanceloading">
+                ₹{{ remainingBalance | number:'1.2-2' }}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="pa-card-divider"></div>
+
+          <div class="pa-desc-row">
+            <div class="pa-desc-label">Description</div>
+            <div class="pa-desc-text">
+              {{ requestdata.description || '—' }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bank -->
+      <div class="pa-section">
+        <div class="pa-section-label medium-font">Bank Account</div>
+
+        <div class="small-loader" *ngIf="!balanceloading">
+
+              </div>
+
+        <div class="pa-bank-card" *ngIf="balanceloading">
+
+          <div class="pa-bank-top">
+            <div class="pa-bank-icon">
+              <i class="bi bi-bank"></i>
+            </div>
+
+            <div>
+              <div class="pa-bank-name">
+                {{ Associationdata?.bank_name }}
+              </div>
+              <div class="pa-bank-type">
+                {{ Associationdata?.account_type }}
+              </div>
+            </div>
+
+            <span class="pa-bank-badge">Primary</span>
+          </div>
+
+          <div class="pa-card-divider"></div>
+
+          <div class="pa-bank-rows">
+
+            <div class="pa-bank-row">
+              <span class="medium-font">Account Holder</span>
+              <span class="regular-font">{{ Associationdata?.account_name }}</span>
+            </div>
+
+            <div class="pa-bank-row">
+              <span class="medium-font">Account Number</span>
+              <span class="regular-font">{{ Associationdata?.account_number }}</span>
+            </div>
+
+            <div class="pa-bank-row">
+              <span class="medium-font">IFSC Code</span>
+              <span class="regular-font">{{ Associationdata?.ifsc_code }}</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="pa-actions" *ngIf="requestdata.status === 'pending'">
+
+        <button class="pa-btn reject " (click)="reject()" *ngIf="!rejectbtnloading">
+          <i class="bi bi-x-circle"></i>
+          Reject Request
+        </button>
+        <button class="pa-btn reject btn-dis" disabled *ngIf="rejectbtnloading">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          Processing...
+        </button>
+
+        <button class="pa-btn approve" (click)="updatepayoutrequeststatus()" *ngIf="!approvebtnloading">
+          <i class="bi bi-check-circle"></i>
+          Approve Payout
+        </button>
+
+        <button class="pa-btn approve btn-dis" disabled *ngIf="approvebtnloading">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+         Processing...
+        </button>
+
+      </div>
+
+      <div class="pa-actions" *ngIf="requestdata.status === 'completed'">
+        <button class="pa-btn approve" disabled>
+          <i class="bi bi-check-circle"></i>
+          Completed
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>

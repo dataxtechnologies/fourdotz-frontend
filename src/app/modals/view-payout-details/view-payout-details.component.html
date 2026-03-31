@@ -1,0 +1,121 @@
+<div class="payout-card" *ngIf="request">
+
+    <!-- Card Header -->
+    <div class="card-header">
+        <h2 class="card-title">Payout Details</h2>
+        <button class="close-btn" type="button">
+            <i class='bx bx-x' (click)="closeModal()"></i>
+        </button>
+    </div>
+
+    <!-- Status -->
+    <div class="status-row">
+        <span class="status-badge" [ngClass]="'status-' + request.status">
+            <span class="status-dot"></span>
+            {{ request.status | titlecase }}
+        </span>
+    </div>
+
+    <!-- Requested Time -->
+    <div class="meta-row">
+        <i class='bx bx-calendar meta-icon'></i>
+        <span class="meta-text">Requested on {{ request.created_time?.$date | date:'dd MMM yyyy, h:mm a' }}</span>
+    </div>
+
+    <!-- ── Section: Requester Info ── -->
+    <div class="section">
+        <div class="section-label medium-font ">REQUESTER DETAILS</div>
+
+        <div class="assoc-block">
+            <div class="assoc-avatar">{{ request.name?.charAt(0)?.toUpperCase() }}</div>
+            <div class="assoc-info">
+                <span class="assoc-name">{{ request.name }}</span>
+                <span class="assoc-sub regular-font">{{ request.user_type | titlecase }}</span>
+            </div>
+        </div>
+
+        <div class="contact-row">
+            <div class="contact-item">
+                <i class='bx bx-envelope contact-icon'></i>
+                <span class="regular-font">{{ request.email }}</span>
+            </div>
+            <div class="contact-item">
+                <i class='bx bx-phone contact-icon'></i>
+                <span class="regular-font">{{ request.mobile }}</span>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ── Section: Payout Details ── -->
+    <div class="section">
+        <div class="section-label medium-font">PAYOUT DETAILS</div>
+
+        <div class="amount-row">
+            <div class="amount-item">
+                <span class="amount-label">Total Amount</span>
+                <span class="amount-value amount-red">₹{{ request.total_amount | number:'1.2-2' }}</span>
+            </div>
+        </div>
+
+        <div class="desc-block" *ngIf="request.description">
+            <span class="desc-label">Description</span>
+            <span class="desc-text">{{ request.description }}</span>
+        </div>
+    </div>
+
+    <!-- ── Section: Attachments ── -->
+    <div class="section section--last">
+        <div class="section-label medium-font">ATTACHMENTS</div>
+
+        <!-- No Attachments -->
+        <div class="empty-attach" *ngIf="!request.paid_attachment || request.paid_attachment.length === 0">
+            <i class='bx bx-paperclip empty-icon'></i>
+            <span class="regular-font">No attachments available</span>
+        </div>
+
+        <!-- Attachment List -->
+        <div class="attach-list" *ngIf="request.paid_attachment?.length > 0">
+            <div class="attach-row" *ngFor="let url of request.paid_attachment; let i = index">
+
+                <div class="attach-thumb" (click)="viewAttachment(url)">
+                    <img [src]="url" [alt]="'File ' + (i+1)" (error)="onImgError($event)" />
+                    <div class="thumb-hover"><i class='bx bx-show'></i></div>
+                </div>
+
+                <div class="attach-meta">
+                    <span class="attach-filename">
+                        <i class='bx bx-file attach-file-icon'></i>
+                        {{ getFileName(url) }}
+                    </span>
+                    <div class="attach-btns">
+                        <!-- <button class="btn-view" (click)="viewAttachment(url)">
+                            <i class='bx bx-show'></i> View
+                        </button> -->
+                        <button class="btn-dl" (click)="downloadAttachment(url)">
+                            <i class='bx bx-download'></i> Download
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-ids regular-font">
+        <i class='bx bx-info-circle'></i>
+        <span>ID: {{ request._id | slice:0:20 }}…</span>
+        <span class="fid-sep">·</span>
+        <span>Updated {{ request.modified_time?.$date | date:'dd MMM yyyy' }}</span>
+    </div>
+
+</div>
+
+<!-- ── Lightbox ── -->
+<div class="lightbox" *ngIf="lightboxUrl" (click)="closeLightbox()">
+    <div class="lb-box" (click)="$event.stopPropagation()">
+        <button class="lb-close" (click)="closeLightbox()"><i class='bx bx-x'></i></button>
+        <img [src]="lightboxUrl" class="lb-img" alt="Preview" />
+    </div>
+</div>

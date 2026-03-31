@@ -40,6 +40,15 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
       'post ad', 'create ad', 'ad campaign']
     //activeicon: ''
   },
+  {
+    label: 'Payouts Management',
+    icon: '/assets/icons/sidebar/payouts.png',
+    route: '/Superadmin/payouts-management/list',
+    allowedRole: 'superadmin',
+    keywords: ['payout', 'payouts', 'payment', 'pay', 'rent', 'rental payment',
+      'rent payment', 'rent invoice', 'invoice', 'bill', 'receipt', 'dues', 'transaction']
+    //activeicon: ''
+  },
 
 
   {
@@ -88,6 +97,15 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     route: '/Association/announcement',
     allowedRole: 'association',
     keywords: ['announcement', 'news', 'updates', 'notice', 'circular', 'message', 'broadcast']
+    //activeicon: ''
+  },
+  {
+    label: 'Payouts Management',
+    icon: '/assets/icons/sidebar/payouts.png',
+    route: '/Association/payout-request-list',
+    allowedRole: 'association',
+    keywords: ['payout', 'payouts', 'payment', 'pay', 'rent', 'rental payment',
+      'rent payment', 'rent invoice', 'invoice', 'bill', 'receipt', 'dues', 'transaction']
     //activeicon: ''
   },
   {

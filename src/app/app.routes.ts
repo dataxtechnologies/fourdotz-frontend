@@ -102,6 +102,8 @@ import { TenantRequestListComponent } from './pages/Owner-pages/tenant-request-l
 import { ResidentDashboardComponent } from './pages/pre-approved-pages/resident-dashboard/resident-dashboard.component';
 import { ResidentMarketplaceComponent } from './pages/pre-approved-pages/resident-marketplace/resident-marketplace.component';
 import { ResidentViewprofileComponent } from './pages/pre-approved-pages/resident-viewprofile/resident-viewprofile.component';
+import { PayoutReqListComponent } from './pages/superadmin-pages/payout-req-list/payout-req-list.component';
+import { PayoutManagementComponent } from './pages/association-pages/payout-management/payout-management.component';
 
 export const routes: Routes = [
   {
@@ -179,6 +181,10 @@ export const routes: Routes = [
         path: 'view-association/:associationId',
         component: ViewAssociationComponent,
       },
+      {
+        path : 'payouts-management/list',
+        component : PayoutReqListComponent
+      }
     ],
   },
 
@@ -229,6 +235,10 @@ export const routes: Routes = [
       {
         path: 'residents-request-list',
         component: ResidentRequestListComponent,
+      },
+      {
+        path: 'payout-request-list',
+        component: PayoutManagementComponent,
       },
     ],
   },

@@ -86,6 +86,16 @@ export class AssociationServiceService {
   ResidentRequestApprovalStatus$ = this.ResidentRequestApprovalSubject.asObservable();
 
 
+  private PayoutRequestCreateSubject = new BehaviorSubject<any>(null);
+  PayoutRequestCreateStatus$ = this.PayoutRequestCreateSubject.asObservable();
+
+
+  triggerPayoutRequestCreate(PayoutRequestCreate: any): void {
+    //console.log('addassociation', PayoutRequestCreate);
+    this.PayoutRequestCreateSubject.next(PayoutRequestCreate);
+  }
+
+
   triggerresidentrequestapproval(residentrequestapproval: any): void {
     //console.log('addassociation', residentrequestapproval);
     this.ResidentRequestApprovalSubject.next(residentrequestapproval);
