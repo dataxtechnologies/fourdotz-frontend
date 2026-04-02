@@ -1,0 +1,71 @@
+<section>
+    <div class="update-status-wrapper" [formGroup]="form">
+        <div class="section-header">
+
+            <div class="header-new-cont">
+                <h2 class="section-title">Update Ticket Status</h2>
+                <i class="bi bi-x" (click)="onCancel()"></i>
+            </div>
+        </div>
+
+        <div class="form-body">
+
+            <!-- Status Select -->
+            <div class="field-group">
+                <label class="field-label medium-font">
+                    Status <span class="required-dot">*</span>
+                </label>
+                <div class="select-wrapper">
+                    <select class="field-select regular-font" formControlName="status"
+                        [class.has-value]="f['status'].value">
+
+                        <option value="" disabled>Select a status</option>
+                        <option value="closed">Closed</option>
+                    </select>
+
+                    <span class="select-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </span>
+
+                    <span class="status-badge" *ngIf="f['status'].value">
+                        {{ getStatusLabel(f['status'].value) }}
+                    </span>
+                </div>
+
+                <small class="error" *ngIf="f['status'].touched && f['status'].errors">
+                    Status is required
+                </small>
+            </div>
+
+            <!-- Description -->
+            <div class="field-group">
+                <label class="field-label medium-font">
+                    Description <span class="required-dot">*</span>
+                </label>
+
+                <textarea class="field-textarea" formControlName="description"
+                    placeholder="Add a note or reason for this status update..." rows="4"></textarea>
+
+                <span class="char-count">{{ f['description'].value?.length || 0 }} / 500</span>
+
+                <small class="error" *ngIf="f['description'].touched && f['description'].errors">
+                    Description is required
+                </small>
+            </div>
+
+        </div>
+
+        <!-- Actions -->
+        <div class="form-actions">
+
+            <button class="btn-save" type="button" (click)="onSubmit()" *ngIf="!submitbtnloading">
+                Update Status
+            </button>
+            <button class="btn-save btn-dis" type="button" disabled *ngIf="submitbtnloading">
+               <i class="fa-solid fa-spinner fa-spin"></i> Processing...
+            </button>
+        </div>
+    </div>
+</section>

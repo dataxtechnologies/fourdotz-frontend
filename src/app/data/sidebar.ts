@@ -49,6 +49,26 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
       'rent payment', 'rent invoice', 'invoice', 'bill', 'receipt', 'dues', 'transaction']
     //activeicon: ''
   },
+  {
+    label: 'General Enquiry',
+    icon: '/assets/icons/sidebar/support.png',
+    route: '/Superadmin/general-enquiry/list',
+    allowedRole: 'superadmin',
+    keywords: ['general', 'enquiry', 'support', 'tickets', 'complaints', 'service', 'services',
+      'cleaning', 'inspection', 'support', 'ticket',
+      'raise complaint', 'service request', 'maintenance request']
+
+  },
+  {
+    label: 'Support Ticket',
+    icon: '/assets/icons/sidebar/support-ticket.png',
+    route: '/Superadmin/support-ticket/customers-ticket',
+    allowedRole: 'superadmin',
+    keywords: ['general', 'enquiry', 'support', 'tickets', 'complaints', 'service', 'services',
+      'cleaning', 'inspection', 'support', 'ticket',
+      'raise complaint', 'service request', 'maintenance request']
+
+  },
 
 
   {
@@ -272,6 +292,17 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     ],
     //activeicon: ''
   },
+   {
+    label: 'Contact Support',
+    icon: '/assets/icons/sidebar/support-ticket.png',
+    route: '/Association/support-ticket/list',
+    allowedRole: 'association',
+    keywords: ['support', 'ticket', 'customer', 'enquiry', 'complaint', 'issue', 'service', 'services',
+      'cleaning', 'inspection', 'support', 'ticket',
+      'raise complaint', 'service request', 'maintenance request']
+    //activeicon: ''
+  },
+
   {
     label: 'Dashboard',
     icon: '/assets/icons/sidebar/Dashboard.png',
@@ -377,14 +408,22 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     //activeicon: ''
   },
 
-   
+  //     {
+  //   label: 'Payouts Management',
+  //   icon: '/assets/icons/sidebar/payouts.png',
+  //   route: '/Association/payout-request-list',
+  //   allowedRole: 'owner',
+  //   keywords: ['payout', 'payouts', 'payment', 'pay', 'rent', 'rental payment',
+  //     'rent payment', 'rent invoice', 'invoice', 'bill', 'receipt', 'dues', 'transaction']
+  //   //activeicon: ''
+  // },
 
-    {
-    label: 'Resident Requests',
+   {
+    label: 'Tenant Requests',
     icon: '/assets/icons/sidebar/resident-req.png',
     route: '/Owner/tenant-request-list',
     allowedRole: 'owner',
-    keywords: ['announcement', 'resident request', 'resident requests', 'request', 'requests', 'complaint', 'tickets', 'approval',
+    keywords: ['resident request','tenant request', 'resident requests', 'request', 'requests', 'complaint', 'tickets', 'approval',
       'pending request', 'service request'],
     //activeicon: ''
   },
@@ -427,6 +466,19 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     ],
     //activeicon: ''
   },
+
+
+
+    {
+    label: 'Contact Support',
+    icon: '/assets/icons/sidebar/support-ticket.png',
+    route: '/Owner/support-ticket-list',
+    allowedRole: 'owner',
+    keywords: ['support', 'ticket', 'customer', 'enquiry', 'complaint', 'issue', 'service', 'services', 'cleaning', 'inspection', 'support', 'ticket', 'raise complaint', 'service request', 'maintenance request'],
+    //activeicon: ''
+  },
+
+
   {
     label: 'Dashboard',
     icon: '/assets/icons/sidebar/Dashboard.png',
@@ -536,6 +588,15 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
         allowedRole: 'tenant',
       },
     ],
+    //activeicon: ''
+  },
+
+   {
+    label: 'Contact Support',
+    icon: '/assets/icons/sidebar/support-ticket.png',
+    route: '/Tenant/support-ticket-list',
+    allowedRole: 'tenant',
+    keywords: ['support', 'ticket', 'customer', 'enquiry', 'complaint', 'issue', 'service', 'services', 'cleaning', 'inspection', 'support', 'ticket', 'raise complaint', 'service request', 'maintenance request'],
     //activeicon: ''
   },
 

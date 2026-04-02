@@ -94,7 +94,7 @@ onDateSelected(event: Event): void {
     const payload = {
       id: this.request_id,
       approval_status: true,
-      owned_date: this.ownerForm.get('ownedDate')?.value
+      owner_owned_date : this.ownerForm.get('ownedDate')?.value
     };
 
     this.apiService.ApproveRequest<any>(payload).subscribe({

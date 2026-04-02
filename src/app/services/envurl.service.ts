@@ -230,4 +230,16 @@ export class EnvurlService {
   public payoutcardDetailsinAssociation = '/payout/list_payment_payout_details'
   public createpayoutrequestinAssociation = '/payout/create_payout'
   public updatepayoutrequeststatus = '/payout/update_payout'
+
+
+  // support ticket
+  public createNewSupportTicket = '/support/create_support'
+  public UpdateTicketData = '/support/update_status'
+
+
+
+  // static page Api
+  public contactusSubmit = '/support/create_contact_support'
+  public listAllRequestinSite = '/support/list_contact_support'
+  
 }

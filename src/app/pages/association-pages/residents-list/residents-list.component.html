@@ -118,8 +118,8 @@
                                         <td>{{ item.property_type }}</td>
                                         <td>{{ item.resident_type || '--' }}</td>
 
-                                        <td (click)="viewresident(item._id)">
-                                            <div class="view-btn-div">
+                                        <td (click)="viewresident(item._id)" >
+                                            <div class="view-btn-div " id="tour-view-resident">
                                                 <i class="bx bx-eye"></i>
                                                 <span class="view-btn" style="cursor: pointer;"> View</span>
 

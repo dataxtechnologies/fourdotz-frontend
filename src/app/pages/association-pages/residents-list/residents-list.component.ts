@@ -310,7 +310,7 @@ export class ResidentsListComponent {
             action: () => this.shepherd.back(),
           },
           {
-            text: 'Next',
+            text: 'Finish',
             classes: 'shepherd-btn-primary',
             action: () => this.shepherd.next(),
           },

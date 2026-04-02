@@ -1,0 +1,87 @@
+<section class="enquiry-section">
+  <div class="enquiry-card">
+
+    <!-- ── Header ── -->
+    <div class="card-header">
+      <div class="header-left">
+      
+        <h2 class="card-title">Enquiry Details</h2>
+      </div>
+      <div class="header-right">
+        <!-- <span class="badge badge-open">Open</span> -->
+        <i class="bx bx-x-circle close-btn" (click)="onClose()"></i>
+      </div>
+    </div>
+
+    <!-- ── Body ── -->
+    <div class="card-body">
+
+      <!-- Person Row -->
+      <div class="person-row">
+        <div class="avatar">{{ initials }}</div>
+        <div class="person-info">
+          <div class="person-name medium-font">{{ fullName }}</div>
+          <div class="person-meta regular-font">
+            {{ enquiry.email }}&nbsp;·&nbsp;+91 {{ enquiry.mobile }}
+          </div>
+        </div>
+        <div class="enquiry-type-block">
+          <div class="field-label medium-font">Enquiry type</div>
+          <span class="badge badge-sales">{{ enquiry.enquiry_type | titlecase }}</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Details Grid -->
+      <div class="details-grid">
+
+        <div class="field-cell border-bottom border-right-col">
+          <div class="field-label medium-font">City</div>
+          <div class="field-value regular-font">{{ enquiry.city }}</div>
+        </div>
+
+        <div class="field-cell border-bottom border-left-col">
+          <div class="field-label medium-font">State</div>
+          <div class="field-value regular-font">{{ enquiry.state }}</div>
+        </div>
+
+        <div class="field-cell border-bottom border-right-col">
+          <div class="field-label medium-font">Country</div>
+          <div class="field-value regular-font">{{ enquiry.country }}</div>
+        </div>
+
+        <div class="field-cell border-bottom border-left-col">
+          <div class="field-label medium-font">Type</div>
+          <div class="field-value regular-font">{{ typeLabel | titlecase }}</div>
+        </div>
+
+        <div class="field-cell border-right-col">
+          <div class="field-label medium-font">Created</div>
+          <div class="field-value regular-font">{{ enquiry.created_time.$date | date: 'd MMM yyyy, h:mm a' }}</div>
+        </div>
+
+        <div class="field-cell border-left-col">
+          <div class="field-label medium-font">Last Updated</div>
+          <div class="field-value regular-font">{{ enquiry.modified_time.$date | date: 'd MMM yyyy, h:mm a' }}</div>
+        </div>
+
+      </div>
+
+      <!-- Address -->
+      <div class="field-block border-top">
+        <div class="field-label medium-font">Address</div>
+        <div class="field-value regular-font">{{ enquiry.address }}</div>
+      </div>
+
+      <!-- Description -->
+      <div class="description-block">
+        <div class="field-label medium-font">Message / Description</div>
+        <div class="field-value regular-font">{{ enquiry.description }}</div>
+      </div>
+
+     
+
+    </div>
+  </div>
+</section>

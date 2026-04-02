@@ -11,6 +11,8 @@ import { HttpClient } from '@angular/common/http';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { State, City } from 'country-state-city';
+
 
 interface Step {
   id: number;
@@ -481,7 +483,7 @@ export class AssociationOnboardingStartComponent implements OnInit {
     this.initializeForms();
     const userJson = localStorage.getItem('userdata');
     this.userData = userJson ? JSON.parse(userJson) : {};
-    this.filteredStates = [...INDIAN_STATES];
+    this.filteredStates = State.getStatesOfCountry('IN').map(s => s.name);
   }
 
   @HostListener('document:click', ['$event'])
@@ -538,21 +540,45 @@ export class AssociationOnboardingStartComponent implements OnInit {
   // ════════════════════════════════════════════════════════════
   //  STATE / DISTRICT / AREA DROPDOWN
   // ════════════════════════════════════════════════════════════
-  onStateSearch(): void {
-    const q = this.stateSearch.toLowerCase();
-    this.filteredStates = INDIAN_STATES.filter(s => s.toLowerCase().includes(q));
-    this.stateDropdownOpen = true;
-  }
+onStateSearch(): void {
+  const q = this.stateSearch.toLowerCase();
+
+  const allStates = State.getStatesOfCountry('IN').map(s => s.name);
+
+  this.filteredStates = allStates.filter(s =>
+    s.toLowerCase().includes(q)
+  );
+
+  this.stateDropdownOpen = true;
+}
 
   selectState(state: string): void {
-    this.stateSearch = state;
-    this.addressForm.patchValue({ state, district: '', city: '' });
-    this.districtSearch = '';
-    this.areaSearch = '';
-    this.stateDropdownOpen = false;
-    this.filteredDistricts = STATE_DISTRICTS[state] || this.generateGenericDistricts(state);
-    this.filteredAreas = [];
+  this.stateSearch = state;
+
+  this.addressForm.patchValue({
+    state,
+    district: '',
+    city: ''
+  });
+
+  this.districtSearch = '';
+  this.areaSearch = '';
+  this.stateDropdownOpen = false;
+
+  // ✅ Get ISO code
+  const stateObj = State.getStatesOfCountry('IN')
+    .find(s => s.name === state);
+
+  if (stateObj) {
+    // ❌ No districts in package → use cities as districts
+    this.filteredDistricts = City.getCitiesOfState('IN', stateObj.isoCode)
+      .map(c => c.name);
+  } else {
+    this.filteredDistricts = [];
   }
+
+  this.filteredAreas = [];
+}
 
   onDistrictFocus(): void {
     if (!this.addressForm.get('state')?.value) return;
@@ -561,22 +587,41 @@ export class AssociationOnboardingStartComponent implements OnInit {
     this.districtDropdownOpen = true;
   }
 
-  onDistrictSearch(): void {
-    const state = this.addressForm.get('state')?.value;
-    if (!state) return;
-    const all = STATE_DISTRICTS[state] || this.generateGenericDistricts(state);
-    const q = this.districtSearch.toLowerCase();
-    this.filteredDistricts = all.filter(d => d.toLowerCase().includes(q));
-    this.districtDropdownOpen = true;
-  }
+onDistrictSearch(): void {
+  const state = this.addressForm.get('state')?.value;
+  if (!state) return;
 
-  selectDistrict(district: string): void {
-    this.districtSearch = district;
-    this.addressForm.patchValue({ district, city: '' });
-    this.areaSearch = '';
-    this.districtDropdownOpen = false;
-    this.filteredAreas = DISTRICT_AREAS[district] || this.generateGenericAreas(district);
-  }
+  const stateObj = State.getStatesOfCountry('IN')
+    .find(s => s.name === state);
+
+  if (!stateObj) return;
+
+  const allCities = City.getCitiesOfState('IN', stateObj.isoCode)
+    .map(c => c.name);
+
+  const q = this.districtSearch.toLowerCase();
+
+  this.filteredDistricts = allCities.filter(d =>
+    d.toLowerCase().includes(q)
+  );
+
+  this.districtDropdownOpen = true;
+}
+
+selectDistrict(district: string): void {
+  this.districtSearch = district;
+
+  this.addressForm.patchValue({
+    district,
+    city: district // 👈 SAME VALUE
+  });
+
+  this.areaSearch = district;
+  this.districtDropdownOpen = false;
+
+  // 👇 Since no areas API → reuse same
+  this.filteredAreas = [district];
+}
 
   onAreaFocus(): void {
     if (!this.addressForm.get('district')?.value) return;
@@ -585,20 +630,25 @@ export class AssociationOnboardingStartComponent implements OnInit {
     this.areaDropdownOpen = true;
   }
 
-  onAreaSearch(): void {
-    const district = this.addressForm.get('district')?.value;
-    if (!district) return;
-    const all = DISTRICT_AREAS[district] || this.generateGenericAreas(district);
-    const q = this.areaSearch.toLowerCase();
-    this.filteredAreas = all.filter(a => a.toLowerCase().includes(q));
-    this.areaDropdownOpen = true;
-  }
+onAreaSearch(): void {
+  const q = this.areaSearch.toLowerCase();
 
-  selectArea(area: string): void {
-    this.areaSearch = area;
-    this.addressForm.patchValue({ city: area });
-    this.areaDropdownOpen = false;
-  }
+  this.filteredAreas = this.filteredAreas.filter(a =>
+    a.toLowerCase().includes(q)
+  );
+
+  this.areaDropdownOpen = true;
+}
+
+selectArea(area: string): void {
+  this.areaSearch = area;
+
+  this.addressForm.patchValue({
+    city: area
+  });
+
+  this.areaDropdownOpen = false;
+}
 
   private generateGenericDistricts(state: string): string[] {
     return [`${state} District 1`, `${state} District 2`, `${state} District 3`];

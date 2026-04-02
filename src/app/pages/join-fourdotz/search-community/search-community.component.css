@@ -1,0 +1,115 @@
+.main-sec-container {
+    background-color: #fff;
+    min-height: 100vh;
+}
+
+.navbar-tag {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 40px;
+    border-bottom: 1px solid #e8e8e8;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.logo-png {
+    width: 200px;
+    height: auto;
+}
+
+.right-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sign-in-btn {
+    background-color: #fff;
+    border: 0;
+    color: var(--primary-color1);
+    padding: 10px;
+    font-size: 17px;
+}
+
+.logout-btn {
+    background-color: #fff;
+    border: 2px solid var(--primary-color2);
+    color: var(--primary-color2);
+    padding: 3px 16px;
+    font-size: 17px;
+    border-radius: 7px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px;
+}
+
+.illustration {
+
+    z-index: 1;
+
+    img {
+        width: 300px;
+        height: auto;
+        display: block;
+    }
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    padding: 40px 48px 48px;
+    width: 100%;
+    width: 720px;
+}
+
+.form-label {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    border: 1.5px solid #d0d5dd;
+    border-radius: 10px;
+    padding: 0 16px;
+    height: 52px;
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+
+    &:focus-within {
+        border-color: #a0aec0;
+        box-shadow: 0 0 0 3px rgba(160, 174, 192, 0.2);
+    }
+}
+
+.search-icon {
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: #333;
+    background: transparent;
+
+    &::placeholder {
+        color: #bbb;
+    }
+}

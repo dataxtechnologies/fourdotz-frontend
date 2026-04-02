@@ -214,7 +214,7 @@
 }
 
 .download-btn {
-    width: 70%;
+    width: 40%;
     padding: 14px;
     background: #4f58bf;
     color: #fff;
@@ -331,4 +331,36 @@
     padding: 10px;
     font-size: 17px;
     border-radius: 12px;
+}
+
+
+/* ✅ Loader center */
+.loader-center {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Simple loader */
+.loader {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #ccc;
+    border-top-color: #4f58bf;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ✅ Center QR when image mode */
+.center-mode {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

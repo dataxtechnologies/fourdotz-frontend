@@ -1,0 +1,188 @@
+<section>
+    <div>
+
+        <!-- HEADER -->
+        <div class="container header-cont">
+            <div class="head-cont">
+                <h2>General Enquiry List</h2>
+            </div>
+            <div class="mt-4">
+                <!-- <button class="btn-add" (click)="AddAssociation()">+ Add Association</button> -->
+            </div>
+        </div>
+
+        <!-- TABLE CARD -->
+        <div class="container">
+            <div class="item">
+
+                <div class="new-table-wrapper">
+
+                    <!-- FILTERS -->
+                    <form [formGroup]="filterForm">
+                        <div class="filters">
+
+                            <div class="search-box">
+                                <input type="text" placeholder="Search name / email / phone" formControlName="search"
+                                    class="regular-font" />
+                            </div>
+
+                            <div class="search-box">
+                                <select formControlName="status" class="regular-font">
+                                    <option value="">All Enquiry</option>
+                                    <option value="sales">Sales</option>
+                                    <option value="support">Support</option>
+                                    <option value="general">General</option>
+                                </select>
+                            </div>
+
+                            <button type="button" class="filter-reset-btn" (click)="resetFilters()">
+                                Reset
+                            </button>
+
+                        </div>
+                    </form>
+
+                    <!-- SCROLL WRAPPER (IMPORTANT) -->
+                    <div class="table-scroll-wrapper">
+                        <div class="table-scroll">
+
+                            <table class="new-table">
+
+                                <!-- HEADER -->
+                                <thead>
+                                    <tr class="medium-font">
+                                        <th class="sticky-col lead-col">Enquiry Details</th>
+                                        <th>Contact</th>
+                                        <th>Description</th>
+                                        <th>Enquiry Type</th>
+                                        <th>Enquired On</th>
+                                        <th>Address</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody *ngIf="!tableLoading; else tableSkeleton" class="regular-font">
+
+                                    <tr *ngFor="let item of payoutTable.paginatedData">
+
+
+                                        <!-- Details -->
+                                        <td class="sticky-col lead-col">
+                                            <div class="data-1">{{ item.name }}</div>
+                                            <div>{{ item.last_name }}</div>
+
+                                        </td>
+
+                                        <!-- Amount -->
+                                        <td>
+                                            <div>{{ item.email }}</div>
+                                            <div>+91 {{ item.mobile }}</div>
+                                        </td>
+
+                                        <!-- Description -->
+                                        <td>
+                                            {{ truncate(item.description, 20) }}
+                                        </td>
+
+                                        <!-- Status -->
+                                        <td>
+
+
+
+                                            {{ formatLabel(item.enquiry_type) }}
+
+                                        </td>
+
+                                        <!-- Date -->
+                                        <td>
+                                            {{ item.created_time?.$date | date:'dd MMM yyyy, h:mm a' }}
+                                        </td>
+
+                                        <td>
+
+                                            {{ truncate(item.address, 20) }}
+
+                                        </td>
+                                        <td>
+                                            <div class="view-btn-div" (click)="openviewpayoutdetails(item)">
+                                                <i class="bx bx-eye"></i>
+                                                <span class="view-btn">View</span>
+                                            </div>
+                                        </td>
+
+
+
+                                    </tr>
+
+                                    <tr *ngIf="payoutTable.paginatedData.length === 0">
+                                        <td colspan="6" class="no-data">
+                                            No Data Found
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                            <ng-template #tableSkeleton>
+                                <tr *ngFor="let i of [1,2,3,4,5]" style="height: 50px;"> <!-- taller row -->
+                                    <td> <span class="placeholder col-10 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td> <span class="placeholder col-8 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td> <span class="placeholder col-6 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td> <span class="placeholder col-7 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td> <span class="placeholder col-5 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                    <td> <span class="placeholder col-3 placeholder-glow"
+                                            style="height: 12px; display: inline-block; border-radius: 4px; background: #e0e0e0;"></span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                        </div>
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="">
+
+
+
+                        <div class="crm-pagination">
+                            <div class="regular-font">
+                                Showing <span class="medium-font">{{ payoutTable.startIndex + 1 }}</span> to <span
+                                    class="medium-font">{{ payoutTable.endIndex + 1 }}</span> of
+                                <span class="medium-font"> {{payoutTable.totalData }}</span> entries
+                            </div>
+                            <div class="d-flex gap-3 regular-font">
+                                <button class="nav-btn" (click)="payoutTable.prevPage()"
+                                    [disabled]="payoutTable.currentPage === 1">
+                                    ‹ Prev
+                                </button>
+
+                                <button *ngFor="let p of pages" class="page-btn"
+                                    [class.active]="p === payoutTable.currentPage" (click)="payoutTable.goToPage(p)">
+                                    {{ p }}
+                                </button>
+
+                                <button class="nav-btn" (click)="payoutTable.nextPage()"
+                                    [disabled]="payoutTable.currentPage === payoutTable.totalPages">
+                                    Next ›
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

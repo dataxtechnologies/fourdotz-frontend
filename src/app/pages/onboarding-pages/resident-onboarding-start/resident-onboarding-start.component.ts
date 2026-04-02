@@ -186,7 +186,11 @@ export class ResidentOnboardingStartComponent {
 
   selfsigninbtnloading = false;
 
+  associationId: any
 
+  associationDetails: any
+
+  globalLoading = true;
 
   constructor(
     private fb: FormBuilder,
@@ -199,29 +203,42 @@ export class ResidentOnboardingStartComponent {
 
   ngOnInit(): void {
     this.initForms();
+
     const userJson = localStorage.getItem('userdata');
     this.userData = userJson ? JSON.parse(userJson) : {};
-    this.filteredStates = [...INDIAN_STATES];
 
     this.Acroute.paramMap.subscribe(params => {
-    const value = params.get('username'); // or 'user_name' based on your route
+      this.associationId = params.get('username'); // ✅ FIX NAME
 
-    if (value) {
-      // Detect if it's phone or email
-      if (/^[6-9]\d{9}$/.test(value)) {
-        // 📱 Phone number
-        this.basicForm.patchValue({ phone: value });
-      } else if (this.isValidEmail(value)) {
-        // 📧 Email
-        this.basicForm.patchValue({ email: value });
-      }
-    }
-  });
+    });
+
+    this.basicForm.get('phone')?.valueChanges.subscribe(() => {
+      this.resetOtpState();
+    });
+
+    this.basicForm.get('email')?.valueChanges.subscribe(() => {
+      this.resetOtpState();
+    });
+
+    this.fetchAssociations(this.associationId);
+    // if (this.associationId) {
+    //   this.fetchPropertiesFromUrl();
+    // }
   }
 
-  isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  resetOtpState(): void {
+  this.otpVerified = false;
+  this.otpSent = false;
+  this.otpInput = '';
+  this.otptoken = null;
+
+  clearInterval(this.otpResendInterval);
+  this.otpResendTimer = 0;
 }
+
+  isValidEmail(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
   // ════════════════════════════════════════════════════════════
   //  FORMS
@@ -238,9 +255,6 @@ export class ResidentOnboardingStartComponent {
     }, { validators: passwordMatchValidator });
 
     this.residentForm = this.fb.group({
-      state: ['', Validators.required],
-      district: ['', Validators.required],
-      association_id: ['', Validators.required],
       property_id: ['', Validators.required],
       occupancy_status: ['', Validators.required],
     });
@@ -250,6 +264,33 @@ export class ResidentOnboardingStartComponent {
       aadhar_card: [null, Validators.required],
     });
   }
+
+
+  fetchAssociations(data : any): void {
+    this.globalLoading = true;
+
+    this.apiService.fetchAssociationlistbyId<any>(data).subscribe({
+      next: (res: any) => {
+        this.globalLoading = false;
+
+        if (res?.success && res?.data) {
+          this.associationDetails = res.data[0];
+          
+
+        } else {
+          this.associationDetails = [];
+          // this.filteredAssociations = [];
+        }
+      },
+      error: () => {
+        this.globalLoading = false;
+        this.associationDetails = [];
+        // this.filteredAssociations = [];
+      },
+    });
+  }
+
+
 
   // ════════════════════════════════════════════════════════════
   //  OTP
@@ -346,125 +387,43 @@ export class ResidentOnboardingStartComponent {
     }
   }
 
-  onStateSearch(): void {
-    const q = this.stateSearch.toLowerCase();
-    this.filteredStates = INDIAN_STATES.filter(s => s.toLowerCase().includes(q));
-    this.stateDropdownOpen = true;
-  }
 
-  selectState(state: string): void {
-    this.stateSearch = state;
-    this.residentForm.patchValue({ state, district: '', association_id: '', property_id: '' });
-    this.districtSearch = '';
-    this.stateDropdownOpen = false;
-    this.filteredDistricts = STATE_DISTRICTS[state] || [];
-    // reset association & property
-    this.selectedAssociation = null;
-    this.associationSearch = '';
-    this.associationList = [];
-    this.filteredAssociations = [];
-    this.selectedProperty = null;
-    this.propertySearch = '';
-    this.propertyList = [];
-    this.filteredProperties = [];
-  }
 
-  onDistrictSearch(): void {
-    const state = this.residentForm.get('state')?.value;
-    if (!state) return;
-    const all = STATE_DISTRICTS[state] || [];
-    const q = this.districtSearch.toLowerCase();
-    this.filteredDistricts = all.filter(d => d.toLowerCase().includes(q));
-    this.districtDropdownOpen = true;
-  }
 
-  onDistrictFocus(): void {
-    if (!this.residentForm.get('state')?.value) return;
-    const state = this.residentForm.get('state')?.value;
-    this.filteredDistricts = STATE_DISTRICTS[state] || [];
-    this.districtDropdownOpen = true;
-  }
 
-  selectDistrict(district: string): void {
-    this.districtSearch = district;
-    this.residentForm.patchValue({ district, association_id: '', property_id: '' });
-    this.districtDropdownOpen = false;
-    // reset association & property
-    this.selectedAssociation = null;
-    this.associationSearch = '';
-    this.associationList = [];
-    this.filteredAssociations = [];
-    this.selectedProperty = null;
-    this.propertySearch = '';
-    this.propertyList = [];
-    this.filteredProperties = [];
-    // fetch association list
-    this.fetchAssociations();
-  }
 
-  // ════════════════════════════════════════════════════════════
-  //  ASSOCIATION DROPDOWN
-  // ════════════════════════════════════════════════════════════
-  fetchAssociations(): void {
-    const state = this.residentForm.get('state')?.value;
-    const district = this.residentForm.get('district')?.value;
-    if (!state || !district) return;
-    this.associationLoading = true;
-    this.apiService.fetchAssociationlist<any>(state, district).subscribe({
+  fetchPropertiesFromUrl(): void {
+    this.propertyLoading = true;
+
+    const user_type = localStorage.getItem('user_type');
+
+    const apiCall =
+      user_type === 'owner'
+        ? this.apiService.fetchnonownerpropertylist<any>(this.associationId)
+        : this.apiService.fetchnontenantpropertylist<any>(this.associationId);
+
+    apiCall.subscribe({
       next: (res: any) => {
-        this.associationLoading = false;
-        if (res?.success && res?.data) {
-          this.associationList = res.data;
-          this.filteredAssociations = [...res.data];
-        } else {
-          this.associationList = [];
-          this.filteredAssociations = [];
-        }
+        this.propertyLoading = false;
+
+        if (res?.success && res?.data && res.data.length > 0) {
+  this.propertyList = res.data;
+  this.filteredProperties = [...res.data];
+} else {
+  this.propertyList = [];
+  this.filteredProperties = [];
+}
       },
       error: () => {
-        this.associationLoading = false;
-        this.associationList = [];
-        this.filteredAssociations = [];
-        this.Toast.error('Could not load association list.', 'Error');
+        this.propertyLoading = false;
+        this.propertyList = [];
+        this.filteredProperties = [];
+        // this.Toast.error('Could not load property list.', 'Error');
       },
     });
   }
 
-  onAssociationSearch(): void {
-    const q = this.associationSearch.toLowerCase();
-    this.filteredAssociations = this.associationList.filter(a =>
-      (a.property_name || a.name || '').toLowerCase().includes(q)
-    );
-    this.associationDropdownOpen = true;
-  }
 
-  onAssociationFocus(): void {
-    if (!this.residentForm.get('district')?.value) return;
-    if (!this.associationList.length) this.fetchAssociations();
-    this.filteredAssociations = [...this.associationList];
-    this.associationDropdownOpen = true;
-  }
-
-  selectAssociation(assoc: any): void {
-    this.selectedAssociation = assoc;
-    this.associationSearch = assoc.property_name || assoc.name || '';
-    this.associationDropdownOpen = false;
-    this.residentForm.patchValue({ association_id: assoc._id, property_id: '' });
-    // reset property
-    this.selectedProperty = null;
-    this.propertySearch = '';
-    this.propertyList = [];
-    this.filteredProperties = [];
-    // fetch property list
-
-    const user_type = localStorage.getItem('user_type');
-    if (user_type === 'owner') {
-      this.fetchnonownerpropertylist(assoc.user_id);
-    } else {
-      this.fetchnontenantpropertylist(assoc.user_id);
-    }
-    // this.fetchProperties(assoc.user_id);
-  }
 
   // ════════════════════════════════════════════════════════════
   //  PROPERTY DROPDOWN
@@ -486,7 +445,7 @@ export class ResidentOnboardingStartComponent {
         this.propertyLoading = false;
         this.propertyList = [];
         this.filteredProperties = [];
-        this.Toast.error('Could not load property list.', 'Error');
+        // this.Toast.error('Could not load property list.', 'Error');
       },
     });
   }
@@ -507,26 +466,33 @@ export class ResidentOnboardingStartComponent {
         this.propertyLoading = false;
         this.propertyList = [];
         this.filteredProperties = [];
-        this.Toast.error('Could not load property list.', 'Error');
+        // this.Toast.error('Could not load property list.', 'Error');
       },
     });
   }
 
-  onPropertySearch(): void {
-    const q = this.propertySearch.toLowerCase();
-    this.filteredProperties = this.propertyList.filter(p =>
-      (p.property_no || p.property_name || p.unit_number || p.name || '')
-        .toLowerCase()
-        .includes(q)
-    );
-    this.propertyDropdownOpen = true;
-  }
+onPropertySearch(): void {
+  const q = (this.propertySearch || '').toLowerCase();
 
-  onPropertyFocus(): void {
-    if (!this.residentForm.get('association_id')?.value) return;
+  this.filteredProperties = this.propertyList.filter(p =>
+    (p.property_no || p.property_name || p.unit_number || p.name || '')
+      .toLowerCase()
+      .includes(q)
+  );
+
+  this.propertyDropdownOpen = false;
+}
+
+onPropertyFocus(): void {
+  this.propertyDropdownOpen = true;
+
+  if (this.propertyList.length === 0) {
+    this.filteredProperties = [];
+  } else {
     this.filteredProperties = [...this.propertyList];
-    this.propertyDropdownOpen = true;
   }
+}
+
 
   selectProperty(prop: any): void {
     this.selectedProperty = prop;
@@ -646,6 +612,7 @@ export class ResidentOnboardingStartComponent {
           this.storeAuthData(res);
           this.selfsigninbtnloading = false;
           this.goToNextStep();
+          this.fetchPropertiesFromUrl();
         } else {
           this.selfsigninbtnloading = false;
           // this.submitLoading = false;

@@ -1,0 +1,38 @@
+/* ================= FIX CONTAINER ================= */
+.container {
+    display: block;
+    /* IMPORTANT */
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* ================= HEADER ================= */
+.header-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.head-cont h2 {
+    font-size: 30px;
+}
+
+
+/* ================= ACTION ================= */
+.mail-btn {
+    color: var(--primary-color1);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Approve button */
+.approve-btn {
+  color: #1a9e5c;
+}
+
+/* Disabled completed */
+.disabled-btn {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}

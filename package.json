@@ -21,6 +21,7 @@
     "@ckeditor/ckeditor5-angular": "^11.0.0",
     "@ckeditor/ckeditor5-build-classic": "^39.0.2",
     "angular-shepherd": "^21.0.5",
+    "country-state-city": "^3.2.1",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.0.0",
     "ngx-modal-ease": "^0.1.3",

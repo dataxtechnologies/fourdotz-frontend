@@ -50,7 +50,8 @@ export class AddResidentComponent implements OnInit {
       property_id: ['', Validators.required], // store selected _id
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required,  Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]{2,}\.[a-zA-Z]{2,}$/)]],
+      // email: ['', [Validators.required,  Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)]],
+      email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required,  Validators.pattern('^[6-9][0-9]{9}$')]],
       ownedAt: ['', Validators.required],
     });

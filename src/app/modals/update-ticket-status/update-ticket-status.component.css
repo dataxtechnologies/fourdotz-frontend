@@ -1,0 +1,311 @@
+/* ── Wrapper ── */
+.update-status-wrapper {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  padding: 28px;
+  width: 580px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+
+
+.header-new-cont{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e5e7eb;
+
+}
+
+.header-new-cont i{
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.section-title {
+  margin: 0 0 3px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: -0.2px;
+}
+
+.section-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+/* ── Form Body ── */
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Field Group ── */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.field-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.required-dot {
+  color: #ef4444;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* ── Select ── */
+.select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field-select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 10px 40px 10px 14px;
+  font-size: 14px;
+  color: #000;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  outline: none;
+  cursor: pointer;
+  font-weight: 400 !important;
+}
+
+.field-select.has-value {
+  color: #111827;
+}
+
+.field-select:focus {
+  border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+  background: #fff;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+}
+
+/* Status badge shown beside select when value chosen */
+.status-badge {
+  display: none; /* shown via JS state inline if needed */
+}
+
+/* ── Textarea ── */
+.field-textarea {
+  resize: vertical;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #111827;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  outline: none;
+  min-height: 100px;
+  line-height: 1.6;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.field-textarea::placeholder {
+  color: #9ca3af;
+  font-size: 15px;
+  font-weight: 500 !important;
+}
+
+.field-textarea:focus {
+  border-color: #111827;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+  background: #fff;
+}
+
+.char-count {
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: right;
+  margin-top: -2px;
+}
+
+/* ── Drop Zone ── */
+.drop-zone {
+  border: 1.5px dashed #d1d5db;
+  border-radius: 7px;
+  background: #f9fafb;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  text-align: center;
+  min-height: 110px;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: #111827;
+  background: #f3f4f6;
+}
+
+.drop-zone.has-file {
+  padding: 16px;
+  align-items: stretch;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.drop-icon {
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
+.drop-text {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.drop-hint {
+  margin: 0;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ── File Preview ── */
+.file-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 7px;
+  padding: 10px 14px;
+}
+
+.file-icon {
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.file-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-size {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 1px;
+}
+
+.remove-file {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.remove-file:hover {
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+/* ── Actions ── */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.btn-save {
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  background: #000;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.btn-save:hover:not(:disabled) {
+  background: #1f2937;
+}
+
+.btn-save:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ── Status option colors (native select options — limited styling) ── */
+option[value="pending"]    { color: #000; }
+option[value="approved"]   { color: #000; }
+option[value="processing"] { color: #000; }
+option[value="completed"]  { color: #000; }
+option[value="rejected"]   { color: #000; }
+
+
+.error {
+  color: #dc2626;
+  font-size: 12px;
+}
+
+
+.btn-dis{
+  opacity: 0.8;
+}

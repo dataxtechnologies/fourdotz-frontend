@@ -1,7 +1,27 @@
-<section class="main-sec-container">
+<div  *ngIf="globalLoading" class="full-loader">
+  <div class="loader">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 66" height="100px" width="100px" class="spinner">
+    <circle stroke="url(#gradient)" r="20" cy="33" cx="33" stroke-width="1" fill="transparent" class="path"></circle>
+      <linearGradient id="gradient">
+        <stop stop-opacity="1" stop-color="#fe0000" offset="0%"></stop>
+        <stop stop-opacity="0" stop-color="#af3dff" offset="100%"></stop>
+      </linearGradient>
+    
+  </svg> 
+</div>
+<p class="medium-font mt-2">Loading your workspace</p>
+</div>
+
+<section class="main-sec-container" *ngIf="!globalLoading">
     <div class="logo-container">
-        <img src="assets/logo/fourdotz1.png" class="logo-png">
-        <h3 class="medium-font welcome-font">Welcome to Fourdotz</h3>
+        <div class="logo-den">
+            <img src="assets/logo/fourdotz1.png" class="logo-png">
+            <h3 class="medium-font welcome-font">Welcome to Fourdotz</h3>
+        </div>
+        <div>
+            <p class="regular-font">We’re excited to have you here! You are joining <strong>{{ associationDetails.property_name }}</strong> through Fourdotz.
+            </p>
+        </div>
     </div>
 
     <div class="main-container">
@@ -74,7 +94,7 @@
                     <div class="form-group">
                         <label class="medium-font">Email Address <span class="required">*</span></label>
                         <input type="email" formControlName="email" class="inp-cus regular-font"
-                            placeholder="Enter Email Address" [readOnly]="otpVerified" />
+                            placeholder="Enter Email Address" />
                         <div *ngIf="basicForm.get('email')?.touched">
                             <span *ngIf="basicForm.get('email')?.errors?.['required']" class="error">
                                 Email is required.
@@ -90,7 +110,7 @@
                         <label class="medium-font">Phone Number <span class="required">*</span></label>
                         <div class="otp-send-row">
                             <input type="tel" formControlName="phone" class="inp-cus regular-font"
-                                placeholder="e.g., 9876543210" maxlength="10" [readOnly]="otpVerified" />
+                                placeholder="e.g., 9876543210" maxlength="10" />
                             <button type="button" class="btn-otp" (click)="sendOtp()"
                                 [disabled]="otpSending || otpVerified || !canSendOtp">
                                 <span *ngIf="otpSending">Sending...</span>
@@ -210,10 +230,12 @@
                     </ng-container>
 
                     <div class="form-navigation">
-                        <button type="submit" class="button-next" [disabled]="!otpVerified" *ngIf="!selfsigninbtnloading">
+                        <button type="submit" class="button-next" [disabled]="!otpVerified"
+                            *ngIf="!selfsigninbtnloading">
                             Save and continue
                         </button>
-                        <button type="button" class="button-next" disabled style="opacity: 0.7; cursor: not-allowed;" *ngIf="selfsigninbtnloading">
+                        <button type="button" class="button-next" disabled style="opacity: 0.7; cursor: not-allowed;"
+                            *ngIf="selfsigninbtnloading">
                             Processing...
                         </button>
                     </div>
@@ -226,120 +248,49 @@
             <div *ngIf="currentStep === 2" class="form-section">
                 <form [formGroup]="residentForm" (ngSubmit)="goToNextStep()">
 
-                    <!-- State Dropdown -->
-                    <div class="form-group">
-                        <label class="medium-font">State <span class="required">*</span></label>
-                        <div class="searchable-select-wrapper">
-                            <input type="text" class="inp-cus regular-font" placeholder="Search or select a state..."
-                                [(ngModel)]="stateSearch" [ngModelOptions]="{standalone: true}"
-                                (focus)="stateDropdownOpen = true" (input)="onStateSearch()" autocomplete="off" />
-                            <div class="dropdown-list" *ngIf="stateDropdownOpen && filteredStates.length > 0">
-                                <div class="dropdown-item" *ngFor="let state of filteredStates"
-                                    (mousedown)="selectState(state)">{{ state }}</div>
-                            </div>
-                            <div class="dropdown-list"
-                                *ngIf="stateDropdownOpen && filteredStates.length === 0 && stateSearch">
-                                <div class="dropdown-item no-result">No states found</div>
-                            </div>
-                        </div>
-                        <div *ngIf="residentForm.get('state')?.touched">
-                            <span *ngIf="residentForm.get('state')?.errors?.['required']" class="error">
-                                State is required.
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- District Dropdown -->
-                    <div class="form-group">
-                        <label class="medium-font">District <span class="required">*</span></label>
-                        <div class="searchable-select-wrapper">
-                            <input type="text" class="inp-cus regular-font"
-                                [placeholder]="residentForm.get('state')?.value ? 'Search or select a district...' : 'Select a state first'"
-                                [(ngModel)]="districtSearch" [ngModelOptions]="{standalone: true}"
-                                (focus)="onDistrictFocus()" (input)="onDistrictSearch()"
-                                [disabled]="!residentForm.get('state')?.value" autocomplete="off" />
-                            <div class="dropdown-list" *ngIf="districtDropdownOpen && filteredDistricts.length > 0">
-                                <div class="dropdown-item" *ngFor="let district of filteredDistricts"
-                                    (mousedown)="selectDistrict(district)">{{ district }}</div>
-                            </div>
-                            <div class="dropdown-list"
-                                *ngIf="districtDropdownOpen && filteredDistricts.length === 0 && districtSearch">
-                                <div class="dropdown-item no-result">No districts found</div>
-                            </div>
-                        </div>
-                        <div *ngIf="residentForm.get('district')?.touched">
-                            <span *ngIf="residentForm.get('district')?.errors?.['required']" class="error">
-                                District is required.
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Association Dropdown -->
-                    <div class="form-group">
-                        <label class="medium-font">Association <span class="required">*</span></label>
-                        <div class="searchable-select-wrapper">
-                            <div class="input-with-loader">
-                                <input type="text" class="inp-cus regular-font"
-                                    [placeholder]="residentForm.get('district')?.value ? 'Search or select an association...' : 'Select a district first'"
-                                    [(ngModel)]="associationSearch" [ngModelOptions]="{standalone: true}"
-                                    (focus)="onAssociationFocus()" (input)="onAssociationSearch()"
-                                    [disabled]="!residentForm.get('district')?.value" autocomplete="off" />
-                                <span class="field-spinner" *ngIf="associationLoading">
-                                    <i class="fa fa-spinner fa-spin"></i>
-                                </span>
-                            </div>
-                            <div class="dropdown-list"
-                                *ngIf="associationDropdownOpen && filteredAssociations.length > 0">
-                                <div class="dropdown-item" *ngFor="let assoc of filteredAssociations"
-                                    (mousedown)="selectAssociation(assoc)">
-                                    <div class="dropdown-item-main">{{ assoc.property_name || assoc.name }}</div>
-                                    <div class="dropdown-item-sub" *ngIf="assoc.city || assoc.district">
-                                        {{ assoc.city }}{{ assoc.city && assoc.district ? ', ' : '' }}{{ assoc.district
-                                        }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dropdown-list"
-                                *ngIf="associationDropdownOpen && filteredAssociations.length === 0 && !associationLoading && residentForm.get('district')?.value">
-                                <div class="dropdown-item no-result">No associations found</div>
-                            </div>
-                        </div>
-                        <div *ngIf="residentForm.get('association_id')?.touched">
-                            <span *ngIf="residentForm.get('association_id')?.errors?.['required']" class="error">
-                                Association is required.
-                            </span>
-                        </div>
-                    </div>
-
                     <!-- Property Dropdown -->
                     <div class="form-group">
                         <label class="medium-font">Property <span class="required">*</span></label>
+
                         <div class="searchable-select-wrapper">
                             <div class="input-with-loader">
+
                                 <input type="text" class="inp-cus regular-font"
-                                    [placeholder]="residentForm.get('association_id')?.value ? 'Search or select a property...' : 'Select an association first'"
-                                    [(ngModel)]="propertySearch" [ngModelOptions]="{standalone: true}"
-                                    (focus)="onPropertyFocus()" (input)="onPropertySearch()"
-                                    [disabled]="!residentForm.get('association_id')?.value" autocomplete="off" />
+                                    placeholder="Search or select a property..." [(ngModel)]="propertySearch"
+                                    [ngModelOptions]="{standalone: true}" (focus)="onPropertyFocus()"
+                                    (input)="onPropertySearch()" autocomplete="off" />
+
                                 <span class="field-spinner" *ngIf="propertyLoading">
                                     <i class="fa fa-spinner fa-spin"></i>
                                 </span>
                             </div>
+
+                            <!-- Dropdown -->
                             <div class="dropdown-list" *ngIf="propertyDropdownOpen && filteredProperties.length > 0">
                                 <div class="dropdown-item" *ngFor="let prop of filteredProperties"
                                     (mousedown)="selectProperty(prop)">
-                                    <div class="dropdown-item-main">{{ prop.property_no || prop.property_name || prop.unit_number || prop.name }}</div>
+                                    <div class="dropdown-item-main">
+                                        {{ prop.property_no || prop.property_name || prop.unit_number || prop.name }}
+                                    </div>
+
                                     <div class="dropdown-item-sub" *ngIf="prop.block || prop.floor">
-                                        {{ prop.block ? 'Block ' + prop.block : '' }}{{ prop.block && prop.floor ? ' · '
-                                        : '' }}{{ prop.floor ? 'Floor ' + prop.floor : '' }}
+                                        {{ prop.block ? 'Block ' + prop.block : '' }}
+                                        {{ prop.block && prop.floor ? ' · ' : '' }}
+                                        {{ prop.floor ? 'Floor ' + prop.floor : '' }}
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Empty -->
                             <div class="dropdown-list"
-                                *ngIf="propertyDropdownOpen && filteredProperties.length === 0 && !propertyLoading && residentForm.get('association_id')?.value">
-                                <div class="dropdown-item no-result">No properties found</div>
+                                *ngIf="propertyDropdownOpen && !propertyLoading && filteredProperties.length === 0">
+                                <div class="dropdown-item no-result">
+                                    No properties available
+                                </div>
                             </div>
+
                         </div>
+
                         <div *ngIf="residentForm.get('property_id')?.touched">
                             <span *ngIf="residentForm.get('property_id')?.errors?.['required']" class="error">
                                 Property is required.
@@ -347,9 +298,10 @@
                         </div>
                     </div>
 
-                    <!-- Occupancy Status — shown after property selected -->
+                    <!-- Occupancy -->
                     <div class="form-group" *ngIf="residentForm.get('property_id')?.value">
                         <label class="medium-font">Occupancy Status <span class="required">*</span></label>
+
                         <div class="radio-group">
                             <label class="radio-card"
                                 [class.selected]="residentForm.get('occupancy_status')?.value === 'current_occupant'">
@@ -359,6 +311,7 @@
                                     <span class="radio-label">Current Occupant</span>
                                 </div>
                             </label>
+
                             <label class="radio-card"
                                 [class.selected]="residentForm.get('occupancy_status')?.value === 'move_in'">
                                 <input type="radio" formControlName="occupancy_status" value="move_in" />
@@ -368,17 +321,13 @@
                                 </div>
                             </label>
                         </div>
-                        <div *ngIf="residentForm.get('occupancy_status')?.touched">
-                            <span *ngIf="residentForm.get('occupancy_status')?.errors?.['required']" class="error">
-                                Please select occupancy status.
-                            </span>
-                        </div>
                     </div>
 
                     <div class="form-navigation">
                         <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
                         <button type="submit" class="button-next">Save and continue</button>
                     </div>
+
                 </form>
             </div>
 
@@ -479,18 +428,12 @@
                 <!-- Resident Details Preview -->
                 <div class="review-block">
                     <h3>Resident Details</h3>
-                    <p class="regular-font address-wrap"><strong>State:</strong> {{ residentForm.value.state }}</p>
-                    <p class="regular-font address-wrap"><strong>District:</strong> {{ residentForm.value.district }}
-                    </p>
-                    <p class="regular-font address-wrap">
-                        <strong>Association:</strong> {{ selectedAssociation?.property_name || selectedAssociation?.name
-                        || '—' }}
-                    </p>
+
                     <p class="regular-font address-wrap">
                         <strong>Property:</strong> {{ selectedProperty?.property_no || selectedProperty?.property_name
                         || '—' }}
 
-                        
+
                     </p>
                     <p class="regular-font address-wrap">
                         <strong>Occupancy Status:</strong>

@@ -1,0 +1,78 @@
+<section class="main-sec-container">
+    <div>
+        <nav class="navbar-tag">
+            <div>
+                <img src="assets/logo/logo-no-gap.png" alt="logo-no-gap" class="logo-png">
+            </div>
+
+            <div class="right-nav">
+                <button class="sign-in-btn" *ngIf="!Showlogoutbtn" (click)="siginbtn()">Sign in</button>
+                <button class="logout-btn" *ngIf="Showlogoutbtn" (click)="confirmlogout()">Logout</button>
+            </div>
+        </nav>
+
+        <div class="wrapper">
+
+            <!-- Illustration -->
+            <div class="illustration">
+                <img src="assets/images/signin/search-community.png" alt="Search illustration" />
+            </div>
+
+            <!-- Card -->
+            <div class="card">
+
+                <label class="form-label medium-font">Your Community Name</label>
+
+                <!-- 🔥 Wrapper -->
+                <div class="search-wrapper">
+
+                    <!-- Input Box -->
+                    <div class="search-box">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                            viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+
+                        <input type="text" [(ngModel)]="communityName" (input)="onSearchChange()"
+                            (focus)="onInputFocus()" placeholder="E.g. Sharlow Apartments"
+                            class="search-input regular-font" />
+                    </div>
+
+                    <!-- 🔥 DROPDOWN -->
+                    <div class="association-list" *ngIf="dropdownOpen">
+
+                        <!-- List -->
+                        <div class="association-item" *ngFor="let item of filteredAssociations"
+                            (click)="selectAssociation(item)">
+                            {{ item.property_name }} - {{ item.district || 'N/A' }}
+                        </div>
+
+                        <!-- Empty -->
+                        <div *ngIf="filteredAssociations.length === 0" class="no-data">
+                            No associations found
+                        </div>
+
+                        <!-- Register -->
+                        <div class="register-option" (click)="gotoRegister()">
+                            <div class="register-option-content">
+                                <!-- <div> -->
+                                <i class="bx bx-plus-circle green"></i>
+                                <!-- </div> -->
+                                <div class="regular-font">
+                                    Create an account for your community
+                                </div>
+                                <!-- <div> -->
+                                <i class="bx bx-chevron-right"></i>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

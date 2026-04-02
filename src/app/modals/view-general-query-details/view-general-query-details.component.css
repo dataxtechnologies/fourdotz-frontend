@@ -1,0 +1,266 @@
+
+/* ── Card ────────────────────────────────────────────────── */
+.enquiry-card {
+  background: #ffffff;
+  border: 0.5px solid #e0e0e0;
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+  width: 520px;
+   max-width: 520px;
+  height: auto;
+  max-height: 90vh;
+
+  overflow-y: auto;
+}
+
+/* ── Card Header ─────────────────────────────────────────── */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.4rem;
+  border-bottom: 0.5px solid #e0e0e0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.card-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111111;
+  margin: 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Close Button ────────────────────────────────────────── */
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: #888;
+  font-size: 20px;
+  transition: background 0.15s, color 0.15s;
+}
+.close-btn:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
+/* ── Badges ──────────────────────────────────────────────── */
+.badge {
+  font-size: 14px;
+  padding: 5px 15px;
+  border-radius: 99px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.badge-open {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-sales {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+/* ── Card Body ───────────────────────────────────────────── */
+.card-body {
+  padding: 1.4rem;
+}
+
+/* ── Person Row ──────────────────────────────────────────── */
+.person-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1.4rem;
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e40af;
+  flex-shrink: 0;
+}
+
+.person-info {
+  flex: 1;
+}
+
+.person-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111111;
+  margin-bottom: 3px;
+}
+
+.person-meta {
+  font-size: 13px;
+  color: #666666;
+}
+
+.enquiry-type-block {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Divider ─────────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 0.5px solid #e0e0e0;
+  margin-bottom: 0;
+}
+
+/* ── Details Grid ────────────────────────────────────────── */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.field-cell {
+  padding: 12px 0;
+}
+
+.field-cell.border-right-col {
+  padding-right: 1.5rem;
+}
+
+.field-cell.border-left-col {
+  padding-left: 1.5rem;
+  border-left: 0.5px solid #e0e0e0;
+}
+
+.field-cell.border-bottom {
+  border-bottom: 0.5px solid #e0e0e0;
+}
+
+/* ── Field Label & Value ─────────────────────────────────── */
+.field-label {
+  font-size: 15px;
+  color: #000;
+  margin-bottom: 4px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600 !important;
+}
+
+.field-value {
+  font-size: 14px;
+  color: #111111;
+  line-height: 1.5;
+}
+
+/* ── Address block ───────────────────────────────────────── */
+.field-block {
+  padding: 12px 0;
+}
+
+.field-block.border-top {
+  border-top: 0.5px solid #e0e0e0;
+  margin-top: 4px;
+}
+
+.description-block {
+  margin-top: 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 12px 14px;
+
+ 
+}
+
+/* TEXT WRAP FIX */
+.description-block .field-value {
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.6;
+}
+/* ── Card Footer ─────────────────────────────────────────── */
+.card-footer {
+  margin-top: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 0.5px solid #e0e0e0;
+  padding-top: 1rem;
+}
+
+.footer-id {
+  font-size: 11px;
+  color: #aaaaaa;
+  word-break: break-all;
+}
+
+.footer-status {
+  font-size: 12px;
+  color: #aaaaaa;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.status-text-open {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .person-row {
+    flex-wrap: wrap;
+  }
+  .enquiry-type-block {
+    text-align: left;
+    width: 100%;
+  }
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+  .field-cell.border-left-col {
+    border-left: none;
+    padding-left: 0;
+    border-top: 0.5px solid #e0e0e0;
+  }
+  .field-cell.border-right-col {
+    padding-right: 0;
+  }
+}
+
+
+.enquiry-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.enquiry-card::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 10px;
+}
+
+.enquiry-card::-webkit-scrollbar-thumb:hover {
+  background: #cbd5f5;
+}

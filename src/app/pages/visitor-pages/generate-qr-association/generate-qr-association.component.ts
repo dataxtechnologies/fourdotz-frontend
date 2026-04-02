@@ -24,6 +24,7 @@ import { ApiserviceService } from '../../../services/api/apiservice.service';
   styleUrls: ['./generate-qr-association.component.css'],
 })
 export class GenerateQrAssociationComponent implements OnInit {
+  isLoading = true;
   @ViewChild('qrCodeRef', { static: false })
   qrCodeRef!: NgxQrcodeStylingComponent;
   @ViewChild('pdfContent') pdfContent!: ElementRef;
@@ -84,24 +85,29 @@ export class GenerateQrAssociationComponent implements OnInit {
   // this.updateQRCode();
 
   // ▶ Fetch saved QR from API
-  GetAssociationQR() {
-    this.apiService.GetAssociationQR<any>().subscribe({
-      next: (res: any) => {
-        if (res?.success && res?.data?.qr_code) {
-          this.qrimagedata = res.data;
-          this.customiseoptions = false; // show saved QR
-          this.noqr = false;
-        } else {
-          this.customiseoptions = true; // show QR generator
-          this.noqr = true;
-        }
-      },
-      error: () => {
+ GetAssociationQR() {
+  this.isLoading = true;
+
+  this.apiService.GetAssociationQR<any>().subscribe({
+    next: (res: any) => {
+      this.isLoading = false;
+
+      if (res?.success && res?.data?.qr_code) {
+        this.qrimagedata = res.data;
+        this.customiseoptions = false;
+        this.noqr = false;
+      } else {
         this.customiseoptions = true;
         this.noqr = true;
-      },
-    });
-  }
+      }
+    },
+    error: () => {
+      this.isLoading = false;
+      this.customiseoptions = true;
+      this.noqr = true;
+    },
+  });
+}
 
   downloadPDF() {
 

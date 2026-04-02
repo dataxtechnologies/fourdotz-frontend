@@ -1,4 +1,17 @@
+<main class="content">
+    <router-outlet></router-outlet>
 
-    <main class="content">
-        <router-outlet></router-outlet>
-    </main>
+    <div>
+        <!-- <div class="float-ripple"></div> -->
+        <!-- <div class="float-ripple"></div> -->
+
+        <a class="float-contact-wrap" (click)="gotopage()">
+            <span class="float-contact-label">Contact us</span>
+            <div class="float-contact-btn">
+                <svg viewBox="0 0 24 24">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+            </div>
+        </a>
+    </div>
+</main>

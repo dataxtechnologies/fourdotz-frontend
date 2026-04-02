@@ -1,0 +1,233 @@
+<section class="contact-us-hero-sec">
+
+    <!-- ── Navbar ── -->
+    <nav class="navbar">
+        <img src="assets/logo/logo-no-gap.png" alt="fourdotz-logo" class="navbar-logo" />
+        <div class="navbar-right">
+            <ul class="nav-links">
+                <li><button type="button" class="get-started-btn" (click)="getstarted()">Get Started</button></li>
+                <li><button type="button" class="signin-btn" (click)="singinpage()">Sign In</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ── Hero ── -->
+    <div class="hero-section">
+        <h1 class="medium-font">Let's Talk</h1>
+        <p class="regular-font">Best Community Management Software for Housing Societies</p>
+    </div>
+
+    <!-- ── Two-column grid ── -->
+    <div class="form-section">
+
+        <!-- ════ LEFT: FORM ════ -->
+        <div class="form-left">
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+
+                <!-- Enquiry Type -->
+                <div class="form-group">
+                    <label class="form-label medium-font">Enquiry Type <span class="required">*</span></label>
+                    <div class="radio-group">
+                        <label class="form-label medium-font" class="radio-label">
+                            <input class="input-custom-style regular-font" type="radio" formControlName="enquiry_type"
+                                value="sales" />
+                            Sales Enquiry
+                        </label>
+                        <label class="form-label medium-font" class="radio-label">
+                            <input class="input-custom-style regular-font" type="radio" formControlName="enquiry_type"
+                                value="support" />
+                            Support
+                        </label>
+                        <label class="form-label medium-font" class="radio-label">
+                            <input class="input-custom-style regular-font" type="radio" formControlName="enquiry_type"
+                                value="general" />
+                            General
+                        </label>
+                    </div>
+                    <span class="error-msg" *ngIf="isInvalid('enquiry_type')">
+                        Please select an enquiry type.
+                    </span>
+                </div>
+
+                <!-- First Name -->
+                <div class="form-group">
+                    <label class="form-label medium-font" for="name">Name of Housing Society / Apartment / Villa Complex
+                        <span class="required">*</span></label>
+                    <input class="input-custom-style regular-font" id="name" type="text" formControlName="name"
+                        placeholder="Enter your Name of Housing Society / Apartment / Villa Complex"
+                        [class.input-error]="isInvalid('name')" />
+                    <span class="error-msg" *ngIf="isInvalid('name')">
+                        <ng-container *ngIf="f['name'].errors?.['required']">First name is required.</ng-container>
+                        <ng-container *ngIf="f['name'].errors?.['minlength']">Minimum 2 characters.</ng-container>
+                    </span>
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label class="form-label medium-font" for="last_name">Full Name</label>
+                    <input class="input-custom-style regular-font" id="last_name" type="text"
+                        formControlName="last_name" placeholder="Enter your full name" />
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label class="form-label medium-font" for="email">Email Address <span
+                            class="required">*</span></label>
+                    <input class="input-custom-style regular-font" id="email" type="email" formControlName="email"
+                        placeholder="Enter your email address" [class.input-error]="isInvalid('email')" />
+                    <span class="error-msg" *ngIf="isInvalid('email')">
+                        <ng-container *ngIf="f['email'].errors?.['required']">Email is required.</ng-container>
+                        <ng-container *ngIf="f['email'].errors?.['email']">Enter a valid email address.</ng-container>
+                    </span>
+                </div>
+
+                <!-- Mobile -->
+                <div class="form-group">
+                    <label class="form-label medium-font" for="mobile">Phone Number <span
+                            class="required">*</span></label>
+                    <input class="input-custom-style regular-font" id="mobile" type="tel" maxlength="10"
+                        formControlName="mobile" placeholder="Enter 10-digit mobile number"
+                        [class.input-error]="isInvalid('mobile')" />
+                    <span class="error-msg" *ngIf="isInvalid('mobile')">
+                        <ng-container *ngIf="f['mobile'].errors?.['required']">Phone number is required.</ng-container>
+                        <ng-container *ngIf="f['mobile'].errors?.['pattern']">Enter a valid 10-digit Indian mobile
+                            number.</ng-container>
+                    </span>
+                </div>
+
+                <!-- Country -->
+                <div class="form-group">
+                    <label class="form-label medium-font" for="country">Country <span class="required">*</span></label>
+                    <div class="select-wrapper">
+                        <select class="input-custom-style regular-font" id="country" formControlName="country"
+                            [class.input-error]="isInvalid('country')">
+                            <option value="">Select Country</option>
+                            <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+                        </select>
+
+                    </div>
+                    <span class="error-msg" *ngIf="isInvalid('country')">Country is required.</span>
+                </div>
+
+                <!-- State -->
+                <div class="form-group">
+                    <label class="form-label medium-font" for="state">
+                        State <span class="required">*</span>
+                    </label>
+
+                    <div class="select-wrapper">
+                        <select class="input-custom-style regular-font" id="state" formControlName="state"
+                            [class.input-error]="isInvalid('state')">
+                            <option value="">Select State</option>
+
+                            <!-- ✅ FIXED -->
+                            <option *ngFor="let s of filteredStates" [value]="s.isoCode">
+                                {{ s.name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <span class="error-msg" *ngIf="isInvalid('state')">
+                        State is required.
+                    </span>
+                </div>
+
+                <!-- City -->
+                <div class="form-group">
+                    <label class="form-label medium-font" for="city">
+                        City <span class="required">*</span>
+                    </label>
+
+                    <ng-container *ngIf="filteredCities.length > 0; else cityTextInput">
+                        <div class="select-wrapper">
+                            <select class="input-custom-style regular-font" id="city" formControlName="city"
+                                [class.input-error]="isInvalid('city')">
+                                <option value="">Select City</option>
+
+                                <!-- ✅ FIXED -->
+                                <option *ngFor="let c of filteredCities" [value]="c.name">
+                                    {{ c.name }}
+                                </option>
+                            </select>
+                        </div>
+                    </ng-container>
+
+                    <!-- Fallback input -->
+                    <ng-template #cityTextInput>
+                        <input class="input-custom-style regular-font" id="city" type="text" formControlName="city"
+                            placeholder="Enter your city" [class.input-error]="isInvalid('city')" />
+                    </ng-template>
+
+                    <span class="error-msg" *ngIf="isInvalid('city')">
+                        City is required.
+                    </span>
+                </div>
+                <!-- Address -->
+                <div class="form-group">
+                    <label class="form-label medium-font" for="address">Address <span class="required">*</span></label>
+                    <input class="input-custom-style regular-font" id="address" type="text" formControlName="address"
+                        placeholder="Enter your address" [class.input-error]="isInvalid('address')" />
+                    <span class="error-msg" *ngIf="isInvalid('address')">Address is required.</span>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label class="form-label medium-font" for="description">Comments / Questions <span
+                            class="required">*</span></label>
+                    <textarea class="input-custom-style regular-font" id="description" formControlName="description"
+                        placeholder="Write your message here..."
+                        [class.input-error]="isInvalid('description')"></textarea>
+                    <span class="error-msg" *ngIf="isInvalid('description')">
+                        <ng-container *ngIf="f['description'].errors?.['required']">Message is required.</ng-container>
+                        <ng-container *ngIf="f['description'].errors?.['minlength']">Minimum 10
+                            characters.</ng-container>
+                    </span>
+                </div>
+
+                <button type="submit" class="btn-submit" *ngIf="!submitbtnloading">Submit</button>
+                <button type="button" class="btn-submit" style="opacity: 0.8; cursor: not-allowed;"
+                    *ngIf="submitbtnloading"> <i class="fa-solid fa-spinner fa-spin"></i> Processing...</button>
+
+            </form>
+        </div>
+
+        <!-- ════ RIGHT: INFO PANEL ════ -->
+        <div class="form-right">
+
+            <!-- SVG illustration -->
+            <div class="info-illustration">
+                <img src="assets/images/site/contact-us-page.png" alt="contact-us-page" class="illustration-img">
+            </div>
+
+            <div class="info-box-section">
+                <h4 class="medium-font">Want to know more about the product?</h4>
+                <p class="regular-font">Leave your details here and our Product Specialist Team will get in touch with
+                    you right away to
+                    schedule a live demo.</p>
+            </div>
+
+            <div class="info-box-section">
+                <h4 class="medium-font">Have any questions or need support regarding usage?</h4>
+                <p class="regular-font">Leave us your query here &amp; we'll address it right away!</p>
+            </div>
+
+            <div class="connect-section">
+                <h4 class="medium-font">Connect with Us:</h4>
+                <p class="regular-font">For Product Support: <a
+                        href="mailto:sayhello@fourdotz.com">sayhello&#64;fourdotz.com</a></p>
+                <p class="regular-font">For Sales Queries: <a
+                        href="mailto:hello@dataxtechnologies.com">hello&#64;dataxtechnologies.com</a> | <a
+                        href="tel:+919486115590">+91 94861 15590</a></p>
+            </div>
+
+            <div class="offices-grid">
+                <div class="office-item">
+                    <h5 class="medium-font">FOURDOTZ </h5>
+                    <p class="regular-font">Coimbatore, Tamil Nadu, India.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>

@@ -104,12 +104,21 @@ import { ResidentMarketplaceComponent } from './pages/pre-approved-pages/residen
 import { ResidentViewprofileComponent } from './pages/pre-approved-pages/resident-viewprofile/resident-viewprofile.component';
 import { PayoutReqListComponent } from './pages/superadmin-pages/payout-req-list/payout-req-list.component';
 import { PayoutManagementComponent } from './pages/association-pages/payout-management/payout-management.component';
+import { ContactUsComponent } from './pages/static-pages/contact-us/contact-us.component';
+import { GeneralQueryListComponent } from './pages/superadmin-pages/general-query-list/general-query-list.component';
+import { FeatuesPageComponent } from './pages/static-pages/featues-page/featues-page.component';
+import { SupportTicketListComponent } from './pages/superadmin-pages/support-ticket-list/support-ticket-list.component';
+import { SupportListBothComponent } from './pages/Owner-pages/support-list-both/support-list-both.component';
+import { CreateSupportTicketComponent } from './pages/support-pages/create-support-ticket/create-support-ticket.component';
+import { ViewSupportTicketComponent } from './pages/support-pages/view-support-ticket/view-support-ticket.component';
+import { SupportListComponent } from './pages/association-pages/support-list/support-list.component';
+import { JoinFourdotzComponent } from './pages/onboarding-pages/join-fourdotz/join-fourdotz.component';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'auth/sign-in',
+    redirectTo: 'join/join-fourdotz',
   },
 
   {
@@ -135,7 +144,7 @@ export const routes: Routes = [
     ],
   },
 
-   {
+  {
     path: 'onboarding',
     component: OnboardingLayoutComponent,
     children: [
@@ -182,8 +191,16 @@ export const routes: Routes = [
         component: ViewAssociationComponent,
       },
       {
-        path : 'payouts-management/list',
-        component : PayoutReqListComponent
+        path: 'payouts-management/list',
+        component: PayoutReqListComponent
+      },
+      {
+        path: 'general-enquiry/list',
+        component: GeneralQueryListComponent
+      },
+      {
+        path: 'support-ticket/customers-ticket',
+        component: SupportTicketListComponent,
       }
     ],
   },
@@ -240,6 +257,10 @@ export const routes: Routes = [
         path: 'payout-request-list',
         component: PayoutManagementComponent,
       },
+      {
+        path: 'support-ticket/list',
+        component:SupportListComponent,
+      },
     ],
   },
 
@@ -278,6 +299,10 @@ export const routes: Routes = [
         path: 'tenant-request-list',
         component: TenantRequestListComponent,
       },
+      {
+        path: 'support-ticket-list',
+        component: SupportListBothComponent,
+      },
     ],
   },
 
@@ -314,6 +339,10 @@ export const routes: Routes = [
       {
         path: 'view-properties/:propertiesId',
         component: TenantViewPropertyDetailsComponent,
+      },
+      {
+        path: 'support-ticket-list',
+        component: SupportListBothComponent,
       },
     ],
   },
@@ -490,12 +519,12 @@ export const routes: Routes = [
 
 
   {
-    path : 'owner/waiting-for-approval',
+    path: 'owner/waiting-for-approval',
     component: OwnerWaitingComponent,
   },
 
   {
-    path : 'tenant/waiting-for-approval',
+    path: 'tenant/waiting-for-approval',
     component: TenantWaitingComponent,
   },
 
@@ -507,7 +536,7 @@ export const routes: Routes = [
       { path: 'resident/dashboard', component: ResidentDashboardComponent },
       { path: 'resident/market-place', component: ResidentMarketplaceComponent },
       { path: 'resident/view-profile', component: ResidentViewprofileComponent },
-      
+
     ],
   },
 
@@ -516,4 +545,38 @@ export const routes: Routes = [
     path: 'no-network',
     component: NoInternetPageComponent,
   },
+
+
+  {
+    path: 'contact-us/enquiry-now',
+    component: ContactUsComponent
+  },
+
+  {
+    path: 'features',
+    component: FeatuesPageComponent
+  },
+
+
+
+  {
+    path: 'support-ticket',
+    component: DashboardLayoutComponent,
+    children: [
+      {
+        path: 'create-ticket',
+        component: CreateSupportTicketComponent,
+      },
+      {
+        path: 'view-ticket',
+        component: ViewSupportTicketComponent,
+      }
+    ],
+  },
+
+
+  {
+    path: 'join/join-fourdotz',
+    component : JoinFourdotzComponent
+  }
 ];

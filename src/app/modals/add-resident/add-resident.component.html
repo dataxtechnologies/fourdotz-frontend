@@ -81,9 +81,9 @@
                         Email is required
                     </div>
 
-                    <div *ngIf="ownerForm.get('email')?.touched && ownerForm.get('email')?.errors?.['email']"
+                   <div *ngIf="ownerForm.get('email')?.touched && ownerForm.get('email')?.invalid"
                         class="error-text">
-                        Enter a valid email
+                        Enter a valid email address
                     </div>
                 </div>
 
