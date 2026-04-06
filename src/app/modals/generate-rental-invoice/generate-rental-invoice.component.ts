@@ -95,12 +95,12 @@ export class GenerateRentalInvoiceComponent implements OnInit {
         next: (res: any) => {
           if (res?.success) {
             this.btnloading= false
-            this.Toast.success(res.message, 'Success');
+            this.Toast.success('Rental Invoice Generated Successfully', 'Success');
             this.OwnerService.triggerRentalGeneratedInvoice(res);
             this.closeModal();
           } else {
             this.btnloading= false
-            this.Toast.warning(res.message, 'Warning');
+            this.Toast.warning('Rental Invoice Generation Failed', 'Warning');
             // this.loginbtn = true;
           }
         },

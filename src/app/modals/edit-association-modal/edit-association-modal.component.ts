@@ -116,8 +116,8 @@ get selectedPropertyTypes(): string[] {
       next: (res: any) => {
         this.createButton = true;
         if (res?.success) {
+          this.toastr.success('Property Updated successfully', 'Success');
           this.AdminServices.triggerAdminAssociation(res);
-          this.toastr.success(res.message, 'Success');
           this.closeModal();
         } else {
           this.toastr.warning(res.message, 'Warning');

@@ -55,17 +55,17 @@ export class AddGateComponent implements OnInit {
         
         if (res?.success) {
           this.AssociationService.triggerGateCreate(res.data);
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Gate Added Successfully', 'Success');
           this.submitbtn = true;
           this.closeModal();
         } else {
           this.submitbtn = true;
-          this.Toast.warning(res.message, 'Warning');
+          this.Toast.warning('Gate Add Failed', 'Warning');
         }
       },
       error: (err: any) => {
         this.submitbtn = true;
-        this.Toast.error(err?.error?.message || 'Failed to add gate', 'Error');
+        this.Toast.error('Gate Add Failed', 'Error');
       }
     });
   }

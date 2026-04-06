@@ -47,11 +47,11 @@ export class ChangePaidStatusComponent {
         this.showprocessingbtn = false;
 
         if (res?.success) {
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Paid status updated successfully', 'Success');
           this.OwnerService.triggerRentalPaidStatus(res);
           this.closeModal();
         } else {
-          this.Toast.warning(res.message, 'Warning');
+          this.Toast.warning('Paid status update failed', 'Warning');
         }
       },
       error: (err: any) => {

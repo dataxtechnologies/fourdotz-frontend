@@ -65,14 +65,23 @@ export class BookAmenitiesByownerComponent {
   ngOnInit(): void {
 
     this.bookingForm = this.fb.group({
-      resource: ['', Validators.required],
-      name: [''],
-      slot: ['', Validators.required],
-      property: ['', Validators.required],
-      personName: [''],
-      personMobile: [''],
-      personAge: [''],
-    });
+  resource: ['', Validators.required],
+  name: ['', Validators.required], // email field
+  slot: ['', Validators.required],
+  property: ['', Validators.required],
+
+  personName: ['', Validators.required],
+
+  personMobile: [
+    '',
+    [
+      Validators.required,
+      Validators.pattern('^[6-9][0-9]{9}$') // ✅ starts 6-9 & 10 digits
+    ]
+  ],
+
+  personAge: ['', [Validators.required, Validators.pattern('^[0-9]{1,3}$')]],
+});
 
     // whenever resource value changes → auto clear slot
     this.bookingForm.get('resource')?.valueChanges.subscribe(() => {
@@ -110,23 +119,52 @@ export class BookAmenitiesByownerComponent {
 
   /* ---------------- RESOURCE LOAD ---------------- */
 
-  getallresourcesforOwner(data: any) {
-    this.apiService.getallresourcesforOwner<any>(data).subscribe({
-      next: (res: any) => {
-        if (res?.success) {
+getallresourcesforOwner(data: any) {
+  this.apiService.getallresourcesforOwner<any>(data).subscribe({
+    next: (res: any) => {
 
-          this.resourcesDetails = res.data;
-
-          // preload icons
-          this.resourcesDetails.forEach((r: any) => {
-            r.icon = this.getResourceIcon(r.name);
-          });
-
-          this.visibleResources = this.resourcesDetails.slice(0, this.visibleCount);
-        }
+      // ✅ 1. Check success
+      if (!res?.success) {
+        this.handleError(res?.message || 'Something went wrong');
+        return;
       }
-    });
-  }
+
+      // ✅ 2. Validate data type
+      if (!Array.isArray(res.data)) {
+        console.warn('Invalid data format:', res.data);
+
+        this.resourcesDetails = [];
+        this.visibleResources = [];
+        return;
+      }
+
+      // ✅ 3. Safe assignment
+      this.resourcesDetails = res.data.map((r: any) => ({
+        ...r,
+        icon: this.getResourceIcon(r.name)
+      }));
+
+      this.visibleResources = this.resourcesDetails.slice(0, this.visibleCount);
+    },
+
+    error: (err) => {
+      // ✅ 4. API error handling
+      console.error('API Error:', err);
+      this.handleError('Server error. Please try again');
+    }
+  });
+}
+
+handleError(message: string) {
+  this.resourcesDetails = [];
+  this.visibleResources = [];
+
+  // If using toastr
+  // this.toastr.error(message);
+
+  // Optional fallback
+  console.warn(message);
+}
 
   showMoreResources() {
     this.visibleCount += 4;
@@ -329,13 +367,19 @@ export class BookAmenitiesByownerComponent {
 
   submitBooking() {
 
-    this.savebtnloading = true;
-
-    if (!this.selectedSlotFull || !this.bookingForm.value.property) {
+    
+    if (this.bookingForm.invalid) {
+      this.bookingForm.markAllAsTouched(); // 🔥 show all errors
       this.savebtnloading = false;
       return;
     }
-
+    
+    
+    if (!this.selectedSlotFull || !this.bookingForm.value.property) {
+    this.savebtnloading = false;
+    return;
+  }
+  this.savebtnloading = true;
     const payload = {
       resource_id: this.bookingForm.value.resource,
 

@@ -1,0 +1,46 @@
+
+.whole-page-shell{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: auto;
+    flex-direction: column;
+}
+
+.image-shell img{
+    width: 300px;
+
+}
+
+.content-shell{
+    text-align: center;
+    width: 600px;
+}
+
+.content-shell h1{
+    font-size: 24px;
+    
+}
+
+.content-shell p{
+    font-size:18px;
+    
+}
+
+.strong-cont{
+    color: var(--primary-color2);
+}
+
+.supp-team{
+    background: var(--primary-color1);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 7px;
+    font-size: 16px;
+}
+
+.button-shell{
+    margin-top: 20px;
+}

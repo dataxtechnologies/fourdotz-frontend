@@ -185,7 +185,7 @@ GetBookingforResourcesbyId(data: any, hoa_id: any) {
         }
       },
       error: (err: any) => {
-            this.Toast.error(err.error.error.message, 'Failed');
+            this.Toast.error('Unable to open slot today. Try again another day', 'Failed');
           this.openslotloading = false;
         console.error('Fetch resource failed', err);
       }

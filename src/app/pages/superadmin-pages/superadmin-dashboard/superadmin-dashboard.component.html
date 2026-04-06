@@ -2,33 +2,35 @@
 
     <div class="parent">
         <div class="div1 bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
-            <div class="cont">
-                <span class="card-head-font medium-font">Total Associations</span>
-            </div>
-            <div class="flex flex-col mt-4">
-                <span class="card-font regular-font">{{ DashboardData?.hoa_total_count || 0}}</span>
+  <div class="cont">
+    <span class="card-head-font medium-font">Total Associations</span>
+    <!-- <i class="bx bx-buildings card-icon"></i> -->
+  </div>
 
-            </div>
-        </div>
+  <div class="flex flex-col mt-4">
+    <span class="card-font regular-font">{{ DashboardData?.hoa_total_count || 0}}</span>
+  </div>
+</div>
         <div class="div2 bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
-            <div class="flex items-center justify-between">
-                <span class="card-head-font medium-font">Number of Properties</span>
-            </div>
-            <div class="flex flex-col mt-4">
-                <span class="card-font regular-font">{{ DashboardData?.property_total_count || 0}}</span>
+  <div class="cont">
+    <span class="card-head-font medium-font">Number of Properties</span>
+    <!-- <i class="bx bx-home-alt card-icon"></i> -->
+  </div>
 
-            </div>
+  <div class="flex flex-col mt-4">
+    <span class="card-font regular-font">{{ DashboardData?.property_total_count || 0}}</span>
+  </div>
+</div>
+        <div class="div3 bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
+  <div class="cont">
+    <span class="card-head-font medium-font">Total Tenants</span>
+    <!-- <i class="bx bx-user card-icon"></i> -->
+  </div>
 
-        </div>
-        <div class="div3  bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between">
-            <div class="flex items-center justify-between">
-                <span class="card-head-font medium-font">Total Tenants</span>
-            </div>
-            <div class="flex flex-col mt-4">
-                <span class="card-font regular-font">{{ DashboardData?.tenant_total_count || 0}}</span>
-
-            </div>
-        </div>
+  <div class="flex flex-col mt-4">
+    <span class="card-font regular-font">{{ DashboardData?.tenant_total_count || 0}}</span>
+  </div>
+</div>
         <div class="div4 rounded-2xl shadow-md flex flex-col p-3 new-table-wrapper" >
             <div class="transaction-header12 d-flex justify-content-between align-items-start mb-3">
                 <h3>Associations</h3>

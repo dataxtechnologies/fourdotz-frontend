@@ -236,6 +236,10 @@ export class EnvurlService {
   public createNewSupportTicket = '/support/create_support'
   public UpdateTicketData = '/support/update_status'
 
+  // delete account 
+  public deleteAccount = '/auth/delete_user'
+  public deactiveassociation = '/hoa_admin/update_association_status'
+
 
 
   // static page Api

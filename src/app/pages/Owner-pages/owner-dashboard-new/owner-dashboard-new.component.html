@@ -1,0 +1,231 @@
+<!-- owner-dashboard-new.component.html -->
+<section>
+    <div class="dashboard-wrapper">
+        <div class="parent">
+
+            <!-- DIV1: Hero Area -->
+            <div class="div1">
+                <div class="hero-area">
+                    <div class="hero-stats">
+                        <div class="stat-block">
+                            <span class="stat-label">Maintenance ({{ currentMonthName }})</span>
+                            <span class="stat-value">{{ currentMonthMaintenanceTotal  | currency:'INR'}}</span>
+                        </div>
+                        <div class="stat-block">
+                            <span class="stat-label">Rental Income ({{ currentMonthNameRental }})</span>
+                            <span class="stat-value">{{ currentMonthRentalTotal | currency:'INR' }}</span>
+                        </div>
+                    </div>
+                    <img src="assets/images/owner-dashboard.png" alt="Modern House" class="house-img" />
+                    <div class="mini-cards-row">
+                        <div class="mini-card green-card">
+                            <div class="mini-card-header">
+                                <span class="mini-icon"><i class="bx bx-home-alt"></i></span>
+                                <span class="mini-label">Property Details</span>
+                            </div>
+                            <div class="property-value-div">
+                                <div class="mini-card-value"><i class="bx bx-home-alt"></i><span>{{
+                                        propertieslist2.property_no }}</span></div>
+                                <div class="mini-card-value"><i class="bx bx-apartment"></i><span>{{
+                                        propertieslist2.association_name }}</span></div>
+                                <div class="mini-card-value"><i class="bx bx-building"></i><span>{{
+                                        propertieslist2.property_type }}</span></div>
+                                <!-- <div class="mini-card-value"><i class="bx bx-credit-card"></i><span>{{ propertieslist2.maintenance_paid_by }}</span></div> -->
+                            </div>
+                        </div>
+                        <div class="mini-card blue-card">
+                            <div class="mini-card-header">
+                                <span class="mini-icon"><i class="bx bx-id-card"></i></span>
+                                <span class="mini-label">Resident Details</span>
+                            </div>
+
+                            <div class="property-value-div">
+
+                                <!-- Property No (common) -->
+                                <div class="mini-card-value">
+                                    <i class="bx bx-home-alt"></i>
+                                    <span>{{ propertieslist2.property_no }}</span>
+                                </div>
+
+                                <!-- ✅ IF TENANT -->
+                                <ng-container *ngIf="propertieslist2?.resident_type === 'tenant'; else ownerBlock">
+
+                                    <div class="mini-card-value">
+                                        <i class="bx bx-user"></i>
+                                        <span>{{ propertieslist2.tenant_name }}</span>
+                                    </div>
+
+                                    <div class="mini-card-value">
+                                        <i class="bx bx-phone"></i>
+                                        <span>{{ propertieslist2.tenant_mobile }}</span>
+                                    </div>
+
+                                    <div class="mini-card-value">
+                                        <i class="bx bx-home-alt-2"></i>
+                                        <span>Tenant</span>
+                                    </div>
+
+                                </ng-container>
+
+                                <!-- ✅ ELSE OWNER -->
+                                <ng-template #ownerBlock>
+
+                                    <div class="mini-card-value">
+                                        <i class="bx bx-user"></i>
+                                        <span>{{ propertieslist2.owner_name }}</span>
+                                    </div>
+
+                                    <div class="mini-card-value">
+                                        <i class="bx bx-phone"></i>
+                                        <span>{{ propertieslist2.owner_mobile }}</span>
+                                    </div>
+
+                                    <div class="mini-card-value">
+                                        <i class="bx bx-home-alt-2"></i>
+                                        <span>Owner</span>
+                                    </div>
+
+                                </ng-template>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIV2: Announcements -->
+            <div class="div2">
+                <div class="listing-board">
+
+                    <div class="listing-header">
+                        <span class="listing-title">Announcements</span>
+                    </div>
+
+                    <div class="listing-scroll-area">
+
+                        <!-- ✅ NO DATA -->
+                        <div *ngIf="latestAnnouncements.length === 0 && !loadingPosts" class="no-data">
+                            No Announcements Found
+                        </div>
+
+                        <!-- ✅ LOADING -->
+                        <div *ngIf="loadingPosts" class="no-data">
+                            Loading...
+                        </div>
+
+                        <!-- ✅ LIST -->
+                        <div class="listing-card" *ngFor="let post of latestAnnouncements">
+
+                            <!-- IMAGE / VIDEO -->
+                            <div class="listing-img-wrap" *ngIf="post.attachments.length > 0">
+
+                                <!-- IMAGE -->
+                                <img *ngIf="post.attachments[0].type === 'image'" [src]="post.attachments[0].url"
+                                    class="listing-img" alt="Announcement" />
+
+                                <!-- VIDEO -->
+                                <video *ngIf="post.attachments[0].type === 'video'" class="listing-img" controls>
+                                    <source [src]="post.attachments[0].url" type="video/mp4" />
+                                </video>
+
+                            </div>
+
+                            <!-- TEXT -->
+                            <div class="listing-info">
+                                <span class="listing-price">
+                                    {{ post.title }}
+                                </span>
+
+                                <div class="listing-name">
+                                    {{ post.summary }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIV3: Maintenance Payment List -->
+            <div class="div3">
+                <div class="finance-card">
+                    <h5 class="finance-title">Maintenance Payment</h5>
+                    <div class="finance-list">
+
+                        <div *ngIf="latestMaintenanceList.length === 0" class="no-data">
+                            No Maintenance Invoice Found
+                        </div>
+                        <div class="finance-item" *ngFor="let item of latestMaintenanceList">
+                            <div class="left">
+                                <div class="icon">🏠</div>
+                                <div class="item-info">
+                                    <span class="item-name medium-font">
+                                        {{ item.resident_name }}
+                                    </span>
+                                    <span class="item-sub regular-font">
+                                        {{ item.property_no }} · {{ item.association_name }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="right">
+                                <span class="amount medium-font">
+                                    ₹{{ item.total_amount }}
+                                </span>
+
+                                <button class="pay-btn regular-font" *ngIf="!item.payment_status" (click)="gotomaintenance()">
+                                    View
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- DIV4: Rental Invoice List -->
+            <div class="div4">
+                <div class="finance-card">
+                    <h5 class="finance-title">Rental Invoice</h5>
+                    <div class="finance-list">
+
+                        <!-- ✅ NO DATA -->
+                        <div *ngIf="latestRentalList.length === 0" class="no-data">
+                            No Rental Invoice Found
+                        </div>
+
+                        <!-- ✅ LIST -->
+                        <div class="finance-item" *ngFor="let item of latestRentalList">
+                            <div class="left">
+                                <div class="icon">📄</div>
+                                <div class="item-info">
+                                    <span class="item-name medium-font">
+                                        {{ item.tenant_name }}
+                                    </span>
+                                    <span class="item-sub regular-font">
+                                        {{ item.tenant_mobile }} · {{ item.property_no }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="right">
+                                <span class="amount medium-font">
+                                    ₹{{ item.total_amount }}
+                                </span>
+
+                                <button class="pay-btn regular-font" *ngIf="!item.payment_status" (click)="gotorental()">
+                                   View
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

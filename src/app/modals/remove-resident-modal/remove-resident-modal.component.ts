@@ -36,14 +36,14 @@ export class RemoveResidentModalComponent {
       next: (res: any) => {
         if (res?.success) {
           this.showprocessingbtn = false
-          this.Toast.success(res.message, 'Success')
+          this.Toast.success('Resident Removed Successfully', 'Success');
           // this.OwnerService.triggerVehicleAdd(res);
           this.AssociationService.triggerRemoveResident(res);
           this.closeModal();
         } else {
           this.showprocessingbtn = false
           this.closeModal();
-           this.Toast.warning(res.message, 'Warning')
+           this.Toast.warning('Resident Remove Failed', 'Warning')
           // this.loginbtn = true;
         }
       },

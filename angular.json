@@ -59,17 +59,20 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "fourdotz-frontend:build:production"
-            },
-            "development": {
-              "buildTarget": "fourdotz-frontend:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
-        },
+  "builder": "@angular-devkit/build-angular:dev-server",
+  "options": {
+    "poll": 2000
+  },
+  "configurations": {
+    "production": {
+      "buildTarget": "fourdotz-frontend:build:production"
+    },
+    "development": {
+      "buildTarget": "fourdotz-frontend:build:development"
+    }
+  },
+  "defaultConfiguration": "development"
+},
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
         },

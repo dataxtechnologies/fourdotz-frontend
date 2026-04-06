@@ -121,6 +121,10 @@ export class SigninPageNewComponent implements OnInit {
     });
   }
 
+  signupscreen(){
+    this.router.navigateByUrl('/join/join-fourdotz');
+  }
+
   // -----------------------------------------------------
   // SUBMIT LOGIN
   // -----------------------------------------------------

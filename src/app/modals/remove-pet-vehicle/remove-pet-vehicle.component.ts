@@ -101,14 +101,14 @@ export class RemovePetVehicleComponent {
         this.showprocessingbtn = false;
 
         if (res?.success) {
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Pet Removed successfully', 'Success');
 
           // Trigger correct refresh event
           this.AssociationService.triggerRemoveResident(res);
 
           this.closeModal();
         } else {
-          this.Toast.warning(res.message, 'Warning');
+          this.Toast.warning('Pet Removal Failed', 'Warning');
           this.closeModal();
         }
       },
@@ -116,7 +116,7 @@ export class RemovePetVehicleComponent {
       error: (err: any) => {
         this.showprocessingbtn = false;
         this.Toast.error(
-          err.error?.error?.message || 'Something went wrong',
+          err.error?.error?.message,
           'Failed'
         );
         this.closeModal();

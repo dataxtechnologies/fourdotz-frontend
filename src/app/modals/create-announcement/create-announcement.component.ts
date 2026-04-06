@@ -178,10 +178,10 @@ export class CreateAnnouncementComponent {
 
         if (res?.success) {
           this.AssociationSer.triggerAnnouncementCreated(res);
-          this.toast.success(res.message, 'Success');
+          this.toast.success('Announcement created successfully', 'Success');
           this.closeModal();
         } else {
-          this.toast.warning(res.message || 'Something went wrong.', 'Warning');
+          this.toast.warning('Announcement creation failed', 'Warning');
         }
       },
       error: (err: any) => {

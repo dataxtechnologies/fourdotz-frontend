@@ -246,7 +246,6 @@
 
 /* ─── Heading ────────────────────────────────────────────────────────────────── */
 .heading {
-    font-family: 'Syne', sans-serif;
     font-size: 30px;
     font-weight: 800;
     line-height: 1.2;
@@ -430,7 +429,6 @@
     border-radius: 14px;
     background: linear-gradient(135deg, var(--primary-color1), var(--primary-color2));
     color: #ffffff;
-    font-family: 'Syne', sans-serif;
     font-size: 15px;
     font-weight: 700;
     letter-spacing: 0.02em;

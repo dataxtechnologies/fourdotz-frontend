@@ -64,19 +64,19 @@ export class AddGateKeeperComponent implements OnInit {
       next: (res: any) => {
         if (res?.success) {
           this.submitbtn = true;
+          this.Toast.success('Gate Keeper Added Successfully', 'Success');
           this.associationService.triggerGatekeeperAdded(res.data);
-          this.Toast.success(res.message, 'Success');
           this.closeModal();
         } else {
           this.submitbtn = true;
-          this.Toast.warning(res.message, 'Warning');
+          this.Toast.warning('Gate Keeper Add Failed', 'Warning');
         }
       },
       error: (err: any) => {
         this.submitbtn = true;
         console.log('err?.error?.message', err?.error);
         
-        this.Toast.error(err?.error?.error.message || 'Failed to add Gate Keeper', 'Error');
+        this.Toast.error('Failed to add Gate Keeper', 'Error');
       }
     });
   }

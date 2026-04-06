@@ -117,12 +117,12 @@ export class RequestPayoutAssociationComponent implements OnInit {
       next: (res: any) => {
         this.loading = false;
         if (res?.success) {
-          this.Toast.success(res?.message, 'Success');
+          this.Toast.success('Payout Request Created Successfully', 'Success');
           this.Association.triggerPayoutRequestCreate(res);
 
           this.close();
         }else{
-          this.Toast.warning(res?.message, 'Warning');
+          this.Toast.warning('Payout Request Creation Failed', 'Warning');
         }
       },
       error: (err : any) => {

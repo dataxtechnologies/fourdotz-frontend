@@ -100,17 +100,17 @@ onDateSelected(event: Event): void {
     this.apiService.ApproveRequest<any>(payload).subscribe({
       next: (res) => {
         if (res?.success) {
-          this.toast.success(res.message, 'Success');
+          this.toast.success('Request Approved Successfully', 'Success');
           this.associationService.triggerresidentrequestapproval(res);
           this.submitbtn = true;
           this.closeModal();
         } else {
-          this.toast.warning(res.message, 'Warning');
+          this.toast.warning('Request Approval Failed', 'Warning');
           this.submitbtn = true;
         }
       },
       error: (err) => {
-        this.toast.error(err.error?.error?.message || 'Something went wrong', 'Failed');
+        this.toast.error(err.error?.error?.message, 'Failed');
         this.submitbtn = true;
       }
     });

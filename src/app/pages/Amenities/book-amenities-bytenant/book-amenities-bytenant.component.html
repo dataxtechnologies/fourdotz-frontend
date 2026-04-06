@@ -168,16 +168,16 @@
                                     maxlength="10" formControlName="personMobile" />
 
                                 <div *ngIf="bookingForm.get('personMobile')?.touched && bookingForm.get('personMobile')?.invalid"
-                                    class="error-text">
+     class="error-text">
 
-                                    <span *ngIf="bookingForm.get('personMobile')?.errors?.['required']">
-                                        Mobile number is required
-                                    </span>
+  <span *ngIf="bookingForm.get('personMobile')?.errors?.['required']">
+    Mobile number is required
+  </span>
 
-                                    <span *ngIf="bookingForm.get('personMobile')?.errors?.['pattern']">
-                                        Enter valid 10-digit mobile number starting from 6-9
-                                    </span>
-                                </div>
+  <span *ngIf="bookingForm.get('personMobile')?.errors?.['pattern']">
+    Enter valid 10-digit mobile number starting from 6-9
+  </span>
+</div>
                             </div>
 
                             <div>

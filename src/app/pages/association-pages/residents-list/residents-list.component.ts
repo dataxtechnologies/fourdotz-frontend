@@ -92,12 +92,12 @@ export class ResidentsListComponent {
       next: (res: any) => {
         if (res?.success) {
           index.spinloading = false;
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Invite Mail sent successfully', 'Success');
           this.getpropertiesdata();
           this.loadingIndexMap[index] = false;
         } else {
           index.spinloading = false;
-          this.Toast.error(res.message, 'Failed');
+          this.Toast.error('Failed to send Invite Mail', 'Failed');
           this.loadingIndexMap[index] = false;
         }
       },

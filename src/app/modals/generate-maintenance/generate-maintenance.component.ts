@@ -251,11 +251,11 @@ export class GenerateMaintenanceComponent implements OnInit {
       next: (res: any) => {
         this.btnloading = false;
         if (res?.success) {
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Maintenance Invoice Generated Successfully', 'Success');
           this.AssociationService.triggerMaintenanceInv(res);
           this.closeModal();
         } else {
-          this.Toast.warning(res.message, 'Warning');
+          this.Toast.warning('Maintenance Invoice Generation Failed', 'Warning');
         }
       },
       error: (err: any) => {

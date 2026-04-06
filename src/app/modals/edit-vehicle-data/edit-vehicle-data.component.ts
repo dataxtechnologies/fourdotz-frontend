@@ -136,13 +136,13 @@ export class EditVehicleDataComponent implements OnInit {
       next: (res: any) => {
         if (res?.success) {
           this.submitbtn = true;
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Vehicle Updated Successfully', 'Success');
           this.OwnerService.triggerVehicleAdd(res);
           this.AssociationService.triggervehicleAdd(res);
           this.closeModal();
         } else {
           this.submitbtn = true;
-          this.Toast.warning(res.message, 'Warning');
+          this.Toast.warning('Vehicle Update Failed', 'Warning');
         }
       },
       error: (err: any) => {

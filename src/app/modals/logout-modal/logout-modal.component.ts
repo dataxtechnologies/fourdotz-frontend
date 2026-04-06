@@ -31,9 +31,9 @@ this.apiService.logoutApi<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
           this.clearSessionAndRedirect(
-            res.message || 'Logged out successfully'
+            'Logged out successfully'
           );
-          this.Toast.success(res.message);
+          this.Toast.success('Logged out successfully', 'Success');
           this.showprocessingbtn = false
           this.closeModal()
         } else {

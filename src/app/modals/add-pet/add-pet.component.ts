@@ -68,17 +68,17 @@ export class AddPetComponent implements OnInit {
     this.apiService.Addpet<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
-          this.Toast.success(res.message, 'Success')
+          this.Toast.success('Pet Added Successfully', 'Success');
           this.OwnerService.triggerPetAdd(res);
           this.AssociationService.triggerAssociationpet(res);
           this.closeModal();
         } else {
-           this.Toast.warning(res.message, 'Warning')
+           this.Toast.warning('Pet Add Failed', 'Warning');
           // this.loginbtn = true;
         }
       },
       error: (err: any) => {
-         this.Toast.error(err.error.error.message, 'Failed')
+         this.Toast.error('Pet Add Failed', 'Error');
         //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },

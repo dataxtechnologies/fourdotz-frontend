@@ -32,4 +32,12 @@ export class AdmindataService {
   triggerAdminAdSpaceDelete(addelete: any): void {
     this.AdminadSpaceDeleteSubject.next(addelete);
   }
+
+
+  private AdminDeactiveAssociationSubject = new BehaviorSubject<any>(null);
+  AdminDeactiveAssociationStatus$ = this.AdminDeactiveAssociationSubject.asObservable();
+
+  triggerAdminDeactiveAssociation(adddeactiveassociation: any): void {
+    this.AdminDeactiveAssociationSubject.next(adddeactiveassociation);
+  }
 }

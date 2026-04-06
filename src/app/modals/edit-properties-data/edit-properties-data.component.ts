@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { ApiserviceService } from '../../services/api/apiservice.service';
 import { ModalService } from 'ngx-modal-ease';
 import { AssociationServiceService } from '../../services/association/association-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-properties-data',
@@ -39,7 +40,8 @@ export class EditPropertiesDataComponent implements OnInit {
     private apiService: ApiserviceService,
     private fb: FormBuilder,
     private Modal: ModalService,
-    private AssociationService: AssociationServiceService
+    private AssociationService: AssociationServiceService,
+    private Toast: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -172,13 +174,16 @@ export class EditPropertiesDataComponent implements OnInit {
       next: (res: any) => {
         this.submitBtn = true;
         if (res?.success) {
+          this.Toast.success('Property Updated Successfully', 'Success');
           this.AssociationService.triggerAdminAssociation(res)
           this.closeModal();
         } else {
+          this.Toast.warning('Property Update Failed', 'Warning');
           //console.warn(res?.message || 'Something went wrong.');
         }
       },
       error: (err: any) => {
+        this.Toast.error('Property Update Failed', 'Error');
         this.submitBtn = true;
         //console.error('Error updating property:', err);
       },

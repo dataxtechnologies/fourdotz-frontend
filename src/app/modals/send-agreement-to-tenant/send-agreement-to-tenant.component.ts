@@ -128,16 +128,16 @@ onSearchChange(event: Event) {
       next: (res: any) => {
         this.submitLoading = false;
         if (res?.success) {
-          this.toast.success(res.message);
+          this.toast.success('Agreement Sent Successfully', 'Success');
           this.modal.close();
           this.router.navigateByUrl('/agreement/owner/list-created-agreement')
         } else {
-          this.toast.warning(res.message || 'Failed');
+          this.toast.warning('Agreement Send Failed', 'Warning');
         }
       },
       error: () => {
         this.submitLoading = false;
-        this.toast.error('Failed to send agreement');
+        this.toast.error('Failed to send agreement', 'Failed');
       },
     });
   }

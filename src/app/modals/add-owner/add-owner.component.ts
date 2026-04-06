@@ -124,18 +124,18 @@ ngOnInit(): void {
       next: (res: any) => {
         if (res?.success) {
           this.submitbtn = true;
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Owner Added Successfully', 'Success');
           this.AssociationService.triggerAssociationOwner(res);
           this.closeModal();
         } else {
           this.submitbtn = true;
-          this.Toast.warning(res.message, 'Warning');
+          this.Toast.warning('Owner Add Failed', 'Warning');
           // this.loginbtn = true;
         }
       },
       error: (err: any) => {
         this.submitbtn = true;
-        this.Toast.error(err.error.error.message, 'Failed');
+        this.Toast.error('Owner Add Failed', 'Error');
         //console.error('Login failed:', err.error.error.data);
         // alert(err.message || 'Login failed, please try again.');
       },

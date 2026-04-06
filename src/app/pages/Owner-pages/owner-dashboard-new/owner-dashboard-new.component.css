@@ -1,0 +1,685 @@
+/* owner-dashboard-new.component.css */
+
+/* ─── SECTION WRAPPER ─── */
+section {
+    min-height: 100vh;
+    display: flex;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.dashboard-wrapper {
+    border-radius: 7px;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ─── MAIN GRID ─── */
+.parent {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 10px;
+    height: calc(100vh - 48px);
+}
+
+.div1 {
+    grid-column: span 4 / span 4;
+    grid-row: span 3 / span 3;
+    min-height: 0;
+    height: 280px;
+}
+
+.div2 {
+    grid-column: span 2 / span 2;
+    grid-row: span 6 / span 6;
+    grid-column-start: 5;
+    min-height: 0;
+}
+
+.div3 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-row-start: 4;
+    min-height: 0;
+    margin-top: -80px;
+}
+
+.div4 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-column-start: 3;
+    grid-row-start: 4;
+    min-height: 0;
+    margin-top: -80px;
+}
+
+/* ─── DIV1: HERO AREA ─── */
+.hero-area {
+    background: #fff;
+    border-radius: 7px;
+    height: 100%;
+    padding: 22px 24px 16px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.stat-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #000;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.stat-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+    line-height: 1.1;
+}
+
+.house-img {
+    position: absolute;
+    right: -15px;
+    top: 0;
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    z-index: 1;
+    border-radius: 12px;
+}
+
+.mini-cards-row {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+    width: 400px;
+}
+
+.mini-card {
+    flex: 1;
+    border-radius: 7px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.green-card { background: #e8f5e9; }
+.blue-card  { background: #e3f2fd; }
+
+.mini-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mini-icon { font-size: 16px; margin-top: 4px; }
+.mini-icon i { font-size: 20px; color: #1a1a2e; }
+
+.mini-label {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.property-value-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.mini-card-value {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #1a1a2e;
+}
+
+.mini-card-value i { font-size: 16px; margin-bottom: 3px; }
+
+/* ─── DIV2: ANNOUNCEMENTS ─── */
+.listing-board {
+    background: #fff;
+    border-radius: 7px;
+    height: 100%;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.listing-header { flex-shrink: 0; }
+
+.listing-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.listing-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 2px;
+}
+
+.listing-scroll-area::-webkit-scrollbar { width: 4px; }
+.listing-scroll-area::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
+.listing-scroll-area::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+.listing-card {
+    background: #fff;
+    border-radius: 7px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px #00000067;
+    flex-shrink: 0;
+}
+
+.listing-img-wrap {
+    width: 100%;
+    height: 110px;
+    overflow: hidden;
+}
+
+.listing-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.listing-info {
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.listing-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.listing-name {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* ─── DIV3 & DIV4: FINANCE CARDS ─── */
+.finance-card {
+    background: #fff;
+    border-radius: 7px;
+    padding: 14px 14px 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+}
+
+.finance-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a2e;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.finance-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+}
+
+.finance-list::-webkit-scrollbar { width: 3px; }
+.finance-list::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+
+.finance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f7f9fb;
+    padding: 8px 10px;
+    border-radius: 10px;
+    /* FIX: prevent row collapse that hides pay button */
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+.finance-item:hover { background: #eef3f7; }
+
+/* FIX: .left shrinks so .right (pay btn) is always fully visible */
+.left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    flex-shrink: 0;
+}
+
+/* FIX: overflow hidden here so ellipsis works without pushing .right out */
+.item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.item-name {
+    font-size: 15px;
+    color: #1a1a2e;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-sub {
+    font-size: 13px;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* FIX: never shrink — pay button always visible */
+.right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: 6px;
+}
+
+.amount {
+    font-size: 16px;
+    color: #1a1a2e;
+    white-space: nowrap;
+}
+
+.pay-btn {
+    background: #22c55e;
+    border: none;
+    color: #fff;
+    font-size: 13px;
+    padding: 4px 9px;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+
+.pay-btn:hover { background: #16a34a; }
+
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   1600 → 1440 → 1366 → 1280 → 1199 (13" laptop tight)
+   → 1023 (tablet land, 2-col) → 767 (tablet portrait, 1-col)
+   → 599 (large mobile) → 479 (small mobile) → 380 (tiny)
+════════════════════════════════════════════════════════ */
+
+/* ─── 1600px ─── */
+@media (max-width: 1600px) {
+    .stat-value     { font-size: 21px; }
+    .mini-cards-row { width: 380px; }
+    .item-name      { font-size: 14px; }
+    .amount         { font-size: 15px; }
+}
+
+/* ─── 1440px ─── */
+@media (max-width: 1440px) {
+    section         { padding: 20px; }
+    .parent         { height: calc(100vh - 40px); gap: 10px; }
+    .div1           { height: 275px; }
+    .div3, .div4    { margin-top: -76px; }
+    .stat-label     { font-size: 12px; }
+    .stat-value     { font-size: 20px; }
+    .mini-cards-row { width: 355px; }
+    .mini-label     { font-size: 13px; }
+    .mini-card-value{ font-size: 13px; }
+    .mini-card      { padding: 12px 14px; }
+    .finance-title  { font-size: 17px; }
+    .item-name      { font-size: 14px; }
+    .item-sub       { font-size: 12px; }
+    .amount         { font-size: 14px; }
+    .pay-btn        { font-size: 12px; padding: 4px 8px; }
+    .listing-img-wrap { height: 100px; }
+}
+
+/* ─── 1366px (13–14" laptop) ─── */
+@media (max-width: 1366px) {
+    section         { padding: 16px; }
+    .parent         { height: calc(100vh - 32px); gap: 9px; }
+    .div1           { height: 260px; }
+    .div3, .div4    { margin-top: -68px; }
+    .hero-area      { padding: 18px 20px 14px; }
+    .stat-label     { font-size: 11px; }
+    .stat-value     { font-size: 19px; }
+    .mini-cards-row { width: 320px; }
+    .mini-label     { font-size: 12px; }
+    .mini-card-value{ font-size: 12px; }
+    .mini-card      { padding: 10px 12px; gap: 6px; }
+    .finance-card   { padding: 12px 12px 8px; gap: 6px; }
+    .finance-title  { font-size: 16px; }
+    .finance-item   { padding: 7px 9px; }
+    .item-name      { font-size: 13px; }
+    .item-sub       { font-size: 11px; }
+    .amount         { font-size: 13px; }
+    .pay-btn        { font-size: 11px; padding: 4px 8px; }
+    .icon           { width: 28px; height: 28px; font-size: 13px; }
+    .listing-img-wrap { height: 92px; }
+    .listing-price  { font-size: 13px; }
+    .listing-name   { font-size: 11px; }
+    .listing-board  { padding: 14px 12px; gap: 14px; }
+}
+
+/* ─── 1280px ─── */
+@media (max-width: 1280px) {
+    .div1           { height: 250px; }
+    .div3, .div4    { margin-top: -64px; }
+    .mini-cards-row { width: 300px; }
+    .finance-title  { font-size: 15px; }
+    .amount         { font-size: 13px; }
+    .pay-btn        { font-size: 11px; padding: 3px 8px; }
+}
+
+/* ─── 1199px (13" laptop narrow) ─── */
+@media (max-width: 1199px) {
+    section         { padding: 12px; }
+    .parent         { height: calc(100vh - 24px); gap: 8px; }
+    .div1           { height: 240px; }
+    .div3, .div4    { margin-top: -58px; }
+    .hero-area      { padding: 14px 16px 12px; }
+    .stat-label     { font-size: 10px; }
+    .stat-value     { font-size: 17px; }
+    .mini-cards-row { width: 280px; }
+    .mini-label     { font-size: 11px; }
+    .mini-card-value{ font-size: 11px; }
+    .mini-card      { padding: 8px 10px; gap: 5px; }
+    .mini-icon i    { font-size: 16px; }
+    .listing-board  { padding: 12px 10px; gap: 10px; }
+    .listing-img-wrap { height: 82px; }
+    .listing-price  { font-size: 12px; }
+    .listing-name   { font-size: 10px; }
+    .finance-card   { padding: 10px 10px 8px; gap: 5px; }
+    .finance-title  { font-size: 14px; }
+    .finance-item   { padding: 6px 8px; border-radius: 8px; }
+    .item-name      { font-size: 12px; }
+    .item-sub       { font-size: 10px; }
+    .amount         { font-size: 12px; }
+    .pay-btn        { font-size: 10px; padding: 3px 7px; border-radius: 7px; }
+    .icon           { width: 26px; height: 26px; font-size: 12px; }
+    .right          { gap: 5px; margin-left: 4px; }
+    .left           { gap: 8px; }
+}
+
+/* ─── 1023px — Tablet Landscape: 2-col stacked ─── */
+@media (max-width: 1023px) {
+    section {
+        padding: 12px;
+        min-height: 100vh;
+        height: auto;
+    }
+    .parent {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        height: auto;
+        gap: 12px;
+    }
+    .div1 { grid-column: 1 / -1; grid-row: auto; height: 260px; margin-top: 0; }
+    .div2 { grid-column: 1 / -1; grid-row: auto; grid-column-start: unset; min-height: unset; height: auto; }
+    .div3 { grid-column: 1 / 2;  grid-row: auto; grid-row-start: unset; margin-top: 0; min-height: unset; height: auto; }
+    .div4 { grid-column: 2 / 3;  grid-row: auto; grid-row-start: unset; grid-column-start: unset; margin-top: 0; min-height: unset; height: auto; }
+
+    /* Announcements: horizontal scroll strip on tablet landscape */
+    .listing-board  { height: auto; gap: 12px; padding: 16px 14px; }
+    .listing-scroll-area {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        padding-bottom: 6px;
+        padding-right: 0;
+    }
+    .listing-scroll-area::-webkit-scrollbar { height: 4px; width: unset; }
+    .listing-card   { min-width: 200px; max-width: 200px; }
+    .listing-img-wrap { height: 95px; }
+
+    .finance-card   { height: auto; min-height: 0; }
+    .finance-list   { overflow-y: visible; flex: unset; }
+
+    .stat-value     { font-size: 22px; }
+    .stat-label     { font-size: 12px; }
+    .mini-cards-row { width: 370px; }
+    .finance-title  { font-size: 17px; }
+    .item-name      { font-size: 14px; }
+    .item-sub       { font-size: 12px; }
+    .amount         { font-size: 15px; }
+    .pay-btn        { font-size: 13px; padding: 4px 9px; }
+    .icon           { width: 30px; height: 30px; font-size: 14px; }
+    .right          { gap: 8px; margin-left: 6px; }
+    .left           { gap: 10px; }
+}
+
+/* ─── 767px — Tablet Portrait: single column ─── */
+@media (max-width: 767px) {
+    section         { padding: 10px; height: auto; min-height: 100vh; }
+    .parent {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+        gap: 10px;
+    }
+    .div1, .div2, .div3, .div4 { grid-column: 1 / -1; grid-row: auto; }
+    .div1 { height: 250px; }
+
+    /* Announcements: back to VERTICAL on single-column mobile/tablet */
+    .listing-board  { height: auto; padding: 14px 12px; gap: 12px; overflow: hidden; }
+    .listing-scroll-area {
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+        flex-wrap: nowrap;
+        max-height: 340px;
+        padding-right: 2px;
+        padding-bottom: 0;
+    }
+    .listing-scroll-area::-webkit-scrollbar { width: 4px; height: unset; }
+    /* Full-width cards in single column */
+    .listing-card   { min-width: unset; max-width: unset; width: 100%; }
+    .listing-img-wrap { height: 130px; }
+
+    .finance-card   { height: auto; padding: 12px 12px 10px; }
+    .finance-list   { overflow-y: visible; flex: unset; }
+
+    .hero-area      { padding: 18px 20px 14px; }
+    .hero-stats     { gap: 24px; }
+    .stat-label     { font-size: 11px; }
+    .stat-value     { font-size: 20px; }
+    .mini-cards-row { width: 100%; max-width: 420px; }
+    .mini-label     { font-size: 13px; }
+    .mini-card-value{ font-size: 13px; }
+    .finance-title  { font-size: 16px; }
+    .item-name      { font-size: 14px; }
+    .item-sub       { font-size: 12px; }
+    .amount         { font-size: 14px; }
+    .pay-btn        { font-size: 13px; padding: 4px 10px; }
+    .right          { gap: 8px; margin-left: 6px; }
+}
+
+/* ─── 599px — Large Mobile ─── */
+@media (max-width: 599px) {
+    section         { padding: 8px; }
+    .div1           { height: 225px; }
+    .hero-area      { padding: 14px 14px 12px; }
+    .hero-stats     { gap: 18px; }
+    .stat-label     { font-size: 10px; }
+    .stat-value     { font-size: 18px; }
+    .house-img      { right: -20px; height: 85%; top: auto; bottom: 0; }
+    .mini-cards-row { width: 100%; gap: 8px; }
+    .mini-card      { padding: 10px 12px; gap: 6px; }
+    .mini-label     { font-size: 12px; }
+    .mini-card-value{ font-size: 12px; }
+    .mini-icon i    { font-size: 16px; }
+    .listing-board  { padding: 12px 10px; gap: 10px; }
+    .listing-scroll-area { max-height: 300px; }
+    .listing-img-wrap { height: 110px; }
+    .listing-price  { font-size: 13px; }
+    .listing-name   { font-size: 11px; }
+    .finance-card   { padding: 12px 12px 8px; }
+    .finance-title  { font-size: 15px; }
+    .finance-item   { padding: 7px 8px; }
+    .item-name      { font-size: 13px; }
+    .item-sub       { font-size: 11px; }
+    .amount         { font-size: 13px; }
+    .pay-btn        { font-size: 11px; padding: 4px 8px; }
+    .icon           { width: 28px; height: 28px; font-size: 13px; }
+    .right          { gap: 6px; margin-left: 4px; }
+    .left           { gap: 8px; }
+}
+
+/* ─── 479px — Small Mobile ─── */
+@media (max-width: 479px) {
+    section         { padding: 6px; }
+    .div1           { height: 210px; }
+    .hero-area      { padding: 12px 12px 10px; }
+    .hero-stats     { gap: 14px; flex-wrap: wrap; }
+    .stat-label     { font-size: 9px; }
+    .stat-value     { font-size: 16px; }
+    .house-img      { opacity: 0.35; }
+    .mini-cards-row { width: 100%; flex-direction: column; gap: 8px; }
+    .mini-card      { width: 100%; padding: 10px 12px; }
+    .mini-label     { font-size: 12px; }
+    .mini-card-value{ font-size: 12px; }
+    .listing-board  { padding: 10px 8px; }
+    .listing-scroll-area { max-height: 280px; }
+    .listing-img-wrap { height: 100px; }
+    .listing-price  { font-size: 12px; }
+    .listing-name   { font-size: 10px; }
+    .finance-card   { padding: 10px 10px 8px; }
+    .finance-title  { font-size: 14px; }
+    .finance-item   { padding: 7px 8px; }
+    .item-name      { font-size: 12px; }
+    .item-sub       { font-size: 10px; }
+    .amount         { font-size: 12px; }
+    .pay-btn        { font-size: 10px; padding: 3px 7px; border-radius: 7px; }
+    .icon           { width: 26px; height: 26px; font-size: 12px; }
+    .right          { gap: 5px; margin-left: 4px; }
+    .left           { gap: 7px; }
+}
+
+/* ─── 380px — Tiny Mobile ─── */
+@media (max-width: 380px) {
+    section         { padding: 4px; }
+    .div1           { height: 195px; }
+    .hero-area      { padding: 10px 10px 8px; }
+    .hero-stats     { gap: 10px; }
+    .stat-label     { font-size: 8px; }
+    .stat-value     { font-size: 15px; }
+    .mini-cards-row { gap: 6px; }
+    .mini-card      { padding: 8px 10px; gap: 5px; }
+    .mini-label     { font-size: 11px; }
+    .mini-card-value{ font-size: 11px; }
+    .mini-icon i    { font-size: 14px; }
+    .listing-board  { padding: 8px 8px; }
+    .listing-scroll-area { max-height: 260px; }
+    .listing-img-wrap { height: 90px; }
+    .listing-price  { font-size: 11px; }
+    .listing-name   { font-size: 10px; }
+    .finance-card   { padding: 8px 8px 6px; }
+    .finance-title  { font-size: 13px; }
+    .finance-item   { padding: 6px 7px; border-radius: 8px; }
+    .item-name      { font-size: 11px; }
+    .item-sub       { font-size: 10px; }
+    .amount         { font-size: 11px; }
+    .pay-btn        { font-size: 9px; padding: 3px 6px; border-radius: 6px; }
+    .icon           { width: 24px; height: 24px; font-size: 11px; }
+    .right          { gap: 4px; margin-left: 3px; }
+    .left           { gap: 6px; }
+}
+
+
+
+
+.no-data {
+  text-align: center;
+  color: #999;
+  padding: 20px;
+  font-size: 14px;
+}
+
+video.listing-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+
+
+.paid-label {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.pay-btn {
+  background: var(--primary-color1);
+  color: #fff;
+  border: none;
+  padding: 3px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+.no-data {
+  text-align: center;
+  color: #999;
+  padding: 20px;
+  font-size: 14px;
+}

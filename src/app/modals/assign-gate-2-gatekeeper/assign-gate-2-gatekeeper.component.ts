@@ -82,12 +82,12 @@ export class AssignGate2GatekeeperComponent implements OnInit {
         
         if (res?.success) {
           this.showprocessingbtn = false;
+          this.Toast.success('Gate Keeper Assigned Successfully', 'Success');
           this.AssociationService.triggerGatekeeperAssigned(res.data);
-          this.Toast.success(res.message, 'Success');
           this.closeModal();
         } else {
           this.showprocessingbtn = false;
-          this.Toast.warning(res.message, 'Warning');
+          this.Toast.warning('Gate Keeper Assigned Failed', 'Warning');
         }
       },
 

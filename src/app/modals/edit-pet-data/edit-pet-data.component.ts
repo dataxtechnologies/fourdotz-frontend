@@ -107,7 +107,7 @@ export class EditPetDataComponent implements OnInit {
     this.apiService.Addpet<any>(payload).subscribe({
        next: (res: any) => {
         if (res?.success) {
-          this.Toast.success(res.message, 'Success')
+          this.Toast.success('Pet Updated Successfully', 'Success');
         this.OwnerService.triggerPetAdd(res);
           this.AssociationService.triggerAssociationpet(res);
           this.ResidentService.TriggerPetServiceinResident(res);
@@ -116,7 +116,7 @@ export class EditPetDataComponent implements OnInit {
           
           this.closeModal();
         } else {
-           this.Toast.warning(res.message, 'Warning')
+           this.Toast.warning('Pet Update Failed', 'Warning');
           // this.loginbtn = true;
         }
       },

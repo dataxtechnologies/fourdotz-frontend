@@ -7,6 +7,8 @@ import { TableService } from '../../../services/tableservice.service';
 import { EditAssociationModalComponent } from '../../../modals/edit-association-modal/edit-association-modal.component';
 import { ModalService } from 'ngx-modal-ease';
 import { AdmindataService } from '../../../services/adminservice/admindata.service';
+import { DeactiveModalComponent } from '../../../modals/deactive-modal/deactive-modal.component';
+import { ActivateAssociationModalComponent } from '../../../modals/activate-association-modal/activate-association-modal.component';
 
 @Component({
   selector: 'app-view-association',
@@ -55,9 +57,49 @@ export class ViewAssociationComponent {
       }
     });
 
+    this.AdminServices.AdminDeactiveAssociationStatus$.subscribe((adddeactiveassociation) => {
+      if (adddeactiveassociation) {
+        this.getAssociationList(this.AssociationId);
+      }
+    });
+
     this.getAssociationList(this.AssociationId);
     this.getpropertybyAssociation(this.AssociationId);
     this.AmountforAssociationinSA(this.AssociationId);
+  }
+
+
+  deactivateAssociation(data : any){
+    this.ModalService.open(DeactiveModalComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        associationID: data,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
+  }
+  activateAssociation(data : any){
+    this.ModalService.open(ActivateAssociationModalComponent, {
+      modal: {
+        enter: 'enter-going-down 0.3s ease-out',
+        leave: 'fade-out 0.5s',
+      },
+      overlay: { leave: 'fade-out 0.5s' },
+      data: {
+        associationID: data,
+      },
+      actions: {
+        click: false,
+        escape: false,
+      },
+    });
   }
 
   goback() {

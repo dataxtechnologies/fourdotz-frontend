@@ -161,18 +161,18 @@ onDateSelected(event: Event): void {
       next: (res: any) => {
         if (res?.success) {
           this.submitbtnloading = false;
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Owner Added Successfully', 'Success');
           this.AssociationService.triggerAssociationOwner(res);
           this.AssociationService.triggerAdminAssociation(res);
           this.closeModal();
         } else {
           this.submitbtnloading = false;
-          this.Toast.warning(res.message, 'Warning');
+          this.Toast.warning('Owner Add Failed', 'Warning');
         }
       },
       error: (err: any) => {
         this.submitbtnloading = false;
-        this.Toast.error(err.error.error.message, 'Failed');
+        this.Toast.error('Owner Add Failed', 'Error');
         //console.error('Request failed:', err);
       },
     });

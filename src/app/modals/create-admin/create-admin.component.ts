@@ -52,12 +52,12 @@ export class CreateAdminComponent {
     this.apiService.CreateServiceAdmin<any>(payload).subscribe({
       next: (res) => {
         if (res?.success) {
-          this.toast.success(res.message, 'Success');
+          this.toast.success('Admin Created Successfully', 'Success');
           this.AssociationService.triggerCreateAdmin(res);
           this.submitbtn = true;
           this.closeModal();
         } else {
-          this.toast.warning(res.message, 'Warning');
+          this.toast.warning('Admin Create Failed', 'Warning');
           this.submitbtn = true;
         }
       },

@@ -126,13 +126,13 @@ export class AddVehicleComponent implements OnInit {
       next: (res: any) => {
         if (res?.success) {
           this.submitbtn = true;
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Vehicle Added Successfully', 'Success');
           this.OwnerService.triggerVehicleAdd(res);
           this.AssociationService.triggervehicleAdd(res);
           this.closeModal();
         } else {
           this.submitbtn = true;
-          this.Toast.warning(res.message, 'Warning');
+          this.Toast.warning('Vehicle Add Failed', 'Warning');
         }
       },
       error: (err: any) => {

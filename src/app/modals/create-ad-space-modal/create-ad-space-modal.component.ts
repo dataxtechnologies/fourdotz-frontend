@@ -135,16 +135,16 @@ removeImage(index: number) {
         this.showprocessingbtn = false;
 
         if (res?.success) {
-          this.toast.success(res.message, 'Success');
+          this.toast.success('Ad created successfully', 'Success');
           this.AdminService.triggerAdServiceCreated(res);
           this.closeModal();
         } else {
-          this.toast.warning(res.message || 'Failed to create ad.');
+          this.toast.warning('Ad creation failed', 'Warning');
         }
       },
       error: (err: any) => {
         this.showprocessingbtn = false;
-        this.toast.error('Something went wrong', 'Error');
+        this.toast.error('Ad creation failed', 'Error');
       },
     });
   }

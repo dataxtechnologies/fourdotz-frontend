@@ -141,20 +141,20 @@ export class AddSignatureModalComponent {
     this.apiService.SendOTPforVerifySign<any>().subscribe({
       next: (res: any) => {
         if (res?.success) {
-          this.Toast.success(res.message);
+          this.Toast.success('OTP Sent Successfully', 'Success');
 
           this.requireOtpVerification = true;
           this.otpToken = res.data;
 
           this.sendotpbtn = false;
         } else {
-          this.Toast.error(res.message || 'Submission failed', 'Failed');
+          this.Toast.error('OTP Send Failed', 'Failed');
           this.sendotpbtn = false;
         }
       },
       error: (err: any) => {
         this.Toast.error(
-          err?.error?.error?.message || 'Submission failed',
+          'OTP Send Failed',
           'Failed'
         );
         this.sendotpbtn = false;
@@ -182,7 +182,7 @@ export class AddSignatureModalComponent {
       next: (res: any) => {
         if (res?.success) {
           this.showprocessingbtn = false
-          this.Toast.success(res.message);
+          this.Toast.success('OTP Verified Successfully', 'Success');
 
           // ✅ OTP VERIFIED → PROCEED TO SIGN
           // this.sendotpbtn = false;
@@ -252,7 +252,7 @@ export class AddSignatureModalComponent {
     this.apiService.signAgreement<any>(finalPayload).subscribe({
       next: (res: any) => {
         if (res?.success) {
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Agreement Signed Successfully', 'Success');
 
           // refresh agreement in parent
           this.AssociationService.triggerNewAgreementSigned(res.data);
@@ -263,7 +263,7 @@ export class AddSignatureModalComponent {
         }
       },
       error: () => {
-        this.Toast.error('Failed to sign agreement');
+        this.Toast.error('Failed to sign agreement' , 'Error');
       },
     });
   }

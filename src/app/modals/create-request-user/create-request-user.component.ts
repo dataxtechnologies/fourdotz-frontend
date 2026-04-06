@@ -202,13 +202,13 @@ export class CreateRequestUserComponent {
       next: (res: any) => {
         if (res?.success) {
           this.submitLoading = false;
+          this.toast.success('Request created successfully', 'Success');
           this.OwnerService.triggerRequestUser(res);
           // this.AssociationSer.triggerAnnouncementCreated(res);
-          this.toast.success(res.message, 'Success');
           this.closeModal();
         } else {
           this.submitLoading = false;
-          this.toast.warning(res.message || 'Something went wrong.', 'Warning');
+          this.toast.warning('Request creation failed', 'Warning');
         }
       },
       error: (err: any) => {

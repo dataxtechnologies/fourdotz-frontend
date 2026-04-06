@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiserviceService } from '../../../services/api/apiservice.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -26,10 +26,13 @@ export class ResidentDashboardComponent {
   elapsed = 0; // seconds since last check
 
   user_type = localStorage.getItem('user_type');
+  usertype: any;
+  originaluserdata : any
   constructor(
     private apiService: ApiserviceService,
     private router: Router,
-    private Toast: ToastrService
+    private Toast: ToastrService,
+    private ActivatedRoute : ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +40,10 @@ export class ResidentDashboardComponent {
     this.getUserData(this.user_type);
 
     console.log('user_type', this.user_type);
+
+    // this.ActivatedRoute.params.subscribe((params) => {
+    //   this.usertype = params['usertype'] || null;
+    // });
     
   }
 
@@ -78,14 +85,14 @@ export class ResidentDashboardComponent {
 
         if (res?.success) {
 
-          const userdata = res.data;
-          console.log('userdata', userdata);
+          this.originaluserdata = res.data;
+          console.log('userdata', this.originaluserdata);
           
-          const usertype = userdata.user_type;
+          const usertype = this.originaluserdata.user_type;
 
           // ✅ NEW PRIORITY CHECK (FIRST)
-          if(userdata.property_merge_status == 'request_approved')  {
-            console.log(userdata.property_merge_status, 'userdata.property_merge_status');
+          if(this.originaluserdata.property_merge_status == 'request_approved'  && this.originaluserdata.association_status === true)  {
+            console.log(this.originaluserdata.property_merge_status, 'userdata.property_merge_status');
             console.log(usertype, 'usertype');
             
             if(role === 'owner'){
@@ -98,6 +105,10 @@ export class ResidentDashboardComponent {
            
           }
 
+          if((role === 'service_admin' || role === 'gate_keeper') && this.originaluserdata.association_status === false){
+            this.router.navigateByUrl('/helper-users/inactivate');
+
+          }
           // // ✅ EXISTING FLOW (UNCHANGED)
           // if (
           //   (role === 'owner' || role === 'tenant') &&
@@ -112,4 +123,8 @@ export class ResidentDashboardComponent {
       },
     });
   }
+
+gotosupport() {
+  window.open('/contact-us/enquiry-now', '_blank');
+}
 }

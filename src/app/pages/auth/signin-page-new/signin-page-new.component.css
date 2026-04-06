@@ -208,3 +208,9 @@
         transform: scale(1.1);
     }
 }
+
+.join-btn{
+    color: var(--primary-orange);
+    cursor: pointer;
+    font-weight: bold;
+}

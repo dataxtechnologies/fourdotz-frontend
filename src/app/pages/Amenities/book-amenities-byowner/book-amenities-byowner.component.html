@@ -1,20 +1,20 @@
 <section>
 
-     <div class="d-flex align-items-center gap-3">
-           <div class="d-flex align-items-center gap-2" (click)="goback()">
-             <div class="mb-2">
+    <div class="d-flex align-items-center gap-3">
+        <div class="d-flex align-items-center gap-2" (click)="goback()">
+            <div class="mb-2">
                 <i class="fa-solid fa-arrow-left"></i>
             </div>
             <div class="mb-2">
 
                 <Button class="backbtn">Back</Button>
             </div>
-           </div>
-
-            <div>
-                <h3 class="" style="font-size: 22px;">Book Amenities</h3>
-            </div>
         </div>
+
+        <div>
+            <h3 class="" style="font-size: 22px;">Book Amenities</h3>
+        </div>
+    </div>
     <div>
         <form [formGroup]="bookingForm" (ngSubmit)="submitBooking()">
 
@@ -27,29 +27,45 @@
                     <div class="card">
                         <h3>Select Resource</h3>
 
-                        <div class="resource-grid">
+                        <!-- ✅ Resource List -->
+                        <div class="resource-grid" *ngIf="visibleResources.length > 0">
 
                             <label class="resource-card" *ngFor="let res of visibleResources"
                                 (click)="selectResource(res)"
                                 [ngClass]="{'active': selectedResource?.resource_id === res.resource_id}">
 
-                                <input type="radio" formControlName="resource" [value]="res.resource_id" />
+                                <!-- Radio -->
+                                <input type="radio" formControlName="resource" [value]="res.resource_id"
+                                    name="resource" />
 
-                                <!-- IMAGE FIXED -->
-                                <img [src]="res.icon" />
+                                <!-- Icon with fallback -->
+                                <img [src]="res.icon" (error)="res.icon='assets/default-resource.png'"
+                                    alt="resource icon" />
 
+                                <!-- Name -->
                                 <p class="regular-font">{{ res.name }}</p>
 
                             </label>
 
                         </div>
 
-                        <!-- SHOW MORE -->
+                        <!-- ✅ Show More -->
                         <div class="show-more-wrapper" *ngIf="resourcesDetails?.length > visibleCount">
-                            <button class="show-more-btn regular-font" (click)="showMoreResources()">
+                            <button type="button" class="show-more-btn regular-font" (click)="showMoreResources()">
                                 Show more
                             </button>
                         </div>
+
+                        <!-- ✅ Empty State -->
+                        <div class="no-resource regular-font" *ngIf="resourcesDetails && resourcesDetails.length === 0">
+                            No resources available
+                        </div>
+
+                        <!-- ✅ Optional Loading State -->
+                        <div class="loading" *ngIf="!resourcesDetails">
+                            Loading resources...
+                        </div>
+
                     </div>
 
                     <!-- SLOT -->
@@ -168,16 +184,16 @@
                                     maxlength="10" formControlName="personMobile" />
 
                                 <div *ngIf="bookingForm.get('personMobile')?.touched && bookingForm.get('personMobile')?.invalid"
-                                    class="error-text">
+     class="error-text">
 
-                                    <span *ngIf="bookingForm.get('personMobile')?.errors?.['required']">
-                                        Mobile number is required
-                                    </span>
+  <span *ngIf="bookingForm.get('personMobile')?.errors?.['required']">
+    Mobile number is required
+  </span>
 
-                                    <span *ngIf="bookingForm.get('personMobile')?.errors?.['pattern']">
-                                        Enter valid 10-digit mobile number starting from 6-9
-                                    </span>
-                                </div>
+  <span *ngIf="bookingForm.get('personMobile')?.errors?.['pattern']">
+    Enter valid 10-digit mobile number starting from 6-9
+  </span>
+</div>
                             </div>
 
                             <div>

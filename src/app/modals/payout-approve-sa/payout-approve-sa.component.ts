@@ -104,18 +104,18 @@ export class PayoutApproveSAComponent implements OnInit {
           this.updatepayoutrequeststatustoprocessing();
           this.approvebtnloading = false;
           this.Association.triggerPayoutRequestCreate(res);
-          this.Toast.success(res?.message, 'Success');
+          this.Toast.success('Payout Request Approved Successfully', 'Success');
           this.close();
         }else{
           this.approvebtnloading = false;
-          this.Toast.warning(res?.message, 'Warning');
+          this.Toast.warning('Payout Request Approved Failed', 'Warning');
           this.close();
         }
         // this.close();
       },
       error: (err : any) => {
         this.approvebtnloading = false;
-        this.Toast.error(err?.error.error?.message, 'Error');
+        this.Toast.error('Payout Request Approved Failed', 'Error');
         this.close();
       }
     });

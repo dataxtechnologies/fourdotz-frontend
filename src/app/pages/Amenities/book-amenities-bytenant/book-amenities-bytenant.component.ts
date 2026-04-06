@@ -356,12 +356,18 @@ console.log('this.hoaId', this.hoaId);
 
   submitBooking() {
 
-    this.savebtnloading = true;
-
-    if (!this.selectedSlotFull || !this.bookingForm.value.property) {
+    if (this.bookingForm.invalid) {
+      this.bookingForm.markAllAsTouched(); // 🔥 show all errors
       this.savebtnloading = false;
       return;
     }
+    
+    
+    if (!this.selectedSlotFull || !this.bookingForm.value.property) {
+    this.savebtnloading = false;
+    return;
+  }
+  this.savebtnloading = true;
 
     const payload = {
       resource_id: this.bookingForm.value.resource,

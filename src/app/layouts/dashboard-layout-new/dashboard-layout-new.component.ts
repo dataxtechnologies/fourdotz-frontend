@@ -183,7 +183,17 @@ export class DashboardLayoutNewComponent {
          }
  
          localStorage.setItem('userdata', JSON.stringify(userdata));
- 
+
+         if(userdata.association_status === true){
+          if(role === 'service_admin' || role === 'gate_keeper'){
+            this.router.navigateByUrl('/helper-users/inactivate');
+
+          }
+          this.redirectUser(role);
+          return;
+         }
+
+         
          // ✅ NEW PRIORITY CHECK (FIRST)
          if (userdata.property_merge_status === 'request_sent') {
            this.router.navigateByUrl('/pre-approval/resident/dashboard');
@@ -204,6 +214,33 @@ export class DashboardLayoutNewComponent {
      },
    });
  }
+
+ redirectUser(userType: string): void {
+    switch (userType) {
+      case 'superadmin':
+        this.router.navigateByUrl('/Superadmin/Dashboard');
+        break;
+      case 'association':
+        this.router.navigateByUrl('/Association/Dashboard');
+        break;
+      case 'owner':
+        this.router.navigateByUrl('/Owner/Dashboard');
+        break;
+      case 'tenant':
+        this.router.navigateByUrl('/Tenant/Dashboard');
+        break;
+      case 'service_admin':
+        this.router.navigateByUrl('/Service-admin/manage-requests');
+        break;
+      case 'gate_keeper':
+        this.router.navigateByUrl('/Gate-keeper/visitors-management/visitors-list');
+        break;
+      default:
+        localStorage.clear();
+        this.router.navigateByUrl('/auth/sign-in');
+        break;
+    }
+  }
  
    /* ===============================
       PROFILE / LOGOUT

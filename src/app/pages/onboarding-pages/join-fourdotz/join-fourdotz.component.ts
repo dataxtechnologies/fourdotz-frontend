@@ -28,11 +28,11 @@ FormatedUserData = this.userdata ? JSON.parse(this.userdata) : {};
 
     this.fetchAssociations();
 
-    if (this.access_token) {
-      this.Showlogoutbtn = true;
-    } else {
-      this.Showlogoutbtn = false;
-    }
+    // if (this.access_token) {
+    //   this.Showlogoutbtn = true;
+    // } else {
+    //   this.Showlogoutbtn = false;
+    // }
   }
 
   fetchAssociations(): void {

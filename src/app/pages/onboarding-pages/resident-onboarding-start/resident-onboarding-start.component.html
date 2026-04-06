@@ -1,15 +1,16 @@
-<div  *ngIf="globalLoading" class="full-loader">
-  <div class="loader">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 66" height="100px" width="100px" class="spinner">
-    <circle stroke="url(#gradient)" r="20" cy="33" cx="33" stroke-width="1" fill="transparent" class="path"></circle>
-      <linearGradient id="gradient">
-        <stop stop-opacity="1" stop-color="#fe0000" offset="0%"></stop>
-        <stop stop-opacity="0" stop-color="#af3dff" offset="100%"></stop>
-      </linearGradient>
-    
-  </svg> 
-</div>
-<p class="medium-font mt-2">Loading your workspace</p>
+<div *ngIf="globalLoading" class="full-loader">
+    <div class="loader">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 66" height="100px" width="100px" class="spinner">
+            <circle stroke="url(#gradient)" r="20" cy="33" cx="33" stroke-width="1" fill="transparent" class="path">
+            </circle>
+            <linearGradient id="gradient">
+                <stop stop-opacity="1" stop-color="#fe0000" offset="0%"></stop>
+                <stop stop-opacity="0" stop-color="#af3dff" offset="100%"></stop>
+            </linearGradient>
+
+        </svg>
+    </div>
+    <p class="medium-font mt-2">Loading your workspace</p>
 </div>
 
 <section class="main-sec-container" *ngIf="!globalLoading">
@@ -19,7 +20,8 @@
             <h3 class="medium-font welcome-font">Welcome to Fourdotz</h3>
         </div>
         <div>
-            <p class="regular-font">We’re excited to have you here! You are joining <strong>{{ associationDetails.property_name }}</strong> through Fourdotz.
+            <p class="regular-font">We’re excited to have you here! You are joining <strong>{{
+                    associationDetails.property_name }}</strong> through Fourdotz.
             </p>
         </div>
     </div>
@@ -296,7 +298,26 @@
                                 Property is required.
                             </span>
                         </div>
+
+                        <div *ngIf="noPropertyAvailable" class="no-property-box">
+                        <div class="no-property-icon">⚠️</div>
+
+                        <div class="no-property-content">
+                            <h4>No Property Available</h4>
+
+                            <p>
+                                There are currently no properties available for your selected role
+                                (<strong>{{ basicForm.value.user_type | titlecase }}</strong>) in this association.
+                            </p>
+
+                            <p class="sub-text">
+                                Please contact your association administrator for assistance or to get access to your
+                                property.
+                            </p>
+                        </div>
                     </div>
+                    </div>
+                    
 
                     <!-- Occupancy -->
                     <div class="form-group" *ngIf="residentForm.get('property_id')?.value">
@@ -323,9 +344,23 @@
                         </div>
                     </div>
 
+                    
+
                     <div class="form-navigation">
-                        <button type="button" (click)="goToPreviousStep()" class="btn secondary">← Back</button>
-                        <button type="submit" class="button-next">Save and continue</button>
+                        <button type="button" (click)="goToPreviousStep()" class="btn secondary"
+                            [disabled]="noPropertyAvailable">
+                            ← Back
+                        </button>
+                        <!-- If properties exist -->
+                        <button *ngIf="!noPropertyAvailable" type="submit" class="button-next">
+                            Save and continue
+                        </button>
+
+                        <!-- If no properties -->
+                        <button *ngIf="noPropertyAvailable" type="button" class="button-next exit-btn"
+                            (click)="exitOnboarding()">
+                            Exit
+                        </button>
                     </div>
 
                 </form>

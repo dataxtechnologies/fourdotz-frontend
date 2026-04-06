@@ -70,25 +70,44 @@
       </div>
 
       <div class="inp-cont">
-        <label class="medium-font">Property Type <span class="required">*</span></label>
-        <div class="checkbox-group" formGroupName="propertyType">
-          <label class="medium-font" class="checkbox-cus">
-            <input type="checkbox" formControlName="villa">
-            <span class="regular-font">Villa</span>
-          </label>
-          <label class="medium-font" class="checkbox-cus">
-            <input type="checkbox" formControlName="apartment">
-            <span class="regular-font">Apartment</span>
-          </label>
-          <label class="medium-font" class="checkbox-cus">
-            <input type="checkbox" formControlName="townhouse">
-            <span class="regular-font">Town House</span>
-          </label>
-        </div>
-        <small *ngIf="!anyPropertySelected() && associationForm.get('propertyType')?.touched" class="error-text">Select
-          at least one property
-          type</small>
+  <label class="medium-font">Property Type <span class="required">*</span></label>
+
+  <div class="property-card-group" formGroupName="propertyType">
+
+    <!-- Villa -->
+    <label class="property-card">
+      <input type="checkbox" formControlName="villa" hidden>
+      <div class="card-content">
+        <i class="bx bx-home"></i>
+        <span>Villa</span>
       </div>
+    </label>
+
+    <!-- Apartment -->
+    <label class="property-card">
+      <input type="checkbox" formControlName="apartment" hidden>
+      <div class="card-content">
+        <i class="bx bx-building-house"></i>
+        <span>Apartment</span>
+      </div>
+    </label>
+
+    <!-- Townhouse -->
+    <label class="property-card">
+      <input type="checkbox" formControlName="townhouse" hidden>
+      <div class="card-content">
+        <i class="bx bx-buildings"></i>
+        <span>Town House</span>
+      </div>
+    </label>
+
+  </div>
+
+  <small *ngIf="!anyPropertySelected() && associationForm.get('propertyType')?.touched"
+    class="error-text">
+    Select at least one property type
+  </small>
+</div>
 
       <div>
         <button type="submit" class="submit-btn" *ngIf="createButton" [disabled]="!otpVerified">

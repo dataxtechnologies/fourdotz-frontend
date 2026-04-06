@@ -103,12 +103,12 @@ export class TenantApprovalModalComponent implements OnInit {
     this.apiService.ApproveRequest<any>(payload).subscribe({
       next: (res) => {
         if (res?.success) {
-          this.toast.success(res.message, 'Success');
+          this.toast.success('Request Approved Successfully', 'Success');
           this.OwnerServiceService.triggerTenantRequestapproval(res);
           this.submitbtn = true;
           this.closeModal();
         } else {
-          this.toast.warning(res.message, 'Warning');
+          this.toast.warning('Request Approval Failed', 'Warning');
           this.submitbtn = true;
         }
       },

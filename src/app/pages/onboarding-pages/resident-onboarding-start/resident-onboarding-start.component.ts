@@ -191,6 +191,7 @@ export class ResidentOnboardingStartComponent {
   associationDetails: any
 
   globalLoading = true;
+  noPropertyAvailable = false; // 🔥 add this
 
   constructor(
     private fb: FormBuilder,
@@ -227,14 +228,14 @@ export class ResidentOnboardingStartComponent {
   }
 
   resetOtpState(): void {
-  this.otpVerified = false;
-  this.otpSent = false;
-  this.otpInput = '';
-  this.otptoken = null;
+    this.otpVerified = false;
+    this.otpSent = false;
+    this.otpInput = '';
+    this.otptoken = null;
 
-  clearInterval(this.otpResendInterval);
-  this.otpResendTimer = 0;
-}
+    clearInterval(this.otpResendInterval);
+    this.otpResendTimer = 0;
+  }
 
   isValidEmail(email: string): boolean {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -266,7 +267,7 @@ export class ResidentOnboardingStartComponent {
   }
 
 
-  fetchAssociations(data : any): void {
+  fetchAssociations(data: any): void {
     this.globalLoading = true;
 
     this.apiService.fetchAssociationlistbyId<any>(data).subscribe({
@@ -275,7 +276,7 @@ export class ResidentOnboardingStartComponent {
 
         if (res?.success && res?.data) {
           this.associationDetails = res.data[0];
-          
+
 
         } else {
           this.associationDetails = [];
@@ -289,6 +290,30 @@ export class ResidentOnboardingStartComponent {
       },
     });
   }
+
+
+  exitOnboarding(): void {
+  const userId = localStorage.getItem('user_id');
+
+  const payload = {
+    user_id: userId
+  };
+
+  this.apiService.deleteAccount<any>(payload).subscribe({
+    next: (res: any) => {
+      if (res?.success) {
+        this.Toast.success('Exited successfully');
+        this.router.navigateByUrl('/join/join-fourdotz'); // or landing page
+      } else {
+        this.Toast.warning(res.message);
+      }
+    },
+    error: () => {
+      this.Toast.error('Something went wrong while exiting');
+    }
+  });
+}
+
 
 
 
@@ -407,18 +432,20 @@ export class ResidentOnboardingStartComponent {
         this.propertyLoading = false;
 
         if (res?.success && res?.data && res.data.length > 0) {
-  this.propertyList = res.data;
-  this.filteredProperties = [...res.data];
-} else {
-  this.propertyList = [];
-  this.filteredProperties = [];
-}
+          this.propertyList = res.data;
+          this.filteredProperties = [...res.data];
+          this.noPropertyAvailable = false; // ✅ normal
+        } else {
+          this.propertyList = [];
+          this.filteredProperties = [];
+          this.noPropertyAvailable = true; // ❌ important
+        }
       },
       error: () => {
         this.propertyLoading = false;
         this.propertyList = [];
         this.filteredProperties = [];
-        // this.Toast.error('Could not load property list.', 'Error');
+        this.noPropertyAvailable = true;
       },
     });
   }
@@ -471,27 +498,27 @@ export class ResidentOnboardingStartComponent {
     });
   }
 
-onPropertySearch(): void {
-  const q = (this.propertySearch || '').toLowerCase();
+  onPropertySearch(): void {
+    const q = (this.propertySearch || '').toLowerCase();
 
-  this.filteredProperties = this.propertyList.filter(p =>
-    (p.property_no || p.property_name || p.unit_number || p.name || '')
-      .toLowerCase()
-      .includes(q)
-  );
+    this.filteredProperties = this.propertyList.filter(p =>
+      (p.property_no || p.property_name || p.unit_number || p.name || '')
+        .toLowerCase()
+        .includes(q)
+    );
 
-  this.propertyDropdownOpen = false;
-}
-
-onPropertyFocus(): void {
-  this.propertyDropdownOpen = true;
-
-  if (this.propertyList.length === 0) {
-    this.filteredProperties = [];
-  } else {
-    this.filteredProperties = [...this.propertyList];
+    this.propertyDropdownOpen = false;
   }
-}
+
+  onPropertyFocus(): void {
+    this.propertyDropdownOpen = true;
+
+    if (this.propertyList.length === 0) {
+      this.filteredProperties = [];
+    } else {
+      this.filteredProperties = [...this.propertyList];
+    }
+  }
 
 
   selectProperty(prop: any): void {

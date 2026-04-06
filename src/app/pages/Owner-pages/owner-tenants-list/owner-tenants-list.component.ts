@@ -60,6 +60,7 @@ export class OwnerTenantsListComponent {
     this.apiService.SendmailAgain<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
+          this.Toast.success('Invite Mail sent successfully', 'Success');
           item.spinloading = false;
           this.TenantListinOwner();
         } else {

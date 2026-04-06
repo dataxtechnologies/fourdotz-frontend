@@ -1,0 +1,29 @@
+<section class="form-section ">
+    <div class="form-header">
+        <h3>Activate Association</h3>
+        <i class="fa-solid fa-xmark" (click)="closeModal()"></i>
+    </div>
+
+    <div class="form-body">
+        <p class="warning-text regular-font">
+    <strong>Warning:</strong>  Activating this association will restore access for all users and resume all services and activities.
+  The association will become fully operational again.
+</p>
+
+        <div class="inp-cont">
+            <label class="medium-font" for="confirmText">To confirm, type <span class="highlight">ACTIVATE</span> below:</label>
+            <input id="confirmText" type="text" [(ngModel)]="confirmationText" placeholder="Type ACTIVATE to confirm"
+                class="input-custom-style regular-font" />
+        </div>
+
+        <div class="popup-actions">
+            <button class="cancel-btn" (click)="closeModal()">No, Cancel</button>
+            <button class="delete-btn" [disabled]="!canDelete()" (click)="confirmDelete(associationID)" *ngIf="!showprocessingbtn">
+                Yes, Activate Association
+            </button>
+            <button class="delete-btn"  disabled *ngIf="showprocessingbtn" (click)="confirmDelete(associationID)">
+                Processing...
+            </button>
+        </div>
+    </div>
+</section>

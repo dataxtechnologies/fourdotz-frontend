@@ -186,13 +186,27 @@ getUserData(role: any): void {
 
         localStorage.setItem('userdata', JSON.stringify(userdata));
 
+        if(userdata.association_status === false){
+          console.log('data');
+
+          if(role === 'service_admin' || role === 'gate_keeper'){
+            this.router.navigateByUrl('/helper-users/inactivate');
+
+          }
+          
+          this.router.navigateByUrl('/pre-approval/resident/dashboard')
+          return;
+        }
+
+
+
         // ✅ NEW PRIORITY CHECK (FIRST)
         if (userdata.property_merge_status === 'request_sent') {
           this.router.navigateByUrl('/pre-approval/resident/dashboard');
           return; // 🚨 IMPORTANT: STOP HERE (no popup)
         }
+        console.log('userdata', userdata);
 
-        // ✅ EXISTING FLOW (UNCHANGED)
         if (
           (role === 'owner' || role === 'tenant') &&
           userdata.upi_submit_status === false

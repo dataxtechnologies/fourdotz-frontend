@@ -71,12 +71,12 @@ export class UpdateTicketStatusComponent {
        next: (res: any) => {
         if (res?.success) {
           this.submitbtnloading = false;
+          this.Toast.success('Ticket Updated Successfully', 'Success');
           this.Association.triggerPayoutRequestCreate(res);
-          this.Toast.success(res?.message, 'Success');
           this.close();
         }else{
           this.submitbtnloading = false;
-          this.Toast.warning(res?.message, 'Warning');
+          this.Toast.warning('Ticket Update Failed', 'Warning');
           this.close();
         }
         // this.close();

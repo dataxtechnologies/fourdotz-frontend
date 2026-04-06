@@ -2,7 +2,8 @@
 
     <!-- BREADCRUMB -->
     <div class="breadcrumb  medium-font">
-        <span (click)="goback()" style="cursor: pointer;"><i class="fa-solid fa-arrow-left mt-1"></i> Associations</span> / <span> {{ Associationdata.property_name
+        <span (click)="goback()" style="cursor: pointer;"><i class="fa-solid fa-arrow-left mt-1"></i>
+            Associations</span> / <span> {{ Associationdata.property_name
             }}</span>
     </div>
 
@@ -59,6 +60,7 @@
         <span [class.active]="activeTab === 'Properties'" (click)="setTab('Properties')">Properties</span>
         <span [class.active]="activeTab === 'Documents'" (click)="setTab('Documents')">Documents</span>
         <span [class.active]="activeTab === 'Transactions'" (click)="setTab('Transactions')">Transaction Amounts</span>
+        <span [class.active]="activeTab === 'deactive'" (click)="setTab('deactive')">Deactivate Association</span>
     </div>
 
     <!-- CONTENT -->
@@ -185,6 +187,41 @@
             </ng-template>
         </div>
 
+        <div *ngIf="activeTab === 'deactive'">
+            <div class="simple-page">
+
+  <div class="content-card">
+    
+    <h2 class="medium-font" *ngIf="!Associationdata.active_status">Activate Association</h2>
+    <h2 class="medium-font" *ngIf="Associationdata.active_status">Deactivate Association</h2>
+
+    <p class="description regular-font" *ngIf="!Associationdata.active_status">
+      Activating this association will restore access for all users and resume all services and activities.
+  The association will become fully operational again.
+    </p>
+    <p class="description regular-font" *ngIf="Associationdata.active_status">
+      Deactivating this association will disable access for all users and pause all related activities.
+      You can reactivate it at any time from the settings.
+    </p>
+
+    <div class="info-box">
+      <p class="medium-font"><strong class="color-diff">Association:</strong> {{ Associationdata.property_name }}</p>
+      <!-- <p><strong>ID:</strong> {{ association.id }}</p> -->
+      <p class="medium-font" *ngIf="!Associationdata.active_status"><strong class="color-diff" >Status:</strong> Inactive</p>
+      <p class="medium-font" *ngIf="Associationdata.active_status"><strong class="color-diff">Status:</strong> Active</p>
+    </div>
+
+    <button class="deactivate-btn regular-font" *ngIf="!Associationdata.active_status" (click)="activateAssociation(Associationdata._id)">
+      Activate Association
+    </button>
+    <button class="deactivate-btn regular-font" *ngIf="Associationdata.active_status" (click)="deactivateAssociation(Associationdata._id)">
+      Deactivate Association
+    </button>
+
+  </div>
+
+</div>
+        </div>
     </div>
 
 </section>

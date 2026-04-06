@@ -16,12 +16,12 @@
 
 /* Common card style */
 .parent>div {
-    border-radius: 32px;
+    border-radius: 28px;
     padding: 1.5em;
     display: flex;
     flex-direction: column;
     justify-content: start;
-    align-items: flex-start;
+    /* align-items: flex-start; */
 
     /* background: #fff; */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -43,60 +43,52 @@
 
 /* Div1: Total Property */
 .div1 {
-    background-color: #faf9f4 !important;
+    background-color: var(--bg-white) !important;
     color: #fff;
     height: 150px;
-    position: relative;
+    /* position: relative; */
+    border-left: 4px solid var(--primary-color2);
+
 }
 
-.cont{
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
+
+.cont {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.div1::after {
-   content: url('/assets/icons/building.svg');
-    position: absolute;
-  width: 40px;
-     top: 20px;
-    right: 10px;
-}
+
 
 /* Div2: Number of Sales */
 .div2 {
-    background-color: #faf9f4 !important;
+    background-color: var(--bg-white) !important;
     color: #fff;
       height: 150px;
-    position: relative;
+    /* position: relative; */
+    border-left: 4px solid var(--primary-color2);
 }
 
-.div2::after {
-    content: url('/assets/icons/properties.svg');
-    position: absolute;
-  width: 40px;
-     top: 20px;
-    right: 10px;
-}
 
 /* Div3: Total Sales */
 .div3 {
-     background-color: #faf9f4 !important;
+     background-color: var(--bg-white) !important;
     color: #fff;
       height: 150px;
-    position: relative;
+    /* position: relative; */
+     border-left: 4px solid var(--primary-color2);
 }
 
-.div3::after {
-    content: url('/assets/images/total-amount.svg');
-    position: absolute;
-    width: 40px;
-    top: 20px;
-    right: 10px;
-    /* opacity: 0.15; */
+
+.card-icon {
+  font-size: 32px;
+  color: var(--primary-color2);
+  opacity: 0.9;
 }
+
 
 .link-text{
+    color: var(--primary-color2) !important;
     cursor: pointer;
 }
 
@@ -364,13 +356,14 @@
 }
 
 .card-font{
-    font-size: 20px;
+    font-size: 28px;
     font-weight: 700 !important;
+    color: var(--primary-color2);
 }
 
 .card-head-font{
      font-size: 22px;
-     color: #3e3e3e;
+     color: var(--text-black);
 }
 
 /* Avatar */
@@ -717,5 +710,5 @@
 }
 
 .table-btn{
-    
+   color: var(--primary-color2); 
 }

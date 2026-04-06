@@ -128,7 +128,7 @@ onSearchChange(event: Event) {
       next: (res: any) => {
         this.submitLoading = false;
         if (res?.success) {
-          this.toast.success(res.message);
+          this.toast.success('Agreement Sent Successfully', 'Success');
           this.modal.close();
           this.router.navigateByUrl('/agreement/association/list-agreement')
         } else {
@@ -137,7 +137,7 @@ onSearchChange(event: Event) {
       },
       error: () => {
         this.submitLoading = false;
-        this.toast.error('Failed to send agreement');
+        this.toast.error('Failed to send agreement', 'Failed');
       },
     });
   }

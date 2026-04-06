@@ -126,14 +126,29 @@
                 <!-- Property Type -->
                 <!-- Property Type -->
                 <div class="inp-cont">
-                    <label class="medium-font">Property Type <span class="required">*</span></label>
-                    <div class="checkbox-group">
-                        <label class="medium-font" class="radio-cus regular-font" *ngFor="let type of propertyTypes">
-                            <input type="radio" [value]="type" formControlName="propertyType"
-                                [checked]="propertyTypes.length === 1 && propertyTypes[0] === type" />
-                            {{ type }}
+                    <label class="medium-font">
+                        Property Type <span class="required">*</span>
+                    </label>
+                    
+                    <div class="property-card-group">
+
+                        <label class="property-card" *ngFor="let type of propertyTypes"
+                            [class.selected]="propertyForm.get('propertyType')?.value === type">
+                            <input type="radio" [value]="type" formControlName="propertyType" hidden />
+
+                            <div class="card-content">
+                                <i class="bx" [ngClass]="{
+            'bx-home': type === 'Villa',
+            'bx-building-house': type === 'Apartment',
+            'bx-buildings': type === 'Townhouse'
+          }"></i>
+
+                                <span>{{ type }}</span>
+                            </div>
                         </label>
+
                     </div>
+
                     <div *ngIf="propertyForm.get('propertyType')?.touched && propertyForm.get('propertyType')?.invalid"
                         class="error-text">
                         Property Type is required

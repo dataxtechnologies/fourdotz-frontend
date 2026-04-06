@@ -87,8 +87,9 @@ export class AddPropertyComponent implements OnInit {
       );
 
       if (this.propertyTypes.length === 1) {
-        this.propertyForm.patchValue({ propertyType: this.propertyTypes[0] });
-      }
+  const selectedType = this.propertyTypes[0];
+  this.propertyForm.patchValue({ propertyType: selectedType });
+}
     
 
       // Auto-select if only one property type

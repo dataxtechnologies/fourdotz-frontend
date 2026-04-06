@@ -134,11 +134,11 @@ export class PayoutUpdateStatusSAComponent {
         if (res?.success) {
           this.submitbtnloading = false;
           this.Association.triggerPayoutRequestCreate(res);
-          this.Toast.success(res?.message, 'Success');
+          this.Toast.success('Payout Request updated Successfully', 'Success');
           this.close();
         }else{
           this.submitbtnloading = false;
-          this.Toast.warning(res?.message, 'Warning');
+          this.Toast.warning('Payout Request updated Failed', 'Warning');
           this.close();
         }
         // this.close();

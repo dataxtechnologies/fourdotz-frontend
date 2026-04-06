@@ -2,9 +2,27 @@
     <form [formGroup]="slotForm">
         <div class="delivery-card">
 
-           <h4 class="section-title">{{ resourceName }}</h4>
+            <!-- HEADER -->
+            <div class="card-header">
+                <div class="header-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color1)"
+                        stroke-width="1.8" stroke-linecap="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" />
+                        <line x1="3" y1="9" x2="21" y2="9" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="14" x2="11" y2="14" />
+                        <line x1="13" y1="14" x2="16" y2="14" />
+                    </svg>
+                </div>
+                <div>
+                    <h4 class="section-title">{{ resourceName }}</h4>
+                    <p class="section-subtitle">Set booking slot rules for this amenity</p>
+                </div>
+            </div>
 
             <!-- RESOURCE SUMMARY -->
+            <div class="sec-label medium-font">Current rules</div>
             <div class="resource-summary">
                 <div class="summary-item">
                     <span class="medium-font">Start Time</span>
@@ -12,56 +30,62 @@
                 </div>
                 <div class="summary-item">
                     <span class="medium-font">End Time</span>
-                   <strong class="regular-font">{{ summaryEndTime }}</strong>
+                    <strong class="regular-font">{{ summaryEndTime }}</strong>
                 </div>
                 <div class="summary-item">
-                    <span class="medium-font">Available Capacity</span>
-                   <strong class="regular-font">{{ availableCapacity }}</strong>
+                    <span class="medium-font">Capacity</span>
+                    <strong class="regular-font">{{ availableCapacity }}</strong>
                 </div>
                 <div class="summary-item">
                     <span class="medium-font">Slot Duration</span>
                     <strong class="regular-font">{{ slotDurationMinutes }} mins</strong>
                 </div>
                 <div class="summary-item">
-                   <span class="medium-font">Total Slots</span>
+                    <span class="medium-font">Total Slots</span>
                     <strong class="regular-font">{{ totalSlots }}</strong>
                 </div>
             </div>
 
+            <!-- TODAY -->
             <div class="today-label medium-font">
-                Today:
-                <strong class="regular-font">{{ today | date:'fullDate' }}</strong>
+                <span class="today-dot"></span>
+                Today: <strong class="regular-font">{{ today | date:'fullDate' }}</strong>
             </div>
 
+            <div class="divider"></div>
+
             <!-- WEEKDAY SELECTION -->
+            <div class="sec-label">Apply to days</div>
             <div class="week-pill-row">
                 <label *ngFor="let day of weekDays; let i = index" class="week-pill regular-font"
                     [class.active]="day.selected">
                     <input type="checkbox" (change)="toggleDay(i)" />
                     {{ day.label }}
                 </label>
+                <label class="week-pill all-pill regular-font" [class.active]="allDaysSelected"
+                    (click)="toggleAllDays()">
+                    + All days
+                </label>
             </div>
 
+            <div class="divider"></div>
+
             <!-- TIME INPUTS -->
+            <div class="sec-label medium-font">Update rules</div>
             <div class="grid two mt-2">
                 <div class="field">
                     <label class="medium-font">Start Time</label>
                     <select class="regular-font input-custom-style" formControlName="start_time"
                         (change)="onStartTimeChange()">
                         <option value="">Select start time</option>
-                        <option *ngFor="let time of startTimeOptions" [value]="time">
-                            {{ time }}
-                        </option>
+                        <option *ngFor="let time of startTimeOptions" [value]="time">{{ time }}</option>
                     </select>
                 </div>
-
                 <div class="field">
                     <label class="medium-font">End Time</label>
                     <select class="regular-font input-custom-style" formControlName="end_time">
                         <option value="">Select end time</option>
-                        <option *ngFor="let time of endTimeOptions" [value]="time">
-                            {{ time }}
-                        </option>
+                        <option *ngFor="let time of endTimeOptions" [value]="time">{{ time }}</option>
                     </select>
                 </div>
             </div>
@@ -71,17 +95,45 @@
                 <label class="medium-font">Max Capacity</label>
                 <input type="number" class="regular-font input-custom-style" formControlName="max_capacity"
                     [max]="availableCapacity" min="1" />
-
+                <span class="hint">Max people allowed per booking slot</span>
                 <p class="error-text" *ngIf="slotForm.get('max_capacity')?.value > availableCapacity">
                     Max capacity cannot exceed {{ availableCapacity }}
                 </p>
             </div>
 
+            <!-- LIVE PREVIEW — shown only when both times are selected -->
+            <div class="preview-strip" *ngIf="slotForm.get('start_time')?.value && slotForm.get('end_time')?.value">
+                <div class="prev-icon">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+                        stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                </div>
+                <div class="prev-body">
+                    <div class="prev-title">Live preview</div>
+                    <div class="prev-text">
+                        <strong>{{ calcTotalSlots() }} slots</strong>
+                        &bull; {{ slotForm.get('start_time')?.value }} – {{ slotForm.get('end_time')?.value }}
+                        &bull; {{ slotDurationMinutes }} min each
+                        &bull; up to
+                        <strong>
+                            {{ slotForm.get('max_capacity')?.value || 1 }}
+                            person{{ slotForm.get('max_capacity')?.value > 1 ? 's' : '' }}
+                        </strong>
+                        per slot
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACTIONS -->
             <div class="actions">
-                <button class="btn-add" type="button" (click)="onSave()" [disabled]="slotForm.invalid" *ngIf="!savebtnloading">
-                    Save
+                <!-- <button class="btn-cancel" type="button">Cancel</button> -->
+                <button class="btn-add" type="button" (click)="onSave()" [disabled]="slotForm.invalid"
+                    *ngIf="!savebtnloading">
+                    Save slot rules
                 </button>
-                <button class="btn-add" type="button" *ngIf="savebtnloading" disabled style="cursor: not-allowed;">
+                <button class="btn-add" type="button" *ngIf="savebtnloading" disabled style="cursor:not-allowed;">
                     Saving...
                 </button>
             </div>

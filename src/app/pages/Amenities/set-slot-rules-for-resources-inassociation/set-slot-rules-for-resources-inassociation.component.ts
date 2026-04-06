@@ -91,6 +91,27 @@ export class SetSlotRulesForResourcesInassociationComponent implements OnInit {
       .map(d => d.value);
   }
 
+  // ── Add this getter (for "All days" pill active state) ──
+  get allDaysSelected(): boolean {
+    return this.weekDays.every(d => d.selected);
+  }
+
+  toggleAllDays() {
+    const selectAll = !this.allDaysSelected;
+    this.weekDays.forEach(d => (d.selected = selectAll));
+  }
+
+  // ── Add this method (for live preview slot count) ──
+  calcTotalSlots(): number {
+    const start = this.slotForm.get('start_time')?.value;
+    const end = this.slotForm.get('end_time')?.value;
+    if (!start || !end) return 0;
+    const startMin = this.timeToMinutes(start);
+    const endMin = this.timeToMinutes(end);
+    return Math.floor((endMin - startMin) / this.slotDurationMinutes);
+  }
+
+
   /* ---------- TIME ---------- */
 
   generateStartTimeOptions() {
@@ -198,20 +219,20 @@ export class SetSlotRulesForResourcesInassociationComponent implements OnInit {
       next: (res: any) => {
         if (res?.success) {
           this.savebtnloading = false
-          this.toast.success(res.message);
+          this.toast.success('Slot Rules Created Successfully', 'Success');
           this.router.navigateByUrl(
             '/Association/manage-amenities/resources');
         } else {
           this.savebtnloading = false
 
-           this.toast.warning(res.message);
+          this.toast.warning(res.message, 'Warning');
           // this.tableLoading = false;
           // alert(res.message || 'Logout failed, please try again.');
         }
       },
       error: (err: any) => {
         this.savebtnloading = false
-         this.toast.error(err.error.error.message);
+        this.toast.error(err.error.error.message, 'Failed');
         // this.tableLoading = false;
         //console.error('Logout failed:', err);
         // alert(err.message || 'Logout failed, please try again.');

@@ -76,7 +76,7 @@ export class ServiceAdminListComponent {
     this.Apiservice.SendmailAgain<any>(payload).subscribe({
       next: (res: any) => {
         if (res?.success) {
-          this.Toast.success(res.message, 'Success');
+          this.Toast.success('Invite Mail sent successfully', 'Success');
           item.spinloading = false;
           this.ListServiceAdmin();
         } else {

@@ -113,8 +113,14 @@ import { CreateSupportTicketComponent } from './pages/support-pages/create-suppo
 import { ViewSupportTicketComponent } from './pages/support-pages/view-support-ticket/view-support-ticket.component';
 import { SupportListComponent } from './pages/association-pages/support-list/support-list.component';
 import { JoinFourdotzComponent } from './pages/onboarding-pages/join-fourdotz/join-fourdotz.component';
+import { AssociationInactiveComponent } from './pages/pre-approved-pages/association-inactive/association-inactive.component';
+import { AssociationUsersInactiveComponent } from './pages/pre-approved-pages/association-users-inactive/association-users-inactive.component';
+import { HelpersInactiveComponent } from './pages/pre-approved-pages/helpers-inactive/helpers-inactive.component';
+import { OwnerDashboardNewComponent } from './pages/Owner-pages/owner-dashboard-new/owner-dashboard-new.component';
 
 export const routes: Routes = [
+
+
   {
     path: '',
     pathMatch: 'full',
@@ -273,7 +279,7 @@ export const routes: Routes = [
     // canActivate: [authGuard],
     component: DashboardLayoutComponent,
     children: [
-      { path: 'Dashboard', component: OwnerDashboardComponent },
+      { path: 'Dashboard', component: OwnerDashboardNewComponent },
       { path: 'properties-list', component: OwnerPropertiesComponent },
       { path: 'tenants-list', component: OwnerTenantsListComponent },
       { path: 'Maintenance-list', component: OwnerMaintenanceListComponent },
@@ -536,10 +542,14 @@ export const routes: Routes = [
       { path: 'resident/dashboard', component: ResidentDashboardComponent },
       { path: 'resident/market-place', component: ResidentMarketplaceComponent },
       { path: 'resident/view-profile', component: ResidentViewprofileComponent },
+      { path: 'association/inactivate/:usertype', component: AssociationInactiveComponent },
+      { path: 'association-users/inactivate/:usertype', component: AssociationUsersInactiveComponent },
+      
 
     ],
   },
 
+  { path: 'helper-users/inactivate', component: HelpersInactiveComponent },
 
   {
     path: 'no-network',

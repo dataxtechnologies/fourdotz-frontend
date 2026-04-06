@@ -267,7 +267,7 @@ export class CreateResourcesInassociationComponent implements OnInit {
       next: (res: any) => {
         if (res?.success) {
           this.savebtnloading = false
-          this.toast.success(res.message);
+          this.toast.success('Resource Created Successfully', 'Success');
           const resources_id = res.data;
           this.router.navigateByUrl(
             `/Association/manage-amenities/resources/set-slot-rules/${resources_id}`);

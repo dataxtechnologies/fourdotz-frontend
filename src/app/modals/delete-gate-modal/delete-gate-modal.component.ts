@@ -39,13 +39,13 @@ export class DeleteGateModalComponent {
         next: (res: any) => {
           if (res?.success) {
             this.showprocessingbtn = false;
-            this.Toast.success(res.message, 'Success');
+            this.Toast.success('Gate Deleted Successfully', 'Success');
             // this.OwnerService.triggerVehicleAdd(res);
             this.AssociationService.triggergatedelete(res);
             this.closeModal();
           } else {
             this.showprocessingbtn = false;
-            this.Toast.warning(res.message, 'Warning');
+            this.Toast.warning('Gate Delete Failed', 'Warning');
             // this.loginbtn = true;
             this.closeModal();
           }

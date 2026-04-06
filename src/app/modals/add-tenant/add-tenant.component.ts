@@ -188,13 +188,13 @@ ListPropertyNotresidentedbyTenantinOwner() {
       next: (res: any) => {
         if (res?.success) {
           this.submitbtn = true
-          this.Toast.success(res.message, 'Success')
+          this.Toast.success('Tenant Added Successfully', 'Success');
           this.AssociationService.triggerAssociationOwner(res);
           this.OwnerService.triggerTenantAdd(res);
           this.closeModal();
         } else {
           this.submitbtn = true
-          this.Toast.warning(res.message, 'Warning')
+          this.Toast.warning('Tenant Add Failed', 'Warning')
           // this.loginbtn = true;
         }
       },

@@ -86,16 +86,16 @@ export class EditOwnerDataComponent implements OnInit {
       next: (res: any) => {
         this.submitbtn = true;
         if (res?.success) {
-          this.Toast.success(res?.message, 'Success');
+          this.Toast.success('Owner Update Successful', 'Success');
           this.Association.triggerOwnerUpdate(res);
           this.closeModal();
         } else {
-          this.Toast.warning(res?.message, 'Warning');
+          this.Toast.warning('Owner Update Failed', 'Warning');
         }
       },
       error: (err) => {
         this.submitbtn = true;
-        this.Toast.error(err?.error?.message, 'Error');
+        this.Toast.error('Owner Update Failed', 'Error');
         //console.error('Error updating owner:', err);
        
       }

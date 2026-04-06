@@ -96,12 +96,12 @@ confirmUPISubmit() {
   this.apiService.OwnerUpdateUPI<any>(formData).subscribe({
     next: (res: any) => {
       if (res?.success) {
-        this.Toast.success(res.message);
+        this.Toast.success('UPI ID Updated Successfully', 'Success');
         this.showsubmitprocessingbtn = false;
         this.OwnerService.triggerOwnerUpiIDUpdate(res);
         this.closeModal();
       } else {
-        this.Toast.error(res.message || 'Submission failed', 'Failed');
+        this.Toast.error('Submission failed', 'Failed');
         this.showsubmitprocessingbtn = false;
       }
     },

@@ -158,15 +158,16 @@ export class AssociationListComponent {
       next: (res: any) => {
         if (res?.success) {
           item.spinloading = false;
+          this.Toast.success('Invite Mail sent successfully', 'Success');
           this.getAssociationList();
         } else {
           item.spinloading = false;
-          this.Toast.error(res.message, 'Failed');
+          this.Toast.error('Failed to send Invite Mail', 'Failed');
         }
       },
       error: (err: any) => {
         item.spinloading = false;
-        this.Toast.error(err.error.error.message, 'Failed');
+        this.Toast.error('Failed to send Invite Mail', 'Failed');
       },
     });
   }

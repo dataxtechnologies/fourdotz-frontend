@@ -1,13 +1,20 @@
 <section class="cst-section">
-    <div>
-        <button class="gobackbtn" (click)="goback()">Go Back</button>
+    <div class="gobacksec">
+        <button class="gobackbtn" (click)="goback()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+            </svg>
+            Go Back
+        </button>
     </div>
+
     <div class="cst-card">
 
         <!-- ── Card Header ─────────────────────────────────────── -->
         <div class="cst-header">
             <div class="cst-header__icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M15 5v2M15 11v2M15 17v2
                    M5 5h14a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3
@@ -16,40 +23,35 @@
                 </svg>
             </div>
             <div class="cst-header__text">
-                <h2 class="cst-header__title medium-font">Create Support Ticket</h2>
-                <p class="cst-header__sub regular-font">
-                    Raise a new request — our support team will respond shortly.
-                </p>
+                <h2 class="cst-header__title">Create Support Ticket</h2>
+                <p class="cst-header__sub">Raise a new request — our support team will respond shortly.</p>
             </div>
         </div>
 
         <!-- ── Form Body ───────────────────────────────────────── -->
         <div class="cst-body">
 
-            <!-- Row: Property No. + Module Name (side by side on ≥768 px) -->
+            <!-- Row: Property No. + Module Name -->
             <div class="cst-row">
 
                 <!-- Property No. -->
                 <div class="cst-field" [class.cst-field--error]="propertyError" *ngIf="userType !== 'association'">
-                    <label class="cst-label medium-font" for="propSearch">
+                    <label class="cst-label" for="propSearch">
                         Property No. <span class="cst-required">*</span>
                     </label>
-
                     <div class="cst-search" [class.cst-search--open]="showPropertyDropdown">
-
                         <div class="cst-search__input-wrap">
-                            <svg class="cst-search__icon" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            <svg class="cst-search__icon" width="14" height="14" viewBox="0 0 24 24" fill="none"
                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8" />
                                 <path d="m21 21-4.35-4.35" />
                             </svg>
-
-                            <input id="propSearch" type="text" class="cst-search__input regular-font"
+                            <input id="propSearch" type="text" class="cst-search__input"
                                 placeholder="Search property number or name…" autocomplete="off"
-                                [(ngModel)]="propertySearch" (input)="onPropertyInput()" (focus)="openDropdown()"  (click)="$event.stopPropagation()"/>
-
+                                [(ngModel)]="propertySearch" (input)="onPropertyInput()" (focus)="openDropdown()"
+                                (click)="$event.stopPropagation()" />
                             <span class="cst-search__badge" *ngIf="selectedProperty">
-                               {{ selectedProperty.property_no }}
+                                {{ selectedProperty.property_no }}
                                 <button class="cst-search__clear" type="button" (click)="clearProperty($event)"
                                     title="Clear">
                                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -59,40 +61,39 @@
                                 </button>
                             </span>
                         </div>
-
-                        <ul class="cst-search__list" *ngIf="showPropertyDropdown"  (click)="$event.stopPropagation()">
-
+                        <ul class="cst-search__list" *ngIf="showPropertyDropdown" (click)="$event.stopPropagation()">
                             <li class="cst-search__item" *ngFor="let prop of filteredProperties"
                                 (mousedown)="selectProperty(prop)">
                                 <span class="cst-search__item-id">{{ prop.property_no }}</span>
                                 <span class="cst-search__item-name">{{ prop.property_name }}</span>
                             </li>
-
                             <li class="cst-search__empty" *ngIf="filteredProperties.length === 0">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="11" cy="11" r="8" />
                                     <path d="m21 21-4.35-4.35" />
                                 </svg>
                                 No matching properties
                             </li>
-
                         </ul>
                     </div>
-
                     <span class="cst-error-msg" *ngIf="propertyError">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v4M12 16h.01" />
+                        </svg>
                         Please select a property.
                     </span>
                 </div>
 
                 <!-- Module Name -->
                 <div class="cst-field" [class.cst-field--error]="moduleError">
-                    <label class="cst-label medium-font" for="moduleName">
+                    <label class="cst-label" for="moduleName">
                         Module Name <span class="cst-required">*</span>
                     </label>
-
                     <div class="cst-select-wrap">
-                        <select id="moduleName" class="cst-select" [(ngModel)]="selectedModule">
+                        <select id="moduleName" class="cst-select regular-font" [(ngModel)]="selectedModule">
                             <option value="" disabled>Select a module</option>
                             <option *ngFor="let mod of modules" [value]="mod">{{ mod }}</option>
                         </select>
@@ -101,8 +102,12 @@
                             <path d="m6 9 6 6 6-6" />
                         </svg>
                     </div>
-
                     <span class="cst-error-msg" *ngIf="moduleError">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v4M12 16h.01" />
+                        </svg>
                         Please select a module.
                     </span>
                 </div>
@@ -111,20 +116,22 @@
 
             <!-- Description -->
             <div class="cst-field" [class.cst-field--error]="descriptionError">
-                <label class="cst-label medium-font" for="description">
+                <label class="cst-label" for="description">
                     Description <span class="cst-required">*</span>
                 </label>
-                <textarea id="description" class="cst-textarea" rows="5" 
+                <textarea id="description" class="cst-textarea regular-font" rows="5"
                     placeholder="Describe your issue in detail — steps to reproduce, expected outcome, error messages…"
                     [(ngModel)]="description">
         </textarea>
                 <div class="cst-textarea-footer">
                     <span class="cst-error-msg" *ngIf="descriptionError">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 8v4M12 16h.01" />
+                        </svg>
                         Description is required.
                     </span>
-                    <!-- <span class="cst-char-count" [class.cst-char-count--warn]="description.length > 900">
-                        {{ description.length }} / 1000
-                    </span> -->
                 </div>
             </div>
 
@@ -136,17 +143,17 @@
                 Cancel
             </button>
             <button class="cst-btn cst-btn--primary" type="button" (click)="onSubmit()" *ngIf="!btnstatusloading">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M22 2 11 13M22 2 15 22l-4-9-9-4 20-7z" />
                 </svg>
                 Submit Ticket
             </button>
-            <button class="cst-btn cst-btn--primary" type="button" *ngIf="btnstatusloading">
-                <i class="fa-solid fa-spinner fa-spin"></i>
-               Processing...
+            <button class="cst-btn cst-btn--primary cst-btn--loading" type="button" *ngIf="btnstatusloading">
+                <span class="cst-spinner"></span>
+                Processing…
             </button>
         </div>
 
-    </div>
+    </div><!-- /cst-card -->
 </section>

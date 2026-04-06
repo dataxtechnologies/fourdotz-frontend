@@ -39,13 +39,13 @@ showprocessingbtn = false;
         next: (res: any) => {
           if (res?.success) {
             this.showprocessingbtn = false;
-            this.Toast.success(res.message, 'Success');
+            this.Toast.success('Ad Space Deleted Successfully', 'Success');
             // this.OwnerService.triggerVehicleAdd(res);
             this.AdmindataService.triggerAdminAdSpaceDelete(res);
             this.closeModal();
           } else {
             this.showprocessingbtn = false;
-            this.Toast.warning(res.message, 'Warning');
+            this.Toast.warning('Ad Space Delete Failed', 'Warning');
             // this.loginbtn = true;
             this.closeModal();
           }
